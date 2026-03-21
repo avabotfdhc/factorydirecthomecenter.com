@@ -89,7 +89,7 @@ export default function AboutPage() {
                 <p>
                   Factory Direct Homes Center is an exclusive Champion Home Builders
                   retailer located on State Road 8 in Auburn, Indiana. We serve
-                  families across Indiana, Michigan, and Ohio with new manufactured
+                  families across Indiana, Illinois, Michigan, and Ohio with new manufactured
                   and modular homes at factory-direct pricing.
                 </p>
                 <p>
