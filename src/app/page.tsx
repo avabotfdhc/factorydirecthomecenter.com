@@ -63,9 +63,9 @@ export default function Home() {
     <>
       {/* Hero with Search */}
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        {/* Background image placeholder with overlay */}
+        {/* Background image with overlay */}
         <div className="absolute inset-0 bg-[var(--color-charcoal)]">
-          <div className="absolute inset-0 bg-[url('/images/homepage/hero-banner.webp')] bg-cover bg-center opacity-40" />
+          <div className="absolute inset-0 bg-[url('/images/hero-home.jpg')] bg-cover bg-center opacity-50" />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
         </div>
 
