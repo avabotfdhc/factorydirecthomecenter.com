@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     "factory direct homes",
     "mobile homes Indiana",
   ],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

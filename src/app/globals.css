@@ -1,18 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --color-cream: #FBF7F0;
-  --color-cream-dark: #F0EBE0;
-  --color-charcoal: #2A2520;
-  --color-charcoal-light: #3D3630;
-  --color-terracotta: #B8632F;
-  --color-terracotta-light: #D4844E;
-  --color-terracotta-dark: #934E24;
-  --color-sage: #6B7F5E;
-  --color-sage-light: #8FA07E;
-  --color-warm-gray: #9B918A;
-  --color-warm-gray-light: #C4BBB4;
-  --color-gold: #C8963E;
+  /* Brand colors matched from factorydirecthomescenter.com */
+  --color-teal: #1B6B7D;
+  --color-teal-light: #238A9F;
+  --color-teal-dark: #155768;
+  --color-orange: #E8922A;
+  --color-orange-light: #F0A94E;
+  --color-orange-dark: #C87A1E;
+  --color-lime: #8AC540;
+  --color-lime-light: #9FD45C;
+  --color-lime-dark: #74A835;
+  --color-charcoal: #2A2A2A;
+  --color-charcoal-light: #3D3D3D;
+  --color-charcoal-lighter: #555555;
+  --color-cream: #F8F7F4;
+  --color-cream-dark: #EDECEA;
+  --color-gray: #888888;
+  --color-gray-light: #BBBBBB;
+  --color-white: #FFFFFF;
 }
 
 @theme inline {
@@ -27,21 +33,13 @@ body {
   color: var(--color-charcoal);
 }
 
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Fade-in animation */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
@@ -50,42 +48,19 @@ html {
 }
 
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.animate-fade-up {
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.8s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.6s ease-out forwards;
-}
+.animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+.animate-slide-in-right { animation: slideInRight 0.8s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
 
 .animation-delay-100 { animation-delay: 100ms; }
 .animation-delay-200 { animation-delay: 200ms; }
@@ -94,12 +69,8 @@ html {
 .animation-delay-500 { animation-delay: 500ms; }
 .animation-delay-600 { animation-delay: 600ms; }
 
-/* Initially hidden for animation */
-.animate-on-load {
-  opacity: 0;
-}
+.animate-on-load { opacity: 0; }
 
-/* Grain overlay */
 .grain-overlay::after {
   content: "";
   position: absolute;
@@ -111,20 +82,17 @@ html {
   background-size: 256px 256px;
 }
 
-/* Decorative line */
 .decorative-line {
   width: 48px;
   height: 2px;
-  background: var(--color-terracotta);
+  background: var(--color-teal);
 }
 
-/* Custom selection */
 ::selection {
-  background: var(--color-terracotta);
+  background: var(--color-teal);
   color: white;
 }
 
-/* Smooth image hover */
 .home-card-image {
   transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -133,7 +101,6 @@ html {
   transform: scale(1.05);
 }
 
-/* Button hover shine effect */
 .btn-primary {
   position: relative;
   overflow: hidden;

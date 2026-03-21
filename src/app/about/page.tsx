@@ -54,13 +54,13 @@ export default function AboutPage() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-4 mb-6">
               <div className="decorative-line" />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-terracotta-light)]">
+              <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">
                 Our Story
               </span>
             </div>
             <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
               Built on{" "}
-              <span className="italic text-[var(--color-terracotta-light)]">
+              <span className="italic text-[var(--color-teal-light)]">
                 Trust,
               </span>
               <br />
@@ -83,9 +83,9 @@ export default function AboutPage() {
               <div className="decorative-line mb-6" />
               <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Who We{" "}
-                <span className="italic text-[var(--color-terracotta)]">Are</span>
+                <span className="italic text-[var(--color-teal)]">Are</span>
               </h2>
-              <div className="space-y-6 text-base text-[var(--color-warm-gray)] leading-relaxed">
+              <div className="space-y-6 text-base text-[var(--color-gray)] leading-relaxed">
                 <p>
                   Factory Direct Homes Center is an exclusive Champion Home Builders
                   retailer located on State Road 8 in Auburn, Indiana. We serve
@@ -110,14 +110,14 @@ export default function AboutPage() {
 
             {/* Timeline */}
             <div className="flex flex-col justify-center">
-              <div className="space-y-12 border-l-2 border-[var(--color-terracotta)]/20 pl-8">
+              <div className="space-y-12 border-l-2 border-[var(--color-teal)]/20 pl-8">
                 {timeline.map((item) => (
                   <div key={item.label} className="relative">
-                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-[var(--color-terracotta)] border-4 border-[var(--color-cream)]" />
+                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-[var(--color-teal)] border-4 border-[var(--color-cream)]" />
                     <h3 className="font-serif text-xl font-semibold mb-2">
                       {item.label}
                     </h3>
-                    <p className="text-sm text-[var(--color-warm-gray)] leading-relaxed">
+                    <p className="text-sm text-[var(--color-gray)] leading-relaxed">
                       {item.text}
                     </p>
                   </div>
@@ -135,7 +135,7 @@ export default function AboutPage() {
             <div className="decorative-line mx-auto mb-6" />
             <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               What We{" "}
-              <span className="italic text-[var(--color-terracotta)]">
+              <span className="italic text-[var(--color-teal)]">
                 Stand For
               </span>
             </h2>
@@ -150,7 +150,7 @@ export default function AboutPage() {
                 <h3 className="font-serif text-2xl font-semibold mb-4">
                   {v.title}
                 </h3>
-                <p className="text-sm text-[var(--color-warm-gray)] leading-relaxed">
+                <p className="text-sm text-[var(--color-gray)] leading-relaxed">
                   {v.description}
                 </p>
               </div>
@@ -163,13 +163,13 @@ export default function AboutPage() {
       <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-terracotta)]">
+            <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal)]">
               Our Partner
             </span>
             <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
               Champion Home Builders
             </h2>
-            <p className="text-base text-[var(--color-warm-gray)] leading-relaxed mb-8">
+            <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
               Champion is the #2 manufactured home builder in America, producing
               over 20% of all factory-built homes nationwide. Their Indiana plant
               in Decatur — just 20 miles from our showroom — means your home
@@ -183,10 +183,10 @@ export default function AboutPage() {
                 { value: "20 mi", label: "From Our Lot" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="font-serif text-3xl lg:text-4xl font-semibold text-[var(--color-terracotta)]">
+                  <div className="font-serif text-3xl lg:text-4xl font-semibold text-[var(--color-teal)]">
                     {stat.value}
                   </div>
-                  <div className="text-xs tracking-widest uppercase text-[var(--color-warm-gray)] mt-1">
+                  <div className="text-xs tracking-widest uppercase text-[var(--color-gray)] mt-1">
                     {stat.label}
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export default function AboutPage() {
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Ready to Find{" "}
-            <span className="italic text-[var(--color-terracotta-light)]">
+            <span className="italic text-[var(--color-teal-light)]">
               Your Home?
             </span>
           </h2>
@@ -213,7 +213,7 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/floor-plans"
-              className="btn-primary inline-flex items-center justify-center bg-[var(--color-terracotta)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-terracotta-dark)] transition-colors duration-300"
+              className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
             >
               Browse Floor Plans
             </Link>

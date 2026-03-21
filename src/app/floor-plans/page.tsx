@@ -133,13 +133,13 @@ export default function FloorPlansPage() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-4 mb-6">
               <div className="decorative-line" />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-terracotta-light)]">
+              <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">
                 Champion Home Builders
               </span>
             </div>
             <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
               Floor{" "}
-              <span className="italic text-[var(--color-terracotta-light)]">
+              <span className="italic text-[var(--color-teal-light)]">
                 Plans
               </span>
             </h1>
@@ -167,12 +167,12 @@ export default function FloorPlansPage() {
                 <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
                   {cat.title}
                 </h2>
-                <p className="font-serif text-xl italic text-[var(--color-terracotta)]">
+                <p className="font-serif text-xl italic text-[var(--color-teal)]">
                   {cat.tagline}
                 </p>
               </div>
               <div className="flex items-end">
-                <p className="text-base text-[var(--color-warm-gray)] leading-relaxed">
+                <p className="text-base text-[var(--color-gray)] leading-relaxed">
                   {cat.description}
                 </p>
               </div>
@@ -182,7 +182,7 @@ export default function FloorPlansPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-16 p-8 bg-white border border-[var(--color-charcoal)]/5">
               {Object.entries(cat.specs).map(([key, value]) => (
                 <div key={key}>
-                  <div className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-warm-gray)] mb-1">
+                  <div className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-gray)] mb-1">
                     {key === "sqft"
                       ? "Sq. Footage"
                       : key.charAt(0).toUpperCase() + key.slice(1)}
@@ -197,15 +197,15 @@ export default function FloorPlansPage() {
               {cat.models.map((model) => (
                 <div
                   key={model.name}
-                  className="group border border-[var(--color-charcoal)]/8 hover:border-[var(--color-terracotta)]/30 bg-white transition-all duration-500"
+                  className="group border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white transition-all duration-500"
                 >
                   {/* Model image placeholder */}
                   <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] flex items-center justify-center border-b border-[var(--color-charcoal)]/5">
                     <div className="text-center">
-                      <svg className="w-10 h-10 mx-auto text-[var(--color-warm-gray-light)] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                      <svg className="w-10 h-10 mx-auto text-[var(--color-gray-light)] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 7.5h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
                       </svg>
-                      <span className="text-xs text-[var(--color-warm-gray-light)] tracking-wider uppercase">
+                      <span className="text-xs text-[var(--color-gray-light)] tracking-wider uppercase">
                         Floor Plan
                       </span>
                     </div>
@@ -215,14 +215,14 @@ export default function FloorPlansPage() {
                     <h3 className="font-serif text-xl font-semibold mb-1">
                       {model.name}
                     </h3>
-                    <p className="text-sm text-[var(--color-terracotta)] font-medium mb-4">
+                    <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
                       {model.highlight}
                     </p>
-                    <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-warm-gray)]">
+                    <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
                       <span>{model.sqft} sq ft</span>
-                      <span className="text-[var(--color-warm-gray-light)]">|</span>
+                      <span className="text-[var(--color-gray-light)]">|</span>
                       <span>{model.beds} Bed</span>
-                      <span className="text-[var(--color-warm-gray-light)]">|</span>
+                      <span className="text-[var(--color-gray-light)]">|</span>
                       <span>{model.baths} Bath</span>
                     </div>
                   </div>
@@ -238,7 +238,7 @@ export default function FloorPlansPage() {
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Every Home is{" "}
-            <span className="italic text-[var(--color-terracotta-light)]">
+            <span className="italic text-[var(--color-teal-light)]">
               Yours to Customize
             </span>
           </h2>
@@ -250,7 +250,7 @@ export default function FloorPlansPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="tel:+12603081457"
-              className="btn-primary inline-flex items-center justify-center gap-2 bg-[var(--color-terracotta)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-terracotta-dark)] transition-colors duration-300"
+              className="btn-primary inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
             >
               Schedule a Tour
             </a>
