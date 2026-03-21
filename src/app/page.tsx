@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const homeTypes = [
@@ -13,6 +14,7 @@ const homeTypes = [
     startingAt: "$50,000",
     description: "Thoughtfully designed for smart, comfortable living. Perfect for first-time buyers, downsizers, or anyone who values quality over excess.",
     features: ["14–18 ft wide", "Up to 80 ft long", "Open floor plans"],
+    image: "/images/homepage/single-wides.webp",
   },
   {
     title: "Double Wide",
@@ -23,6 +25,7 @@ const homeTypes = [
     startingAt: "$80,000",
     description: "Spacious sectional homes that rival site-built quality. The Brighton and Silverton series offer generous layouts for growing families.",
     features: ["24–32 ft wide", "Multiple living areas", "Walk-in closets"],
+    image: "/images/homepage/double-wides.webp",
   },
   {
     title: "Modular",
@@ -33,6 +36,7 @@ const homeTypes = [
     startingAt: "$100,000",
     description: "IRC-code compliant homes placed on permanent foundations. Indistinguishable from site-built, with factory precision and pricing.",
     features: ["Permanent foundation", "IRC building codes", "Fully customizable"],
+    image: "/images/homepage/feature-find-home.webp",
   },
 ];
 
@@ -43,10 +47,10 @@ const testimonials = [
 ];
 
 const featuredPlans = [
-  { name: "Brighton 2856", type: "Double Wide", sqft: "1,493", beds: 3, baths: 2, price: "$89,900", highlight: "Split bedroom, island kitchen" },
-  { name: "Aspire 1672", type: "Single Wide", sqft: "1,152", beds: 3, baths: 2, price: "$62,500", highlight: "Master suite with walk-in" },
-  { name: "Silverton 2876", type: "Double Wide", sqft: "1,493", beds: 4, baths: 2, price: "$94,500", highlight: "Dual living areas" },
-  { name: "Aspire Modular 3268", type: "Modular", sqft: "2,176", beds: 4, baths: 3, price: "$149,900", highlight: "Luxury en-suite master" },
+  { name: "Brighton 2856", type: "Double Wide", sqft: "1,493", beds: 3, baths: 2, price: "$89,900", highlight: "Split bedroom, island kitchen", image: "/images/homepage/brighton-2852.png" },
+  { name: "Aspire 1672", type: "Single Wide", sqft: "1,152", beds: 3, baths: 2, price: "$62,500", highlight: "Master suite with walk-in", image: "/images/homepage/single-wides.webp" },
+  { name: "Silverton 2876", type: "Double Wide", sqft: "1,493", beds: 4, baths: 2, price: "$94,500", highlight: "Dual living areas", image: "/images/homepage/silverton-2856.png" },
+  { name: "Aspire Modular 3268", type: "Modular", sqft: "2,176", beds: 4, baths: 3, price: "$149,900", highlight: "Luxury en-suite master", image: "/images/homepage/georgetown-2864.png" },
 ];
 
 export default function Home() {
@@ -61,7 +65,7 @@ export default function Home() {
       <section className="relative min-h-[85vh] flex items-center overflow-hidden">
         {/* Background image placeholder with overlay */}
         <div className="absolute inset-0 bg-[var(--color-charcoal)]">
-          <div className="absolute inset-0 bg-[url('/hero-home.jpg')] bg-cover bg-center opacity-40" />
+          <div className="absolute inset-0 bg-[url('/images/homepage/hero-banner.webp')] bg-cover bg-center opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
         </div>
 
@@ -157,16 +161,15 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredPlans.map((plan) => (
               <div key={plan.name} className="group bg-white rounded-lg border border-[var(--color-charcoal)]/8 overflow-hidden hover:shadow-lg hover:border-[var(--color-teal)]/30 transition-all duration-400">
-                {/* Image placeholder */}
-                <div className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-center">
-                    <svg className="w-10 h-10 mx-auto text-[var(--color-gray-light)] mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 7.5h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                    </svg>
-                    <span className="text-[10px] text-[var(--color-gray-light)] uppercase tracking-wider">Floor Plan</span>
-                  </div>
-                  {/* Type badge */}
-                  <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
+                <div className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden">
+                  <Image
+                    src={plan.image}
+                    alt={plan.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded z-10">
                     {plan.type}
                   </span>
                 </div>
@@ -256,7 +259,16 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {homeTypes.map((home) => (
-              <div key={home.title} className="group bg-white/5 border border-white/10 rounded-lg hover:border-[var(--color-teal)]/40 transition-all duration-500">
+              <div key={home.title} className="group bg-white/5 border border-white/10 rounded-lg hover:border-[var(--color-teal)]/40 transition-all duration-500 overflow-hidden">
+                <div className="aspect-[16/10] relative overflow-hidden">
+                  <Image
+                    src={home.image}
+                    alt={home.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
+                </div>
                 <div className="p-8 pb-6 border-b border-white/10">
                   <span className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-lime)]">{home.subtitle}</span>
                   <h3 className="font-serif text-3xl font-semibold mt-2 mb-4">{home.title}</h3>
@@ -327,6 +339,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t) => (
               <div key={t.name} className="relative bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-md transition-shadow">
+                <div className="mb-3">
+                  <Image src="/images/homepage/quote.svg" alt="" width={24} height={24} className="opacity-20" />
+                </div>
                 <div className="flex gap-1 mb-4">
                   {[1,2,3,4,5].map((star) => (
                     <svg key={star} className="w-4 h-4 text-[var(--color-orange)]" fill="currentColor" viewBox="0 0 24 24">
@@ -353,8 +368,17 @@ export default function Home() {
       </section>
 
       {/* Financing CTA */}
-      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.07]">
+          <Image
+            src="/images/homepage/about-2.webp"
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
             Affordable Financing Options
           </h2>
