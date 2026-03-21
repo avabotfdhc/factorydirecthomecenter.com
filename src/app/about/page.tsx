@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Factory Direct Homes Center is a family-owned Champion Homes exclusive dealer in Auburn, IN. Serving Indiana, Michigan & Ohio with factory-direct pricing on manufactured and modular homes.",
+    "Factory Direct Homes Center is a family-owned Champion Homes exclusive dealer in Auburn, IN. Serving Indiana, Michigan, Ohio & Wisconsin with factory-direct pricing on manufactured and modular homes.",
 };
 
 const values = [
@@ -26,14 +26,14 @@ const values = [
   {
     title: "Community Roots",
     description:
-      "We're not a corporate chain. We're your neighbors in Auburn, Indiana. We live in the communities we serve across Indiana, Michigan, and Ohio, and we take that responsibility seriously.",
+      "We're not a corporate chain. We're your neighbors in Auburn, Indiana. We live in the communities we serve across Indiana, Michigan, Ohio, and Wisconsin, and we take that responsibility seriously.",
   },
 ];
 
 const timeline = [
   {
     label: "The Vision",
-    text: "Founded with a simple idea: everyone deserves a quality home at a fair price. We partnered with Champion Home Builders to bring factory-direct pricing to the tri-state region.",
+    text: "Founded with a simple idea: everyone deserves a quality home at a fair price. We partnered with Champion Home Builders to bring factory-direct pricing to the region.",
   },
   {
     label: "The Partnership",
@@ -41,7 +41,7 @@ const timeline = [
   },
   {
     label: "The Community",
-    text: "Over 500 families across Indiana, Michigan, and Ohio now call a Factory Direct home their own. We've grown through referrals and repeat customers — the best kind of growth.",
+    text: "Over 500 families across Indiana, Michigan, Ohio, and Wisconsin now call a Factory Direct home their own. We've grown through referrals and repeat customers — the best kind of growth.",
   },
 ];
 
@@ -67,9 +67,9 @@ export default function AboutPage() {
               Not Markup
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-              We&rsquo;re a family-owned manufactured home dealer in Auburn, Indiana.
-              We believe the path to homeownership shouldn&rsquo;t be paved with hidden
-              fees and fine print.
+              We&rsquo;re a family-owned manufactured home dealer in Auburn, Indiana,
+              serving Indiana, Michigan, Ohio, and Wisconsin. We believe the path
+              to homeownership shouldn&rsquo;t be paved with hidden fees and fine print.
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function AboutPage() {
                 <p>
                   Factory Direct Homes Center is an exclusive Champion Home Builders
                   retailer located on State Road 8 in Auburn, Indiana. We serve
-                  families across Indiana, Illinois, Michigan, and Ohio with new manufactured
+                  families across Indiana, Michigan, Ohio, and Wisconsin with new manufactured
                   and modular homes at factory-direct pricing.
                 </p>
                 <p>
