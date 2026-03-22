@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { GoogleAnalytics, GoogleTagManager, MetaPixel, MicrosoftClarity } from "@/lib/analytics";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -54,6 +55,22 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${jakarta.variable} h-full antialiased`}
     >
+      <head>
+        {/* Google Analytics 4 */}
+        <GoogleAnalytics />
+        
+        {/* Google Tag Manager - Uncomment when ready
+        <GoogleTagManager gtmId="GTM-XXXXXXX" />
+        */}
+        
+        {/* Meta Pixel for Facebook/Instagram Ads - Uncomment when ready
+        <MetaPixel pixelId="XXXXXXXXXXXXXXXX" />
+        */}
+        
+        {/* Microsoft Clarity for heatmaps - Uncomment when ready
+        <MicrosoftClarity projectId="XXXXXXXXXX" />
+        */}
+      </head>
       <body className="min-h-full flex flex-col font-sans bg-[var(--color-cream)] text-[var(--color-charcoal)]">
         <Header />
         <main className="flex-1">{children}</main>
