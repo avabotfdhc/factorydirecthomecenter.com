@@ -72,9 +72,16 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
           {/* Headline */}
           <div className="text-center mb-12">
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-tight tracking-tight mb-4">
-              Single Wides, Double Wides and<br className="hidden lg:block" /> Modular Homes for sale
+            <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
+              Factory Direct Homes Center — Auburn, Indiana
+            </p>
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-tight tracking-tight mb-6">
+              The Only Dealer That Treats You<br className="hidden lg:block" /> Like a Partner, Not a Profit Center
             </h1>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Champion manufactured and modular homes with line-item transparency. 
+              See exactly what you&apos;re paying for — and choose your own contractors to save thousands.
+            </p>
           </div>
 
           {/* Search Bar */}
