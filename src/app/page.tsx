@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { metadata } from "./metadata";
+import { FAQSection, commonFAQs } from "@/components/FAQSection";
+import { StructuredData, structuredData } from "@/lib/seo";
 
 const homeTypes = [
   {
