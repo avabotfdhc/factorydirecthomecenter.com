@@ -12,7 +12,10 @@ import {
   useScrollTracking, 
   useTimeOnPageTracking,
   MagneticButton,
-  ZoomImage
+  ZoomImage,
+  useParallax,
+  TextReveal,
+  Skeleton
 } from "@/components/VisualEffects";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
@@ -77,21 +80,8 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero with Search - H1 Section */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden" aria-label="Hero section">
-        {/* Background image with proper metadata */}
-        <div className="absolute inset-0 bg-[var(--color-charcoal)]">
-          <Image
-            src="/images/hero-home.jpg"
-            alt="Modern manufactured home with white siding and black trim on foundation with professional landscaping"
-            fill
-            priority
-            quality={90}
-            className="object-cover opacity-50"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
-        </div>
+      {/* Hero with Parallax Effect */}
+      <ParallaxHero />
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
           {/* H1 Headline - Single H1 per page for SEO */}
@@ -759,6 +749,177 @@ export default function Home() {
           })
         }}
       />
+
+      {/* Hero with Parallax - Using useParallax hook inline */}
+      <ParallaxHeroSection />
+
+      {/* Trust Badges Section */}
+      <section className="py-12 bg-white border-b border-[var(--color-charcoal)]/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <StaggerContainer staggerDelay={100} className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+            <FadeIn direction="up" delay={0}>
+              <div className="text-center">
+                <div className="text-3xl mb-2">🏆</div>
+                <div className="font-semibold text-sm">Champion Authorized</div>
+              </div>
+            </FadeIn>
+            <FadeIn direction="up" delay={100}>
+              <div className="text-center">
+                <div className="text-3xl mb-2">⭐</div>
+                <div className="font-semibold text-sm">4.8 Star Rating</div>
+              </div>
+            </FadeIn>
+            <FadeIn direction="up" delay={200}>
+              <div className="text-center">
+                <div className="text-3xl mb-2">🛡️</div>
+                <div className="font-semibold text-sm">Full Warranty</div>
+              </div>
+            </FadeIn>
+            <FadeIn direction="up" delay={300}>
+              <div className="text-center">
+                <div className="text-3xl mb-2">🚚</div>
+                <div className="font-semibold text-sm">20 Mile Delivery</div>
+              </div>
+            </FadeIn>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Process Steps Section */}
+      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-14">
+              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+                How It Works
+              </h2>
+              <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
+              <p className="text-base text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
+                From browsing to move-in, we make the process simple and transparent
+              </p>
+            </div>
+          </FadeIn>
+
+          <StaggerContainer staggerDelay={200} className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { step: "1", title: "Browse", desc: "Explore floor plans online or visit our showroom", icon: "🔍" },
+              { step: "2", title: "Customize", desc: "Choose your options and get a detailed quote", icon: "⚙️" },
+              { step: "3", title: "Finance", desc: "We connect you with the best lenders for your situation", icon: "💰" },
+              { step: "4", title: "Build & Deliver", desc: "Your home is built and delivered in 8-12 weeks", icon: "🏠" },
+            ].map((item, idx) => (
+              <FadeIn key={item.step} direction="up" delay={idx * 200}>
+                <div className="relative text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-[var(--color-teal)] rounded-full flex items-center justify-center text-2xl text-white font-bold">
+                    {item.step}
+                  </div>
+                  <h3 className="font-serif text-xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-sm text-[var(--color-gray)]">{item.desc}</p>
+                  {idx < 3 && (
+                    <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-[var(--color-teal)]/20" />
+                  )}
+                </div>
+              </FadeIn>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Loading Skeleton Demo - For future async content */}
+      <section className="py-12 bg-white hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <h3 className="text-lg font-semibold mb-4">Loading State Example</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <Skeleton className="h-48 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+            <div className="space-y-3">
+              <Skeleton className="h-48 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+            <div className="space-y-3">
+              <Skeleton className="h-48 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          </div>
+        </div>
+      </section>
     </>
+  );
+}
+
+// Parallax Hero Section Component
+function ParallaxHeroSection() {
+  const { ref, offset } = useParallax(0.3);
+  
+  return (
+    <section ref={ref} className="relative min-h-[85vh] flex items-center overflow-hidden" aria-label="Hero section">
+      {/* Parallax Background */}
+      <div 
+        className="absolute inset-0 bg-[var(--color-charcoal)]"
+        style={{ transform: `translateY(${offset}px)` }}
+      >
+        <Image
+          src="/images/hero-home.jpg"
+          alt="Modern manufactured home with white siding and black trim on foundation with professional landscaping"
+          fill
+          priority
+          quality={90}
+          className="object-cover opacity-50"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
+        <header className="text-center mb-12">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
+            Factory Direct Homes Center — Auburn, Indiana
+          </p>
+          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-tight tracking-tight mb-6">
+            Manufactured & Modular Homes<br className="hidden lg:block" /> in Indiana, Ohio & Michigan
+          </h1>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+            Champion manufactured and modular homes with line-item transparency. 
+            See exactly what you&apos;re paying for — and choose your own contractors to save thousands.
+          </p>
+        </header>
+
+        {/* Search Bar */}
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl p-3 flex flex-col md:flex-row gap-3">
+            <select className="px-4 py-3 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
+              <option>All Home Types</option>
+              <option>Single Wide</option>
+              <option>Double Wide</option>
+              <option>Modular</option>
+            </select>
+            <select className="px-4 py-3 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
+              <option>Any Size</option>
+              <option>1,000+ sq ft</option>
+              <option>1,500+ sq ft</option>
+              <option>2,000+ sq ft</option>
+            </select>
+            <select className="px-4 py-3 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
+              <option>Any Beds</option>
+              <option>2+ Beds</option>
+              <option>3+ Beds</option>
+              <option>4+ Beds</option>
+            </select>
+            <MagneticButton>
+              <Link 
+                href="/floor-plans" 
+                className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors whitespace-nowrap flex items-center justify-center"
+              >
+                Find Your Home
+              </Link>
+            </MagneticButton>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
