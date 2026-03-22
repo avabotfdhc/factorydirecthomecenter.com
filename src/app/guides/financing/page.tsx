@@ -1,0 +1,395 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Financing Options for Manufactured Homes | Factory Direct Homes Center",
+  description: "FHA, VA, conventional, and chattel loans explained. Compare financing options for manufactured homes in Indiana, Ohio, and Michigan. Find the best loan for your situation.",
+};
+
+const loanTypes = [
+  {
+    name: "FHA Title I",
+    type: "Home Only",
+    downPayment: "5%",
+    creditScore: "500+",
+    bestFor: "Buyers who don't own land",
+    description: "FHA Title I loans are designed for manufactured home purchases where you don't own the land. The home is collateral, and you can place it on leased land, in a park, or on property you don't yet own.",
+    pros: [
+      "Lower down payment than conventional",
+      "Available for home-only purchases",
+      "Government-backed security",
+      "Fixed interest rates",
+    ],
+    cons: [
+      "Higher rates than Title II",
+      "Shorter loan terms (15-20 years)",
+      "Home must meet FHA standards",
+      "Mortgage insurance required",
+    ],
+    requirements: [
+      "Minimum 500 credit score",
+      "5% down payment minimum",
+      "Debt-to-income ratio under 43%",
+      "Home must be primary residence",
+      "Property must meet FHA standards",
+    ],
+  },
+  {
+    name: "FHA Title II",
+    type: "Home & Land",
+    downPayment: "3.5%",
+    creditScore: "580+",
+    bestFor: "Buyers with land or buying land",
+    description: "FHA Title II loans cover both the manufactured home and the land it sits on. This is essentially a traditional mortgage for manufactured homes on permanent foundations.",
+    pros: [
+      "Low 3.5% down payment",
+      "Competitive interest rates",
+      "30-year terms available",
+      "Builds equity like site-built home",
+    ],
+    cons: [
+      "Must own the land",
+      "Home must be on permanent foundation",
+      "Stricter property standards",
+      "Mortgage insurance required",
+    ],
+    requirements: [
+      "Minimum 580 credit score (3.5% down)",
+      "500-579 requires 10% down",
+      "Home must be on permanent foundation",
+      "Land included in purchase",
+      "Property must meet FHA standards",
+    ],
+  },
+  {
+    name: "VA Loan",
+    type: "Veterans Only",
+    downPayment: "0%",
+    creditScore: "580+",
+    bestFor: "Veterans and active military",
+    description: "If you've served in the U.S. military, VA loans offer unbeatable benefits: zero down payment, no mortgage insurance, and competitive rates. This is often the best financing option for eligible buyers.",
+    pros: [
+      "Zero down payment",
+      "No mortgage insurance",
+      "Competitive interest rates",
+      "Easier qualification standards",
+      "Can finance funding fee",
+    ],
+    cons: [
+      "VA funding fee (2.3% first use)",
+      "Must meet service requirements",
+      "Home must meet VA standards",
+      "Primary residence only",
+    ],
+    requirements: [
+      "Active duty or veteran status",
+      "Certificate of Eligibility (COE)",
+      "Minimum 580 credit score",
+      "Debt-to-income ratio under 41%",
+      "Sufficient residual income",
+    ],
+  },
+  {
+    name: "Conventional",
+    type: "Modular Homes",
+    downPayment: "5-20%",
+    creditScore: "620+",
+    bestFor: "Modular homes with good credit",
+    description: "Conventional mortgages work for modular homes on permanent foundations, just like site-built homes. Best rates go to buyers with strong credit and larger down payments.",
+    pros: [
+      "Best interest rates",
+      "No mortgage insurance with 20% down",
+      "Flexible terms (15-30 years)",
+      "No government fees",
+      "Can be used for investment properties",
+    ],
+    cons: [
+      "Higher credit requirements",
+      "Larger down payment needed",
+      "Modular homes only (typically)",
+      "Stricter appraisal standards",
+      "Private mortgage insurance under 20%",
+    ],
+    requirements: [
+      "Minimum 620 credit score",
+      "5% down minimum (20% avoids PMI)",
+      "Debt-to-income ratio under 36-43%",
+      "Stable employment history",
+      "Home on permanent foundation",
+    ],
+  },
+  {
+    name: "Chattel Loan",
+    type: "Personal Property",
+    downPayment: "5-10%",
+    creditScore: "575+",
+    bestFor: "Buyers without land, easier qualification",
+    description: "Chattel loans treat your manufactured home as personal property (like a car), not real estate. Easier to qualify, but higher rates. Many buyers use chattel temporarily, then refinance to a mortgage after buying land.",
+    pros: [
+      "Easier qualification",
+      "Faster approval process",
+      "No land required",
+      "Lower closing costs",
+      "Can refinance later",
+    ],
+    cons: [
+      "Higher interest rates (7-12%)",
+      "Shorter terms (15-20 years)",
+      "May not build equity as fast",
+      "Fewer lender options",
+      "Interest not tax deductible",
+    ],
+    requirements: [
+      "Minimum 575 credit score",
+      "5-10% down payment",
+      "Proof of income",
+      "Home must be primary residence",
+      "Home must be new or near-new",
+    ],
+  },
+];
+
+const rateComparison = [
+  { type: "VA Loan", rate: "6.0% - 6.5%", bestFor: "Veterans" },
+  { type: "FHA Title II", rate: "6.5% - 7.0%", bestFor: "First-time buyers" },
+  { type: "Conventional", rate: "6.5% - 7.5%", bestFor: "Strong credit" },
+  { type: "FHA Title I", rate: "7.0% - 8.0%", bestFor: "Home-only purchase" },
+  { type: "Chattel", rate: "8.0% - 12%", bestFor: "Easier qualification" },
+];
+
+export default function FinancingPage() {
+  return (
+    <>
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="decorative-line" />
+              <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">
+                Complete Guide
+              </span>
+            </div>
+            <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
+              Financing<br />
+              <span className="italic text-[var(--color-teal-light)]">Options</span>
+            </h1>
+            <p className="text-lg text-white/60 leading-relaxed max-w-xl">
+              FHA, VA, conventional, and chattel loans — explained. Find the best financing 
+              option for your manufactured or modular home purchase.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Comparison */}
+      <section className="py-16 bg-[var(--color-cream-dark)]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <h2 className="font-serif text-2xl font-semibold mb-8 text-center">Quick Rate Comparison</h2>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {rateComparison.map((loan) => (
+              <div key={loan.type} className="bg-white rounded-lg p-6 text-center border border-[var(--color-charcoal)]/5">
+                <div className="font-semibold text-sm mb-2">{loan.type}</div>
+                <div className="font-serif text-2xl font-semibold text-[var(--color-teal)] mb-2">{loan.rate}</div>
+                <div className="text-xs text-[var(--color-gray)]">{loan.bestFor}</div>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-sm text-[var(--color-gray)] mt-6">
+            *Rates are estimates as of 2026. Actual rates vary by lender, credit score, and market conditions.
+          </p>
+        </div>
+      </section>
+
+      {/* Loan Types */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="decorative-line mx-auto mb-6" />
+            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+              Compare <span className="italic text-[var(--color-teal)]">Loan Types</span>
+            </h2>
+          </div>
+
+          <div className="space-y-16">
+            {loanTypes.map((loan, idx) => (
+              <div key={idx} className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
+                <div className="bg-[var(--color-charcoal)] text-white p-6 lg:p-8">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div>
+                      <h3 className="font-serif text-3xl font-semibold mb-2">{loan.name}</h3>
+                      <p className="text-white/60">{loan.description}</p>
+                    </div>
+                    <div className="flex gap-6">
+                      <div className="text-center">
+                        <div className="text-xs uppercase tracking-wider text-white/40 mb-1">Down Payment</div>
+                        <div className="font-serif text-2xl font-semibold text-[var(--color-lime)]">{loan.downPayment}</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xs uppercase tracking-wider text-white/40 mb-1">Credit Score</div>
+                        <div className="font-serif text-2xl font-semibold text-[var(--color-lime)]">{loan.creditScore}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 lg:p-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div>
+                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-lime-dark)] mb-4">Pros</h4>
+                      <ul className="space-y-2">
+                        {loan.pros.map((pro, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className="text-[var(--color-lime)] mt-1">✓</span>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-4">Considerations</h4>
+                      <ul className="space-y-2">
+                        {loan.cons.map((con, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className="text-[var(--color-orange)] mt-1">•</span>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">Requirements</h4>
+                      <ul className="space-y-2">
+                        {loan.requirements.map((req, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className="w-1.5 h-1.5 bg-[var(--color-teal)] rounded-full mt-1.5" />
+                            {req}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-6 border-t border-[var(--color-charcoal)]/5">
+                    <span className="text-sm text-[var(--color-gray)]">
+                      <strong>Best for:</strong> {loan.bestFor}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Decision Guide */}
+      <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="decorative-line mx-auto mb-6" />
+            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+              Which Loan Is <span className="italic text-[var(--color-teal)]">Right for You?</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="font-serif text-xl font-semibold mb-4">If You're a Veteran...</h3>
+              <p className="text-[var(--color-gray)] mb-4">
+                Start with VA loans. Zero down, no mortgage insurance, and great rates. 
+                This is the best deal in manufactured home financing.
+              </p>
+              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+                Get VA Loan Info →
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="font-serif text-xl font-semibold mb-4">If You Own Land...</h3>
+              <p className="text-[var(--color-gray)] mb-4">
+                FHA Title II or conventional loans offer the best rates. Your home will 
+                appreciate like site-built real estate.
+              </p>
+              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+                Explore Land-Home Loans →
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="font-serif text-xl font-semibold mb-4">If You Don't Own Land...</h3>
+              <p className="text-[var(--color-gray)] mb-4">
+                FHA Title I or chattel loans work for home-only purchases. Buy the home now, 
+                add land later, then refinance.
+              </p>
+              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+                See Home-Only Options →
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="font-serif text-xl font-semibold mb-4">If Your Credit Needs Work...</h3>
+              <p className="text-[var(--color-gray)] mb-4">
+                FHA loans accept scores as low as 500. Chattel loans are also more forgiving. 
+                We work with lenders who specialize in credit challenges.
+              </p>
+              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+                Credit-Challenged Options →
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="font-serif text-xl font-semibold mb-4">If You Want Lowest Payment...</h3>
+              <p className="text-[var(--color-gray)] mb-4">
+                VA loans (if eligible) or FHA Title II with 3.5% down. Longer terms (30 years) 
+                keep monthly payments manageable.
+              </p>
+              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+                Low Payment Options →
+              </Link>
+            </div>
+
+            <div className="bg-white rounded-lg p-8">
+              <h3 className="font-serif text-xl font-semibold mb-4">If You're Buying Modular...</h3>
+              <p className="text-[var(--color-gray)] mb-4">
+                Conventional mortgages treat modular homes like site-built. Best rates, 
+                no government fees, and standard mortgage terms.
+              </p>
+              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+                Modular Financing →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pre-Qualification */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+            Get <span className="italic text-[var(--color-teal)]">Pre-Qualified</span>
+          </h2>
+          <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
+            Pre-qualification shows sellers you're serious, helps you understand your budget, 
+            and speeds up the buying process. We work with multiple lenders to find your best option.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/contact"
+              className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
+            >
+              Start Pre-Qualification
+            </Link>
+            <a
+              href="tel:+12603081457"
+              className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300"
+            >
+              Call (260) 308-1457
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
