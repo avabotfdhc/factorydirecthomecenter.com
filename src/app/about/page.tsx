@@ -37,7 +37,7 @@ const timeline = [
   },
   {
     label: "The Partnership",
-    text: "As a Champion Homes exclusive dealer, we have direct access to their Decatur, IN manufacturing plant — just miles from our Auburn showroom. Shorter supply chains mean lower costs and faster delivery.",
+    text: "As a Champion Homes exclusive dealer, we have direct access to their Topeka, IN manufacturing plant — the largest Champion factory in the country. Just 20 miles from our Auburn showroom, this facility builds the Aspire Series, Paramount, Redman, and Dutch series homes. Shorter supply chains mean lower costs and faster delivery.",
   },
   {
     label: "The Community",
@@ -95,9 +95,10 @@ export default function AboutPage() {
                 </p>
                 <p>
                   Our partnership with Champion — the nation&rsquo;s second-largest home
-                  manufacturer with a 20% national market share — gives us access
-                  to their complete lineup: single wides, double wides, and modular
-                  homes in the Aspire, Brighton, Silverton, and Dutch series.
+                  manufacturer — gives us access to their complete lineup from the 
+                  Topeka, IN facility, the largest Champion factory in the country. 
+                  This plant builds the Aspire Series, Paramount, Redman, and Dutch 
+                  series homes, all just 20 miles from our showroom.
                 </p>
                 <p>
                   What sets us apart isn&rsquo;t just pricing. It&rsquo;s our
@@ -171,11 +172,13 @@ export default function AboutPage() {
               Champion Home Builders
             </h2>
             <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
-              Champion is the #2 manufactured home builder in America, producing
-              over 20% of all factory-built homes nationwide. Their Indiana plant
-              in Decatur — just 20 miles from our showroom — means your home
-              travels less and costs less. Every Champion home is HUD-certified,
-              energy-efficient, and backed by a comprehensive warranty.
+              Champion is the #2 manufactured home builder in America. Their Topeka, 
+              Indiana facility — the largest Champion factory in the country — is 
+              just 20 miles from our showroom. This plant produces the Aspire Series, 
+              Paramount, Redman, and Dutch series homes. Shorter delivery distances 
+              mean lower costs and faster delivery for you. Every Champion home is 
+              HUD or IRC-certified, energy-efficient, and backed by a comprehensive 
+              warranty.
             </p>
             <div className="grid grid-cols-3 gap-8 mt-12">
               {[
