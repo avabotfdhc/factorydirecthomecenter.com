@@ -1,19 +1,196 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { FAQSection } from "@/components/FAQSection";
+import { StructuredData, structuredData } from "@/lib/seo";
+import { 
+  FadeIn, 
+  StaggerContainer,
+  useScrollTracking 
+} from "@/components/VisualEffects";
+import { generateAltText } from "@/lib/images";
+import { trackPhoneClick } from "@/lib/analytics";
+
+// ============================================
+// FLOOR PLANS PAGE - MAXIMUM SEO/AEO
+// ============================================
+// Product schema for each home
+// AEO content with 40-60 word answers
+// FAQ schema
+// Internal linking
+// ============================================
 
 export const metadata: Metadata = {
-  title: "Floor Plans",
-  description:
-    "Browse Champion single wide, double wide, and modular home floor plans. Factory-direct pricing from $50,000. Customizable layouts for every family.",
+  title: "Manufactured Home Floor Plans | Champion Single Wide, Double Wide, Modular",
+  description: "Browse 20+ Champion floor plans. Single wide from $50K, double wide from $80K, modular from $100K. All customizable. Factory-direct pricing from Auburn, IN.",
+  keywords: [
+    "manufactured home floor plans",
+    "champion homes floor plans",
+    "single wide floor plans",
+    "double wide floor plans",
+    "modular home floor plans",
+    "3 bedroom manufactured home",
+    "4 bedroom modular home"
+  ],
+  openGraph: {
+    title: "Manufactured Home Floor Plans | Champion Homes",
+    description: "Browse 20+ customizable floor plans. Single wide, double wide, and modular homes. Factory-direct pricing.",
+    url: "https://factorydirecthomescenter.com/floor-plans",
+    type: "website",
+  },
 };
 
+// AEO Content - 40-60 word answers
+const aeoContent = [
+  {
+    question: "What types of floor plans does Factory Direct Homes Center offer?",
+    directAnswer: "We offer three categories: single wide homes (500-1,200 sq ft), double wide homes (1,000-2,400+ sq ft), and modular homes (1,000-2,500+ sq ft).",
+    supportingDetails: [
+      "Single wides are ideal for first-time buyers and downsizers.",
+      "Double wides provide spacious family living with multiple bedrooms.",
+      "Modular homes offer site-built quality with full customization options."
+    ],
+    wordCount: 48
+  },
+  {
+    question: "How much do manufactured home floor plans cost?",
+    directAnswer: "Single wide homes start at $50,000, double wides at $80,000, and modular homes at $100,000.",
+    supportingDetails: [
+      "Final price depends on size, features, and customization choices.",
+      "We provide line-item pricing so you see exactly what you're paying for."
+    ],
+    wordCount: 42
+  },
+  {
+    question: "Can I customize a floor plan to fit my needs?",
+    directAnswer: "Yes, every Champion floor plan is fully customizable including flooring, cabinetry, countertops, appliances, and exterior finishes.",
+    supportingDetails: [
+      "Our design team helps you select options that match your lifestyle and budget.",
+      "Virtual tours let you visualize your choices before construction begins."
+    ],
+    wordCount: 45
+  },
+  {
+    question: "What is the difference between single wide and double wide homes?",
+    directAnswer: "Single wide homes are one continuous section, typically 14-18 feet wide. Double wide homes are two sections joined together, usually 24-32 feet wide.",
+    supportingDetails: [
+      "Double wides offer more square footage and wider interior spaces.",
+      "Both types are built to HUD standards and can be placed on various foundation types."
+    ],
+    wordCount: 49
+  },
+  {
+    question: "Are modular homes better than manufactured homes?",
+    directAnswer: "Modular homes are built to IRC codes like site-built homes and can qualify for conventional mortgages, while manufactured homes follow HUD standards.",
+    supportingDetails: [
+      "Modular homes typically appreciate like site-built homes.",
+      "Manufactured homes offer more affordable entry points and faster delivery."
+    ],
+    wordCount: 47
+  }
+];
+
+// FAQs with 40-60 word answers
+const floorPlanFAQs = [
+  {
+    question: "How many floor plans does Factory Direct Homes Center offer?",
+    answer: "We offer over 20 floor plans across three categories: single wide, double wide, and modular homes. Each category includes multiple layouts ranging from 2-bedroom starter homes to 5-bedroom family homes. All plans are customizable to meet your specific needs and preferences."
+  },
+  {
+    question: "What is the smallest home floor plan available?",
+    answer: "Our smallest floor plans are in the single wide category, starting at approximately 500 square feet. The Dutch 1460 offers 840 square feet with 2 bedrooms and 1 bathroom, making it an ideal starter home or downsizing option. Despite the compact size, these homes feature smart, efficient layouts."
+  },
+  {
+    question: "What is the largest home floor plan available?",
+    answer: "Our largest floor plan is the Aspire Modular 3276, offering 2,432 square feet with 5 bedrooms and 3 bathrooms. This multi-generational design includes spacious living areas, a large kitchen, and flexible space configurations. It's designed for large families or those needing room for home offices."
+  },
+  {
+    question: "Can I make changes to a floor plan layout?",
+    answer: "While major structural changes to floor plans are limited by manufacturing constraints, you have extensive customization options. You can choose flooring types, cabinetry styles, countertop materials, appliance packages, exterior colors, and interior finishes. Our design team helps you personalize within the available options."
+  },
+  {
+    question: "Do you offer open concept floor plans?",
+    answer: "Yes, many of our floor plans feature open concept designs, particularly in the double wide and modular categories. The Brighton 2856 and Aspire Modular series are popular for their open kitchen and living areas. These designs create spacious, modern living environments perfect for family gatherings."
+  },
+  {
+    question: "What floor plans work best for families with children?",
+    answer: "For families, we recommend double wide or modular floor plans with 3-4 bedrooms. The Silverton 2876 offers 4 bedrooms with dual living areas, giving kids their own space. The Brighton series provides split bedroom designs that separate the master suite from children's rooms for privacy."
+  },
+  {
+    question: "Are there floor plans suitable for retirees or empty nesters?",
+    answer: "Yes, single wide homes like the Aspire 1456 (2 bed, 2 bath, 1,008 sq ft) are perfect for retirees. These homes offer manageable space with modern amenities, single-level living, and lower maintenance requirements. Many retirees appreciate the affordability and efficiency of these well-designed smaller homes."
+  },
+  {
+    question: "How do I choose the right floor plan for my needs?",
+    answer: "Start by considering your family size, lifestyle, and budget. Visit our Auburn showroom to walk through model homes and visualize the space. Our team helps you compare options, understand customization possibilities, and select a floor plan that fits your current needs with room for future changes."
+  }
+];
+
+// Product data for structured data
+const homeProducts = [
+  {
+    name: "Aspire 1456",
+    description: "2 bedroom, 2 bathroom single wide home with 1,008 sq ft. Open-concept kitchen and living area.",
+    image: "/images/hero-home.jpg",
+    sku: "ASP-1456",
+    brand: "Champion Homes",
+    price: "55000",
+    category: "Single Wide"
+  },
+  {
+    name: "Aspire 1672",
+    description: "3 bedroom, 2 bathroom single wide home with 1,152 sq ft. Master suite with walk-in closet.",
+    image: "/images/hero-home.jpg",
+    sku: "ASP-1672",
+    brand: "Champion Homes",
+    price: "62000",
+    category: "Single Wide"
+  },
+  {
+    name: "Brighton 2856",
+    description: "3 bedroom, 2 bathroom double wide home with 1,493 sq ft. Split bedroom design with island kitchen.",
+    image: "/images/hero-home.jpg",
+    sku: "BRI-2856",
+    brand: "Champion Homes",
+    price: "89900",
+    category: "Double Wide"
+  },
+  {
+    name: "Silverton 2876",
+    description: "4 bedroom, 2 bathroom double wide home with 1,493 sq ft. Four bedrooms with dual living areas.",
+    image: "/images/hero-home.jpg",
+    sku: "SIL-2876",
+    brand: "Champion Homes",
+    price: "95000",
+    category: "Double Wide"
+  },
+  {
+    name: "Aspire Modular 2860",
+    description: "3 bedroom, 2 bathroom modular home with 1,680 sq ft. Open floor plan with mudroom entry.",
+    image: "/images/hero-home.jpg",
+    sku: "ASM-2860",
+    brand: "Champion Homes",
+    price: "110000",
+    category: "Modular"
+  },
+  {
+    name: "Aspire Modular 3276",
+    description: "5 bedroom, 3 bathroom modular home with 2,432 sq ft. Multi-generational design with basement option.",
+    image: "/images/hero-home.jpg",
+    sku: "ASM-3276",
+    brand: "Champion Homes",
+    price: "145000",
+    category: "Modular"
+  }
+];
+
+// Categories with full data
 const categories = [
   {
     id: "single-wide",
     title: "Single Wide Homes",
     tagline: "Efficient Living, Exceptional Value",
-    description:
-      "Our single wide homes pack smart design into an efficient footprint. Ideal for first-time buyers, downsizers, or anyone who values quality craftsmanship without the excess square footage. Every inch is thoughtfully planned.",
+    description: "Our single wide homes pack smart design into an efficient footprint. Ideal for first-time buyers, downsizers, or anyone who values quality craftsmanship without the excess square footage. Every inch is thoughtfully planned.",
     specs: {
       width: "14–18 ft",
       length: "40–80 ft",
@@ -29,6 +206,8 @@ const categories = [
         beds: 2,
         baths: 2,
         highlight: "Open-concept kitchen & living",
+        price: "$55,000",
+        slug: "aspire-1456"
       },
       {
         name: "Aspire 1672",
@@ -36,6 +215,8 @@ const categories = [
         beds: 3,
         baths: 2,
         highlight: "Master suite with walk-in closet",
+        price: "$62,000",
+        slug: "aspire-1672"
       },
       {
         name: "Dutch 1460",
@@ -43,6 +224,8 @@ const categories = [
         beds: 2,
         baths: 1,
         highlight: "Compact & affordable starter home",
+        price: "$52,000",
+        slug: "dutch-1460"
       },
     ],
   },
@@ -50,8 +233,7 @@ const categories = [
     id: "double-wide",
     title: "Double Wide Homes",
     tagline: "Room to Breathe, Built to Last",
-    description:
-      "Sectional homes that rival site-built quality with factory precision. The Brighton and Silverton series offer generous living spaces, multiple bedrooms, and the kind of open floor plans families love coming home to.",
+    description: "Sectional homes that rival site-built quality with factory precision. The Brighton and Silverton series offer generous living spaces, multiple bedrooms, and the kind of open floor plans families love coming home to.",
     specs: {
       width: "24–32 ft",
       length: "40–76 ft",
@@ -67,6 +249,8 @@ const categories = [
         beds: 3,
         baths: 2,
         highlight: "Split bedroom design with island kitchen",
+        price: "$89,900",
+        slug: "brighton-2856"
       },
       {
         name: "Brighton 2852",
@@ -74,6 +258,8 @@ const categories = [
         beds: 3,
         baths: 2,
         highlight: "Spacious family room with vaulted ceilings",
+        price: "$85,000",
+        slug: "brighton-2852"
       },
       {
         name: "Silverton 2876",
@@ -81,6 +267,8 @@ const categories = [
         beds: 4,
         baths: 2,
         highlight: "Four bedrooms with dual living areas",
+        price: "$95,000",
+        slug: "silverton-2876"
       },
     ],
   },
@@ -88,8 +276,7 @@ const categories = [
     id: "modular",
     title: "Modular Homes",
     tagline: "Site-Built Quality, Factory Precision",
-    description:
-      "Built to IRC residential building codes and placed on permanent foundations, our modular homes are indistinguishable from traditional construction — but delivered faster, with less waste, and at a better price. Fully customizable to your vision.",
+    description: "Built to IRC residential building codes and placed on permanent foundations, our modular homes are indistinguishable from traditional construction — but delivered faster, with less waste, and at a better price. Fully customizable to your vision.",
     specs: {
       width: "24–36 ft",
       length: "40–76+ ft",
@@ -105,6 +292,8 @@ const categories = [
         beds: 3,
         baths: 2,
         highlight: "Open floor plan with mudroom entry",
+        price: "$110,000",
+        slug: "aspire-modular-2860"
       },
       {
         name: "Aspire Modular 3268",
@@ -112,6 +301,8 @@ const categories = [
         beds: 4,
         baths: 3,
         highlight: "Luxury master with en-suite & walk-in",
+        price: "$135,000",
+        slug: "aspire-modular-3268"
       },
       {
         name: "Aspire Modular 3276",
@@ -119,148 +310,376 @@ const categories = [
         beds: 5,
         baths: 3,
         highlight: "Full basement-ready, multi-generational design",
+        price: "$145,000",
+        slug: "aspire-modular-3276"
       },
     ],
   },
 ];
 
+// Breadcrumbs
+const breadcrumbs = [
+  { name: "Home", url: "/" },
+  { name: "Floor Plans", url: "/floor-plans" }
+];
+
+// Related pages
+const relatedPages = [
+  {
+    title: "Financing Options",
+    url: "/financing",
+    description: "Learn about chattel loans, VA loans, and land-home packages"
+  },
+  {
+    title: "About Our Process",
+    url: "/about",
+    description: "How we deliver homes from factory to foundation"
+  },
+  {
+    title: "Service Areas",
+    url: "/locations",
+    description: "See where we deliver across 6 states"
+  }
+];
+
 export default function FloorPlansPage() {
+  useScrollTracking();
+  
   return (
     <>
-      {/* Hero */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
+      {/* ============================================
+          MAXIMUM STRUCTURED DATA
+          ============================================ */}
+      
+      {/* 1. LocalBusiness */}
+      <StructuredData data={structuredData.localBusiness()} />
+      
+      {/* 2. WebSite */}
+      <StructuredData data={structuredData.website()} />
+      
+      {/* 3. BreadcrumbList */}
+      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
+      
+      {/* 4. Product Catalog (ItemList) */}
+      <StructuredData data={{
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: homeProducts.map((product, idx) => ({
+          "@type": "ListItem",
+          position: idx + 1,
+          item: {
+            "@type": "Product",
+            name: product.name,
+            description: product.description,
+            image: `https://factorydirecthomescenter.com${product.image}`,
+            sku: product.sku,
+            brand: {
+              "@type": "Brand",
+              name: product.brand
+            },
+            offers: {
+              "@type": "Offer",
+              price: product.price,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+              seller: {
+                "@type": "LocalBusiness",
+                name: "Factory Direct Homes Center"
+              }
+            },
+            category: product.category
+          }
+        }))
+      }} />
+      
+      {/* 5. Individual Product Schemas */}
+      {homeProducts.map((product) => (
+        <StructuredData 
+          key={product.sku}
+          data={structuredData.product({
+            name: product.name,
+            description: product.description,
+            image: product.image,
+            sku: product.sku,
+            brand: product.brand,
+            price: `$${parseInt(product.price).toLocaleString()}`,
+            priceCurrency: "USD",
+            availability: "InStock"
+          })}
+        />
+      ))}
+      
+      {/* 6. FAQPage */}
+      <StructuredData data={structuredData.faqPage(floorPlanFAQs)} />
+      
+      {/* 7. ImageObject */}
+      <StructuredData data={structuredData.imageObject({
+        url: "/images/hero-home.jpg",
+        name: "Champion Home Floor Plans Collection",
+        description: "Browse single wide, double wide, and modular home floor plans from Champion Homes",
+        width: 1200,
+        height: 630
+      })} />
+
+      {/* ============================================
+          BREADCRUMB NAVIGATION
+          ============================================ */}
+      <nav aria-label="Breadcrumb" className="bg-[var(--color-cream-dark)] py-4">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <ol className="flex items-center gap-2 text-sm text-[var(--color-gray)]">
+            {breadcrumbs.map((crumb, idx) => (
+              <li key={idx} className="flex items-center gap-2">
+                {idx > 0 && <span>/</span>}
+                <Link 
+                  href={crumb.url}
+                  className={idx === breadcrumbs.length - 1 ? "font-semibold text-[var(--color-charcoal)]" : "hover:text-[var(--color-teal)]"}
+                >
+                  {crumb.name}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </nav>
+
+      {/* ============================================
+          HERO SECTION
+          ============================================ */}
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/hero-home.jpg"
+            alt={generateAltText("location", { name: "Champion Home Floor Plans Showroom", location: "Auburn, Indiana" })}
+            fill
+            className="object-cover opacity-30"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
+        </div>
+        
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="decorative-line" />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">
-                Champion Home Builders
-              </span>
+          <FadeIn direction="up">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="decorative-line" />
+                <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">
+                  Champion Home Builders
+                </span>
+              </div>
+              
+              <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
+                Manufactured Home{" "}
+                <span className="italic text-[var(--color-teal-light)]">
+                  Floor Plans
+                </span>
+              </h1>
+              
+              <p className="text-lg text-white/60 leading-relaxed max-w-xl">
+                Browse 20+ customizable floor plans. Single wide from $50K, 
+                double wide from $80K, modular from $100K. Every plan is 
+                customizable to fit your lifestyle.
+              </p>
             </div>
-            <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
-              Floor{" "}
-              <span className="italic text-[var(--color-teal-light)]">
-                Plans
-              </span>
-            </h1>
-            <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-              Explore our full lineup of Champion manufactured and modular homes.
-              Every plan is customizable — flooring, cabinetry, countertops,
-              appliances, and exterior finishes are all your choice.
-            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ============================================
+          AEO CONTENT SECTION
+          ============================================ */}
+      <section className="py-16 bg-white border-b border-[var(--color-charcoal)]/5">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-10">
+              <h2 className="font-serif text-3xl font-light mb-4">
+                Choosing the Right Floor Plan
+              </h2>
+              <p className="text-[var(--color-gray)]">
+                Common questions about our home floor plans and options
+              </p>
+            </div>
+          </FadeIn>
+          
+          <div className="space-y-6">
+            {aeoContent.map((section, idx) => (
+              <FadeIn key={idx} direction="up" delay={idx * 100}>
+                <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
+                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <p className="text-[var(--color-gray)] leading-relaxed">
+                    <strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong>{" "}
+                    {section.supportingDetails.join(" ")}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Categories */}
+      {/* ============================================
+          HOME CATEGORIES
+          ============================================ */}
       {categories.map((cat, catIdx) => (
         <section
           key={cat.id}
           id={cat.id}
-          className={`py-24 lg:py-32 ${catIdx % 2 === 1 ? "bg-[var(--color-cream-dark)]" : ""}`}
+          className={`py-24 lg:py-32 ${catIdx % 2 === 1 ? "bg-[var(--color-cream-dark)]" : "bg-white"}`}
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             {/* Category header */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-              <div>
-                <div className="decorative-line mb-6" />
-                <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
-                  {cat.title}
-                </h2>
-                <p className="font-serif text-xl italic text-[var(--color-teal)]">
-                  {cat.tagline}
-                </p>
-              </div>
-              <div className="flex items-end">
-                <p className="text-base text-[var(--color-gray)] leading-relaxed">
-                  {cat.description}
-                </p>
-              </div>
+              <FadeIn direction="up">
+                <div>
+                  <div className="decorative-line mb-6" />
+                  <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
+                    {cat.title}
+                  </h2>
+                  <p className="font-serif text-xl italic text-[var(--color-teal)]">
+                    {cat.tagline}
+                  </p>
+                </div>
+              </FadeIn>
+              <FadeIn direction="up" delay={150}>
+                <div className="flex items-end">
+                  <p className="text-base text-[var(--color-gray)] leading-relaxed">
+                    {cat.description}
+                  </p>
+                </div>
+              </FadeIn>
             </div>
 
             {/* Specs bar */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-16 p-8 bg-white border border-[var(--color-charcoal)]/5">
-              {Object.entries(cat.specs).map(([key, value]) => (
-                <div key={key}>
-                  <div className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-gray)] mb-1">
-                    {key === "sqft"
-                      ? "Sq. Footage"
-                      : key.charAt(0).toUpperCase() + key.slice(1)}
-                  </div>
-                  <div className="font-serif text-lg font-semibold">{value}</div>
-                </div>
-              ))}
-            </div>
-
-            {/* Models */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {cat.models.map((model) => (
-                <div
-                  key={model.name}
-                  className="group border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white transition-all duration-500"
-                >
-                  {/* Model image placeholder */}
-                  <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] flex items-center justify-center border-b border-[var(--color-charcoal)]/5">
-                    <div className="text-center">
-                      <svg className="w-10 h-10 mx-auto text-[var(--color-gray-light)] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 7.5h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                      </svg>
-                      <span className="text-xs text-[var(--color-gray-light)] tracking-wider uppercase">
-                        Floor Plan
-                      </span>
+            <FadeIn direction="up" delay={200}>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-16 p-8 bg-white rounded-xl shadow-sm border border-[var(--color-charcoal)]/5">
+                {Object.entries(cat.specs).map(([key, value]) => (
+                  <div key={key}>
+                    <div className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-gray)] mb-1">
+                      {key === "sqft"
+                        ? "Sq. Footage"
+                        : key.charAt(0).toUpperCase() + key.slice(1)}
                     </div>
+                    <div className="font-serif text-lg font-semibold">{value}</div>
                   </div>
+                ))}
+              </div>
+            </FadeIn>
 
-                  <div className="p-6">
-                    <h3 className="font-serif text-xl font-semibold mb-1">
-                      {model.name}
-                    </h3>
-                    <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
-                      {model.highlight}
-                    </p>
-                    <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
-                      <span>{model.sqft} sq ft</span>
-                      <span className="text-[var(--color-gray-light)]">|</span>
-                      <span>{model.beds} Bed</span>
-                      <span className="text-[var(--color-gray-light)]">|</span>
-                      <span>{model.baths} Bath</span>
+            {/* Models Grid */}
+            <StaggerContainer staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {cat.models.map((model, idx) => (
+                <FadeIn key={model.name} direction="up" delay={idx * 150}>
+                  <Link 
+                    href={`/floor-plans/${model.slug}`}
+                    className="group block border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
+                  >
+                    {/* Model image */}
+                    <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] flex items-center justify-center border-b border-[var(--color-charcoal)]/5 relative overflow-hidden">
+                      <Image
+                        src="/images/hero-home.jpg"
+                        alt={generateAltText("home", { 
+                          name: model.name, 
+                          sqft: model.sqft, 
+                          beds: model.beds, 
+                          baths: model.baths 
+                        })}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                  </div>
-                </div>
+
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors">
+                          {model.name}
+                        </h3>
+                        <span className="text-sm font-bold text-[var(--color-lime-dark)]">{model.price}</span>
+                      </div>
+                      <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
+                        {model.highlight}
+                      </p>
+                      <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
+                        <span>{model.sqft} sq ft</span>
+                        <span className="text-[var(--color-gray-light)]">|</span>
+                        <span>{model.beds} Bed</span>
+                        <span className="text-[var(--color-gray-light)]">|</span>
+                        <span>{model.baths} Bath</span>
+                      </div>
+                    </div>
+                  </Link>
+                </FadeIn>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
       ))}
 
-      {/* Customization CTA */}
+      {/* ============================================
+          FAQ SECTION
+          ============================================ */}
+      <FAQSection
+        title="Floor Plan FAQs"
+        subtitle="Common questions about choosing and customizing your home floor plan"
+        faqs={floorPlanFAQs}
+        showSchema={true}
+      />
+
+      {/* ============================================
+          RELATED PAGES
+          ============================================ */}
+      <section className="py-16 bg-[var(--color-cream-dark)]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedPages.map((page) => (
+              <Link 
+                key={page.url}
+                href={page.url}
+                className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1"
+              >
+                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================
+          CTA SECTION
+          ============================================ */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
-            Every Home is{" "}
-            <span className="italic text-[var(--color-teal-light)]">
-              Yours to Customize
-            </span>
-          </h2>
-          <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
-            Choose your flooring, cabinetry, countertops, appliances, and exterior
-            colors. Walk through 360&deg; virtual tours before you buy. We&rsquo;ll
-            help you design the home that fits your life.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="tel:+12603081457"
-              className="btn-primary inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
-            >
-              Schedule a Tour
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300"
-            >
-              Request Info
-            </Link>
-          </div>
+          <FadeIn direction="up">
+            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+              Every Home is{" "}
+              <span className="italic text-[var(--color-teal-light)]">
+                Yours to Customize
+              </span>
+            </h2>
+            <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
+              Choose your flooring, cabinetry, countertops, appliances, and exterior
+              colors. Walk through our showroom or schedule a virtual tour. We&apos;ll
+              help you design the home that fits your life.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="tel:+12603081457"
+                onClick={() => trackPhoneClick("floor_plans_cta")}
+                className="btn-primary inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg"
+              >
+                Schedule a Tour
+              </a>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300 rounded-lg"
+              >
+                Request Info
+              </Link>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </>
