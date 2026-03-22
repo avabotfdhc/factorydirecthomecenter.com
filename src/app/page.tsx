@@ -5,6 +5,16 @@ import Image from "next/image";
 import { useState } from "react";
 import { FAQSection, commonFAQs } from "@/components/FAQSection";
 import { StructuredData, structuredData } from "@/lib/seo";
+import { 
+  FadeIn, 
+  StaggerContainer, 
+  AnimatedCounter, 
+  useScrollTracking, 
+  useTimeOnPageTracking,
+  MagneticButton,
+  ZoomImage
+} from "@/components/VisualEffects";
+import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 const homeTypes = [
   {
@@ -60,6 +70,10 @@ export default function Home() {
   const [sqft, setSqft] = useState("");
   const [beds, setBeds] = useState("");
   const [baths, setBaths] = useState("");
+
+  // Initialize tracking
+  useScrollTracking();
+  useTimeOnPageTracking();
 
   return (
     <>
@@ -328,38 +342,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Stats with Animated Counters */}
       <section className="py-16 bg-[var(--color-teal)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
-            {[
-              { value: "500+", label: "Happy Homeowners" },
-              { value: "4.8\u2605", label: "Customer Rating" },
-              { value: "3", label: "States Served" },
-              { value: "$50K", label: "Starting Price" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="font-serif text-3xl lg:text-4xl font-bold">{stat.value}</div>
-                <div className="text-sm text-white/70 mt-1">{stat.label}</div>
+          <StaggerContainer staggerDelay={150} className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
+            <FadeIn direction="up" delay={0}>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">
+                <AnimatedCounter end={500} suffix="+" />
               </div>
-            ))}
-          </div>
+              <div className="text-sm text-white/70 mt-1">Happy Homeowners</div>
+            </FadeIn>
+            <FadeIn direction="up" delay={150}>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">4.8★</div>
+              <div className="text-sm text-white/70 mt-1">Customer Rating</div>
+            </FadeIn>
+            <FadeIn direction="up" delay={300}>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">
+                <AnimatedCounter end={6} />
+              </div>
+              <div className="text-sm text-white/70 mt-1">States Served</div>
+            </FadeIn>
+            <FadeIn direction="up" delay={450}>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">$50K</div>
+              <div className="text-sm text-white/70 mt-1">Starting Price</div>
+            </FadeIn>
+          </StaggerContainer>
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials with Fade In */}
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
-              What Our Homeowners Say
-            </h2>
-            <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
-          </div>
+          <FadeIn direction="up">
+            <div className="text-center mb-14">
+              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+                What Our Homeowners Say
+              </h2>
+              <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
+            </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t) => (
-              <div key={t.name} className="relative bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-md transition-shadow">
+          <StaggerContainer staggerDelay={200} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, idx) => (
+              <FadeIn key={t.name} direction="up" delay={idx * 200}>
+                <div className="relative bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <div className="mb-3">
                   <Image src="/images/homepage/quote.svg" alt="" width={24} height={24} className="opacity-20" />
                 </div>
@@ -382,9 +408,10 @@ export default function Home() {
                     </div>
                   </footer>
                 </blockquote>
-              </div>
+                </div>
+              </FadeIn>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -409,12 +436,23 @@ export default function Home() {
             We&rsquo;ll connect you with trusted lenders and guide you through pre-qualification.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/financing" className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300">
-              Explore Financing
-            </Link>
-            <a href="tel:+12603081457" className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300">
-              Call Us
-            </a>
+            <MagneticButton>
+              <Link 
+                href="/financing" 
+                className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
+              >
+                Explore Financing
+              </Link>
+            </MagneticButton>
+            <MagneticButton>
+              <a 
+                href="tel:+12603081457" 
+                onClick={() => trackPhoneClick("financing_cta")}
+                className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300"
+              >
+                Call Us
+              </a>
+            </MagneticButton>
           </div>
         </div>
       </section>
@@ -437,12 +475,24 @@ export default function Home() {
                 <p className="text-sm text-[var(--color-gray)]">Mon–Fri: 9 AM – 5 PM &nbsp;|&nbsp; Sat: 10 AM – 4 PM</p>
               </address>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="https://maps.google.com/?q=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors duration-300">
-                  Get Directions
-                </a>
-                <Link href="/contact" className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300">
-                  Contact Us
-                </Link>
+                <MagneticButton>
+                  <a 
+                    href="https://maps.google.com/?q=1211+State+Road+8+Auburn+IN+46706" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
+                  >
+                    Get Directions
+                  </a>
+                </MagneticButton>
+                <MagneticButton>
+                  <Link 
+                    href="/contact" 
+                    className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300"
+                  >
+                    Contact Us
+                  </Link>
+                </MagneticButton>
               </div>
             </div>
 
