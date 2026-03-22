@@ -8,13 +8,13 @@ export const metadata: Metadata = {
 
 const locations = [
   {
-    state: "Indiana",
+    state: "Indiana - Rural Counties",
     cities: [
+      { name: "Noble County", distance: "35 miles", slug: "noble-county" },
+      { name: "DeKalb County", distance: "Local", slug: "dekalb-county" },
+      { name: "Rural Indiana", distance: "25-45 miles", slug: "rural-indiana" },
       { name: "Fort Wayne", distance: "30 miles", slug: "fort-wayne" },
       { name: "Indianapolis", distance: "110 miles", slug: "indianapolis" },
-      { name: "South Bend", distance: "85 miles", slug: "south-bend" },
-      { name: "Muncie", distance: "75 miles", slug: "muncie" },
-      { name: "Lafayette", distance: "130 miles", slug: "lafayette" },
     ],
   },
   {
