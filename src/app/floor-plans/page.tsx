@@ -9,7 +9,6 @@ import {
   useScrollTracking 
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
-import { trackPhoneClick } from "@/lib/analytics";
 
 // ============================================
 // FLOOR PLANS PAGE - MAXIMUM SEO/AEO
@@ -343,7 +342,6 @@ const relatedPages = [
 ];
 
 export default function FloorPlansPage() {
-  useScrollTracking();
   
   return (
     <>
@@ -579,9 +577,9 @@ export default function FloorPlansPage() {
                         src="/images/hero-home.jpg"
                         alt={generateAltText("home", { 
                           name: model.name, 
-                          sqft: model.sqft, 
-                          beds: model.beds, 
-                          baths: model.baths 
+                          sqft: String(model.sqft), 
+                          beds: String(model.beds), 
+                          baths: String(model.baths) 
                         })}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -667,7 +665,7 @@ export default function FloorPlansPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="tel:+12603081457"
-                onClick={() => trackPhoneClick("floor_plans_cta")}
+                
                 className="btn-primary inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg"
               >
                 Schedule a Tour

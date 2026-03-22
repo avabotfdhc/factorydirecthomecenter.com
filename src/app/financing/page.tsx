@@ -3,13 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData } from "@/lib/seo";
-import { 
-  FadeIn, 
-  StaggerContainer,
-  useScrollTracking 
+import {
+  FadeIn,
+  StaggerContainer
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
-import { trackPhoneClick } from "@/lib/analytics";
 
 // ============================================
 // FINANCING PAGE - MAXIMUM SEO/AEO
@@ -258,7 +256,6 @@ const citations = [
 ];
 
 export default function FinancingPage() {
-  useScrollTracking();
   
   return (
     <>
@@ -661,7 +658,7 @@ export default function FinancingPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="tel:+12603081457"
-                onClick={() => trackPhoneClick("financing_cta")}
+
                 className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg"
               >
                 Call (260) 308-1457

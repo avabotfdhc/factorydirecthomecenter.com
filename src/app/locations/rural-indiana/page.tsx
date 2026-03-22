@@ -5,7 +5,6 @@ import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
-import { trackPhoneClick } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Manufactured Homes Rural Indiana | Noble, DeKalb, Whitley, Steuben | Factory Direct",
@@ -43,7 +42,6 @@ const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Locations", url: "/loc
 const relatedPages = [{ title: "Noble County", url: "/locations/noble-county", description: "Detailed info for Noble County buyers" }, { title: "DeKalb County", url: "/locations/dekalb-county", description: "Our local county expertise" }, { title: "Financing", url: "/financing", description: "Rural buyer financing options" }];
 
 export default function RuralIndianaPage() {
-  useScrollTracking();
   return (
     <>
       <StructuredData data={structuredData.localBusiness()} />
@@ -196,7 +194,7 @@ export default function RuralIndianaPage() {
             <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for <span className="italic text-[var(--color-teal-light)]">Rural Living?</span></h2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Browse our floor plans or call to discuss your rural Indiana property. We understand rural needs and deliver throughout northeast Indiana.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+12603081457" onClick={() => trackPhoneClick("rural_cta")} className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>
+              <a href="tel:+12603081457"  className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>
               <Link href="/floor-plans" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300 rounded-lg">Browse Floor Plans</Link>
             </div>
           </FadeIn>

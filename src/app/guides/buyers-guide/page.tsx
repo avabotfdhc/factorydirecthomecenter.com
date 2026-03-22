@@ -24,7 +24,6 @@ const guideFAQs = [
 const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Guides", url: "/guides" }, { name: "Buyer's Guide", url: "/guides/buyers-guide" }];
 
 export default function BuyersGuidePage() {
-  useScrollTracking();
   return (
     <>
       <StructuredData data={structuredData.localBusiness()} />
@@ -32,7 +31,7 @@ export default function BuyersGuidePage() {
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Complete Manufactured Home Buyer's Guide", description: "Everything you need to know about buying a manufactured home", image: "/images/hero-home.jpg", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/guides/buyers-guide" })} />
       <StructuredData data={structuredData.faqPage(guideFAQs)} />
-      <StructuredData data={structuredData.howTo({ name: "How to Buy a Manufactured Home", description: "Step-by-step guide to purchasing a manufactured home", steps: ["Determine budget and get pre-qualified", "Research floor plans and manufacturers", "Visit showrooms and tour homes", "Choose your home and customize", "Finalize financing", "Prepare your site", "Complete purchase and order home", "Coordinate delivery and setup", "Move in and enjoy"] })} />
+
 
       <nav aria-label="Breadcrumb" className="bg-[var(--color-cream-dark)] py-4">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

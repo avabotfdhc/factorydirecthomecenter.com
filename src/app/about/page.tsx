@@ -6,8 +6,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { 
   FadeIn, 
   StaggerContainer, 
-  AnimatedCounter,
-  useScrollTracking 
+  AnimatedCounter
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 
@@ -171,8 +170,6 @@ const breadcrumbs = [
 ];
 
 export default function AboutPage() {
-  useScrollTracking();
-  
   return (
     <>
       {/* ============================================

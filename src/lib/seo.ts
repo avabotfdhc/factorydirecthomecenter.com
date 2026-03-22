@@ -1,3 +1,4 @@
+import React from "react";
 import { Metadata } from "next";
 
 interface SEOConfig {
@@ -7,7 +8,7 @@ interface SEOConfig {
   image?: string;
   imageAlt?: string;
   url: string;
-  type?: "website" | "article" | "product" | "localbusiness";
+  type?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
@@ -358,12 +359,10 @@ export const structuredData = {
 
 // Helper to inject structured data
 export function StructuredData({ data }: { data: object }) {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data),
-      }}
-    />
-  );
+  return React.createElement('script', {
+    type: 'application/ld+json',
+    dangerouslySetInnerHTML: {
+      __html: JSON.stringify(data),
+    },
+  });
 }

@@ -5,7 +5,6 @@ import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
-import { trackPhoneClick } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Manufactured Homes Kalamazoo MI | Champion Dealer | Factory Direct",
@@ -29,7 +28,6 @@ const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Locations", url: "/loc
 const relatedPages = [{ title: "Floor Plans", url: "/floor-plans", description: "Browse homes for Michigan delivery" }, { title: "Financing", url: "/financing", description: "Financing for Michigan buyers" }, { title: "Fort Wayne", url: "/locations/fort-wayne", description: "Our location near Michigan border" }];
 
 export default function KalamazooPage() {
-  useScrollTracking();
   return (
     <>
       <StructuredData data={structuredData.localBusiness()} />
@@ -160,7 +158,7 @@ export default function KalamazooPage() {
             <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for Your <span className="italic text-[var(--color-teal-light)]">Kalamazoo Home?</span></h2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Browse our floor plans or call to discuss delivery to your Michigan property. Factory-direct pricing across state lines.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:+12603081457" onClick={() => trackPhoneClick("kalamazoo_cta")} className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>
+              <a href="tel:+12603081457"  className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>
               <Link href="/floor-plans" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300 rounded-lg">Browse Floor Plans</Link>
             </div>
           </FadeIn>
