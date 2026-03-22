@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { metadata } from "./metadata";
 
 const homeTypes = [
   {
@@ -61,28 +62,36 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero with Search */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        {/* Background image with overlay */}
+      {/* Hero with Search - H1 Section */}
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden" aria-label="Hero section">
+        {/* Background image with proper metadata */}
         <div className="absolute inset-0 bg-[var(--color-charcoal)]">
-          <div className="absolute inset-0 bg-[url('/images/hero-home.jpg')] bg-cover bg-center opacity-50" />
+          <Image
+            src="/images/hero-home.jpg"
+            alt="Modern manufactured home with white siding and black trim on foundation with professional landscaping"
+            fill
+            priority
+            quality={90}
+            className="object-cover opacity-50"
+            sizes="100vw"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
-          {/* Headline */}
-          <div className="text-center mb-12">
+          {/* H1 Headline - Single H1 per page for SEO */}
+          <header className="text-center mb-12">
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
               Factory Direct Homes Center — Auburn, Indiana
             </p>
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-tight tracking-tight mb-6">
-              The Only Dealer That Treats You<br className="hidden lg:block" /> Like a Partner, Not a Profit Center
+              Manufactured & Modular Homes<br className="hidden lg:block" /> in Indiana, Ohio & Michigan
             </h1>
             <p className="text-lg text-white/70 max-w-2xl mx-auto">
               Champion manufactured and modular homes with line-item transparency. 
               See exactly what you&apos;re paying for — and choose your own contractors to save thousands.
             </p>
-          </div>
+          </header>
 
           {/* Search Bar */}
           <div className="max-w-5xl mx-auto">
@@ -168,18 +177,20 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredPlans.map((plan) => (
               <div key={plan.name} className="group bg-white rounded-lg border border-[var(--color-charcoal)]/8 overflow-hidden hover:shadow-lg hover:border-[var(--color-teal)]/30 transition-all duration-400">
-                <div className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden">
+                <figure className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden">
                   <Image
                     src={plan.image}
-                    alt={plan.name}
+                    alt={`${plan.name} ${plan.type} floor plan - ${plan.sqft} sq ft, ${plan.beds} bed, ${plan.baths} bath manufactured home`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    loading="lazy"
                   />
+                  <figcaption className="sr-only">{plan.name} - {plan.highlight}</figcaption>
                   <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded z-10">
                     {plan.type}
                   </span>
-                </div>
+                </figure>
 
                 <div className="p-5">
                   <h3 className="font-semibold text-base mb-1">{plan.name}</h3>
@@ -267,15 +278,17 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {homeTypes.map((home) => (
               <div key={home.title} className="group bg-white/5 border border-white/10 rounded-lg hover:border-[var(--color-teal)]/40 transition-all duration-500 overflow-hidden">
-                <div className="aspect-[16/10] relative overflow-hidden">
+                <figure className="aspect-[16/10] relative overflow-hidden">
                   <Image
                     src={home.image}
-                    alt={home.title}
+                    alt={`${home.title} manufactured home - ${home.sqft}, ${home.beds}, ${home.baths} starting at ${home.startingAt}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 1024px) 100vw, 33vw"
+                    loading="lazy"
                   />
-                </div>
+                  <figcaption className="sr-only">{home.title} - {home.description}</figcaption>
+                </figure>
                 <div className="p-8 pb-6 border-b border-white/10">
                   <span className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-lime)]">{home.subtitle}</span>
                   <h3 className="font-serif text-3xl font-semibold mt-2 mb-4">{home.title}</h3>
@@ -581,6 +594,117 @@ export default function Home() {
                 }
               }
             ]
+          })
+        }}
+      />
+
+      {/* LocalBusiness Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Factory Direct Homes Center",
+            "description": "Champion manufactured and modular homes with factory-direct pricing. Serving Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky.",
+            "url": "https://factorydirecthomescenter.com",
+            "telephone": "+1-260-308-1457",
+            "email": "info@factorydirecthomescenter.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "1211 State Road 8",
+              "addressLocality": "Auburn",
+              "addressRegion": "IN",
+              "postalCode": "46706",
+              "addressCountry": "US"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 41.3668,
+              "longitude": -85.0583
+            },
+            "image": "https://factorydirecthomescenter.com/images/hero-home.jpg",
+            "priceRange": "$$",
+            "openingHours": [
+              "Mo-Fr 09:00-17:00",
+              "Sa 10:00-16:00"
+            ],
+            "areaServed": [
+              {
+                "@type": "State",
+                "name": "Indiana"
+              },
+              {
+                "@type": "State",
+                "name": "Ohio"
+              },
+              {
+                "@type": "State",
+                "name": "Michigan"
+              },
+              {
+                "@type": "State",
+                "name": "Wisconsin"
+              },
+              {
+                "@type": "State",
+                "name": "Illinois"
+              },
+              {
+                "@type": "State",
+                "name": "Kentucky"
+              }
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Manufactured and Modular Homes",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Product",
+                    "name": "Single Wide Manufactured Homes",
+                    "description": "500-1,200 sq ft homes starting at $50,000"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Product",
+                    "name": "Double Wide Manufactured Homes",
+                    "description": "1,000-2,400 sq ft homes starting at $80,000"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Product",
+                    "name": "Modular Homes",
+                    "description": "1,000-2,500+ sq ft IRC-code homes starting at $100,000"
+                  }
+                }
+              ]
+            }
+          })
+        }}
+      />
+
+      {/* ImageObject Schema for Hero */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ImageObject",
+            "contentUrl": "https://factorydirecthomescenter.com/images/hero-home.jpg",
+            "name": "Modern Manufactured Home Exterior",
+            "description": "Modern manufactured home with white siding and black trim on foundation with professional landscaping",
+            "width": 2752,
+            "height": 1536,
+            "author": {
+              "@type": "Organization",
+              "name": "Factory Direct Homes Center"
+            }
           })
         }}
       />
