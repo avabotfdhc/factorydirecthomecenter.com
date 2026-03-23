@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Manufactured Homes in Noble County, IN | Factory Direct Homes Center",
   description: "Champion manufactured and modular homes delivered to Noble County, Indiana. Serving Kendallville, Ligonier, Albion, and rural areas with factory-direct pricing.",
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/noble-county",
+  },
 };
 
 export default function NobleCountyPage() {

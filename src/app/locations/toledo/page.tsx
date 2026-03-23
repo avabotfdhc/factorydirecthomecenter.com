@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Manufactured Homes Toledo OH | Champion Dealer | Factory Direct",
   description: "Champion manufactured & modular homes delivered to Toledo, Ohio. 75 miles from Auburn. Serving Lucas, Wood, Fulton counties. Factory-direct pricing.",
   keywords: ["manufactured homes toledo", "modular homes toledo ohio", "mobile homes toledo", "champion homes toledo", "lucas county manufactured homes"],
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/toledo",
+  },
 };
 
 const aeoContent = [

@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Manufactured Homes in DeKalb County, IN | Factory Direct Homes Center",
   description: "Champion manufactured and modular homes in DeKalb County, Indiana. Auburn's local dealer serving Butler, Garrett, Waterloo, and rural areas with factory-direct pricing.",
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/dekalb-county",
+  },
 };
 
 export default function DeKalbCountyPage() {

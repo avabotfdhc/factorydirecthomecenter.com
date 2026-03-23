@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Manufactured Homes Rural Indiana | Noble, DeKalb, Whitley, Steuben | Factory Direct",
   description: "Champion manufactured homes for rural Indiana. Noble, DeKalb, Whitley, Steuben, LaGrange, Wells, Adams counties. Zoning-friendly, affordable acreage. Factory-direct pricing.",
   keywords: ["manufactured homes rural indiana", "mobile homes noble county", "modular homes dekalb county", "manufactured homes whitley county", "affordable acreage indiana"],
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/rural-indiana",
+  },
 };
 
 const aeoContent = [

@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Manufactured Homes Kalamazoo MI | Champion Dealer | Factory Direct",
   description: "Champion manufactured & modular homes delivered to Kalamazoo, Michigan. 95 miles from Auburn. Serving Kalamazoo, Calhoun, Branch counties. Factory-direct pricing.",
   keywords: ["manufactured homes kalamazoo", "modular homes kalamazoo michigan", "mobile homes kalamazoo", "champion homes kalamazoo", "kalamazoo county manufactured homes"],
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/kalamazoo",
+  },
 };
 
 const aeoContent = [
