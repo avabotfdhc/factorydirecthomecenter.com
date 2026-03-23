@@ -84,7 +84,7 @@ export default function Home() {
       <ParallaxHeroSection />
 
       {/* Featured Floor Plans */}
-      <section className="py-20 lg:py-28">
+      <section className="py-12 lg:py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
@@ -770,7 +770,7 @@ function ParallaxHeroSection() {
   const { ref, offset } = useParallax(0.3);
 
   return (
-    <section ref={ref} className="relative min-h-[60vh] flex items-center overflow-hidden" aria-label="Hero section">
+    <section ref={ref} className="relative min-h-[75vh] flex items-center overflow-hidden" aria-label="Hero section">
       {/* Parallax Background */}
       <div
         className="absolute inset-0 bg-[var(--color-charcoal)]"
@@ -788,7 +788,7 @@ function ParallaxHeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24 w-full">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16 w-full">
         <header className="text-center mb-8">
           <p className="text-sm font-bold tracking-[0.2em] uppercase text-[var(--color-lime)] mb-3">
             Factory Direct Homes Center — Auburn, Indiana
