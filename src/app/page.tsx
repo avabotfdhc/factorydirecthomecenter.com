@@ -770,34 +770,31 @@ function ParallaxHeroSection() {
   const { ref, offset } = useParallax(0.3);
 
   return (
-    <section ref={ref} className="relative overflow-hidden" aria-label="Hero section">
-      {/* Parallax Background */}
-      <div
-        className="absolute inset-0 bg-[var(--color-charcoal)] h-[120%]"
-        style={{ transform: `translateY(${offset}px)` }}
-      >
+    <section ref={ref} className="relative bg-[var(--color-charcoal)]" aria-label="Hero section">
+      {/* Background Image */}
+      <div className="absolute inset-0">
         <Image
           src="/images/hero-home.jpg"
           alt="Modern manufactured home with white siding and black trim on foundation with professional landscaping"
           fill
           priority
           quality={90}
-          className="object-cover opacity-40"
+          className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/70 via-[var(--color-charcoal)]/50 to-[var(--color-charcoal)]/90" />
+        <div className="absolute inset-0 bg-[var(--color-charcoal)]/60" />
       </div>
 
-      {/* Hero Content - Compact */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-6 w-full">
-        <header className="text-center mb-6">
-          <p className="text-xs font-bold tracking-[0.25em] uppercase text-[var(--color-lime)] mb-2">
+      {/* Hero Content */}
+      <div className="relative max-w-7xl mx-auto px-4 lg:px-8 pt-16 pb-4">
+        <header className="text-center mb-4">
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-lime)] mb-1">
             Factory Direct Homes Center — Auburn, Indiana
           </p>
-          <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-tight tracking-tight mb-3">
+          <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-light text-white leading-tight mb-2">
             Manufactured & Modular Homes in Indiana, Ohio & Michigan
           </h1>
-          <p className="text-sm text-white/70 max-w-xl mx-auto">
+          <p className="text-xs text-white/80 max-w-lg mx-auto">
             Champion homes with line-item transparency. Choose your own contractors and save thousands.
           </p>
         </header>
