@@ -771,9 +771,9 @@ export default function Home() {
       </section>
 
       {/* Loading Skeleton Demo - For future async content */}
-      <section className="py-12 bg-white hidden">
+      <section className="py-12 bg-white hidden" aria-hidden="true">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="text-lg font-semibold mb-4">Loading State Example</h3>
+          <p className="text-lg font-semibold mb-4">Loading State Example</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-3">
               <Skeleton className="h-48 w-full" />

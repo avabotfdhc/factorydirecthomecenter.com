@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "champion homes indianapolis",
     "marion county manufactured homes"
   ],
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/indianapolis",
+  },
   openGraph: {
     title: "Manufactured Homes Indianapolis IN | Champion Dealer",
     description: "Champion homes delivered to Indianapolis. Serving central Indiana from our Auburn showroom.",

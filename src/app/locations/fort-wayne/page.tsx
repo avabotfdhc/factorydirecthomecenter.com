@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     "factory direct homes fort wayne",
     "allen county manufactured homes"
   ],
+  alternates: {
+    canonical: "https://factorydirecthomescenter.com/locations/fort-wayne",
+  },
   openGraph: {
     title: "Manufactured Homes Fort Wayne IN | Champion Dealer",
     description: "Champion homes delivered to Fort Wayne. 30 miles from our Auburn showroom. Serving Allen County and Northeast Indiana.",
