@@ -800,7 +800,7 @@ export default function Home() {
 // Parallax Hero Section Component
 function ParallaxHeroSection() {
   return (
-    <section className="relative h-[200px] sm:h-[240px] lg:h-[280px]" aria-label="Hero section">
+    <section className="relative h-[280px] sm:h-[320px] lg:h-[380px]" aria-label="Hero section">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -815,12 +815,12 @@ function ParallaxHeroSection() {
       </div>
 
       {/* Hero Content - Minimal */}
-      <div className="relative h-full flex flex-col justify-center px-4 lg:px-8">
+      <div className="relative h-full flex flex-col justify-center px-4 lg:px-8 pt-4">
         <div className="max-w-7xl mx-auto w-full">
-          <p className="text-[10px] sm:text-xs font-bold tracking-wider uppercase text-[var(--color-lime)] mb-1">
-            Auburn, Indiana
+          <p className="text-xs sm:text-sm font-bold tracking-wider uppercase text-[var(--color-lime)] mb-2">
+            Factory Direct Homes Center — Auburn, Indiana
           </p>
-          <h1 className="font-serif text-lg sm:text-xl lg:text-2xl font-light text-white leading-tight">
+          <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-light text-white leading-tight">
             Manufactured & Modular Homes<br className="hidden sm:block" /> in Indiana, Ohio & Michigan
           </h1>
         </div>
