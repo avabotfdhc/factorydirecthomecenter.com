@@ -770,10 +770,10 @@ function ParallaxHeroSection() {
   const { ref, offset } = useParallax(0.3);
 
   return (
-    <section ref={ref} className="relative min-h-[75vh] flex items-center overflow-hidden" aria-label="Hero section">
+    <section ref={ref} className="relative overflow-hidden" aria-label="Hero section">
       {/* Parallax Background */}
       <div
-        className="absolute inset-0 bg-[var(--color-charcoal)]"
+        className="absolute inset-0 bg-[var(--color-charcoal)] h-[120%]"
         style={{ transform: `translateY(${offset}px)` }}
       >
         <Image
@@ -782,55 +782,53 @@ function ParallaxHeroSection() {
           fill
           priority
           quality={90}
-          className="object-cover opacity-50"
+          className="object-cover opacity-40"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/70 via-[var(--color-charcoal)]/50 to-[var(--color-charcoal)]/90" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16 w-full">
-        <header className="text-center mb-8">
-          <p className="text-sm font-bold tracking-[0.2em] uppercase text-[var(--color-lime)] mb-3">
+      {/* Hero Content - Compact */}
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-8 pb-6 w-full">
+        <header className="text-center mb-6">
+          <p className="text-xs font-bold tracking-[0.25em] uppercase text-[var(--color-lime)] mb-2">
             Factory Direct Homes Center — Auburn, Indiana
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-tight tracking-tight mb-4">
-            Manufactured & Modular Homes<br className="hidden lg:block" /> in Indiana, Ohio & Michigan
+          <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-white leading-tight tracking-tight mb-3">
+            Manufactured & Modular Homes in Indiana, Ohio & Michigan
           </h1>
-          <p className="text-base text-white/70 max-w-2xl mx-auto">
-            Champion manufactured and modular homes with line-item transparency.
-            See exactly what you&apos;re paying for — and choose your own contractors to save thousands.
+          <p className="text-sm text-white/70 max-w-xl mx-auto">
+            Champion homes with line-item transparency. Choose your own contractors and save thousands.
           </p>
         </header>
 
-        {/* Search Bar */}
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl p-3 flex flex-col md:flex-row gap-3">
-            <select className="px-4 py-3 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
-              <option>All Home Types</option>
+        {/* Search Bar - Inline with hero */}
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-xl p-2 flex flex-col sm:flex-row gap-2">
+            <select className="flex-1 px-3 py-2.5 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
+              <option>All Types</option>
               <option>Single Wide</option>
               <option>Double Wide</option>
               <option>Modular</option>
             </select>
-            <select className="px-4 py-3 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
+            <select className="flex-1 px-3 py-2.5 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
               <option>Any Size</option>
               <option>1,000+ sq ft</option>
               <option>1,500+ sq ft</option>
               <option>2,000+ sq ft</option>
             </select>
-            <select className="px-4 py-3 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
+            <select className="flex-1 px-3 py-2.5 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
               <option>Any Beds</option>
               <option>2+ Beds</option>
               <option>3+ Beds</option>
               <option>4+ Beds</option>
             </select>
-            <MagneticButton>
-              <Link 
-                href="/floor-plans" 
-                className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors whitespace-nowrap flex items-center justify-center"
-              >
-                Find Your Home
-              </Link>
-            </MagneticButton>
+            <Link 
+              href="/floor-plans" 
+              className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors whitespace-nowrap flex items-center justify-center"
+            >
+              Search
+            </Link>
           </div>
         </div>
       </div>
