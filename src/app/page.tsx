@@ -789,7 +789,7 @@ function ParallaxHeroSection() {
       </div>
 
       {/* Hero Content - Compact */}
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-8 pb-6 w-full">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-6 w-full">
         <header className="text-center mb-6">
           <p className="text-xs font-bold tracking-[0.25em] uppercase text-[var(--color-lime)] mb-2">
             Factory Direct Homes Center — Auburn, Indiana
