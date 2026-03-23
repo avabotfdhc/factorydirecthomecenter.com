@@ -80,8 +80,40 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero with Parallax Effect */}
+      {/* Hero */}
       <ParallaxHeroSection />
+
+      {/* Search Bar - Separate from hero */}
+      <section className="bg-[var(--color-teal)] py-4">
+        <div className="max-w-5xl mx-auto px-4 lg:px-8">
+          <div className="bg-white rounded-lg shadow-lg p-2 flex flex-col sm:flex-row gap-2">
+            <select className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
+              <option>All Types</option>
+              <option>Single Wide</option>
+              <option>Double Wide</option>
+              <option>Modular</option>
+            </select>
+            <select className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
+              <option>Any Size</option>
+              <option>1,000+ sq ft</option>
+              <option>1,500+ sq ft</option>
+              <option>2,000+ sq ft</option>
+            </select>
+            <select className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
+              <option>Any Beds</option>
+              <option>2+ Beds</option>
+              <option>3+ Beds</option>
+              <option>4+ Beds</option>
+            </select>
+            <Link
+              href="/floor-plans"
+              className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2 text-sm font-bold uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors flex items-center justify-center"
+            >
+              Search
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Featured Floor Plans */}
       <section className="py-12 lg:py-16 bg-[var(--color-cream-dark)]">
@@ -767,66 +799,30 @@ export default function Home() {
 
 // Parallax Hero Section Component
 function ParallaxHeroSection() {
-  const { ref, offset } = useParallax(0.3);
-
   return (
-    <section ref={ref} className="relative bg-[var(--color-charcoal)]" aria-label="Hero section">
+    <section className="relative h-[200px] sm:h-[240px] lg:h-[280px]" aria-label="Hero section">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
           src="/images/hero-home.jpg"
-          alt="Modern manufactured home with white siding and black trim on foundation with professional landscaping"
+          alt="Modern manufactured home"
           fill
           priority
-          quality={90}
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[var(--color-charcoal)]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-charcoal)]/80 to-[var(--color-charcoal)]/40" />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative max-w-7xl mx-auto px-4 lg:px-8 pt-16 pb-4">
-        <header className="text-center mb-4">
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--color-lime)] mb-1">
-            Factory Direct Homes Center — Auburn, Indiana
+      {/* Hero Content - Minimal */}
+      <div className="relative h-full flex flex-col justify-center px-4 lg:px-8">
+        <div className="max-w-7xl mx-auto w-full">
+          <p className="text-[10px] sm:text-xs font-bold tracking-wider uppercase text-[var(--color-lime)] mb-1">
+            Auburn, Indiana
           </p>
-          <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-light text-white leading-tight mb-2">
-            Manufactured & Modular Homes in Indiana, Ohio & Michigan
+          <h1 className="font-serif text-lg sm:text-xl lg:text-2xl font-light text-white leading-tight">
+            Manufactured & Modular Homes<br className="hidden sm:block" /> in Indiana, Ohio & Michigan
           </h1>
-          <p className="text-xs text-white/80 max-w-lg mx-auto">
-            Champion homes with line-item transparency. Choose your own contractors and save thousands.
-          </p>
-        </header>
-
-        {/* Search Bar - Inline with hero */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-xl p-2 flex flex-col sm:flex-row gap-2">
-            <select className="flex-1 px-3 py-2.5 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
-              <option>All Types</option>
-              <option>Single Wide</option>
-              <option>Double Wide</option>
-              <option>Modular</option>
-            </select>
-            <select className="flex-1 px-3 py-2.5 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
-              <option>Any Size</option>
-              <option>1,000+ sq ft</option>
-              <option>1,500+ sq ft</option>
-              <option>2,000+ sq ft</option>
-            </select>
-            <select className="flex-1 px-3 py-2.5 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)]">
-              <option>Any Beds</option>
-              <option>2+ Beds</option>
-              <option>3+ Beds</option>
-              <option>4+ Beds</option>
-            </select>
-            <Link 
-              href="/floor-plans" 
-              className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors whitespace-nowrap flex items-center justify-center"
-            >
-              Search
-            </Link>
-          </div>
         </div>
       </div>
     </section>
