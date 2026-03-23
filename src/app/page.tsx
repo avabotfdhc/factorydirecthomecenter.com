@@ -768,11 +768,11 @@ export default function Home() {
 // Parallax Hero Section Component
 function ParallaxHeroSection() {
   const { ref, offset } = useParallax(0.3);
-  
+
   return (
-    <section ref={ref} className="relative min-h-[85vh] flex items-center overflow-hidden" aria-label="Hero section">
+    <section ref={ref} className="relative min-h-[60vh] flex items-center overflow-hidden" aria-label="Hero section">
       {/* Parallax Background */}
-      <div 
+      <div
         className="absolute inset-0 bg-[var(--color-charcoal)]"
         style={{ transform: `translateY(${offset}px)` }}
       >
@@ -788,16 +788,16 @@ function ParallaxHeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/60 via-transparent to-[var(--color-charcoal)]/80" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 lg:py-40 w-full">
-        <header className="text-center mb-12">
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24 w-full">
+        <header className="text-center mb-8">
+          <p className="text-sm font-bold tracking-[0.2em] uppercase text-[var(--color-lime)] mb-3">
             Factory Direct Homes Center — Auburn, Indiana
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-tight tracking-tight mb-6">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-light text-white leading-tight tracking-tight mb-4">
             Manufactured & Modular Homes<br className="hidden lg:block" /> in Indiana, Ohio & Michigan
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Champion manufactured and modular homes with line-item transparency. 
+          <p className="text-base text-white/70 max-w-2xl mx-auto">
+            Champion manufactured and modular homes with line-item transparency.
             See exactly what you&apos;re paying for — and choose your own contractors to save thousands.
           </p>
         </header>
