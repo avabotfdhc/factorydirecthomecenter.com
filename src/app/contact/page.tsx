@@ -1,9 +1,20 @@
-"use client";
+import type { Metadata } from "next";
+import ContactForm from "./ContactForm";
 
-import type { FormEvent } from "react";
-import { useState } from "react";
+export const metadata: Metadata = {
+  title: "Contact Us | Factory Direct Homes Center | Auburn, IN",
+  description: "Contact Factory Direct Homes Center in Auburn, Indiana. Visit our showroom, call (260) 308-1457, or send a message. We're here to help with your manufactured home questions.",
+  openGraph: {
+    title: "Contact Us | Factory Direct Homes Center",
+    description: "Visit our Auburn showroom or contact us for manufactured home information. No pressure, just honest guidance.",
+    url: "https://factorydirecthomescenter.com/contact",
+    type: "website",
+  },
+};
 
 export default function ContactPage() {
+  return <ContactForm />;
+}
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
