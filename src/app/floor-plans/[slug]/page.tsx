@@ -12,8 +12,9 @@ export function generateStaticParams() {
   return getAllFloorPlanSlugs().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const plan = getFloorPlanBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const plan = getFloorPlanBySlug(slug);
   if (!plan) return {};
   return genMeta({
     title: `${plan.name} | ${plan.beds} Bed ${plan.baths} Bath ${plan.type}`,
@@ -29,8 +30,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   });
 }
 
-export default function FloorPlanPage({ params }: { params: { slug: string } }) {
-  const plan = getFloorPlanBySlug(params.slug);
+export default async function FloorPlanPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const plan = getFloorPlanBySlug(slug);
   if (!plan) notFound();
 
   const related = getRelatedFloorPlans(plan.slug);

@@ -11,8 +11,9 @@ export function generateStaticParams() {
 }
 
 // Generate metadata per post
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   if (!post) return {};
   return genMeta({
     title: post.title,
@@ -250,8 +251,9 @@ const postContent: Record<string, () => React.JSX.Element> = {
   "how-to-finance-manufactured-home": Post3Content,
 };
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   if (!post || !post.published) notFound();
 
   const ContentComponent = postContent[post.slug];
