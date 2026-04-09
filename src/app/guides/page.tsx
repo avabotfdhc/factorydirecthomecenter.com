@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Guides & Resources | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Guides & Resources",
   description: "Educational guides for manufactured home buyers. Learn about financing, pricing, the buying process, and more from Factory Direct Homes Center.",
-};
+  url: "/guides",
+});
 
 const guides = [
   {
@@ -87,9 +89,9 @@ export default function GuidesPage() {
                 className="group bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-lg hover:border-[var(--color-teal)]/30 transition-all duration-300"
               >
                 <div className="text-4xl mb-4">{guide.icon}</div>
-                <h3 className="font-serif text-xl font-semibold mb-3 group-hover:text-[var(--color-teal)] transition-colors">
+                <H3 className="font-serif text-xl font-semibold mb-3 group-hover:text-[var(--color-teal)] transition-colors">
                   {guide.title}
-                </h3>
+                </H3>
                 <p className="text-[var(--color-gray)] text-sm mb-4 leading-relaxed">
                   {guide.description}
                 </p>
@@ -108,9 +110,9 @@ export default function GuidesPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Have a <span className="italic text-[var(--color-teal)]">Specific Question?</span>
-          </h2>
+          </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
             Our team is here to help. No pressure, no sales tactics — just honest answers 
             to help you make the best decision for your family.

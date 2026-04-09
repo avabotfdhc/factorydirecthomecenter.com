@@ -34,7 +34,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
   const fullImage = image.startsWith("http") ? image : `https://factorydirecthomescenter.com${image}`;
 
   return {
-    title: `${title} | Factory Direct Homes Center`,
+    title,
     description,
     keywords: [
       "manufactured homes",

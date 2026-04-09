@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "name": "Factory Direct Homes Center",
+  "description": "Champion manufactured and modular homes with factory-direct pricing. Authorized dealer in Auburn, Indiana serving 6 states.",
+  "url": "https://factorydirecthomescenter.com",
+  "logo": "https://factorydirecthomescenter.com/images/logo.png",
+  "contact": {
+    "phone": "+1-260-308-1457",
+    "email": "sales@factorydirecthomescenter.com",
+    "address": {
+      "street": "1211 State Road 8",
+      "city": "Auburn",
+      "state": "IN",
+      "zip": "46706",
+      "country": "US"
+    },
+    "hours": {
+      "monday_friday": "9:00 AM - 5:00 PM",
+      "saturday": "10:00 AM - 4:00 PM",
+      "sunday": "Closed"
+    }
+  },
+  "capabilities": [
+    {
+      "name": "browse_floor_plans",
+      "description": "Browse available Champion manufactured and modular home floor plans with specifications, photos, and pricing. Filter by type (single wide, double wide, modular), bedrooms, bathrooms, and square footage.",
+      "url": "https://factorydirecthomescenter.com/floor-plans",
+      "input": {
+        "type": ["single-wide", "double-wide", "modular"],
+        "bedrooms": "1-5",
+        "price_range": "$50,000 - $200,000+"
+      }
+    },
+    {
+      "name": "get_financing_info",
+      "description": "Learn about financing options for manufactured homes including chattel loans, FHA loans, VA loans, USDA rural loans, and land-home packages. Includes partner lender information and pre-qualification guidance.",
+      "url": "https://factorydirecthomescenter.com/financing"
+    },
+    {
+      "name": "check_delivery_area",
+      "description": "Check if a location is within our delivery area. We deliver throughout Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky, typically within 150 miles of Auburn, IN.",
+      "url": "https://factorydirecthomescenter.com/locations"
+    },
+    {
+      "name": "get_pricing_estimate",
+      "description": "Get transparent pricing information. Single wides from $50K, double wides from $80K, modular from $100K. All pricing is line-item transparent with no hidden fees.",
+      "url": "https://factorydirecthomescenter.com/guides/pricing"
+    },
+    {
+      "name": "contact_dealer",
+      "description": "Submit a contact form to reach Factory Direct Homes Center. Specify interest in single wide, double wide, modular homes, financing, or general information. Response within one business day.",
+      "url": "https://factorydirecthomescenter.com/contact",
+      "method": "form"
+    },
+    {
+      "name": "get_zoning_info",
+      "description": "Look up manufactured home zoning regulations and requirements for Indiana, Ohio, and Michigan. Includes permit requirements, placement rules, and local restrictions.",
+      "url": "https://factorydirecthomescenter.com/guides/zoning"
+    },
+    {
+      "name": "get_site_preparation_info",
+      "description": "Learn about land preparation requirements for a manufactured home including foundations, utility connections, permits, grading, and typical costs.",
+      "url": "https://factorydirecthomescenter.com/guides/site-work"
+    }
+  ],
+  "content_index": {
+    "llms_txt": "https://factorydirecthomescenter.com/llms.txt",
+    "sitemap": "https://factorydirecthomescenter.com/sitemap.xml",
+    "robots": "https://factorydirecthomescenter.com/robots.txt"
+  }
+}

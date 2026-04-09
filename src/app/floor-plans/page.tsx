@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
-import { 
-  FadeIn, 
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
+import {
+  FadeIn,
   StaggerContainer,
-  useScrollTracking 
+  useScrollTracking
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
 // ============================================
 // FLOOR PLANS PAGE - MAXIMUM SEO/AEO
@@ -19,7 +19,7 @@ import { generateAltText } from "@/lib/images";
 // Internal linking
 // ============================================
 
-export const metadata: Metadata = {
+export const metadata = genMeta({
   title: "Manufactured Home Floor Plans | Champion Single Wide, Double Wide, Modular",
   description: "Browse 20+ Champion floor plans. Single wide from $50K, double wide from $80K, modular from $100K. All customizable. Factory-direct pricing from Auburn, IN.",
   keywords: [
@@ -31,13 +31,8 @@ export const metadata: Metadata = {
     "3 bedroom manufactured home",
     "4 bedroom modular home"
   ],
-  openGraph: {
-    title: "Manufactured Home Floor Plans | Champion Homes",
-    description: "Browse 20+ customizable floor plans. Single wide, double wide, and modular homes. Factory-direct pricing.",
-    url: "https://factorydirecthomescenter.com/floor-plans",
-    type: "website",
-  },
-};
+  url: "/floor-plans",
+});
 
 // AEO Content - 40-60 word answers
 const aeoContent = [
@@ -490,9 +485,9 @@ export default function FloorPlansPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-light mb-4">
+              <H2 className="font-serif text-3xl font-light mb-4">
                 Choosing the Right Floor Plan
-              </h2>
+              </H2>
               <p className="text-[var(--color-gray)]">
                 Common questions about our home floor plans and options
               </p>
@@ -503,7 +498,7 @@ export default function FloorPlansPage() {
             {aeoContent.map((section, idx) => (
               <FadeIn key={idx} direction="up" delay={idx * 100}>
                 <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
                   <p className="text-[var(--color-gray)] leading-relaxed">
                     <strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong>{" "}
                     {section.supportingDetails.join(" ")}
@@ -530,9 +525,9 @@ export default function FloorPlansPage() {
               <FadeIn direction="up">
                 <div>
                   <div className="decorative-line mb-6" />
-                  <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
+                  <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
                     {cat.title}
-                  </h2>
+                  </H2>
                   <p className="font-serif text-xl italic text-[var(--color-teal)]">
                     {cat.tagline}
                   </p>
@@ -590,9 +585,9 @@ export default function FloorPlansPage() {
 
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors">
+                        <H3 className="font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors">
                           {model.name}
-                        </h3>
+                        </H3>
                         <span className="text-sm font-bold text-[var(--color-lime-dark)]">{model.price}</span>
                       </div>
                       <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
@@ -629,7 +624,7 @@ export default function FloorPlansPage() {
           ============================================ */}
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link 
@@ -637,7 +632,7 @@ export default function FloorPlansPage() {
                 href={page.url}
                 className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1"
               >
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -651,12 +646,12 @@ export default function FloorPlansPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
               Every Home is{" "}
               <span className="italic text-[var(--color-teal-light)]">
                 Yours to Customize
               </span>
-            </h2>
+            </H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
               Choose your flooring, cabinetry, countertops, appliances, and exterior
               colors. Walk through our showroom or schedule a virtual tour. We&apos;ll

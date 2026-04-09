@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { H2, H3 } from "@/components/Heading";
 
 const colors = [
   { name: "Teal", var: "--color-teal", hex: "#1B6B7D" },
@@ -41,7 +42,7 @@ export default function DesignSystemPage() {
 
         {/* ── COLORS ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Color Palette</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Color Palette</H2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
             {colors.map((c) => (
               <div key={c.var} className="group">
@@ -55,10 +56,10 @@ export default function DesignSystemPage() {
 
         {/* ── TYPOGRAPHY ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Typography</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Typography</H2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Display / Serif (Cormorant Garamond)</h3>
+              <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Display / Serif (Cormorant Garamond)</H3>
               <div className="space-y-4 bg-white rounded-lg p-6 border border-[var(--color-charcoal)]/5">
                 <p className="font-serif text-5xl font-light">Heading 1</p>
                 <p className="font-serif text-4xl font-light">Heading 2</p>
@@ -68,7 +69,7 @@ export default function DesignSystemPage() {
               </div>
             </div>
             <div>
-              <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Body / Sans (Plus Jakarta Sans)</h3>
+              <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Body / Sans (Plus Jakarta Sans)</H3>
               <div className="space-y-4 bg-white rounded-lg p-6 border border-[var(--color-charcoal)]/5">
                 <p className="text-lg font-light">Body Large — Light 300</p>
                 <p className="text-base">Body Regular — Normal 400</p>
@@ -83,28 +84,28 @@ export default function DesignSystemPage() {
 
         {/* ── BUTTONS ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Buttons</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Buttons</H2>
           <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-            <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Primary (Lime)</h3>
+            <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Primary (Lime)</H3>
             <div className="flex flex-wrap gap-4 mb-8">
               <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Primary Button</button>
               <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2.5 text-xs font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Small</button>
               <button className="bg-[var(--color-lime)]/50 text-[var(--color-charcoal)]/50 px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded cursor-not-allowed">Disabled</button>
             </div>
 
-            <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Secondary (Teal)</h3>
+            <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Secondary (Teal)</H3>
             <div className="flex flex-wrap gap-4 mb-8">
               <button className="btn-primary bg-[var(--color-teal)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors">Teal Button</button>
               <button className="btn-primary bg-[var(--color-teal)] text-white px-6 py-2.5 text-xs font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors">Small</button>
             </div>
 
-            <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Outline</h3>
+            <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Outline</H3>
             <div className="flex flex-wrap gap-4 mb-8">
               <button className="border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors">Outline</button>
               <button className="border-2 border-[var(--color-teal)] text-[var(--color-teal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal)]/5 transition-colors">Teal Outline</button>
             </div>
 
-            <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Dark Background</h3>
+            <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Dark Background</H3>
             <div className="bg-[var(--color-charcoal)] rounded-lg p-6 flex flex-wrap gap-4">
               <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Primary on Dark</button>
               <button className="border-2 border-white/20 text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-white/5 transition-colors">Outline on Dark</button>
@@ -114,9 +115,9 @@ export default function DesignSystemPage() {
 
         {/* ── NAVIGATION ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Navigation</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Navigation</H2>
           <div className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
-            <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] p-6 pb-3">Breadcrumbs</h3>
+            <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] p-6 pb-3">Breadcrumbs</H3>
             <div className="px-6 pb-6">
               <nav className="flex items-center gap-2 text-sm">
                 <Link href="/" className="text-[var(--color-teal)] hover:underline">Home</Link>
@@ -127,7 +128,7 @@ export default function DesignSystemPage() {
               </nav>
             </div>
 
-            <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] p-6 pb-3">Pagination</h3>
+            <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] p-6 pb-3">Pagination</H3>
             <div className="px-6 pb-6 flex gap-1">
               <button className="w-10 h-10 flex items-center justify-center rounded text-sm text-[var(--color-gray)] hover:bg-[var(--color-cream-dark)] transition-colors">&larr;</button>
               <button className="w-10 h-10 flex items-center justify-center rounded bg-[var(--color-teal)] text-white text-sm font-bold">1</button>
@@ -140,7 +141,7 @@ export default function DesignSystemPage() {
 
         {/* ── TABS ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Tabs</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Tabs</H2>
           <div className="bg-white rounded-lg p-6 border border-[var(--color-charcoal)]/5">
             <div className="flex border-b border-[var(--color-charcoal)]/10">
               {["Single Wides", "Double Wides", "Modular"].map((tab, i) => (
@@ -169,7 +170,7 @@ export default function DesignSystemPage() {
 
         {/* ── ACCORDION ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Accordion / FAQ</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Accordion / FAQ</H2>
           <div className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 divide-y divide-[var(--color-charcoal)]/5">
             {[
               { q: "What is the difference between manufactured and modular homes?", a: "Manufactured homes are built to HUD federal code and can be placed on various foundations. Modular homes are built to IRC state/local building codes and must be placed on permanent foundations." },
@@ -199,7 +200,7 @@ export default function DesignSystemPage() {
 
         {/* ── CARDS ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Cards</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Cards</H2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Floor plan card */}
             <div className="bg-white rounded-lg border border-[var(--color-charcoal)]/8 overflow-hidden hover:shadow-lg transition-shadow">
@@ -208,7 +209,7 @@ export default function DesignSystemPage() {
                 <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">Double Wide</span>
               </div>
               <div className="p-5">
-                <h3 className="font-semibold mb-1">Brighton 2856</h3>
+                <H3 className="font-semibold mb-1">Brighton 2856</H3>
                 <p className="text-xs text-[var(--color-teal)] font-medium mb-3">Split bedroom, island kitchen</p>
                 <div className="flex gap-3 text-xs text-[var(--color-gray)] mb-4">
                   <span>1,493 ft²</span><span>|</span><span>3 Bed</span><span>|</span><span>2 Bath</span>
@@ -225,7 +226,7 @@ export default function DesignSystemPage() {
               <div className="w-14 h-14 mx-auto mb-5 flex items-center justify-center rounded-full bg-[var(--color-teal)]/10 text-[var(--color-teal)]">
                 <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
-              <h3 className="font-semibold mb-2">Feature Card</h3>
+              <H3 className="font-semibold mb-2">Feature Card</H3>
               <p className="text-sm text-[var(--color-gray)]">Centered layout for benefits and features sections.</p>
             </div>
 
@@ -250,7 +251,7 @@ export default function DesignSystemPage() {
 
         {/* ── ALERTS / BADGES ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Alerts &amp; Badges</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Alerts &amp; Badges</H2>
           <div className="space-y-4 mb-8">
             {alertVisible && (
               <div className="flex items-center justify-between bg-[var(--color-teal)]/10 border border-[var(--color-teal)]/20 rounded-lg px-5 py-4">
@@ -266,7 +267,7 @@ export default function DesignSystemPage() {
             </div>
           </div>
 
-          <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Badges</h3>
+          <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Badges</H3>
           <div className="flex flex-wrap gap-3">
             <span className="bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">Single Wide</span>
             <span className="bg-[var(--color-lime)] text-[var(--color-charcoal)] text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">On Sale</span>
@@ -278,7 +279,7 @@ export default function DesignSystemPage() {
 
         {/* ── FORM ELEMENTS ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Form Elements</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Form Elements</H2>
           <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5 max-w-2xl">
             <div className="space-y-6">
               <div>
@@ -318,7 +319,7 @@ export default function DesignSystemPage() {
 
         {/* ── MODAL ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Modal / Dialog</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Modal / Dialog</H2>
           <button onClick={() => setModalOpen(true)} className="btn-primary bg-[var(--color-teal)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors">
             Open Modal
           </button>
@@ -329,7 +330,7 @@ export default function DesignSystemPage() {
                 <button onClick={() => setModalOpen(false)} className="absolute top-4 right-4 text-[var(--color-gray)] hover:text-[var(--color-charcoal)]">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
-                <h3 className="font-serif text-2xl font-semibold mb-3">Schedule a Visit</h3>
+                <H3 className="font-serif text-2xl font-semibold mb-3">Schedule a Visit</H3>
                 <p className="text-sm text-[var(--color-gray)] mb-6">Come see our model homes in person at our Auburn, IN showroom.</p>
                 <div className="flex gap-3">
                   <a href="tel:+12603081457" className="btn-primary flex-1 text-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-3 text-sm font-bold rounded hover:bg-[var(--color-lime-dark)] transition-colors">Call Now</a>
@@ -342,7 +343,7 @@ export default function DesignSystemPage() {
 
         {/* ── GALLERY / IMAGE GRID ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Gallery Grid</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Gallery Grid</H2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[1,2,3,4,5,6,7,8].map((n) => (
               <div key={n} className={`bg-gradient-to-br from-gray-100 to-gray-50 rounded-lg flex items-center justify-center border border-[var(--color-charcoal)]/5 hover:shadow-md transition-shadow cursor-pointer ${n === 1 ? "col-span-2 row-span-2 aspect-square" : "aspect-[4/3]"}`}>
@@ -354,7 +355,7 @@ export default function DesignSystemPage() {
 
         {/* ── STATS BAR ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Stats Bar</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Stats Bar</H2>
           <div className="bg-[var(--color-teal)] rounded-lg py-10 px-8">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
               {[
@@ -374,7 +375,7 @@ export default function DesignSystemPage() {
 
         {/* ── SEARCH BAR ── */}
         <section className="mb-20">
-          <h2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Search / Filter Bar</h2>
+          <H2 className="text-xl font-bold uppercase tracking-wider mb-6 pb-3 border-b-2 border-[var(--color-charcoal)]/10">Search / Filter Bar</H2>
           <div className="bg-[var(--color-charcoal)] rounded-lg p-8">
             <div className="bg-white/95 rounded-lg p-3 flex flex-col md:flex-row gap-3">
               <select className="flex-1 px-4 py-3.5 border border-[var(--color-charcoal)]/10 rounded text-sm bg-white focus:outline-none focus:border-[var(--color-teal)]">

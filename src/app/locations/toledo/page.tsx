@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Manufactured Homes Toledo OH | Champion Dealer | Factory Direct",
+export const metadata = genMeta({
+  title: "Manufactured Homes Toledo OH | Champion Dealer",
   description: "Champion manufactured & modular homes delivered to Toledo, Ohio. 75 miles from Auburn. Serving Lucas, Wood, Fulton counties. Factory-direct pricing.",
   keywords: ["manufactured homes toledo", "modular homes toledo ohio", "mobile homes toledo", "champion homes toledo", "lucas county manufactured homes"],
-  alternates: {
-    canonical: "https://factorydirecthomescenter.com/locations/toledo",
-  },
-};
+  url: "/locations/toledo",
+  type: "article",
+});
 
 const aeoContent = [
   { question: "Does Factory Direct deliver manufactured homes to Toledo, Ohio?", directAnswer: "Yes, we deliver manufactured and modular homes throughout Toledo and northwest Ohio.", supportingDetails: ["We serve Lucas County and surrounding areas including Wood, Fulton, and Williams counties.", "Our Auburn showroom is 75 miles from Toledo, making delivery efficient and cost-effective."], wordCount: 46 },
@@ -87,7 +86,7 @@ export default function ToledoPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-light mb-4">Manufactured Homes in Toledo</h2>
+              <H2 className="font-serif text-3xl font-light mb-4">Manufactured Homes in Toledo</H2>
               <p className="text-[var(--color-gray)]">Everything you need to know about buying in northwest Ohio</p>
             </div>
           </FadeIn>
@@ -95,7 +94,7 @@ export default function ToledoPage() {
             {aeoContent.map((section, idx) => (
               <FadeIn key={idx} direction="up" delay={idx * 100}>
                 <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
                   <p className="text-[var(--color-gray)] leading-relaxed"><strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong> {section.supportingDetails.join(" ")}</p>
                 </div>
               </FadeIn>
@@ -110,10 +109,10 @@ export default function ToledoPage() {
             <FadeIn direction="up">
               <div>
                 <div className="decorative-line mb-6" />
-                <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">Serving <span className="italic text-[var(--color-teal)]">Toledo</span> & NW Ohio</h2>
+                <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">Serving <span className="italic text-[var(--color-teal)]">Toledo</span> & NW Ohio</H2>
                 <p className="text-[var(--color-gray)] leading-relaxed mb-8">Toledo is Ohio's fourth-largest city with 270,000+ residents. From downtown along the Maumee River to suburbs like Perrysburg and Sylvania, we deliver throughout the region.</p>
                 <div className="mb-8">
-                  <h3 className="font-semibold mb-4">Ohio Counties Served:</h3>
+                  <H3 className="font-semibold mb-4">Ohio Counties Served:</H3>
                   <div className="flex flex-wrap gap-2">
                     {["Lucas", "Wood", "Fulton", "Williams", "Henry", "Defiance"].map((county) => (
                       <span key={county} className="text-xs bg-[var(--color-teal)]/10 text-[var(--color-teal)] px-3 py-1.5 rounded-full font-medium">{county} County</span>
@@ -124,7 +123,7 @@ export default function ToledoPage() {
             </FadeIn>
             <FadeIn direction="up" delay={200}>
               <div className="bg-white rounded-2xl p-8 shadow-sm">
-                <h3 className="font-serif text-2xl font-semibold mb-6">Nearby Ohio Cities</h3>
+                <H3 className="font-serif text-2xl font-semibold mb-6">Nearby Ohio Cities</H3>
                 <div className="space-y-4">
                   {["Bowling Green (45 mi)", "Findlay (95 mi)", "Lima (55 mi)", "Defiance (70 mi)"].map((city) => (
                     <div key={city} className="flex justify-between items-center py-3 border-b border-[var(--color-charcoal)]/5 last:border-0">
@@ -143,11 +142,11 @@ export default function ToledoPage() {
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link key={page.url} href={page.url} className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1">
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -158,7 +157,7 @@ export default function ToledoPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for Your <span className="italic text-[var(--color-teal-light)]">Toledo Home?</span></h2>
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for Your <span className="italic text-[var(--color-teal-light)]">Toledo Home?</span></H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Browse our floor plans or call to discuss delivery to your Ohio property. Factory-direct pricing delivered across state lines.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="tel:+12603081457"  className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>

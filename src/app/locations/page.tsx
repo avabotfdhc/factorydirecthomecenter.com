@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Locations We Serve | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Locations We Serve",
   description: "Factory Direct Homes Center delivers Champion manufactured and modular homes throughout Indiana, Ohio, Michigan, Wisconsin, and Kentucky. Find your city and get a custom delivery quote.",
-};
+  url: "/locations",
+});
 
 const locations = [
   {
@@ -68,9 +70,9 @@ export default function LocationsPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {locations.map((location) => (
             <div key={location.state} className="mb-16 last:mb-0">
-              <h2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-8 pb-4 border-b border-[var(--color-charcoal)]/10">
+              <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-8 pb-4 border-b border-[var(--color-charcoal)]/10">
                 {location.state}
-              </h2>
+              </H2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {location.cities.map((city) => (
                   <Link
@@ -78,9 +80,9 @@ export default function LocationsPage() {
                     href={`/locations/${city.slug}`}
                     className="group bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-6 hover:shadow-lg hover:border-[var(--color-teal)]/30 transition-all duration-300"
                   >
-                    <h3 className="font-serif text-xl font-semibold mb-2 group-hover:text-[var(--color-teal)] transition-colors">
+                    <H3 className="font-serif text-xl font-semibold mb-2 group-hover:text-[var(--color-teal)] transition-colors">
                       {city.name}
-                    </h3>
+                    </H3>
                     <p className="text-sm text-[var(--color-gray)]">
                       {city.distance} from Auburn
                     </p>
@@ -98,9 +100,9 @@ export default function LocationsPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Don&apos;t See Your City?
-          </h2>
+          </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
             We deliver to all of Indiana, Ohio, Michigan, Wisconsin, and Kentucky. 
             Contact us for a custom delivery quote to your location.

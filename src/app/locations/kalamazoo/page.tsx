@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Manufactured Homes Kalamazoo MI | Champion Dealer | Factory Direct",
+export const metadata = genMeta({
+  title: "Manufactured Homes Kalamazoo MI | Champion Dealer",
   description: "Champion manufactured & modular homes delivered to Kalamazoo, Michigan. 95 miles from Auburn. Serving Kalamazoo, Calhoun, Branch counties. Factory-direct pricing.",
   keywords: ["manufactured homes kalamazoo", "modular homes kalamazoo michigan", "mobile homes kalamazoo", "champion homes kalamazoo", "kalamazoo county manufactured homes"],
-  alternates: {
-    canonical: "https://factorydirecthomescenter.com/locations/kalamazoo",
-  },
-};
+  url: "/locations/kalamazoo",
+  type: "article",
+});
 
 const aeoContent = [
   { question: "Do you deliver manufactured homes to Kalamazoo, Michigan?", directAnswer: "Yes, Factory Direct Homes Center delivers manufactured and modular homes throughout Kalamazoo and southwest Michigan.", supportingDetails: ["We serve Kalamazoo County and surrounding areas including Calhoun, Branch, and St. Joseph counties.", "Our Auburn showroom is 95 miles from Kalamazoo, with regular deliveries across the Michigan border."], wordCount: 47 },
@@ -87,7 +86,7 @@ export default function KalamazooPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-light mb-4">Manufactured Homes in Kalamazoo</h2>
+              <H2 className="font-serif text-3xl font-light mb-4">Manufactured Homes in Kalamazoo</H2>
               <p className="text-[var(--color-gray)]">Everything you need to know about buying in southwest Michigan</p>
             </div>
           </FadeIn>
@@ -95,7 +94,7 @@ export default function KalamazooPage() {
             {aeoContent.map((section, idx) => (
               <FadeIn key={idx} direction="up" delay={idx * 100}>
                 <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
                   <p className="text-[var(--color-gray)] leading-relaxed"><strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong> {section.supportingDetails.join(" ")}</p>
                 </div>
               </FadeIn>
@@ -110,10 +109,10 @@ export default function KalamazooPage() {
             <FadeIn direction="up">
               <div>
                 <div className="decorative-line mb-6" />
-                <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">Serving <span className="italic text-[var(--color-teal)]">Kalamazoo</span> & SW Michigan</h2>
+                <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">Serving <span className="italic text-[var(--color-teal)]">Kalamazoo</span> & SW Michigan</H2>
                 <p className="text-[var(--color-gray)] leading-relaxed mb-8">Kalamazoo is home to Western Michigan University and major employers like Pfizer and Stryker. From the vibrant downtown to suburban Portage, we deliver throughout the region.</p>
                 <div className="mb-8">
-                  <h3 className="font-semibold mb-4">Michigan Counties Served:</h3>
+                  <H3 className="font-semibold mb-4">Michigan Counties Served:</H3>
                   <div className="flex flex-wrap gap-2">
                     {["Kalamazoo", "Calhoun", "Branch", "St. Joseph", "Cass", "Van Buren"].map((county) => (
                       <span key={county} className="text-xs bg-[var(--color-teal)]/10 text-[var(--color-teal)] px-3 py-1.5 rounded-full font-medium">{county} County</span>
@@ -124,7 +123,7 @@ export default function KalamazooPage() {
             </FadeIn>
             <FadeIn direction="up" delay={200}>
               <div className="bg-white rounded-2xl p-8 shadow-sm">
-                <h3 className="font-serif text-2xl font-semibold mb-6">Nearby Michigan Cities</h3>
+                <H3 className="font-serif text-2xl font-semibold mb-6">Nearby Michigan Cities</H3>
                 <div className="space-y-4">
                   {["Battle Creek (85 mi)", "Portage (90 mi)", "Coldwater (80 mi)", "Jackson (120 mi)"].map((city) => (
                     <div key={city} className="flex justify-between items-center py-3 border-b border-[var(--color-charcoal)]/5 last:border-0">
@@ -143,11 +142,11 @@ export default function KalamazooPage() {
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link key={page.url} href={page.url} className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1">
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -158,7 +157,7 @@ export default function KalamazooPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for Your <span className="italic text-[var(--color-teal-light)]">Kalamazoo Home?</span></h2>
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for Your <span className="italic text-[var(--color-teal-light)]">Kalamazoo Home?</span></H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Browse our floor plans or call to discuss delivery to your Michigan property. Factory-direct pricing across state lines.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="tel:+12603081457"  className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>

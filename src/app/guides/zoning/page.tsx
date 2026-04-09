@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
+export const metadata = genMeta({
   title: "Zoning Laws for Manufactured Homes | Indiana, Ohio, Michigan",
   description: "Manufactured home zoning regulations explained for Indiana, Ohio, and Michigan. What you need to know about placement, permits, and local restrictions.",
-};
+  url: "/guides/zoning",
+  type: "article",
+});
 
 const states = [
   {
@@ -123,23 +126,23 @@ export default function ZoningPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               State-by-State <span className="italic text-[var(--color-teal)]">Guide</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="space-y-16">
             {states.map((state, idx) => (
               <div key={idx} className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
                 <div className="bg-[var(--color-charcoal)] text-white p-8">
-                  <h3 className="font-serif text-3xl font-semibold mb-4">{state.name}</h3>
+                  <H3 className="font-serif text-3xl font-semibold mb-4">{state.name}</H3>
                   <p className="text-white/60 max-w-3xl">{state.overview}</p>
                 </div>
 
                 <div className="p-8">
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Key Points</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Key Points</H4>
                       <ul className="space-y-2">
                         {state.keyPoints.map((point, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
@@ -151,7 +154,7 @@ export default function ZoningPage() {
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Permits Required</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Permits Required</H4>
                       <p className="text-sm text-[var(--color-gray)] mb-4">{state.permits}</p>
                       <div className="bg-[var(--color-cream-dark)] rounded-lg p-4">
                         <span className="text-xs uppercase tracking-wider text-[var(--color-gray)]">Timeline</span>
@@ -160,7 +163,7 @@ export default function ZoningPage() {
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Common Restrictions</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Common Restrictions</H4>
                       <ul className="space-y-2">
                         {state.restrictions.map((restriction, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
@@ -173,9 +176,9 @@ export default function ZoningPage() {
                   </div>
 
                   <div className="mt-8 pt-8 border-t border-[var(--color-charcoal)]/5">
-                    <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
+                    <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
                       Counties We Serve in {state.name}
-                    </h4>
+                    </H4>
                     <div className="flex flex-wrap gap-2">
                       {state.counties.map((county) => (
                         <span
@@ -199,15 +202,15 @@ export default function ZoningPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Common <span className="italic text-[var(--color-teal)]">Questions</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="space-y-6">
             {commonQuestions.map((qa, idx) => (
               <div key={idx} className="bg-white rounded-lg p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4">{qa.question}</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4">{qa.question}</H3>
                 <p className="text-[var(--color-gray)]">{qa.answer}</p>
               </div>
             ))}
@@ -221,9 +224,9 @@ export default function ZoningPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Check Before You <span className="italic text-[var(--color-teal)]">Buy Land</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-[var(--color-gray)]">
                 <p>
                   Before purchasing land for your manufactured home, verify these items 
@@ -255,7 +258,7 @@ export default function ZoningPage() {
             </div>
 
             <div className="bg-[var(--color-charcoal)] text-white rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-6">We Can Help</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">We Can Help</H3>
               <p className="text-white/60 mb-8">
                 Not sure if your land is suitable? We offer free zoning checks for customers 
                 in our service area. We'll contact the local zoning office and verify:
@@ -286,9 +289,9 @@ export default function ZoningPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Questions About <span className="italic text-[var(--color-teal-light)]">Your Property?</span>
-          </h2>
+          </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
             We can check zoning for your specific property, explain local requirements, 
             and help you navigate the permitting process. Free for customers in our service area.

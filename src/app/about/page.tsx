@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
-import { 
-  FadeIn, 
-  StaggerContainer, 
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
+import {
+  FadeIn,
+  StaggerContainer,
   AnimatedCounter
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
 // ============================================
 // ABOUT PAGE - MAXIMUM SEO/AEO COMPLIANCE
@@ -21,8 +21,8 @@ import { generateAltText } from "@/lib/images";
 // - E-E-A-T signals
 // ============================================
 
-export const metadata: Metadata = {
-  title: "About Factory Direct Homes Center | Champion Homes Dealer Auburn IN",
+export const metadata = genMeta({
+  title: "About Us | Champion Homes Dealer Auburn IN",
   description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving 6 states with factory-direct pricing. 500+ homes delivered. Learn about our story, values, and commitment to transparent pricing.",
   keywords: [
     "factory direct homes center",
@@ -32,13 +32,9 @@ export const metadata: Metadata = {
     "family owned business",
     "topeka champion factory"
   ],
-  openGraph: {
-    title: "About Factory Direct Homes Center | Champion Homes Dealer",
-    description: "Family-owned Champion Homes dealer in Auburn, IN. 500+ homes delivered across 6 states with factory-direct pricing.",
-    url: "https://factorydirecthomescenter.com/about",
-    type: "article",
-  },
-};
+  url: "/about",
+  type: "article",
+});
 
 // AEO Content - 40-60 word answers
 const aeoContent = [
@@ -294,10 +290,10 @@ export default function AboutPage() {
             <div>
               <FadeIn direction="up">
                 <div className="decorative-line mb-6" />
-                <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+                <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                   Who We{" "}
                   <span className="italic text-[var(--color-teal)]">Are</span>
-                </h2>
+                </H2>
               </FadeIn>
               
               <div className="space-y-8">
@@ -305,9 +301,9 @@ export default function AboutPage() {
                   <FadeIn key={idx} direction="up" delay={idx * 150}>
                     <article className="aeo-section">
                       {/* Question as H3 */}
-                      <h3 className="font-serif text-xl font-semibold mb-3 text-[var(--color-charcoal)]">
+                      <H3 className="font-serif text-xl font-semibold mb-3 text-[var(--color-charcoal)]">
                         {section.question}
-                      </h3>
+                      </H3>
                       
                       {/* 40-60 word answer */}
                       <div className="bg-[var(--color-cream-dark)] rounded-lg p-5 border-l-4 border-[var(--color-teal)]">
@@ -326,7 +322,7 @@ export default function AboutPage() {
             <div className="flex flex-col justify-center">
               <FadeIn direction="up" delay={200}>
                 <div className="bg-[var(--color-teal)] text-white rounded-2xl p-8 mb-8">
-                  <h3 className="font-serif text-2xl font-semibold mb-6 text-center">By The Numbers</h3>
+                  <H3 className="font-serif text-2xl font-semibold mb-6 text-center">By The Numbers</H3>
                   <StaggerContainer staggerDelay={150} className="grid grid-cols-2 gap-6">
                     <div className="text-center">
                       <div className="font-serif text-4xl font-bold">
@@ -360,7 +356,7 @@ export default function AboutPage() {
                   ].map((item, idx) => (
                     <div key={item.label} className="relative">
                       <div className="absolute -left-[41px] top-1 w-5 h-5 bg-[var(--color-teal)] border-4 border-[var(--color-cream)] rounded-full" />
-                      <h4 className="font-serif text-lg font-semibold mb-2">{item.label}</h4>
+                      <H4 className="font-serif text-lg font-semibold mb-2">{item.label}</H4>
                       <p className="text-sm text-[var(--color-gray)] leading-relaxed">{item.text}</p>
                     </div>
                   ))}
@@ -379,10 +375,10 @@ export default function AboutPage() {
           <FadeIn direction="up">
             <div className="text-center mb-16">
               <div className="decorative-line mx-auto mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
                 What We{" "}
                 <span className="italic text-[var(--color-teal)]">Stand For</span>
-              </h2>
+              </H2>
             </div>
           </FadeIn>
 
@@ -412,7 +408,7 @@ export default function AboutPage() {
               <FadeIn key={value.title} direction="up" delay={idx * 150}>
                 <div className="bg-white border border-[var(--color-charcoal)]/5 p-8 lg:p-10 rounded-xl hover:shadow-lg transition-shadow">
                   <div className="text-4xl mb-4">{value.icon}</div>
-                  <h3 className="font-serif text-2xl font-semibold mb-4">{value.title}</h3>
+                  <H3 className="font-serif text-2xl font-semibold mb-4">{value.title}</H3>
                   <p className="text-sm text-[var(--color-gray)] leading-relaxed">{value.description}</p>
                 </div>
               </FadeIn>
@@ -431,9 +427,9 @@ export default function AboutPage() {
               <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal)]">
                 Our Partner
               </span>
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
                 Champion Home Builders
-              </h2>
+              </H2>
               <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
                 Champion is the #2 manufactured home builder in America. Their Topeka, 
                 Indiana facility — the largest Champion factory in the country — is 
@@ -476,7 +472,7 @@ export default function AboutPage() {
       <section className="py-16 bg-[var(--color-teal)]/5 border-y border-[var(--color-charcoal)]/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
-            <h3 className="font-serif text-2xl font-semibold mb-8 text-center">Why Trust Factory Direct Homes Center</h3>
+            <H3 className="font-serif text-2xl font-semibold mb-8 text-center">Why Trust Factory Direct Homes Center</H3>
           </FadeIn>
           
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -489,7 +485,7 @@ export default function AboutPage() {
               <FadeIn key={item.title} direction="up" delay={idx * 150}>
                 <div className="text-center">
                   <div className="text-3xl mb-2">{item.icon}</div>
-                  <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
+                  <H4 className="font-semibold text-sm mb-1">{item.title}</H4>
                   <p className="text-xs text-[var(--color-gray)]">{item.desc}</p>
                 </div>
               </FadeIn>
@@ -513,9 +509,9 @@ export default function AboutPage() {
           ============================================ */}
       <section className="py-12 bg-white border-t border-[var(--color-charcoal)]/5">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <h3 className="font-semibold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
+          <H3 className="font-semibold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
             Sources & References
-          </h3>
+          </H3>
           <ul className="space-y-3">
             {citations.map((cite, idx) => (
               <li key={idx} className="text-sm">
@@ -539,7 +535,7 @@ export default function AboutPage() {
           ============================================ */}
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Reading</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Reading</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link 
@@ -547,7 +543,7 @@ export default function AboutPage() {
                 href={page.url}
                 className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1"
               >
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -561,12 +557,12 @@ export default function AboutPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
               Ready to Find{" "}
               <span className="italic text-[var(--color-teal-light)]">
                 Your Home?
               </span>
-            </h2>
+            </H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
               Visit our Auburn showroom, browse our floor plans online, or give us a
               call. We&apos;re here to help you take the first step toward

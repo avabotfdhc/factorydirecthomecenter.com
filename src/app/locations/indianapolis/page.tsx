@@ -1,22 +1,22 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
-import { 
-  FadeIn, 
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
+import {
+  FadeIn,
   StaggerContainer,
   AnimatedCounter,
-  useScrollTracking 
+  useScrollTracking
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
 // ============================================
 // INDIANAPOLIS LOCATION PAGE - MAXIMUM SEO/AEO
 // ============================================
 
-export const metadata: Metadata = {
-  title: "Manufactured Homes Indianapolis IN | Champion Dealer | Factory Direct",
+export const metadata = genMeta({
+  title: "Manufactured Homes Indianapolis IN | Champion Dealer",
   description: "Champion manufactured & modular homes delivered to Indianapolis, Indiana. 110 miles from Auburn. Serving Marion, Hamilton, Johnson counties. Factory-direct pricing.",
   keywords: [
     "manufactured homes indianapolis",
@@ -25,16 +25,9 @@ export const metadata: Metadata = {
     "champion homes indianapolis",
     "marion county manufactured homes"
   ],
-  alternates: {
-    canonical: "https://factorydirecthomescenter.com/locations/indianapolis",
-  },
-  openGraph: {
-    title: "Manufactured Homes Indianapolis IN | Champion Dealer",
-    description: "Champion homes delivered to Indianapolis. Serving central Indiana from our Auburn showroom.",
-    url: "https://factorydirecthomescenter.com/locations/indianapolis",
-    type: "article",
-  },
-};
+  url: "/locations/indianapolis",
+  type: "article",
+});
 
 const aeoContent = [
   {
@@ -298,9 +291,9 @@ export default function IndianapolisPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-light mb-4">
+              <H2 className="font-serif text-3xl font-light mb-4">
                 Manufactured Homes in Indianapolis
-              </h2>
+              </H2>
               <p className="text-[var(--color-gray)]">
                 Everything you need to know about buying a manufactured home in central Indiana
               </p>
@@ -311,7 +304,7 @@ export default function IndianapolisPage() {
             {aeoContent.map((section, idx) => (
               <FadeIn key={idx} direction="up" delay={idx * 100}>
                 <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
                   <p className="text-[var(--color-gray)] leading-relaxed">
                     <strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong>{" "}
                     {section.supportingDetails.join(" ")}
@@ -329,10 +322,10 @@ export default function IndianapolisPage() {
             <FadeIn direction="up">
               <div>
                 <div className="decorative-line mb-6" />
-                <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+                <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                   Serving <span className="italic text-[var(--color-teal)]">Indianapolis</span><br />
                   & Central Indiana
-                </h2>
+                </H2>
                 
                 <p className="text-[var(--color-gray)] leading-relaxed mb-8">
                   Indianapolis is Indiana's capital and largest city with over 880,000 residents 
@@ -341,7 +334,7 @@ export default function IndianapolisPage() {
                 </p>
 
                 <div className="mb-8">
-                  <h3 className="font-semibold mb-4">Near Indianapolis Landmarks:</h3>
+                  <H3 className="font-semibold mb-4">Near Indianapolis Landmarks:</H3>
                   <div className="flex flex-wrap gap-2">
                     {localLandmarks.map((landmark) => (
                       <span 
@@ -355,7 +348,7 @@ export default function IndianapolisPage() {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold mb-4">Counties We Serve:</h3>
+                  <H3 className="font-semibold mb-4">Counties We Serve:</H3>
                   <div className="flex flex-wrap gap-2">
                     {countiesServed.map((county) => (
                       <span 
@@ -372,7 +365,7 @@ export default function IndianapolisPage() {
 
             <FadeIn direction="up" delay={200}>
               <div className="bg-white rounded-2xl p-8 shadow-sm">
-                <h3 className="font-serif text-2xl font-semibold mb-6">Nearby Cities</h3>
+                <H3 className="font-serif text-2xl font-semibold mb-6">Nearby Cities</H3>
                 <div className="space-y-4">
                   {nearbyCities.map((city) => (
                     <div key={city.name} className="flex justify-between items-center py-3 border-b border-[var(--color-charcoal)]/5 last:border-0">
@@ -400,16 +393,16 @@ export default function IndianapolisPage() {
           <FadeIn direction="up">
             <div className="text-center mb-16">
               <div className="decorative-line mx-auto mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
                 Zoning in <span className="italic text-[var(--color-teal)]">Central Indiana</span>
-              </h2>
+              </H2>
             </div>
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FadeIn direction="up" delay={0}>
               <div className="bg-[var(--color-lime)]/10 rounded-xl p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Zoning-Friendly Areas</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Zoning-Friendly Areas</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-lime)] mt-1">✓</span>
@@ -436,7 +429,7 @@ export default function IndianapolisPage() {
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="bg-[var(--color-orange)]/10 rounded-xl p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">Considerations</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">Considerations</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-orange)] mt-1">•</span>
@@ -474,7 +467,7 @@ export default function IndianapolisPage() {
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link 
@@ -482,7 +475,7 @@ export default function IndianapolisPage() {
                 href={page.url}
                 className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1"
               >
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -493,12 +486,12 @@ export default function IndianapolisPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
               Ready for Your{" "}
               <span className="italic text-[var(--color-teal-light)]">
                 Indianapolis Home?
               </span>
-            </h2>
+            </H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
               Browse our floor plans or call us to discuss delivery to your 
               Indianapolis-area property. Factory-direct pricing with transparent, 

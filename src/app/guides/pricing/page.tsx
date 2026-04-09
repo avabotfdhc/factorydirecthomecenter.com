@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "How Our Pricing Works | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "How Our Pricing Works",
   description: "Learn how Factory Direct Homes Center's line-item pricing works. See exactly what you're paying for — home, delivery, setup, and site work. No hidden markups, total transparency.",
-};
+  url: "/guides/pricing",
+  type: "article",
+});
 
 const comparisonData = [
   {
@@ -97,10 +100,10 @@ export default function PricingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 The Problem With<br />
                 <span className="italic text-[var(--color-teal)]">Bundled Pricing</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
                   Traditional dealers bundle everything into one price: home, delivery, setup, site work. 
@@ -128,7 +131,7 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-6">Typical Dealer Quote</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">Typical Dealer Quote</H3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
                   <span className="text-[var(--color-gray)]">Your Home</span>
@@ -154,9 +157,9 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Our <span className="italic text-[var(--color-teal)]">Line-Item</span> Approach
-            </h2>
+            </H2>
             <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
               Every cost is separate. Every choice is yours. See exactly what you're paying for.
             </p>
@@ -166,7 +169,7 @@ export default function PricingPage() {
             {lineItems.map((item, idx) => (
               <div key={idx} className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-serif text-2xl font-semibold">{item.title}</h3>
+                  <H3 className="font-serif text-2xl font-semibold">{item.title}</H3>
                   <span className="text-[var(--color-teal)] font-bold text-lg">{item.example}</span>
                 </div>
                 <p className="text-[var(--color-gray)] mb-6">{item.description}</p>
@@ -188,9 +191,9 @@ export default function PricingPage() {
       <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="decorative-line mb-6" />
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-12">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-12">
             Side-by-Side <span className="italic text-[var(--color-teal)]">Comparison</span>
-          </h2>
+          </H2>
 
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -232,14 +235,14 @@ export default function PricingPage() {
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Your Choice on <span className="italic text-[var(--color-teal-light)]">Every Line</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option A: We Handle Everything</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option A: We Handle Everything</H3>
               <p className="text-white/60 text-sm mb-6">
                 We coordinate delivery, setup, and site work with our trusted contractors. 
                 One point of contact, zero hassle.
@@ -248,7 +251,7 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option B: You Pick Contractors</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option B: You Pick Contractors</H3>
               <p className="text-white/60 text-sm mb-6">
                 Use any licensed, insured contractor you choose. We'll review bids and advise. 
                 Save 10-20% managing it yourself.
@@ -257,7 +260,7 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option C: Mix & Match</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option C: Mix & Match</H3>
               <p className="text-white/60 text-sm mb-6">
                 We handle delivery (required), you pick setup crew, we coordinate site work. 
                 Customized to your needs.
@@ -273,14 +276,14 @@ export default function PricingPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Common <span className="italic text-[var(--color-teal)]">Questions</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="space-y-8">
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-3">Can I really use my own contractors?</h3>
+              <H3 className="font-serif text-xl font-semibold mb-3">Can I really use my own contractors?</H3>
               <p className="text-[var(--color-gray)]">
                 Absolutely. Many of our customers save $5,000-$10,000 by using their own excavator, 
                 concrete crew, or electrician. We'll review their credentials to ensure everything 
@@ -289,7 +292,7 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-3">What if I don't know any contractors?</h3>
+              <H3 className="font-serif text-xl font-semibold mb-3">What if I don't know any contractors?</H3>
               <p className="text-[var(--color-gray)]">
                 No problem. We have a network of trusted, licensed contractors we've worked with 
                 for years. We'll coordinate everything and you'll still see every line item.
@@ -297,7 +300,7 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-3">Is the home price really the factory invoice plus a fair margin?</h3>
+              <H3 className="font-serif text-xl font-semibold mb-3">Is the home price really the factory invoice plus a fair margin?</H3>
               <p className="text-[var(--color-gray)]">
                 Yes. We show you the factory base price and add a transparent dealer margin 
                 (typically 10-15%, not the 20-40% you'll find elsewhere). No games, no hidden fees.
@@ -305,7 +308,7 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-3">What costs are fixed vs. variable?</h3>
+              <H3 className="font-serif text-xl font-semibold mb-3">What costs are fixed vs. variable?</H3>
               <p className="text-[var(--color-gray)]">
                 The home price is fixed once you choose your model and options. Delivery is 
                 fixed based on your distance. Setup and site work vary based on your property 
@@ -319,9 +322,9 @@ export default function PricingPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             See It For <span className="italic text-[var(--color-teal)]">Yourself</span>
-          </h2>
+          </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
             Browse our floor plans and request a custom quote. You'll see line-item pricing 
             for your specific home, location, and preferences — no obligation, no pressure.

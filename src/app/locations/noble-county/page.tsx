@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Manufactured Homes in Noble County, IN | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Manufactured Homes in Noble County, IN",
   description: "Champion manufactured and modular homes delivered to Noble County, Indiana. Serving Kendallville, Ligonier, Albion, and rural areas with factory-direct pricing.",
-  alternates: {
-    canonical: "https://factorydirecthomescenter.com/locations/noble-county",
-  },
-};
+  url: "/locations/noble-county",
+  type: "article",
+});
 
 export default function NobleCountyPage() {
   return (
@@ -41,10 +41,10 @@ export default function NobleCountyPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Why Noble County Is<br />
                 <span className="italic text-[var(--color-teal)]">Perfect for Manufactured Homes</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
                   Noble County's rural character and progressive zoning make it ideal for 
@@ -74,7 +74,7 @@ export default function NobleCountyPage() {
             </div>
 
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-6">Delivery to Noble County</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">Delivery to Noble County</H3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
                   <span className="text-[var(--color-gray)]">Distance from Auburn</span>
@@ -103,9 +103,9 @@ export default function NobleCountyPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Serving <span className="italic text-[var(--color-teal)]">All of Noble County</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -117,7 +117,7 @@ export default function NobleCountyPage() {
           </div>
 
           <div className="mt-12 bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-            <h3 className="font-serif text-xl font-semibold mb-4">Rural Areas & Acreage</h3>
+            <H3 className="font-serif text-xl font-semibold mb-4">Rural Areas & Acreage</H3>
             <p className="text-[var(--color-gray)]">
               We specialize in delivering to rural Noble County properties. Whether you have 
               1 acre or 40, we can coordinate delivery, foundation, and setup. Agricultural 
@@ -133,10 +133,10 @@ export default function NobleCountyPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Noble County<br />
                 <span className="italic text-[var(--color-teal)]">Zoning Basics</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-[var(--color-gray)]">
                 <p>
                   Noble County's zoning ordinance permits manufactured homes in most residential 
@@ -164,7 +164,7 @@ export default function NobleCountyPage() {
             </div>
 
             <div className="bg-[var(--color-charcoal)] text-white rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-6">We Handle Permits</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">We Handle Permits</H3>
               <p className="text-white/60 mb-8">
                 Don't navigate Noble County permits alone. As part of our service, we:
               </p>
@@ -194,9 +194,9 @@ export default function NobleCountyPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Ready for Your <span className="italic text-[var(--color-teal-light)]">Noble County Home?</span>
-          </h2>
+          </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
             Browse our floor plans, visit our Auburn showroom (just 35 miles away), or give us a call. 
             We'll create a custom quote for delivery to your Noble County property.

@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Site Work & Preparation Guide | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Site Work & Preparation Guide",
   description: "Everything you need to know about preparing your land for a manufactured home. Foundations, utilities, permits, and site work costs explained.",
-};
+  url: "/guides/site-work",
+  type: "article",
+});
 
 const siteWorkItems = [
   {
@@ -110,9 +113,9 @@ export default function SiteWorkPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 What Is <span className="italic text-[var(--color-teal)]">Site Work?</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
                   Site work is everything that happens on your property before your manufactured 
@@ -128,7 +131,7 @@ export default function SiteWorkPage() {
             </div>
 
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-6">Typical Site Work Costs</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">Typical Site Work Costs</H3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-3 border-b border-[var(--color-charcoal)]/10">
                   <span className="text-[var(--color-gray)]">Basic (developed lot)</span>
@@ -156,9 +159,9 @@ export default function SiteWorkPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Site Work <span className="italic text-[var(--color-teal)]">Breakdown</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="space-y-8">
@@ -166,7 +169,7 @@ export default function SiteWorkPage() {
               <div key={idx} className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                   <div className="lg:col-span-2">
-                    <h3 className="font-serif text-2xl font-semibold mb-3">{item.category}</h3>
+                    <H3 className="font-serif text-2xl font-semibold mb-3">{item.category}</H3>
                     <p className="text-[var(--color-gray)]">{item.description}</p>
                   </div>
                   <div>
@@ -197,9 +200,9 @@ export default function SiteWorkPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Foundation <span className="italic text-[var(--color-teal)]">Options</span>
-            </h2>
+            </H2>
             <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
               The foundation affects your home's stability, financing options, and resale value. 
               Choose based on your budget, soil, climate, and long-term plans.
@@ -210,7 +213,7 @@ export default function SiteWorkPage() {
             {foundationTypes.map((foundation, idx) => (
               <div key={idx} className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
                 <div className="bg-[var(--color-charcoal)] text-white p-6">
-                  <h3 className="font-serif text-2xl font-semibold mb-2">{foundation.name}</h3>
+                  <H3 className="font-serif text-2xl font-semibold mb-2">{foundation.name}</H3>
                   <p className="text-white/60 text-sm">{foundation.bestFor}</p>
                 </div>
                 <div className="p-6">
@@ -223,7 +226,7 @@ export default function SiteWorkPage() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-lime-dark)] mb-2">Pros</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-lime-dark)] mb-2">Pros</H4>
                       <ul className="space-y-1">
                         {foundation.pros.map((pro, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs">
@@ -234,7 +237,7 @@ export default function SiteWorkPage() {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-2">Considerations</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-2">Considerations</H4>
                       <ul className="space-y-1">
                         {foundation.cons.map((con, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs">
@@ -257,14 +260,14 @@ export default function SiteWorkPage() {
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               DIY vs. <span className="italic text-[var(--color-teal-light)]">Hiring Contractors</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Use Our Network</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Use Our Network</H3>
               <p className="text-white/60 text-sm mb-6">
                 We coordinate everything with trusted contractors we've worked with for years. 
                 One point of contact, guaranteed quality.
@@ -278,7 +281,7 @@ export default function SiteWorkPage() {
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Pick Your Own</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Pick Your Own</H3>
               <p className="text-white/60 text-sm mb-6">
                 You choose every contractor. We review their credentials and coordinate 
                 delivery timing. Maximum flexibility, potential savings.
@@ -292,7 +295,7 @@ export default function SiteWorkPage() {
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Hybrid Approach</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Hybrid Approach</H3>
               <p className="text-white/60 text-sm mb-6">
                 Mix and match. We handle critical items (foundation, utilities), you handle 
                 optional work (driveway, landscaping). Best of both worlds.
@@ -311,9 +314,9 @@ export default function SiteWorkPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Need Help With <span className="italic text-[var(--color-teal)]">Site Work?</span>
-          </h2>
+          </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
             We can recommend trusted contractors in your area, review bids, or coordinate everything. 
             Get a site work estimate as part of your custom quote.

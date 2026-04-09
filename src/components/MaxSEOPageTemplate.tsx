@@ -5,6 +5,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { aeo } from "@/lib/aeo";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 import { 
   FadeIn, 
   StaggerContainer,
@@ -260,9 +261,9 @@ export function AEOContent({
         return (
           <section key={idx} className="aeo-section">
             {/* Question as H2 */}
-            <h2 className="font-serif text-2xl lg:text-3xl font-semibold mb-4">
+            <H2 className="font-serif text-2xl lg:text-3xl font-semibold mb-4">
               {section.question}
-            </h2>
+            </H2>
             
             {/* Direct Answer (40-60 words) */}
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 mb-4">
@@ -326,7 +327,7 @@ export function InternalLinking({
       {relatedPages.length > 0 && (
         <section className="py-12 bg-[var(--color-cream-dark)]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <h3 className="font-serif text-xl font-semibold mb-6">Related Articles</h3>
+            <H3 className="font-serif text-xl font-semibold mb-6">Related Articles</H3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedPages.map((page) => (
                 <Link 
@@ -334,7 +335,7 @@ export function InternalLinking({
                   href={page.url}
                   className="bg-white rounded-lg p-6 border border-[var(--color-charcoal)]/5 hover:shadow-md transition-shadow"
                 >
-                  <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                  <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                   <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
                 </Link>
               ))}
@@ -352,7 +353,7 @@ export function InternalLinking({
             className="inline-flex items-center gap-2 text-[var(--color-teal)] font-semibold hover:underline"
           >
             {pillarPage.title}
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
@@ -370,9 +371,9 @@ export function ExternalSources({ citations }: { citations: PageTemplateProps["c
   
   return (
     <section className="py-8 border-t border-[var(--color-charcoal)]/10">
-      <h3 className="font-semibold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
+      <H3 className="font-semibold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
         Sources & References
-      </h3>
+      </H3>
       <ul className="space-y-2">
         {citations.map((cite, idx) => (
           <li key={idx} className="text-sm">
@@ -400,9 +401,9 @@ export function HyperlocalContent({ location }: { location: PageTemplateProps["l
   
   return (
     <section className="py-8 bg-[var(--color-teal)]/5 rounded-lg p-6">
-      <h3 className="font-serif text-xl font-semibold mb-4">
+      <H3 className="font-serif text-xl font-semibold mb-4">
         Serving {location.city}, {location.state}
-      </h3>
+      </H3>
       
       {location.county && (
         <p className="text-sm text-[var(--color-gray)] mb-4">
@@ -436,13 +437,13 @@ export function EEATSignals() {
   return (
     <section className="py-12 border-t border-[var(--color-charcoal)]/10">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        <h3 className="font-serif text-xl font-semibold mb-6 text-center">Why Trust Factory Direct Homes Center</h3>
+        <H3 className="font-serif text-xl font-semibold mb-6 text-center">Why Trust Factory Direct Homes Center</H3>
         
         <StaggerContainer staggerDelay={150} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <FadeIn direction="up" delay={0}>
             <div className="text-center">
               <div className="text-3xl mb-2">🏆</div>
-              <h4 className="font-semibold text-sm mb-1">Experience</h4>
+              <H4 className="font-semibold text-sm mb-1">Experience</H4>
               <p className="text-xs text-[var(--color-gray)]">500+ homes delivered across 6 states</p>
             </div>
           </FadeIn>
@@ -450,7 +451,7 @@ export function EEATSignals() {
           <FadeIn direction="up" delay={150}>
             <div className="text-center">
               <div className="text-3xl mb-2">🎓</div>
-              <h4 className="font-semibold text-sm mb-1">Expertise</h4>
+              <H4 className="font-semibold text-sm mb-1">Expertise</H4>
               <p className="text-xs text-[var(--color-gray)]">Champion Homes authorized dealer</p>
             </div>
           </FadeIn>
@@ -458,7 +459,7 @@ export function EEATSignals() {
           <FadeIn direction="up" delay={300}>
             <div className="text-center">
               <div className="text-3xl mb-2">⭐</div>
-              <h4 className="font-semibold text-sm mb-1">Authoritativeness</h4>
+              <H4 className="font-semibold text-sm mb-1">Authoritativeness</H4>
               <p className="text-xs text-[var(--color-gray)]">4.8★ rating from verified customers</p>
             </div>
           </FadeIn>
@@ -466,7 +467,7 @@ export function EEATSignals() {
           <FadeIn direction="up" delay={450}>
             <div className="text-center">
               <div className="text-3xl mb-2">🛡️</div>
-              <h4 className="font-semibold text-sm mb-1">Trustworthiness</h4>
+              <H4 className="font-semibold text-sm mb-1">Trustworthiness</H4>
               <p className="text-xs text-[var(--color-gray)]">Line-item pricing, no hidden fees</p>
             </div>
           </FadeIn>

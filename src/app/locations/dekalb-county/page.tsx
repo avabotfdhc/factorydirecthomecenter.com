@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Manufactured Homes in DeKalb County, IN | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Manufactured Homes in DeKalb County, IN",
   description: "Champion manufactured and modular homes in DeKalb County, Indiana. Auburn's local dealer serving Butler, Garrett, Waterloo, and rural areas with factory-direct pricing.",
-  alternates: {
-    canonical: "https://factorydirecthomescenter.com/locations/dekalb-county",
-  },
-};
+  url: "/locations/dekalb-county",
+  type: "article",
+});
 
 export default function DeKalbCountyPage() {
   return (
@@ -41,10 +41,10 @@ export default function DeKalbCountyPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Your Local<br />
                 <span className="italic text-[var(--color-teal)]">DeKalb County Dealer</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
                   We're not a national chain calling from Topeka or Nappanee. We're your 
@@ -72,7 +72,7 @@ export default function DeKalbCountyPage() {
             </div>
 
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-6">Delivery in DeKalb County</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">Delivery in DeKalb County</H3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
                   <span className="text-[var(--color-gray)]">Distance</span>
@@ -106,9 +106,9 @@ export default function DeKalbCountyPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Serving <span className="italic text-[var(--color-teal)]">All of DeKalb County</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -121,14 +121,14 @@ export default function DeKalbCountyPage() {
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-              <h3 className="font-serif text-xl font-semibold mb-4">Town & Village Lots</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">Town & Village Lots</H3>
               <p className="text-[var(--color-gray)]">
                 Building in Auburn, Butler, Garrett, or Waterloo? We know the local zoning, 
                 setback requirements, and permit process for each municipality.
               </p>
             </div>
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-              <h3 className="font-serif text-xl font-semibold mb-4">Rural Acreage</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">Rural Acreage</H3>
               <p className="text-[var(--color-gray)]">
                 DeKalb County's agricultural zoning is manufactured-home friendly. Whether 
                 you have 5 acres or 50, we can make it work.
@@ -143,28 +143,28 @@ export default function DeKalbCountyPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Why Build in <span className="italic text-[var(--color-teal)]">DeKalb County?</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-              <h3 className="font-serif text-xl font-semibold mb-4">Affordable Land</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">Affordable Land</H3>
               <p className="text-[var(--color-gray)]">
                 DeKalb County offers some of the most affordable rural land in northeast Indiana. 
                 Perfect for manufactured homes on acreage.
               </p>
             </div>
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-              <h3 className="font-serif text-xl font-semibold mb-4">Friendly Zoning</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">Friendly Zoning</H3>
               <p className="text-[var(--color-gray)]">
                 Agricultural and rural residential zoning welcomes manufactured homes. 
                 Fewer restrictions than urban counties.
               </p>
             </div>
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
-              <h3 className="font-serif text-xl font-semibold mb-4">Local Dealer</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">Local Dealer</H3>
               <p className="text-[var(--color-gray)]">
                 We're right here in Auburn. No long-distance coordination, no out-of-town 
                 contractors. Local service from start to finish.
@@ -177,9 +177,9 @@ export default function DeKalbCountyPage() {
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Your DeKalb County <span className="italic text-[var(--color-teal-light)]">Home Starts Here</span>
-          </h2>
+          </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
             Visit our Auburn showroom, just minutes from anywhere in DeKalb County. 
             See the homes, meet the team, and get a custom quote for your property.

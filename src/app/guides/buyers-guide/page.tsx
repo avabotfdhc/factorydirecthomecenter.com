@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, useScrollTracking } from "@/components/VisualEffects";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Complete Manufactured Home Buyer's Guide | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Complete Manufactured Home Buyer's Guide",
   description: "Everything you need to know about buying a manufactured home. Types, financing, costs, timeline, and process. Free guide from Factory Direct Homes Center.",
   keywords: ["manufactured home buyers guide", "how to buy manufactured home", "manufactured home buying process", "first time manufactured home buyer"],
-};
+  url: "/guides/buyers-guide",
+  type: "article",
+});
 
 const guideFAQs = [
   { question: "What is the first step in buying a manufactured home?", answer: "The first step is determining your budget and getting pre-qualified for financing. This helps you understand what you can afford and shows sellers you're serious. Next, research floor plans and manufacturers to find homes that meet your needs. Visiting showrooms to walk through actual homes is highly recommended before making a decision." },
@@ -65,26 +67,26 @@ export default function BuyersGuidePage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="prose prose-lg max-w-none">
-              <h2 className="font-serif text-3xl font-light mb-6">Introduction</h2>
+              <H2 className="font-serif text-3xl font-light mb-6">Introduction</H2>
               <p className="text-[var(--color-gray)] leading-relaxed mb-6">Buying a manufactured home is one of the most significant decisions you'll make. This guide walks you through everything you need to know—from understanding home types to financing options to the complete buying process.</p>
               
-              <h2 className="font-serif text-3xl font-light mb-6 mt-12">Types of Factory-Built Homes</h2>
+              <H2 className="font-serif text-3xl font-light mb-6 mt-12">Types of Factory-Built Homes</H2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
-                  <h3 className="font-semibold text-xl mb-3">Single Wide</h3>
+                  <H3 className="font-semibold text-xl mb-3">Single Wide</H3>
                   <p className="text-sm text-[var(--color-gray)]">500-1,200 sq ft • 1-3 beds • Most affordable • Faster delivery</p>
                 </div>
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
-                  <h3 className="font-semibold text-xl mb-3">Double Wide</h3>
+                  <H3 className="font-semibold text-xl mb-3">Double Wide</H3>
                   <p className="text-sm text-[var(--color-gray)]">1,000-2,400 sq ft • 2-4 beds • Spacious living • Family favorite</p>
                 </div>
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
-                  <h3 className="font-semibold text-xl mb-3">Modular</h3>
+                  <H3 className="font-semibold text-xl mb-3">Modular</H3>
                   <p className="text-sm text-[var(--color-gray)]">1,000-2,500+ sq ft • 2-5 beds • Site-built quality • IRC code</p>
                 </div>
               </div>
 
-              <h2 className="font-serif text-3xl font-light mb-6 mt-12">The Buying Process</h2>
+              <H2 className="font-serif text-3xl font-light mb-6 mt-12">The Buying Process</H2>
               <ol className="space-y-4 list-decimal list-inside">
                 <li><strong>Determine Budget</strong> — Include home, delivery, setup, and site work</li>
                 <li><strong>Get Pre-Qualified</strong> — Understand your financing options</li>
@@ -98,9 +100,9 @@ export default function BuyersGuidePage() {
                 <li><strong>Move In</strong> — Final inspection and keys</li>
               </ol>
 
-              <h2 className="font-serif text-3xl font-light mb-6 mt-12">Understanding Costs</h2>
+              <H2 className="font-serif text-3xl font-light mb-6 mt-12">Understanding Costs</H2>
               <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg my-6">
-                <h3 className="font-semibold mb-4">Typical Cost Breakdown</h3>
+                <H3 className="font-semibold mb-4">Typical Cost Breakdown</H3>
                 <ul className="space-y-2">
                   <li className="flex justify-between"><span>Home (single wide)</span><span>$50,000 - $80,000</span></li>
                   <li className="flex justify-between"><span>Home (double wide)</span><span>$80,000 - $150,000</span></li>
@@ -110,27 +112,27 @@ export default function BuyersGuidePage() {
                 </ul>
               </div>
 
-              <h2 className="font-serif text-3xl font-light mb-6 mt-12">Financing Options</h2>
+              <H2 className="font-serif text-3xl font-light mb-6 mt-12">Financing Options</H2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                 <div>
-                  <h4 className="font-semibold mb-2">Chattel Loans</h4>
+                  <H4 className="font-semibold mb-2">Chattel Loans</H4>
                   <p className="text-sm text-[var(--color-gray)]">Home-only financing. No land required. Faster approval. 5-10% down.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">VA Loans</h4>
+                  <H4 className="font-semibold mb-2">VA Loans</H4>
                   <p className="text-sm text-[var(--color-gray)]">For veterans. 0% down. Best rates. No mortgage insurance.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">FHA Loans</h4>
+                  <H4 className="font-semibold mb-2">FHA Loans</H4>
                   <p className="text-sm text-[var(--color-gray)]">3.5% down. Government-backed. Flexible credit.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">Conventional</h4>
+                  <H4 className="font-semibold mb-2">Conventional</H4>
                   <p className="text-sm text-[var(--color-gray)]">For modular homes. Best rates with good credit. 10-20% down.</p>
                 </div>
               </div>
 
-              <h2 className="font-serif text-3xl font-light mb-6 mt-12">Timeline Expectations</h2>
+              <H2 className="font-serif text-3xl font-light mb-6 mt-12">Timeline Expectations</H2>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
                   <div className="w-16 text-right font-semibold text-[var(--color-teal)]">Week 1</div>
@@ -162,7 +164,7 @@ export default function BuyersGuidePage() {
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h3 className="font-serif text-2xl font-semibold mb-6">Ready to Take the Next Step?</h3>
+          <H3 className="font-serif text-2xl font-semibold mb-6">Ready to Take the Next Step?</H3>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/floor-plans" className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors rounded-lg">Browse Floor Plans</Link>
             <Link href="/financing" className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-charcoal)]/5 transition-colors rounded-lg">Explore Financing</Link>

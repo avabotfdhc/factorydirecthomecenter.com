@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { H2, H3 } from "@/components/Heading";
 
 interface LocationPageProps {
   city: string;
@@ -62,10 +63,10 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Why {city} Homeowners<br />
                 <span className="italic text-[var(--color-teal)]">Choose Factory Direct</span>
-              </h2>
+              </H2>
               <div className="space-y-6 text-base text-[var(--color-gray)] leading-relaxed">
                 <p>
                   We&apos;re located just {distance} from {city}, making us one of the closest 
@@ -83,7 +84,7 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
 
             {/* Stats */}
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-12">
-              <h3 className="font-serif text-2xl font-semibold mb-8">Delivery to {city}</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-8">Delivery to {city}</H3>
               <div className="space-y-6">
                 <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
                   <span className="text-[var(--color-gray)]">Distance from Auburn, IN</span>
@@ -112,9 +113,9 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               We Serve <span className="italic text-[var(--color-teal)]">All of {state}</span>
-            </h2>
+            </H2>
             <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
               From {city} to every corner of {state}, we deliver Champion manufactured 
               and modular homes with factory-direct pricing.
@@ -137,9 +138,9 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Ready to Find <span className="italic text-[var(--color-teal-light)]">Your Home?</span>
-          </h2>
+          </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
             Browse our floor plans online, visit our Auburn showroom, or give us a call. 
             We&apos;ll create a custom quote for delivery to {city} — with every cost itemized 

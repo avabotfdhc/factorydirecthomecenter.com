@@ -18,6 +18,7 @@ import {
   Skeleton
 } from "@/components/VisualEffects";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
+import { H2, H3 } from "@/components/Heading";
 
 const homeTypes = [
   {
@@ -119,9 +120,9 @@ export default function Home() {
       <section className="py-12 lg:py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+            <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
               Featured Floor Plans
-            </h2>
+            </H2>
             <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
           </div>
 
@@ -144,20 +145,20 @@ export default function Home() {
                 </figure>
 
                 <div className="p-5">
-                  <h3 className="font-semibold text-base mb-1">{plan.name}</h3>
+                  <H3 className="font-semibold text-base mb-1">{plan.name}</H3>
                   <p className="text-xs text-[var(--color-teal)] font-medium mb-3">{plan.highlight}</p>
 
                   <div className="flex gap-3 text-xs text-[var(--color-gray)] mb-4">
                     <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg>
                       {plan.sqft} ft²
                     </span>
                     <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
                       {plan.beds} Bed
                     </span>
                     <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                       {plan.baths} Bath
                     </span>
                   </div>
@@ -176,7 +177,7 @@ export default function Home() {
           <div className="text-center mt-10">
             <Link href="/floor-plans" className="btn-primary inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300">
               View All Floor Plans
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
             </Link>
           </div>
         </div>
@@ -186,9 +187,9 @@ export default function Home() {
       <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+            <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
               Why Choose Factory Direct?
-            </h2>
+            </H2>
             <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto mb-6" />
             <p className="text-base text-[var(--color-gray)] max-w-2xl mx-auto">
               We&rsquo;re a family-owned business that believes everyone deserves a quality home at an honest price.
@@ -208,7 +209,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-base mb-2">{item.title}</h3>
+                <H3 className="font-semibold text-base mb-2">{item.title}</H3>
                 <p className="text-sm text-[var(--color-gray)] leading-relaxed">{item.desc}</p>
               </div>
             ))}
@@ -220,9 +221,9 @@ export default function Home() {
       <section className="py-20 lg:py-28 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+            <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
               Browse by Home Type
-            </h2>
+            </H2>
             <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
           </div>
 
@@ -242,7 +243,7 @@ export default function Home() {
                 </figure>
                 <div className="p-8 pb-6 border-b border-white/10">
                   <span className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-lime)]">{home.subtitle}</span>
-                  <h3 className="font-serif text-3xl font-semibold mt-2 mb-4">{home.title}</h3>
+                  <H3 className="font-serif text-3xl font-semibold mt-2 mb-4">{home.title}</H3>
                   <div className="flex gap-4 text-xs tracking-wider uppercase text-white/50">
                     <span>{home.sqft}</span>
                     <span className="text-white/20">|</span>
@@ -268,7 +269,7 @@ export default function Home() {
                     </div>
                     <Link href="/floor-plans" className="text-sm font-semibold text-white/60 hover:text-[var(--color-lime)] transition-colors flex items-center gap-1">
                       Explore
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                     </Link>
                   </div>
                 </div>
@@ -311,9 +312,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-14">
-              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+              <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
                 What Our Homeowners Say
-              </h2>
+              </H2>
               <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
             </div>
           </FadeIn>
@@ -363,9 +364,9 @@ export default function Home() {
           />
         </div>
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+          <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
             Affordable Financing Options
-          </h2>
+          </H2>
           <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto mb-6" />
           <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8 max-w-2xl mx-auto">
             FHA, VA, conventional, and chattel loans available. As low as 0% down for veterans.
@@ -398,9 +399,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+              <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
                 Visit Our Auburn Location
-              </h2>
+              </H2>
               <div className="w-16 h-1 bg-[var(--color-lime)] mb-6" />
               <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
                 See our model homes in person. Walk through floor plans, explore customization
@@ -443,9 +444,9 @@ export default function Home() {
       <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+            <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
               Frequently Asked Questions
-            </h2>
+            </H2>
             <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
             <p className="text-base text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
               Everything you need to know about buying a manufactured home in Indiana, Ohio, and Michigan.
@@ -502,7 +503,7 @@ export default function Home() {
           <div className="text-center mt-10">
             <Link href="/guides" className="inline-flex items-center gap-2 text-[var(--color-teal)] font-semibold hover:underline">
               View All Guides
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </Link>
           </div>
         </div>
@@ -736,9 +737,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-14">
-              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+              <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
                 How It Works
-              </h2>
+              </H2>
               <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
               <p className="text-base text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
                 From browsing to move-in, we make the process simple and transparent
@@ -758,7 +759,7 @@ export default function Home() {
                   <div className="w-16 h-16 mx-auto mb-4 bg-[var(--color-teal)] rounded-full flex items-center justify-center text-2xl text-white font-bold">
                     {item.step}
                   </div>
-                  <h3 className="font-serif text-xl font-semibold mb-2">{item.title}</h3>
+                  <H3 className="font-serif text-xl font-semibold mb-2">{item.title}</H3>
                   <p className="text-sm text-[var(--color-gray)]">{item.desc}</p>
                   {idx < 3 && (
                     <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-[var(--color-teal)]/20" />

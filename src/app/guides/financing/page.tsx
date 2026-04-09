@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Financing Options for Manufactured Homes | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Financing Options for Manufactured Homes",
   description: "FHA, VA, conventional, and chattel loans explained. Compare financing options for manufactured homes in Indiana, Ohio, and Michigan. Find the best loan for your situation.",
-};
+  url: "/guides/financing",
+  type: "article",
+});
 
 const loanTypes = [
   {
@@ -185,7 +188,7 @@ export default function FinancingPage() {
       {/* Quick Comparison */}
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="font-serif text-2xl font-semibold mb-8 text-center">Quick Rate Comparison</h2>
+          <H2 className="font-serif text-2xl font-semibold mb-8 text-center">Quick Rate Comparison</H2>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {rateComparison.map((loan) => (
               <div key={loan.type} className="bg-white rounded-lg p-6 text-center border border-[var(--color-charcoal)]/5">
@@ -206,9 +209,9 @@ export default function FinancingPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Compare <span className="italic text-[var(--color-teal)]">Loan Types</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="space-y-16">
@@ -217,7 +220,7 @@ export default function FinancingPage() {
                 <div className="bg-[var(--color-charcoal)] text-white p-6 lg:p-8">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div>
-                      <h3 className="font-serif text-3xl font-semibold mb-2">{loan.name}</h3>
+                      <H3 className="font-serif text-3xl font-semibold mb-2">{loan.name}</H3>
                       <p className="text-white/60">{loan.description}</p>
                     </div>
                     <div className="flex gap-6">
@@ -236,7 +239,7 @@ export default function FinancingPage() {
                 <div className="p-6 lg:p-8">
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-lime-dark)] mb-4">Pros</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-lime-dark)] mb-4">Pros</H4>
                       <ul className="space-y-2">
                         {loan.pros.map((pro, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
@@ -248,7 +251,7 @@ export default function FinancingPage() {
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-4">Considerations</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-4">Considerations</H4>
                       <ul className="space-y-2">
                         {loan.cons.map((con, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
@@ -260,7 +263,7 @@ export default function FinancingPage() {
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">Requirements</h4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">Requirements</H4>
                       <ul className="space-y-2">
                         {loan.requirements.map((req, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
@@ -289,14 +292,14 @@ export default function FinancingPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
               Which Loan Is <span className="italic text-[var(--color-teal)]">Right for You?</span>
-            </h2>
+            </H2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-4">If You're a Veteran...</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You're a Veteran...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 Start with VA loans. Zero down, no mortgage insurance, and great rates. 
                 This is the best deal in manufactured home financing.
@@ -307,7 +310,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-4">If You Own Land...</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You Own Land...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 FHA Title II or conventional loans offer the best rates. Your home will 
                 appreciate like site-built real estate.
@@ -318,7 +321,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-4">If You Don't Own Land...</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You Don't Own Land...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 FHA Title I or chattel loans work for home-only purchases. Buy the home now, 
                 add land later, then refinance.
@@ -329,7 +332,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-4">If Your Credit Needs Work...</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If Your Credit Needs Work...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 FHA loans accept scores as low as 500. Chattel loans are also more forgiving. 
                 We work with lenders who specialize in credit challenges.
@@ -340,7 +343,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-4">If You Want Lowest Payment...</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You Want Lowest Payment...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 VA loans (if eligible) or FHA Title II with 3.5% down. Longer terms (30 years) 
                 keep monthly payments manageable.
@@ -351,7 +354,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-4">If You're Buying Modular...</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You're Buying Modular...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 Conventional mortgages treat modular homes like site-built. Best rates, 
                 no government fees, and standard mortgage terms.
@@ -367,9 +370,9 @@ export default function FinancingPage() {
       {/* Pre-Qualification */}
       <section className="py-24 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Get <span className="italic text-[var(--color-teal)]">Pre-Qualified</span>
-          </h2>
+          </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
             Pre-qualification shows sellers you're serious, helps you understand your budget, 
             and speeds up the buying process. We work with multiple lenders to find your best option.

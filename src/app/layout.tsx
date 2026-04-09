@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics, GoogleTagManager, MetaPixel, MicrosoftClarity } from "@/lib/analytics";
+import { StructuredData, structuredData } from "@/lib/seo";
+import { PageFooter } from "@/components/PageFooter";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -20,6 +22,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://factorydirecthomescenter.com"),
   title: {
     default: "Factory Direct Homes Center | New Champion Homes in Auburn, IN",
     template: "%s | Factory Direct Homes Center",
@@ -42,6 +45,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Factory Direct Homes Center",
+    url: "https://factorydirecthomescenter.com",
+    images: [
+      {
+        url: "/images/hero-home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Factory Direct Homes Center | New Champion Homes in Auburn, IN",
+    description:
+      "Factory-direct pricing on new Champion manufactured and modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN.",
+    images: ["/images/hero-home.jpg"],
   },
 };
 
@@ -56,24 +75,16 @@ export default function RootLayout({
       className={`${cormorant.variable} ${jakarta.variable} h-full antialiased`}
     >
       <head>
-        {/* Google Analytics 4 */}
-        <GoogleAnalytics />
-        
-        {/* Google Tag Manager - Uncomment when ready
-        <GoogleTagManager gtmId="GTM-XXXXXXX" />
-        */}
-        
-        {/* Meta Pixel for Facebook/Instagram Ads - Uncomment when ready
-        <MetaPixel pixelId="XXXXXXXXXXXXXXXX" />
-        */}
-        
-        {/* Microsoft Clarity for heatmaps - Uncomment when ready
-        <MicrosoftClarity projectId="XXXXXXXXXX" />
-        */}
+        {/* Global Structured Data — LocalBusiness + WebSite on every page */}
+        <StructuredData data={structuredData.localBusiness()} />
+        <StructuredData data={structuredData.website()} />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+        {/* Analytics — next/script strategy="afterInteractive" handles deferred loading */}
+        <GoogleAnalytics />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
+        <PageFooter />
         <Footer />
       </body>
     </html>

@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import {
   FadeIn,
   StaggerContainer
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
 // ============================================
 // FINANCING PAGE - MAXIMUM SEO/AEO
@@ -18,8 +18,8 @@ import { generateAltText } from "@/lib/images";
 // HowTo schema for process
 // ============================================
 
-export const metadata: Metadata = {
-  title: "Manufactured Home Financing | Chattel Loans, VA, FHA | Factory Direct",
+export const metadata = genMeta({
+  title: "Manufactured Home Financing | Chattel Loans, VA, FHA",
   description: "Financing options for manufactured homes in Indiana, Ohio, Michigan. Chattel loans, VA loans, FHA, land-home packages. Work with 21st Mortgage, Triad, Credit Human. Pre-qualify today.",
   keywords: [
     "manufactured home financing",
@@ -30,13 +30,9 @@ export const metadata: Metadata = {
     "triad financial",
     "land home packages"
   ],
-  openGraph: {
-    title: "Manufactured Home Financing | Chattel Loans & VA Options",
-    description: "Multiple financing options for manufactured homes. Chattel loans, VA, FHA, and land-home packages. Pre-qualify with our lending partners.",
-    url: "https://factorydirecthomescenter.com/financing",
-    type: "article",
-  },
-};
+  url: "/financing",
+  type: "article",
+});
 
 // AEO Content - 40-60 word answers
 const aeoContent = [
@@ -409,9 +405,9 @@ export default function FinancingPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-light mb-4">
+              <H2 className="font-serif text-3xl font-light mb-4">
                 Understanding Your Financing Options
-              </h2>
+              </H2>
               <p className="text-[var(--color-gray)]">
                 Common questions about manufactured home financing
               </p>
@@ -422,7 +418,7 @@ export default function FinancingPage() {
             {aeoContent.map((section, idx) => (
               <FadeIn key={idx} direction="up" delay={idx * 100}>
                 <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
                   <p className="text-[var(--color-gray)] leading-relaxed">
                     <strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong>{" "}
                     {section.supportingDetails.join(" ")}
@@ -442,9 +438,9 @@ export default function FinancingPage() {
           <FadeIn direction="up">
             <div className="text-center mb-16">
               <div className="decorative-line mx-auto mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
                 Our <span className="italic text-[var(--color-teal)]">Lending Partners</span>
-              </h2>
+              </H2>
               <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
                 We work with the nation's top manufactured home lenders to find the best option for your situation.
               </p>
@@ -457,7 +453,7 @@ export default function FinancingPage() {
                 <div className="bg-white rounded-xl p-8 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-shadow">
                   <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
                     <div className="lg:col-span-1">
-                      <h3 className="font-serif text-xl font-semibold mb-1">{partner.name}</h3>
+                      <H3 className="font-serif text-xl font-semibold mb-1">{partner.name}</H3>
                       <span className="inline-block bg-[var(--color-teal)]/10 text-[var(--color-teal)] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded">
                         {partner.type}
                       </span>
@@ -492,9 +488,9 @@ export default function FinancingPage() {
           <FadeIn direction="up">
             <div className="text-center mb-16">
               <div className="decorative-line mx-auto mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
                 Compare <span className="italic text-[var(--color-teal)]">Loan Types</span>
-              </h2>
+              </H2>
             </div>
           </FadeIn>
 
@@ -526,7 +522,7 @@ export default function FinancingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <FadeIn direction="up" delay={0}>
               <div className="bg-[var(--color-lime)]/10 rounded-xl p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Pros of Our Financing</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Pros of Our Financing</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-lime)] mt-1">✓</span>
@@ -553,7 +549,7 @@ export default function FinancingPage() {
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="bg-[var(--color-orange)]/10 rounded-xl p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">What to Consider</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">What to Consider</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-orange)] mt-1">•</span>
@@ -597,9 +593,9 @@ export default function FinancingPage() {
           ============================================ */}
       <section className="py-12 bg-white border-t border-[var(--color-charcoal)]/5">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <h3 className="font-semibold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
+          <H3 className="font-semibold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
             Sources & References
-          </h3>
+          </H3>
           <ul className="space-y-3">
             {citations.map((cite, idx) => (
               <li key={idx} className="text-sm">
@@ -623,7 +619,7 @@ export default function FinancingPage() {
           ============================================ */}
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link 
@@ -631,7 +627,7 @@ export default function FinancingPage() {
                 href={page.url}
                 className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1"
               >
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -645,12 +641,12 @@ export default function FinancingPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
               Ready to Get{" "}
               <span className="italic text-[var(--color-teal-light)]">
                 Pre-Qualified?
               </span>
-            </h2>
+            </H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
               We&apos;ll connect you with the right lender for your situation. 
               No obligation, no pressure — just honest information about your options.

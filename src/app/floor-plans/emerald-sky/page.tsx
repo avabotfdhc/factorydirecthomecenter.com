@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
+import { H2, H3 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Emerald Sky | 3 Bed 2 Bath Modular Home | Factory Direct Homes Center",
+export const metadata = genMeta({
+  title: "Emerald Sky | 3 Bed 2 Bath Modular Home",
   description: "The Emerald Sky by Champion Homes — 1,680 sq ft modular home with 3 bedrooms, 2 baths, fireplace, kitchen island, and office/flex room. Built at the largest Champion factory in Topeka, IN. Factory-direct pricing from Auburn dealer.",
-};
+  url: "/floor-plans/emerald-sky",
+});
 
 const homeDetails = {
   name: "Emerald Sky",
@@ -156,10 +157,10 @@ export default function EmeraldSkyPage() {
             {/* Description */}
             <div className="lg:col-span-2">
               <div className="decorative-line mb-6" />
-              <h2 className="font-serif text-3xl lg:text-4xl font-light mb-6">About the <span className="italic text-[var(--color-teal)]">{homeDetails.name}</span></h2>
+              <H2 className="font-serif text-3xl lg:text-4xl font-light mb-6">About the <span className="italic text-[var(--color-teal)]">{homeDetails.name}</span></H2>
               <p className="text-[var(--color-gray)] leading-relaxed text-lg mb-8">{homeDetails.description}</p>
 
-              <h3 className="font-serif text-2xl font-semibold mb-6">Home Features</h3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">Home Features</H3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {homeDetails.features.map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-3">
@@ -172,7 +173,7 @@ export default function EmeraldSkyPage() {
 
             {/* Specs Sidebar */}
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8">
-              <h3 className="font-serif text-xl font-semibold mb-6">Specifications</h3>
+              <H3 className="font-serif text-xl font-semibold mb-6">Specifications</H3>
               <div className="space-y-4">
                 {Object.entries(homeDetails.specs).map(([key, value]) => (
                   <div key={key} className="flex justify-between items-start pb-4 border-b border-[var(--color-charcoal)]/10 last:border-0">
@@ -200,21 +201,21 @@ export default function EmeraldSkyPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-3xl lg:text-4xl font-light">Financing the <span className="italic text-[var(--color-teal)]">{homeDetails.name}</span></h2>
+            <H2 className="font-serif text-3xl lg:text-4xl font-light">Financing the <span className="italic text-[var(--color-teal)]">{homeDetails.name}</span></H2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-lg p-8 text-center">
-              <h3 className="font-serif text-xl font-semibold mb-4">Conventional Mortgage</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">Conventional Mortgage</H3>
               <p className="text-[var(--color-gray)] text-sm mb-4">As an IRC-code modular home, the Emerald Sky qualifies for traditional mortgages with competitive rates.</p>
               <span className="text-[var(--color-teal)] font-bold text-sm">Best for: Land-home packages</span>
             </div>
             <div className="bg-white rounded-lg p-8 text-center">
-              <h3 className="font-serif text-xl font-semibold mb-4">FHA Loan</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">FHA Loan</H3>
               <p className="text-[var(--color-gray)] text-sm mb-4">FHA Title II loans available with as little as 3.5% down for qualified buyers.</p>
               <span className="text-[var(--color-teal)] font-bold text-sm">Best for: First-time buyers</span>
             </div>
             <div className="bg-white rounded-lg p-8 text-center">
-              <h3 className="font-serif text-xl font-semibold mb-4">VA Loan</h3>
+              <H3 className="font-serif text-xl font-semibold mb-4">VA Loan</H3>
               <p className="text-[var(--color-gray)] text-sm mb-4">Veterans can finance with 0% down, no mortgage insurance, and competitive rates.</p>
               <span className="text-[var(--color-teal)] font-bold text-sm">Best for: Veterans</span>
             </div>
@@ -227,7 +228,7 @@ export default function EmeraldSkyPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="decorative-line mx-auto mb-6" />
-            <h2 className="font-serif text-3xl lg:text-4xl font-light">Similar <span className="italic text-[var(--color-teal)]">Homes</span></h2>
+            <H2 className="font-serif text-3xl lg:text-4xl font-light">Similar <span className="italic text-[var(--color-teal)]">Homes</span></H2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {similarHomes.map((home, idx) => (
@@ -236,7 +237,7 @@ export default function EmeraldSkyPage() {
                   <Image src="/images/hero-home.jpg" alt={home.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-serif text-xl font-semibold mb-2 group-hover:text-[var(--color-teal)] transition-colors">{home.name}</h3>
+                  <H3 className="font-serif text-xl font-semibold mb-2 group-hover:text-[var(--color-teal)] transition-colors">{home.name}</H3>
                   <p className="text-[var(--color-gray)] text-sm mb-4">{home.sqft} sq ft • {home.beds} bed • {home.baths} bath</p>
                   <p className="text-[var(--color-teal)] text-sm font-medium">{home.highlight}</p>
                 </div>
@@ -249,7 +250,7 @@ export default function EmeraldSkyPage() {
       {/* CTA Section */}
       <section className="py-16 lg:py-24 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready to See the <span className="italic text-[var(--color-teal-light)]">{homeDetails.name}?</span></h2>
+          <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready to See the <span className="italic text-[var(--color-teal-light)]">{homeDetails.name}?</span></H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Visit our Auburn showroom to tour this home, or request a custom quote. Built at the largest Champion factory in the country, just 20 miles away.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300">Get Local Pricing</Link>

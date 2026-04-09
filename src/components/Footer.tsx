@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { H4 } from "@/components/Heading";
 
 export function Footer() {
   return (
@@ -23,13 +24,14 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
               Explore
-            </h4>
+            </H4>
             <ul className="space-y-3">
               {[
                 { href: "/floor-plans", label: "Floor Plans" },
                 { href: "/financing", label: "Financing" },
+                { href: "/blog", label: "Blog" },
                 { href: "/about", label: "About Us" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (
@@ -47,9 +49,9 @@ export function Footer() {
 
           {/* Home Types */}
           <div>
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
               Home Types
-            </h4>
+            </H4>
             <ul className="space-y-3">
               {["Single Wide Homes", "Double Wide Homes", "Modular Homes"].map(
                 (type) => (
@@ -68,9 +70,9 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
               Visit Us
-            </h4>
+            </H4>
             <address className="not-italic space-y-3 text-sm text-[var(--color-gray-light)]">
               <p>1211 State Road 8<br />Auburn, IN 46706</p>
               <p>
@@ -98,8 +100,37 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Newsletter Signup */}
+        <div className="mt-16 pt-10 border-t border-white/10">
+          <div className="max-w-xl mx-auto text-center">
+            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-3">
+              Stay Informed
+            </H4>
+            <p className="text-sm text-[var(--color-gray-light)] mb-6">
+              Get manufactured home buying tips, market updates, and new listing alerts.
+            </p>
+            <form className="flex gap-3 max-w-md mx-auto" action="/contact" method="get">
+              <label htmlFor="footer-email" className="sr-only">Email address</label>
+              <input
+                type="email"
+                id="footer-email"
+                name="email"
+                placeholder="Enter your email"
+                aria-label="Email address for newsletter"
+                className="flex-1 px-4 py-3 text-sm bg-white/10 border border-white/10 rounded text-white placeholder:text-[var(--color-gray)] focus:border-[var(--color-lime)] focus:ring-2 focus:ring-[var(--color-lime)]/30 focus:outline-none transition-colors"
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-sm font-bold tracking-wide rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--color-gray)]">
             &copy; {new Date().getFullYear()} Factory Direct Homes Center LLC. All rights reserved.
           </p>

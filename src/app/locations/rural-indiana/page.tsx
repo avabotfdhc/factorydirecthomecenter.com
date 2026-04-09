@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
+import { H2, H3, H4 } from "@/components/Heading";
 
-export const metadata: Metadata = {
-  title: "Manufactured Homes Rural Indiana | Noble, DeKalb, Whitley, Steuben | Factory Direct",
+export const metadata = genMeta({
+  title: "Manufactured Homes Rural Indiana | Noble, DeKalb, Whitley, Steuben",
   description: "Champion manufactured homes for rural Indiana. Noble, DeKalb, Whitley, Steuben, LaGrange, Wells, Adams counties. Zoning-friendly, affordable acreage. Factory-direct pricing.",
   keywords: ["manufactured homes rural indiana", "mobile homes noble county", "modular homes dekalb county", "manufactured homes whitley county", "affordable acreage indiana"],
-  alternates: {
-    canonical: "https://factorydirecthomescenter.com/locations/rural-indiana",
-  },
-};
+  url: "/locations/rural-indiana",
+  type: "article",
+});
 
 const aeoContent = [
   { question: "Why are rural Indiana counties ideal for manufactured homes?", directAnswer: "Rural Indiana counties offer zoning-friendly regulations, affordable land, and welcoming communities for manufactured homes.", supportingDetails: ["Agricultural zones typically allow manufactured homes by right with minimal restrictions.", "Counties like Noble, DeKalb, and Whitley have progressive zoning that welcomes affordable housing options."], wordCount: 47 },
@@ -101,7 +100,7 @@ export default function RuralIndianaPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl font-light mb-4">Rural Indiana Living</h2>
+              <H2 className="font-serif text-3xl font-light mb-4">Rural Indiana Living</H2>
               <p className="text-[var(--color-gray)]">Why rural counties are perfect for manufactured homes</p>
             </div>
           </FadeIn>
@@ -109,7 +108,7 @@ export default function RuralIndianaPage() {
             {aeoContent.map((section, idx) => (
               <FadeIn key={idx} direction="up" delay={idx * 100}>
                 <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <h3 className="font-semibold text-lg mb-3">{section.question}</h3>
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
                   <p className="text-[var(--color-gray)] leading-relaxed"><strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong> {section.supportingDetails.join(" ")}</p>
                 </div>
               </FadeIn>
@@ -123,7 +122,7 @@ export default function RuralIndianaPage() {
           <FadeIn direction="up">
             <div className="text-center mb-16">
               <div className="decorative-line mx-auto mb-6" />
-              <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">Rural Counties <span className="italic text-[var(--color-teal)]">We Serve</span></h2>
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">Rural Counties <span className="italic text-[var(--color-teal)]">We Serve</span></H2>
             </div>
           </FadeIn>
 
@@ -131,7 +130,7 @@ export default function RuralIndianaPage() {
             {ruralCounties.map((county, idx) => (
               <FadeIn key={county.name} direction="up" delay={idx * 100}>
                 <div className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1">
-                  <h3 className="font-serif text-xl font-semibold mb-2">{county.name}</h3>
+                  <H3 className="font-serif text-xl font-semibold mb-2">{county.name}</H3>
                   <p className="text-sm text-[var(--color-gray)] mb-3">{county.cities}</p>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[var(--color-teal)] font-medium">{county.distance}</span>
@@ -149,7 +148,7 @@ export default function RuralIndianaPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FadeIn direction="up" delay={0}>
               <div className="bg-[var(--color-lime)]/10 rounded-xl p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Rural Advantages</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Rural Advantages</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2"><span className="text-[var(--color-lime)] mt-1">✓</span><span>Affordable land prices</span></li>
                   <li className="flex items-start gap-2"><span className="text-[var(--color-lime)] mt-1">✓</span><span>Zoning-friendly regulations</span></li>
@@ -161,7 +160,7 @@ export default function RuralIndianaPage() {
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="bg-[var(--color-orange)]/10 rounded-xl p-8">
-                <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">Considerations</h3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">Considerations</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Well and septic needed</span></li>
                   <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Longer drive to services</span></li>
@@ -179,11 +178,11 @@ export default function RuralIndianaPage() {
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</h3>
+          <H3 className="font-serif text-xl font-semibold mb-6">Continue Exploring</H3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedPages.map((page) => (
               <Link key={page.url} href={page.url} className="bg-white rounded-xl p-6 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-all hover:-translate-y-1">
-                <h4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</h4>
+                <H4 className="font-semibold text-[var(--color-teal)] mb-2">{page.title}</H4>
                 <p className="text-sm text-[var(--color-gray)]">{page.description}</p>
               </Link>
             ))}
@@ -194,7 +193,7 @@ export default function RuralIndianaPage() {
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
-            <h2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for <span className="italic text-[var(--color-teal-light)]">Rural Living?</span></h2>
+            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready for <span className="italic text-[var(--color-teal-light)]">Rural Living?</span></H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Browse our floor plans or call to discuss your rural Indiana property. We understand rural needs and deliver throughout northeast Indiana.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="tel:+12603081457"  className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg">Call (260) 308-1457</a>
