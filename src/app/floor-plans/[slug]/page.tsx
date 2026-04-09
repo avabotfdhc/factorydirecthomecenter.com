@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
