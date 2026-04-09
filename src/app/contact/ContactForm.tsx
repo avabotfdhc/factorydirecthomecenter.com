@@ -3,6 +3,7 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { H2, H3 } from "@/components/Heading";
+import { trackEvent } from "@/lib/analytics";
 
 interface FormErrors {
   firstName?: string;
@@ -30,7 +31,18 @@ export default function ContactForm() {
     const errs = validate(e.currentTarget);
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
+      const data = new FormData(e.currentTarget);
+      const interest = data.get("interest")?.toString() || "not_specified";
+      trackEvent("lead_form_submit", {
+        form_location: "contact_page",
+        interest_category: interest,
+      });
       setSubmitted(true);
+    } else {
+      trackEvent("lead_form_error", {
+        form_location: "contact_page",
+        error_fields: Object.keys(errs).join(","),
+      });
     }
   }
 
