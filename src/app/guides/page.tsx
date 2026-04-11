@@ -1,6 +1,6 @@
 import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
-import { H2, H3 } from "@/components/Heading";
+import { H2 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "Guides & Resources",
@@ -89,9 +89,9 @@ export default function GuidesPage() {
                 className="group bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-lg hover:border-[var(--color-teal)]/30 transition-all duration-300"
               >
                 <div className="text-4xl mb-4">{guide.icon}</div>
-                <H3 className="font-serif text-xl font-semibold mb-3 group-hover:text-[var(--color-teal)] transition-colors">
+                <H2 className="font-serif text-xl font-semibold mb-3 group-hover:text-[var(--color-teal)] transition-colors">
                   {guide.title}
-                </H3>
+                </H2>
                 <p className="text-[var(--color-gray)] text-sm mb-4 leading-relaxed">
                   {guide.description}
                 </p>

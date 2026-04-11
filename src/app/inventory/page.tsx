@@ -3,7 +3,7 @@ import Image from "next/image";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { getFloorPlanBySlug } from "@/lib/floor-plans";
 import { CTABlock } from "@/components/CTABlock";
-import { H3 } from "@/components/Heading";
+import { H2 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "Available Homes & Quick Move-In Inventory | Auburn, IN",
@@ -76,9 +76,9 @@ export default function InventoryPage() {
                     </div>
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
-                    <H3 className="font-serif text-2xl font-semibold tracking-tight mb-2 group-hover:text-[var(--color-teal)] transition-colors">
+                    <H2 className="font-serif text-2xl font-semibold tracking-tight mb-2 group-hover:text-[var(--color-teal)] transition-colors">
                       {home.name}
-                    </H3>
+                    </H2>
                     <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)] mb-4">
                       <span>{home.sqft.toLocaleString()} sq ft</span>
                       <span className="text-[var(--color-gray-light)]">|</span>

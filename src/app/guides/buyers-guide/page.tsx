@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, useScrollTracking } from "@/components/VisualEffects";
-import { H2, H3, H4 } from "@/components/Heading";
+import { H2, H3 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "Complete Manufactured Home Buyer's Guide",
@@ -115,19 +115,19 @@ export default function BuyersGuidePage() {
               <H2 className="font-serif text-3xl font-light mb-6 mt-12">Financing Options</H2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                 <div>
-                  <H4 className="font-semibold mb-2">Chattel Loans</H4>
+                  <H3 className="font-semibold mb-2">Chattel Loans</H3>
                   <p className="text-sm text-[var(--color-gray)]">Home-only financing. No land required. Faster approval. 5-10% down.</p>
                 </div>
                 <div>
-                  <H4 className="font-semibold mb-2">VA Loans</H4>
+                  <H3 className="font-semibold mb-2">VA Loans</H3>
                   <p className="text-sm text-[var(--color-gray)]">For veterans. 0% down. Best rates. No mortgage insurance.</p>
                 </div>
                 <div>
-                  <H4 className="font-semibold mb-2">FHA Loans</H4>
+                  <H3 className="font-semibold mb-2">FHA Loans</H3>
                   <p className="text-sm text-[var(--color-gray)]">3.5% down. Government-backed. Flexible credit.</p>
                 </div>
                 <div>
-                  <H4 className="font-semibold mb-2">Conventional</H4>
+                  <H3 className="font-semibold mb-2">Conventional</H3>
                   <p className="text-sm text-[var(--color-gray)]">For modular homes. Best rates with good credit. 10-20% down.</p>
                 </div>
               </div>
