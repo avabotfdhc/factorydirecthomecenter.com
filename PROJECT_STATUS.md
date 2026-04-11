@@ -128,7 +128,7 @@ Every page includes:
 ## 📋 PENDING/INCOMPLETE
 
 ### Critical (Blocking Deployment)
-- 🔴 **Netlify usage limits** - Site paused, needs plan upgrade or alternative host
+- ✅ **Hosting migrated to Vercel** — live at https://factorydirecthomescenter-com.vercel.app (2026-04-11)
 
 ### Content Needed
 - 🟡 Replace placeholder images with real photos
@@ -146,7 +146,7 @@ Every page includes:
 - ✅ Add more model detail pages (Dynamic slug setup covers entire catalog)
 - ✅ Create "Available Homes" inventory page
 - ✅ Add more rural county pages (Whitley, Steuben, LaGrange, Wells, Adams)
-- 🟡 Create hyperlocal neighborhood pages
+- ✅ Create hyperlocal neighborhood pages (Garrett, Waterloo, Butler)
 
 ---
 

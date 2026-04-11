@@ -209,6 +209,36 @@ export const sitePages: SitePage[] = [
     priority: 0.7,
     changeFrequency: "monthly",
   },
+  {
+    url: "/locations/garrett",
+    title: "Manufactured Homes Garrett IN",
+    description: "Champion homes delivered to Garrett, Indiana.",
+    topics: ["locations", "garrett", "indiana", "hyperlocal"],
+    cluster: "locations",
+    pillar: "/locations",
+    priority: 0.6,
+    changeFrequency: "monthly",
+  },
+  {
+    url: "/locations/waterloo",
+    title: "Manufactured Homes Waterloo IN",
+    description: "Champion homes delivered to Waterloo, Indiana.",
+    topics: ["locations", "waterloo", "indiana", "hyperlocal"],
+    cluster: "locations",
+    pillar: "/locations",
+    priority: 0.6,
+    changeFrequency: "monthly",
+  },
+  {
+    url: "/locations/butler",
+    title: "Manufactured Homes Butler IN",
+    description: "Champion homes delivered to Butler, Indiana.",
+    topics: ["locations", "butler", "indiana", "hyperlocal"],
+    cluster: "locations",
+    pillar: "/locations",
+    priority: 0.6,
+    changeFrequency: "monthly",
+  },
 
   // Guide Pages
   {

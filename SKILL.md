@@ -15,7 +15,7 @@
 - Ensure all changes are committed
 - Run build locally to verify no errors
 - Push to GitHub (origin main)
-- Verify deployment on Netlify
+- Verify deployment on Vercel (auto-deploys on push to main)
 - Report deployment status
 
 **"Fix [issue]"**
@@ -208,10 +208,11 @@ export default function ClientComponent() { ... }
 - Branch: main
 - Always pull before push
 
-### Netlify
-- Site: fdhc-ava.netlify.app
-- Auto-deploys from GitHub
-- Currently paused (usage limits)
+### Vercel
+- Project: factorydirecthomecenter-com (avabotfdhcs-projects)
+- Live URL: https://factorydirecthomescenter-com.vercel.app
+- Auto-deploys from GitHub `main`
+- Migrated from Netlify on 2026-04-11 (Netlify was paused due to usage limits)
 
 ---
 
