@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { H4 } from "@/components/Heading";
+import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 export function Footer() {
   return (
@@ -79,6 +82,7 @@ export function Footer() {
               <p>
                 <a
                   href="tel:+12603081457"
+                  onClick={() => trackPhoneClick("footer_contact", "desktop")}
                   className="hover:text-[var(--color-lime)] transition-colors"
                 >
                   (260) 308-1457
@@ -87,6 +91,7 @@ export function Footer() {
               <p>
                 <a
                   href="mailto:sales@factorydirecthomescenter.com"
+                  onClick={() => trackEmailClick("footer_contact", "desktop")}
                   className="hover:text-[var(--color-lime)] transition-colors"
                 >
                   sales@factorydirecthomescenter.com

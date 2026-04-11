@@ -1,9 +1,16 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { H2, H3 } from "@/components/Heading";
-import { trackEvent } from "@/lib/analytics";
+import { 
+  trackLeadFormStart, 
+  trackLeadFormError, 
+  trackLeadFormSubmit,
+  trackPhoneClick,
+  trackEmailClick,
+  FacebookEvents
+} from "@/lib/analytics";
 
 interface FormErrors {
   firstName?: string;
@@ -14,6 +21,29 @@ interface FormErrors {
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [formStarted, setFormStarted] = useState(false);
+
+  // Track when user starts interacting with form
+  useEffect(() => {
+    const handleFormStart = () => {
+      if (!formStarted) {
+        setFormStarted(true);
+        trackLeadFormStart("contact_page_main");
+        FacebookEvents.getQuote();
+      }
+    };
+
+    const form = document.querySelector('form');
+    if (form) {
+      form.addEventListener('focusin', handleFormStart, { once: true });
+    }
+
+    return () => {
+      if (form) {
+        form.removeEventListener('focusin', handleFormStart);
+      }
+    };
+  }, [formStarted]);
 
   function validate(form: HTMLFormElement): FormErrors {
     const data = new FormData(form);
@@ -30,19 +60,29 @@ export default function ContactForm() {
     e.preventDefault();
     const errs = validate(e.currentTarget);
     setErrors(errs);
+    
     if (Object.keys(errs).length === 0) {
       const data = new FormData(e.currentTarget);
       const interest = data.get("interest")?.toString() || "not_specified";
-      trackEvent("lead_form_submit", {
-        form_location: "contact_page",
-        interest_category: interest,
+      const firstName = data.get("firstName")?.toString() || "";
+      const lastName = data.get("lastName")?.toString() || "";
+      const email = data.get("email")?.toString() || "";
+      const phone = data.get("phone")?.toString() || "";
+      
+      // Track lead submission with full data
+      trackLeadFormSubmit("contact_page_main", {
+        id: `lead_${Date.now()}`,
+        name: `${firstName} ${lastName}`.trim(),
+        email: email,
+        phone: phone,
+        interest: interest,
+        value: 50000, // Estimated minimum lead value
+        currency: "USD",
       });
+      
       setSubmitted(true);
     } else {
-      trackEvent("lead_form_error", {
-        form_location: "contact_page",
-        error_fields: Object.keys(errs).join(","),
-      });
+      trackLeadFormError("contact_page_main", Object.keys(errs));
     }
   }
 
@@ -89,7 +129,11 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <H3 className="font-semibold mb-1">Phone</H3>
-                    <a href="tel:+12603081457" className="text-sm text-[var(--color-teal)] hover:underline">(260) 308-1457</a>
+                    <a 
+                      href="tel:+12603081457" 
+                      onClick={() => trackPhoneClick("contact_page_showroom", "contact")}
+                      className="text-sm text-[var(--color-teal)] hover:underline"
+                    >(260) 308-1457</a>
                   </div>
                 </div>
 
@@ -99,7 +143,11 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <H3 className="font-semibold mb-1">Email</H3>
-                    <a href="mailto:sales@factorydirecthomescenter.com" className="text-sm text-[var(--color-teal)] hover:underline">sales@factorydirecthomescenter.com</a>
+                    <a 
+                      href="mailto:sales@factorydirecthomescenter.com" 
+                      onClick={() => trackEmailClick("contact_page_showroom", "contact")}
+                      className="text-sm text-[var(--color-teal)] hover:underline"
+                    >sales@factorydirecthomescenter.com</a>
                   </div>
                 </div>
 

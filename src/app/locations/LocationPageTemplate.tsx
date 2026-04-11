@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
+import { useEffect } from "react";
+import { trackLocationView, trackCTAClick } from "@/lib/analytics";
 
 interface LocationPageProps {
   city: string;
@@ -12,14 +15,11 @@ interface LocationPageProps {
   counties: string[];
 }
 
-export function generateLocationMetadata({ city, state }: { city: string; state: string }): Metadata {
-  return {
-    title: `Manufactured & Modular Homes in ${city}, ${state} | Factory Direct`,
-    description: `Champion manufactured and modular homes delivered to ${city}, ${state}. Factory-direct pricing, line-item transparency, serving Indiana, Ohio, and Michigan from Auburn, IN.`,
-  };
-}
-
 export function LocationPageTemplate({ city, state, stateAbbr, distance, deliveryCost, description, counties }: LocationPageProps) {
+  useEffect(() => {
+    trackLocationView(city, state);
+  }, [city, state]);
+
   return (
     <>
       {/* Hero */}
@@ -42,12 +42,14 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/floor-plans"
+                onClick={() => trackCTAClick("browse_floor_plans", `location_${city.toLowerCase().replace(/\s+/g, '_')}`)}
                 className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
               >
                 Browse Floor Plans
               </Link>
               <Link
                 href="/contact"
+                onClick={() => trackCTAClick("get_custom_quote", `location_${city.toLowerCase().replace(/\s+/g, '_')}`)}
                 className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300"
               >
                 Get a Custom Quote

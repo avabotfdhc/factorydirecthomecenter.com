@@ -7,6 +7,7 @@ import { getFloorPlanBySlug, getAllFloorPlanSlugs, getRelatedFloorPlans } from "
 import { FAQSection } from "@/components/FAQSection";
 import { CTABlock } from "@/components/CTABlock";
 import { H2, H3 } from "@/components/Heading";
+import { FloorPlanTracker } from "./FloorPlanTracker";
 
 export function generateStaticParams() {
   return getAllFloorPlanSlugs().map((slug) => ({ slug }));
@@ -39,6 +40,7 @@ export default async function FloorPlanPage({ params }: { params: Promise<{ slug
 
   return (
     <>
+      <FloorPlanTracker plan={plan} />
       {/* Structured Data */}
       <StructuredData
         data={structuredData.product({

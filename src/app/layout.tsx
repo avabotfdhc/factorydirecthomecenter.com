@@ -3,7 +3,8 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { GoogleAnalytics, GoogleTagManager, MetaPixel, MicrosoftClarity } from "@/lib/analytics";
+import { AnalyticsProvider, GoogleTagManagerNoScript } from "@/lib/analytics";
+import { TrackingProvider } from "@/components/TrackingProvider";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { PageFooter } from "@/components/PageFooter";
 
@@ -71,6 +72,8 @@ export const metadata: Metadata = {
   },
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -87,8 +90,13 @@ export default function RootLayout({
         <StructuredData data={structuredData.website()} />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-        {/* Analytics — next/script strategy="afterInteractive" handles deferred loading */}
-        <GoogleAnalytics />
+        {/* Google Tag Manager NoScript (required for GTM) */}
+        <GoogleTagManagerNoScript />
+        
+        {/* Analytics Provider — loads GA4, Facebook Pixel, GTM, Clarity */}
+        <AnalyticsProvider />
+        
+        <TrackingProvider />
         <Header />
         <main id="main-content" className="flex-1">{children}</main>
         <PageFooter />

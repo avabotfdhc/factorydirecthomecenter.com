@@ -1,4 +1,5 @@
-import { generateLocationMetadata, LocationPageTemplate } from "../LocationPageTemplate";
+import { generateLocationMetadata } from "../locationMetadata";
+import { LocationPageTemplate } from "../LocationPageTemplate";
 
 const locationData = {
   city: "LaGrange County",

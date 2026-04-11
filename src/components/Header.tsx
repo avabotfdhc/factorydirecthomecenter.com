@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { trackPhoneClick } from "@/lib/analytics";
 
 const navLinks = [
   { href: "/floor-plans", label: "Floor Plans" },
@@ -89,6 +90,7 @@ export function Header() {
             ))}
             <a
               href="tel:+12603081457"
+              onClick={() => trackPhoneClick("header_nav", "desktop")}
               className="btn-primary inline-flex items-center gap-1.5 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 text-xs font-bold tracking-wide rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
             >
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false">
@@ -137,6 +139,7 @@ export function Header() {
             ))}
             <a
               href="tel:+12603081457"
+              onClick={() => trackPhoneClick("header_mobile_menu", "mobile")}
               className="mt-2 inline-flex items-center justify-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-3 text-sm font-bold rounded"
             >
               Call (260) 308-1457
