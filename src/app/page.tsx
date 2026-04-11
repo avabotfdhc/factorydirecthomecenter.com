@@ -697,9 +697,6 @@ export default function Home() {
         }}
       />
 
-      {/* Hero with Parallax - Using useParallax hook inline */}
-      <ParallaxHeroSection />
-
       {/* Trust Badges Section */}
       <section className="py-12 bg-white border-b border-[var(--color-charcoal)]/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
