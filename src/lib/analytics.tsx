@@ -4,7 +4,7 @@ import React from "react";
 import Script from "next/script";
 
 // Google Analytics 4 Configuration
-export const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // Replace with your GA4 ID
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
 // Google Analytics Component
 export function GoogleAnalytics() {
