@@ -1,0 +1,10 @@
+# Never upload local env files to Vercel builds.
+# Vercel env vars (set via dashboard or `vercel env add`) are the source of truth.
+# A stale or partial .env.local can shadow process.env during the build,
+# silently breaking NEXT_PUBLIC_* tracking IDs (see 2026-04-11 incident).
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
