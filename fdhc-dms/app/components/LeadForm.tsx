@@ -9,7 +9,7 @@ import { Card, CardContent, CardFooter } from '@/app/components/ui/Card'
 import { Loader2 } from 'lucide-react'
 
 interface LeadFormProps {
-  initialData?: Partial<LeadFormData>
+  initialData?: Partial<LeadFormData> | Record<string, any>
   onSubmit: (data: LeadFormData) => Promise<void>
   onCancel?: () => void
   isLoading?: boolean
@@ -42,12 +42,12 @@ export function LeadForm({
     first_name: initialData?.first_name || '',
     last_name: initialData?.last_name || '',
     phone: initialData?.phone || '',
-    email: initialData?.email || '',
+    email: initialData?.email || undefined,
     source: initialData?.source || 'website',
     land_status: initialData?.land_status || 'UNDECIDED',
-    land_location: initialData?.land_location || '',
-    target_move_in: initialData?.target_move_in || '',
-    notes: initialData?.notes || '',
+    land_location: initialData?.land_location || undefined,
+    target_move_in: initialData?.target_move_in || undefined,
+    notes: initialData?.notes || undefined,
   })
 
   const [errors, setErrors] = useState<Partial<Record<keyof LeadFormData, string>>>({})
