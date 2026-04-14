@@ -304,7 +304,7 @@ export default function FinancingPage() {
                 Start with VA loans. Zero down, no mortgage insurance, and great rates. 
                 This is the best deal in manufactured home financing.
               </p>
-              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Get VA Loan Info →
               </Link>
             </div>
@@ -315,7 +315,7 @@ export default function FinancingPage() {
                 FHA Title II or conventional loans offer the best rates. Your home will 
                 appreciate like site-built real estate.
               </p>
-              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Explore Land-Home Loans →
               </Link>
             </div>
@@ -326,7 +326,7 @@ export default function FinancingPage() {
                 FHA Title I or chattel loans work for home-only purchases. Buy the home now, 
                 add land later, then refinance.
               </p>
-              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 See Home-Only Options →
               </Link>
             </div>
@@ -337,7 +337,7 @@ export default function FinancingPage() {
                 FHA loans accept scores as low as 500. Chattel loans are also more forgiving. 
                 We work with lenders who specialize in credit challenges.
               </p>
-              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Credit-Challenged Options →
               </Link>
             </div>
@@ -348,7 +348,7 @@ export default function FinancingPage() {
                 VA loans (if eligible) or FHA Title II with 3.5% down. Longer terms (30 years) 
                 keep monthly payments manageable.
               </p>
-              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Low Payment Options →
               </Link>
             </div>
@@ -359,7 +359,7 @@ export default function FinancingPage() {
                 Conventional mortgages treat modular homes like site-built. Best rates, 
                 no government fees, and standard mortgage terms.
               </p>
-              <Link href="/contact" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
+              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Modular Financing →
               </Link>
             </div>
@@ -379,7 +379,7 @@ export default function FinancingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
+              href="/contact-us"
               className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
             >
               Start Pre-Qualification

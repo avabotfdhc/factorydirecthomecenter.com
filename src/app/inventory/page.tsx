@@ -14,7 +14,7 @@ export const metadata = genMeta({
 
 export default function InventoryPage() {
   // Pull a few floor plans to act as "inventory"
-  const inventorySlugs = ["1456", "brighton-2856", "summit-2864"];
+  const inventorySlugs = ["1456", "1672", "brighton-2852"];
   const availableHomes = inventorySlugs
     .map(slug => getFloorPlanBySlug(slug))
     .filter((home): home is NonNullable<typeof home> => home !== undefined);
@@ -106,7 +106,7 @@ export default function InventoryPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8 flex justify-center">
           <CTABlock
             text="Don't see exactly what you want? We have incoming inventory arriving weekly."
-            href="/contact"
+            href="/contact-us"
             label="Contact Sales"
             variant="primary"
           />

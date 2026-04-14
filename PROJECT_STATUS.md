@@ -131,8 +131,8 @@ Every page includes:
 - ✅ **Hosting migrated to Vercel** — live at https://factorydirecthomescenter-com.vercel.app (2026-04-11)
 
 ### Content Needed
-- 🟡 Replace placeholder images with real photos
-- 🟡 Add actual floor plan images
+- ✅ Replace placeholder images with real photos (Floor plan galleries wired up)
+- ✅ Add actual floor plan images (Linked PDFs directly to floor plan schema)
 - 🟡 Add team photos to About page
 - 🟡 Add testimonial photos
 

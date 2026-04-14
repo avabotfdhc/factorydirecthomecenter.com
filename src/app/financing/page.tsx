@@ -660,7 +660,7 @@ export default function FinancingPage() {
                 Call (260) 308-1457
               </a>
               <Link
-                href="/contact"
+                href="/contact-us"
                 className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300 rounded-lg"
               >
                 Request Info

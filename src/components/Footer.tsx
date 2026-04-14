@@ -37,7 +37,7 @@ export function Footer() {
                 { href: "/financing", label: "Financing" },
                 { href: "/blog", label: "Blog" },
                 { href: "/about", label: "About Us" },
-                { href: "/contact", label: "Contact" },
+                { href: "/contact-us", label: "Contact" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -115,7 +115,7 @@ export function Footer() {
             <p className="text-sm text-[var(--color-gray-light)] mb-6">
               Get manufactured home buying tips, market updates, and new listing alerts.
             </p>
-            <form className="flex gap-3 max-w-md mx-auto" action="/contact" method="get">
+            <form className="flex gap-3 max-w-md mx-auto" action="/contact-us" method="get">
               <label htmlFor="footer-email" className="sr-only">Email address</label>
               <input
                 type="email"

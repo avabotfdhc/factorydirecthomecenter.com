@@ -133,7 +133,7 @@ export default function BlogPage() {
             delivered to your inbox.
           </p>
           <Link
-            href="/contact"
+            href="/contact-us"
             className="inline-flex items-center gap-2 bg-white text-[var(--color-teal)] px-8 py-3 text-sm font-bold tracking-widest uppercase rounded hover:bg-[var(--color-cream)] transition-colors duration-300"
           >
             Subscribe for Updates

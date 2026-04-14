@@ -141,7 +141,7 @@ export default function EmeraldSkyPage() {
               </div>
 
               {/* CTA */}
-              <Link href="/contact" className="btn-primary w-full bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg text-center">
+              <Link href="/contact-us" className="btn-primary w-full bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded-lg text-center">
                 Get Local Pricing
               </Link>
               <p className="text-white/40 text-xs text-center">Factory-direct pricing. No obligation.</p>
@@ -253,8 +253,8 @@ export default function EmeraldSkyPage() {
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">Ready to See the <span className="italic text-[var(--color-teal-light)]">{homeDetails.name}?</span></H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">Visit our Auburn showroom to tour this home, or request a custom quote. Built at the largest Champion factory in the country, just 20 miles away.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300">Get Local Pricing</Link>
-            <Link href="/contact" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300">Schedule a Tour</Link>
+            <Link href="/contact-us" className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300">Get Local Pricing</Link>
+            <Link href="/contact-us" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300">Schedule a Tour</Link>
           </div>
         </div>
       </section>

@@ -424,7 +424,7 @@ export default function Home() {
                 </MagneticButton>
                 <MagneticButton>
                   <Link 
-                    href="/contact" 
+                    href="/contact-us" 
                     className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300"
                   >
                     Contact Us
