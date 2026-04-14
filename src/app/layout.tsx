@@ -7,6 +7,9 @@ import { AnalyticsProvider, GoogleTagManagerNoScript } from "@/lib/analytics";
 import { TrackingProvider } from "@/components/TrackingProvider";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { PageFooter } from "@/components/PageFooter";
+import { MobileActionBar } from "@/components/MobileActionBar";
+import { LiveChat } from "@/components/LiveChat";
+import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -101,6 +104,9 @@ export default function RootLayout({
         <main id="main-content" className="flex-1">{children}</main>
         <PageFooter />
         <Footer />
+        <MobileActionBar />
+        <LiveChat />
+        <ExitIntentPopup />
       </body>
     </html>
   );

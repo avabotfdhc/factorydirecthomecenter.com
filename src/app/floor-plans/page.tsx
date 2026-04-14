@@ -9,6 +9,8 @@ import {
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
+import { FloorPlanComparison } from "@/components/FloorPlanComparison";
+import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 
 // ============================================
 // FLOOR PLANS PAGE - MAXIMUM SEO/AEO
@@ -610,6 +612,26 @@ export default function FloorPlansPage() {
       ))}
 
       {/* ============================================
+          FLOOR PLAN COMPARISON
+          ============================================ */}
+      <section className="py-16 lg:py-24 bg-[var(--color-cream-dark)]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-12">
+              <div className="decorative-line mx-auto mb-6" />
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
+                Compare <span className="italic text-[var(--color-teal)]">Floor Plans</span>
+              </H2>
+              <p className="text-[var(--color-gray)] max-w-2xl mx-auto">
+                Select up to 3 floor plans to compare side-by-side and find the perfect home for your needs.
+              </p>
+            </div>
+          </FadeIn>
+          <FloorPlanComparison />
+        </div>
+      </section>
+
+      {/* ============================================
           FAQ SECTION
           ============================================ */}
       <FAQSection
@@ -618,6 +640,26 @@ export default function FloorPlansPage() {
         faqs={floorPlanFAQs}
         showSchema={true}
       />
+
+      {/* ============================================
+          LEAD CAPTURE SECTION
+          ============================================ */}
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-12">
+              <div className="decorative-line mx-auto mb-6" />
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
+                Get Your <span className="italic text-[var(--color-teal)]">Personalized Quote</span>
+              </H2>
+              <p className="text-[var(--color-gray)] max-w-2xl mx-auto">
+                Tell us about your needs and we'll send you personalized floor plan recommendations and pricing within 24 hours.
+              </p>
+            </div>
+          </FadeIn>
+          <LeadCaptureForm source="floor_plans_page" />
+        </div>
+      </section>
 
       {/* ============================================
           RELATED PAGES

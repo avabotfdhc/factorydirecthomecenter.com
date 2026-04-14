@@ -969,6 +969,11 @@ export function getAllFloorPlanSlugs(): string[] {
   return floorPlans.map((p) => p.slug);
 }
 
+// Get all floor plans
+export function getAllFloorPlans(): FloorPlan[] {
+  return floorPlans;
+}
+
 // Get related floor plans (same type + similar size, excluding current)
 export function getRelatedFloorPlans(slug: string, count = 3): FloorPlan[] {
   const current = floorPlans.find((p) => p.slug === slug);

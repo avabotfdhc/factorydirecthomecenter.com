@@ -8,6 +8,8 @@ import {
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
+import { PaymentCalculator } from "@/components/PaymentCalculator";
+import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 
 // ============================================
 // FINANCING PAGE - MAXIMUM SEO/AEO
@@ -395,6 +397,26 @@ export default function FinancingPage() {
               </p>
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* ============================================
+          PAYMENT CALCULATOR
+          ============================================ */}
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-12">
+              <div className="decorative-line mx-auto mb-6" />
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
+                Calculate Your <span className="italic text-[var(--color-teal)]">Monthly Payment</span>
+              </H2>
+              <p className="text-[var(--color-gray)] max-w-2xl mx-auto">
+                Estimate your monthly payment based on home price, down payment, credit score, and loan type.
+              </p>
+            </div>
+          </FadeIn>
+          <PaymentCalculator />
         </div>
       </section>
 
