@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "FDHC DMS (dev)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "cwd": "/Users/ava/.openclaw/workspace/fdhc-dms"
+    },
+    {
+      "name": "FDHC DMS (prod preview)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start"],
+      "port": 3000,
+      "cwd": "/Users/ava/.openclaw/workspace/fdhc-dms"
+    }
+  ]
+}
