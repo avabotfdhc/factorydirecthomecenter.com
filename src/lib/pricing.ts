@@ -41,8 +41,8 @@ export interface SalesCampaign {
 
 // Constants
 const PACK_AMOUNT = 2500;
-const FDHC_GROSS_PROFIT = 0.55; // 55%
-const MSRP_GROSS_PROFIT = 0.65; // 65%
+const MSRP_MULTIPLIER = 1.65; // Factory cost + pack, then 65% markup
+const FDHC_DISCOUNT = 0.10; // 10% off MSRP
 
 // Factory cost database (from CSV files)
 export const factoryCosts: Record<string, FactoryCost> = {
@@ -175,15 +175,14 @@ export function calculatePricing(sku: string): PricingResult | null {
   const surcharge = cost.sqft * cost.surchargePerSqft;
   const totalFactoryCost = cost.basePrice + surcharge;
 
-  // Calculate FDHC Price (factory cost + $2500 pack + 55% gross profit)
-  const fdhcCost = totalFactoryCost + PACK_AMOUNT;
-  const fdhcPrice = fdhcCost / (1 - FDHC_GROSS_PROFIT);
+  // Calculate MSRP = (Factory Cost + Pack) × 1.65
+  const msrpBase = totalFactoryCost + PACK_AMOUNT;
+  const msrp = msrpBase * MSRP_MULTIPLIER;
 
-  // Calculate MSRP (factory cost + $2500 pack + 65% gross profit)
-  const msrpCost = totalFactoryCost + PACK_AMOUNT;
-  const msrp = msrpCost / (1 - MSRP_GROSS_PROFIT);
+  // Calculate FDHC Price = MSRP - 10%
+  const fdhcPrice = msrp * (1 - FDHC_DISCOUNT);
 
-  // Calculate savings
+  // Calculate savings (MSRP vs FDHC)
   const savings = msrp - fdhcPrice;
   const savingsPercent = (savings / msrp) * 100;
 

@@ -355,15 +355,20 @@ export default function CampaignsAdminPage() {
               <p className="text-[var(--color-gray)]">Surcharge: $0.50/sqft (singles), $0.65/sqft (sectional)</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">FDHC Price</h4>
-              <p className="text-[var(--color-gray)]">(Factory Cost + $2,500 Pack) ÷ (1 - 55%)</p>
-              <p className="text-[var(--color-gray)]">55% gross profit margin</p>
+              <h4 className="font-semibold mb-2">MSRP</h4>
+              <p className="text-[var(--color-gray)]">(Factory Cost + $2,500 Pack) × 1.65</p>
+              <p className="text-[var(--color-gray)]">65% markup on cost + pack</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">MSRP</h4>
-              <p className="text-[var(--color-gray)]">(Factory Cost + $2,500 Pack) ÷ (1 - 65%)</p>
-              <p className="text-[var(--color-gray)]">65% gross profit margin</p>
+              <h4 className="font-semibold mb-2">FDHC Price</h4>
+              <p className="text-[var(--color-gray)]">MSRP × 0.90</p>
+              <p className="text-[var(--color-gray)]">10% off MSRP</p>
             </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-[var(--color-teal)]/20">
+            <h4 className="font-semibold mb-2">Sales Campaign Price</h4>
+            <p className="text-[var(--color-gray)]">FDHC Price × (1 - Campaign Discount%)</p>
+            <p className="text-[var(--color-gray)]">Additional discount off FDHC price for limited time</p>
           </div>
         </div>
       </main>
