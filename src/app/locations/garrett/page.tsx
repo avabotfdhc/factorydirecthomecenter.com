@@ -8,7 +8,7 @@ const locationData = {
   distance: "5 miles",
   deliveryCost: "$1,800",
   description: "Located just down the road from our Auburn showroom, Garrett is prime territory for Champion manufactured homes. We provide factory-direct pricing to all neighborhoods within the DeKalb County area.",
-  counties: ["DeKalb"],
+  counties: ["DeKalb"]
 };
 
 export const metadata = generateLocationMetadata({ city: locationData.city, state: locationData.state });
@@ -16,3 +16,4 @@ export const metadata = generateLocationMetadata({ city: locationData.city, stat
 export default function GarrettPage() {
   return <LocationPageTemplate {...locationData} />;
 }
+
