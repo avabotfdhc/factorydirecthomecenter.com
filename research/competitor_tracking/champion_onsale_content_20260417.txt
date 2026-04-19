@@ -1,0 +1,1613 @@
+
+
+
+<img height="1" width="1" style="display:none" alt="fbpx"
+src="https://www.facebook.com/tr?id=1738897366527317&ev=PageView&noscript=1" />
+
+
+		
+				Champion Homes Center | Shipping to: Indiana, Illinois, Michigan, Ohio, Kentucky, Iowa, Minnesota, Wisconsin, Missouri, Tennessee
+
+
+	change state or location
+
+
+
+  .utility-bar {
+		padding: 0 .5rem .5rem;
+	}
+	
+	.textwidget {
+		font-size: 12px;
+	}
+		
+	Champion Homes CenterManufactured Home & Mobile Home Dealer
+	
+		
+				<img class="logoImage" alt="Logo" src="https://images.factorydirectmobilehomes.com/logos/tkhud-logo.svg" />
+		
+	
+	
+	
+		
+			<img class="leaderImage" alt="Homes Starting At" src="https://images.factorydirectmobilehomes.com/leaders/tkhud-leader.svg" />
+		
+	
+
+	
+		
+			
+				BUY DIRECT AT THE FACTORY!
+			
+			|
+			
+				1-800-543-7412
+			
+		
+		
+		
+			Champion Homes Center is the Nation’sMobile & Manufactured Home Sales Leader!
+		
+	
+	
+
+
+
+	.site-header .widget-area {
+    float: none;
+    text-align: right;
+    width: inherit;
+	}
+	.title-area {
+		display: none;
+	}
+	.headerContainer {
+		display: flex;
+	}
+	.headerTextContainer, .logoContainer {
+		padding-top: 20px;
+	}
+	.logoContainer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 102px;
+	}
+	.logoImage {
+		width: 220px;
+		max-height: 82px;
+	}
+	.leaderContainer {
+		padding-top: 15px;
+		padding-left:10px;
+		padding-right:10px;
+		margin:auto;
+	}
+	
+	.leaderImage {
+		width: 203px;
+		max-height: 82px;
+	}
+	
+	.content {
+		width: 887px;
+	}
+	
+	.home .site-inner, .site-inner {
+		border: none;
+	}
+	
+	.nav-primary {
+		line-height: 0px;
+    text-align: center;
+	}
+	
+	.nav-primary .wrap {
+		display: inline-block;
+	}
+	
+	@media only screen and (max-width: 1024px) {
+		.header-image .title-area {
+    display: none !important;
+    width: 100% !important;
+    background-position: center !important;
+		}
+		
+		.site-header .widget-area {	 
+ 			text-align: right !important; 
+ 		} 
+		
+		.sidebar-content .sidebar-primary {
+    	width: 20%;
+		}
+		
+		.sidebar-content .content {
+			width: 80%;
+		}
+		
+		.content {
+			padding-top: 0px;
+			padding-right: 0px;
+		}
+		
+		.wrap {
+			width: auto;
+		}
+}
+
+@media only screen and (max-width: 1000px) {
+	.nav-primary {
+		background: #f5f5f4;
+		margin: auto;
+    margin-bottom: 20px;
+		width: 94%;
+		float: none;
+	}
+	
+	.nav-primary ul {
+		display: none;
+	}
+	
+	.nav-primary .select-menu {
+		border: 1px solid #CCC;
+		display: block;
+		margin: 0 auto;
+	}
+	
+	.wrap {
+			width: 100%;
+		}
+}
+	
+@media only screen and (max-width: 865px) {
+		.site-header .widget-area {	 
+ 			text-align: center !important; 
+ 		} 	
+	
+		.headerContainer {
+			display: block;
+		}
+	
+		.logoContainer {
+			width: 50%;
+    	float: left;
+			margin: auto;
+		}
+	
+		.leaderContainer   {
+			width: 50%;
+			float: right;
+			padding-top: 20px;
+			padding-right: 0px;
+			padding-left: 0px;
+		}
+	
+		.headerTextContainer {
+			width: 100%;
+			float: left;
+			margin: auto;
+		}
+	
+		.sidebar-content .sidebar-primary {
+    	width: 50%;
+			float: none;
+			margin: auto;
+			display: block;
+		}
+		
+		.sidebar-content .content {
+			width: 100%;
+		}
+	
+		.content {
+			padding: 0px;
+		}
+}
+	
+@media only screen and (max-width: 600px) {
+	.sidebar-content .sidebar-primary {
+    	width: 100%;
+			float: none;
+			margin: auto;
+			display: block;
+		}
+}
+	
+@media only screen and (max-width: 450px) {
+	.logoContainer, .leaderContainer, .headerTextContainer  {
+		width: 100%;
+		float: none;
+	}
+	.logoContainer {
+    min-height: 0;
+	}
+	.leaderContainer {
+		padding-top: 30px;	
+	}
+	.promoMore {
+		font-size: 18px;
+	}
+}
+
+
+
+Floor Plans
+On Sale
+Clearance
+About Us
+Gallery
+Videos
+Loans & Lenders
+Reviews
+FAQ
+Contact
+Navigate to... Floor Plans On Sale Clearance About Us Gallery Videos Loans & Lenders Reviews FAQ ContactCurrent Mobile Home Models on Sale
+
+
+
+
+	
+	
+	
+		
+  
+    <img decoding="async" class="lazy lazy-hidden promoTitle" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://factoryexpohomes.com/resources/promos/april/april-title.png" /><noscript><img decoding="async" class="promoTitle" src="https://factoryexpohomes.com/resources/promos/april/april-title.png" />
+    
+    <img decoding="async" class="lazy lazy-hidden promoTitleDate" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://factoryexpohomes.com/resources/promos/april/april-date.png" /><noscript><img decoding="async" class="promoTitleDate" src="https://factoryexpohomes.com/resources/promos/april/april-date.png" />
+    
+    
+  
+  
+    <img decoding="async" class="lazy lazy-hidden promoHero promoHero-april" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://factoryexpohomes.com/resources/heroes/tkhud/tkhud-active.jpg" /><noscript><img decoding="async" class="promoHero promoHero-april" src="https://factoryexpohomes.com/resources/heroes/tkhud/tkhud-active.jpg" />
+  
+  
+
+
+
+	
+	
+	
+	
+		
+		
+			
+				
+  
+    
+      Millbank
+      1 Bed · 1 Bath ·     
+      546 SqFt
+      
+      
+      
+    
+    
+      
+      
+        
+          
+          
+          
+          
+          
+        
+      
+      
+      
+      
+        
+          
+          
+        
+      
+      
+    
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            SPECIAL VALUE
+          
+          
+            Now $40,900!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+		
+			
+				
+  
+    
+      Bowmansville
+      2 Beds · 2 Baths ·     
+      746 SqFt
+      
+      
+      
+    
+    
+      
+      
+    
+  
+  
+  
+  
+  
+  
+    
+        <img decoding="async" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Bowmansville.png" alt="Bowmansville Single Wide " title="Bowmansville Single Wide " class="lazy lazy-hidden attachment-full aligncenter" /><noscript><img decoding="async" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Bowmansville.png" alt="Bowmansville Single Wide " title="Bowmansville Single Wide " class="lazy lazy-hidden attachment-full aligncenter" /><noscript><img decoding="async" src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Bowmansville.png" alt="Bowmansville Single Wide " title="Bowmansville Single Wide " class="attachment-full aligncenter" />
+      
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $55,717
+          
+          
+            Now $44,432!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+        
+		
+		
+		
+			
+				
+  
+    
+      Montclair
+      3 Beds · 2 Baths ·     
+      1001 SqFt
+      
+      
+      
+    
+    
+      
+      
+    
+  
+  
+  
+  
+  
+  
+    
+        <img decoding="async" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Montclair.png" alt="Montclair Single Wide " title="Montclair Single Wide " class="lazy lazy-hidden attachment-full aligncenter" /><noscript><img decoding="async" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Montclair.png" alt="Montclair Single Wide " title="Montclair Single Wide " class="lazy lazy-hidden attachment-full aligncenter" /><noscript><img decoding="async" src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Montclair.png" alt="Montclair Single Wide " title="Montclair Single Wide " class="attachment-full aligncenter" />
+      
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $70,337
+          
+          
+            Now $56,091!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+		
+			
+				
+  
+    
+      Almena
+      3 Beds · 2 Baths ·     
+      1387 SqFt
+      
+      
+      
+    
+    
+      
+      
+        
+          
+          
+          
+          
+          
+        
+      
+      
+      
+      
+        
+          
+          
+        
+      
+      
+    
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $88,939
+          
+          
+            Now $70,925!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+        
+		
+		
+		
+			
+				
+  
+    
+      St. Clair
+      3 Beds · 2 Baths ·     
+      1280 SqFt
+      
+      
+      
+    
+    
+      
+      
+      
+        
+          
+          
+        
+      
+      
+    
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $97,235
+          
+          
+            Now $77,540!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+		
+			
+				
+  
+    
+      Poe
+      3 Beds · 2 Baths ·     
+      1707 SqFt
+      
+      
+      
+    
+    
+      
+      
+      
+        
+          
+          
+        
+      
+      
+    
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $113,804
+          
+          
+            Now $90,754!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+        
+		
+		
+		
+			
+				
+  
+    
+      Penwell
+      5 Beds · 2 Baths ·     
+      1813 SqFt
+      
+      
+      
+    
+    
+      
+      
+    
+  
+  
+  
+  
+  
+  
+    
+        <img decoding="async" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Penwell.png" alt="Penwell Double Wide " title="Penwell Double Wide " class="lazy lazy-hidden attachment-full aligncenter" /><noscript><img decoding="async" src="//factorydirectmobilehomes.com/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Penwell.png" alt="Penwell Double Wide " title="Penwell Double Wide " class="lazy lazy-hidden attachment-full aligncenter" /><noscript><img decoding="async" src="https://images.factorydirectmobilehomes.com/locations/tkhud/floorplans/Penwell.png" alt="Penwell Double Wide " title="Penwell Double Wide " class="attachment-full aligncenter" />
+      
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $118,877
+          
+          
+            Now $94,799!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+		
+			
+				
+  
+    
+      Swayzee
+      4 Beds · 2 Baths ·     
+      2027 SqFt
+      
+      
+      
+    
+    
+      
+      
+      
+        
+          
+          
+        
+      
+      
+    
+  
+  
+  
+  
+    
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+          
+            Was $128,004
+          
+          
+            Now $102,078!
+          
+        
+        
+      
+    
+    
+    
+      VIEW DETAILS
+    
+  
+
+			
+		
+        
+		
+	
+	
+	
+	
+
+  
+    More Homes On Sale – 
+    Call 1-800-543-7412 for Details
+  
+  SALE ENDS Monday, April 20th, 2026
+  Ask About Our Early Bird Discounts & Free Factory Tour
+
+	
+	
+	
+	
+
+
+	
+	
+		
+
+	
+	
+				
+			
+					
+				
+		
+	
+
+	
+	
+	
+		
+			
+			
+			
+		
+	
+
+	
+	
+	
+				
+			
+					
+				
+		
+	
+
+	
+	
+	
+
+		
+
+			
+
+			
+			
+				
+			
+		
+	
+	
+	
+	
+		
+	
+		
+			
+				
+			
+		
+		
+			
+		
+	
+	
+
+	
+
+	
+	
+
+		
+		
+		
+
+		
+	
+
+	
+	
+
+
+	
+		
+
+	
+	
+	
+	
+
+	
+		
+	
+
+	
+	
+	
+		Generic selectors
+		
+			
+				
+				
+			
+			
+				Exact matches only			
+		
+		
+			
+				
+				
+			
+			
+				Search in title			
+		
+		
+			
+				
+				
+			
+			
+				Search in content			
+		
+		
+			
+			
+		
+	
+	
+		Post Type Selectors
+					
+				
+			
+						
+				
+			
+						
+				
+			
+				
+	
+	
+
+
+
+
+	SHIPPING HOMES TO:
+	
+		
+			<img style="max-width:350px; padding-left:15px; padding-right:15px;" src="https://factoryexpohomes.com/resources/maps/FE_map-topeka.svg"  title="Indiana, Illinois, Michigan, Ohio, Kentucky, Iowa, Minnesota, Wisconsin, Missouri, Tennessee" alt="Indiana, Illinois, Michigan, Ohio, Kentucky, Iowa, Minnesota, Wisconsin, Missouri, Tennessee" />
+		
+	
+	
+		
+			VIEW OTHER STATES
+		
+	
+
+
+
+	.deliveryMap {
+		margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #FFFFFF;
+		background: var(--primaryColor);
+	}
+	
+	/*#menu-item-2894 {
+    background-color: #ffcf7a;
+	}
+	
+	#menu-item-2894 a {
+    color: black !important;
+	}*/
+	
+	#menu-item-4021 {
+    background: #931416;
+	}
+	
+	.sidebar-primary .menu li {
+		background: black;
+		font-weight: 600;
+		border-left: none;
+	}
+	
+	.sidebar-primary .menu li:hover {
+    background: black;
+    color: #ccc!important;
+	}
+
+Single Wide Floor Plans
+Double Wide Floor Plans
+Clearance Homes
+Browse by Home Series
+Request an Appointment
+Advanced Home Search
+Color Selections
+Upgrades & Options
+Volume Home Sales
+Park Models
+
+
+	
+		<img src="https://images.factorydirectmobilehomes.com/_general/MHI-quote-badge.png" alt="Mobile Home Insurance Quote"/>
+	
+
+
+	
+		
+			SAVE $1,000'S
+		
+		
+			BY RECEIVING CLEARANCE AND SALES ALERTS.
+		
+	
+	
+                
+                        
+							
+                        
+                        FacebookThis field is for validation purposes and should be left unchanged.Email*
+                            
+                        CAPTCHA
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        
+                        
+                        
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {gformInitSpinner( 11, 'https://factorydirectmobilehomes.com/wp-content/plugins/gravityforms/images/spinner.svg', true );jQuery('#gform_ajax_frame_11').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_11');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_11').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_11').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_11').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_11').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_11').offset().top - mt); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_11').val();gformInitSpinner( 11, 'https://factorydirectmobilehomes.com/wp-content/plugins/gravityforms/images/spinner.svg', true );jQuery(document).trigger('gform_page_loaded', [11, current_page]);window['gf_submitting_11'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}jQuery('#gform_wrapper_11').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_11').offset().top - mt);jQuery(document).trigger('gform_confirmation_loaded', [11]);window['gf_submitting_11'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_11').text());}else{jQuery('#gform_11').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger("gform_pre_post_render", [{ formId: "11", currentPage: "current_page", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_11" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_11";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_11" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 11, current_page );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );} ); 
+/* ]]> */
+
+
+	
+		*Email Addresses are Never Shared
+	
+
+
+
+	#gform_fields_11 {
+		grid-row-gap: 5px;
+	}
+	#input_11_1 {
+		text-align: center;
+	}
+
+
+	
+		<img src="https://images.factorydirectmobilehomes.com/_general/resources-banner.svg" alt="Mobile Home Resources"/>
+	
+
+
+	<img src="https://images.factorydirectmobilehomes.com/_general/questions-btn.svg" alt="Contact Factory Expo Home Centers" />
+
+
+	
+		
+			WE ACCEPT ALL MAJOR CREDIT CARDS
+		
+		<img style="padding-left:15px; padding-right:15px;" src="https://factoryexpohomes.com/resources/site-images/credit-cards.jpg" alt="We Accept All Major Credit Cards" />
+		
+			MAKE A PAYMENT
+		
+	
+
+
+	ENGAGE WITH US:
+	
+		
+			<img style="max-width:45px; max-height:45px; margin-right:2.5px;" alt="facebook" src="https://factoryexpohomes.com/resources/site-images/facebook-black.png" />
+		
+		
+			<img style="max-width:45px; max-height:45px; margin-left:2.5px;" alt="youtube" src="https://factoryexpohomes.com/resources/site-images/youtube-black.png" />
+		
+	
+
+
+	advertisement
+  
+  
+    
+    Discover moreHome warranty plansDeck patio construction services
+    
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    
+  
+  .decorated{
+    overflow: hidden;
+    text-align: center;
+    margin: 10px auto !important;
+    max-width: 400px;
+    color: #999999;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .decorated > span{
+    position: relative;
+    display: inline-block;
+    color: #999999;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0 !important;
+  }
+  .decorated > span:before, .decorated > span:after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    border-bottom: 1px solid #dedadb;
+    width: 100vw;
+    margin: 0 5px;
+  }
+  .decorated > span:before{
+    right: 100%;
+  }
+  .decorated > span:after{
+    left: 100%;
+  }
+
+
+
+	.home .universalAdsenseSquare,
+	.page-id-1355 .universalAdsenseSquare,
+	.home .adsbygoogle,
+	.page-id-1355 .adsbygoogle {
+		display: none !important;
+	}
+	.universalAdsenseSquare,
+	.universalAdsenseHorizontal,
+	.universalAdsenseVertical {
+		overflow: hidden;
+	}
+
+Primary Navigation
+Home
+Floor Plans & Inventory Mobile Homes
+About Champion Homes Center
+Manufactured Home Photo Gallery
+Manufactured Home Videos
+Customer Reviews
+Contact Us
+Make a Payment
+
+Search this Website
+
+Find Your Home
+Single Wide Floor Plans
+Double Wide Floor Plans
+Clearance Homes
+Browse by Home Series
+Request an Appointment
+Advanced Home Search
+Color Selections
+Upgrades & Options
+Volume Home Sales
+Park Models
+
+Resources
+Home Insurance
+Loans & Lenders
+Frequently Asked Questions
+Mobile Home Resources
+Factory Warranty Contacts
+MobileHome.com
+
+Contact Us
+Champion Homes Center
+Sales Office & Model Village
+Toll Free: 1-800-543-7412
+EMail: Contact Us
+Hours: Mon-Fri 8:00am to 5:00pm
+  Sat 9:00am to 4:00pm
+ After Hours Call for an Appointment
+Location Map & Directions
+There are 19 Champion Homes Center locations: Change your location
+Connect with Us
+FX
+Homes Manufactured By:
+<img style="width: 100%; max-width: 280px; max-height: 52px;" src="https://images.factorydirectmobilehomes.com/logos/manufacturers/champion-homes-logo-white.svg" alt="Homes Manufactured by Champion Homes" title="Homes Manufactured by Champion Homes" />
+This Champion Homes Center location delivers our finely built Champion Homes to Indiana, Illinois, Michigan, Ohio, Kentucky, Iowa, Minnesota, Wisconsin, Missouri, Tennessee. Throughout its 50+ year history, Champion has been acknowledged as a major leader in the manufactured housing industry and is one of the largest factory-built home builders in North America.
+<img src="/wp-content/themes/factoryexpo/images/fair-housing.png" alt="an Equal Housing Opportunity" title="an Equal Housing Opportunity" width="50" height="50" class="alignright" />Champion Homes Center reserves the right to modify, cancel or substitute products or features of this event at any time without prior notice or obligation. Pictures and other promotional materials are representative and may depict or contain floor plans, square footages, elevations, options, upgrades, extra design features, decorations, floor coverings, specialty light fixtures, custom paint and wall coverings, window treatments, landscaping, sound and alarm systems, furnishings, appliances, and other designer/decorator features and amenities that are not included as part of the home and/or may not be available at all locations. Home, pricing and community information is subject to change, and homes to prior sale, at any time without notice or obligation. © 2026 Champion Homes Center. All rights reserved. | LIC# 2348706
+
+
+	#field_18_1 {
+		margin-bottom: 0px;
+	}
+	#gform_submit_button_18 {
+		margin-top: 10px;
+	}
+	.ui-datepicker table {
+    background: #bbb;
+	}
+	.ui-datepicker-title select {
+		width: 100%;
+	}
+	.ui-datepicker-calendar td {
+		width: auto;
+    display: table-cell;
+	}
+	.gform_wrapper input.datepicker_with_icon.medium {
+		width: calc(100% - 24px) !important;
+	}
+	body .gform_wrapper img.ui-datepicker-trigger {
+    vertical-align: sub;
+	}
+
+TOP
+
+	
+
+	Privacy Policy | California Residents: Notice at Collection and Personal Information Rights | Do Not Sell or Share my Information
+	© 2026	Champion Homes Center - Topeka, IN | Manufactured Home & Mobile Home Dealer
+
+
+const wpvViewHead = document.getElementsByTagName( "head" )[ 0 ];
+const wpvViewExtraCss = document.createElement( "style" );
+wpvViewExtraCss.textContent = '<!--[if IE 7]><style>.wpv-pagination { *zoom: 1; }</style><![endif]-->';
+wpvViewHead.appendChild( wpvViewExtraCss );
+
+
+
+const wpvCtHead = document.getElementsByTagName( "head" )[ 0 ];
+const wpvCtExtraCss = document.createElement( "style" );
+wpvCtExtraCss.textContent = '/* ----------------------------------------- *//* Content Template: promotions_grid_floorplans_3 - start *//* ----------------------------------------- */.promoFloorplanFeaturedImg {  background-position: center;  background-size: cover;  background-repeat: no-repeat;  margin-left: -15px;  margin-right: -15px;}/* ----------------------------------------- *//* Content Template: promotions_grid_floorplans_3 - end *//* ----------------------------------------- */';
+wpvCtHead.appendChild( wpvCtExtraCss );
+
+        
+        
+        (function () {
+            function runPixelCode( response ) {
+                if ( ! response || ! response.data || ! response.data.fb_pxl_code ) {
+                    return;
+                }
+
+                try {
+                    new Function( response.data.fb_pxl_code )();
+                } catch ( e ) {
+                    console && console.warn
+                        && console.warn( 'Meta Pixel response parsing failed. Please check if your pixel is connected.', e );
+                }
+            }
+
+            var radio = window.nfRadio
+                || ( window.Backbone && window.Backbone.Radio );
+            if ( radio && radio.channel ) {
+                radio.channel( 'forms' ).on( 'submit:response', runPixelCode );
+            }
+
+            if ( window.jQuery ) {
+                window.jQuery( document ).on(
+                    'nfFormSubmitResponse',
+                    function ( event, data ) {
+                        if ( data && data.response ) {
+                            runPixelCode( data.response );
+                        }
+                    }
+                );
+            }
+        })();
+        
+        
+                
+        
+        (function ( $ ) {
+            if ( ! $ || typeof document === 'undefined' ) {
+                return;
+            }
+            // WPForms triggers this jQuery event and passes the AJAX response object.
+            $( document ).on( 'wpformsAjaxSubmitSuccess', function ( event, data ) {
+                if ( data && data.data && data.data.fb_pxl_code ) {
+                    try {
+                        new Function( data.data.fb_pxl_code )();
+                    } catch ( e ) {
+                        console && console.warn && console.warn( 'Meta Pixel eval failed', e );
+                    }
+                }
+            } );
+        })( window.jQuery );
+        
+        
+        
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/factoryexpo/*","/wp-content/themes/genesis/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+
+
+
+jQuery(document).ready(function(){jQuery('.description').before('<span><!--INFOLINKS_OFF--></span>');jQuery('.description').after('<span><!--INFOLINKS_ON--></span>');jQuery('#headerimg').before('<span><!--INFOLINKS_OFF--></span>');jQuery('#headerimg').after('<span><!--INFOLINKS_ON--></span>');jQuery('h1').before('<span><!--INFOLINKS_OFF--></span>');jQuery('h1').after('<span><!--INFOLINKS_ON--></span>');jQuery('h1').before('<span><!--INFOLINKS_OFF--></span>');jQuery('h1').after('<span><!--INFOLINKS_ON--></span>');});
+
+    var infolinks_pid = 3348531; 
+    var infolinks_plugin_version = "WP_3.2.3"; 
+    var infolinks_resources = "https://resources.infolinks.com/js"; 
+
+
+This website uses cookies to analyze our traffic. Nothing more. OKPrivacy & Cookies Policy
+  
+	
+		  
+			
+			Close
+		  
+		  
+			
+	
+		
+			
+				Privacy Overview				
+					This website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the ...
+				
+							
+		
+		
+												
+						
+							
+								Necessary							
+															
+									
+									Necessary
+								
+								Always Enabled
+													
+						
+							
+								
+									Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information.								
+							
+						
+					
+																	
+						
+							
+								Non-necessary							
+															
+									
+									Non-necessary
+								
+													
+						
+							
+								
+									Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website.								
+							
+						
+					
+										
+	
+
+		  
+		  
+			
+				
+					
+						
+						
+															SAVE & ACCEPT
+													
+						
+					
+				
+			
+		
+	
+  
+
+
+
+
+<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WCNSR7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>
+
+
+
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("activeCollapsible");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+
+
+
+
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+if (document.getElementById("defaultOpen") != null) {
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+}
+
+
+
+
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+
+
+
+
+
+(function () {
+
+  const params = new URLSearchParams(window.location.search);
+  const url = new URL(window.location);
+  let updated = false;
+
+  params.forEach((value, key) => {
+
+    if (
+      key.startsWith('utm_') ||
+      key === 'keyword' ||
+      key === 'campaign'
+    ) {
+
+      localStorage.setItem('ppc_' + key, value);
+      url.searchParams.delete(key);
+      updated = true;
+
+    }
+
+  });
+
+  if (updated) {
+    window.history.replaceState({}, document.title, url.pathname + url.search);
+  }
+
+})();
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const keyword = localStorage.getItem('ppc_keyword');
+  const campaign = localStorage.getItem('ppc_campaign');
+  const source = localStorage.getItem('ppc_utm_source');
+
+  const formInputMap = {
+    17: {
+      keyword: '15',
+      campaign: '16',
+      source: '17'
+    },
+    9: {
+      keyword: '12',
+      campaign: '13',
+      source: '14'
+    },
+    10: {
+      keyword: '21',
+      campaign: '22',
+      source: '23'
+    },
+    13: {
+      keyword: '16',
+      campaign: '17',
+      source: '18'
+    },
+    15: {
+      keyword: '11',
+      campaign: '12',
+      source: '13'
+    },
+    18: {
+      keyword: '7',
+      campaign: '8',
+      source: '9'
+    },
+    19: {
+      keyword: '6',
+      campaign: '7',
+      source: '8'
+    }
+  };
+
+  Object.entries(formInputMap).forEach(([formId, fields]) => {
+
+    const formEl = document.getElementById(`gform_${formId}`);
+    if (!formEl) return;
+
+    if (keyword && fields.keyword) {
+      const input = document.querySelector(`input[name='input_${fields.keyword}']`);
+      if (input) input.value = keyword;
+    }
+
+    if (campaign && fields.campaign) {
+      const input = document.querySelector(`input[name='input_${fields.campaign}']`);
+      if (input) input.value = campaign;
+    }
+
+    if (source && fields.source) {
+      const input = document.querySelector(`input[name='input_${fields.source}']`);
+      if (input) input.value = source;
+    }
+
+  });
+
+});
+
+    
+    
+        document.addEventListener( 'wpcf7mailsent', function( event ) {
+        if( "fb_pxl_code" in event.detail.apiResponse){
+            eval(event.detail.apiResponse.fb_pxl_code);
+        }
+        }, false );
+    
+    
+        
+/* <![CDATA[ */
+var eio_lazy_vars = {"exactdn_domain":"","skip_autoscale":0,"bg_min_dpr":1.1,"threshold":0,"use_dpr":1};
+//# sourceURL=eio-lazy-load-js-before
+/* ]]> */
+
+
+
+/* <![CDATA[ */
+window.ASL = typeof window.ASL !== 'undefined' ? window.ASL : {}; window.ASL.wp_rocket_exception = "DOMContentLoaded"; window.ASL.ajaxurl = "https:\/\/factorydirectmobilehomes.com\/wp-admin\/admin-ajax.php"; window.ASL.backend_ajaxurl = "https:\/\/factorydirectmobilehomes.com\/wp-admin\/admin-ajax.php"; window.ASL.asl_url = "https:\/\/factorydirectmobilehomes.com\/wp-content\/plugins\/ajax-search-lite\/"; window.ASL.detect_ajax = 1; window.ASL.media_query = 4781; window.ASL.version = 4781; window.ASL.pageHTML = ""; window.ASL.additional_scripts = []; window.ASL.script_async_load = false; window.ASL.init_only_in_viewport = true; window.ASL.font_url = "https:\/\/factorydirectmobilehomes.com\/wp-content\/plugins\/ajax-search-lite\/css\/fonts\/icons2.woff2"; window.ASL.highlight = {"enabled":false,"data":[]}; window.ASL.analytics = {"method":0,"tracking_id":"","string":"?ajax_search={asl_term}","event":{"focus":{"active":true,"action":"focus","category":"ASL","label":"Input focus","value":"1"},"search_start":{"active":false,"action":"search_start","category":"ASL","label":"Phrase: {phrase}","value":"1"},"search_end":{"active":true,"action":"search_end","category":"ASL","label":"{phrase} | {results_count}","value":"1"},"magnifier":{"active":true,"action":"magnifier","category":"ASL","label":"Magnifier clicked","value":"1"},"return":{"active":true,"action":"return","category":"ASL","label":"Return button pressed","value":"1"},"facet_change":{"active":false,"action":"facet_change","category":"ASL","label":"{option_label} | {option_value}","value":"1"},"result_click":{"active":true,"action":"result_click","category":"ASL","label":"{result_title} | {result_url}","value":"1"}}};
+window.ASL_INSTANCES = [];window.ASL_INSTANCES[1] = {"homeurl":"https:\/\/factorydirectmobilehomes.com\/","resultstype":"vertical","resultsposition":"hover","itemscount":5,"charcount":0,"highlight":false,"highlightWholewords":true,"singleHighlight":false,"scrollToResults":{"enabled":false,"offset":0},"resultareaclickable":1,"autocomplete":{"enabled":true,"lang":"en","trigger_charcount":0},"mobile":{"menu_selector":"#menu-toggle"},"trigger":{"click":"ajax_search","click_location":"same","update_href":false,"return":"ajax_search","return_location":"same","facet":true,"type":true,"redirect_url":"?s={phrase}","delay":300},"animations":{"pc":{"settings":{"anim":"fadedrop","dur":300},"results":{"anim":"fadedrop","dur":300},"items":"voidanim"},"mob":{"settings":{"anim":"fadedrop","dur":300},"results":{"anim":"fadedrop","dur":300},"items":"voidanim"}},"autop":{"state":true,"phrase":"","count":"1"},"resPage":{"useAjax":false,"selector":"#main","trigger_type":true,"trigger_facet":true,"trigger_magnifier":false,"trigger_return":false},"resultsSnapTo":"left","results":{"width":"auto","width_tablet":"auto","width_phone":"auto"},"settingsimagepos":"right","closeOnDocClick":true,"overridewpdefault":false,"override_method":"get"};
+//# sourceURL=wd-asl-ajaxsearchlite-js-before
+/* ]]> */
+
+
+
+/* <![CDATA[ */
+var a3_lazyload_params = {"apply_images":"1","apply_videos":"1"};
+//# sourceURL=jquery-lazyloadxt-js-extra
+/* ]]> */
+
+
+
+
+/* <![CDATA[ */
+var a3_lazyload_extend_params = {"edgeY":"0","horizontal_container_classnames":""};
+//# sourceURL=jquery-lazyloadxt-extend-js-extra
+/* ]]> */
+
+
+
+
+
+
+
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+//# sourceURL=wp-i18n-js-after
+/* ]]> */
+
+
+
+
+/* <![CDATA[ */
+var gform_i18n = {"datepicker":{"days":{"monday":"Mo","tuesday":"Tu","wednesday":"We","thursday":"Th","friday":"Fr","saturday":"Sa","sunday":"Su"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":1,"iconText":"Select date"}};
+var gf_legacy_multi = [];
+var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file is not allowed. Must be one of the following:","delete_file":"Delete this file","in_progress":"in progress","file_exceeds_limit":"File exceeds size limit","illegal_extension":"This type of file is not allowed.","max_reached":"Maximum number of files reached","unknown_error":"There was a problem while saving the file on the server","currently_uploading":"Please wait for the uploading to complete","cancel":"Cancel","cancel_upload":"Cancel this upload","cancelled":"Cancelled","error":"Error","message":"Message"},"vars":{"images_url":"https://factorydirectmobilehomes.com/wp-content/plugins/gravityforms/images"}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https://factorydirectmobilehomes.com/wp-content/plugins/gravityforms","number_formats":[],"spinnerUrl":"https://factorydirectmobilehomes.com/wp-content/plugins/gravityforms/images/spinner.svg","version_hash":"de17df840546a8876ce8b41b2a6e654a","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+//# sourceURL=gform_gravityforms-js-extra
+/* ]]> */
+
+
+
+
+
+
+
+/* <![CDATA[ */
+var gform_theme_config = {"common":{"form":{"honeypot":{"version_hash":"de17df840546a8876ce8b41b2a6e654a"},"ajax":{"ajaxurl":"https://factorydirectmobilehomes.com/wp-admin/admin-ajax.php","ajax_submission_nonce":"6a407923b5","i18n":{"step_announcement":"Step %1$s of %2$s, %3$s","unknown_error":"There was an unknown error processing your request. Please try again."}}}},"hmr_dev":"","public_path":"https://factorydirectmobilehomes.com/wp-content/plugins/gravityforms/assets/js/dist/","config_nonce":"6bfb3111e9"};
+//# sourceURL=gform_gravityforms_theme-js-extra
+/* ]]> */
+
+
+
+
+
+
+
+
+/* <![CDATA[ */
+var mejsL10n = {"language":"en","strings":{"mejs.download-file":"Download File","mejs.install-flash":"You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https://get.adobe.com/flashplayer/","mejs.fullscreen":"Fullscreen","mejs.play":"Play","mejs.pause":"Pause","mejs.time-slider":"Time Slider","mejs.time-help-text":"Use Left/Right Arrow keys to advance one second, Up/Down arrows to advance ten seconds.","mejs.live-broadcast":"Live Broadcast","mejs.volume-help-text":"Use Up/Down Arrow keys to increase or decrease volume.","mejs.unmute":"Unmute","mejs.mute":"Mute","mejs.volume-slider":"Volume Slider","mejs.video-player":"Video Player","mejs.audio-player":"Audio Player","mejs.captions-subtitles":"Captions/Subtitles","mejs.captions-chapters":"Chapters","mejs.none":"None","mejs.afrikaans":"Afrikaans","mejs.albanian":"Albanian","mejs.arabic":"Arabic","mejs.belarusian":"Belarusian","mejs.bulgarian":"Bulgarian","mejs.catalan":"Catalan","mejs.chinese":"Chinese","mejs.chinese-simplified":"Chinese (Simplified)","mejs.chinese-traditional":"Chinese (Traditional)","mejs.croatian":"Croatian","mejs.czech":"Czech","mejs.danish":"Danish","mejs.dutch":"Dutch","mejs.english":"English","mejs.estonian":"Estonian","mejs.filipino":"Filipino","mejs.finnish":"Finnish","mejs.french":"French","mejs.galician":"Galician","mejs.german":"German","mejs.greek":"Greek","mejs.haitian-creole":"Haitian Creole","mejs.hebrew":"Hebrew","mejs.hindi":"Hindi","mejs.hungarian":"Hungarian","mejs.icelandic":"Icelandic","mejs.indonesian":"Indonesian","mejs.irish":"Irish","mejs.italian":"Italian","mejs.japanese":"Japanese","mejs.korean":"Korean","mejs.latvian":"Latvian","mejs.lithuanian":"Lithuanian","mejs.macedonian":"Macedonian","mejs.malay":"Malay","mejs.maltese":"Maltese","mejs.norwegian":"Norwegian","mejs.persian":"Persian","mejs.polish":"Polish","mejs.portuguese":"Portuguese","mejs.romanian":"Romanian","mejs.russian":"Russian","mejs.serbian":"Serbian","mejs.slovak":"Slovak","mejs.slovenian":"Slovenian","mejs.spanish":"Spanish","mejs.swahili":"Swahili","mejs.swedish":"Swedish","mejs.tagalog":"Tagalog","mejs.thai":"Thai","mejs.turkish":"Turkish","mejs.ukrainian":"Ukrainian","mejs.vietnamese":"Vietnamese","mejs.welsh":"Welsh","mejs.yiddish":"Yiddish"}};
+//# sourceURL=mediaelement-core-js-before
+/* ]]> */
+
+
+
+
+/* <![CDATA[ */
+var _wpmejsSettings = {"pluginPath":"/wp-includes/js/mediaelement/","classPrefix":"mejs-","stretching":"responsive","audioShortcodeLibrary":"mediaelement","videoShortcodeLibrary":"mediaelement"};
+//# sourceURL=mediaelement-js-extra
+/* ]]> */
+
+
+
+/* <![CDATA[ */
+var _wpUtilSettings = {"ajax":{"url":"/wp-admin/admin-ajax.php"}};
+//# sourceURL=wp-util-js-extra
+/* ]]> */
+
+
+
+
+
+/* <![CDATA[ */
+var wpv_pagination_local = {"front_ajaxurl":"https://factorydirectmobilehomes.com/wp-admin/admin-ajax.php","calendar_image":"https://factorydirectmobilehomes.com/wp-content/plugins/wp-views/embedded/res/img/calendar.gif","calendar_text":"Select date","datepicker_min_date":null,"datepicker_max_date":null,"datepicker_min_year":"1582","datepicker_max_year":"3000","resize_debounce_tolerance":"100","datepicker_style_url":"https://factorydirectmobilehomes.com/wp-content/plugins/wp-views/vendor/toolset/toolset-common/toolset-forms/css/wpt-jquery-ui/jquery-ui-1.11.4.custom.css","wpmlLang":""};
+//# sourceURL=views-blocks-frontend-js-extra
+/* ]]> */
+
+
+
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 11) {if(typeof Placeholders != 'undefined'){
+                        Placeholders.enable();
+                    }} } );jQuery(document).on('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } ); 
+/* ]]> */
+
+
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "11", currentPage: "1", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_11" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_11";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_11" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 11, 1 );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } ); 
+/* ]]> */
+
+
+
+
+Notifications

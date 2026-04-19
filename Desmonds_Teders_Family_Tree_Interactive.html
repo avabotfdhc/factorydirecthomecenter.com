@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desmonds-Teders Family Tree</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2c5f2d;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #5d4e37;
+            font-size: 1.1em;
+        }
+
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .generation {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            position: relative;
+        }
+
+        .generation-label {
+            position: absolute;
+            left: -120px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            background: #8b4513;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .person-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 200px;
+            max-width: 280px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 3px solid #d4a574;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .person-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: #8b4513;
+        }
+
+        .generation:first-child .person-card::before {
+            display: none;
+        }
+
+        .photo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            border: 3px solid #2c5f2d;
+        }
+
+        .person-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c5f2d;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .person-dates {
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .person-spouse {
+            font-size: 0.85em;
+            color: #8b0000;
+            text-align: center;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .person-notes {
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .connector {
+            width: 100%;
+            height: 30px;
+            position: relative;
+        }
+
+        .connector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #8b4513;
+        }
+
+        .branch-line {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background: #8b4513;
+        }
+
+        .print-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2c5f2d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .print-button:hover {
+            transform: scale(1.05);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            .header {
+                box-shadow: none;
+                border: 2px solid #2c5f2d;
+            }
+            
+            .person-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 2px solid #d4a574;
+            }
+            
+            .generation-label {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .generation-label {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+            }
+            
+            .person-card {
+                min-width: 150px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌳 The Desmonds-Teders Family Tree 🌳</h1>
+        <p>Six Generations • From German Immigrants (1857) to Today</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">Prepared for Caren & Kyle Dudgeon • March 2026</p>
+    </div>
+
+    <div class="tree-container">
+        <!-- Generation 0: Immigrants -->
+        <div class="generation">
+            <div class="generation-label">Gen 0: Immigrants</div>
+            <div class="person-card">
+                <div class="photo-placeholder">👴</div>
+                <div class="person-name">Henry John Teders</div>
+                <div class="person-dates">b. 1857, Germany</div>
+                <div class="person-spouse">♥ Anna Elizabeth Riemen</div>
+                <div class="person-notes">German immigrants, settled in Avilla, IN • 12 children</div>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <!-- Generation 1 -->
+        <div class="generation">
+            <div class="generation-label">Gen 1</div>
+            <div class="person-card">
+                <div class="photo-placeholder">👴</div>
+                <div class="person-name">Edward John Teders</div>
+                <div class="person-dates">1899 - 1989</div>
+                <div class="person-spouse">♥ Catherine Cecelia Mund</div>
+                <div class="person-notes">Caren's great-grandfather • Avilla, IN</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👵</div>
+                <div class="person-name">Henrietta Teders</div>
+                <div class="person-dates">Nov 27, 1893 - May 7, 1977</div>
+                <div class="person-spouse">♥ Sister M. Martialis</div>
+                <div class="person-notes">Became a nun • Died South Bend, IN</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👴</div>
+                <div class="person-name">Joseph August Teders</div>
+                <div class="person-dates">Sep 22, 1891 - Jul 1, 1953</div>
+                <div class="person-notes">Avilla, IN • Lifelong resident</div>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <!-- Generation 2 -->
+        <div class="generation">
+            <div class="generation-label">Gen 2</div>
+            <div class="person-card">
+                <div class="photo-placeholder">👵</div>
+                <div class="person-name">Joan Catherine Teders</div>
+                <div class="person-dates">Dec 30, 1930 - Sep 14, 2016</div>
+                <div class="person-spouse">♥ Sherman J. Desmonds (1951)</div>
+                <div class="person-notes">Caren's grandmother • Avilla → Fort Wayne</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👵</div>
+                <div class="person-name">Brunetta Marie Teders</div>
+                <div class="person-dates">d. Sep 22, 2010</div>
+                <div class="person-spouse">♥ Paul E. Sible (1949)</div>
+                <div class="person-notes">Avilla, IN • 5 children</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👴</div>
+                <div class="person-name">Clifford J. Teders</div>
+                <div class="person-dates">Dec 3, 1933 - Sep 4, 2012</div>
+                <div class="person-spouse">♥ Joyce</div>
+                <div class="person-notes">U.S. Army veteran • Welder</div>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <!-- Generation 3: Subject -->
+        <div class="generation">
+            <div class="generation-label">Gen 3</div>
+            <div class="person-card" style="border-color: #2c5f2d; background: linear-gradient(135deg, #e8f5e9 0%, #fff 100%);">
+                <div class="photo-placeholder">⭐</div>
+                <div class="person-name">Sherman James Desmonds</div>
+                <div class="person-dates">Nov 11, 1930 - Jun 10, 1971</div>
+                <div class="person-spouse">♥ Joan Catherine Teders</div>
+                <div class="person-notes">Korean War Veteran • Caren's grandfather ⭐</div>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <!-- Generation 4 -->
+        <div class="generation">
+            <div class="generation-label">Gen 4</div>
+            <div class="person-card">
+                <div class="photo-placeholder">👨</div>
+                <div class="person-name">Steve Desmonds</div>
+                <div class="person-spouse">♥ Susan Desmonds</div>
+                <div class="person-notes">Caren's father • Fort Wayne, IN</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👩</div>
+                <div class="person-name">Sue Desmonds</div>
+                <div class="person-spouse">♥ Mike Moorhead</div>
+                <div class="person-notes">Daughter of Joan & Sherman</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👩</div>
+                <div class="person-name">Diane Desmonds</div>
+                <div class="person-spouse">♥ Robert A. Phillips II (1983)</div>
+                <div class="person-notes">Daughter of Joan & Sherman</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👨</div>
+                <div class="person-name">Dave Desmonds</div>
+                <div class="person-spouse">♥ Dawn Desmonds</div>
+                <div class="person-notes">Son of Joan & Sherman • Kendallville, IN</div>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <!-- Generation 5 -->
+        <div class="generation">
+            <div class="generation-label">Gen 5</div>
+            <div class="person-card" style="border-color: #8b4513;">
+                <div class="photo-placeholder">👩</div>
+                <div class="person-name">Caren Desmonds</div>
+                <div class="person-spouse">♥ Kyle Dudgeon</div>
+                <div class="person-notes">Recipient of this tree • Fort Wayne, IN</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👩</div>
+                <div class="person-name">Michelle Desmonds</div>
+                <div class="person-notes">Caren's sister</div>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <!-- Generation 6 -->
+        <div class="generation">
+            <div class="generation-label">Gen 6</div>
+            <div class="person-card" style="border-color: #4caf50;">
+                <div class="photo-placeholder">👦</div>
+                <div class="person-name">Braxton Dudgeon</div>
+                <div class="person-dates">b. Jul 8, 2017 (Age 8)</div>
+                <div class="person-notes">Son of Caren & Kyle • 6th Generation</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👧</div>
+                <div class="person-name">Jenna</div>
+                <div class="person-notes">Daughter of Michelle • Caren's niece</div>
+            </div>
+            <div class="person-card">
+                <div class="photo-placeholder">👧</div>
+                <div class="person-name">Jorja</div>
+                <div class="person-notes">Daughter of Michelle • Caren's niece</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="print-button" onclick="window.print()">🖨️ Print Family Tree</button>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add hover effects for connections
+        document.querySelectorAll('.person-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+</html>

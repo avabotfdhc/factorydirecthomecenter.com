@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDHC Single Wide Price Sheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .price-sheet {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .header .subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .header .date {
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+        
+        .table-container {
+            padding: 30px 40px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        thead {
+            background: #1e3a5f;
+            color: white;
+        }
+        
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        th:last-child {
+            text-align: right;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        tbody tr.featured {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        
+        tbody tr.featured:hover {
+            background: #c8e6c9;
+        }
+        
+        td {
+            padding: 14px 12px;
+            vertical-align: middle;
+        }
+        
+        td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+        
+        .model-name {
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+        
+        .model-no {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .type-single {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .size {
+            font-weight: 500;
+        }
+        
+        .bed-bath {
+            color: #666;
+        }
+        
+        .sqft {
+            font-weight: 500;
+        }
+        
+        .price {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .msrp {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .discount {
+            color: #4caf50;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .sale-price {
+            font-size: 16px;
+            color: #1e3a5f;
+        }
+        
+        .featured-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .disclaimer {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .page-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .contact-info p {
+            font-size: 12px;
+            color: #666;
+            margin: 4px 0;
+        }
+        
+        .contact-info strong {
+            color: #1e3a5f;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .price-sheet {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="price-sheet">
+        <div class="header">
+            <h1>Factory Direct Homes Center</h1>
+            <div class="subtitle">Single Wide Homes</div>
+            <div class="date">Price Sheet — April 2026</div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model Name</th>
+                        <th>Model No.</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Bed/Bath</th>
+                        <th>Sq. Ft.</th>
+                        <th>MSRP</th>
+                        <th>Sale Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="featured">
+                        <td>
+                            <span class="model-name">The Aspen</span>
+                            <span class="featured-badge">Best Seller</span>
+                        </td>
+                        <td class="model-no">SW-2401</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">16' × 76'</td>
+                        <td class="bed-bath">3 Bed / 2 Bath</td>
+                        <td class="sqft">1,216</td>
+                        <td>
+                            <div class="msrp">$89,900</div>
+                            <div class="discount">Save $12,000</div>
+                        </td>
+                        <td class="sale-price price">$77,900</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Birch</td>
+                        <td class="model-no">SW-2002</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">16' × 72'</td>
+                        <td class="bed-bath">3 Bed / 2 Bath</td>
+                        <td class="sqft">1,152</td>
+                        <td>
+                            <div class="msrp">$84,500</div>
+                            <div class="discount">Save $10,500</div>
+                        </td>
+                        <td class="sale-price price">$74,000</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Cedar</td>
+                        <td class="model-no">SW-1803</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">16' × 68'</td>
+                        <td class="bed-bath">2 Bed / 2 Bath</td>
+                        <td class="sqft">1,088</td>
+                        <td>
+                            <div class="msrp">$79,900</div>
+                            <div class="discount">Save $9,900</div>
+                        </td>
+                        <td class="sale-price price">$70,000</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Dogwood</td>
+                        <td class="model-no">SW-1604</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">14' × 72'</td>
+                        <td class="bed-bath">2 Bed / 1 Bath</td>
+                        <td class="sqft">1,008</td>
+                        <td>
+                            <div class="msrp">$71,500</div>
+                            <div class="discount">Save $8,500</div>
+                        </td>
+                        <td class="sale-price price">$63,000</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Elm</td>
+                        <td class="model-no">SW-1405</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">14' × 66'</td>
+                        <td class="bed-bath">2 Bed / 1 Bath</td>
+                        <td class="sqft">924</td>
+                        <td>
+                            <div class="msrp">$66,900</div>
+                            <div class="discount">Save $7,900</div>
+                        </td>
+                        <td class="sale-price price">$59,000</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Fir</td>
+                        <td class="model-no">SW-1206</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">14' × 60'</td>
+                        <td class="bed-bath">2 Bed / 1 Bath</td>
+                        <td class="sqft">840</td>
+                        <td>
+                            <div class="msrp">$61,500</div>
+                            <div class="discount">Save $7,000</div>
+                        </td>
+                        <td class="sale-price price">$54,500</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Grove</td>
+                        <td class="model-no">SW-1007</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">14' × 56'</td>
+                        <td class="bed-bath">2 Bed / 1 Bath</td>
+                        <td class="sqft">784</td>
+                        <td>
+                            <div class="msrp">$57,900</div>
+                            <div class="discount">Save $6,400</div>
+                        </td>
+                        <td class="sale-price price">$51,500</td>
+                    </tr>
+                    <tr>
+                        <td class="model-name">The Hickory</td>
+                        <td class="model-no">SW-0808</td>
+                        <td><span class="type-badge type-single">Single Wide</span></td>
+                        <td class="size">12' × 56'</td>
+                        <td class="bed-bath">1 Bed / 1 Bath</td>
+                        <td class="sqft">672</td>
+                        <td>
+                            <div class="msrp">$52,500</div>
+                            <div class="discount">Save $5,500</div>
+                        </td>
+                        <td class="sale-price price">$47,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <div class="disclaimer">
+                <strong>Important Notice:</strong> Prices shown are estimates only and subject to change without notice. 
+                Final pricing depends on options, delivery location, site preparation requirements, and current manufacturer pricing. 
+                All homes are subject to availability. Please contact us for a detailed quote specific to your needs. 
+                Prices do not include sales tax, delivery, setup, or optional features unless specified.
+            </div>
+            <div class="contact-info">
+                <p><strong>Factory Direct Homes Center</strong></p>
+                <p>Serving Indiana, Ohio, Michigan, Wisconsin, Illinois & Kentucky</p>
+                <p>📞 (574) 555-0123 | 📧 info@factorydirecthomescenter.com</p>
+                <p>🌐 www.factorydirecthomescenter.com</p>
+            </div>
+            <div class="page-info">
+                <span>Page 1 of 2</span>
+                <span>Printed: April 16, 2026</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

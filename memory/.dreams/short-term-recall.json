@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-19T22:24:23.787Z",
+  "entries": {
+    "memory:memory/2026-03-21.md:35:49": {
+      "key": "memory:memory/2026-03-21.md:35:49",
+      "path": "memory/2026-03-21.md",
+      "startLine": 35,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "- Analyzed FactoryDirectMobileHomes.com (Champion Homes Center — Topeka, IN) - Direct competitor in same state - Their strength: Real inventory photos, specific pricing, extensive content - Our strength: Modern tech stack, better design, faster site - Gap: We need real home photos and transparent pricing to compete ### Next Priorities (from Kyle): 1. Complete 50 image generation 2. Build individual floor plan pages with real content 3. Add specific pricing (\"Was/Now\" format) 4. Expand lead capture forms with qualifying questions --- Session active. More images generating in background.",
+      "recallCount": 12,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 6.1106706604361545,
+      "maxScore": 0.5494979739189148,
+      "firstRecalledAt": "2026-04-11T11:00:16.651Z",
+      "lastRecalledAt": "2026-04-19T11:00:17.467Z",
+      "queryHashes": [
+        "4a9b0c830562",
+        "ac02ab59956e",
+        "967b59470ad4",
+        "d0acf2d4e349",
+        "fdc31559c797",
+        "c32280f81e2c",
+        "7f857907f66e",
+        "27fe79a41379",
+        "7b9516051f72",
+        "256af72f8e90",
+        "2fdb9850d6d8"
+      ],
+      "recallDays": [
+        "2026-04-11",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-18",
+        "2026-04-19"
+      ],
+      "conceptTags": [
+        "factorydirectmobilehomes.com",
+        "was/now",
+        "analyzed",
+        "champion",
+        "homes",
+        "center",
+        "topeka",
+        "direct"
+      ]
+    },
+    "memory:memory/2026-04-12.md:1:32": {
+      "key": "memory:memory/2026-04-12.md:1:32",
+      "path": "memory/2026-04-12.md",
+      "startLine": 1,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "# Daily Log - April 12, 2026 ## Research Completed - **Nightly Industry Intel Scan** (cron job: 0e42cb4d-8c2b-479a-bcf4-98644788ec7e) - Comprehensive research across RSS feeds, Reddit, industry news sites, manufacturer newsrooms - Report saved to: `/research/daily_intel/2026-04-12_intel.md` ## Key Findings Summary ### Major Policy News 1. **White House Executive Order** (March 13) - Directs review of FHFA chattel lending guidelines and DOE energy standards for manufactured housing 2. **Senate Passes H.R.6644** (March 12, 89-10 vote) - \"21st Century Road to Housing Act\" includes chassis removal provision, modular financing improvements, institutional investor restrictions 3. **HR 5184** -",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.096621125936508,
+      "maxScore": 0.5461129248142242,
+      "firstRecalledAt": "2026-04-13T06:01:44.210Z",
+      "lastRecalledAt": "2026-04-17T06:51:27.301Z",
+      "queryHashes": [
+        "0e9846af71c6",
+        "cd4f48415ecd",
+        "7b9516051f72"
+      ],
+      "recallDays": [
+        "2026-04-13",
+        "2026-04-15",
+        "2026-04-17"
+      ],
+      "conceptTags": [
+        "h.r.6644",
+        "89-10",
+        "log",
+        "april",
+        "research",
+        "completed",
+        "nightly",
+        "industry"
+      ]
+    },
+    "memory:memory/2026-04-12.md:24:34": {
+      "key": "memory:memory/2026-04-12.md:24:34",
+      "path": "memory/2026-04-12.md",
+      "startLine": 24,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "- Affordability remains #1 driver (70% of residents) ## Files Created/Modified - Created: `research/daily_intel/2026-04-12_intel.md` - Created: `memory/2026-04-12.md` (this file) ## Notes - Blogwatcher RSS feeds operational, no new articles since yesterday - ManufacturedHousing.com domain now for sale (feed may need updating) - Next scan: April 13, 2026",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.5748215913772583,
+      "maxScore": 0.5331240803003311,
+      "firstRecalledAt": "2026-04-13T06:01:44.210Z",
+      "lastRecalledAt": "2026-04-17T06:01:45.267Z",
+      "queryHashes": [
+        "0e9846af71c6",
+        "cd4f48415ecd"
+      ],
+      "recallDays": [
+        "2026-04-13",
+        "2026-04-15",
+        "2026-04-17"
+      ],
+      "conceptTags": [
+        "created/modified",
+        "memory/2026-04-12.md",
+        "manufacturedhousing.com",
+        "affordability",
+        "remains",
+        "driver",
+        "residents",
+        "created"
+      ]
+    },
+    "memory:memory/2026-03-22.md:40:75": {
+      "key": "memory:memory/2026-03-22.md:40:75",
+      "path": "memory/2026-03-22.md",
+      "startLine": 40,
+      "endLine": 75,
+      "source": "memory",
+      "snippet": "- Self-contained answers for AI search ### Visual Enhancements - FadeIn animations on all pages - Staggered content reveals - Animated counters for stats - Hover effects on cards - Parallax hero sections ### Tracking Deployed - Scroll depth (25%, 50%, 75%, 90%) - Time on page milestones - Phone click tracking - Email click tracking - CTA interaction tracking ### Git Commits (Recent) - 051611d - REBUILD: Buyer's Guide page - 5e162a3 - REBUILD: Rural Indiana location page - dc324b1 - REBUILD: Kalamazoo location page - ac90bb2 - REBUILD: Toledo location page - 836150b - REBUILD: Indianapolis location page - 8a09ae0 - REBUILD: Fort Wayne location page - 90a9aa1 - REBUILD: Financing page - 013",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.0271571666002273,
+      "maxScore": 0.5265199571847915,
+      "firstRecalledAt": "2026-04-16T04:59:08.173Z",
+      "lastRecalledAt": "2026-04-19T22:24:23.787Z",
+      "queryHashes": [
+        "fdc31559c797",
+        "c1c85e01cf0f"
+      ],
+      "recallDays": [
+        "2026-04-16",
+        "2026-04-19"
+      ],
+      "conceptTags": [
+        "self-contained",
+        "self",
+        "contained",
+        "answers",
+        "visual",
+        "enhancements",
+        "fadein",
+        "animations"
+      ]
+    },
+    "memory:memory/2026-03-21.md:1:41": {
+      "key": "memory:memory/2026-03-21.md:1:41",
+      "path": "memory/2026-03-21.md",
+      "startLine": 1,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "# Memory Log — 2026-03-21 ## Website Development Session with Kyle ### Image Generation Project - Started generating 50 AI images for Factory Direct Homes Center website - Using Nano Banana Pro skill (Gemini API — free tier) - Images saved to: factorydirecthomescenter.com/public/images/ ### Images Generated & Approved: 1. ✅ Family with keys in front of home (testimonials/about) 2. ✅ Single wide exterior — cream/teal/lime 3. ✅ Double wide exterior — spacious porch 4. ✅ Sunset home exterior — golden hour 5. ✅ Dusk modular home — twilight lighting 6. ✅ Aerial community view 7. ✅ Modern white with black trim — on foundation, amazing landscape ### Batch Job Running: - 44 additional images gen",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5098903000354766,
+      "maxScore": 0.5098903000354766,
+      "firstRecalledAt": "2026-04-16T04:59:08.173Z",
+      "lastRecalledAt": "2026-04-16T04:59:08.173Z",
+      "queryHashes": [
+        "fdc31559c797"
+      ],
+      "recallDays": [
+        "2026-04-16"
+      ],
+      "conceptTags": [
+        "testimonials/about",
+        "cream/teal/lime",
+        "log",
+        "website",
+        "development",
+        "kyle",
+        "image",
+        "generation"
+      ]
+    }
+  }
+}

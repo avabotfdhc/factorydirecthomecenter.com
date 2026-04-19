@@ -1,0 +1,75 @@
+Hi Kyle,
+
+Here is your step-by-step guide for recovering your locked LinkedIn account:
+
+================================================================
+STEP 1: SUBMIT LINKEDIN'S OFFICIAL RECOVERY FORM
+================================================================
+
+This is your first and most important step. LinkedIn will verify your identity and help you regain access.
+
+Link: https://www.linkedin.com/help/linkedin/ask/TS-RHA
+
+What to include in the form:
+- Your full name
+- The email address associated with your LinkedIn account
+- Your LinkedIn profile URL (if you know it: linkedin.com/in/yourname)
+- Brief description: I am locked out of my account and suspect unauthorized access
+
+Expected response time: 24-72 hours
+
+================================================================
+STEP 2: SECURE YOUR EMAIL ACCOUNT
+================================================================
+
+Your email is the key to everything. Secure it immediately.
+
+Actions to take:
+1. Change your email password to a strong, unique passphrase
+2. Check for unauthorized forwarding rules
+3. Review recent login activity for suspicious access
+4. Enable two-factor authentication (2FA) if not already active
+5. Check if any recovery phone numbers or backup emails were changed
+
+================================================================
+STEP 3: DOCUMENT EVERYTHING
+================================================================
+
+Keep records for your reference and for LinkedIn support:
+
+- Screenshot any suspicious emails or notifications
+- Note the date/time you last had access to LinkedIn
+- List any changes you noticed before being locked out
+- Save any emails from LinkedIn about account changes
+
+================================================================
+STEP 4: ADDITIONAL RESOURCES
+================================================================
+
+LinkedIn Help Center - Compromised Accounts:
+https://www.linkedin.com/help/linkedin/answer/a1340402/reporting-a-hacked-account
+
+LinkedIn Help Center - Two-Factor Authentication:
+https://www.linkedin.com/help/linkedin/answer/531
+
+================================================================
+AFTER YOU REGAIN ACCESS
+================================================================
+
+Once LinkedIn restores your account:
+
+1. Change your LinkedIn password immediately
+2. Enable two-factor authentication on LinkedIn
+3. Review active sessions and sign out of all devices
+   Link: https://www.linkedin.com/settings/sessions
+4. Check your email addresses and phone numbers on the account
+5. Review recent posts, messages, and connection requests
+6. Check for any new trusted devices you did not add
+
+================================================================
+
+Need help with any of these steps? Reply to this email or message me directly.
+
+Best,
+Ava
+Factory Direct Homes Center

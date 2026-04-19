@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desmonds-Teders Family Tree - Editable</title>
+    <script src="https://balkan.app/js/FamilyTree.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 3px solid #2c5f2d;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2c5f2d;
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #5d4e37;
+            font-size: 1em;
+        }
+
+        .toolbar {
+            background: #2c5f2d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar button {
+            background: #fff;
+            color: #2c5f2d;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .toolbar button:hover {
+            background: #d4a574;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        #tree {
+            width: 100%;
+            height: calc(100vh - 180px);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
+        }
+
+        /* Custom node styling */
+        .family-tree-node {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border: 3px solid #d4a574;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .node-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2c5f2d;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        .node-name {
+            font-weight: bold;
+            color: #2c5f2d;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .node-dates {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .node-spouse {
+            color: #8b0000;
+            font-size: 0.8em;
+            font-style: italic;
+        }
+
+        /* Form styling */
+        #editForm {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        #editForm h2 {
+            color: #2c5f2d;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #5d4e37;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #d4a574;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5f2d;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .form-buttons button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-save {
+            background: #2c5f2d;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #1e4220;
+        }
+
+        .btn-cancel {
+            background: #ccc;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #999;
+        }
+
+        .btn-delete {
+            background: #c62828;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #8e0000;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .photo-upload {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2c5f2d;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        @media print {
+            .toolbar, #editForm, #overlay {
+                display: none !important;
+            }
+            
+            .header {
+                border-bottom: 2px solid #2c5f2d;
+            }
+            
+            #tree {
+                height: 100vh;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌳 Desmonds-Teders Family Tree</h1>
+        <p>Six Generations • Click any person to edit • Add photos and details</p>
+    </div>
+
+    <div class="toolbar">
+        <button onclick="family.expandAll()">Expand All</button>
+        <button onclick="family.collapseAll()">Collapse All</button>
+        <button onclick="addNewPerson()">+ Add Person</button>
+        <button onclick="exportData()">💾 Save Data</button>
+        <button onclick="importData()">📂 Load Data</button>
+        <button onclick="window.print()">🖨️ Print Tree</button>
+    </div>
+
+    <div id="tree"></div>
+
+    <div id="overlay" onclick="closeForm()"></div>
+
+    <div id="editForm">
+        <h2>Edit Family Member</h2>
+        <input type="hidden" id="editId">
+        
+        <div class="photo-upload">
+            <img id="photoPreview" class="photo-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23e8f5e9'/%3E%3Ctext x='50' y='55' font-size='40' text-anchor='middle'%3E👤%3C/text%3E%3C/svg%3E">
+            <br>
+            <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(event)">
+        </div>
+
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" id="editName" placeholder="Full Name">
+        </div>
+
+        <div class="form-group">
+            <label>Birth Date:</label>
+            <input type="text" id="editBirth" placeholder="e.g., Nov 11, 1930">
+        </div>
+
+        <div class="form-group">
+            <label>Death Date:</label>
+            <input type="text" id="editDeath" placeholder="e.g., Jun 10, 1971 (leave blank if living)">
+        </div>
+
+        <div class="form-group">
+            <label>Spouse:</label>
+            <input type="text" id="editSpouse" placeholder="Spouse name">
+        </div>
+
+        <div class="form-group">
+            <label>Notes:</label>
+            <textarea id="editNotes" rows="3" placeholder="Additional information..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Parent ID (for positioning):</label>
+            <input type="text" id="editParentId" placeholder="ID of parent (optional)">
+        </div>
+
+        <div class="form-buttons">
+            <button class="btn-save" onclick="savePerson()">💾 Save</button>
+            <button class="btn-cancel" onclick="closeForm()">Cancel</button>
+            <button class="btn-delete" onclick="deletePerson()">Delete</button>
+        </div>
+    </div>
+
+    <script>
+        // Initial family data - COMPLETE FAMILY TREE
+        let familyData = [
+            // Generation 0: Immigrants
+            { id: 1, pids: [2], name: "Henry John Teders", birth: "1857, Germany", death: "Indiana", spouse: "Anna Elizabeth Riemen", notes: "German immigrant • 12 children • Settled Avilla, IN", gender: "male", img: "" },
+            { id: 2, pids: [1], name: "Anna Elizabeth Riemen", birth: "1867, Germany", death: "Indiana", spouse: "Henry John Teders", notes: "German immigrant • Avilla, IN", gender: "female", img: "" },
+            
+            // Generation 1: Teders children (selected)
+            { id: 3, mid: 2, fid: 1, name: "Edward John Teders", birth: "1899", death: "1989", spouse: "Catherine Cecelia Mund", notes: "Caren's great-grandfather • Avilla, IN", gender: "male", img: "" },
+            { id: 4, mid: 2, fid: 1, name: "Henrietta Teders", birth: "Nov 27, 1893", death: "May 7, 1977", spouse: "", notes: "Sister M. Martialis • Became nun • Died South Bend, IN", gender: "female", img: "" },
+            { id: 5, mid: 2, fid: 1, name: "Joseph August Teders", birth: "Sep 22, 1891", death: "Jul 1, 1953", spouse: "", notes: "Avilla, IN • Lifelong resident", gender: "male", img: "" },
+            { id: 100, mid: 2, fid: 1, name: "Charles Henry Teders", birth: "", death: "", spouse: "", notes: "Son of Henry & Anna", gender: "male", img: "" },
+            { id: 101, mid: 2, fid: 1, name: "Maria Rose Teders", birth: "", death: "", spouse: "", notes: "Daughter of Henry & Anna", gender: "female", img: "" },
+            { id: 102, mid: 2, fid: 1, name: "Laura H. Teders", birth: "", death: "", spouse: "", notes: "Married name: Laura Knach • Avilla, IN", gender: "female", img: "" },
+            
+            // Generation 2: Joan's generation
+            { id: 6, pids: [20], mid: 2, fid: 1, name: "Joan Catherine Teders", birth: "Dec 30, 1930", death: "Sep 14, 2016", spouse: "1. Sherman Desmonds (1951) 2. Jerome Houser", notes: "Caren's grandmother • Avilla High 1949 • L.S. Ayers 23 yrs", gender: "female", img: "" },
+            { id: 20, pids: [6], name: "Sherman James Desmonds", birth: "Nov 11, 1930", death: "Jun 10, 1971", spouse: "Joan Catherine Teders", notes: "Korean War Veteran ⭐ • Indiana Rod & Wire • Catholic Cemetery Sec D", gender: "male", img: "" },
+            
+            { id: 7, mid: 2, fid: 1, name: "Brunetta Marie Teders", birth: "", death: "Sep 22, 2010", spouse: "Paul E. Sible (1949)", notes: "Avilla, IN • 5 children: Tom, Dan, Mark, David, Sharon", gender: "female", img: "" },
+            { id: 21, pids: [7], name: "Paul E. Sible", birth: "1916", death: "2007", spouse: "Brunetta Teders", notes: "", gender: "male", img: "" },
+            
+            { id: 8, pids: [22], mid: 2, fid: 1, name: "Clifford J. Teders", birth: "Dec 3, 1933", death: "Sep 4, 2012", spouse: "Joyce", notes: "U.S. Army veteran • Welder", gender: "male", img: "" },
+            { id: 22, pids: [8], name: "Joyce Teders", birth: "", death: "", spouse: "Clifford Teders", notes: "", gender: "female", img: "" },
+            
+            { id: 103, mid: 2, fid: 1, name: "Paul W. Teders", birth: "", death: "", spouse: "", notes: "WWII veteran • B&O Railroad brakeman", gender: "male", img: "" },
+            { id: 104, mid: 2, fid: 1, name: "Arnold Teders", birth: "", death: "", spouse: "", notes: "Resident of Avilla, IN", gender: "male", img: "" },
+            
+            // Clifford's children
+            { id: 23, mid: 22, fid: 8, name: "Laurie Teders", birth: "", death: "", spouse: "Greg Bowers", notes: "Children: Kayla, Nathan", gender: "female", img: "" },
+            { id: 24, mid: 22, fid: 8, name: "Jane Teders", birth: "", death: "", spouse: "", notes: "", gender: "female", img: "" },
+            { id: 25, mid: 22, fid: 8, name: "Mark Teders", birth: "", death: "", spouse: "Shelly", notes: "Children: Peyton, Jordynn", gender: "male", img: "" },
+            
+            // Generation 3: Sherman's siblings (Desmonds family)
+            { id: 105, name: "August Henry Desmonds", birth: "", death: "", spouse: "Agnes Marie Gatchell", notes: "Caren's great-grandfather • Fort Wayne, IN", gender: "male", img: "" },
+            { id: 106, pids: [105], name: "Agnes Marie Gatchell", birth: "", death: "", spouse: "August Desmonds", notes: "Caren's great-grandmother", gender: "female", img: "" },
+            
+            // Generation 4: Sherman & Joan's children
+            { id: 10, mid: 6, fid: 20, pids: [30], name: "Steve Desmonds", birth: "", death: "", spouse: "Susan Desmonds", notes: "Caren's father • Fort Wayne, IN", gender: "male", img: "" },
+            { id: 30, pids: [10], name: "Susan Desmonds", birth: "", death: "", spouse: "Steve Desmonds", notes: "Caren's mother", gender: "female", img: "" },
+            
+            { id: 11, mid: 6, fid: 20, pids: [31], name: "Sue Desmonds", birth: "", death: "", spouse: "Mike Moorhead", notes: "Daughter of Joan & Sherman", gender: "female", img: "" },
+            { id: 31, pids: [11], name: "Mike Moorhead", birth: "", death: "", spouse: "Sue Desmonds", notes: "", gender: "male", img: "" },
+            
+            { id: 12, mid: 6, fid: 20, pids: [32], name: "Diane Desmonds", birth: "", death: "", spouse: "Robert A. Phillips II", notes: "Married July 2, 1983 • Daughter of Joan & Sherman", gender: "female", img: "" },
+            { id: 32, pids: [12], name: "Robert A. Phillips II", birth: "", death: "", spouse: "Diane Desmonds", notes: "Married 1983", gender: "male", img: "" },
+            
+            { id: 13, mid: 6, fid: 20, pids: [33], name: "Dave Desmonds", birth: "", death: "", spouse: "Dawn Desmonds", notes: "Son of Joan & Sherman • Kendallville, IN", gender: "male", img: "" },
+            { id: 33, pids: [13], name: "Dawn Desmonds", birth: "", death: "", spouse: "Dave Desmonds", notes: "", gender: "female", img: "" },
+            
+            // Generation 5: Caren's generation
+            { id: 14, mid: 30, fid: 10, pids: [40], name: "Caren Desmonds", birth: "", death: "", spouse: "Kyle Dudgeon", notes: "Recipient of this tree • Fort Wayne, IN", gender: "female", img: "" },
+            { id: 40, pids: [14], name: "Kyle Dudgeon", birth: "", death: "", spouse: "Caren Desmonds", notes: "", gender: "male", img: "" },
+            
+            { id: 15, mid: 30, fid: 10, name: "Michelle Desmonds", birth: "", death: "", spouse: "", notes: "Caren's sister", gender: "female", img: "" },
+            
+            // Generation 6: Children
+            { id: 16, mid: 14, fid: 40, name: "Braxton Dudgeon", birth: "Jul 8, 2017", death: "", spouse: "", notes: "Son of Caren & Kyle • Age 8 • 6th Generation", gender: "male", img: "" },
+            { id: 17, mid: 15, name: "Jenna", birth: "", death: "", spouse: "", notes: "Daughter of Michelle • Caren's niece", gender: "female", img: "" },
+            { id: 18, mid: 15, name: "Jorja", birth: "", death: "", spouse: "", notes: "Daughter of Michelle • Caren's niece", gender: "female", img: "" },
+            
+            // Extended Sible family (Brunetta's children - Caren's 1st cousins once removed)
+            { id: 50, mid: 7, fid: 21, pids: [51], name: "Tom Sible", birth: "", death: "", spouse: "Nancy", notes: "Kendallville, IN • Son of Paul & Brunetta", gender: "male", img: "" },
+            { id: 51, pids: [50], name: "Nancy Sible", birth: "", death: "", spouse: "Tom Sible", notes: "", gender: "female", img: "" },
+            
+            { id: 52, mid: 7, fid: 21, pids: [53], name: "Dan Sible", birth: "", death: "", spouse: "Jennifer", notes: "Avilla, IN • Son of Paul & Brunetta", gender: "male", img: "" },
+            { id: 53, pids: [52], name: "Jennifer Sible", birth: "", death: "", spouse: "Dan Sible", notes: "", gender: "female", img: "" },
+            
+            { id: 54, mid: 7, fid: 21, name: "Mark Sible", birth: "", death: "", spouse: "", notes: "Avilla, IN • Son of Paul & Brunetta", gender: "male", img: "" },
+            
+            { id: 55, mid: 7, fid: 21, pids: [56], name: "David Sible", birth: "", death: "", spouse: "Joni", notes: "Kendallville, IN • Son of Paul & Brunetta", gender: "male", img: "" },
+            { id: 56, pids: [55], name: "Joni Sible", birth: "", death: "", spouse: "David Sible", notes: "", gender: "female", img: "" },
+            
+            { id: 57, mid: 7, fid: 21, pids: [58], name: "Sharon Sible", birth: "", death: "", spouse: "Keith Gillian", notes: "Rome City, IN • Daughter of Paul & Brunetta", gender: "female", img: "" },
+            { id: 58, pids: [57], name: "Keith Gillian", birth: "", death: "", spouse: "Sharon Sible", notes: "", gender: "male", img: "" },
+        ];
+
+        // Load from localStorage if available
+        const savedData = localStorage.getItem('desmondsTedersFamilyData');
+        if (savedData) {
+            familyData = JSON.parse(savedData);
+        }
+
+        // Initialize FamilyTree
+        const family = new FamilyTree(document.getElementById("tree"), {
+            mouseScrool: FamilyTree.action.zoom,
+            nodeBinding: {
+                field_0: "name",
+                field_1: "birth",
+                field_2: "death",
+                field_3: "spouse",
+                field_4: "notes",
+                img_0: "img"
+            },
+            nodes: familyData,
+            nodeMenu: {
+                details: { text: "Details" },
+                edit: { text: "Edit" },
+                add: { text: "Add" },
+                remove: { text: "Remove" }
+            },
+            editForm: {
+                generateElementsFromFields: false,
+                elements: [
+                    { type: 'textbox', label: 'Name', binding: 'name' },
+                    { type: 'textbox', label: 'Birth', binding: 'birth' },
+                    { type: 'textbox', label: 'Death', binding: 'death' },
+                    { type: 'textbox', label: 'Spouse', binding: 'spouse' },
+                    { type: 'textbox', label: 'Notes', binding: 'notes' }
+                ]
+            },
+            template: function(data) {
+                const deathText = data.death ? ` - ${data.death}` : '';
+                const spouseText = data.spouse ? `<div class="node-spouse">♥ ${data.spouse}</div>` : '';
+                const imgSrc = data.img || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Crect width='70' height='70' fill='%23e8f5e9'/%3E%3Ctext x='35' y='45' font-size='30' text-anchor='middle'%3E👤%3C/text%3E%3C/svg%3E";
+                
+                return `
+                    <div class="family-tree-node">
+                        <img class="node-photo" src="${imgSrc}" alt="${data.name}">
+                        <div class="node-name">${data.name}</div>
+                        <div class="node-dates">${data.birth}${deathText}</div>
+                        ${spouseText}
+                        ${data.notes ? `<div class="node-notes">${data.notes}</div>` : ''}
+                    </div>
+                `;
+            }
+        });
+
+        // Handle node click
+        family.on('click', function(sender, args) {
+            if (args.node) {
+                openEditForm(args.node.id);
+            }
+            return false;
+        });
+
+        function openEditForm(id) {
+            const person = familyData.find(p => p.id === id);
+            if (!person) return;
+
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = person.name || '';
+            document.getElementById('editBirth').value = person.birth || '';
+            document.getElementById('editDeath').value = person.death || '';
+            document.getElementById('editSpouse').value = person.spouse || '';
+            document.getElementById('editNotes').value = person.notes || '';
+            document.getElementById('editParentId').value = person.mid || person.fid || '';
+            
+            if (person.img) {
+                document.getElementById('photoPreview').src = person.img;
+            } else {
+                document.getElementById('photoPreview').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23e8f5e9'/%3E%3Ctext x='50' y='55' font-size='40' text-anchor='middle'%3E👤%3C/text%3E%3C/svg%3E";
+            }
+
+            document.getElementById('editForm').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeForm() {
+            document.getElementById('editForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('photoInput').value = '';
+        }
+
+        function previewPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('photoPreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function savePerson() {
+            const id = parseInt(document.getElementById('editId').value);
+            const name = document.getElementById('editName').value;
+            const birth = document.getElementById('editBirth').value;
+            const death = document.getElementById('editDeath').value;
+            const spouse = document.getElementById('editSpouse').value;
+            const notes = document.getElementById('editNotes').value;
+            const parentId = document.getElementById('editParentId').value;
+            const img = document.getElementById('photoPreview').src;
+
+            const personIndex = familyData.findIndex(p => p.id === id);
+            if (personIndex !== -1) {
+                familyData[personIndex] = {
+                    ...familyData[personIndex],
+                    name,
+                    birth,
+                    death,
+                    spouse,
+                    notes,
+                    img: img.includes('data:image') ? img : familyData[personIndex].img
+                };
+                
+                if (parentId) {
+                    const parent = familyData.find(p => p.id === parseInt(parentId));
+                    if (parent) {
+                        if (parent.gender === 'female' || !parent.gender) {
+                            familyData[personIndex].mid = parseInt(parentId);
+                        } else {
+                            familyData[personIndex].fid = parseInt(parentId);
+                        }
+                    }
+                }
+            }
+
+            saveToLocalStorage();
+            family.load(familyData);
+            closeForm();
+        }
+
+        function deletePerson() {
+            const id = parseInt(document.getElementById('editId').value);
+            if (confirm('Are you sure you want to delete this person?')) {
+                familyData = familyData.filter(p => p.id !== id);
+                saveToLocalStorage();
+                family.load(familyData);
+                closeForm();
+            }
+        }
+
+        function addNewPerson() {
+            const newId = Math.max(...familyData.map(p => p.id), 0) + 1;
+            const newPerson = {
+                id: newId,
+                name: "New Person",
+                birth: "",
+                death: "",
+                spouse: "",
+                notes: "",
+                img: ""
+            };
+            familyData.push(newPerson);
+            saveToLocalStorage();
+            family.load(familyData);
+            openEditForm(newId);
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('desmondsTedersFamilyData', JSON.stringify(familyData));
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(familyData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'desmonds_teders_family_data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('Family data saved! Download started.');
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            familyData = JSON.parse(e.target.result);
+                            saveToLocalStorage();
+                            family.load(familyData);
+                            alert('Family data loaded successfully!');
+                        } catch (err) {
+                            alert('Error loading file: ' + err.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeForm();
+            }
+        });
+    </script>
+</body>
+</html>
