@@ -68,6 +68,9 @@ export default function ContactForm() {
       const lastName = data.get("lastName")?.toString() || "";
       const email = data.get("email")?.toString() || "";
       const phone = data.get("phone")?.toString() || "";
+      const landStatus = data.get("landStatus")?.toString() || "not_specified";
+      const timeframe = data.get("timeframe")?.toString() || "not_specified";
+      const financingStatus = data.get("financingStatus")?.toString() || "not_specified";
       
       // Track lead submission with full data
       trackLeadFormSubmit("contact_page_main", {
@@ -76,6 +79,9 @@ export default function ContactForm() {
         email: email,
         phone: phone,
         interest: interest,
+        landStatus: landStatus,
+        timeframe: timeframe,
+        financingStatus: financingStatus,
         value: 50000, // Estimated minimum lead value
         currency: "USD",
       });
@@ -207,13 +213,49 @@ export default function ContactForm() {
                   <div>
                     <label htmlFor="interest" className="block text-sm font-medium mb-2">I&rsquo;m Interested In</label>
                     <select id="interest" name="interest" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
-                      <option value="">Select an option</option>
+                      <option value="">Select an option...</option>
                       <option value="single-wide">Single Wide Home</option>
                       <option value="double-wide">Double Wide Home</option>
                       <option value="modular">Modular Home</option>
                       <option value="financing">Financing Information</option>
                       <option value="general">General Information</option>
                     </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="landStatus" className="block text-sm font-medium mb-2">Do you have land for the home?</label>
+                    <select id="landStatus" name="landStatus" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
+                      <option value="">Select an option...</option>
+                      <option value="yes-owned">Yes, I own land</option>
+                      <option value="yes-purchasing">Yes, in the process of buying</option>
+                      <option value="no-need-land">No, I need to find land</option>
+                      <option value="park">Placing in a manufactured home community / park</option>
+                      <option value="unsure">Not sure yet</option>
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="timeframe" className="block text-sm font-medium mb-2">Expected Timeframe</label>
+                      <select id="timeframe" name="timeframe" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
+                        <option value="">Select timeframe...</option>
+                        <option value="asap">ASAP (0-3 Months)</option>
+                        <option value="3-6-months">3-6 Months</option>
+                        <option value="6-12-months">6-12 Months</option>
+                        <option value="1-year-plus">1+ Year out</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="financingStatus" className="block text-sm font-medium mb-2">Financing Status</label>
+                      <select id="financingStatus" name="financingStatus" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
+                        <option value="">Select status...</option>
+                        <option value="cash">Cash Buyer</option>
+                        <option value="pre-approved">Pre-approved</option>
+                        <option value="need-financing">Need to apply for financing</option>
+                        <option value="unsure">Not sure / Exploring options</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>
