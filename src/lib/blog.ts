@@ -179,8 +179,29 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "Modern manufactured home on owned land showing appreciating property value",
     topics: ["manufactured-homes", "first-time-buyers", "buying-process"],
     cta: { text: "See our homes and start building equity.", href: "/floor-plans", label: "View our homes" },
-    faqs: [],
-    published: false,
+    faqs: [
+      {
+        question: "Do manufactured homes go up in value?",
+        answer: "Yes. FHFA data shows manufactured homes on owned land appreciated 211.8% between 2000 and 2024, closely tracking site-built home appreciation. The key factors are land ownership, permanent foundation installation, real property titling, and consistent maintenance. Homes on leased lots appreciate more slowly because the land value is not included.",
+      },
+      {
+        question: "How much does a manufactured home appreciate per year?",
+        answer: "Manufactured homes on owned land have averaged roughly 5% to 7% annual appreciation over the past two decades, varying by region and market conditions. This is comparable to site-built homes in the same markets. Homes in areas with strong job growth and housing demand tend to appreciate faster.",
+      },
+      {
+        question: "Do manufactured homes on permanent foundations appreciate more?",
+        answer: "Yes. A permanent foundation classifies the home as real property, which improves appraisal values, qualifies you for conventional mortgages, and makes the home more attractive to future buyers. Foundation costs of $4,000 to $15,000 are typically recovered many times over in improved appreciation and financing terms.",
+      },
+      {
+        question: "Why do people say manufactured homes lose value?",
+        answer: "This myth originates from pre-1976 mobile homes that were poorly built and did depreciate, and from homes on leased land that do not benefit from land appreciation. Modern manufactured homes built to HUD code and placed on owned land with permanent foundations appreciate comparably to site-built homes.",
+      },
+      {
+        question: "How can I increase my manufactured home's resale value?",
+        answer: "Own the land, install a permanent foundation, title the home as real property, maintain the roof and HVAC systems, upgrade to energy-efficient windows, and invest in curb appeal like landscaping and skirting. Budget 1% to 2% of your home's value annually for maintenance to protect long-term value.",
+      },
+    ],
+    published: true,
   },
   {
     slug: "2025-hud-code-update",
@@ -197,8 +218,29 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "New manufactured home built to 2025 HUD code standards",
     topics: ["manufactured-homes", "hud-standards", "champion-homes"],
     cta: { text: "Browse homes built to the latest HUD standards.", href: "/floor-plans", label: "Browse HUD-code homes" },
-    faqs: [],
-    published: false,
+    faqs: [
+      {
+        question: "What is the HUD code for manufactured homes?",
+        answer: "The HUD code (24 CFR 3280) is the federal construction standard that all manufactured homes must meet. Established in 1976, it covers structural design, fire safety, plumbing, electrical systems, thermal protection, and energy efficiency. Every manufactured home carries a red HUD certification label proving it was built to these standards.",
+      },
+      {
+        question: "What changed in the 2025 HUD code update?",
+        answer: "The 2025 update significantly improved energy efficiency requirements including higher insulation R-values, better window thermal performance, stricter air sealing standards, and improved duct insulation. It also updated structural wind and snow load requirements, moisture management provisions, and added standardized accessibility feature specifications.",
+      },
+      {
+        question: "Will the new HUD code make manufactured homes more expensive?",
+        answer: "Industry estimates suggest a 3% to 5% increase in base home prices due to improved materials and tighter construction standards. However, the enhanced energy efficiency typically saves homeowners $400 to $600 per year in utility costs, offsetting the higher purchase price within 3 to 5 years.",
+      },
+      {
+        question: "Do Champion homes meet the 2025 HUD code?",
+        answer: "Yes. Champion Home Builders has been building ahead of HUD code minimums for years. Many features in the 2025 update — such as R-38 ceiling insulation, low-E windows, and enhanced air sealing — were already available in Champion's Energy Smart packages before the new code required them.",
+      },
+      {
+        question: "What is the red label on a manufactured home?",
+        answer: "The red HUD certification label is affixed to the exterior of every manufactured home during factory construction. It certifies that the home was built to federal HUD standards and inspected by a HUD-approved third-party agency. The label includes a unique serial number for tracking and verification purposes.",
+      },
+    ],
+    published: true,
   },
   {
     slug: "energy-upgrades-manufactured-home-rebates",
@@ -215,8 +257,29 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "Energy-efficient manufactured home with modern upgrades",
     topics: ["manufactured-homes", "modular"],
     cta: { text: "Get a quote on energy-efficient home options.", href: "/contact", label: "Get an upgrade quote" },
-    faqs: [],
-    published: false,
+    faqs: [
+      {
+        question: "What energy rebates are available for manufactured homes in 2026?",
+        answer: "The federal 25C tax credit provides up to $3,200 per year: $2,000 for heat pumps, $1,200 for insulation and air sealing, $600 for windows. The HOMES rebate program offers point-of-sale discounts up to $8,000 for heat pumps for low-income households. Utility companies also offer rebates for high-efficiency HVAC and insulation upgrades.",
+      },
+      {
+        question: "What is the best energy upgrade for a manufactured home?",
+        answer: "Insulation upgrades deliver the highest return on investment for most manufactured homes. Upgrading ceiling insulation from R-14 to R-38 can cut heating costs by 20% to 30%, saving $300 to $600 per year. HVAC replacement with a heat pump is the second-best upgrade, potentially saving $400 to $900 annually.",
+      },
+      {
+        question: "Are manufactured homes Energy Star certified?",
+        answer: "Some are. The EPA's Energy Star program certifies manufactured homes that are approximately 30% more efficient than standard HUD code construction. Champion Home Builders offers Energy Star-certified models featuring enhanced insulation, low-E windows, high-efficiency HVAC, and tight building envelopes. Ask your dealer about Energy Star options.",
+      },
+      {
+        question: "How much can I save with energy upgrades on a manufactured home?",
+        answer: "A comprehensive upgrade plan including a heat pump, insulation, and windows can save $900 to $2,000 per year in energy costs. With federal tax credits covering roughly $3,500 of a $13,000 total investment, the net cost of about $9,500 pays for itself in 5 to 10 years through energy savings.",
+      },
+      {
+        question: "Does the Inflation Reduction Act apply to manufactured homes?",
+        answer: "Yes. The IRA's energy efficiency tax credits and HOMES rebate program apply to manufactured homes just as they do to site-built homes. Eligible upgrades include heat pumps, insulation, windows, doors, water heaters, and electrical panel upgrades. The 25C tax credit resets annually, so you can spread upgrades across multiple years.",
+      },
+    ],
+    published: true,
   },
   {
     slug: "manufactured-home-insurance-guide",
@@ -233,8 +296,29 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "Protected manufactured home representing insurance coverage",
     topics: ["manufactured-homes", "buying-process", "first-time-buyers"],
     cta: { text: "Download our free insurance comparison guide.", href: "/guides/buyers-guide", label: "Get a free insurance guide" },
-    faqs: [],
-    published: false,
+    faqs: [
+      {
+        question: "How much does manufactured home insurance cost?",
+        answer: "Manufactured home insurance averages $700 to $1,500 per year nationally. A single-wide on a permanent foundation typically costs $700 to $1,000 per year, while a double-wide without a permanent foundation runs $1,100 to $1,500. Your age of home, location, foundation type, and coverage limits all affect the final premium.",
+      },
+      {
+        question: "What type of insurance policy covers a manufactured home?",
+        answer: "Manufactured homes use an HO-7 policy, specifically designed for factory-built homes. It provides dwelling coverage, personal property protection, liability coverage, and additional living expenses — the same categories as a standard HO-3 homeowner's policy. Homes on permanent foundations titled as real property may qualify for a standard HO-3 instead.",
+      },
+      {
+        question: "Does a permanent foundation lower manufactured home insurance?",
+        answer: "Yes. A permanent foundation can reduce your manufactured home insurance premium by 10% to 20%. Permanent foundations lower the risk of wind damage and structural shifting, which insurers reward with lower rates. They also make your home eligible for standard HO-3 policies, which are more competitively priced than HO-7 policies.",
+      },
+      {
+        question: "What is the difference between replacement cost and actual cash value for manufactured home insurance?",
+        answer: "Replacement cost pays to rebuild or replace your home at current construction prices. Actual cash value (ACV) pays the depreciated value, which could be tens of thousands less than replacement cost on an older home. Replacement cost policies cost $100 to $200 more per year but provide significantly better protection after a total loss.",
+      },
+      {
+        question: "How can I lower my manufactured home insurance premium?",
+        answer: "Bundle home and auto insurance for 10% to 15% savings. Install a permanent foundation for 10% to 20% off. Maintain a claims-free record for 5% to 10% discount. Add security features like smoke detectors and deadbolts. Pay the annual premium in full instead of monthly. Shop at least three quotes since rates vary 30% to 50% between companies.",
+      },
+    ],
+    published: true,
   },
   {
     slug: "fastest-growing-housing-segment-2026",
@@ -251,8 +335,14 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "Row of new manufactured homes representing industry growth",
     topics: ["manufactured-homes", "champion-homes", "factory-direct"],
     cta: { text: "Stay informed with market updates.", href: "/contact", label: "Subscribe to newsletter" },
-    faqs: [],
-    published: false,
+    faqs: [
+      { question: "How fast is the manufactured housing industry growing in 2026?", answer: "Manufactured home shipments are projected to reach 130,000 to 140,000 units in 2026, up roughly 12% from 2025 levels. Multi-section home shipments are growing even faster at approximately 18% year over year. This makes manufactured housing the fastest-growing segment of the U.S. housing market while site-built housing starts remain flat." },
+      { question: "Why are manufactured homes so much cheaper than site-built homes?", answer: "Factory construction eliminates weather delays, reduces material waste by up to 30%, and leverages assembly-line efficiency. The average new manufactured home costs approximately $82,000 for a single section and $127,000 for a multi-section, compared to over $420,000 for the median site-built home." },
+      { question: "Who is buying manufactured homes in 2026?", answer: "First-time buyers priced out of the site-built market are the largest growth segment. Downsizing retirees, rural families in areas with limited housing stock, veterans using VA loans, and small-scale real estate investors are also driving demand. Many buyers previously expected to purchase site-built homes." },
+      { question: "Are new manufactured homes good quality?", answer: "Yes. Modern manufactured homes are built to federal HUD code standards covering structural design, fire safety, energy efficiency, and durability. The 2025 HUD code update further raised these standards. Champion homes feature drywall interiors, residential-grade cabinetry, energy-efficient HVAC, and floor plans that rival custom-built homes." },
+      { question: "Are zoning laws changing for manufactured homes?", answer: "Yes. Over 20 states have introduced or passed legislation in the last three years limiting local governments from excluding HUD-code manufactured homes from residential zones. Federal HUD rulemaking is adding additional pressure. Indiana has been relatively friendly, and more counties are updating ordinances to welcome modern homes on permanent foundations." },
+    ],
+    published: true,
   },
   {
     slug: "land-vs-community-manufactured-home",
@@ -269,8 +359,14 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "Manufactured home on private land in a rural setting",
     topics: ["manufactured-homes", "buying-process", "zoning", "financing", "rural"],
     cta: { text: "Talk to an advisor about your best placement options.", href: "/contact", label: "Talk to an advisor" },
-    faqs: [],
-    published: false,
+    faqs: [
+      { question: "How much does lot rent cost in a manufactured home community?", answer: "In Indiana, manufactured home community lot rent typically ranges from $250 to $500 per month depending on location and amenities. Some communities include water, sewer, and trash in the lot rent while others charge separately. Lot rent typically increases 2 to 5 percent annually." },
+      { question: "Do manufactured homes on owned land appreciate in value?", answer: "Yes. Federal Housing Finance Agency data shows manufactured homes on owned land appreciated 211.8% between 2000 and 2024. The key factor is land ownership — homes classified as real property on owned land build equity in both the home and land. Homes in communities on leased lots do not build land equity." },
+      { question: "What is the difference between a chattel loan and a mortgage for manufactured homes?", answer: "A chattel loan finances the home as personal property with higher interest rates of 8 to 12 percent and shorter terms of 15 to 20 years. A mortgage finances the home as real property with rates of 6 to 8 percent and 30-year terms. You need owned land and a permanent foundation to qualify for a mortgage." },
+      { question: "Can you move a manufactured home out of a community?", answer: "Technically yes, but it is expensive and often impractical. Moving a manufactured home typically costs $5,000 to $15,000 or more depending on distance, permits, and site preparation at the new location. The home must be re-inspected and re-permitted. For most owners, selling in place is more practical." },
+      { question: "What are Indiana property taxes on a manufactured home?", answer: "In Indiana, manufactured homes on owned land taxed as real property benefit from the state homestead property tax cap of 1% of assessed value. Homes titled as personal property in communities pay an excise tax instead, which is typically lower initially but does not include the homestead deduction or tax cap protections." },
+    ],
+    published: true,
   },
   {
     slug: "va-loans-manufactured-homes-veterans-guide",
@@ -287,8 +383,14 @@ export const blogPosts: BlogPost[] = [
     heroImageAlt: "Veteran family in front of their new manufactured home purchased with VA loan",
     topics: ["va-loans", "financing", "manufactured-homes", "first-time-buyers"],
     cta: { text: "Contact us to discuss VA loan options for manufactured homes.", href: "/contact", label: "Contact us" },
-    faqs: [],
-    published: false,
+    faqs: [
+      { question: "Can you use a VA loan to buy a manufactured home?", answer: "Yes. The VA loan program allows eligible veterans and active-duty service members to purchase manufactured homes with zero down payment. The home must be on a permanent foundation, carry the HUD certification label, have at least 400 square feet of living space, and be classified as real property." },
+      { question: "What foundation does a manufactured home need for a VA loan?", answer: "A VA loan requires the manufactured home to be on a permanent foundation engineered by a licensed professional engineer. Acceptable types include pier-and-beam, concrete slab, and full basement foundations. The wheels, axles, and hitch must be removed, and the home must be permanently affixed per HUD and VA standards." },
+      { question: "Is there a down payment required for a VA loan on a manufactured home?", answer: "No. VA loans require zero down payment for manufactured homes that meet VA property requirements. A one-time VA funding fee of 2.15% applies for first-time use but can be rolled into the loan amount. Veterans with service-connected disabilities are exempt from the funding fee entirely." },
+      { question: "Do VA loans for manufactured homes have PMI?", answer: "No. VA loans never require private mortgage insurance regardless of the down payment amount. This saves manufactured home buyers approximately $100 to $200 per month compared to conventional loans with less than 20% down. Over a 30-year loan term, eliminating PMI saves between $36,000 and $72,000." },
+      { question: "How long does it take to close a VA loan on a manufactured home?", answer: "A VA loan for a manufactured home typically takes 30 to 45 days from application to closing. The timeline includes obtaining a Certificate of Eligibility, VA appraisal, foundation engineering certification, and underwriting. Working with an experienced VA lender and having documentation ready keeps the process on the shorter end." },
+    ],
+    published: true,
   },
 ];
 

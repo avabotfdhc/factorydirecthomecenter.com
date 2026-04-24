@@ -15,3 +15,4 @@ export const metadata = generateLocationMetadata({ city: locationData.city, stat
 
 export default function ButlerPage() {
   return <LocationPageTemplate {...locationData} />;
+}
