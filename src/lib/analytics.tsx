@@ -43,6 +43,9 @@ export interface LeadData {
   timeline?: string;
   value?: number;
   currency?: string;
+  landStatus?: string;
+  timeframe?: string;
+  financingStatus?: string;
 }
 
 // ============================================
