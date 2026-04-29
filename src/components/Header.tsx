@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/inventory", label: "Inventory" },
   { href: "/locations", label: "Locations" },
   { href: "/guides", label: "Guides" },
+  { href: "/resources", label: "Resources" },
   { href: "/financing", label: "Financing" },
   { href: "/about", label: "About" },
   { href: "/contact-us", label: "Contact" },
