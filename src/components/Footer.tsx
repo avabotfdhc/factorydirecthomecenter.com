@@ -35,6 +35,8 @@ export function Footer() {
                 { href: "/floor-plans", label: "Floor Plans" },
                 { href: "/inventory", label: "Available Homes" },
                 { href: "/financing", label: "Financing" },
+                { href: "/resources", label: "Resources" },
+                { href: "/guides", label: "Guides" },
                 { href: "/blog", label: "Blog" },
                 { href: "/about", label: "About Us" },
                 { href: "/contact-us", label: "Contact" },

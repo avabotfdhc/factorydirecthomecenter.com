@@ -180,7 +180,7 @@ const homeProducts = [
   }
 ];
 
-// Categories with full data
+// Categories with full data - using actual slugs from floor-plans.ts
 const categories = [
   {
     id: "single-wide",
@@ -193,35 +193,35 @@ const categories = [
       sqft: "500 – 1,200",
       beds: "1–3",
       baths: "1–2",
-      price: "From $50,000",
+      price: "From $45,000",
     },
     models: [
       {
         name: "Aspire 1456",
-        sqft: "1,008",
-        beds: 2,
-        baths: 2,
-        highlight: "Open-concept kitchen & living",
-        price: "$55,000",
-        slug: "aspire-1456"
-      },
-      {
-        name: "Aspire 1672",
-        sqft: "1,152",
-        beds: 3,
-        baths: 2,
-        highlight: "Master suite with walk-in closet",
-        price: "$62,000",
-        slug: "aspire-1672"
-      },
-      {
-        name: "Dutch 1460",
-        sqft: "840",
+        sqft: "747",
         beds: 2,
         baths: 1,
-        highlight: "Compact & affordable starter home",
+        highlight: "Open-concept kitchen & living",
         price: "$52,000",
-        slug: "dutch-1460"
+        slug: "1456"
+      },
+      {
+        name: "Aspire 1460",
+        sqft: "800",
+        beds: 2,
+        baths: 1,
+        highlight: "Spacious 2-bed, 2-bath option available",
+        price: "$54,000",
+        slug: "1460"
+      },
+      {
+        name: "Aspire 1476",
+        sqft: "1,013",
+        beds: 3,
+        baths: 2,
+        highlight: "Over 1,000 sq ft in single wide",
+        price: "$65,000",
+        slug: "1476"
       },
     ],
   },
@@ -283,31 +283,31 @@ const categories = [
     },
     models: [
       {
-        name: "Aspire Modular 2860",
-        sqft: "1,680",
-        beds: 3,
+        name: "Henderson 3276",
+        sqft: "2,304",
+        beds: 4,
         baths: 2,
-        highlight: "Open floor plan with mudroom entry",
-        price: "$110,000",
-        slug: "aspire-modular-2860"
+        highlight: "Spacious 4-bedroom modular design",
+        price: "$125,000",
+        slug: "henderson-3276"
       },
       {
-        name: "Aspire Modular 3268",
+        name: "Madison 3268",
         sqft: "2,176",
         beds: 4,
         baths: 3,
         highlight: "Luxury master with en-suite & walk-in",
         price: "$135,000",
-        slug: "aspire-modular-3268"
+        slug: "madison-3268"
       },
       {
-        name: "Aspire Modular 3276",
-        sqft: "2,432",
-        beds: 5,
-        baths: 3,
-        highlight: "Full basement-ready, multi-generational design",
-        price: "$145,000",
-        slug: "aspire-modular-3276"
+        name: "Georgetown 2864",
+        sqft: "1,792",
+        beds: 3,
+        baths: 2,
+        highlight: "Open concept with modern finishes",
+        price: "$115,000",
+        slug: "georgetown-2864"
       },
     ],
   },
@@ -438,9 +438,9 @@ export default function FloorPlansPage() {
       </nav>
 
       {/* ============================================
-          HERO SECTION
+          HERO SECTION - COMPACT
           ============================================ */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
+      <section className="relative pt-24 pb-12 lg:pt-32 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-home.jpg"
@@ -456,24 +456,23 @@ export default function FloorPlansPage() {
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="max-w-3xl">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 mb-4">
                 <div className="decorative-line" />
                 <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">
                   Champion Home Builders
                 </span>
               </div>
               
-              <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
+              <h1 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight mb-4">
                 Manufactured Home{" "}
                 <span className="italic text-[var(--color-teal-light)]">
                   Floor Plans
                 </span>
               </h1>
               
-              <p className="text-lg text-white/60 leading-relaxed max-w-xl">
+              <p className="text-base text-white/60 leading-relaxed max-w-xl">
                 Browse 20+ customizable floor plans. Single wide from $50K, 
-                double wide from $80K, modular from $100K. Every plan is 
-                customizable to fit your lifestyle.
+                double wide from $80K, modular from $100K.
               </p>
             </div>
           </FadeIn>
@@ -481,40 +480,37 @@ export default function FloorPlansPage() {
       </section>
 
       {/* ============================================
-          AEO CONTENT SECTION
+          QUICK FILTER TABS
           ============================================ */}
-      <section className="py-16 bg-white border-b border-[var(--color-charcoal)]/5">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <FadeIn direction="up">
-            <div className="text-center mb-10">
-              <H2 className="font-serif text-3xl font-light mb-4">
-                Choosing the Right Floor Plan
-              </H2>
-              <p className="text-[var(--color-gray)]">
-                Common questions about our home floor plans and options
-              </p>
-            </div>
-          </FadeIn>
-          
-          <div className="space-y-6">
-            {aeoContent.map((section, idx) => (
-              <FadeIn key={idx} direction="up" delay={idx * 100}>
-                <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
-                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
-                  <p className="text-[var(--color-gray)] leading-relaxed">
-                    <strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong>{" "}
-                    {section.supportingDetails.join(" ")}
-                  </p>
-                </div>
-              </FadeIn>
+      <section className="sticky top-0 z-30 bg-white border-b border-[var(--color-charcoal)]/10 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center gap-1 py-4 overflow-x-auto">
+            <span className="text-sm font-medium text-[var(--color-gray)] mr-4 whitespace-nowrap">
+              Filter by:
+            </span>
+            {categories.map((cat) => (
+              <a
+                key={cat.id}
+                href={`#${cat.id}`}
+                className="px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-cream-dark)] text-[var(--color-charcoal)] hover:bg-[var(--color-teal)] hover:text-white transition-colors whitespace-nowrap"
+              >
+                {cat.title.replace(" Homes", "")}
+              </a>
             ))}
+            <a
+              href="#all-plans"
+              className="px-4 py-2 text-sm font-medium rounded-full bg-[var(--color-teal)] text-white whitespace-nowrap"
+            >
+              View All
+            </a>
           </div>
         </div>
       </section>
 
       {/* ============================================
-          HOME CATEGORIES
+          HOME CATEGORIES - FLOOR PLANS FIRST
           ============================================ */}
+      <div id="all-plans">
       {categories.map((cat, catIdx) => (
         <section
           key={cat.id}
@@ -610,6 +606,40 @@ export default function FloorPlansPage() {
           </div>
         </section>
       ))}
+
+      </div>
+
+      {/* ============================================
+          AEO CONTENT SECTION - MOVED BELOW FLOOR PLANS
+          ============================================ */}
+      <section className="py-16 bg-white border-y border-[var(--color-charcoal)]/5">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-10">
+              <H2 className="font-serif text-3xl font-light mb-4">
+                Choosing the Right Floor Plan
+              </H2>
+              <p className="text-[var(--color-gray)]">
+                Common questions about our home floor plans and options
+              </p>
+            </div>
+          </FadeIn>
+          
+          <div className="space-y-6">
+            {aeoContent.map((section, idx) => (
+              <FadeIn key={idx} direction="up" delay={idx * 100}>
+                <div className="bg-[var(--color-cream-dark)] rounded-lg p-6 border-l-4 border-[var(--color-teal)]">
+                  <H3 className="font-semibold text-lg mb-3">{section.question}</H3>
+                  <p className="text-[var(--color-gray)] leading-relaxed">
+                    <strong className="text-[var(--color-charcoal)]">{section.directAnswer}</strong>{" "}
+                    {section.supportingDetails.join(" ")}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ============================================
           FLOOR PLAN COMPARISON
