@@ -56,7 +56,7 @@ export default function ContactForm() {
     return errs;
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const errs = validate(e.currentTarget);
     setErrors(errs);
@@ -71,22 +71,55 @@ export default function ContactForm() {
       const landStatus = data.get("landStatus")?.toString() || "not_specified";
       const timeframe = data.get("timeframe")?.toString() || "not_specified";
       const financingStatus = data.get("financingStatus")?.toString() || "not_specified";
+      const message = data.get("message")?.toString() || "";
       
-      // Track lead submission with full data
-      trackLeadFormSubmit("contact_page_main", {
-        id: `lead_${Date.now()}`,
-        name: `${firstName} ${lastName}`.trim(),
-        email: email,
-        phone: phone,
-        interest: interest,
-        landStatus: landStatus,
-        timeframe: timeframe,
-        financingStatus: financingStatus,
-        value: 50000, // Estimated minimum lead value
-        currency: "USD",
-      });
-      
-      setSubmitted(true);
+      try {
+        // Submit to API
+        const response = await fetch("/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            phone,
+            interest,
+            landStatus,
+            timeframe,
+            financingStatus,
+            message,
+            source: "Contact Form",
+            pageUrl: window.location.href,
+          }),
+        });
+
+        if (response.ok) {
+          // Track lead submission with full data
+          trackLeadFormSubmit("contact_page_main", {
+            id: `lead_${Date.now()}`,
+            name: `${firstName} ${lastName}`.trim(),
+            email: email,
+            phone: phone,
+            interest: interest,
+            landStatus: landStatus,
+            timeframe: timeframe,
+            financingStatus: financingStatus,
+            value: 50000,
+            currency: "USD",
+          });
+          
+          setSubmitted(true);
+        } else {
+          const error = await response.json();
+          console.error("Lead submission failed:", error);
+          trackLeadFormError("contact_page_main", ["submission_failed"]);
+          alert("There was an error submitting your message. Please try again or call us directly.");
+        }
+      } catch (error) {
+        console.error("Lead submission error:", error);
+        trackLeadFormError("contact_page_main", ["network_error"]);
+        alert("There was an error submitting your message. Please try again or call us directly.");
+      }
     } else {
       trackLeadFormError("contact_page_main", Object.keys(errs));
     }
