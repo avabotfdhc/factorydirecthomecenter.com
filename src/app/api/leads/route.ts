@@ -1,163 +1,238 @@
 import { NextResponse } from "next/server";
 
 // ============================================
-// LEAD CAPTURE API - Website to Backend
+// LEAD CAPTURE API — factorydirecthomescenter.com
 // ============================================
-// Connects Next.js website to Node.js/MySQL backend
-// Endpoint: POST /api/leads
+// POST /api/leads
+//
+// Channel 1 — Email via Resend
+//   Requires env vars (add via: vercel env add <VAR> production):
+//     RESEND_API_KEY   — from resend.com
+//     LEAD_EMAIL_TO    — e.g. sales@factorydirecthomescenter.com
+//
+// Channel 2 — Google Sheets
+//   Requires env vars:
+//     GOOGLE_SHEETS_ID          — the spreadsheet ID from the URL
+//     GOOGLE_SERVICE_ACCOUNT_KEY — full JSON key (base64-encoded)
+//
+// If a channel's env vars are missing it is skipped silently —
+// the contact form will still show the thank-you screen.
 // ============================================
 
-const BACKEND_API_URL = process.env.BACKEND_API_URL || "https://api.factorydirecthomescenter.com";
-const BACKEND_API_KEY = process.env.BACKEND_API_KEY;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const LEAD_EMAIL_TO = process.env.LEAD_EMAIL_TO ?? "sales@factorydirecthomescenter.com";
+const GOOGLE_SHEETS_ID = process.env.GOOGLE_SHEETS_ID;
+const GOOGLE_SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
 
 export async function POST(request: Request) {
+  let body: Record<string, string>;
+
   try {
-    const body = await request.json();
-    
-    // Validate required fields
-    if (!body.firstName || !body.lastName || !body.email) {
-      return NextResponse.json(
-        { error: "Missing required fields: firstName, lastName, email" },
-        { status: 400 }
-      );
-    }
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
 
-    // Map website form data to backend format
-    // Backend expects: firstName, lastName, email, phoneNo, financeOption, homePlacementOption, deliveryState, message, floorTitle
-    const backendData = {
-      firstName: body.firstName,
-      lastName: body.lastName,
-      email: body.email,
-      phoneNo: body.phone || body.phoneNo || "",
-      // Map financing status to financeOption ID (backend uses IDs)
-      financeOption: mapFinancingOption(body.financingStatus),
-      // Map land status to homePlacementOption ID
-      homePlacementOption: mapPlacementOption(body.landStatus),
-      // Map delivery state - backend expects state ID
-      deliveryState: mapDeliveryState(body.deliveryState || body.state),
-      message: body.message || "",
-      floorTitle: body.interest || "",
-    };
+  // Basic validation
+  if (!body.firstName || !body.lastName || !body.email) {
+    return NextResponse.json(
+      { error: "Missing required fields: firstName, lastName, email" },
+      { status: 400 }
+    );
+  }
 
-    console.log("Submitting lead to backend:", backendData);
+  const lead = {
+    firstName: body.firstName ?? "",
+    lastName: body.lastName ?? "",
+    email: body.email ?? "",
+    phone: body.phone ?? "",
+    interest: body.interest ?? "",
+    landStatus: body.landStatus ?? "",
+    timeframe: body.timeframe ?? "",
+    financingStatus: body.financingStatus ?? "",
+    message: body.message ?? "",
+    source: body.source ?? "Contact Form",
+    pageUrl: body.pageUrl ?? "",
+    submittedAt: new Date().toISOString(),
+  };
 
-    // Submit to backend API
-    const response = await fetch(`${BACKEND_API_URL}/api/user/enquiryform/submit`, {
+  console.log("[leads] New submission:", lead.email, lead.firstName, lead.lastName);
+
+  // Run both channels concurrently; neither failing blocks the response
+  const [emailResult, sheetsResult] = await Promise.allSettled([
+    sendEmail(lead),
+    appendToSheet(lead),
+  ]);
+
+  if (emailResult.status === "rejected") {
+    console.error("[leads] Email channel failed:", emailResult.reason);
+  }
+  if (sheetsResult.status === "rejected") {
+    console.error("[leads] Sheets channel failed:", sheetsResult.reason);
+  }
+
+  return NextResponse.json({ success: true, message: "Lead received" });
+}
+
+// ─── Channel 1: Resend email ───────────────────────────────────────────────
+
+async function sendEmail(lead: Record<string, string>) {
+  if (!RESEND_API_KEY) {
+    console.log("[leads] Email skipped — RESEND_API_KEY not set");
+    return;
+  }
+
+  const html = `
+    <h2 style="color:#1a1a1a">New Website Lead</h2>
+    <table cellpadding="6" cellspacing="0" style="font-family:sans-serif;font-size:14px">
+      <tr><td><strong>Name</strong></td><td>${lead.firstName} ${lead.lastName}</td></tr>
+      <tr><td><strong>Email</strong></td><td>${lead.email}</td></tr>
+      <tr><td><strong>Phone</strong></td><td>${lead.phone || "—"}</td></tr>
+      <tr><td><strong>Interest</strong></td><td>${lead.interest || "—"}</td></tr>
+      <tr><td><strong>Land Status</strong></td><td>${lead.landStatus || "—"}</td></tr>
+      <tr><td><strong>Timeframe</strong></td><td>${lead.timeframe || "—"}</td></tr>
+      <tr><td><strong>Financing</strong></td><td>${lead.financingStatus || "—"}</td></tr>
+      <tr><td><strong>Message</strong></td><td>${lead.message || "—"}</td></tr>
+      <tr><td><strong>Source</strong></td><td>${lead.source}</td></tr>
+      <tr><td><strong>Page</strong></td><td>${lead.pageUrl}</td></tr>
+      <tr><td><strong>Submitted</strong></td><td>${lead.submittedAt}</td></tr>
+    </table>
+  `;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+    },
+    body: JSON.stringify({
+      from: "leads@factorydirecthomescenter.com",
+      to: LEAD_EMAIL_TO,
+      subject: `New Lead: ${lead.firstName} ${lead.lastName} — ${lead.interest || "General Inquiry"}`,
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Resend API error ${res.status}: ${err}`);
+  }
+
+  console.log("[leads] Email sent to", LEAD_EMAIL_TO);
+}
+
+// ─── Channel 2: Google Sheets ──────────────────────────────────────────────
+
+async function appendToSheet(lead: Record<string, string>) {
+  if (!GOOGLE_SHEETS_ID || !GOOGLE_SERVICE_ACCOUNT_KEY) {
+    console.log("[leads] Sheets skipped — GOOGLE_SHEETS_ID or GOOGLE_SERVICE_ACCOUNT_KEY not set");
+    return;
+  }
+
+  // Decode and parse the service account key (stored base64 to avoid JSON quoting issues in Vercel)
+  const serviceAccount = JSON.parse(
+    Buffer.from(GOOGLE_SERVICE_ACCOUNT_KEY, "base64").toString("utf-8")
+  );
+
+  // Get an access token via JWT (Google OAuth2 service account flow)
+  const token = await getGoogleAccessToken(serviceAccount);
+
+  const row = [
+    lead.submittedAt,
+    lead.firstName,
+    lead.lastName,
+    lead.email,
+    lead.phone,
+    lead.interest,
+    lead.landStatus,
+    lead.timeframe,
+    lead.financingStatus,
+    lead.message,
+    lead.source,
+    lead.pageUrl,
+  ];
+
+  const res = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEETS_ID}/values/Sheet1!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(BACKEND_API_KEY && { "Authorization": `Bearer ${BACKEND_API_KEY}` }),
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(backendData),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      return NextResponse.json({
-        success: true,
-        message: "Lead submitted successfully",
-        backendResponse: result,
-      });
-    } else {
-      const errorText = await response.text();
-      console.error("Backend error:", errorText);
-      
-      // Fallback: Send email notification
-      await sendEmailNotification(body);
-      
-      return NextResponse.json({
-        success: true,
-        message: "Lead captured (email fallback)",
-        warning: "Backend sync failed, email sent instead",
-      });
+      body: JSON.stringify({ values: [row] }),
     }
+  );
 
-  } catch (error) {
-    console.error("Lead capture error:", error);
-    
-    // Even on error, try to send email
-    try {
-      await sendEmailNotification(await request.json());
-    } catch (e) {
-      // Ignore email errors
-    }
-    
-    return NextResponse.json(
-      { error: "Failed to capture lead" },
-      { status: 500 }
-    );
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Sheets API error ${res.status}: ${err}`);
   }
+
+  console.log("[leads] Row appended to Google Sheets");
 }
 
-// Map financing status to backend finance option ID
-// These IDs should match your backend database
-function mapFinancingOption(status: string): string {
-  const optionMap: Record<string, string> = {
-    "cash": "1",
-    "pre-approved": "2", 
-    "need-financing": "3",
-    "unsure": "4",
-    "finance": "3",
+// Minimal JWT/OAuth2 for Google service accounts (no extra dependencies)
+async function getGoogleAccessToken(sa: {
+  client_email: string;
+  private_key: string;
+}) {
+  const now = Math.floor(Date.now() / 1000);
+  const header = { alg: "RS256", typ: "JWT" };
+  const payload = {
+    iss: sa.client_email,
+    scope: "https://www.googleapis.com/auth/spreadsheets",
+    aud: "https://oauth2.googleapis.com/token",
+    iat: now,
+    exp: now + 3600,
   };
-  return optionMap[status] || "4"; // Default to "unsure"
-}
 
-// Map land status to backend placement option ID
-function mapPlacementOption(status: string): string {
-  const optionMap: Record<string, string> = {
-    "yes-owned": "1",
-    "yes-purchasing": "2",
-    "no-need-land": "3",
-    "park": "4",
-    "unsure": "5",
-    "i-have-land": "1",
-    "in-community": "4",
-  };
-  return optionMap[status] || "5"; // Default to "not sure yet"
-}
+  const encode = (obj: object) =>
+    Buffer.from(JSON.stringify(obj)).toString("base64url");
 
-// Map state name to backend delivery state ID
-function mapDeliveryState(state: string): string {
-  const stateMap: Record<string, string> = {
-    "indiana": "1",
-    "ohio": "2",
-    "michigan": "3",
-    "wisconsin": "4",
-    "illinois": "5",
-    "kentucky": "6",
-  };
-  return stateMap[state?.toLowerCase()] || "1"; // Default to Indiana
-}
+  const signingInput = `${encode(header)}.${encode(payload)}`;
 
-// Fallback email notification
-async function sendEmailNotification(leadData: any) {
-  try {
-    const emailPayload = {
-      to: "sales@factorydirecthomescenter.com",
-      subject: `New Website Lead: ${leadData.firstName} ${leadData.lastName}`,
-      html: `
-        <h2>New Website Lead</h2>
-        <p><strong>Name:</strong> ${leadData.firstName} ${leadData.lastName}</p>
-        <p><strong>Email:</strong> ${leadData.email}</p>
-        <p><strong>Phone:</strong> ${leadData.phone || "Not provided"}</p>
-        <p><strong>Interest:</strong> ${leadData.interest || "Not specified"}</p>
-        <p><strong>Land Status:</strong> ${leadData.landStatus || "Not specified"}</p>
-        <p><strong>Timeframe:</strong> ${leadData.timeframe || "Not specified"}</p>
-        <p><strong>Financing:</strong> ${leadData.financingStatus || "Not specified"}</p>
-        <p><strong>State:</strong> ${leadData.deliveryState || leadData.state || "Not specified"}</p>
-        <p><strong>Message:</strong> ${leadData.message || "None"}</p>
-        <hr>
-        <p><em>This lead was submitted from the website contact form.</em></p>
-      `,
-    };
+  // Import the RSA private key and sign
+  const privateKey = await crypto.subtle.importKey(
+    "pkcs8",
+    pemToArrayBuffer(sa.private_key),
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
 
-    // Try to send via backend email endpoint or any configured email service
-    console.log("Email notification would be sent:", emailPayload);
-    
-    // TODO: Implement actual email sending via SendGrid, Resend, etc.
-    // await fetch('/api/send-email', { method: 'POST', body: JSON.stringify(emailPayload) });
-    
-  } catch (error) {
-    console.error("Email notification failed:", error);
+  const signature = await crypto.subtle.sign(
+    "RSASSA-PKCS1-v1_5",
+    privateKey,
+    new TextEncoder().encode(signingInput)
+  );
+
+  const jwt = `${signingInput}.${Buffer.from(signature).toString("base64url")}`;
+
+  const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      assertion: jwt,
+    }),
+  });
+
+  if (!tokenRes.ok) {
+    throw new Error(`Google token error: ${await tokenRes.text()}`);
   }
+
+  const { access_token } = await tokenRes.json();
+  return access_token as string;
+}
+
+function pemToArrayBuffer(pem: string): ArrayBuffer {
+  const b64 = pem
+    .replace(/-----BEGIN PRIVATE KEY-----/, "")
+    .replace(/-----END PRIVATE KEY-----/, "")
+    .replace(/\s+/g, "");
+  const binary = atob(b64);
+  const buf = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) buf[i] = binary.charCodeAt(i);
+  return buf.buffer;
 }
