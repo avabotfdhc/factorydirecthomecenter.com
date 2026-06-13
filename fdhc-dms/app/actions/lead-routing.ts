@@ -3,6 +3,12 @@
 import { createAdminClient } from '@/app/lib/supabase/admin'
 import { LeadFormData, LandStatus } from '@/app/types'
 
+// Validate required environment variables
+const DEFAULT_ORG_ID = process.env.DEFAULT_ORG_ID;
+if (!DEFAULT_ORG_ID) {
+  throw new Error('Missing required environment variable: DEFAULT_ORG_ID');
+}
+
 const supabase = createAdminClient()
 
 export async function processIncomingLead(leadData: LeadFormData) {
@@ -15,6 +21,7 @@ export async function processIncomingLead(leadData: LeadFormData) {
       .from('profiles')
       .select('id, full_name, last_assignment_at, handles_land_home, is_online')
       .eq('is_active', true)
+      .eq('org_id', DEFAULT_ORG_ID)  // Enforce org isolation
       .order('last_assignment_at', { ascending: true })
 
     if (isLandHome) {
@@ -34,7 +41,7 @@ export async function processIncomingLead(leadData: LeadFormData) {
     const { data: newLead, error: insertError } = await supabase
       .from('leads')
       .insert({
-        org_id: process.env.DEFAULT_ORG_ID!,
+        org_id: DEFAULT_ORG_ID,
         first_name: leadData.first_name,
         last_name: leadData.last_name,
         phone: leadData.phone,
@@ -83,7 +90,7 @@ async function assignToManagerQueue(leadData: LeadFormData) {
   const { data: newLead, error } = await supabase
     .from('leads')
     .insert({
-      org_id: process.env.DEFAULT_ORG_ID!,
+      org_id: DEFAULT_ORG_ID,
       first_name: leadData.first_name,
       last_name: leadData.last_name,
       phone: leadData.phone,
@@ -107,13 +114,16 @@ async function assignToManagerQueue(leadData: LeadFormData) {
   }
 }
 
-export async function getLeads(filters?: { status?: string; assigned_to?: string }) {
+export async function getLeads(filters?: { status?: string; assigned_to?: string; org_id?: string }) {
+  const orgId = filters?.org_id || DEFAULT_ORG_ID;
+  
   let query = supabase
     .from('leads')
     .select(`
       *,
       assigned_profile:profiles(full_name, email)
     `)
+    .eq('org_id', orgId)  // Enforce org isolation
     .order('created_at', { ascending: false })
 
   if (filters?.status) {
@@ -181,7 +191,8 @@ export async function logActivity({
   outcome,
   notes,
   duration_seconds,
-  scheduled_at
+  scheduled_at,
+  org_id
 }: {
   lead_id?: string
   deal_id?: string
@@ -192,40 +203,53 @@ export async function logActivity({
   notes?: string
   duration_seconds?: number
   scheduled_at?: string
+  org_id?: string
 }) {
-  const { data, error } = await supabase
-    .from('activities')
-    .insert({
-      org_id: process.env.DEFAULT_ORG_ID!,
-      lead_id,
-      deal_id,
-      user_id,
-      type,
-      direction,
-      outcome,
-      notes,
-      duration_seconds,
-      scheduled_at,
-      completed_at: outcome ? new Date().toISOString() : null
-    })
-    .select()
-    .single()
-
-  if (error) {
-    console.error('Error logging activity:', error)
-    return { success: false, error: error.message }
-  }
-
-  // Update lead's last contact info
-  if (lead_id && outcome) {
-    await supabase
-      .from('leads')
-      .update({
-        last_contact_at: new Date().toISOString(),
-        contact_attempts: supabase.rpc('increment_contact_attempts', { lead_id })
+  const activityOrgId = org_id || DEFAULT_ORG_ID;
+  
+  try {
+    const { data, error } = await supabase
+      .from('activities')
+      .insert({
+        org_id: activityOrgId,
+        lead_id,
+        deal_id,
+        user_id,
+        type,
+        direction,
+        outcome,
+        notes,
+        duration_seconds,
+        scheduled_at,
+        completed_at: outcome ? new Date().toISOString() : null
       })
-      .eq('id', lead_id)
-  }
+      .select()
+      .single()
 
-  return { success: true, data }
+    if (error) {
+      console.error('Error logging activity:', error)
+      return { success: false, error: error.message }
+    }
+
+    // Update lead's last contact info
+    if (lead_id && outcome) {
+      try {
+        await supabase
+          .from('leads')
+          .update({
+            last_contact_at: new Date().toISOString(),
+          })
+          .eq('id', lead_id)
+          .eq('org_id', activityOrgId)
+      } catch (updateError) {
+        console.error('Error updating lead contact info:', updateError)
+        // Don't fail the activity log if lead update fails
+      }
+    }
+
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error in logActivity:', error)
+    return { success: false, error: 'Failed to log activity' }
+  }
 }
