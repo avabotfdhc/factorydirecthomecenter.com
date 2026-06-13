@@ -137,8 +137,8 @@ const saleHomes = [
 export default function SpecialPlansPage() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero Banner - 25% Off MSRP Campaign */}
-      <section className="relative w-full overflow-hidden">
+      {/* Hero Banner - 25% Off MSRP Campaign - COMPACT VERSION */}
+      <section className="relative w-full min-h-[400px] md:min-h-[450px] flex items-center">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -153,60 +153,63 @@ export default function SpecialPlansPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a365d]/95 via-[#1a365d]/80 to-[#2c7a7b]/70" />
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <FadeIn>
             <div className="text-center">
-              {/* Sparkle decorations */}
-              <div className="flex justify-center gap-4 mb-6">
-                <span className="text-4xl animate-pulse">✨</span>
-                <span className="text-3xl animate-pulse delay-100">⭐</span>
-                <span className="text-4xl animate-pulse delay-200">✨</span>
+              {/* Sale Badge */}
+              <div className="inline-flex items-center gap-2 bg-yellow-400 text-[#1a365d] px-4 py-1.5 rounded-full font-bold text-sm mb-4">
+                <span className="animate-pulse">🔥</span>
+                <span>LIMITED TIME OFFER</span>
+                <span className="animate-pulse">🔥</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
                 25% OFF MSRP
               </h1>
-              <p className="text-2xl md:text-3xl text-white/90 font-semibold mb-4">
-                Summer Sale - Limited Time Offer
+              <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
+                Summer Sale
               </p>
-              <p className="text-lg text-white/80 max-w-2xl mx-auto mb-2">
-                Factory Direct Pricing Just Got Better. Save thousands on your new Champion manufactured home.
+              <p className="text-base text-white/80 max-w-xl mx-auto mb-3">
+                Save thousands on your new Champion manufactured home. Factory direct pricing just got better.
               </p>
-              <p className="text-yellow-300 font-semibold mb-8">
-                ⏰ Offer Ends June 30, 2026
+              <p className="text-yellow-300 font-bold mb-4 text-sm md:text-base">
+                ⏰ Ends June 30, 2026
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="#sale-homes"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors text-lg"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors text-base"
                 >
                   View Sale Homes
+                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </Link>
                 <Link
                   href="/contact-us"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-lg backdrop-blur-sm"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-base backdrop-blur-sm"
                 >
                   Contact Sales
                 </Link>
               </div>
               
-              {/* Trust badges */}
-              <div className="mt-8 flex flex-wrap justify-center gap-6 text-white/70 text-sm">
-                <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              {/* Trust badges - compact */}
+              <div className="mt-4 flex flex-wrap justify-center gap-4 text-white/70 text-xs md:text-sm">
+                <span className="flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                   </svg>
-                  Factory Direct Pricing
+                  Factory Direct
                 </span>
-                <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <span className="flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                   </svg>
                   Champion Quality
                 </span>
-                <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <span className="flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                   </svg>
                   6-State Delivery
