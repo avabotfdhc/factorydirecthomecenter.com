@@ -292,6 +292,24 @@ export default function ContactForm() {
                   </div>
 
                   <div>
+                    <label className="block text-sm font-medium mb-3">Preferred Communication Method</label>
+                    <div className="flex flex-wrap gap-4">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="contactMethod" value="phone" className="w-4 h-4 text-[var(--color-teal)] border-[var(--color-charcoal)]/20 rounded focus:ring-[var(--color-teal)]" />
+                        <span className="text-sm">Phone</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="contactMethod" value="text" className="w-4 h-4 text-[var(--color-teal)] border-[var(--color-charcoal)]/20 rounded focus:ring-[var(--color-teal)]" />
+                        <span className="text-sm">Text</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="contactMethod" value="email" className="w-4 h-4 text-[var(--color-teal)] border-[var(--color-charcoal)]/20 rounded focus:ring-[var(--color-teal)]" />
+                        <span className="text-sm">Email</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
                     <textarea id="message" name="message" rows={4} className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors resize-none"></textarea>
                   </div>

@@ -80,7 +80,7 @@ export function Footer() {
               Visit Us
             </H4>
             <address className="not-italic space-y-3 text-sm text-[var(--color-gray-light)]">
-              <p>1211 State Road 8<br />Auburn, IN 46706</p>
+              <p><a href="https://www.google.com/maps/search/?api=1&query=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-lime)] transition-colors">1211 State Road 8<br />Auburn, IN 46706</a></p>
               <p>
                 <a
                   href="tel:+12603081457"

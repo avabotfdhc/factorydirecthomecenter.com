@@ -185,51 +185,68 @@ export default async function FloorPlanPage({ params }: { params: Promise<{ slug
                 </div>
                 
                 {/* Was/Now Pricing with Savings */}
-                {pricing && (
-                  <div className="bg-white/10 rounded-xl p-6 inline-block">
-                    {/* Sale Badge */}
-                    {pricing.badge && (
-                      <div className="mb-3">
-                        <span className="px-3 py-1 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-xs font-bold tracking-wider uppercase rounded-full">
-                          {pricing.badge}
-                        </span>
-                        {pricing.campaignName && (
-                          <span className="ml-2 text-xs text-white/70">{pricing.campaignName}</span>
+                <div className="bg-white/10 rounded-xl p-6 inline-block">
+                  {pricing ? (
+                    <>
+                      {/* Sale Badge */}
+                      {pricing.badge && (
+                        <div className="mb-3">
+                          <span className="px-3 py-1 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-xs font-bold tracking-wider uppercase rounded-full">
+                            {pricing.badge}
+                          </span>
+                          {pricing.campaignName && (
+                            <span className="ml-2 text-xs text-white/70">{pricing.campaignName}</span>
+                          )}
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center gap-4">
+                        <div>
+                          <span className="text-white/50 block text-xs uppercase tracking-wider mb-1">MSRP</span>
+                          <span className="text-xl text-white/60 line-through">{pricing.wasPrice}</span>
+                        </div>
+                        <div className="w-px h-12 bg-white/20" />
+                        <div>
+                          <span className="text-[var(--color-lime)] block text-xs uppercase tracking-wider mb-1">
+                            {pricing.badge ? 'Sale Price' : 'Factory Direct Price'}
+                          </span>
+                          <span className="text-3xl font-light text-[var(--color-lime)]">{pricing.nowPrice}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Savings Display */}
+                      <div className="mt-4 pt-4 border-t border-white/10">
+                        <div className="flex items-center gap-2">
+                          <svg className="w-5 h-5 text-[var(--color-lime)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span className="text-[var(--color-lime)] font-semibold">Save {pricing.savings}</span>
+                          <span className="text-white/60 text-sm">({pricing.savingsPercent}% off MSRP)</span>
+                        </div>
+                        {pricing.campaignEnds && (
+                          <p className="text-xs text-white/50 mt-1">
+                            Sale ends {new Date(pricing.campaignEnds).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                          </p>
                         )}
                       </div>
-                    )}
-                    
-                    <div className="flex items-center gap-4">
-                      <div>
-                        <span className="text-white/50 block text-xs uppercase tracking-wider mb-1">MSRP</span>
-                        <span className="text-xl text-white/60 line-through">{pricing.wasPrice}</span>
-                      </div>
-                      <div className="w-px h-12 bg-white/20" />
+                    </>
+                  ) : (
+                    /* Fallback pricing when SKU not in pricing engine */
+                    <>
                       <div>
                         <span className="text-[var(--color-lime)] block text-xs uppercase tracking-wider mb-1">
-                          {pricing.badge ? 'Sale Price' : 'Factory Direct Price'}
+                          Factory Direct Price
                         </span>
-                        <span className="text-3xl font-light text-[var(--color-lime)]">{pricing.nowPrice}</span>
+                        <span className="text-3xl font-light text-[var(--color-lime)]">{plan.price}</span>
                       </div>
-                    </div>
-                    
-                    {/* Savings Display */}
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <div className="flex items-center gap-2">
-                        <svg className="w-5 h-5 text-[var(--color-lime)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span className="text-[var(--color-lime)] font-semibold">Save {pricing.savings}</span>
-                        <span className="text-white/60 text-sm">({pricing.savingsPercent}% off MSRP)</span>
-                      </div>
-                      {pricing.campaignEnds && (
-                        <p className="text-xs text-white/50 mt-1">
-                          Sale ends {new Date(pricing.campaignEnds).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                      <div className="mt-4 pt-4 border-t border-white/10">
+                        <p className="text-sm text-white/60">
+                          Call for detailed pricing and current promotions
                         </p>
-                      )}
-                    </div>
-                  </div>
-                )}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </FadeIn>
             

@@ -26,7 +26,7 @@ const saleHomes = [
     msrp: 89900,
     salePrice: 71920,
     image: "/floorplans/Dutch Aspire 1656H22208.png",
-    description: "Champion 16'x56' 2 Beds 2 baths Signal Wide Dutch Aspire",
+    description: "Champion 16'x56' 2 Beds 2 baths Single Wide Dutch Aspire",
     features: ["Smart Floor Plan", "Modern Kitchen", "Comfortable Living Area", "Spacious Bedrooms"]
   },
   {
@@ -42,7 +42,7 @@ const saleHomes = [
     msrp: 84900,
     salePrice: 67920,
     image: "/floorplans/Dutch Aspire 1652H21151.png",
-    description: "Champion 16'x52' 2 Beds 1 bath Signal Wide Dutch Aspire",
+    description: "Champion 16'x52' 2 Beds 1 bath Single Wide Dutch Aspire",
     features: ["Efficient Layout", "Modern Kitchen", "Cozy Living Space"]
   },
   {
