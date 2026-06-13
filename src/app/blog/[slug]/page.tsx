@@ -961,6 +961,378 @@ function Post10Content() {
   );
 }
 
+// New Blog Post Content Components (Summer 2026)
+function Post11Content() {
+  return (
+    <>
+      <p>
+        If you&rsquo;ve been thinking about buying a manufactured home, Summer 2026 might be the perfect window to make your move. A rare combination of market conditions — stabilizing interest rates, strong factory inventory, and our biggest promotion of the year — has created an opportunity that won&rsquo;t last forever.
+      </p>
+      <p>
+        Here&rsquo;s why savvy buyers are acting now, and what you need to know to take advantage of the current market.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">1. Interest rates have stabilized (for now)</H2>
+      <p>
+        After several years of volatility, manufactured home loan rates have settled into a relatively stable range. As of mid-2026, here&rsquo;s what qualified buyers can expect:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>FHA/VA loans (permanent foundation, owned land):</strong> 6.5% – 7.5%</li>
+        <li><strong>Conventional mortgages:</strong> 6.75% – 7.75%</li>
+        <li><strong>Chattel loans (home only):</strong> 8% – 10%</li>
+      </ul>
+      <p>
+        While these rates are higher than the historic lows of 2020-2021, they&rsquo;re competitive with historical averages — and significantly better than the peaks seen in 2023. More importantly, rates appear to have stabilized, giving buyers confidence to lock in financing without fear of sudden spikes.
+      </p>
+      <p>
+        Waiting for rates to drop further is a gamble. Most economists expect rates to remain in the current range through at least early 2027. Meanwhile, home prices continue to rise gradually due to material costs and demand pressure.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">2. Our 25% off MSRP Summer Promotion</H2>
+      <p>
+        From now through August 31, 2026, Factory Direct Homes Center is offering <strong>25% off Manufacturer&rsquo;s Suggested Retail Price</strong> on select Champion manufactured home models. This is our biggest promotion of the year — and it represents real, substantial savings.
+      </p>
+      <p>
+        Here&rsquo;s what that looks like in practice:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>$80,000 MSRP single-wide:</strong> Your price = $60,000 (save $20,000)</li>
+        <li><strong>$110,000 MSRP double-wide:</strong> Your price = $82,500 (save $27,500)</li>
+        <li><strong>$130,000 MSRP modular:</strong> Your price = $97,500 (save $32,500)</li>
+      </ul>
+      <p>
+        These savings are possible because we sell factory direct — no middleman markup, no dealer premiums. The 25% discount comes off the already-competitive MSRP, not an inflated "retail" price.
+      </p>
+      <p>
+        <Link href="/floor-plans" className="text-[var(--color-teal)] hover:underline">View eligible floor plans</Link> or contact us for current inventory. Popular models are moving quickly.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">3. Summer delivery means faster move-in</H2>
+      <p>
+        Weather matters when you&rsquo;re delivering and setting up a manufactured home. Summer offers the most predictable conditions for every phase of the process:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>Site preparation:</strong> Excavation, foundation work, and utility trenching proceed without weather delays</li>
+        <li><strong>Transportation:</strong> Dry roads and clear skies mean safer, faster delivery</li>
+        <li><strong>Setup and finishing:</strong> Exterior work like skirting, porches, and landscaping can be completed immediately</li>
+        <li><strong>Inspections:</strong> Local inspectors are more available, and exterior inspections aren&rsquo;t hampered by snow or frozen ground</li>
+      </ul>
+      <p>
+        The result: a typical summer delivery takes 8 to 12 weeks from order to move-in, compared to 12 to 20 weeks for winter orders in cold climates. If you want to be in your new home by fall, you need to start the process now.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">4. The housing market is shifting in manufactured homes&rsquo; favor</H2>
+      <p>
+        Manufactured housing is having a moment. Shipments are at 20-year highs, and buyer demand is surging as site-built home prices continue climbing. The median site-built home now costs over $420,000 nationally — while a quality manufactured home from Factory Direct starts under $65,000 with our summer promotion.
+      </p>
+      <p>
+        This demand surge has a flip side: factory build times are extending. Champion&rsquo;s Topeka, IN facility — which builds all our homes — is operating at capacity. Ordering now secures your production slot before lead times stretch further.
+      </p>
+      <p>
+        The buyers who act in Summer 2026 will lock in today&rsquo;s pricing before inevitable material cost increases and factory backlog delays affect the market.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">5. Financing options have never been better</H2>
+      <p>
+        If you&rsquo;re a first-time buyer or have credit challenges, 2026 offers more paths to approval than ever:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>FHA loans:</strong> 3.5% down, credit scores as low as 580</li>
+        <li><strong>VA loans:</strong> Zero down for veterans, no PMI</li>
+        <li><strong>USDA loans:</strong> Zero down for rural buyers</li>
+        <li><strong>Chattel loans:</strong> Easier qualification, faster closing</li>
+      </ul>
+      <p>
+        Our lending partners — 21st Mortgage, Triad Financial, and Credit Human — have expanded their manufactured home programs and streamlined approval processes. Pre-approval typically takes 24-48 hours, and we can connect you with a loan specialist who understands manufactured home financing.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">The bottom line: Why wait?</H2>
+      <p>
+        Summer 2026 offers a convergence of factors that favor buyers: stable rates, promotional pricing, favorable weather for delivery, and strong financing options. The only question is whether you&rsquo;ll take advantage of this window or watch it close.
+      </p>
+      <p>
+        Factory Direct Homes Center has been helping families achieve homeownership for years. Our factory-direct model saves you thousands, our Champion-built homes are the best in the industry, and our team guides you through every step from financing to move-in.
+      </p>
+      <p>
+        <strong>The 25% off MSRP promotion ends August 31, 2026.</strong> Contact us today to reserve your home and lock in your savings.
+      </p>
+    </>
+  );
+}
+
+function Post12Content() {
+  return (
+    <>
+      <p>
+        When you&rsquo;re shopping for a manufactured home, you&rsquo;ll encounter a lot of pricing terminology: MSRP, retail price, invoice price, factory direct price. Understanding what these terms actually mean — and more importantly, what they mean for your wallet — can save you tens of thousands of dollars.
+      </p>
+      <p>
+        This guide breaks down how manufactured home pricing really works, where traditional dealers add markup, and how Factory Direct Homes Center eliminates those extra costs to deliver genuine savings.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">What is MSRP?</H2>
+      <p>
+        <strong>MSRP</strong> stands for Manufacturer&rsquo;s Suggested Retail Price. It&rsquo;s the price the manufacturer (in our case, Champion Home Builders) recommends dealers charge for a particular model with standard features. Think of it like the sticker price on a new car.
+      </p>
+      <p>
+        MSRP includes:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li>The base home with standard features and finishes</li>
+        <li>Factory construction and quality control</li>
+        <li>Standard delivery to the dealer (or direct buyer)</li>
+        <li>A reasonable profit margin for the manufacturer</li>
+      </ul>
+      <p>
+        What MSRP does <em>not</em> include: site preparation, foundation, utility connections, setup, skirting, or any dealer markup. Those are additional costs — and that&rsquo;s where traditional dealers often inflate the price.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">The traditional dealer markup model</H2>
+      <p>
+        Most manufactured home dealers operate on a markup model that adds significant cost above MSRP. Here&rsquo;s how it typically works:
+      </p>
+      <ol className="list-decimal pl-6 space-y-2 mb-6">
+        <li><strong>Dealer acquires home from factory</strong> at or near invoice price (typically 15-20% below MSRP)</li>
+        <li><strong>Dealer adds markup</strong> of 20-40% above their cost to cover overhead and profit</li>
+        <li><strong>Additional fees are added:</strong> "transportation," "setup coordination," "documentation fees"</li>
+        <li><strong>Customer negotiates</strong> from an inflated starting point</li>
+      </ol>
+      <p>
+        The result: A home with an $80,000 MSRP might be listed at $105,000 by a traditional dealer. Even with "discounts" and negotiations, the final price often remains well above MSRP.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">How factory direct pricing works</H2>
+      <p>
+        Factory Direct Homes Center operates on a completely different model. We don&rsquo;t markup above MSRP — we sell <em>at or below</em> MSRP and make our margin through volume and efficiency, not inflated prices.
+      </p>
+      <p>
+        Here&rsquo;s our pricing structure:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>Base home price:</strong> MSRP or below (especially during promotions like our Summer 2026 25% off sale)</li>
+        <li><strong>Delivery:</strong> Actual cost based on distance from our Auburn, IN location — no markup</li>
+        <li><strong>Setup and installation:</strong> Itemized pricing based on your specific site requirements</li>
+        <li><strong>Foundation:</strong> Third-party contractor pricing passed through at cost</li>
+        <li><strong>Options and upgrades:</strong> Factory pricing plus minimal handling fee</li>
+      </ul>
+      <p>
+        We provide a complete, itemized quote so you see exactly what every component costs. No hidden fees, no surprise charges, no inflated "retail" pricing.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">Real numbers: Traditional dealer vs. Factory Direct</H2>
+      <p>
+        Let&rsquo;s compare pricing on a typical double-wide manufactured home with standard features:
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Traditional Dealer Pricing</H3>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li>Home with "retail" markup: $115,000</li>
+        <li>Delivery fee: $3,500</li>
+        <li>Setup coordination: $2,500</li>
+        <li>Documentation fee: $500</li>
+        <li><strong>Total before site work: $121,500</strong></li>
+      </ul>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Factory Direct Homes Center Pricing</H3>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li>Home at MSRP: $95,000</li>
+        <li>Delivery (within 100 miles): $2,500</li>
+        <li>Setup: $3,500</li>
+        <li>No documentation fees</li>
+        <li><strong>Total before site work: $101,000</strong></li>
+      </ul>
+
+      <p>
+        <strong>Savings with Factory Direct: $20,500</strong> — and that&rsquo;s before considering our promotional discounts. During our Summer 2026 promotion, that same home is 25% off MSRP: <strong>$71,250 base price</strong>, for a total savings of over $35,000 compared to traditional dealer pricing.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">Why we can sell for less</H2>
+      <p>
+        You might wonder: If the homes are the same, how can Factory Direct charge so much less? The answer is in our business model:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>Lower overhead:</strong> We don&rsquo;t maintain a massive lot with dozens of model homes. Our showroom is efficient and focused.</li>
+        <li><strong>No commissioned sales staff:</strong> Our team is salaried, not commission-driven. They&rsquo;re incentivized to find you the right home, not the most expensive one.</li>
+        <li><strong>Direct factory relationship:</strong> We receive homes directly from Champion&rsquo;s Topeka, IN factory — no middlemen, no distributor markups.</li>
+        <li><strong>Volume efficiency:</strong> We sell more homes by offering better prices, creating a virtuous cycle.</li>
+        <li><strong>Transparent pricing philosophy:</strong> We believe in fair pricing and repeat customers, not maximizing profit on each sale.</li>
+      </ul>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">What&rsquo;s included in our pricing</H2>
+      <p>
+        When you get a quote from Factory Direct Homes Center, here&rsquo;s what&rsquo;s included:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>The home:</strong> Exactly as specified, with all selected options and upgrades</li>
+        <li><strong>Delivery:</strong> Transportation from factory to your site</li>
+        <li><strong>Professional setup:</strong> Placing the home on the foundation, leveling, and securing</li>
+        <li><strong>Utility connections:</strong> Coordination of electric, water, sewer/septic, and gas hookups</li>
+        <li><strong>Skirting:</strong> Vinyl or metal skirting around the base of the home</li>
+        <li><strong>Steps/landing:</strong> Entry steps or small landing as required</li>
+        <li><strong>Final inspection coordination:</strong> Working with local inspectors to obtain certificate of occupancy</li>
+      </ul>
+      <p>
+        What&rsquo;s <em>not</em> included (but we&rsquo;ll quote separately): foundation work, well/septic installation if needed, extensive site preparation, decks or porches beyond basic steps, and landscaping.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">How to get your factory direct quote</H2>
+      <p>
+        Getting a transparent, itemized quote from Factory Direct Homes Center is simple:
+      </p>
+      <ol className="list-decimal pl-6 space-y-2 mb-6">
+        <li><strong>Visit our showroom</strong> in Auburn, IN to tour available models</li>
+        <li><strong>Select your floor plan</strong> and customize options</li>
+        <li><strong>Provide your site information</strong> (address, foundation type, utility status)</li>
+        <li><strong>Receive itemized pricing</strong> within 24 hours</li>
+        <li><strong>Compare with confidence</strong> — our pricing is guaranteed to beat traditional dealer quotes</li>
+      </ol>
+      <p>
+        We encourage you to get quotes from other dealers. When you compare apples to apples, Factory Direct Homes Center consistently delivers the best value — because we eliminate the markup that traditional dealers depend on.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">The bottom line</H2>
+      <p>
+        MSRP is just a starting point. What matters is what you actually pay — and at Factory Direct Homes Center, you pay less. Our factory-direct model, transparent pricing, and commitment to fair dealing mean you get a quality Champion manufactured home at a price that respects your budget.
+      </p>
+      <p>
+        Stop by our showroom or contact us today. We&rsquo;ll show you exactly how factory direct pricing works — and how much you can save.
+      </p>
+    </>
+  );
+}
+
+function Post13Content() {
+  return (
+    <>
+      <p>
+        Buying your first manufactured home is exciting — but it can also feel overwhelming. There&rsquo;s financing to navigate, land decisions to make, and a process that differs from traditional home buying. The good news? With the right information, you can avoid common pitfalls and make confident decisions.
+      </p>
+      <p>
+        Here are the five things every first-time manufactured home buyer needs to know before signing on the dotted line.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">1. Financing works differently than traditional mortgages</H2>
+      <p>
+        If you&rsquo;re expecting a conventional 30-year mortgage like your friends with site-built homes, you might be surprised. Manufactured home financing depends on two key factors: whether you own the land and whether the home is on a permanent foundation.
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">If you own land and install a permanent foundation:</H3>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>FHA Title II loans:</strong> 3.5% down, credit scores as low as 580, 30-year terms</li>
+        <li><strong>VA loans:</strong> Zero down for veterans, no PMI, lowest rates available</li>
+        <li><strong>USDA loans:</strong> Zero down for rural properties, income limits apply</li>
+        <li><strong>Conventional mortgages:</strong> 5-20% down, best rates for qualified buyers</li>
+      </ul>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">If you don&rsquo;t own land or use a non-permanent foundation:</H3>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>Chattel loans:</strong> Personal property loans with higher rates (8-12%) but easier qualification</li>
+        <li><strong>FHA Title I loans:</strong> For the home only, limits of $69,678 (single) or $92,904 (multi-section)</li>
+      </ul>
+
+      <p>
+        <strong>Key takeaway:</strong> If you can swing it, buying land and installing a permanent foundation opens up significantly better financing options. The interest rate difference alone can save you $20,000 to $40,000 over the life of the loan.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">2. Land ownership changes everything</H2>
+      <p>
+        You have three options for where to place your manufactured home:
+      </p>
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>Buy your own land:</strong> Best long-term value, builds equity, best financing options</li>
+        <li><strong>Place on land you already own:</strong> Same benefits as buying land, lower upfront cost</li>
+        <li><strong>Lease a lot in a manufactured home community:</strong> Lower upfront cost, but no land equity</li>
+      </ul>
+
+      <p>
+        Here&rsquo;s why land ownership matters so much: According to Federal Housing Finance Agency data, manufactured homes on owned land appreciated 211.8% between 2000 and 2024. Homes on leased land? They appreciated far less because you&rsquo;re not building equity in the dirt beneath your home.
+      </p>
+
+      <p>
+        Land-home packages bundle the purchase of land and home into a single loan, making land ownership accessible even if you don&rsquo;t have cash for land upfront. Ask us about land-home financing options.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">3. The timeline is faster than you think (but not instant)</H2>
+      <p>
+        One of manufactured housing&rsquo;s biggest advantages is speed. While a site-built home takes 6-12 months to construct, a manufactured home takes 8-16 weeks from order to move-in. Here&rsquo;s the typical timeline:
+      </p>
+
+      <ol className="list-decimal pl-6 space-y-2 mb-6">
+        <li><strong>Week 1-2:</strong> Financing pre-approval, home selection, order placement</li>
+        <li><strong>Week 3-8:</strong> Factory construction (happens while you prepare your site)</li>
+        <li><strong>Week 9-10:</strong> Delivery to your site</li>
+        <li><strong>Week 11-14:</strong> Setup, utility connections, skirting, final inspections</li>
+        <li><strong>Week 15-16:</strong> Certificate of occupancy, final walkthrough, move-in</li>
+      </ol>
+
+      <p>
+        The key to staying on schedule: start site preparation (foundation, utilities, permits) during the factory build. If you wait until the home arrives, you&rsquo;ll face delays.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">4. Warranties protect your investment</H2>
+      <p>
+        New manufactured homes come with warranties that protect you from defects and unexpected repairs. Here&rsquo;s what&rsquo;s typically covered:
+      </p>
+
+      <ul className="list-disc pl-6 space-y-2 mb-6">
+        <li><strong>One-year manufacturer&rsquo;s warranty:</strong> Covers defects in materials and workmanship — appliances, plumbing, electrical, HVAC, structural components</li>
+        <li><strong>Extended structural warranty:</strong> 5-10 years on major structural elements (roof, walls, floor systems)</li>
+        <li><strong>Appliance warranties:</strong> Manufacturer warranties on refrigerators, stoves, dishwashers, etc.</li>
+        <li><strong>Optional extended warranties:</strong> Additional coverage for mechanical systems beyond standard warranties</li>
+      </ul>
+
+      <p>
+        Champion Home Builders — the manufacturer behind every home we sell — has an excellent warranty reputation. They stand behind their products, and we&rsquo;re here to help if any issues arise.
+      </p>
+
+      <p>
+        <strong>Pro tip:</strong> Document everything during your final walkthrough. Note any cosmetic issues, missing items, or concerns. It&rsquo;s much easier to address these before you move in than after.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">5. Common first-time buyer mistakes (and how to avoid them)</H2>
+      <p>
+        We&rsquo;ve helped hundreds of first-time buyers. Here are the mistakes we see most often — and how to avoid them:
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Mistake #1: Not getting pre-approved before shopping</H3>
+      <p>
+        You wouldn&rsquo;t shop for a car without knowing your budget. Same principle applies here. Get pre-approved for financing before you start touring homes. You&rsquo;ll know exactly what you can afford, and sellers (that&rsquo;s us) will take you more seriously.
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Mistake #2: Underestimating site costs</H3>
+      <p>
+        The home price is just the beginning. Site preparation — foundation, utilities, driveway, permits — can add $15,000 to $50,000 depending on your property. We provide detailed site cost estimates so you&rsquo;re not surprised.
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Mistake #3: Buying without seeing the home in person</H3>
+      <p>
+        Photos and videos are helpful, but nothing replaces walking through a home. Visit our showroom in Auburn, IN to tour actual homes. Sit in the living room. Stand in the shower. Open the cabinets. You&rsquo;ll make a better decision with firsthand experience.
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Mistake #4: Not verifying zoning</H3>
+      <p>
+        Not all properties allow manufactured homes. Before you buy land, verify with the county that manufactured homes are permitted. We help our customers check zoning — just ask.
+      </p>
+
+      <H3 className="font-semibold text-xl mt-8 mb-3">Mistake #5: Skipping the permanent foundation to save money</H3>
+      <p>
+        A permanent foundation costs $4,000 to $15,000 — but it opens up mortgage financing (vs. higher-rate chattel loans) and significantly improves resale value. The long-term savings usually outweigh the upfront cost.
+      </p>
+
+      <H2 className="font-serif text-2xl lg:text-3xl font-light tracking-tight mt-12 mb-4">Ready to buy your first manufactured home?</H2>
+      <p>
+        Factory Direct Homes Center specializes in helping first-time buyers navigate the manufactured home purchase process. We&rsquo;ll walk you through financing options, help you understand total costs, and guide you from initial consultation to move-in day.
+      </p>
+      <p>
+        Our factory-direct pricing means you pay less than at traditional dealers — and our Summer 2026 promotion offers 25% off MSRP on select models. That&rsquo;s thousands in savings on your first home.
+      </p>
+      <p>
+        Contact us today for a free consultation and buyer&rsquo;s guide. Your path to homeownership starts here.
+      </p>
+    </>
+  );
+}
+
 // Map slugs to content components
 const postContent: Record<string, () => React.JSX.Element> = {
   "manufactured-vs-modular-vs-mobile": Post1Content,
@@ -973,6 +1345,9 @@ const postContent: Record<string, () => React.JSX.Element> = {
   "fastest-growing-housing-segment-2026": Post8Content,
   "land-vs-community-manufactured-home": Post9Content,
   "va-loans-manufactured-homes-veterans-guide": Post10Content,
+  "summer-2026-best-time-buy-manufactured-home": Post11Content,
+  "msrp-vs-factory-direct-pricing-explained": Post12Content,
+  "first-time-buyer-guide-2026": Post13Content,
 };
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
