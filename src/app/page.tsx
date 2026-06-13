@@ -798,7 +798,7 @@ export default function Home() {
 // Parallax Hero Section Component
 function ParallaxHeroSection() {
   return (
-    <section className="relative h-[280px] sm:h-[320px] lg:h-[380px]" aria-label="Hero section">
+    <section className="relative h-[320px] sm:h-[360px] lg:h-[420px]" aria-label="Hero section">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -812,9 +812,19 @@ function ParallaxHeroSection() {
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-charcoal)]/80 to-[var(--color-charcoal)]/40" />
       </div>
 
-      {/* Hero Content - Minimal */}
+      {/* Hero Content */}
       <div className="relative h-full flex flex-col justify-center px-4 lg:px-8 pt-4">
         <div className="max-w-7xl mx-auto w-full">
+          {/* Sale Badge */}
+          <Link href="/special-plans" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
+            <span className="animate-pulse">🎉</span>
+            <span>25% OFF MSRP — Summer Sale!</span>
+            <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">Ends June 30</span>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+          
           <p className="text-xs sm:text-sm font-bold tracking-wider uppercase text-[var(--color-lime)] mb-2">
             Factory Direct Homes Center — Auburn, Indiana
           </p>

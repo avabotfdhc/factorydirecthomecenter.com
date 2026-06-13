@@ -1,0 +1,76 @@
+"use client";
+
+import { useState } from "react";
+
+interface SaleDisclaimerProps {
+  variant?: "compact" | "full" | "inline";
+  className?: string;
+}
+
+export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclaimerProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  if (variant === "compact") {
+    return (
+      <div className={`bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800 ${className}`}>
+        <p className="font-medium">
+          *25% off MSRP base price only. Excludes delivery, setup, taxes & fees. 
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="underline hover:text-amber-900 ml-1"
+          >
+            {isExpanded ? "Show less" : "See details"}
+          </button>
+        </p>
+        {isExpanded && (
+          <div className="mt-2 text-amber-700 space-y-1 border-t border-amber-200 pt-2">
+            <p>Offer valid on in-stock inventory and new orders placed by June 30, 2026.</p>
+            <p>MSRP = Manufacturer's Suggested Retail Price. Subject to credit approval.</p>
+            <p>Cannot be combined with other offers. See dealer for complete details.</p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (variant === "inline") {
+    return (
+      <p className={`text-xs text-gray-500 ${className}`}>
+        *25% off MSRP base price only. Excludes delivery, setup, skirting, taxes, title fees, and optional upgrades. 
+        Valid through June 30, 2026. Subject to credit approval. See dealer for details.
+      </p>
+    );
+  }
+
+  // Full variant (default)
+  return (
+    <div className={`bg-white rounded-xl p-6 shadow-md border border-gray-200 ${className}`}>
+      <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <svg className="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+        </svg>
+        Sale Terms & Conditions
+      </h3>
+      <div className="text-sm text-gray-600 space-y-3">
+        <p>
+          <strong>*25% OFF MSRP BASE PRICE DISCLOSURE:</strong> Offer valid on select new manufactured and modular homes. 
+          25% discount applies to MSRP (Manufacturer's Suggested Retail Price) base price only and does not include delivery, setup, skirting, taxes, 
+          title fees, or optional upgrades.
+        </p>
+        <p>
+          Offer valid on in-stock inventory and new orders placed by <strong>June 30, 2026</strong>. 
+          Subject to credit approval. Cannot be combined with other offers, promotions, or prior purchases. 
+          Factory Direct Homes Center reserves the right to modify or cancel this promotion at any time without notice.
+        </p>
+        <p>
+          Prices shown are for the home only and do not include taxes, title, delivery, installation, 
+          or site preparation costs. All homes are built by Champion Home Builders to HUD or modular building codes. 
+          Warranty information available upon request.
+        </p>
+        <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-200">
+          Factory Direct Homes Center LLC | 1211 State Road 8, Auburn, IN 46706 | (260) 308-1457
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -3,35 +3,37 @@ import Image from "next/image";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
 import { H2, H3 } from "@/components/Heading";
+import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 
 // ============================================
-// SPECIAL PLANS / ON SALE PAGE - 20% OFF CAMPAIGN
+// SPECIAL PLANS / ON SALE PAGE - 25% OFF MSRP CAMPAIGN
 // ============================================
 // Promotional page for current sales and clearance
-// Updated: May 2026 - 20% OFF MSRP Campaign
+// Updated: June 2026 - 25% OFF MSRP Summer Sale
 // ============================================
 
 export const metadata = genMeta({
-  title: "20% Off MSRP | Factory Direct Homes Center Sale",
-  description: "Save 20% off MSRP on all floor plans! Limited time offer on Champion manufactured homes. Single wide, double wide, and modular homes on sale now.",
+  title: "25% Off MSRP | Factory Direct Homes Center Summer Sale",
+  description: "Save 25% off MSRP on all floor plans! Limited time summer sale on Champion manufactured homes. Single wide, double wide, and modular homes on sale now.",
   keywords: [
     "manufactured homes sale",
-    "20% off mobile homes",
+    "25% off MSRP mobile homes",
     "champion homes discount",
     "factory direct sale",
     "mobile home clearance",
-    "modular home sale"
+    "modular home sale",
+    "summer home sale"
   ],
   url: "/special-plans",
 });
 
 // Sale disclaimer
 const saleDisclaimer = `
-*20% off MSRP (Manufacturer's Suggested Retail Price) valid on all new floor plan orders 
-placed during the promotional period. Discount applies to base home price only and does 
+*25% off MSRP (Manufacturer's Suggested Retail Price) valid on all new floor plan orders 
+placed during the promotional period. Discount applies to MSRP base price only and does 
 not include options, upgrades, delivery, setup, or other fees. Cannot be combined with 
 other offers or prior sales. See dealer for complete details. Financing subject to credit 
-approval. Offer expires [DATE] or while supplies last.
+approval. Offer expires June 30, 2026 or while supplies last.
 `;
 
 // Featured sale homes
@@ -47,7 +49,7 @@ const saleHomes = [
     width: "16'",
     length: "56'",
     msrp: 89900,
-    salePrice: 71920,
+    salePrice: 67425,
     image: "/floorplans/Dutch Aspire 1656H22208.png",
     tag: "On Sale"
   },
@@ -62,7 +64,7 @@ const saleHomes = [
     width: "16'",
     length: "52'",
     msrp: 84900,
-    salePrice: 67920,
+    salePrice: 63675,
     image: "/floorplans/Dutch Aspire 1652H21151.png",
     tag: "On Sale"
   },
@@ -78,7 +80,7 @@ const saleHomes = [
     width: "28'",
     length: "52'",
     msrp: 145000,
-    salePrice: 116000,
+    salePrice: 108750,
     image: "/floorplans/Brighton.png",
     tag: "On Sale"
   },
@@ -94,7 +96,7 @@ const saleHomes = [
     width: "28'",
     length: "64'",
     msrp: 169000,
-    salePrice: 135200,
+    salePrice: 126750,
     image: "/floorplans/Fillmore.png",
     tag: "On Sale"
   },
@@ -110,7 +112,7 @@ const saleHomes = [
     width: "28'",
     length: "56'",
     msrp: 155000,
-    salePrice: 124000,
+    salePrice: 116250,
     image: "/floorplans/Silverton.png",
     tag: "On Sale"
   },
@@ -126,7 +128,7 @@ const saleHomes = [
     width: "28'",
     length: "60'",
     msrp: 162000,
-    salePrice: 129600,
+    salePrice: 121500,
     image: "/floorplans/Bay Port.png",
     tag: "On Sale"
   }
@@ -135,17 +137,20 @@ const saleHomes = [
 export default function SpecialPlansPage() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero Banner - 20% Off Campaign */}
-      <section className="relative w-full bg-gradient-to-r from-[#1a365d] to-[#2c7a7b] overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          {/* Subtle house silhouettes background */}
-          <svg className="w-full h-full" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
-            <path d="M0,400 L0,250 L150,150 L300,250 L300,400 Z" fill="currentColor" className="text-white"/>
-            <path d="M250,400 L250,200 L400,100 L550,200 L550,400 Z" fill="currentColor" className="text-white"/>
-            <path d="M500,400 L500,220 L650,120 L800,220 L800,400 Z" fill="currentColor" className="text-white"/>
-            <path d="M750,400 L750,180 L900,80 L1050,180 L1050,400 Z" fill="currentColor" className="text-white"/>
-            <path d="M1000,400 L1000,240 L1150,140 L1300,240 L1300,400 Z" fill="currentColor" className="text-white"/>
-          </svg>
+      {/* Hero Banner - 25% Off MSRP Campaign */}
+      <section className="relative w-full overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/2026-03-22-hero-autumn.png"
+            alt="Modern manufactured home with autumn landscaping"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          {/* Gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a365d]/95 via-[#1a365d]/80 to-[#2c7a7b]/70" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
@@ -159,16 +164,16 @@ export default function SpecialPlansPage() {
               </div>
               
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tight">
-                20% OFF MSRP
+                25% OFF MSRP
               </h1>
               <p className="text-2xl md:text-3xl text-white/90 font-semibold mb-4">
-                All Floor Plans - Limited Time Offer
+                Summer Sale - Limited Time Offer
               </p>
               <p className="text-lg text-white/80 max-w-2xl mx-auto mb-2">
                 Factory Direct Pricing Just Got Better. Save thousands on your new Champion manufactured home.
               </p>
               <p className="text-yellow-300 font-semibold mb-8">
-                ⏰ Offer Ends May 31, 2026
+                ⏰ Offer Ends June 30, 2026
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -408,34 +413,7 @@ export default function SpecialPlansPage() {
       <section className="bg-gray-100 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="bg-white rounded-xl p-8 shadow-md">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <svg className="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
-                </svg>
-                Sale Terms & Conditions
-              </h3>
-              <div className="text-sm text-gray-600 space-y-2">
-                <p>
-                  <strong>*20% off MSRP</strong> (Manufacturer's Suggested Retail Price) valid on all new floor plan orders 
-                  placed during the promotional period. Discount applies to base home price only and does not include 
-                  options, upgrades, delivery, setup, or other fees.
-                </p>
-                <p>
-                  Cannot be combined with other offers or prior sales. See dealer for complete details. 
-                  Financing subject to credit approval. Prices shown are for the home only and do not include 
-                  taxes, title, delivery, installation, or site preparation costs.
-                </p>
-                <p>
-                  All homes are built by Champion Home Builders to HUD or modular building codes. 
-                  Warranty information available upon request. <strong>Offer expires May 31, 2026</strong> or while supplies last. 
-                  Factory Direct Homes Center reserves the right to modify or end this promotion at any time.
-                </p>
-                <p className="text-xs text-gray-500 mt-4">
-                  Factory Direct Homes Center LLC | 1211 State Road 8, Auburn, IN 46706 | (260) 308-1457
-                </p>
-              </div>
-            </div>
+            <SaleDisclaimer variant="full" />
           </FadeIn>
         </div>
       </section>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { trackPhoneClick } from "@/lib/analytics";
+import { AnnouncementBar } from "./AnnouncementBar";
 
 const navLinks = [
   { href: "/floor-plans", label: "Floor Plans" },
@@ -59,7 +60,9 @@ export function Header() {
   }, [mobileOpen, closeMenu]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[var(--color-charcoal)]/5">
+    <>
+      <AnnouncementBar />
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[var(--color-charcoal)]/5">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-[var(--color-teal)] focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
@@ -163,5 +166,6 @@ export function Header() {
         </div>
       )}
     </header>
+    </>
   );
 }

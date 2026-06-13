@@ -10,7 +10,7 @@ interface ExitIntentPopupProps {
   delay?: number;
 }
 
-export function ExitIntentPopup({ offer = "Get $500 Off Your Home Purchase", delay = 5000 }: ExitIntentPopupProps) {
+export function ExitIntentPopup({ offer = "25% OFF MSRP - Limited Time!", delay = 5000 }: ExitIntentPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [email, setEmail] = useState("");
@@ -88,7 +88,8 @@ export function ExitIntentPopup({ offer = "Get $500 Off Your Home Purchase", del
               </svg>
             </div>
             <H3 className="font-serif text-2xl font-light mb-2">Wait! Don't Miss Out</H3>
-            <p className="text-white/80">{offer}</p>
+            <p className="text-white/80 text-lg font-semibold">{offer}</p>
+            <p className="text-yellow-300 text-sm mt-1">Ends June 30, 2026</p>
           </div>
 
           {/* Content */}
@@ -102,7 +103,7 @@ export function ExitIntentPopup({ offer = "Get $500 Off Your Home Purchase", del
                 </div>
                 <H4 className="font-serif text-xl font-semibold mb-2">You're In!</H4>
                 <p className="text-[var(--color-gray)]">
-                  Check your email for your $500 coupon code. A home specialist will contact you within 24 hours.
+                  A home specialist will contact you within 24 hours with your 25% OFF MSRP details.
                 </p>
               </div>
             ) : (
@@ -110,15 +111,15 @@ export function ExitIntentPopup({ offer = "Get $500 Off Your Home Purchase", del
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
-                    <span className="text-sm text-[var(--color-charcoal)]">$500 off your home purchase</span>
+                    <span className="text-sm text-[var(--color-charcoal)]"><strong>25% OFF MSRP</strong> base price</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
-                    <span className="text-sm text-[var(--color-charcoal)]">Free site evaluation ($250 value)</span>
+                    <span className="text-sm text-[var(--color-charcoal)]">Save thousands on your new home</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
-                    <span className="text-sm text-[var(--color-charcoal)]">Priority factory scheduling</span>
+                    <span className="text-sm text-[var(--color-charcoal)]">Free site evaluation included</span>
                   </div>
                 </div>
 
@@ -135,12 +136,12 @@ export function ExitIntentPopup({ offer = "Get $500 Off Your Home Purchase", del
                     type="submit"
                     className="w-full py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
                   >
-                    Claim My $500 Discount
+                    Claim My 25% OFF MSRP
                   </button>
                 </form>
 
                 <p className="text-xs text-center text-[var(--color-gray)] mt-4">
-                  Limited time offer. Valid for new customers only.
+                  *25% off MSRP base price only. Excludes delivery, setup, taxes & fees. Valid through June 30, 2026.
                 </p>
               </>
             )}

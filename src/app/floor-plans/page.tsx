@@ -11,6 +11,7 @@ import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { FloorPlanComparison } from "@/components/FloorPlanComparison";
 import { LeadCaptureForm } from "@/components/LeadCaptureForm";
+import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 
 // ============================================
 // FLOOR PLANS PAGE - MAXIMUM SEO/AEO
@@ -480,6 +481,32 @@ export default function FloorPlansPage() {
       </section>
 
       {/* ============================================
+          SUMMER SALE BANNER
+          ============================================ */}
+      <section className="bg-gradient-to-r from-[#1a365d] via-[#2c7a7b] to-[#1a365d] py-4">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🎉</span>
+              <div>
+                <p className="text-white font-bold text-lg">25% OFF MSRP</p>
+                <p className="text-white/80 text-sm">Summer Sale — Save thousands on your new home!</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-yellow-300 text-sm font-semibold">Ends June 30th</span>
+              <Link 
+                href="/special-plans"
+                className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2 text-sm font-bold rounded hover:bg-[var(--color-lime-dark)] transition-colors"
+              >
+                View Sale
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================
           QUICK FILTER TABS
           ============================================ */}
       <section className="sticky top-0 z-30 bg-white border-b border-[var(--color-charcoal)]/10 shadow-sm">
@@ -670,6 +697,15 @@ export default function FloorPlansPage() {
         faqs={floorPlanFAQs}
         showSchema={true}
       />
+
+      {/* ============================================
+          SALE DISCLAIMER
+          ============================================ */}
+      <section className="py-8 bg-[var(--color-cream-dark)]">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <SaleDisclaimer variant="compact" />
+        </div>
+      </section>
 
       {/* ============================================
           LEAD CAPTURE SECTION
