@@ -46,6 +46,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   alternates: {
+    canonical: "/",
     types: {
       "application/rss+xml": [
         { url: "/blog/feed.xml", title: "The Manufactured Home Blog — Factory Direct Homes Center" },
