@@ -224,7 +224,7 @@ const relatedPages = [
   },
   {
     title: "Contact",
-    url: "/contact",
+    url: "/contact-us",
     description: "Get personalized financing guidance from our team"
   }
 ];

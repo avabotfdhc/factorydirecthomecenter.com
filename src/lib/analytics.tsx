@@ -608,7 +608,7 @@ export function trackLeadFormSubmit(formName: string, leadData: LeadData) {
   // GA4
   trackGenerateLead(leadData);
   trackFormSubmit(formName, {
-    form_destination: "/contact",
+    form_destination: "/contact-us",
     form_id: leadData.id,
   });
   

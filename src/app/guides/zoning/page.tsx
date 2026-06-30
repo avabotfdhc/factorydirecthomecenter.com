@@ -1,4 +1,4 @@
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3, H4 } from "@/components/Heading";
 
@@ -99,6 +99,8 @@ const commonQuestions = [
 export default function ZoningPage() {
   return (
     <>
+      <StructuredData data={structuredData.faqPage(commonQuestions)} />
+
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">

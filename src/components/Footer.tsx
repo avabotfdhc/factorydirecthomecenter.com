@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { H4 } from "@/components/Heading";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 export function Footer() {
@@ -27,9 +26,9 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
               Explore
-            </H4>
+            </p>
             <ul className="space-y-3">
               {[
                 { href: "/floor-plans", label: "Floor Plans" },
@@ -55,9 +54,9 @@ export function Footer() {
 
           {/* Home Types */}
           <div>
-            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
               Home Types
-            </H4>
+            </p>
             <ul className="space-y-3">
               {["Single Wide Homes", "Double Wide Homes", "Modular Homes"].map(
                 (type) => (
@@ -76,9 +75,9 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
               Visit Us
-            </H4>
+            </p>
             <address className="not-italic space-y-3 text-sm text-[var(--color-gray-light)]">
               <p><a href="https://www.google.com/maps/search/?api=1&query=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-lime)] transition-colors">1211 State Road 8<br />Auburn, IN 46706</a></p>
               <p>
@@ -111,9 +110,9 @@ export function Footer() {
         {/* Newsletter Signup */}
         <div className="mt-16 pt-10 border-t border-white/10">
           <div className="max-w-xl mx-auto text-center">
-            <H4 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-3">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-3">
               Stay Informed
-            </H4>
+            </p>
             <p className="text-sm text-[var(--color-gray-light)] mb-6">
               Get manufactured home buying tips, market updates, and new listing alerts.
             </p>

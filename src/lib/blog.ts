@@ -89,7 +89,7 @@ export const blogPosts: BlogPost[] = [
     topics: ["first-time-buyers", "buying-process", "financing", "manufactured-homes", "site-work", "zoning"],
     cta: {
       text: "Ready to start your home buying journey? Get a personalized quote.",
-      href: "/contact",
+      href: "/contact-us",
       label: "Request a quote",
     },
     faqs: [
@@ -135,7 +135,7 @@ export const blogPosts: BlogPost[] = [
     pillarSlug: "first-time-buyer-checklist",
     cta: {
       text: "Have financing questions? Our team can walk you through your best options.",
-      href: "/contact",
+      href: "/contact-us",
       label: "Talk to a financing expert",
     },
     faqs: [
@@ -256,7 +256,7 @@ export const blogPosts: BlogPost[] = [
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "Energy-efficient manufactured home with modern upgrades",
     topics: ["manufactured-homes", "modular"],
-    cta: { text: "Get a quote on energy-efficient home options.", href: "/contact", label: "Get an upgrade quote" },
+    cta: { text: "Get a quote on energy-efficient home options.", href: "/contact-us", label: "Get an upgrade quote" },
     faqs: [
       {
         question: "What energy rebates are available for manufactured homes in 2026?",
@@ -334,7 +334,7 @@ export const blogPosts: BlogPost[] = [
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "Row of new manufactured homes representing industry growth",
     topics: ["manufactured-homes", "champion-homes", "factory-direct"],
-    cta: { text: "Stay informed with market updates.", href: "/contact", label: "Subscribe to newsletter" },
+    cta: { text: "Stay informed with market updates.", href: "/contact-us", label: "Subscribe to newsletter" },
     faqs: [
       { question: "How fast is the manufactured housing industry growing in 2026?", answer: "Manufactured home shipments are projected to reach 130,000 to 140,000 units in 2026, up roughly 12% from 2025 levels. Multi-section home shipments are growing even faster at approximately 18% year over year. This makes manufactured housing the fastest-growing segment of the U.S. housing market while site-built housing starts remain flat." },
       { question: "Why are manufactured homes so much cheaper than site-built homes?", answer: "Factory construction eliminates weather delays, reduces material waste by up to 30%, and leverages assembly-line efficiency. The average new manufactured home costs approximately $82,000 for a single section and $127,000 for a multi-section, compared to over $420,000 for the median site-built home." },
@@ -358,7 +358,7 @@ export const blogPosts: BlogPost[] = [
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "Manufactured home on private land in a rural setting",
     topics: ["manufactured-homes", "buying-process", "zoning", "financing", "rural"],
-    cta: { text: "Talk to an advisor about your best placement options.", href: "/contact", label: "Talk to an advisor" },
+    cta: { text: "Talk to an advisor about your best placement options.", href: "/contact-us", label: "Talk to an advisor" },
     faqs: [
       { question: "How much does lot rent cost in a manufactured home community?", answer: "In Indiana, manufactured home community lot rent typically ranges from $250 to $500 per month depending on location and amenities. Some communities include water, sewer, and trash in the lot rent while others charge separately. Lot rent typically increases 2 to 5 percent annually." },
       { question: "Do manufactured homes on owned land appreciate in value?", answer: "Yes. Federal Housing Finance Agency data shows manufactured homes on owned land appreciated 211.8% between 2000 and 2024. The key factor is land ownership — homes classified as real property on owned land build equity in both the home and land. Homes in communities on leased lots do not build land equity." },
@@ -382,7 +382,7 @@ export const blogPosts: BlogPost[] = [
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "Veteran family in front of their new manufactured home purchased with VA loan",
     topics: ["va-loans", "financing", "manufactured-homes", "first-time-buyers"],
-    cta: { text: "Contact us to discuss VA loan options for manufactured homes.", href: "/contact", label: "Contact us" },
+    cta: { text: "Contact us to discuss VA loan options for manufactured homes.", href: "/contact-us", label: "Contact us" },
     faqs: [
       { question: "Can you use a VA loan to buy a manufactured home?", answer: "Yes. The VA loan program allows eligible veterans and active-duty service members to purchase manufactured homes with zero down payment. The home must be on a permanent foundation, carry the HUD certification label, have at least 400 square feet of living space, and be classified as real property." },
       { question: "What foundation does a manufactured home need for a VA loan?", answer: "A VA loan requires the manufactured home to be on a permanent foundation engineered by a licensed professional engineer. Acceptable types include pier-and-beam, concrete slab, and full basement foundations. The wheels, axles, and hitch must be removed, and the home must be permanently affixed per HUD and VA standards." },
@@ -407,7 +407,7 @@ export const blogPosts: BlogPost[] = [
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "Beautiful manufactured home in summer setting with blue sky",
     topics: ["manufactured-homes", "financing", "factory-direct", "first-time-buyers"],
-    cta: { text: "Take advantage of our Summer 2026 promotion — 25% off MSRP on select models. Limited inventory available.", href: "/contact", label: "Claim your 25% discount" },
+    cta: { text: "Take advantage of our Summer 2026 promotion — 25% off MSRP on select models. Limited inventory available.", href: "/contact-us", label: "Claim your 25% discount" },
     faqs: [
       { question: "Is summer a good time to buy a manufactured home?", answer: "Yes. Summer 2026 offers a unique combination of favorable factors: competitive interest rates stabilizing after recent volatility, our 25% off MSRP factory direct promotion, and faster delivery times due to optimal weather conditions for site preparation and delivery. Factory build times are also typically shorter in summer months." },
       { question: "What is the 25% off MSRP promotion?", answer: "Factory Direct Homes Center is offering 25% off Manufacturer's Suggested Retail Price on select Champion manufactured home models through August 31, 2026. This is a factory-direct savings — no middleman markup means you pay significantly less than retail pricing. Contact us for eligible models and availability." },
@@ -455,7 +455,7 @@ export const blogPosts: BlogPost[] = [
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "First-time homebuyers receiving keys to their new manufactured home",
     topics: ["first-time-buyers", "buying-process", "financing", "manufactured-homes", "site-work"],
-    cta: { text: "Ready to buy your first manufactured home? Get a personalized consultation and free buyer's guide.", href: "/contact", label: "Schedule a free consultation" },
+    cta: { text: "Ready to buy your first manufactured home? Get a personalized consultation and free buyer's guide.", href: "/contact-us", label: "Schedule a free consultation" },
     faqs: [
       { question: "What financing options are available for first-time manufactured home buyers?", answer: "First-time buyers have several options: FHA Title I loans (home only, low down payment), FHA Title II loans (home and land, 3.5% down), VA loans for veterans (zero down), USDA loans for rural buyers (zero down), and chattel loans (higher rates but easier qualification). Your best option depends on whether you own land and your credit score." },
       { question: "Do I need to buy land before getting a manufactured home?", answer: "No, you don't need to own land. You can place a manufactured home on land you purchase, land you already own, or in a manufactured home community where you lease the lot. However, owning land opens up better financing options and builds long-term equity. Land-home packages combine land and home purchase into one loan." },

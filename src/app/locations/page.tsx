@@ -10,12 +10,25 @@ export const metadata = genMeta({
 
 const locations = [
   {
-    state: "Indiana - Rural Counties",
+    state: "Indiana — Local Area",
     cities: [
-      { name: "Noble County", distance: "35 miles", slug: "noble-county" },
       { name: "DeKalb County", distance: "Local", slug: "dekalb-county" },
+      { name: "Garrett", distance: "5 miles", slug: "garrett" },
+      { name: "Waterloo", distance: "6 miles", slug: "waterloo" },
+      { name: "Butler", distance: "12 miles", slug: "butler" },
+    ],
+  },
+  {
+    state: "Indiana — Northeast & Central",
+    cities: [
+      { name: "Steuben County", distance: "25 miles", slug: "steuben-county" },
       { name: "Rural Indiana", distance: "25-45 miles", slug: "rural-indiana" },
+      { name: "LaGrange County", distance: "30 miles", slug: "lagrange-county" },
       { name: "Fort Wayne", distance: "30 miles", slug: "fort-wayne" },
+      { name: "Noble County", distance: "35 miles", slug: "noble-county" },
+      { name: "Whitley County", distance: "35 miles", slug: "whitley-county" },
+      { name: "Wells County", distance: "50 miles", slug: "wells-county" },
+      { name: "Adams County", distance: "55 miles", slug: "adams-county" },
       { name: "Indianapolis", distance: "110 miles", slug: "indianapolis" },
     ],
   },
@@ -23,18 +36,12 @@ const locations = [
     state: "Ohio",
     cities: [
       { name: "Toledo", distance: "75 miles", slug: "toledo" },
-      { name: "Dayton", distance: "140 miles", slug: "dayton" },
-      { name: "Lima", distance: "55 miles", slug: "lima" },
-      { name: "Findlay", distance: "95 miles", slug: "findlay" },
     ],
   },
   {
     state: "Michigan",
     cities: [
       { name: "Kalamazoo", distance: "95 miles", slug: "kalamazoo" },
-      { name: "Battle Creek", distance: "85 miles", slug: "battle-creek" },
-      { name: "Jackson", distance: "120 miles", slug: "jackson" },
-      { name: "Ann Arbor", distance: "140 miles", slug: "ann-arbor" },
     ],
   },
 ];

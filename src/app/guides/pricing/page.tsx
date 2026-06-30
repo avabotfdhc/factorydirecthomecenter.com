@@ -1,4 +1,4 @@
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 
@@ -8,6 +8,25 @@ export const metadata = genMeta({
   url: "/guides/pricing",
   type: "article",
 });
+
+const pricingFAQs = [
+  {
+    question: "Can I really use my own contractors?",
+    answer: "Absolutely. Many of our customers save $5,000-$10,000 by using their own excavator, concrete crew, or electrician. We'll review their credentials to ensure everything meets code, but the choice is yours.",
+  },
+  {
+    question: "What if I don't know any contractors?",
+    answer: "No problem. We have a network of trusted, licensed contractors we've worked with for years. We'll coordinate everything and you'll still see every line item.",
+  },
+  {
+    question: "Is the home price really the factory invoice plus a fair margin?",
+    answer: "Yes. We show you the factory base price and add a transparent dealer margin (typically 10-15%, not the 20-40% you'll find elsewhere). No games, no hidden fees.",
+  },
+  {
+    question: "What costs are fixed vs. variable?",
+    answer: "The home price is fixed once you choose your model and options. Delivery is fixed based on your distance. Setup and site work vary based on your property and choices — that's where you have the most control over total cost.",
+  },
+];
 
 const comparisonData = [
   {
@@ -72,6 +91,8 @@ const lineItems = [
 export default function PricingPage() {
   return (
     <>
+      <StructuredData data={structuredData.faqPage(pricingFAQs)} />
+
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">

@@ -77,9 +77,9 @@ export function PageFooter() {
       {citations.length > 0 && (
         <section className="py-10 border-t border-[var(--color-charcoal)]/10">
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
-            <h3 id="sources" className="font-semibold text-xs uppercase tracking-[0.2em] text-[var(--color-gray)] mb-4">
+            <h2 id="sources" className="font-semibold text-xs uppercase tracking-[0.2em] text-[var(--color-gray)] mb-4">
               Sources & References
-            </h3>
+            </h2>
             <ul className="space-y-2">
               {citations.map((cite, idx) => (
                 <li key={idx} className="text-sm">

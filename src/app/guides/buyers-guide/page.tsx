@@ -31,7 +31,7 @@ export default function BuyersGuidePage() {
       <StructuredData data={structuredData.localBusiness()} />
       <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
-      <StructuredData data={structuredData.article({ headline: "Complete Manufactured Home Buyer's Guide", description: "Everything you need to know about buying a manufactured home", image: "/images/hero-home.jpg", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/guides/buyers-guide" })} />
+      <StructuredData data={structuredData.article({ headline: "Complete Manufactured Home Buyer's Guide", description: "Everything you need to know about buying a manufactured home", image: "/images/hero-home.jpg", datePublished: "2026-01-15", dateModified: "2026-06-01", author: "Factory Direct Homes Center", url: "/guides/buyers-guide" })} />
       <StructuredData data={structuredData.faqPage(guideFAQs)} />
 
 
@@ -160,7 +160,7 @@ export default function BuyersGuidePage() {
         </div>
       </section>
 
-      <FAQSection title="Buyer's Guide FAQs" subtitle="Common questions from first-time manufactured home buyers" faqs={guideFAQs} showSchema={true} />
+      <FAQSection title="Buyer's Guide FAQs" subtitle="Common questions from first-time manufactured home buyers" faqs={guideFAQs} showSchema={false} />
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">

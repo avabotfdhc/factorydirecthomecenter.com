@@ -116,9 +116,10 @@ const saleHomes = [
 ];
 
 // Generate metadata for the page
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const home = saleHomes.find(h => h.id === params.slug);
-  
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const home = saleHomes.find(h => h.id === slug);
+
   if (!home) {
     return genMeta({
       title: "Home Not Found | Factory Direct Homes Center",
@@ -134,8 +135,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   });
 }
 
-export default function SaleHomeDetailPage({ params }: { params: { slug: string } }) {
-  const home = saleHomes.find(h => h.id === params.slug);
+export default async function SaleHomeDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const home = saleHomes.find(h => h.id === slug);
 
   if (!home) {
     notFound();
@@ -271,7 +273,7 @@ export default function SaleHomeDetailPage({ params }: { params: { slug: string 
 
               {/* Features */}
               <div className="mb-6">
-                <h3 className="font-bold text-gray-900 mb-3">Key Features</h3>
+                <h2 className="font-bold text-gray-900 mb-3">Key Features</h2>
                 <ul className="space-y-2">
                   {home.features.map((feature, index) => (
                     <li key={index} className="flex items-center gap-2 text-gray-600">
@@ -320,12 +322,12 @@ export default function SaleHomeDetailPage({ params }: { params: { slug: string 
 
         {/* Disclaimer */}
         <div className="mt-12 p-6 bg-gray-50 rounded-xl">
-          <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
             <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
             </svg>
             Terms & Conditions
-          </h3>
+          </h2>
           <p className="text-xs text-gray-500">
             *20% off MSRP (Manufacturer's Suggested Retail Price) valid on new orders only. 
             Discount applies to base home price only and does not include options, upgrades, 

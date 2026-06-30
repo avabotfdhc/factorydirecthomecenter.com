@@ -31,13 +31,6 @@ const guides = [
     readTime: "12 min",
   },
   {
-    title: "The Buying Process Timeline",
-    description: "From research to move-in day. What happens when, how long each step takes, and what you need to prepare.",
-    href: "/guides/timeline",
-    icon: "📅",
-    readTime: "8 min",
-  },
-  {
     title: "Site Work & Preparation",
     description: "Land clearing, foundations, utilities, and permits. What needs to happen before your home arrives.",
     href: "/guides/site-work",
