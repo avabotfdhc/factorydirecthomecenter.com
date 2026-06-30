@@ -1,0 +1,70 @@
+// Data layer that reads content from the existing Factory Direct Homes Center
+// admin CMS / backend API (api.factorydirecthomescenter.com). This is the bridge
+// that lets the new (Vercel/Tailwind) design render live, CMS-managed content
+// instead of hardcoded data — so Kyle keeps editing in the admin panel.
+//
+// Fetches run server-side (Next.js server components), so there is no CORS issue
+// and no API key is exposed to the browser.
+
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
+const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
+
+export interface ApiFloorPlan {
+  slug: string;
+  name: string;        // short display name (e.g. "Brighton")
+  title: string;       // full title from the CMS
+  price: string;       // formatted (e.g. "$120,800")
+  sqft: number;
+  beds: number;
+  baths: number;
+  image: string;       // absolute S3 URL, or "" if none
+  brand: string;
+  homeType: string;
+}
+
+function formatPrice(raw: unknown): string {
+  const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
+  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
+}
+
+// CMS titles are long ("Brighton - 3 Bed 2 Bath ... | Champion Aspire").
+// Use the first segment as the card's display name.
+function shortName(title: string): string {
+  return String(title || "")
+    .split(/\s[-|–]\s/)[0]
+    .trim() || "Home";
+}
+
+function s3Url(path?: string): string {
+  if (!path) return "";
+  if (/^https?:\/\//.test(path)) return path;
+  return `${S3_BASE}/${String(path).replace(/^\//, "")}`;
+}
+
+/** All active floor plans from the CMS, mapped to the card shape the design uses. */
+export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
+  try {
+    const res = await fetch(`${API_BASE}/api/floor-plan/get-active?limit=500`, {
+      next: { revalidate: 300 },
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
+    return rows
+      .filter((r) => r?.slug)
+      .map((r) => ({
+        slug: String(r.slug),
+        name: shortName(r.title),
+        title: String(r.title || ""),
+        price: formatPrice(r.price),
+        sqft: Number(r.sqft) || 0,
+        beds: Number(r.beds) || 0,
+        baths: Number(r.baths) || 0,
+        image: s3Url(r.bannerImage),
+        brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
+        homeType: String(r.homeType || ""),
+      }));
+  } catch {
+    return [];
+  }
+}
