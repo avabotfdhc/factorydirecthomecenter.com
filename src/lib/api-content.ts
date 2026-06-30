@@ -68,3 +68,60 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
     return [];
   }
 }
+
+export interface ApiFloorPlanDetail extends ApiFloorPlan {
+  description: string;     // short summary
+  floorPlanHtml: string;   // long HTML body
+  modelNumber: string;
+  length: string;
+  width: string;
+  series: string;
+  brochureUrl: string;     // absolute S3 URL or ""
+  virtualTour: string;     // e.g. Matterport URL or ""
+  gallery: string[];       // absolute image URLs (banner first)
+}
+
+/** One floor plan by slug, with full detail, from the CMS. */
+export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
+  try {
+    const res = await fetch(
+      `${API_BASE}/api/floor-plan/get-details/${encodeURIComponent(slug)}`,
+      { next: { revalidate: 300 } },
+    );
+    if (!res.ok) return null;
+    const json = await res.json();
+    const r: any = json?.data || json;
+    if (!r?.slug) return null;
+
+    const rawImgs = [
+      r.bannerImage,
+      ...((r.images || []).map((i: any) => i?.imageName || i?.imageLocation)),
+      ...((r.galleryImages || []).map((i: any) => i?.imageName || i?.imageLocation)),
+    ].filter(Boolean);
+    const gallery = [...new Set(rawImgs)].map(s3Url);
+
+    return {
+      slug: String(r.slug),
+      name: shortName(r.title),
+      title: String(r.title || ""),
+      price: formatPrice(r.price),
+      sqft: Number(r.sqft) || 0,
+      beds: Number(r.beds) || 0,
+      baths: Number(r.baths) || 0,
+      image: s3Url(r.bannerImage),
+      brand: r?.brandDetails?.name || "Champion Homes",
+      homeType: String(r.homeType || ""),
+      description: String(r.description || ""),
+      floorPlanHtml: String(r.floorPlan || ""),
+      modelNumber: String(r.modelNumber || ""),
+      length: String(r.length || ""),
+      width: String(r.width || ""),
+      series: r?.seriesDetails?.name || String(r.series || "") || "",
+      brochureUrl: r.brochure ? s3Url(r.brochure) : "",
+      virtualTour: String(r.virtualTour || ""),
+      gallery,
+    };
+  } catch {
+    return null;
+  }
+}

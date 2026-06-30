@@ -43,7 +43,7 @@ export default async function FloorPlansLivePage() {
             {plans.map((p) => (
               <Link
                 key={p.slug}
-                href={`/floor-plans/${p.slug}`}
+                href={`/floor-plans-live/${p.slug}`}
                 className="group block border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
               >
                 <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] relative overflow-hidden border-b border-[var(--color-charcoal)]/5">
