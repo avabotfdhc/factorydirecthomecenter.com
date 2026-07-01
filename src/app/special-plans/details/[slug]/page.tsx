@@ -404,7 +404,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Finance Options
                     </label>
-                    <select className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
+                    <select aria-label="Finance option" className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
                       <option>Select finance option</option>
                       <option>Cash</option>
                       <option>Finance</option>
@@ -415,7 +415,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Home Placement
                     </label>
-                    <select className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
+                    <select aria-label="Home placement" className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
                       <option>Select placement option</option>
                       <option>In a community</option>
                       <option>I have land</option>
@@ -428,7 +428,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Delivery State
                   </label>
-                  <select className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
+                  <select aria-label="Delivery state" className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
                     <option>Select state</option>
                     <option>Indiana</option>
                     <option>Ohio</option>

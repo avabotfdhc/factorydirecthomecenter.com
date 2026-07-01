@@ -10,7 +10,7 @@
   --color-orange-dark: #C87A1E;
   --color-lime: #8AC540;
   --color-lime-light: #9FD45C;
-  --color-lime-dark: #74A835;
+  --color-lime-dark: #588028; /* WCAG AA: 4.6:1 on white for small text (was #74A835 @ 2.8:1) */
   --color-charcoal: #2A2A2A;
   --color-charcoal-light: #3D3D3D;
   --color-charcoal-lighter: #555555;

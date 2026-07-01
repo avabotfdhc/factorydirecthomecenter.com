@@ -88,19 +88,19 @@ export default function Home() {
       <section className="bg-[var(--color-teal)] py-4">
         <div className="max-w-5xl mx-auto px-4 lg:px-8">
           <div className="bg-white rounded-lg shadow-lg p-2 flex flex-col sm:flex-row gap-2">
-            <select className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
+            <select aria-label="Home type" className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
               <option>All Types</option>
               <option>Single Wide</option>
               <option>Double Wide</option>
               <option>Modular</option>
             </select>
-            <select className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
+            <select aria-label="Home size" className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
               <option>Any Size</option>
               <option>1,000+ sq ft</option>
               <option>1,500+ sq ft</option>
               <option>2,000+ sq ft</option>
             </select>
-            <select className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
+            <select aria-label="Bedrooms" className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
               <option>Any Beds</option>
               <option>2+ Beds</option>
               <option>3+ Beds</option>
