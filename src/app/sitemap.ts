@@ -1,35 +1,46 @@
 import type { MetadataRoute } from "next";
 import { getAllPages } from "@/lib/pages";
-import { floorPlans } from "@/lib/floor-plans";
+import { getApiFloorPlans, getApiBlogPosts } from "@/lib/api-content";
 
 const BASE_URL = "https://factorydirecthomescenter.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// Refresh periodically so newly-published CMS homes/posts enter the sitemap.
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
 
-  const staticEntries: MetadataRoute.Sitemap = getAllPages().map((page) => ({
-    url: `${BASE_URL}${page.url === "/" ? "" : page.url}`,
-    lastModified,
-    changeFrequency: page.changeFrequency,
-    priority: page.priority,
-  }));
+  // Static/registry pages, minus stale sample detail URLs — the real
+  // floor-plan and blog detail pages are sourced live from the CMS below.
+  const staticEntries: MetadataRoute.Sitemap = getAllPages()
+    .filter((page) => page.url !== "/floor-plans/emerald-sky" && !page.url.startsWith("/blog/"))
+    .map((page) => ({
+      url: `${BASE_URL}${page.url === "/" ? "" : page.url}`,
+      lastModified,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    }));
 
-  // Every dynamic floor plan detail page (/floor-plans/[slug]) from the data model.
-  // Priority 0.7 — below hub pages but above thin utility pages.
-  const floorPlanEntries: MetadataRoute.Sitemap = floorPlans.map((plan) => ({
+  const [plans, posts] = await Promise.all([getApiFloorPlans(), getApiBlogPosts()]);
+
+  const floorPlanEntries: MetadataRoute.Sitemap = plans.map((plan) => ({
     url: `${BASE_URL}/floor-plans/${plan.slug}`,
     lastModified,
-    changeFrequency: "monthly" as const,
+    changeFrequency: "weekly" as const,
     priority: 0.7,
   }));
 
-  // Dedupe by URL — if a floor plan is also listed in sitePages (e.g. emerald-sky),
-  // keep the static registry entry since it carries richer metadata.
+  const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   const seen = new Set(staticEntries.map((e) => e.url));
-  const merged = [
+  return [
     ...staticEntries,
     ...floorPlanEntries.filter((e) => !seen.has(e.url)),
+    ...blogEntries.filter((e) => !seen.has(e.url)),
   ];
-
-  return merged;
 }

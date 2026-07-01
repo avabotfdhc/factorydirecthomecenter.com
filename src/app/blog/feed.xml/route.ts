@@ -1,23 +1,25 @@
-import { getPublishedPosts } from "@/lib/blog";
+import { getApiBlogPosts } from "@/lib/api-content";
 
 const BASE_URL = "https://factorydirecthomescenter.com";
 
+export const revalidate = 3600;
+
 export async function GET() {
-  const posts = getPublishedPosts();
+  const posts = await getApiBlogPosts();
 
   const items = posts
     .map((post) => {
       const url = `${BASE_URL}/blog/${post.slug}`;
-      const pubDate = new Date(post.publishedDate).toUTCString();
+      const parsed = post.date ? new Date(post.date) : null;
+      const pubDate = (parsed && !Number.isNaN(parsed.getTime()) ? parsed : new Date()).toUTCString();
       return `
     <item>
       <title><![CDATA[${post.title}]]></title>
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
-      <description><![CDATA[${post.description}]]></description>
+      <description><![CDATA[${post.excerpt}]]></description>
       <pubDate>${pubDate}</pubDate>
-      <author>info@factorydirecthomescenter.com (${post.author})</author>
-      <category>${post.categoryLabel}</category>
+      <author>info@factorydirecthomescenter.com (Factory Direct Homes Center)</author>
     </item>`;
     })
     .join("");

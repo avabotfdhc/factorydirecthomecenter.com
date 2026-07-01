@@ -19,6 +19,7 @@ import {
 } from "@/components/VisualEffects";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 import { H2, H3 } from "@/components/Heading";
+import { FeaturedHomes } from "@/components/FeaturedHomes";
 
 const homeTypes = [
   {
@@ -60,13 +61,6 @@ const testimonials = [
   { quote: "Buying our home was the best decision we ever made. The team walked us through every step and we saved thousands compared to site-built.", name: "David B.", location: "Fort Wayne, IN" },
   { quote: "We were priced out of the traditional market. Our double wide gives us everything we wanted at half the price.", name: "Sarah M.", location: "Indianapolis, IN" },
   { quote: "As a veteran, the VA financing with no money down was incredible. The process was smooth and our home is beautiful.", name: "James T.", location: "South Bend, IN" },
-];
-
-const featuredPlans = [
-  { name: "Brighton 2856", type: "Double Wide", sqft: "1,493", beds: 3, baths: 2, price: "$89,900", highlight: "Split bedroom, island kitchen", image: "/images/homepage/brighton-2852.png" },
-  { name: "Aspire 1672", type: "Single Wide", sqft: "1,152", beds: 3, baths: 2, price: "$62,500", highlight: "Master suite with walk-in", image: "/images/homepage/single-wides.webp" },
-  { name: "Silverton 2876", type: "Double Wide", sqft: "1,493", beds: 4, baths: 2, price: "$94,500", highlight: "Dual living areas", image: "/images/homepage/silverton-2856.png" },
-  { name: "Aspire Modular 3268", type: "Modular", sqft: "2,176", beds: 4, baths: 3, price: "$149,900", highlight: "Luxury en-suite master", image: "/images/homepage/georgetown-2864.png" },
 ];
 
 export default function Home() {
@@ -126,53 +120,7 @@ export default function Home() {
             <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredPlans.map((plan) => (
-              <div key={plan.name} className="group bg-white rounded-lg border border-[var(--color-charcoal)]/8 overflow-hidden hover:shadow-lg hover:border-[var(--color-teal)]/30 transition-all duration-400">
-                <figure className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden">
-                  <Image
-                    src={plan.image}
-                    alt={`${plan.name} ${plan.type} floor plan - ${plan.sqft} sq ft, ${plan.beds} bed, ${plan.baths} bath manufactured home`}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    loading="lazy"
-                  />
-                  <figcaption className="sr-only">{plan.name} - {plan.highlight}</figcaption>
-                  <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded z-10">
-                    {plan.type}
-                  </span>
-                </figure>
-
-                <div className="p-5">
-                  <H3 className="font-semibold text-base mb-1">{plan.name}</H3>
-                  <p className="text-xs text-[var(--color-teal)] font-medium mb-3">{plan.highlight}</p>
-
-                  <div className="flex gap-3 text-xs text-[var(--color-gray)] mb-4">
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg>
-                      {plan.sqft} ft²
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
-                      {plan.beds} Bed
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      {plan.baths} Bath
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-[var(--color-charcoal)]/5">
-                    <span className="font-serif text-xl font-semibold text-[var(--color-teal)]">{plan.price}</span>
-                    <Link href="/floor-plans" className="text-xs font-bold uppercase tracking-wider text-[var(--color-lime-dark)] hover:text-[var(--color-teal)] transition-colors">
-                      View Plan →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FeaturedHomes />
 
           <div className="text-center mt-10">
             <Link href="/floor-plans" className="btn-primary inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300">
