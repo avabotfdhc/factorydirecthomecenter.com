@@ -80,8 +80,34 @@ export async function POST(request: Request) {
 
 // ─── Channel 3: Factory Direct admin CMS (leads appear in the admin panel) ──
 // Posts to the existing public enquiry endpoint so submissions land in the same
-// place Kyle already manages leads. Rich fields the CMS enquiry model doesn't
-// structure are summarized into the address field for visibility.
+// place Kyle already manages leads.
+//
+// The CMS enquiry model REQUIRES numeric option IDs (deliveryState, homeType,
+// bedrooms, purchaseOptions, landOptions, communicationOptions, state) as
+// foreign keys — omitting them makes the insert fail with HTTP 400 and the lead
+// is silently lost. We map the fields the contact form collects to those IDs
+// and default the rest to sensible values (Indiana base market), preserving the
+// full free-text detail in the `address` note field so nothing is lost.
+//
+// Option IDs from GET /api/enquiry/get-enquiry-options (stable):
+//   delivery: 2=Indiana 4=Ohio 5=Michigan 8=Illinois 9=Kentucky
+//   homeType: 1=Single Wide 2=Double/Sectional 3=Modular
+//   bedrooms: 1..5   purchase: 1=Cash 2=Finance
+//   land: 1=Have land/place 2=Community   communication: 1=phone 2=text 3=email
+//   states: 15=Indiana 23=Michigan 36=Ohio
+
+function pickId(map: Record<string, number>, value: string, fallback: number): number {
+  const v = String(value || "").toLowerCase();
+  for (const key of Object.keys(map)) if (v.includes(key)) return map[key];
+  return fallback;
+}
+
+const HOME_TYPE: Record<string, number> = {
+  single: 1, "single wide": 1, double: 2, "double wide": 2, sectional: 2, modular: 3,
+};
+const PURCHASE: Record<string, number> = { cash: 1, finance: 2, financ: 2, loan: 2, mortgage: 2 };
+const LAND: Record<string, number> = { "have land": 1, "own": 1, land: 1, community: 2, lot: 2, need: 2 };
+const DELIVERY: Record<string, number> = { indiana: 2, ohio: 4, michigan: 5, illinois: 8, kentucky: 9 };
 
 async function postToCms(lead: Record<string, string>) {
   const CMS_API = (
@@ -94,6 +120,7 @@ async function postToCms(lead: Record<string, string>) {
     lead.landStatus && `Land: ${lead.landStatus}`,
     lead.financingStatus && `Financing: ${lead.financingStatus}`,
     lead.message && `Message: ${lead.message}`,
+    lead.pageUrl && `Page: ${lead.pageUrl}`,
   ]
     .filter(Boolean)
     .join(" | ");
@@ -106,6 +133,14 @@ async function postToCms(lead: Record<string, string>) {
       lastName: lead.lastName,
       email: lead.email,
       phoneNo: lead.phone || "",
+      // Required option IDs — mapped where the form collects it, else default.
+      deliveryState: pickId(DELIVERY, `${lead.state} ${lead.message} ${lead.interest}`, 2),
+      homeType: pickId(HOME_TYPE, lead.interest, 2),
+      bedrooms: 3,
+      purchaseOptions: pickId(PURCHASE, lead.financingStatus, 2),
+      landOptions: pickId(LAND, lead.landStatus, 1),
+      communicationOptions: 3, // email (we always capture an email address)
+      state: 15, // Indiana (base market); real specifics captured in the note below
       floorTitle: lead.source || "Website Contact Form",
       leadSource: lead.source || "Website",
       address: detail || "Website contact form submission",
