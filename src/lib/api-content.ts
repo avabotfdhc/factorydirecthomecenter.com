@@ -125,3 +125,71 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     return null;
   }
 }
+
+// ---------- Blog ----------
+
+function stripHtmlLocal(s: string): string {
+  return String(s || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function formatDate(iso: string): string {
+  if (!iso) return "";
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return "";
+  return new Date(t).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+}
+
+export interface ApiBlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string; // formatted
+}
+
+export interface ApiBlogDetail extends ApiBlogPost {
+  html: string;
+}
+
+export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
+  try {
+    const res = await fetch(`${API_BASE}/api/blog/get-all?limit=100`, { next: { revalidate: 300 } });
+    if (!res.ok) return [];
+    const json = await res.json();
+    const rows: any[] = Array.isArray(json?.data) ? json.data : [];
+    return rows
+      .filter((r) => r?.slug && r?.isActive !== false && r?.isDeleted !== true)
+      .map((r) => ({
+        slug: String(r.slug),
+        title: String(r.title || ""),
+        excerpt: stripHtmlLocal(r.description || "").slice(0, 170),
+        image: s3Url(r.bannerImage),
+        date: formatDate(r.createdAt),
+      }));
+  } catch {
+    return [];
+  }
+}
+
+export async function getApiBlogBySlug(slug: string): Promise<ApiBlogDetail | null> {
+  try {
+    const res = await fetch(
+      `${API_BASE}/api/blog/get-details/${encodeURIComponent(slug)}`,
+      { next: { revalidate: 300 } },
+    );
+    if (!res.ok) return null;
+    const json = await res.json();
+    const r: any = json?.data || json;
+    if (!r?.slug) return null;
+    return {
+      slug: String(r.slug),
+      title: String(r.title || ""),
+      excerpt: stripHtmlLocal(r.description || "").slice(0, 170),
+      image: s3Url(r.bannerImage),
+      date: formatDate(r.createdAt),
+      html: String(r.description || ""),
+    };
+  } catch {
+    return null;
+  }
+}
