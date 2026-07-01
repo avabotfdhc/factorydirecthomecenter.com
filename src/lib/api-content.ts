@@ -159,6 +159,12 @@ export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
     const rows: any[] = Array.isArray(json?.data) ? json.data : [];
     return rows
       .filter((r) => r?.slug && r?.isActive !== false && r?.isDeleted !== true)
+      // Newest posts first — sort by createdAt (falls back to updatedAt) descending
+      .sort((a, b) => {
+        const ta = new Date(a?.createdAt || a?.updatedAt || 0).getTime();
+        const tb = new Date(b?.createdAt || b?.updatedAt || 0).getTime();
+        return tb - ta;
+      })
       .map((r) => ({
         slug: String(r.slug),
         title: String(r.title || ""),
