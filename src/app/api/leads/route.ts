@@ -59,9 +59,10 @@ export async function POST(request: Request) {
   console.log("[leads] New submission:", lead.email, lead.firstName, lead.lastName);
 
   // Run both channels concurrently; neither failing blocks the response
-  const [emailResult, sheetsResult] = await Promise.allSettled([
+  const [emailResult, sheetsResult, cmsResult] = await Promise.allSettled([
     sendEmail(lead),
     appendToSheet(lead),
+    postToCms(lead),
   ]);
 
   if (emailResult.status === "rejected") {
@@ -70,8 +71,49 @@ export async function POST(request: Request) {
   if (sheetsResult.status === "rejected") {
     console.error("[leads] Sheets channel failed:", sheetsResult.reason);
   }
+  if (cmsResult.status === "rejected") {
+    console.error("[leads] CMS channel failed:", cmsResult.reason);
+  }
 
   return NextResponse.json({ success: true, message: "Lead received" });
+}
+
+// ─── Channel 3: Factory Direct admin CMS (leads appear in the admin panel) ──
+// Posts to the existing public enquiry endpoint so submissions land in the same
+// place Kyle already manages leads. Rich fields the CMS enquiry model doesn't
+// structure are summarized into the address field for visibility.
+
+async function postToCms(lead: Record<string, string>) {
+  const CMS_API = (
+    process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com"
+  ).replace(/\/$/, "");
+
+  const detail = [
+    lead.interest && `Interest: ${lead.interest}`,
+    lead.timeframe && `Timeframe: ${lead.timeframe}`,
+    lead.landStatus && `Land: ${lead.landStatus}`,
+    lead.financingStatus && `Financing: ${lead.financingStatus}`,
+    lead.message && `Message: ${lead.message}`,
+  ]
+    .filter(Boolean)
+    .join(" | ");
+
+  const res = await fetch(`${CMS_API}/api/enquiry/rash-enquiry`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      firstName: lead.firstName,
+      lastName: lead.lastName,
+      email: lead.email,
+      phoneNo: lead.phone || "",
+      floorTitle: lead.source || "Website Contact Form",
+      leadSource: lead.source || "Website",
+      address: detail || "Website contact form submission",
+    }),
+  });
+
+  if (!res.ok) throw new Error(`CMS enquiry API error ${res.status}`);
+  console.log("[leads] pushed to CMS enquiry (admin panel)");
 }
 
 // ─── Channel 1: Resend email ───────────────────────────────────────────────
