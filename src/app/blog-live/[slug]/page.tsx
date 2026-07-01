@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
+import { PostImage } from "@/components/PostImage";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -38,12 +39,9 @@ export default async function BlogLiveDetail({ params }: { params: Promise<{ slu
         )}
         <h1 className="font-serif text-3xl lg:text-5xl font-light tracking-tight mb-8">{post.title}</h1>
 
-        {post.image && (
-          <div className="rounded-2xl overflow-hidden border border-[var(--color-charcoal)]/8 mb-10 aspect-[16/9] relative bg-[var(--color-cream-dark)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.image} alt={post.title} className="absolute inset-0 w-full h-full object-cover" />
-          </div>
-        )}
+        <div className="rounded-2xl overflow-hidden border border-[var(--color-charcoal)]/8 mb-10 aspect-[16/9] relative bg-[var(--color-cream-dark)]">
+          <PostImage src={post.image} alt={post.title} />
+        </div>
 
         <div
           className="text-[var(--color-charcoal)]/85 leading-relaxed text-lg [&_p]:mb-5 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:mt-8 [&_h2]:mb-3 [&_h3]:font-serif [&_h3]:text-xl [&_h3]:mt-6 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-5 [&_li]:mb-1 [&_a]:text-[var(--color-teal)] [&_a]:underline"

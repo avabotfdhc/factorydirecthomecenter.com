@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getApiBlogPosts } from "@/lib/api-content";
+import { PostImage } from "@/components/PostImage";
 
 export const metadata = {
   title: "Blog — Live from CMS | Factory Direct Homes Center",
@@ -41,14 +42,11 @@ export default async function BlogLivePage() {
                 className="group flex flex-col border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
               >
                 <div className="aspect-[16/10] bg-[var(--color-cream-dark)] relative overflow-hidden">
-                  {p.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : null}
+                  <PostImage
+                    src={p.image}
+                    alt={p.title}
+                    className="group-hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   {p.date && (
