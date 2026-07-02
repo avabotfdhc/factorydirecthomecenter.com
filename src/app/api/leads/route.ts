@@ -47,6 +47,8 @@ export async function POST(request: Request) {
     email: body.email ?? "",
     phone: body.phone ?? "",
     interest: body.interest ?? "",
+    deliveryState: body.deliveryState ?? "",
+    bedrooms: body.bedrooms ?? "",
     landStatus: body.landStatus ?? "",
     timeframe: body.timeframe ?? "",
     financingStatus: body.financingStatus ?? "",
@@ -106,8 +108,10 @@ const HOME_TYPE: Record<string, number> = {
   single: 1, "single wide": 1, double: 2, "double wide": 2, sectional: 2, modular: 3,
 };
 const PURCHASE: Record<string, number> = { cash: 1, finance: 2, financ: 2, loan: 2, mortgage: 2 };
-const LAND: Record<string, number> = { "have land": 1, "own": 1, land: 1, community: 2, lot: 2, need: 2 };
+const LAND: Record<string, number> = { own: 1, "have land": 1, land: 1, community: 2, park: 2, lot: 2, need: 2 };
 const DELIVERY: Record<string, number> = { indiana: 2, ohio: 4, michigan: 5, illinois: 8, kentucky: 9 };
+// The CMS `state` FK only has Indiana/Michigan/Ohio; map from the delivery state.
+const STATE: Record<string, number> = { indiana: 15, michigan: 23, ohio: 36 };
 
 async function postToCms(lead: Record<string, string>) {
   const CMS_API = (
@@ -133,14 +137,14 @@ async function postToCms(lead: Record<string, string>) {
       lastName: lead.lastName,
       email: lead.email,
       phoneNo: lead.phone || "",
-      // Required option IDs — mapped where the form collects it, else default.
-      deliveryState: pickId(DELIVERY, `${lead.state} ${lead.message} ${lead.interest}`, 2),
+      // Required option IDs — mapped from the form fields, else sensible default.
+      deliveryState: pickId(DELIVERY, lead.deliveryState, 2),
       homeType: pickId(HOME_TYPE, lead.interest, 2),
-      bedrooms: 3,
+      bedrooms: Number(lead.bedrooms) || 3,
       purchaseOptions: pickId(PURCHASE, lead.financingStatus, 2),
       landOptions: pickId(LAND, lead.landStatus, 1),
       communicationOptions: 3, // email (we always capture an email address)
-      state: 15, // Indiana (base market); real specifics captured in the note below
+      state: pickId(STATE, lead.deliveryState, 15),
       floorTitle: lead.source || "Website Contact Form",
       leadSource: lead.source || "Website",
       address: detail || "Website contact form submission",

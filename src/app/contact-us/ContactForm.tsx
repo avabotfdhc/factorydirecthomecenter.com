@@ -71,6 +71,8 @@ export default function ContactForm() {
       const landStatus = data.get("landStatus")?.toString() || "not_specified";
       const timeframe = data.get("timeframe")?.toString() || "not_specified";
       const financingStatus = data.get("financingStatus")?.toString() || "not_specified";
+      const deliveryState = data.get("deliveryState")?.toString() || "";
+      const bedrooms = data.get("bedrooms")?.toString() || "";
       const message = data.get("message")?.toString() || "";
       
       try {
@@ -84,6 +86,8 @@ export default function ContactForm() {
             email,
             phone,
             interest,
+            deliveryState,
+            bedrooms,
             landStatus,
             timeframe,
             financingStatus,
@@ -253,6 +257,32 @@ export default function ContactForm() {
                       <option value="financing">Financing Information</option>
                       <option value="general">General Information</option>
                     </select>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="deliveryState" className="block text-sm font-medium mb-2">Delivery State</label>
+                      <select id="deliveryState" name="deliveryState" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
+                        <option value="">Select state...</option>
+                        <option value="Indiana">Indiana</option>
+                        <option value="Ohio">Ohio</option>
+                        <option value="Michigan">Michigan</option>
+                        <option value="Illinois">Illinois</option>
+                        <option value="Kentucky">Kentucky</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="bedrooms" className="block text-sm font-medium mb-2">Bedrooms</label>
+                      <select id="bedrooms" name="bedrooms" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
+                        <option value="">Any</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5+</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>
