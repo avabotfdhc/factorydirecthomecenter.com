@@ -4,92 +4,37 @@ import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "Financing Options for Manufactured Homes",
-  description: "FHA, VA, conventional, and chattel loans explained. Compare financing options for manufactured homes in Indiana, Ohio, and Michigan. Find the best loan for your situation.",
+  description: "Chattel loans, land-home packages, and conventional financing explained. Compare financing options for manufactured homes in Indiana, Ohio, and Michigan. Find the best loan for your situation.",
   url: "/guides/financing",
   type: "article",
 });
 
 const loanTypes = [
   {
-    name: "FHA Title I",
-    type: "Home Only",
-    downPayment: "5%",
-    creditScore: "500+",
-    bestFor: "Buyers who don't own land",
-    description: "FHA Title I loans are designed for manufactured home purchases where you don't own the land. The home is collateral, and you can place it on leased land, in a park, or on property you don't yet own.",
-    pros: [
-      "Lower down payment than conventional",
-      "Available for home-only purchases",
-      "Government-backed security",
-      "Fixed interest rates",
-    ],
-    cons: [
-      "Higher rates than Title II",
-      "Shorter loan terms (15-20 years)",
-      "Home must meet FHA standards",
-      "Mortgage insurance required",
-    ],
-    requirements: [
-      "Minimum 500 credit score",
-      "5% down payment minimum",
-      "Debt-to-income ratio under 43%",
-      "Home must be primary residence",
-      "Property must meet FHA standards",
-    ],
-  },
-  {
-    name: "FHA Title II",
+    name: "Land-Home Package",
     type: "Home & Land",
-    downPayment: "3.5%",
-    creditScore: "580+",
-    bestFor: "Buyers with land or buying land",
-    description: "FHA Title II loans cover both the manufactured home and the land it sits on. This is essentially a traditional mortgage for manufactured homes on permanent foundations.",
+    downPayment: "5-20%",
+    creditScore: "620+",
+    bestFor: "Buyers with land or buying land together",
+    description: "Land-home packages finance both the manufactured home and the land it sits on in a single loan. This works like a traditional mortgage for homes placed on a permanent foundation.",
     pros: [
-      "Low 3.5% down payment",
+      "Finances home and land together",
       "Competitive interest rates",
-      "30-year terms available",
+      "Longer terms available",
       "Builds equity like site-built home",
     ],
     cons: [
-      "Must own the land",
+      "Must own or be buying the land",
       "Home must be on permanent foundation",
       "Stricter property standards",
-      "Mortgage insurance required",
+      "Larger down payment than chattel",
     ],
     requirements: [
-      "Minimum 580 credit score (3.5% down)",
-      "500-579 requires 10% down",
-      "Home must be on permanent foundation",
       "Land included in purchase",
-      "Property must meet FHA standards",
-    ],
-  },
-  {
-    name: "VA Loan",
-    type: "Veterans Only",
-    downPayment: "0%",
-    creditScore: "580+",
-    bestFor: "Veterans and active military",
-    description: "If you've served in the U.S. military, VA loans offer unbeatable benefits: zero down payment, no mortgage insurance, and competitive rates. This is often the best financing option for eligible buyers.",
-    pros: [
-      "Zero down payment",
-      "No mortgage insurance",
-      "Competitive interest rates",
-      "Easier qualification standards",
-      "Can finance funding fee",
-    ],
-    cons: [
-      "VA funding fee (2.3% first use)",
-      "Must meet service requirements",
-      "Home must meet VA standards",
-      "Primary residence only",
-    ],
-    requirements: [
-      "Active duty or veteran status",
-      "Certificate of Eligibility (COE)",
-      "Minimum 580 credit score",
-      "Debt-to-income ratio under 41%",
-      "Sufficient residual income",
+      "Home on permanent foundation",
+      "Debt-to-income ratio under 43%",
+      "Stable employment history",
+      "Home must be primary residence",
     ],
   },
   {
@@ -153,10 +98,8 @@ const loanTypes = [
 ];
 
 const rateComparison = [
-  { type: "VA Loan", rate: "6.0% - 6.5%", bestFor: "Veterans" },
-  { type: "FHA Title II", rate: "6.5% - 7.0%", bestFor: "First-time buyers" },
   { type: "Conventional", rate: "6.5% - 7.5%", bestFor: "Strong credit" },
-  { type: "FHA Title I", rate: "7.0% - 8.0%", bestFor: "Home-only purchase" },
+  { type: "Land-Home", rate: "6.5% - 7.5%", bestFor: "Home + land together" },
   { type: "Chattel", rate: "8.0% - 12%", bestFor: "Easier qualification" },
 ];
 
@@ -178,7 +121,7 @@ export default function FinancingPage() {
               <span className="italic text-[var(--color-teal-light)]">Options</span>
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-              FHA, VA, conventional, and chattel loans — explained. Find the best financing 
+              Chattel, land-home, and conventional loans — explained. Find the best financing
               option for your manufactured or modular home purchase.
             </p>
           </div>
@@ -189,7 +132,7 @@ export default function FinancingPage() {
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <H2 className="font-serif text-2xl font-semibold mb-8 text-center">Quick Rate Comparison</H2>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {rateComparison.map((loan) => (
               <div key={loan.type} className="bg-white rounded-lg p-6 text-center border border-[var(--color-charcoal)]/5">
                 <div className="font-semibold text-sm mb-2">{loan.type}</div>
@@ -299,21 +242,10 @@ export default function FinancingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg p-8">
-              <H3 className="font-serif text-xl font-semibold mb-4">If You're a Veteran...</H3>
-              <p className="text-[var(--color-gray)] mb-4">
-                Start with VA loans. Zero down, no mortgage insurance, and great rates. 
-                This is the best deal in manufactured home financing.
-              </p>
-              <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
-                Get VA Loan Info →
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-4">If You Own Land...</H3>
               <p className="text-[var(--color-gray)] mb-4">
-                FHA Title II or conventional loans offer the best rates. Your home will 
-                appreciate like site-built real estate.
+                A land-home package or conventional loan often offers the best rates. Your home
+                will appreciate like site-built real estate.
               </p>
               <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Explore Land-Home Loans →
@@ -323,7 +255,7 @@ export default function FinancingPage() {
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-4">If You Don't Own Land...</H3>
               <p className="text-[var(--color-gray)] mb-4">
-                FHA Title I or chattel loans work for home-only purchases. Buy the home now, 
+                Chattel loans work for home-only purchases. Buy the home now,
                 add land later, then refinance.
               </p>
               <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
@@ -334,7 +266,7 @@ export default function FinancingPage() {
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-4">If Your Credit Needs Work...</H3>
               <p className="text-[var(--color-gray)] mb-4">
-                FHA loans accept scores as low as 500. Chattel loans are also more forgiving. 
+                Chattel loans are more forgiving on credit.
                 We work with lenders who specialize in credit challenges.
               </p>
               <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
@@ -345,8 +277,8 @@ export default function FinancingPage() {
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-4">If You Want Lowest Payment...</H3>
               <p className="text-[var(--color-gray)] mb-4">
-                VA loans (if eligible) or FHA Title II with 3.5% down. Longer terms (30 years) 
-                keep monthly payments manageable.
+                A land-home package or conventional loan with longer terms
+                keeps monthly payments manageable.
               </p>
               <Link href="/contact-us" className="text-[var(--color-teal)] font-bold text-sm uppercase tracking-wider">
                 Low Payment Options →

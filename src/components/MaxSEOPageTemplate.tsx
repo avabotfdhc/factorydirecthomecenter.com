@@ -224,14 +224,9 @@ export function MaximumStructuredData({
     // Add HowTo schema for process content
   }
   
-  // 11. Review/AggregateRating (if reviews exist)
-  if (pageData.schemas.review) {
-    schemas.push(structuredData.aggregateRating({
-      ratingValue: 4.8,
-      reviewCount: 500,
-      itemReviewed: "Factory Direct Homes Center",
-    }));
-  }
+  // 11. Review/AggregateRating — intentionally not emitted. Fabricated ratings
+  // violate Google's review-snippet policy; only add this back with a real,
+  // verified rating value and review count from an approved source.
   
   return (
     <>
@@ -443,8 +438,8 @@ export function EEATSignals() {
           <FadeIn direction="up" delay={0}>
             <div className="text-center">
               <div className="text-3xl mb-2">🏆</div>
-              <H4 className="font-semibold text-sm mb-1">Experience</H4>
-              <p className="text-xs text-[var(--color-gray)]">500+ homes delivered across 6 states</p>
+              <H4 className="font-semibold text-sm mb-1">Selection</H4>
+              <p className="text-xs text-[var(--color-gray)]">70+ floor plans across 6 states</p>
             </div>
           </FadeIn>
           

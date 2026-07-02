@@ -25,7 +25,7 @@ const guides = [
   },
   {
     title: "Financing Options Explained",
-    description: "FHA, VA, conventional, and chattel loans. Which is right for you? Requirements, pros, cons, and how to qualify.",
+    description: "Chattel, land-home, and conventional loans. Which is right for you? Requirements, pros, cons, and how to qualify.",
     href: "/guides/financing",
     icon: "🏦",
     readTime: "12 min",

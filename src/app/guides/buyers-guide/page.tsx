@@ -18,9 +18,9 @@ const guideFAQs = [
   { question: "What is the difference between manufactured and modular homes?", answer: "Manufactured homes are built to federal HUD standards on a permanent chassis, making them more affordable and faster to deliver. They're transported in one or more sections and can be placed on various foundations. Modular homes are built to state IRC codes like site-built homes, placed on permanent foundations, and qualify for conventional mortgages. Both are built in factories with quality control." },
   { question: "How much does a manufactured home really cost?", answer: "Single wide homes typically cost $50,000-$80,000, double wides $80,000-$150,000, and modular homes $100,000-$200,000+. However, the total cost includes delivery ($2,500-$8,000), setup ($5,000-$15,000), and site work ($5,000-$50,000+). We provide line-item pricing so you see exactly what you're paying for. Financing options can make monthly payments comparable to apartment rent." },
   { question: "Can I put a manufactured home on my own land?", answer: "Yes, manufactured homes can be placed on private land in most areas, though zoning restrictions vary. Rural counties typically have fewer restrictions than cities. You'll need to verify zoning compliance, obtain permits, prepare the site (clearing, foundation, utilities), and ensure road access for delivery. We help coordinate all these steps and can verify your property's suitability before purchase." },
-  { question: "What financing options are available for manufactured homes?", answer: "Several financing options exist: Chattel loans (home-only, no land required), VA loans for veterans (0% down), FHA Title I and II loans (3.5% down), conventional mortgages for modular homes, and land-home packages. Credit requirements vary, with options available for scores as low as 575. We work with multiple lenders to find the best option for your situation." },
+  { question: "What financing options are available for manufactured homes?", answer: "Several financing options exist: Chattel loans (home-only, no land required), land-home packages (home and land financed together), and conventional mortgages for modular homes on permanent foundations. Credit requirements vary, with options available for scores as low as 575. We work with multiple lenders to find the best option for your situation." },
   { question: "Do manufactured homes hold their value?", answer: "Modern manufactured homes built to HUD or IRC codes can hold value well, especially when placed on permanent foundations. Like any home, value depends on location, condition, and market factors. Modular homes typically appreciate similarly to site-built homes. Key factors for value retention include: quality construction, permanent foundation, good location, and proper maintenance. Champion homes come with warranties that protect your investment." },
-  { question: "What should I look for when choosing a manufactured home dealer?", answer: "Look for: authorized dealer status with reputable manufacturers, transparent pricing (line-item, not bundled), local knowledge and service area, financing options and lender relationships, customer reviews and testimonials, warranty support, and post-sale service. Be wary of dealers who pressure you, won't provide detailed pricing, or lack local presence. Factory Direct is an authorized Champion dealer with 500+ homes delivered." }
+  { question: "What should I look for when choosing a manufactured home dealer?", answer: "Look for: authorized dealer status with reputable manufacturers, transparent pricing (line-item, not bundled), local knowledge and service area, financing options and lender relationships, customer reviews and testimonials, warranty support, and post-sale service. Be wary of dealers who pressure you, won't provide detailed pricing, or lack local presence. Factory Direct is a family-owned, authorized Champion dealer located just 20 miles from the factory." }
 ];
 
 const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Guides", url: "/guides" }, { name: "Buyer's Guide", url: "/guides/buyers-guide" }];
@@ -119,12 +119,8 @@ export default function BuyersGuidePage() {
                   <p className="text-sm text-[var(--color-gray)]">Home-only financing. No land required. Faster approval. 5-10% down.</p>
                 </div>
                 <div>
-                  <H3 className="font-semibold mb-2">VA Loans</H3>
-                  <p className="text-sm text-[var(--color-gray)]">For veterans. 0% down. Best rates. No mortgage insurance.</p>
-                </div>
-                <div>
-                  <H3 className="font-semibold mb-2">FHA Loans</H3>
-                  <p className="text-sm text-[var(--color-gray)]">3.5% down. Government-backed. Flexible credit.</p>
+                  <H3 className="font-semibold mb-2">Land-Home Packages</H3>
+                  <p className="text-sm text-[var(--color-gray)]">Home and land financed together. Longer terms. Builds equity.</p>
                 </div>
                 <div>
                   <H3 className="font-semibold mb-2">Conventional</H3>

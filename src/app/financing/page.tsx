@@ -21,13 +21,12 @@ import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Manufactured Home Financing | Chattel Loans, VA, FHA",
-  description: "Financing options for manufactured homes in Indiana, Ohio, Michigan. Chattel loans, VA loans, FHA, land-home packages. Work with 21st Mortgage, Triad, Credit Human. Pre-qualify today.",
+  title: "Manufactured Home Financing | Chattel Loans & Land-Home Packages",
+  description: "Financing options for manufactured homes in Indiana, Ohio, Michigan. Chattel loans, land-home packages, and conventional financing through partners like 21st Mortgage, Triad, and Credit Human. Pre-qualify today.",
   keywords: [
     "manufactured home financing",
     "chattel loans",
-    "VA loans manufactured homes",
-    "FHA manufactured homes",
+    "manufactured home loans indiana",
     "21st mortgage",
     "triad financial",
     "land home packages"
@@ -40,7 +39,7 @@ export const metadata = genMeta({
 const aeoContent = [
   {
     question: "What financing options are available for manufactured homes?",
-    directAnswer: "We offer chattel loans, VA loans for veterans, FHA Title I and II loans, and land-home packages through our lending partners.",
+    directAnswer: "We offer chattel (home-only) loans, land-home packages, and conventional financing through our lending partners.",
     supportingDetails: [
       "Our primary lenders include 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union.",
       "Each option has different requirements, rates, and terms depending on your situation."
@@ -57,28 +56,19 @@ const aeoContent = [
     wordCount: 50
   },
   {
-    question: "Can veterans use VA loans for manufactured homes?",
-    directAnswer: "Yes, eligible veterans can use VA loans for manufactured homes with 0% down payment and competitive interest rates.",
-    supportingDetails: [
-      "VA loans offer significant advantages including no mortgage insurance and easier qualification standards.",
-      "The home must meet VA and HUD standards, and we help ensure your chosen model qualifies."
-    ],
-    wordCount: 48
-  },
-  {
     question: "What credit score is needed to finance a manufactured home?",
     directAnswer: "Our lenders work with credit scores as low as 575 for chattel loans, though 620+ gets better rates.",
     supportingDetails: [
-      "VA and FHA loans may accept scores down to 580 with 3.5% down.",
-      "We have options for various credit situations and can help you understand your best path forward."
+      "We have options for a range of credit situations and can help you understand your best path forward.",
+      "Pre-qualification is free and helps you see what you can afford before choosing a home."
     ],
     wordCount: 47
   },
   {
     question: "How much down payment is required for a manufactured home?",
-    directAnswer: "Down payments range from 0% for VA loans to 5-10% for chattel loans, depending on your financing option.",
+    directAnswer: "Down payments typically range from 5-10% for chattel loans, depending on your financing option and credit.",
     supportingDetails: [
-      "FHA loans require 3.5% down, while conventional land-home packages may require 10-20%.",
+      "Conventional land-home packages may require 10-20% down.",
       "Cash buyers receive preferred pricing discounts on the home purchase."
     ],
     wordCount: 45
@@ -109,7 +99,7 @@ const financingFAQs = [
   },
   {
     question: "What interest rates can I expect for a manufactured home loan?",
-    answer: "Interest rates vary by loan type and credit profile. Chattel loans typically range from 7-12%, while VA loans may be under 7%. FHA loans fall in between. Your specific rate depends on credit score, down payment, loan term, and current market conditions. We help you lock in the best available rate."
+    answer: "Interest rates vary by loan type and credit profile. Chattel (home-only) loans typically range from 7-12%, while land-home mortgages are usually lower. Your specific rate depends on credit score, down payment, loan term, and current market conditions. We help you compare offers from our lending partners to find the best available rate."
   },
   {
     question: "Can I get pre-qualified before choosing a home?",
@@ -117,7 +107,7 @@ const financingFAQs = [
   },
   {
     question: "Are there special programs for first-time manufactured home buyers?",
-    answer: "Yes, FHA loans are popular with first-time buyers due to lower down payment requirements (3.5%) and more flexible credit standards. Some states also offer first-time buyer assistance programs. We help you explore all available options to make homeownership affordable and accessible."
+    answer: "Yes. Our lending partners offer chattel loans with flexible credit standards that work well for first-time buyers, and some states offer first-time buyer assistance programs. We help you explore all available options to make homeownership affordable and accessible."
   }
 ];
 
@@ -171,28 +161,12 @@ const loanTypes = [
     cons: ["Higher rates than mortgages", "Shorter terms (15-20 years)"]
   },
   {
-    name: "VA Loan",
-    downPayment: "0%",
-    creditScore: "580+",
-    bestFor: "Veterans and active military",
-    pros: ["Zero down payment", "No mortgage insurance", "Best rates"],
-    cons: ["VA funding fee", "Must meet service requirements"]
-  },
-  {
-    name: "FHA Title I",
-    downPayment: "5%",
-    creditScore: "500+",
-    bestFor: "Home-only with lower down payment",
-    pros: ["Lower down payment", "Government-backed", "Flexible credit"],
-    cons: ["Mortgage insurance required", "Home must meet FHA standards"]
-  },
-  {
-    name: "FHA Title II",
-    downPayment: "3.5%",
-    creditScore: "580+",
-    bestFor: "Land-home packages",
-    pros: ["Low down payment", "30-year terms available", "Builds equity"],
-    cons: ["Must own land", "Mortgage insurance required"]
+    name: "Land-Home Package",
+    downPayment: "5-10%",
+    creditScore: "600+",
+    bestFor: "Buyers who own or are buying land",
+    pros: ["Longer terms", "Lower rates than chattel", "Finances home + land together"],
+    cons: ["Requires land ownership", "Longer approval than chattel"]
   },
   {
     name: "Conventional",
@@ -240,16 +214,6 @@ const citations = [
     source: "Triad Financial Services",
     url: "https://www.triadfs.com",
     description: "Industry leader in manufactured home chattel financing"
-  },
-  {
-    source: "U.S. Department of Veterans Affairs",
-    url: "https://www.va.gov/housing",
-    description: "VA loan guidelines and eligibility requirements"
-  },
-  {
-    source: "Federal Housing Administration",
-    url: "https://www.hud.gov/program_offices/housing/sfh/title/title-i",
-    description: "FHA Title I and II loan programs for manufactured homes"
   }
 ];
 
@@ -273,7 +237,7 @@ export default function FinancingPage() {
       {/* 4. Service */}
       <StructuredData data={structuredData.service({
         name: "Manufactured Home Financing",
-        description: "Multiple financing options for manufactured and modular homes including chattel loans, VA loans, FHA loans, and land-home packages.",
+        description: "Multiple financing options for manufactured and modular homes including chattel loans, land-home packages, and conventional financing.",
         provider: "Factory Direct Homes Center",
         areaServed: "Indiana, Ohio, Michigan, Wisconsin, Illinois, Kentucky"
       })} />
@@ -331,7 +295,7 @@ export default function FinancingPage() {
       <StructuredData data={structuredData.imageObject({
         url: "/images/hero-home.jpg",
         name: "Manufactured Home Financing Options",
-        description: "Multiple financing options available including chattel loans, VA loans, FHA, and land-home packages",
+        description: "Multiple financing options available including chattel loans, land-home packages, and conventional financing",
         width: 1200,
         height: 630
       })} />
@@ -391,9 +355,9 @@ export default function FinancingPage() {
               </h1>
               
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-                Multiple financing options for every situation. Chattel loans, 
-                VA loans, FHA, and land-home packages. We work with the nation's 
-                top lenders to find your best rate.
+                Multiple financing options for every situation. Chattel (home-only) loans,
+                land-home packages, and conventional financing. We work with the nation&rsquo;s
+                top manufactured-home lenders to find your best rate.
               </p>
             </div>
           </FadeIn>
@@ -564,7 +528,7 @@ export default function FinancingPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-lime)] mt-1">✓</span>
-                    <span>VA loans with 0% down for veterans</span>
+                    <span>Land-home packages for buyers who own land</span>
                   </li>
                 </ul>
               </div>

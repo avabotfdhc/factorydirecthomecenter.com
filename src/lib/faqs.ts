@@ -51,7 +51,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "How much down payment is required for a manufactured home?",
-      answer: "Chattel loans typically require 5-10% down. Land-home packages may require more. We also offer preferred payment discounts for cash buyers. VA loans offer 0% down for eligible veterans. FHA loans require as little as 3.5% down.",
+      answer: "Chattel loans typically require 5-10% down. Land-home packages may require more. Conventional financing for modular homes on permanent foundations generally starts around 5% down. We also offer preferred payment discounts for cash buyers.",
     },
     {
       question: "Can I finance just the home without land?",

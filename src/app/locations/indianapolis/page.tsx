@@ -100,7 +100,7 @@ const locationFAQs = [
   },
   {
     question: "Can I get financing for a manufactured home in Indianapolis?",
-    answer: "Yes, Indianapolis buyers have access to all our financing options including chattel loans, VA loans for veterans, FHA loans, and land-home packages. We work with national lenders who serve Indiana buyers. Many Indianapolis customers appreciate our line-item pricing that lets them use local contractors for site work."
+    answer: "Yes, Indianapolis buyers have access to all our financing options including chattel loans, land-home packages, and conventional financing for modular homes. We work with national lenders who serve Indiana buyers. Many Indianapolis customers appreciate our line-item pricing that lets them use local contractors for site work."
   },
   {
     question: "How long does delivery take to Indianapolis?",

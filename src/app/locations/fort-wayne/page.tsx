@@ -68,7 +68,7 @@ const aeoContent = [
     question: "What is the best manufactured home dealer near Fort Wayne?",
     directAnswer: "Factory Direct Homes Center is the closest Champion dealer to Fort Wayne, located just 30 miles away in Auburn.",
     supportingDetails: [
-      "We're family-owned with 500+ homes delivered across 6 states.",
+      "We're a family-owned, authorized Champion dealer serving 6 states.",
       "Our line-item pricing and contractor freedom set us apart from national chains."
     ],
     wordCount: 46
@@ -108,7 +108,7 @@ const locationFAQs = [
   },
   {
     question: "What financing options are available for Fort Wayne buyers?",
-    answer: "Fort Wayne buyers have access to all our financing options including chattel loans, VA loans for veterans, FHA loans, and land-home packages. We work with local credit unions like 3Rivers Federal Credit Union and national lenders like 21st Mortgage. Many Fort Wayne customers appreciate our line-item pricing that lets them use their own contractors for site work."
+    answer: "Fort Wayne buyers have access to all our financing options including chattel loans, land-home packages, and conventional financing for modular homes. We work with local credit unions like 3Rivers Federal Credit Union and national lenders like 21st Mortgage. Many Fort Wayne customers appreciate our line-item pricing that lets them use their own contractors for site work."
   },
   {
     question: "Do you offer site work and foundation services in Fort Wayne?",

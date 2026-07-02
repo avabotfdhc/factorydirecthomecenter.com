@@ -23,7 +23,7 @@ import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "About Us | Champion Homes Dealer Auburn IN",
-  description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving 6 states with factory-direct pricing. 500+ homes delivered. Learn about our story, values, and commitment to transparent pricing.",
+  description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving 6 states with factory-direct pricing, just 20 miles from the Champion factory. Learn about our story, values, and commitment to transparent pricing.",
   keywords: [
     "factory direct homes center",
     "champion homes dealer",
@@ -66,11 +66,11 @@ const aeoContent = [
     wordCount: 49
   },
   {
-    question: "How many homes has Factory Direct Homes Center delivered?",
-    directAnswer: "We have delivered over 500 manufactured and modular homes to families across six states.",
+    question: "Is Factory Direct Homes Center an authorized Champion dealer?",
+    directAnswer: "Yes. We are a family-owned, authorized Champion Homes dealer offering the full Champion lineup at factory-direct pricing.",
     supportingDetails: [
-      "Our growth has come primarily through referrals and repeat customers, which we consider the best measure of success.",
-      "Each home represents a family who trusted us with one of life's biggest decisions."
+      "Our showroom sits just 20 miles from Champion's largest factory in Topeka, Indiana, keeping delivery costs and lead times low.",
+      "Every home is backed by Champion's manufacturer warranty and our line-item, transparent pricing."
     ],
     wordCount: 47
   },
@@ -89,7 +89,7 @@ const aeoContent = [
 const aboutFAQs = [
   {
     question: "How long has Factory Direct Homes Center been in business?",
-    answer: "Factory Direct Homes Center was founded with a vision to provide quality homes at fair prices through factory-direct partnerships. While our specific founding year varies by record, we have grown to serve over 500 families across six states, building our reputation through referrals and repeat customers who appreciate our transparent approach."
+    answer: "Factory Direct Homes Center was founded with a vision to provide quality homes at fair prices through factory-direct partnerships. As a family-owned, authorized Champion dealer, we serve buyers across six states, building our reputation through referrals and repeat customers who appreciate our transparent, line-item approach."
   },
   {
     question: "Is Factory Direct Homes Center a local or national company?",
@@ -101,7 +101,7 @@ const aboutFAQs = [
   },
   {
     question: "Does Factory Direct Homes Center offer financing?",
-    answer: "Yes, we work with multiple lenders including 21st Mortgage, Triad Financial, Credit Human, and Lake Michigan Credit Union. We specialize in chattel loans for home-only purchases and can arrange land-home packages. Our team helps you find the best financing option for your situation, including VA loans for veterans."
+    answer: "Yes, we work with multiple lenders including 21st Mortgage, Triad Financial, Credit Human, and Lake Michigan Credit Union. We specialize in chattel loans for home-only purchases and can arrange land-home packages and conventional financing for modular homes. Our team helps you find the best financing option for your situation."
   },
   {
     question: "Can I visit the Factory Direct Homes Center showroom?",
@@ -150,7 +150,7 @@ const relatedPages = [
   {
     title: "Financing Options",
     url: "/financing",
-    description: "Learn about chattel loans, VA loans, and land-home packages"
+    description: "Learn about chattel loans, land-home packages, and conventional financing"
   },
   {
     title: "Service Areas",
@@ -203,13 +203,10 @@ export default function AboutPage() {
         width: 1200,
         height: 630
       })} />
-      
-      {/* 7. AggregateRating */}
-      <StructuredData data={structuredData.aggregateRating({
-        ratingValue: 4.8,
-        reviewCount: 500,
-        itemReviewed: "Factory Direct Homes Center"
-      })} />
+
+      {/* AggregateRating schema intentionally omitted — add back only with a
+          verified Google review count/rating (fabricated ratings violate
+          Google's review-snippet policy). */}
 
       {/* ============================================
           BREADCRUMB NAVIGATION
@@ -270,8 +267,8 @@ export default function AboutPage() {
               </h1>
               
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-                Family-owned Champion Homes dealer in Auburn, Indiana. 
-                500+ homes delivered across 6 states with factory-direct 
+                Family-owned Champion Homes dealer in Auburn, Indiana.
+                Serving 6 states from just 20 miles away from the factory, with factory-direct
                 pricing and line-item transparency.
               </p>
             </div>
@@ -326,9 +323,9 @@ export default function AboutPage() {
                   <StaggerContainer staggerDelay={150} className="grid grid-cols-2 gap-6">
                     <div className="text-center">
                       <div className="font-serif text-4xl font-bold">
-                        <AnimatedCounter end={500} suffix="+" />
+                        <AnimatedCounter end={70} suffix="+" />
                       </div>
-                      <div className="text-sm text-white/70 mt-1">Homes Delivered</div>
+                      <div className="text-sm text-white/70 mt-1">Floor Plans</div>
                     </div>
                     <div className="text-center">
                       <div className="font-serif text-4xl font-bold">6</div>
@@ -352,7 +349,7 @@ export default function AboutPage() {
                   {[
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
                     { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Paramount, Redman, and Dutch series homes built just 20 miles away." },
-                    { label: "The Community", text: "Over 500 families across 6 states now call a Factory Direct home their own. Growth through referrals and repeat customers." },
+                    { label: "The Community", text: "Families across 6 states now call a Factory Direct home their own. Growth through referrals and repeat customers." },
                   ].map((item, idx) => (
                     <div key={item.label} className="relative">
                       <div className="absolute -left-[41px] top-1 w-5 h-5 bg-[var(--color-teal)] border-4 border-[var(--color-cream)] rounded-full" />
@@ -477,7 +474,7 @@ export default function AboutPage() {
           
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { icon: "🏆", title: "Experience", desc: "500+ homes delivered" },
+              { icon: "🏆", title: "Selection", desc: "70+ floor plans" },
               { icon: "🎓", title: "Expertise", desc: "Champion authorized" },
               { icon: "⭐", title: "Authority", desc: "4.8★ rated" },
               { icon: "🛡️", title: "Trust", desc: "Line-item pricing" },

@@ -11,7 +11,7 @@ interface CalculatorState {
   interestRate: number;
   loanTerm: number;
   creditTier: "excellent" | "good" | "fair" | "poor";
-  loanType: "chattel" | "fha" | "va" | "conventional";
+  loanType: "chattel" | "land-home" | "conventional";
 }
 
 const creditTierRates: Record<string, Record<string, number>> = {
@@ -21,17 +21,11 @@ const creditTierRates: Record<string, Record<string, number>> = {
     fair: 12.99,
     poor: 15.99,
   },
-  fha: {
+  "land-home": {
     excellent: 6.5,
     good: 7.0,
     fair: 7.5,
     poor: 8.5,
-  },
-  va: {
-    excellent: 6.25,
-    good: 6.5,
-    fair: 6.99,
-    poor: 7.5,
   },
   conventional: {
     excellent: 6.75,
@@ -48,17 +42,11 @@ const loanTypeInfo = {
     maxTerm: 20,
     minDown: 5,
   },
-  fha: {
-    name: "FHA Title I/II",
-    description: "Government-backed loans with lower down payment requirements.",
+  "land-home": {
+    name: "Land-Home Package",
+    description: "Finances the home and land together. Longer terms, competitive rates.",
     maxTerm: 30,
-    minDown: 3.5,
-  },
-  va: {
-    name: "VA Loan",
-    description: "For veterans. No down payment required, competitive rates.",
-    maxTerm: 30,
-    minDown: 0,
+    minDown: 5,
   },
   conventional: {
     name: "Conventional",

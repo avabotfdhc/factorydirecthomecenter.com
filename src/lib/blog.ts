@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: "Can you get a mortgage on a manufactured home?",
-        answer: "Yes. Manufactured homes on permanent foundations with owned land qualify for FHA, VA, USDA, and conventional mortgages. Homes without permanent foundations or on leased land typically use chattel loans (personal property loans). Chattel loans have slightly higher rates but are easier to qualify for and close faster than traditional mortgages.",
+        answer: "Yes. Manufactured homes on permanent foundations with owned land qualify for conventional mortgages and land-home packages. Homes without permanent foundations or on leased land typically use chattel loans (personal property loans). Chattel loans have slightly higher rates but are easier to qualify for and close faster than traditional mortgages.",
       },
     ],
     published: true,
@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: "What credit score do I need to buy a manufactured home?",
-        answer: "Credit score requirements vary by loan type. FHA loans require a minimum 580 score for 3.5% down payment. VA loans have no official minimum but most lenders prefer 620 or higher. Chattel loans from lenders like 21st Mortgage may approve scores as low as 575. Higher scores get better interest rates across all loan types.",
+        answer: "Credit score requirements vary by loan type. Conventional mortgages and land-home packages generally look for scores of 620 or higher. Chattel loans from lenders like 21st Mortgage may approve scores as low as 575. Higher scores get better interest rates across all loan types.",
       },
       {
         question: "How long does it take to buy a manufactured home?",
@@ -121,7 +121,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "how-to-finance-manufactured-home",
     title: "How to Finance a Manufactured Home: Every Option Explained",
-    description: "Complete guide to manufactured home financing. FHA, VA, USDA, conventional mortgages, chattel loans, and land-home packages compared with rates and requirements.",
+    description: "Complete guide to manufactured home financing. Conventional mortgages, chattel loans, and land-home packages compared with rates and requirements.",
     primaryKeyword: "manufactured home financing",
     publishedDate: "2026-04-28",
     author: "Factory Direct Homes Center",
@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
     wordCountTarget: 2200,
     heroImage: "/images/hero-home.jpg",
     heroImageAlt: "Calculator and documents representing manufactured home financing options",
-    topics: ["financing", "chattel-loans", "va-loans", "fha-loans", "first-time-buyers", "manufactured-homes"],
+    topics: ["financing", "chattel-loans", "first-time-buyers", "manufactured-homes"],
     pillarSlug: "first-time-buyer-checklist",
     cta: {
       text: "Have financing questions? Our team can walk you through your best options.",
@@ -144,20 +144,16 @@ export const blogPosts: BlogPost[] = [
         answer: "A chattel loan is a personal property loan used to finance a manufactured home without the land. Unlike a mortgage, a chattel loan treats the home as personal property rather than real estate. Chattel loans typically have higher interest rates than mortgages but close faster and require less documentation. They are common for homes in communities or on leased land.",
       },
       {
-        question: "Can I get an FHA loan for a manufactured home?",
-        answer: "Yes. FHA Title II loans finance manufactured homes on permanent foundations with owned land, requiring just 3.5% down with a 580 credit score. FHA Title I loans finance the home alone without land, with limits of $69,678 for a single section and $92,904 for a multi-section home. Both require the home to be your primary residence.",
-      },
-      {
-        question: "Do VA loans cover manufactured homes?",
-        answer: "Yes. Veterans can use VA loans to purchase a manufactured home with zero down payment and no private mortgage insurance. The home must be on a permanent foundation and classified as real property. VA loans offer the lowest interest rates available for manufactured home buyers and have no official minimum credit score requirement.",
+        question: "Can I finance a manufactured home with a conventional mortgage?",
+        answer: "Yes. Manufactured and modular homes on a permanent foundation with owned land can qualify for conventional mortgages, just like site-built homes. This typically requires a credit score around 620 or higher and a down payment starting near 5%. Conventional financing usually offers the lowest rates and longest terms available.",
       },
       {
         question: "What is a land-home package?",
-        answer: "A land-home package bundles the purchase of land and a manufactured home into a single loan. This simplifies financing because you make one monthly payment instead of separate land and home payments. Land-home packages typically qualify for conventional mortgages, FHA loans, or VA loans, which offer lower rates than chattel loans.",
+        answer: "A land-home package bundles the purchase of land and a manufactured home into a single loan. This simplifies financing because you make one monthly payment instead of separate land and home payments. Land-home packages typically qualify for conventional-style financing, which offers lower rates and longer terms than chattel loans.",
       },
       {
         question: "What interest rates can I expect for a manufactured home loan?",
-        answer: "Interest rates vary by loan type. Conventional and VA mortgages for manufactured homes on permanent foundations typically range from 6% to 8%. FHA loans are similar. Chattel loans for homes without permanent foundations run higher, typically 8% to 12%. Your credit score, down payment, and loan term all affect your specific rate.",
+        answer: "Interest rates vary by loan type. Conventional mortgages and land-home packages for homes on permanent foundations typically range from 6% to 8%. Chattel loans for homes without permanent foundations run higher, typically 8% to 12%. Your credit score, down payment, and loan term all affect your specific rate.",
       },
     ],
     published: true,
@@ -338,7 +334,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       { question: "How fast is the manufactured housing industry growing in 2026?", answer: "Manufactured home shipments are projected to reach 130,000 to 140,000 units in 2026, up roughly 12% from 2025 levels. Multi-section home shipments are growing even faster at approximately 18% year over year. This makes manufactured housing the fastest-growing segment of the U.S. housing market while site-built housing starts remain flat." },
       { question: "Why are manufactured homes so much cheaper than site-built homes?", answer: "Factory construction eliminates weather delays, reduces material waste by up to 30%, and leverages assembly-line efficiency. The average new manufactured home costs approximately $82,000 for a single section and $127,000 for a multi-section, compared to over $420,000 for the median site-built home." },
-      { question: "Who is buying manufactured homes in 2026?", answer: "First-time buyers priced out of the site-built market are the largest growth segment. Downsizing retirees, rural families in areas with limited housing stock, veterans using VA loans, and small-scale real estate investors are also driving demand. Many buyers previously expected to purchase site-built homes." },
+      { question: "Who is buying manufactured homes in 2026?", answer: "First-time buyers priced out of the site-built market are the largest growth segment. Downsizing retirees, rural families in areas with limited housing stock, and small-scale real estate investors are also driving demand. Many buyers previously expected to purchase site-built homes." },
       { question: "Are new manufactured homes good quality?", answer: "Yes. Modern manufactured homes are built to federal HUD code standards covering structural design, fire safety, energy efficiency, and durability. The 2025 HUD code update further raised these standards. Champion homes feature drywall interiors, residential-grade cabinetry, energy-efficient HVAC, and floor plans that rival custom-built homes." },
       { question: "Are zoning laws changing for manufactured homes?", answer: "Yes. Over 20 states have introduced or passed legislation in the last three years limiting local governments from excluding HUD-code manufactured homes from residential zones. Federal HUD rulemaking is adding additional pressure. Indiana has been relatively friendly, and more counties are updating ordinances to welcome modern homes on permanent foundations." },
     ],
@@ -368,30 +364,6 @@ export const blogPosts: BlogPost[] = [
     ],
     published: true,
   },
-  {
-    slug: "va-loans-manufactured-homes-veterans-guide",
-    title: "VA Loans for Manufactured Homes: A Veteran's Guide",
-    description: "Complete guide to using VA loans for manufactured homes. Eligibility, requirements, benefits, and step-by-step process for veterans and service members.",
-    primaryKeyword: "VA loan manufactured home",
-    publishedDate: "2026-06-16",
-    author: "Factory Direct Homes Center",
-    category: "niche",
-    categoryLabel: "Veterans",
-    readTimeMinutes: 7,
-    wordCountTarget: 1500,
-    heroImage: "/images/hero-home.jpg",
-    heroImageAlt: "Veteran family in front of their new manufactured home purchased with VA loan",
-    topics: ["va-loans", "financing", "manufactured-homes", "first-time-buyers"],
-    cta: { text: "Contact us to discuss VA loan options for manufactured homes.", href: "/contact-us", label: "Contact us" },
-    faqs: [
-      { question: "Can you use a VA loan to buy a manufactured home?", answer: "Yes. The VA loan program allows eligible veterans and active-duty service members to purchase manufactured homes with zero down payment. The home must be on a permanent foundation, carry the HUD certification label, have at least 400 square feet of living space, and be classified as real property." },
-      { question: "What foundation does a manufactured home need for a VA loan?", answer: "A VA loan requires the manufactured home to be on a permanent foundation engineered by a licensed professional engineer. Acceptable types include pier-and-beam, concrete slab, and full basement foundations. The wheels, axles, and hitch must be removed, and the home must be permanently affixed per HUD and VA standards." },
-      { question: "Is there a down payment required for a VA loan on a manufactured home?", answer: "No. VA loans require zero down payment for manufactured homes that meet VA property requirements. A one-time VA funding fee of 2.15% applies for first-time use but can be rolled into the loan amount. Veterans with service-connected disabilities are exempt from the funding fee entirely." },
-      { question: "Do VA loans for manufactured homes have PMI?", answer: "No. VA loans never require private mortgage insurance regardless of the down payment amount. This saves manufactured home buyers approximately $100 to $200 per month compared to conventional loans with less than 20% down. Over a 30-year loan term, eliminating PMI saves between $36,000 and $72,000." },
-      { question: "How long does it take to close a VA loan on a manufactured home?", answer: "A VA loan for a manufactured home typically takes 30 to 45 days from application to closing. The timeline includes obtaining a Certificate of Eligibility, VA appraisal, foundation engineering certification, and underwriting. Working with an experienced VA lender and having documentation ready keeps the process on the shorter end." },
-    ],
-    published: true,
-  },
   // ===== NEW POSTS (June 2026) =====
   {
     slug: "summer-2026-best-time-buy-manufactured-home",
@@ -411,7 +383,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       { question: "Is summer a good time to buy a manufactured home?", answer: "Yes. Summer 2026 offers a unique combination of favorable factors: competitive interest rates stabilizing after recent volatility, our 25% off MSRP factory direct promotion, and faster delivery times due to optimal weather conditions for site preparation and delivery. Factory build times are also typically shorter in summer months." },
       { question: "What is the 25% off MSRP promotion?", answer: "Factory Direct Homes Center is offering 25% off Manufacturer's Suggested Retail Price on select Champion manufactured home models through August 31, 2026. This is a factory-direct savings — no middleman markup means you pay significantly less than retail pricing. Contact us for eligible models and availability." },
-      { question: "How are interest rates for manufactured homes in 2026?", answer: "As of mid-2026, manufactured home loan rates have stabilized in the 6.5% to 9% range depending on loan type. Chattel loans typically run 8% to 10%, while FHA and VA loans for homes on permanent foundations are closer to 6.5% to 7.5%. Rates are expected to remain relatively stable through the remainder of 2026." },
+      { question: "How are interest rates for manufactured homes in 2026?", answer: "As of mid-2026, manufactured home loan rates have stabilized in the 6.5% to 9% range depending on loan type. Chattel loans typically run 8% to 10%, while conventional mortgages and land-home packages for homes on permanent foundations are closer to 6.5% to 7.5%. Rates are expected to remain relatively stable through the remainder of 2026." },
       { question: "How long does it take to get a manufactured home delivered in summer?", answer: "Summer delivery typically takes 8 to 12 weeks from order to move-in. Factory build time is 4 to 6 weeks, transportation 1 to 2 weeks, and site setup 2 to 4 weeks. Summer weather allows for more predictable site work and fewer weather-related delays compared to winter months." },
       { question: "Should I buy now or wait for lower prices?", answer: "Waiting for lower prices is risky. Factory material costs continue to rise gradually, and demand for manufactured homes is at a 20-year high. The 25% off MSRP promotion represents immediate, guaranteed savings that may not be available later. Locking in today's pricing protects you from future increases." },
     ],
@@ -457,7 +429,7 @@ export const blogPosts: BlogPost[] = [
     topics: ["first-time-buyers", "buying-process", "financing", "manufactured-homes", "site-work"],
     cta: { text: "Ready to buy your first manufactured home? Get a personalized consultation and free buyer's guide.", href: "/contact-us", label: "Schedule a free consultation" },
     faqs: [
-      { question: "What financing options are available for first-time manufactured home buyers?", answer: "First-time buyers have several options: FHA Title I loans (home only, low down payment), FHA Title II loans (home and land, 3.5% down), VA loans for veterans (zero down), USDA loans for rural buyers (zero down), and chattel loans (higher rates but easier qualification). Your best option depends on whether you own land and your credit score." },
+      { question: "What financing options are available for first-time manufactured home buyers?", answer: "First-time buyers have several options: chattel loans (home only, higher rates but easier qualification), land-home packages (home and land financed together), and conventional mortgages for modular homes on permanent foundations. Your best option depends on whether you own land and your credit score." },
       { question: "Do I need to buy land before getting a manufactured home?", answer: "No, you don't need to own land. You can place a manufactured home on land you purchase, land you already own, or in a manufactured home community where you lease the lot. However, owning land opens up better financing options and builds long-term equity. Land-home packages combine land and home purchase into one loan." },
       { question: "What warranties come with a new manufactured home?", answer: "New Champion manufactured homes come with a one-year manufacturer's warranty covering defects in materials and workmanship. Major structural components (roof, walls, floor systems) typically carry extended warranties of 5 to 10 years. Appliances have their own manufacturer warranties. We also offer optional extended warranty packages for additional peace of mind." },
       { question: "How long does the entire manufactured home buying process take?", answer: "From initial consultation to move-in, expect 10 to 16 weeks. This includes: 1-2 weeks for financing approval and home selection, 4-6 weeks for factory construction, 1-2 weeks for delivery, and 2-4 weeks for site setup and final inspections. Starting site preparation early (during factory build) keeps the timeline on track." },

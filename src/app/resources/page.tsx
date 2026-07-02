@@ -69,7 +69,7 @@ const resources: ResourceCard[] = [
   },
   {
     title: "Modular Floor Plans",
-    description: "IRC-code modular home floor plans for 28' and 32' wide models. Modular homes qualify for conventional mortgages, FHA, VA, and USDA loans.",
+    description: "IRC-code modular home floor plans for 28' and 32' wide models. Modular homes qualify for conventional mortgages and land-home financing.",
     href: "https://championh.box.com/s/kvj3updl6ox2au5zky9ed0d8h15vbtne",
     category: "Floor Plans",
     fileCount: "180 PDFs",

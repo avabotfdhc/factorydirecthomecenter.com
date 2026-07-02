@@ -83,7 +83,7 @@ export function LiveChat() {
     } else if (lowerText.includes("stock") || lowerText.includes("inventory") || lowerText.includes("available")) {
       responseText = "We have homes in stock for immediate delivery, homes in production, and can order any Champion floor plan. What's your timeline?";
     } else if (lowerText.includes("financ") || lowerText.includes("loan") || lowerText.includes("payment")) {
-      responseText = "We offer chattel loans, FHA Title I & II, VA loans, and conventional financing. Your best option depends on your credit score and whether you own land. Want to get pre-qualified?";
+      responseText = "We work with lenders offering chattel loans, land-home packages, and conventional financing. Your best option depends on your credit score and whether you own land. Want to get pre-qualified?";
     } else if (lowerText.includes("tour") || lowerText.includes("visit") || lowerText.includes("see")) {
       responseText = "Our showroom in Auburn, IN is open Mon-Fri 9-5, Sat 10-4. We have model homes you can walk through. Would you like to schedule a tour?";
     } else if (lowerText.includes("land") || lowerText.includes("lot") || lowerText.includes("property")) {

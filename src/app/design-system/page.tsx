@@ -175,7 +175,7 @@ export default function DesignSystemPage() {
             {[
               { q: "What is the difference between manufactured and modular homes?", a: "Manufactured homes are built to HUD federal code and can be placed on various foundations. Modular homes are built to IRC state/local building codes and must be placed on permanent foundations." },
               { q: "How long does delivery take?", a: "Manufactured homes typically take 8–16 weeks from order to delivery. Modular homes take 12–20 weeks due to additional code compliance requirements." },
-              { q: "Do you offer financing?", a: "Yes! We work with multiple lenders offering FHA Title I & II, VA loans (0% down), conventional mortgages, and chattel loans. We'll help you get pre-qualified." },
+              { q: "Do you offer financing?", a: "Yes! We work with multiple lenders offering chattel loans, land-home packages, and conventional mortgages. We'll help you get pre-qualified." },
               { q: "What areas do you serve?", a: "We serve Indiana, Michigan, and Ohio. Our proximity to Champion's Decatur, IN plant means competitive delivery rates across all three states." },
             ].map((item, i) => (
               <div key={i}>
@@ -359,9 +359,9 @@ export default function DesignSystemPage() {
           <div className="bg-[var(--color-teal)] rounded-lg py-10 px-8">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
               {[
-                { value: "500+", label: "Happy Homeowners" },
+                { value: "70+", label: "Floor Plans" },
                 { value: "4.8\u2605", label: "Customer Rating" },
-                { value: "3", label: "States Served" },
+                { value: "6", label: "States Served" },
                 { value: "$50K", label: "Starting Price" },
               ].map((s) => (
                 <div key={s.label}>

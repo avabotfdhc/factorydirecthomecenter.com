@@ -31,10 +31,10 @@ function generateFAQs(plan: {
   const isModular = plan.code === "IRC";
   const isSingle = plan.type === "Single Wide";
   const financing = isModular
-    ? "Because it's built to IRC code and placed on a permanent foundation, it qualifies for conventional mortgages, FHA, VA, and USDA loans — giving you access to the lowest rates available."
+    ? "Because it's built to IRC code and placed on a permanent foundation, it qualifies for conventional mortgages — giving you access to the lowest rates available. Land-home packages are also an option."
     : isSingle
-    ? "Chattel loans, FHA Title I, and VA loans are all options. If placed on a permanent foundation with owned land, conventional mortgages and FHA Title II loans become available too."
-    : "Chattel loans from 21st Mortgage or Triad Financial are available for homes on leased land. On a permanent foundation with owned land, FHA, VA, USDA, and conventional mortgages all apply.";
+    ? "Chattel loans are a great option for home-only purchases. If placed on a permanent foundation with owned land, land-home packages and conventional mortgages become available too."
+    : "Chattel loans from 21st Mortgage or Triad Financial are available for homes on leased land. On a permanent foundation with owned land, land-home packages and conventional mortgages apply.";
 
   return [
     {

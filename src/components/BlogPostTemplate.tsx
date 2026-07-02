@@ -127,8 +127,8 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
           <H2 className="font-serif text-xl font-semibold mb-6 text-center">Why Trust Factory Direct Homes Center</H2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-2xl mb-2">500+</div>
-              <p className="text-xs text-[var(--color-gray)]">Homes delivered across 6 states</p>
+              <div className="text-2xl mb-2">70+</div>
+              <p className="text-xs text-[var(--color-gray)]">Floor plans across 6 states</p>
             </div>
             <div>
               <div className="text-2xl mb-2">4.8</div>

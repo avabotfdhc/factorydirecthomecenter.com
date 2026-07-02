@@ -31,16 +31,16 @@ const citationsBank: Citation[] = [
     topics: ["financing", "chattel-loans", "first-time-buyers", "buying-process"],
   },
   {
-    source: "FHA Single Family Housing Policy Handbook",
-    url: "https://www.hud.gov/program_offices/housing/sfh/handbook_4000-1",
-    description: "FHA loan requirements for manufactured homes",
-    topics: ["financing", "fha-loans", "manufactured-homes"],
+    source: "21st Mortgage Corporation",
+    url: "https://www.21stmortgage.com/",
+    description: "Manufactured home lender specializing in chattel (home-only) financing",
+    topics: ["financing", "chattel-loans", "manufactured-homes"],
   },
   {
-    source: "VA Home Loan Program",
-    url: "https://www.va.gov/housing-assistance/home-loans/",
-    description: "VA loan eligibility and benefits for manufactured homes",
-    topics: ["financing", "va-loans"],
+    source: "Triad Financial Services",
+    url: "https://www.triadfs.com/",
+    description: "Manufactured home lender offering chattel and land-home financing",
+    topics: ["financing", "chattel-loans", "manufactured-homes"],
   },
 
   // Industry Data & Statistics
@@ -111,12 +111,6 @@ const citationsBank: Citation[] = [
 
   // Rural & County
   {
-    source: "USDA Rural Development — Single Family Housing",
-    url: "https://www.rd.usda.gov/programs-services/single-family-housing-programs",
-    description: "USDA rural home loans and down payment assistance programs",
-    topics: ["rural", "financing", "first-time-buyers", "indiana"],
-  },
-  {
     source: "National Association of Counties (NACo)",
     url: "https://www.naco.org/resources/manufactured-housing",
     description: "County-level manufactured housing policy and zoning resources",
@@ -143,14 +137,6 @@ const citationsBank: Citation[] = [
     url: "https://content.naic.org/consumer/manufactured-housing",
     description: "Manufactured home insurance guidance and consumer information",
     topics: ["manufactured-homes", "buying-process"],
-  },
-
-  // VA Loans Specific
-  {
-    source: "VA Manufactured Home Loan Guaranty",
-    url: "https://www.benefits.va.gov/homeloans/purchaseco_certificate.asp",
-    description: "VA home loan program details for manufactured home purchases",
-    topics: ["va-loans", "financing", "manufactured-homes"],
   },
 ];
 

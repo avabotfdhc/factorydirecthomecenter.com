@@ -60,7 +60,7 @@ const homeTypes = [
 const testimonials = [
   { quote: "Buying our home was the best decision we ever made. The team walked us through every step and we saved thousands compared to site-built.", name: "David B.", location: "Fort Wayne, IN" },
   { quote: "We were priced out of the traditional market. Our double wide gives us everything we wanted at half the price.", name: "Sarah M.", location: "Indianapolis, IN" },
-  { quote: "As a veteran, the VA financing with no money down was incredible. The process was smooth and our home is beautiful.", name: "James T.", location: "South Bend, IN" },
+  { quote: "The factory-direct pricing was exactly as promised — no hidden fees, no surprises. We got more home for our budget than anywhere else we looked.", name: "James T.", location: "South Bend, IN" },
 ];
 
 export default function Home() {
@@ -233,13 +233,13 @@ export default function Home() {
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
             <FadeIn direction="up" delay={0}>
               <div className="font-serif text-3xl lg:text-4xl font-bold">
-                <AnimatedCounter end={500} suffix="+" />
+                <AnimatedCounter end={70} suffix="+" />
               </div>
-              <div className="text-sm text-white/70 mt-1">Happy Homeowners</div>
+              <div className="text-sm text-white/70 mt-1">Floor Plans</div>
             </FadeIn>
             <FadeIn direction="up" delay={150}>
-              <div className="font-serif text-3xl lg:text-4xl font-bold">4.8★</div>
-              <div className="text-sm text-white/70 mt-1">Customer Rating</div>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">20mi</div>
+              <div className="text-sm text-white/70 mt-1">From the Factory</div>
             </FadeIn>
             <FadeIn direction="up" delay={300}>
               <div className="font-serif text-3xl lg:text-4xl font-bold">
@@ -317,8 +317,8 @@ export default function Home() {
           </H2>
           <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto mb-6" />
           <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8 max-w-2xl mx-auto">
-            FHA, VA, conventional, and chattel loans available. As low as 0% down for veterans.
-            We&rsquo;ll connect you with trusted lenders and guide you through pre-qualification.
+            Chattel loans and land-home financing available through our trusted lending partners.
+            We&rsquo;ll guide you through pre-qualification and help you find the right option.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <MagneticButton>

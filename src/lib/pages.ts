@@ -73,8 +73,8 @@ export const sitePages: SitePage[] = [
   {
     url: "/financing",
     title: "Manufactured Home Financing",
-    description: "Chattel loans, VA, FHA, and land-home packages for manufactured homes in Indiana, Ohio, and Michigan.",
-    topics: ["financing", "chattel-loans", "va-loans", "fha-loans", "first-time-buyers"],
+    description: "Chattel loans, land-home packages, and conventional financing for manufactured homes in Indiana, Ohio, and Michigan.",
+    topics: ["financing", "chattel-loans", "first-time-buyers"],
     cluster: "core",
     priority: 0.8,
     changeFrequency: "monthly",
@@ -82,7 +82,7 @@ export const sitePages: SitePage[] = [
   {
     url: "/about",
     title: "About Factory Direct Homes Center",
-    description: "Family-owned Champion Homes dealer in Auburn, Indiana. 500+ homes delivered across 6 states.",
+    description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving 6 states, just 20 miles from the Champion factory.",
     topics: ["about", "champion-homes", "factory-direct"],
     cluster: "core",
     priority: 0.8,
@@ -309,8 +309,8 @@ export const sitePages: SitePage[] = [
   {
     url: "/guides/financing",
     title: "Financing Options for Manufactured Homes",
-    description: "FHA, VA, conventional, and chattel loans explained for manufactured homes.",
-    topics: ["guides", "financing", "chattel-loans", "va-loans", "fha-loans"],
+    description: "Chattel, land-home, and conventional loans explained for manufactured homes.",
+    topics: ["guides", "financing", "chattel-loans"],
     cluster: "guides",
     pillar: "/guides",
     priority: 0.8,
