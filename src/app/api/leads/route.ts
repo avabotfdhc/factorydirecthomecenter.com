@@ -7,8 +7,8 @@ import { NextResponse } from "next/server";
 //
 // Channel 1 — Email via Resend
 //   Requires env vars (add via: vercel env add <VAR> production):
-//     RESEND_API_KEY   — from resend.com
-//     LEAD_EMAIL_TO    — e.g. sales@factorydirecthomescenter.com
+//     RESEND_API_KEY   — from resend.com (required for email to actually send)
+//     LEAD_EMAIL_TO    — recipient; defaults to leads@factorydirecthomescenter.com
 //
 // Channel 2 — Google Sheets
 //   Requires env vars:
@@ -20,7 +20,7 @@ import { NextResponse } from "next/server";
 // ============================================
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const LEAD_EMAIL_TO = process.env.LEAD_EMAIL_TO ?? "sales@factorydirecthomescenter.com";
+const LEAD_EMAIL_TO = process.env.LEAD_EMAIL_TO ?? "leads@factorydirecthomescenter.com";
 const GOOGLE_SHEETS_ID = process.env.GOOGLE_SHEETS_ID;
 const GOOGLE_SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
 
