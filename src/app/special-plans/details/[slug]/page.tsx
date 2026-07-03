@@ -129,7 +129,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return genMeta({
-    title: `${home.name} - 20% Off MSRP | Factory Direct Homes Center`,
+    title: `${home.name} - Up to 25% Off MSRP | Factory Direct Homes Center`,
     description: `Save $${(home.msrp - home.salePrice).toLocaleString()} on the ${home.name}. ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath manufactured home. Limited time offer!`,
     url: `/special-plans/details/${home.id}`,
   });
@@ -164,10 +164,10 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
       <div className="bg-gradient-to-r from-red-500 to-red-600 text-white py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="font-bold text-lg">
-            🔥 LIMITED TIME: 20% OFF MSRP — Save ${savings.toLocaleString()}! 🔥
+            🔥 LIMITED TIME: Save up to 25% off select Champion plans — Save ${savings.toLocaleString()}! 🔥
           </p>
           <p className="text-sm text-white/90">
-            Offer Ends May 31, 2026
+            Offer Ends July 31, 2026
           </p>
         </div>
       </div>
@@ -179,7 +179,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
             <div className="relative">
               {/* Sale Badge */}
               <div className="absolute top-4 left-4 z-10 bg-red-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
-                20% OFF
+                25% OFF
               </div>
               
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 shadow-lg">
@@ -253,7 +253,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
 
               {/* Pricing */}
               <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl mb-6 border border-red-100">
-                <p className="text-sm text-red-600 font-semibold mb-1">SALE PRICE - 20% OFF MSRP</p>
+                <p className="text-sm text-red-600 font-semibold mb-1">SALE PRICE - UP TO 25% OFF MSRP</p>
                 <div className="flex items-baseline gap-3 mb-2">
                   <span className="text-2xl text-gray-400 line-through">
                     ${home.msrp.toLocaleString()}
@@ -329,12 +329,13 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
             Terms & Conditions
           </h2>
           <p className="text-xs text-gray-500">
-            *20% off MSRP (Manufacturer's Suggested Retail Price) valid on new orders only. 
-            Discount applies to base home price only and does not include options, upgrades, 
-            delivery, setup, or other fees. Cannot be combined with other offers. See dealer 
-            for complete details. Financing subject to credit approval. <strong>Offer expires May 31, 2026</strong> or while 
-            supplies last. Prices shown are for the home only and do not include taxes, title, 
-            delivery, installation, or site preparation costs.
+            *Save up to 25% off MSRP (Manufacturer's Suggested Retail Price) on select new Champion floor plans.
+            Discount applies to base home price only and does not include options, upgrades,
+            delivery, setup, or other fees. This offer is not valid with any other specials or discounts and cannot
+            be used in combination with other specials or discounts. Good on new purchases only, and order must be
+            authorized for production in July 2026. See dealer for complete details. Financing subject to credit
+            approval. <strong>Offer expires July 31, 2026</strong> or while supplies last. Prices shown are for the
+            home only and do not include taxes, title, delivery, installation, or site preparation costs.
           </p>
         </div>
       </div>

@@ -14,8 +14,8 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
     return (
       <div className={`bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800 ${className}`}>
         <p className="font-medium">
-          *25% off MSRP base price only. Excludes delivery, setup, taxes & fees. 
-          <button 
+          *Save up to 25% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
+          <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="underline hover:text-amber-900 ml-1"
           >
@@ -24,9 +24,9 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
         </p>
         {isExpanded && (
           <div className="mt-2 text-amber-700 space-y-1 border-t border-amber-200 pt-2">
-            <p>Offer valid on in-stock inventory and new orders placed by June 30, 2026.</p>
+            <p>Good on new purchases only. Order must be authorized for production in July 2026. Offer expires July 31, 2026.</p>
             <p>MSRP = Manufacturer's Suggested Retail Price. Subject to credit approval.</p>
-            <p>Cannot be combined with other offers. See dealer for complete details.</p>
+            <p>Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. See dealer for complete details.</p>
           </div>
         )}
       </div>
@@ -36,8 +36,9 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
   if (variant === "inline") {
     return (
       <p className={`text-xs text-gray-500 ${className}`}>
-        *25% off MSRP base price only. Excludes delivery, setup, skirting, taxes, title fees, and optional upgrades. 
-        Valid through June 30, 2026. Subject to credit approval. See dealer for details.
+        *Save up to 25% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, skirting, taxes, title fees, and optional upgrades.
+        Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. Good on new purchases only;
+        order must be authorized for production in July 2026. Valid through July 31, 2026. Subject to credit approval. See dealer for details.
       </p>
     );
   }
@@ -53,14 +54,14 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
       </h3>
       <div className="text-sm text-gray-600 space-y-3">
         <p>
-          <strong>*25% OFF MSRP BASE PRICE DISCLOSURE:</strong> Offer valid on select new manufactured and modular homes. 
-          25% discount applies to MSRP (Manufacturer's Suggested Retail Price) base price only and does not include delivery, setup, skirting, taxes, 
+          <strong>*SAVE UP TO 25% OFF MSRP BASE PRICE DISCLOSURE:</strong> Offer valid on select new Champion manufactured and modular floor plans.
+          Discount of up to 25% applies to MSRP (Manufacturer's Suggested Retail Price) base price only and does not include delivery, setup, skirting, taxes,
           title fees, or optional upgrades.
         </p>
         <p>
-          Offer valid on in-stock inventory and new orders placed by <strong>June 30, 2026</strong>. 
-          Subject to credit approval. Cannot be combined with other offers, promotions, or prior purchases. 
-          Factory Direct Homes Center reserves the right to modify or cancel this promotion at any time without notice.
+          This offer is not valid with any other specials or discounts and cannot be used in combination with other specials or discounts.
+          Good on new purchases only, and order must be authorized for production in <strong>July 2026</strong>. Offer expires <strong>July 31, 2026</strong>.
+          Subject to credit approval. Factory Direct Homes Center reserves the right to modify or cancel this promotion at any time without notice.
         </p>
         <p>
           Prices shown are for the home only and do not include taxes, title, delivery, installation, 

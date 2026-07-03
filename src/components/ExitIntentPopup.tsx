@@ -10,7 +10,7 @@ interface ExitIntentPopupProps {
   delay?: number;
 }
 
-export function ExitIntentPopup({ offer = "25% OFF MSRP - Limited Time!", delay = 5000 }: ExitIntentPopupProps) {
+export function ExitIntentPopup({ offer = "Save up to 25% off select Champion floor plans!", delay = 5000 }: ExitIntentPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [email, setEmail] = useState("");
@@ -89,7 +89,7 @@ export function ExitIntentPopup({ offer = "25% OFF MSRP - Limited Time!", delay 
             </div>
             <H3 className="font-serif text-2xl font-light mb-2">Wait! Don't Miss Out</H3>
             <p className="text-white/80 text-lg font-semibold">{offer}</p>
-            <p className="text-yellow-300 text-sm mt-1">Ends June 30, 2026</p>
+            <p className="text-yellow-300 text-sm mt-1">Ends July 31, 2026</p>
           </div>
 
           {/* Content */}
@@ -103,7 +103,7 @@ export function ExitIntentPopup({ offer = "25% OFF MSRP - Limited Time!", delay 
                 </div>
                 <H4 className="font-serif text-xl font-semibold mb-2">You're In!</H4>
                 <p className="text-[var(--color-gray)]">
-                  A home specialist will contact you within 24 hours with your 25% OFF MSRP details.
+                  A home specialist will contact you within 24 hours with your savings details.
                 </p>
               </div>
             ) : (
@@ -111,7 +111,7 @@ export function ExitIntentPopup({ offer = "25% OFF MSRP - Limited Time!", delay 
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
-                    <span className="text-sm text-[var(--color-charcoal)]"><strong>25% OFF MSRP</strong> base price</span>
+                    <span className="text-sm text-[var(--color-charcoal)]"><strong>Up to 25% off MSRP</strong> base price</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
@@ -136,12 +136,13 @@ export function ExitIntentPopup({ offer = "25% OFF MSRP - Limited Time!", delay 
                     type="submit"
                     className="w-full py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
                   >
-                    Claim My 25% OFF MSRP
+                    Claim My Savings
                   </button>
                 </form>
 
                 <p className="text-xs text-center text-[var(--color-gray)] mt-4">
-                  *25% off MSRP base price only. Excludes delivery, setup, taxes & fees. Valid through June 30, 2026.
+                  *Save up to 25% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
+                  Not valid with other specials or discounts. New purchases only; order must be authorized for production in July 2026. Valid through July 31, 2026.
                 </p>
               </>
             )}

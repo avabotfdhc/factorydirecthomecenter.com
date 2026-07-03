@@ -6,18 +6,18 @@ import { H2, H3 } from "@/components/Heading";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 
 // ============================================
-// SPECIAL PLANS / ON SALE PAGE - 25% OFF MSRP CAMPAIGN
+// SPECIAL PLANS / ON SALE PAGE - UP TO 25% OFF CAMPAIGN
 // ============================================
 // Promotional page for current sales and clearance
-// Updated: June 2026 - 25% OFF MSRP Summer Sale
+// Updated: July 2026 - Up to 25% off select new Champion floor plans
 // ============================================
 
 export const metadata = genMeta({
-  title: "25% Off MSRP | Factory Direct Homes Center Summer Sale",
-  description: "Save 25% off MSRP on all floor plans! Limited time summer sale on Champion manufactured homes. Single wide, double wide, and modular homes on sale now.",
+  title: "Up to 25% Off Select Champion Floor Plans | Factory Direct Homes Center",
+  description: "Save up to 25% off select new Champion floor plans! Limited time sale on manufactured and modular homes. Single wide, double wide, and modular homes on sale now through July 31, 2026.",
   keywords: [
     "manufactured homes sale",
-    "25% off MSRP mobile homes",
+    "champion floor plans sale",
     "champion homes discount",
     "factory direct sale",
     "mobile home clearance",
@@ -29,11 +29,12 @@ export const metadata = genMeta({
 
 // Sale disclaimer
 const saleDisclaimer = `
-*25% off MSRP (Manufacturer's Suggested Retail Price) valid on all new floor plan orders 
-placed during the promotional period. Discount applies to MSRP base price only and does 
-not include options, upgrades, delivery, setup, or other fees. Cannot be combined with 
-other offers or prior sales. See dealer for complete details. Financing subject to credit 
-approval. Offer expires June 30, 2026 or while supplies last.
+*Save up to 25% off MSRP (Manufacturer's Suggested Retail Price) on select new Champion floor
+plans. Discount applies to MSRP base price only and does not include options, upgrades, delivery,
+setup, or other fees. This offer is not valid with any other specials or discounts and cannot be
+used in combination with other specials or discounts. Good on new purchases only, and order must
+be authorized for production in July 2026. See dealer for complete details. Financing subject to
+credit approval. Offer expires July 31, 2026 or while supplies last.
 `;
 
 // Featured sale homes
@@ -164,16 +165,16 @@ export default function SpecialPlansPage() {
               </div>
               
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
-                25% OFF MSRP
+                UP TO 25% OFF
               </h1>
               <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
-                Summer Sale
+                Select New Champion Floor Plans
               </p>
               <p className="text-base text-white/80 max-w-xl mx-auto mb-3">
                 Save thousands on your new Champion manufactured home. Factory direct pricing just got better.
               </p>
               <p className="text-yellow-300 font-bold mb-4 text-sm md:text-base">
-                ⏰ Ends June 30, 2026
+                ⏰ Ends July 31, 2026
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -378,7 +379,7 @@ export default function SpecialPlansPage() {
                           ${home.msrp.toLocaleString()}
                         </span>
                         <span className="text-red-500 font-semibold">
-                          20% OFF
+                          25% OFF
                         </span>
                       </div>
                       <p className="text-3xl font-bold text-[#2c7a7b]">

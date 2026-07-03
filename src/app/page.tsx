@@ -766,8 +766,8 @@ function ParallaxHeroSection() {
           {/* Sale Badge */}
           <Link href="/special-plans" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
             <span className="animate-pulse">🎉</span>
-            <span>25% OFF MSRP — Summer Sale!</span>
-            <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">Ends June 30</span>
+            <span>Save up to 25% off select new Champion floor plans!</span>
+            <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">Ends July 31</span>
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

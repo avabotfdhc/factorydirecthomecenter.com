@@ -23,13 +23,13 @@ export function AnnouncementBar() {
           >
             <span className="animate-pulse">🎉</span>
             <span className="hidden sm:inline">
-              <strong>25% OFF MSRP</strong> — Limited Time Summer Sale! 
+              <strong>Save up to 25% off</strong> select new Champion floor plans!
             </span>
             <span className="sm:hidden">
-              <strong>25% OFF MSRP</strong> Sale!
+              <strong>Up to 25% off</strong> Champion plans!
             </span>
             <span className="text-yellow-300 font-semibold whitespace-nowrap">
-              Ends June 30th
+              Ends July 31st
             </span>
             <span className="hidden sm:inline-flex items-center gap-1 ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">
               Shop Now
