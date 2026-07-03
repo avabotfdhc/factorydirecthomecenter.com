@@ -22,7 +22,13 @@ export interface ApiFloorPlan {
   homeType: string;
 }
 
+// TEMPORARY (pre-launch): hide all home prices until CMS pricing is cleaned up.
+// Flip back to `true` to show real prices again — this single flag controls the
+// floor-plan list, detail pages, homepage featured homes, and the inventory page.
+const SHOW_PRICES = false;
+
 function formatPrice(raw: unknown): string {
+  if (!SHOW_PRICES) return "Contact for price";
   const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
   return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
 }

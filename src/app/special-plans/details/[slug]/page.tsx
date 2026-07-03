@@ -130,7 +130,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return genMeta({
     title: `${home.name} - Up to 25% Off MSRP | Factory Direct Homes Center`,
-    description: `Save $${(home.msrp - home.salePrice).toLocaleString()} on the ${home.name}. ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath manufactured home. Limited time offer!`,
+    description: `Save up to 25% off MSRP on the ${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. Contact us for your factory-direct price. Limited time offer!`,
     url: `/special-plans/details/${home.id}`,
   });
 }
@@ -142,8 +142,6 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
   if (!home) {
     notFound();
   }
-
-  const savings = home.msrp - home.salePrice;
 
   return (
     <main className="min-h-screen bg-white">
@@ -164,7 +162,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
       <div className="bg-gradient-to-r from-red-500 to-red-600 text-white py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="font-bold text-lg">
-            🔥 LIMITED TIME: Save up to 25% off select Champion plans — Save ${savings.toLocaleString()}! 🔥
+            🔥 LIMITED TIME: Save up to 25% off select new Champion floor plans! 🔥
           </p>
           <p className="text-sm text-white/90">
             Offer Ends July 31, 2026
@@ -251,21 +249,11 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                 </span>
               </div>
 
-              {/* Pricing */}
+              {/* Pricing — temporarily hidden pre-launch */}
               <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl mb-6 border border-red-100">
-                <p className="text-sm text-red-600 font-semibold mb-1">SALE PRICE - UP TO 25% OFF MSRP</p>
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="text-2xl text-gray-400 line-through">
-                    ${home.msrp.toLocaleString()}
-                  </span>
-                  <span className="bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
-                    SAVE ${savings.toLocaleString()}
-                  </span>
-                </div>
-                <p className="text-5xl font-bold text-[#2c7a7b]">
-                  ${home.salePrice.toLocaleString()}
-                </p>
-                <p className="text-sm text-gray-500 mt-2">Factory Direct Price</p>
+                <p className="text-sm text-red-600 font-semibold mb-1">SAVE UP TO 25% OFF MSRP</p>
+                <p className="text-4xl font-bold text-[#2c7a7b]">Contact for Price</p>
+                <p className="text-sm text-gray-500 mt-2">Call (260) 308-1457 for your factory-direct quote</p>
               </div>
 
               {/* Description */}

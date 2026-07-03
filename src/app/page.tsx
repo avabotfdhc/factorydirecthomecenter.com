@@ -28,7 +28,7 @@ const homeTypes = [
     sqft: "500 – 1,200 sq ft",
     beds: "1–3 Bed",
     baths: "1–2 Bath",
-    startingAt: "$50,000",
+    startingAt: "Contact for pricing",
     description: "Thoughtfully designed for smart, comfortable living. Perfect for first-time buyers, downsizers, or anyone who values quality over excess.",
     features: ["14–18 ft wide", "Up to 80 ft long", "Open floor plans"],
     image: "/images/homepage/single-wides.webp",
@@ -39,7 +39,7 @@ const homeTypes = [
     sqft: "1,000 – 2,400 sq ft",
     beds: "2–4 Bed",
     baths: "2–3 Bath",
-    startingAt: "$80,000",
+    startingAt: "Contact for pricing",
     description: "Spacious sectional homes that rival site-built quality. The Brighton and Silverton series offer generous layouts for growing families.",
     features: ["24–32 ft wide", "Multiple living areas", "Walk-in closets"],
     image: "/images/homepage/double-wides.webp",
@@ -50,7 +50,7 @@ const homeTypes = [
     sqft: "1,000 – 2,500+ sq ft",
     beds: "2–5 Bed",
     baths: "2+ Bath",
-    startingAt: "$100,000",
+    startingAt: "Contact for pricing",
     description: "IRC-code compliant homes placed on permanent foundations. Indistinguishable from site-built, with factory precision and pricing.",
     features: ["Permanent foundation", "IRC building codes", "Fully customizable"],
     image: "/images/homepage/feature-find-home.webp",
@@ -181,7 +181,7 @@ export default function Home() {
                 <figure className="aspect-[16/10] relative overflow-hidden">
                   <Image
                     src={home.image}
-                    alt={`${home.title} manufactured home - ${home.sqft}, ${home.beds}, ${home.baths} starting at ${home.startingAt}`}
+                    alt={`${home.title} manufactured home - ${home.sqft}, ${home.beds}, ${home.baths}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 1024px) 100vw, 33vw"
@@ -212,8 +212,7 @@ export default function Home() {
                   </ul>
                   <div className="flex items-end justify-between">
                     <div>
-                      <span className="text-xs text-white/40 uppercase tracking-wider">Starting at</span>
-                      <div className="font-serif text-2xl font-semibold text-[var(--color-lime)]">{home.startingAt}</div>
+                      <div className="font-serif text-xl font-semibold text-[var(--color-lime)]">{home.startingAt}</div>
                     </div>
                     <Link href="/floor-plans" className="text-sm font-semibold text-white/60 hover:text-[var(--color-lime)] transition-colors flex items-center gap-1">
                       Explore
@@ -248,8 +247,8 @@ export default function Home() {
               <div className="text-sm text-white/70 mt-1">States Served</div>
             </FadeIn>
             <FadeIn direction="up" delay={450}>
-              <div className="font-serif text-3xl lg:text-4xl font-bold">$50K</div>
-              <div className="text-sm text-white/70 mt-1">Starting Price</div>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">100%</div>
+              <div className="text-sm text-white/70 mt-1">Factory Direct</div>
             </FadeIn>
           </StaggerContainer>
         </div>

@@ -314,7 +314,7 @@ export default function SpecialPlansPage() {
                   {/* Savings Badge */}
                   <div className="absolute top-4 right-4 z-10">
                     <span className="bg-[#84cc16] text-white px-3 py-1 rounded-full text-sm font-bold">
-                      Save ${(home.msrp - home.salePrice).toLocaleString()}
+                      Up to 25% Off
                     </span>
                   </div>
 
@@ -372,20 +372,10 @@ export default function SpecialPlansPage() {
                       </span>
                     </div>
 
-                    {/* Pricing */}
+                    {/* Pricing — temporarily hidden pre-launch */}
                     <div className="border-t pt-4 mb-4">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-gray-400 line-through text-lg">
-                          ${home.msrp.toLocaleString()}
-                        </span>
-                        <span className="text-red-500 font-semibold">
-                          25% OFF
-                        </span>
-                      </div>
-                      <p className="text-3xl font-bold text-[#2c7a7b]">
-                        ${home.salePrice.toLocaleString()}
-                      </p>
-                      <p className="text-sm text-gray-500">Factory Direct Price</p>
+                      <p className="text-2xl font-bold text-[#2c7a7b]">Contact for Price</p>
+                      <p className="text-sm text-gray-500">Save up to 25% off select new Champion floor plans</p>
                     </div>
 
                     {/* CTA */}

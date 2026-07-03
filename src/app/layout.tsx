@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | Factory Direct Homes Center",
   },
   description:
-    "Factory-direct pricing on new Champion manufactured and modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN. Single wides from $50K, double wides from $80K.",
+    "Factory-direct pricing on new Champion manufactured and modular homes. Single wides, double wides & modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN. Contact us for pricing.",
   keywords: [
     "manufactured homes",
     "modular homes",
