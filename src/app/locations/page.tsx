@@ -22,7 +22,11 @@ const locations = [
   {
     state: "Indiana — Northeast & Central",
     cities: [
+      { name: "Huntertown", distance: "18 miles", slug: "huntertown" },
+      { name: "Kendallville", distance: "20 miles", slug: "kendallville" },
+      { name: "Angola", distance: "25 miles", slug: "angola" },
       { name: "Steuben County", distance: "25 miles", slug: "steuben-county" },
+      { name: "New Haven", distance: "28 miles", slug: "new-haven" },
       { name: "Rural Indiana", distance: "25-45 miles", slug: "rural-indiana" },
       { name: "LaGrange County", distance: "30 miles", slug: "lagrange-county" },
       { name: "Fort Wayne", distance: "30 miles", slug: "fort-wayne" },
