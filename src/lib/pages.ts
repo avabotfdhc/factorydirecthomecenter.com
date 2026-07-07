@@ -396,6 +396,16 @@ export const sitePages: SitePage[] = [
     priority: 0.7,
     changeFrequency: "monthly",
   },
+  {
+    url: "/guides/manufactured-vs-modular",
+    title: "Manufactured vs. Modular vs. Mobile Homes",
+    description: "The difference between manufactured, modular, and mobile homes — building codes, foundations, financing, and appreciation.",
+    topics: ["guides", "manufactured", "modular", "mobile-home", "comparison"],
+    cluster: "guides",
+    pillar: "/guides",
+    priority: 0.75,
+    changeFrequency: "monthly",
+  },
   // Blog Hub
   {
     url: "/blog",

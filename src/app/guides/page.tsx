@@ -10,6 +10,13 @@ export const metadata = genMeta({
 
 const guides = [
   {
+    title: "Manufactured vs. Modular vs. Mobile",
+    description: "The real difference between the three — building codes (HUD vs. IRC), foundations, financing, and which factory-built home is right for you.",
+    href: "/guides/manufactured-vs-modular",
+    icon: "🏠",
+    readTime: "6 min",
+  },
+  {
     title: "Complete Buyer's Guide",
     description: "Everything you need to know about buying a manufactured or modular home. Types of homes, financing options, costs, and timeline.",
     href: "/guides/buyers-guide",
