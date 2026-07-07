@@ -136,6 +136,16 @@ export const sitePages: SitePage[] = [
     changeFrequency: "monthly",
   },
   {
+    url: "/locations/auburn",
+    title: "Manufactured & Modular Homes in Auburn, IN",
+    description: "Our Auburn, DeKalb County showroom at 1211 State Road 8. Factory-direct Champion homes, 20 miles from the factory.",
+    topics: ["locations", "auburn", "dekalb-county", "indiana", "showroom"],
+    cluster: "locations",
+    pillar: "/locations",
+    priority: 0.95,
+    changeFrequency: "monthly",
+  },
+  {
     url: "/locations/fort-wayne",
     title: "Manufactured Homes Fort Wayne IN",
     description: "Champion homes delivered to Fort Wayne. 30 miles from our Auburn showroom. Serving Allen County.",

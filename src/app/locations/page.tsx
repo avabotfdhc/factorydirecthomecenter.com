@@ -12,6 +12,7 @@ const locations = [
   {
     state: "Indiana — Local Area",
     cities: [
+      { name: "Auburn (Showroom)", distance: "Our Showroom", slug: "auburn" },
       { name: "DeKalb County", distance: "Local", slug: "dekalb-county" },
       { name: "Garrett", distance: "5 miles", slug: "garrett" },
       { name: "Waterloo", distance: "6 miles", slug: "waterloo" },
