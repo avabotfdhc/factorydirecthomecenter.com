@@ -17,6 +17,13 @@ const guides = [
     readTime: "6 min",
   },
   {
+    title: "Single Wide vs. Double Wide",
+    description: "Size, layout, price, and land needs compared — plus which one fits your budget, family, and property.",
+    href: "/guides/single-wide-vs-double-wide",
+    icon: "📐",
+    readTime: "6 min",
+  },
+  {
     title: "Complete Buyer's Guide",
     description: "Everything you need to know about buying a manufactured or modular home. Types of homes, financing options, costs, and timeline.",
     href: "/guides/buyers-guide",

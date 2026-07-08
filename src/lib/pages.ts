@@ -446,6 +446,16 @@ export const sitePages: SitePage[] = [
     priority: 0.75,
     changeFrequency: "monthly",
   },
+  {
+    url: "/guides/single-wide-vs-double-wide",
+    title: "Single Wide vs. Double Wide",
+    description: "Single wide vs. double wide manufactured homes compared — size, layout, price, land needs, and best uses.",
+    topics: ["guides", "single-wide", "double-wide", "comparison"],
+    cluster: "guides",
+    pillar: "/guides",
+    priority: 0.75,
+    changeFrequency: "monthly",
+  },
   // Blog Hub
   {
     url: "/blog",
