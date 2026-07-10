@@ -43,8 +43,11 @@ function shortName(title: string): string {
 
 function s3Url(path?: string): string {
   if (!path) return "";
-  if (/^https?:\/\//.test(path)) return path;
-  return `${S3_BASE}/${String(path).replace(/^\//, "")}`;
+  // Many CMS image keys contain spaces/parentheses — encode so the URL is valid
+  // everywhere (social-preview scrapers and strict crawlers won't auto-encode).
+  // encodeURI preserves the URL structure and already-encoded %XX sequences.
+  const raw = /^https?:\/\//.test(path) ? path : `${S3_BASE}/${String(path).replace(/^\//, "")}`;
+  return encodeURI(raw);
 }
 
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */

@@ -24,6 +24,13 @@ const guides = [
     readTime: "6 min",
   },
   {
+    title: "Delivery & Setup: What to Expect",
+    description: "From order to move-in in 8–12 weeks — factory build, site prep, permitting, delivery day, and installation, step by step.",
+    href: "/guides/delivery-and-setup",
+    icon: "🚚",
+    readTime: "6 min",
+  },
+  {
     title: "Complete Buyer's Guide",
     description: "Everything you need to know about buying a manufactured or modular home. Types of homes, financing options, costs, and timeline.",
     href: "/guides/buyers-guide",

@@ -456,6 +456,16 @@ export const sitePages: SitePage[] = [
     priority: 0.75,
     changeFrequency: "monthly",
   },
+  {
+    url: "/guides/delivery-and-setup",
+    title: "Manufactured Home Delivery & Setup",
+    description: "How manufactured and modular home delivery and setup works, from order to move-in in 8–12 weeks.",
+    topics: ["guides", "delivery", "setup", "installation", "process"],
+    cluster: "guides",
+    pillar: "/guides",
+    priority: 0.75,
+    changeFrequency: "monthly",
+  },
   // Blog Hub
   {
     url: "/blog",
