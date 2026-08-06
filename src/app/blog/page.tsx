@@ -18,8 +18,9 @@ export const metadata: Metadata = {
   ],
 };
 
-// Rendered live from the CMS — new posts appear without a redeploy.
-export const dynamic = "force-dynamic";
+// ISR: refreshed from the CMS every 5 min — new posts appear without a redeploy,
+// while the API is hit at most once per window and stays served if it hiccups.
+export const revalidate = 300;
 
 export default async function BlogPage() {
   const posts = await getApiBlogPosts();

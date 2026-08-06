@@ -21,8 +21,10 @@ export const metadata: Metadata = {
   ],
 };
 
-// Rendered live from the CMS so new/edited homes appear without a redeploy.
-export const dynamic = "force-dynamic";
+// ISR: refreshed from the CMS every 5 min, so new/edited homes appear without a
+// redeploy — but the API is hit at most once per window (not once per visitor),
+// and Next serves the last-good copy if the API is briefly unavailable.
+export const revalidate = 300;
 
 export default async function FloorPlansPage() {
   const plans = await getApiFloorPlans();

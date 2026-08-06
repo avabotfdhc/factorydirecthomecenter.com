@@ -31,7 +31,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export const dynamic = "force-dynamic";
+// ISR: each floor plan renders on first request and caches for 5 min — CMS edits
+// appear without a redeploy, and the API is only hit on cache miss/revalidate.
+export const revalidate = 300;
 
 const Spec = ({ label, value }: { label: string; value: string }) => (
   <div className="text-center">

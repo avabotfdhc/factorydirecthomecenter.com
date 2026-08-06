@@ -11,8 +11,9 @@ export const metadata = genMeta({
   url: "/inventory",
 });
 
-// Rendered live from the CMS so availability reflects the current catalog.
-export const dynamic = "force-dynamic";
+// ISR: availability refreshes from the CMS every 5 min without a redeploy, while
+// the API is hit at most once per window and stays served if it briefly fails.
+export const revalidate = 300;
 
 export default async function InventoryPage() {
   const availableHomes = (await getApiFloorPlans()).slice(0, 6);

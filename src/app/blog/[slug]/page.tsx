@@ -26,7 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export const dynamic = "force-dynamic";
+// ISR: each post renders on first request and caches for 5 min — CMS edits appear
+// without a redeploy, and the API is only hit on cache miss/revalidate.
+export const revalidate = 300;
 
 export default async function BlogDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
