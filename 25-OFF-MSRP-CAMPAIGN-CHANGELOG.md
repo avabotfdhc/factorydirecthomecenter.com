@@ -70,7 +70,7 @@
 ### After:
 - "25% OFF MSRP"
 - "25% off MSRP base price"
-- Offer ends June 30, 2026
+- Offer ends August 31, 2026
 - All disclaimers properly mention "MSRP (Manufacturer's Suggested Retail Price)"
 
 ---
