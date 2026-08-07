@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { pushLeadToDealertide } from "@/lib/dealertide";
 
 // ============================================
 // LEAD CAPTURE API — factorydirecthomescenter.com
@@ -60,11 +61,22 @@ export async function POST(request: Request) {
 
   console.log("[leads] New submission:", lead.email, lead.firstName, lead.lastName);
 
-  // Run both channels concurrently; neither failing blocks the response
-  const [emailResult, sheetsResult, cmsResult] = await Promise.allSettled([
+  // Run all channels concurrently; no single failure blocks the response
+  const [emailResult, sheetsResult, cmsResult, dtResult] = await Promise.allSettled([
     sendEmail(lead),
     appendToSheet(lead),
     postToCms(lead),
+    // DealerTide CRM — key's inbound-lead automation handles source defaulting,
+    // Auburn location assignment, and email/phone dedupe on their side.
+    pushLeadToDealertide({
+      first_name: lead.firstName,
+      last_name: lead.lastName,
+      email: lead.email,
+      phone: lead.phone,
+      source: "Website",
+      message: lead.message,
+      page_url: lead.pageUrl,
+    }),
   ]);
 
   if (emailResult.status === "rejected") {
@@ -75,6 +87,9 @@ export async function POST(request: Request) {
   }
   if (cmsResult.status === "rejected") {
     console.error("[leads] CMS channel failed:", cmsResult.reason);
+  }
+  if (dtResult.status === "rejected" || (dtResult.status === "fulfilled" && dtResult.value === false)) {
+    console.error("[leads] DealerTide channel failed or not configured");
   }
 
   return NextResponse.json({ success: true, message: "Lead received" });
