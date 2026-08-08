@@ -1,79 +1,98 @@
-// TEMPORARY shape-discovery probe for the DealerTide /vehicles payload.
+// TEMPORARY shape-discovery probe for the DealerTide inventory feed.
 //
-// The endpoint + auth are already confirmed (src/lib/dealertide.ts). This
-// prints the field names and a redacted sample of one vehicle to the Vercel
-// build log so the floor-plan field mapping can be pinned down without needing
-// admin credentials. Non-fatal; no-op without the key. Remove once mapped.
+// Two possible sources, tried in order:
+//   1. DEALERTIDE_FEED_URL  — Meta Commerce catalog feed (token in the URL).
+//      This is the whole inventory (homes + photos) in Meta product-feed
+//      format (CSV or XML/RSS). Set in Vercel env only (URL carries a secret
+//      token; this repo is public, so it is NEVER hard-coded here).
+//   2. Partner API /vehicles — needs the vehicles:read scope on the key.
+//
+// Prints format + field names + one sample record to the Vercel build log so
+// the website field mapping can be pinned down. Non-fatal; no-op if unset.
+// Remove this file + the package.json hook once the mapping is built.
 
+const FEED_URL = process.env.DEALERTIDE_FEED_URL?.trim();
 const KEY = process.env.DEALERTIDE_API_KEY?.trim();
-const BASE =
+const API_BASE =
   process.env.DEALERTIDE_API_BASE ||
   "https://renterinsight-api-prod.onrender.com/api/partner/v1";
 
-function unwrap(json) {
-  if (Array.isArray(json)) return json;
-  for (const k of ["data", "vehicles", "results", "items", "rows"]) {
-    if (Array.isArray(json?.[k])) return json[k];
-  }
-  return null;
+function firstTag(xml, tag) {
+  const m = xml.match(new RegExp(`<${tag}[\\s>][\\s\\S]*?</${tag}>`, "i"));
+  return m ? m[0] : null;
 }
 
-// Print keys and short scalar previews; never dump full nested blobs.
-function shape(obj, prefix = "") {
-  const lines = [];
-  for (const [k, v] of Object.entries(obj || {})) {
-    const path = prefix ? `${prefix}.${k}` : k;
-    if (v && typeof v === "object" && !Array.isArray(v)) {
-      lines.push(`${path}: {object}`);
-    } else if (Array.isArray(v)) {
-      const first = v[0];
-      lines.push(`${path}: [${v.length}] ${first && typeof first === "object" ? "{object}" : JSON.stringify(first)?.slice(0, 40)}`);
-    } else {
-      lines.push(`${path} = ${JSON.stringify(v)?.slice(0, 60)}`);
-    }
+function tagNames(block) {
+  const names = new Set();
+  const re = /<([a-zA-Z0-9:_-]+)[\s>]/g;
+  let m;
+  while ((m = re.exec(block))) names.add(m[1]);
+  return [...names];
+}
+
+async function probeFeed() {
+  console.log(`[dt-feed] fetching DEALERTIDE_FEED_URL`);
+  const res = await fetch(FEED_URL, { headers: { Accept: "*/*" } });
+  const ct = res.headers.get("content-type") || "";
+  console.log(`[dt-feed] -> ${res.status} ${ct}`);
+  const text = await res.text();
+  console.log(`[dt-feed] length: ${text.length} bytes`);
+  if (!res.ok) {
+    console.log(`[dt-feed] body: ${text.replace(/\s+/g, " ").slice(0, 300)}`);
+    return;
   }
-  return lines;
+
+  const trimmed = text.trimStart();
+  if (trimmed.startsWith("<")) {
+    // XML / RSS product feed
+    const item = firstTag(text, "item") || firstTag(text, "entry") || firstTag(text, "product");
+    const count = (text.match(/<item[\s>]/gi) || text.match(/<entry[\s>]/gi) || []).length;
+    console.log(`[dt-feed] format: XML, ~${count} items`);
+    if (item) {
+      console.log(`[dt-feed] item fields: ${tagNames(item).join(", ")}`);
+      console.log(`[dt-feed] --- first item (truncated) ---`);
+      console.log(item.replace(/\s+/g, " ").slice(0, 1200));
+    }
+  } else if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+    // JSON
+    let json;
+    try { json = JSON.parse(text); } catch { console.log(`[dt-feed] JSON parse failed`); return; }
+    const rows = Array.isArray(json) ? json : (json.data || json.products || json.items || json.entries);
+    console.log(`[dt-feed] format: JSON, ${Array.isArray(rows) ? rows.length : "?"} items`);
+    if (Array.isArray(rows) && rows[0]) {
+      console.log(`[dt-feed] item fields: ${Object.keys(rows[0]).join(", ")}`);
+      console.log(`[dt-feed] first item: ${JSON.stringify(rows[0]).slice(0, 1200)}`);
+    }
+  } else {
+    // Assume CSV/TSV
+    const lines = text.split(/\r?\n/).filter(Boolean);
+    const delim = (lines[0].match(/\t/g) || []).length > (lines[0].match(/,/g) || []).length ? "\t" : ",";
+    console.log(`[dt-feed] format: CSV (delim ${delim === "\t" ? "TAB" : "comma"}), ${lines.length - 1} rows`);
+    console.log(`[dt-feed] headers: ${lines[0].slice(0, 1000)}`);
+    if (lines[1]) console.log(`[dt-feed] row 1: ${lines[1].slice(0, 1200)}`);
+  }
+}
+
+async function probeApi() {
+  const auth = KEY.startsWith("Bearer ") ? KEY : `Bearer ${KEY}`;
+  const res = await fetch(`${API_BASE}/vehicles`, {
+    headers: { Authorization: auth, Accept: "application/json" },
+  });
+  const text = await res.text();
+  console.log(`[dt-shape] GET /vehicles -> ${res.status}: ${text.replace(/\s+/g, " ").slice(0, 200)}`);
 }
 
 async function main() {
-  if (!KEY) {
-    console.log("[dt-shape] DEALERTIDE_API_KEY not set — skipping");
-    return;
-  }
-  const auth = KEY.startsWith("Bearer ") ? KEY : `Bearer ${KEY}`;
   try {
-    const res = await fetch(`${BASE}/vehicles`, {
-      headers: { Authorization: auth, Accept: "application/json" },
-    });
-    console.log(`[dt-shape] GET /vehicles -> ${res.status} ${res.headers.get("content-type") || ""}`);
-    const text = await res.text();
-    if (!res.ok) {
-      console.log(`[dt-shape] body: ${text.replace(/\s+/g, " ").slice(0, 300)}`);
-      return;
+    if (FEED_URL) {
+      await probeFeed();
+    } else {
+      console.log("[dt-feed] DEALERTIDE_FEED_URL not set — skipping feed probe");
     }
-    let json;
-    try { json = JSON.parse(text); } catch { console.log(`[dt-shape] non-JSON: ${text.slice(0, 200)}`); return; }
-    const rows = unwrap(json);
-    if (!rows) {
-      console.log(`[dt-shape] envelope keys: ${Object.keys(json || {}).join(", ")}`);
-      return;
-    }
-    console.log(`[dt-shape] vehicles count: ${rows.length}`);
-    if (rows[0]) {
-      console.log("[dt-shape] --- field shape of vehicles[0] ---");
-      for (const line of shape(rows[0])) console.log(`[dt-shape] ${line}`);
-      // One nested images/gallery hint if present.
-      for (const k of ["images", "photos", "media", "gallery", "attachments"]) {
-        if (rows[0][k]) {
-          console.log(`[dt-shape] --- ${k}[0] shape ---`);
-          const first = Array.isArray(rows[0][k]) ? rows[0][k][0] : rows[0][k];
-          for (const line of shape(first, k)) console.log(`[dt-shape] ${line}`);
-        }
-      }
-    }
+    if (KEY) await probeApi();
   } catch (e) {
-    console.log(`[dt-shape] ERR ${String(e?.cause?.code || e?.name || e).slice(0, 100)}`);
+    console.log(`[dt-probe] ERR ${String(e?.cause?.code || e?.name || e).slice(0, 120)}`);
   }
 }
 
-main().catch((e) => console.log(`[dt-shape] fatal: ${e}`));
+main().catch((e) => console.log(`[dt-probe] fatal: ${e}`));
