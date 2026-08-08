@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminToken, cmsGet } from "@/lib/admin-auth";
-import { feedConfigured, getFeedRecordsRaw, mapToFloorPlan } from "@/lib/dealertide-feed";
+import { feedConfigured, getFeedFloorPlans } from "@/lib/dealertide-feed";
 
 export const dynamic = "force-dynamic";
 
@@ -21,17 +21,19 @@ export async function GET() {
     });
   }
 
-  const rows = await getFeedRecordsRaw();
-  if (!rows) {
-    return NextResponse.json({ configured: true, ok: false, error: "feed fetch/parse failed — see server logs" });
+  try {
+    const homes = await getFeedFloorPlans();
+    return NextResponse.json({
+      configured: true,
+      ok: true,
+      count: homes.length,
+      sample: homes.slice(0, 3),
+    });
+  } catch (err) {
+    return NextResponse.json({
+      configured: true,
+      ok: false,
+      error: err instanceof Error ? err.message : "feed fetch/parse failed — see server logs",
+    });
   }
-
-  return NextResponse.json({
-    configured: true,
-    ok: true,
-    count: rows.length,
-    fieldKeys: rows[0] ? Object.keys(rows[0]) : [],
-    rawSample: rows.slice(0, 2),
-    mappedSample: rows.slice(0, 2).map(mapToFloorPlan),
-  });
 }

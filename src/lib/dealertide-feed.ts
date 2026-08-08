@@ -1,204 +1,204 @@
-// DealerTide (Renter Insight) Meta Commerce product-catalog feed adapter.
+// DealerTide (Renter Insight) inventory feed adapter.
 //
-// This is the inventory source for the public site: the same feed DealerTide
-// generates for Meta/Facebook catalog ("vehicle" = home). It carries titles,
-// prices, photos and specs for every home in the selected statuses.
+// Source: the Meta Commerce product-catalog feed (DEALERTIDE_FEED_URL, token in
+// the URL — set only in Vercel env, never committed; this repo is public). The
+// feed is a JSON array of "units" (homes). This module maps that shape to the
+// same ApiFloorPlan / ApiFloorPlanDetail types the pages already render, so the
+// site can source homes from the CRM with no page changes — api-content.ts
+// prefers this feed when DEALERTIDE_FEED_URL is set and falls back to the CMS.
 //
-// The feed URL (with its secret token) is provided via the DEALERTIDE_FEED_URL
-// env var — set only in Vercel, never committed (this repo is public).
-//
-// Two on-the-wire formats are supported because Meta accepts both and DealerTide
-// may emit either: RSS-XML (2.0 with the `g:` namespace) and CSV/TSV. The parser
-// returns shape-agnostic records; mapToFloorPlan() adapts them to the same
-// ApiFloorPlan shape the pages already render (see api-content.ts), so the
-// feed can back the site without changing render code.
+// Feed field notes (confirmed 2026-08-08 from a live sample):
+//   id            "unit-41"                     (stable per unit)
+//   title         "2026 Champion Appleton 2842 H32388 — 3BR/2.0BA"
+//   description   "... · 3 bedrooms · 2.0 bathrooms · 1120 sq ft · VIN ..."   <- beds/baths/sqft here
+//   price         "79792.00 USD"               (present on only some units)
+//   image_link            main photo           (Scene7 / S3; may contain spaces)
+//   additional_image_link [gallery urls]
+//   brand         "Champion" | "Dutch Housing" | "Champion Homes"
+//   availability  "in stock" | "out of stock"  ("out of stock" = build-to-order)
 
-import type { ApiFloorPlan } from "@/lib/api-content";
+import type { ApiFloorPlan, ApiFloorPlanDetail } from "./api-content";
 
 const FEED_URL = process.env.DEALERTIDE_FEED_URL?.trim();
+
+// Match the CMS adapter: prices stay hidden pre-launch (most units have none,
+// and partial pricing looks broken). Flip to show real feed prices later.
+const SHOW_PRICES = false;
+
+// Build-to-order (not physically in stock) homes are marketed as this model
+// year regardless of the year the CRM stamped on the plan.
+const ORDER_MODEL_YEAR = "2027";
 
 export function feedConfigured(): boolean {
   return Boolean(FEED_URL);
 }
 
-// ---------- fetch ----------
+interface FeedUnit {
+  id?: string;
+  title?: string;
+  description?: string;
+  price?: string;
+  image_link?: string;
+  additional_image_link?: string[];
+  brand?: string;
+  availability?: string;
+  condition?: string;
+  [k: string]: unknown;
+}
 
-async function fetchFeedText(): Promise<string | null> {
-  if (!FEED_URL) return null;
+function inStock(u: FeedUnit): boolean {
+  return /in stock/i.test(String(u.availability || ""));
+}
+
+/** Encode a raw image URL so spaces/parentheses are valid, preserving %XX. */
+function encodeImg(url?: string): string {
+  if (!url) return "";
   try {
-    const res = await fetch(FEED_URL, {
-      headers: { Accept: "application/xml, text/csv, */*" },
-      next: { revalidate: 300 },
-    });
-    if (!res.ok) {
-      console.error(`[dt-feed] fetch failed: HTTP ${res.status} ${res.statusText}`);
-      return null;
-    }
-    return await res.text();
-  } catch (err) {
-    console.error(`[dt-feed] fetch error: ${String(err)}`);
-    return null;
+    return /^https?:\/\//.test(url) ? encodeURI(url) : "";
+  } catch {
+    return "";
   }
 }
 
-// ---------- parsing ----------
-
-function decodeEntities(s: string): string {
-  return String(s)
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#0?39;/g, "'")
-    .replace(/&apos;/g, "'")
-    .replace(/&amp;/g, "&")
-    .trim();
+// Available-to-order homes show ORDER_MODEL_YEAR; in-stock units keep their
+// real year. Replaces the first 20xx in the text.
+function applyYear(text: string, order: boolean): string {
+  if (!order) return String(text || "");
+  return String(text || "").replace(/\b20\d{2}\b/, ORDER_MODEL_YEAR);
 }
 
-/** Parse RSS/Atom product XML into flat records. Repeated tags collapse into
- *  comma-joined values (e.g. multiple additional_image_link). Namespace prefix
- *  (g:) is dropped so `g:price` and `price` both key as `price`. */
-function parseXml(xml: string): Record<string, string>[] {
-  const blocks = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ||
-    xml.match(/<entry[\s>][\s\S]*?<\/entry>/gi) || [];
-  return blocks.map((block) => {
-    const rec: Record<string, string> = {};
-    const re = /<(?:[a-zA-Z0-9]+:)?([a-zA-Z0-9_]+)(?:\s[^>]*)?>([\s\S]*?)<\/(?:[a-zA-Z0-9]+:)?\1>/g;
-    let m;
-    while ((m = re.exec(block))) {
-      const key = m[1].toLowerCase();
-      const val = decodeEntities(m[2]);
-      if (!val) continue;
-      rec[key] = rec[key] ? `${rec[key]},${val}` : val;
-    }
-    return rec;
-  });
+/** Text before the " — 3BR/2.0BA" spec suffix. */
+function baseTitle(title: string): string {
+  return String(title || "").split(/\s+—\s+/)[0].trim();
 }
 
-/** Minimal RFC-4180-ish CSV/TSV parser (handles quoted fields + embedded delimiters). */
-function parseDelimited(text: string): Record<string, string>[] {
-  const lines = text.split(/\r?\n/).filter((l) => l.length > 0);
-  if (lines.length < 2) return [];
-  const delim = (lines[0].match(/\t/g)?.length || 0) > (lines[0].match(/,/g)?.length || 0) ? "\t" : ",";
-
-  const parseLine = (line: string): string[] => {
-    const out: string[] = [];
-    let cur = "", inQ = false;
-    for (let i = 0; i < line.length; i++) {
-      const c = line[i];
-      if (inQ) {
-        if (c === '"' && line[i + 1] === '"') { cur += '"'; i++; }
-        else if (c === '"') inQ = false;
-        else cur += c;
-      } else if (c === '"') inQ = true;
-      else if (c === delim) { out.push(cur); cur = ""; }
-      else cur += c;
-    }
-    out.push(cur);
-    return out;
-  };
-
-  const headers = parseLine(lines[0]).map((h) => h.trim().toLowerCase().replace(/^g:/, ""));
-  return lines.slice(1).map((line) => {
-    const cells = parseLine(line);
-    const rec: Record<string, string> = {};
-    headers.forEach((h, i) => { if (cells[i] != null && cells[i] !== "") rec[h] = cells[i].trim(); });
-    return rec;
-  });
+function stripYear(s: string): string {
+  return s.replace(/^\s*20\d{2}\s+/, "").trim();
 }
 
-/** All feed records, raw (lowercased keys, namespace-stripped). */
-export async function getFeedRecordsRaw(): Promise<Record<string, string>[] | null> {
-  const text = await fetchFeedText();
-  if (!text) return null;
-  const t = text.trimStart();
-  const rows = t.startsWith("<") ? parseXml(text) : parseDelimited(text);
-  return rows.filter((r) => Object.keys(r).length > 0);
+function slugify(s: string): string {
+  return String(s || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
-// ---------- mapping ----------
-
-const num = (v: unknown): number => {
-  const n = Number(String(v ?? "").replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) ? n : 0;
-};
-
-/** First present value among candidate keys, else "". */
-function pick(rec: Record<string, string>, keys: string[]): string {
-  for (const k of keys) if (rec[k]) return rec[k];
-  return "";
+/** Year-independent slug so URLs don't change when the model year flips. */
+function unitSlug(u: FeedUnit): string {
+  const base = slugify(stripYear(baseTitle(String(u.title || ""))));
+  return base || slugify(String(u.id || "home"));
 }
 
-/** Pull "3" from "3 bed", "3br", "3 bedrooms" in any provided text. */
-function extractCount(text: string, words: string[]): number {
-  for (const w of words) {
-    const m = text.match(new RegExp(`(\\d+(?:\\.\\d+)?)\\s*${w}`, "i"));
-    if (m) return Number(m[1]);
-  }
-  return 0;
+function num(re: RegExp, s: string): number {
+  const m = String(s || "").match(re);
+  return m ? Number(m[1].replace(/,/g, "")) || 0 : 0;
 }
 
-function slugFrom(rec: Record<string, string>): string {
-  const link = pick(rec, ["link", "url"]);
-  if (link) {
-    const seg = link.split("?")[0].replace(/\/$/, "").split("/").pop();
-    if (seg) return seg.toLowerCase();
-  }
-  const id = pick(rec, ["id", "sku", "mpn", "item_group_id"]);
-  return String(id || pick(rec, ["title"]))
-    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "home";
-}
-
-const SHOW_PRICES = false; // mirror api-content.ts pre-launch policy
-
-function formatPrice(raw: string): string {
+function formatPrice(raw?: string): string {
   if (!SHOW_PRICES) return "Contact for price";
-  const n = num(raw);
-  return n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
+  const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
+  return Number.isFinite(n) && n > 0 ? `$${Math.round(n).toLocaleString("en-US")}` : "Contact for price";
 }
 
-/** Map one feed record to the site's ApiFloorPlan card shape. */
-export function mapToFloorPlan(rec: Record<string, string>): ApiFloorPlan & { gallery: string[] } {
-  const title = pick(rec, ["title", "name"]);
-  const desc = pick(rec, ["description", "summary"]);
-  const specText = `${title} ${desc} ${pick(rec, ["product_type", "custom_label_0", "custom_label_1", "custom_label_2", "custom_label_3", "custom_label_4"])}`;
+function vinFrom(desc: string): string {
+  const m = String(desc || "").match(/VIN\s+([A-Za-z0-9-]+)/);
+  return m && m[1].toUpperCase() !== "TBD" ? m[1] : "";
+}
 
-  const beds =
-    num(pick(rec, ["bedrooms", "beds", "num_beds", "bed"])) ||
-    extractCount(specText, ["bedrooms?", "beds?", "br\\b", "bd\\b"]);
-  const baths =
-    num(pick(rec, ["bathrooms", "baths", "num_baths", "bath"])) ||
-    extractCount(specText, ["bathrooms?", "baths?", "ba\\b"]);
-  const sqft =
-    num(pick(rec, ["square_feet", "sqft", "square_footage", "size"])) ||
-    extractCount(specText.replace(/,/g, ""), ["sq\\.?\\s*ft", "square\\s*feet", "sf\\b"]);
+function toFloorPlan(u: FeedUnit): ApiFloorPlan & { _hasImage: boolean; _inStock: boolean } {
+  const order = !inStock(u);
+  const desc = String(u.description || "");
+  const name = applyYear(baseTitle(String(u.title || "")), order) || "Home";
+  const image = encodeImg(u.image_link) || encodeImg((u.additional_image_link || [])[0]);
+  return {
+    slug: unitSlug(u),
+    name,
+    title: applyYear(String(u.title || ""), order),
+    price: formatPrice(u.price),
+    sqft: num(/([\d,]+)\s*sq\s*ft/i, desc),
+    beds: num(/(\d+)\s*bedrooms?/i, desc),
+    baths: num(/([\d.]+)\s*bathrooms?/i, desc),
+    image,
+    brand: String(u.brand || "Champion Homes"),
+    homeType: "",
+    _hasImage: Boolean(image),
+    _inStock: !order,
+  };
+}
 
-  const images = [
-    pick(rec, ["image_link", "image", "image_url"]),
-    pick(rec, ["additional_image_link", "additional_image_links", "additional_images"]),
-  ].filter(Boolean).join(",");
-  const gallery = [...new Set(images.split(",").map((s) => s.trim()).filter(Boolean))];
+async function fetchUnits(): Promise<FeedUnit[]> {
+  if (!FEED_URL) return [];
+  const res = await fetch(FEED_URL, { next: { revalidate: 300 } });
+  if (!res.ok) throw new Error(`[dt-feed] HTTP ${res.status} ${res.statusText}`);
+  const json = await res.json();
+  const rows = Array.isArray(json) ? json : (json?.data || json?.products || json?.items || []);
+  return Array.isArray(rows) ? rows : [];
+}
+
+/** All homes from the feed, deduped by slug, photo-bearing homes first. */
+export async function getFeedFloorPlans(): Promise<ApiFloorPlan[]> {
+  let units: FeedUnit[];
+  try {
+    units = await fetchUnits();
+  } catch (err) {
+    // During `next build` degrade gracefully (log + empty) so a feed blip can't
+    // fail a deploy; at runtime rethrow so ISR keeps serving the last good page.
+    console.error(`[dt-feed] fetch failed: ${err instanceof Error ? err.message : err}`);
+    if (process.env.NEXT_PHASE === "phase-production-build") return [];
+    throw err;
+  }
+
+  const mapped = units.filter((u) => u?.title).map(toFloorPlan);
+
+  // Dedupe by slug (H/M variants share a plan): keep the richest — prefer one
+  // with a photo, then in-stock.
+  const best = new Map<string, ReturnType<typeof toFloorPlan>>();
+  for (const p of mapped) {
+    const cur = best.get(p.slug);
+    if (!cur) { best.set(p.slug, p); continue; }
+    const score = (x: typeof p) => (x._hasImage ? 2 : 0) + (x._inStock ? 1 : 0);
+    if (score(p) > score(cur)) best.set(p.slug, p);
+  }
+
+  const list = [...best.values()].sort((a, b) => Number(b._hasImage) - Number(a._hasImage));
+  console.log(`[dt-feed] ${list.length} homes (${mapped.length} units) from inventory feed`);
+  return list.map(({ _hasImage, _inStock, ...rest }) => { void _hasImage; void _inStock; return rest; });
+}
+
+/** One home by slug, with gallery, for the detail page. */
+export async function getFeedFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
+  const units = await fetchUnits();
+  const matches = units.filter((u) => u?.title && unitSlug(u) === slug);
+  if (matches.length === 0) return null;
+  // Prefer the variant with a photo.
+  const u = matches.sort((a, b) => (encodeImg(b.image_link) ? 1 : 0) - (encodeImg(a.image_link) ? 1 : 0))[0];
+
+  const order = !inStock(u);
+  const base = toFloorPlan(u);
+  const desc = applyYear(String(u.description || ""), order);
+  const gallery = [...new Set(
+    [encodeImg(u.image_link), ...((u.additional_image_link || []).map(encodeImg))].filter(Boolean),
+  )];
 
   return {
-    slug: slugFrom(rec),
-    name: (title.split(/\s[-|–]\s/)[0] || title || "Home").trim(),
-    title,
-    price: formatPrice(pick(rec, ["sale_price", "price"])),
-    sqft,
-    beds,
-    baths,
-    image: gallery[0] || "",
-    brand: pick(rec, ["brand", "manufacturer"]) || "Champion Homes",
-    homeType: pick(rec, ["product_type", "google_product_category", "condition"]) || "",
+    slug: base.slug,
+    name: base.name,
+    title: base.title,
+    price: base.price,
+    sqft: base.sqft,
+    beds: base.beds,
+    baths: base.baths,
+    image: base.image,
+    brand: base.brand,
+    homeType: "",
+    description: desc,
+    floorPlanHtml: "",
+    modelNumber: vinFrom(String(u.description || "")),
+    length: "",
+    width: "",
+    series: "",
+    brochureUrl: "",
+    virtualTour: "",
     gallery,
   };
-}
-
-/** All homes from the feed, mapped to the card shape. null if feed unavailable. */
-export async function getFeedFloorPlans(): Promise<(ApiFloorPlan & { gallery: string[] })[] | null> {
-  const rows = await getFeedRecordsRaw();
-  if (!rows) return null;
-  const homes = rows.map(mapToFloorPlan).filter((h) => h.slug && h.title);
-  console.log(`[dt-feed] mapped ${homes.length} homes from feed`);
-  return homes;
 }
