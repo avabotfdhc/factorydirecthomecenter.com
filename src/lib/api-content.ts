@@ -65,6 +65,11 @@ function cmsFailure(context: string, detail: string): void {
 
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
 export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
+  // Prefer the DealerTide (Renter Insight) inventory feed when configured; the
+  // CMS remains the fallback. Imported lazily to avoid a load-time env read.
+  const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
+  if (feedConfigured()) return getFeedFloorPlans();
+
   const endpoint = "floor-plan/get-active";
   let json: any;
   try {
@@ -120,6 +125,9 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
 
 /** One floor plan by slug, with full detail, from the CMS. */
 export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
+  const { feedConfigured, getFeedFloorPlanBySlug } = await import("./dealertide-feed");
+  if (feedConfigured()) return getFeedFloorPlanBySlug(slug);
+
   const endpoint = `floor-plan/get-details/${slug}`;
   let json: any;
   try {
