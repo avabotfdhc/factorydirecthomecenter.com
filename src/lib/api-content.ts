@@ -50,32 +50,65 @@ function s3Url(path?: string): string {
   return encodeURI(raw);
 }
 
+// A CMS API failure must NOT be swallowed into an empty result: ISR would then
+// cache a zero-home page over the last good one for every visitor. Throwing
+// during revalidation makes Next.js keep serving the last successfully
+// generated page and retry on the next request. During `next build` we stay
+// graceful (empty result) so a CMS blip can't fail unrelated deploys — the
+// error still lands in the build log.
+function cmsFailure(context: string, detail: string): void {
+  console.error(`[cms-api] ${context} FAILED: ${detail}`);
+  if (process.env.NEXT_PHASE !== "phase-production-build") {
+    throw new Error(`[cms-api] ${context}: ${detail}`);
+  }
+}
+
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
 export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
+  // Prefer the DealerTide (Renter Insight) inventory feed when configured; the
+  // CMS remains the fallback. Imported lazily to avoid a load-time env read.
+  const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
+  if (feedConfigured()) return getFeedFloorPlans();
+
+  const endpoint = "floor-plan/get-active";
+  let json: any;
   try {
-    const res = await fetch(`${API_BASE}/api/floor-plan/get-active?limit=500`, {
+    const res = await fetch(`${API_BASE}/api/${endpoint}?limit=500`, {
       next: { revalidate: 300 },
     });
-    if (!res.ok) return [];
-    const json = await res.json();
-    const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
-    return rows
-      .filter((r) => r?.slug)
-      .map((r) => ({
-        slug: String(r.slug),
-        name: shortName(r.title),
-        title: String(r.title || ""),
-        price: formatPrice(r.price),
-        sqft: Number(r.sqft) || 0,
-        beds: Number(r.beds) || 0,
-        baths: Number(r.baths) || 0,
-        image: s3Url(r.bannerImage),
-        brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
-        homeType: String(r.homeType || ""),
-      }));
-  } catch {
+    if (!res.ok) {
+      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      return [];
+    }
+    json = await res.json();
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
+    cmsFailure(endpoint, String(err));
     return [];
   }
+  const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
+  const plans = rows
+    .filter((r) => r?.slug)
+    .map((r) => ({
+      slug: String(r.slug),
+      name: shortName(r.title),
+      title: String(r.title || ""),
+      price: formatPrice(r.price),
+      sqft: Number(r.sqft) || 0,
+      beds: Number(r.beds) || 0,
+      baths: Number(r.baths) || 0,
+      image: s3Url(r.bannerImage),
+      brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
+      homeType: String(r.homeType || ""),
+    }));
+  if (plans.length === 0) {
+    // HTTP 200 with zero homes is a valid CMS state but almost always means
+    // someone deactivated everything — make it impossible to miss in the logs.
+    console.warn(`[cms-api] ${endpoint} returned 0 active homes — floor plan pages will render empty`);
+  } else {
+    console.log(`[cms-api] ${endpoint} OK — ${plans.length} active homes`);
+  }
+  return plans;
 }
 
 export interface ApiFloorPlanDetail extends ApiFloorPlan {
@@ -92,13 +125,30 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
 
 /** One floor plan by slug, with full detail, from the CMS. */
 export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
+  const { feedConfigured, getFeedFloorPlanBySlug } = await import("./dealertide-feed");
+  if (feedConfigured()) return getFeedFloorPlanBySlug(slug);
+
+  const endpoint = `floor-plan/get-details/${slug}`;
+  let json: any;
   try {
     const res = await fetch(
       `${API_BASE}/api/floor-plan/get-details/${encodeURIComponent(slug)}`,
       { next: { revalidate: 300 } },
     );
-    if (!res.ok) return null;
-    const json = await res.json();
+    // 404 is a genuinely unknown slug -> notFound(). Anything else (5xx, rate
+    // limit) must not masquerade as "home doesn't exist".
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      return null;
+    }
+    json = await res.json();
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
+    cmsFailure(endpoint, String(err));
+    return null;
+  }
+  try {
     const r: any = json?.data || json;
     if (!r?.slug) return null;
 
@@ -161,10 +211,21 @@ export interface ApiBlogDetail extends ApiBlogPost {
 }
 
 export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
+  const endpoint = "blog/get-all";
+  let json: any;
   try {
     const res = await fetch(`${API_BASE}/api/blog/get-all?limit=100`, { next: { revalidate: 300 } });
-    if (!res.ok) return [];
-    const json = await res.json();
+    if (!res.ok) {
+      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      return [];
+    }
+    json = await res.json();
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
+    cmsFailure(endpoint, String(err));
+    return [];
+  }
+  {
     const rows: any[] = Array.isArray(json?.data) ? json.data : [];
     return rows
       .filter((r) => r?.slug && r?.isActive !== false && r?.isDeleted !== true)
@@ -181,19 +242,29 @@ export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
         image: s3Url(r.bannerImage),
         date: formatDate(r.createdAt),
       }));
-  } catch {
-    return [];
   }
 }
 
 export async function getApiBlogBySlug(slug: string): Promise<ApiBlogDetail | null> {
+  const endpoint = `blog/get-details/${slug}`;
+  let json: any;
   try {
     const res = await fetch(
       `${API_BASE}/api/blog/get-details/${encodeURIComponent(slug)}`,
       { next: { revalidate: 300 } },
     );
-    if (!res.ok) return null;
-    const json = await res.json();
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      return null;
+    }
+    json = await res.json();
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
+    cmsFailure(endpoint, String(err));
+    return null;
+  }
+  {
     const r: any = json?.data || json;
     if (!r?.slug) return null;
     return {
@@ -204,7 +275,5 @@ export async function getApiBlogBySlug(slug: string): Promise<ApiBlogDetail | nu
       date: formatDate(r.createdAt),
       html: String(r.description || ""),
     };
-  } catch {
-    return null;
   }
 }
