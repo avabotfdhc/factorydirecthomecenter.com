@@ -9,12 +9,12 @@ import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 // SPECIAL PLANS / ON SALE PAGE - UP TO 25% OFF CAMPAIGN
 // ============================================
 // Promotional page for current sales and clearance
-// Updated: July 2026 - Up to 25% off select new Champion floor plans
+// Updated: August 2026 - Up to 25% off select new Champion floor plans
 // ============================================
 
 export const metadata = genMeta({
   title: "Up to 25% Off Select Champion Floor Plans | Factory Direct Homes Center",
-  description: "Save up to 25% off select new Champion floor plans! Limited time sale on manufactured and modular homes. Single wide, double wide, and modular homes on sale now through July 31, 2026.",
+  description: "Save up to 25% off select new Champion floor plans! Limited time sale on manufactured and modular homes. Single wide, double wide, and modular homes on sale now through August 31, 2026.",
   keywords: [
     "manufactured homes sale",
     "champion floor plans sale",
@@ -33,8 +33,8 @@ const saleDisclaimer = `
 plans. Discount applies to MSRP base price only and does not include options, upgrades, delivery,
 setup, or other fees. This offer is not valid with any other specials or discounts and cannot be
 used in combination with other specials or discounts. Good on new purchases only, and order must
-be authorized for production in July 2026. See dealer for complete details. Financing subject to
-credit approval. Offer expires July 31, 2026 or while supplies last.
+be authorized for production in August 2026. See dealer for complete details. Financing subject to
+credit approval. Offer expires August 31, 2026 or while supplies last.
 `;
 
 // Featured sale homes
@@ -174,7 +174,7 @@ export default function SpecialPlansPage() {
                 Save thousands on your new Champion manufactured home. Factory direct pricing just got better.
               </p>
               <p className="text-yellow-300 font-bold mb-4 text-sm md:text-base">
-                ⏰ Ends July 31, 2026
+                ⏰ Ends August 31, 2026
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 justify-center">

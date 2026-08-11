@@ -165,7 +165,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
             🔥 LIMITED TIME: Save up to 25% off select new Champion floor plans! 🔥
           </p>
           <p className="text-sm text-white/90">
-            Offer Ends July 31, 2026
+            Offer Ends August 31, 2026
           </p>
         </div>
       </div>
@@ -321,8 +321,8 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
             Discount applies to base home price only and does not include options, upgrades,
             delivery, setup, or other fees. This offer is not valid with any other specials or discounts and cannot
             be used in combination with other specials or discounts. Good on new purchases only, and order must be
-            authorized for production in July 2026. See dealer for complete details. Financing subject to credit
-            approval. <strong>Offer expires July 31, 2026</strong> or while supplies last. Prices shown are for the
+            authorized for production in August 2026. See dealer for complete details. Financing subject to credit
+            approval. <strong>Offer expires August 31, 2026</strong> or while supplies last. Prices shown are for the
             home only and do not include taxes, title, delivery, installation, or site preparation costs.
           </p>
         </div>

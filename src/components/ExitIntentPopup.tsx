@@ -89,7 +89,7 @@ export function ExitIntentPopup({ offer = "Save up to 25% off select Champion fl
             </div>
             <H3 className="font-serif text-2xl font-light mb-2">Wait! Don't Miss Out</H3>
             <p className="text-white/80 text-lg font-semibold">{offer}</p>
-            <p className="text-yellow-300 text-sm mt-1">Ends July 31, 2026</p>
+            <p className="text-yellow-300 text-sm mt-1">Ends August 31, 2026</p>
           </div>
 
           {/* Content */}
@@ -142,7 +142,7 @@ export function ExitIntentPopup({ offer = "Save up to 25% off select Champion fl
 
                 <p className="text-xs text-center text-[var(--color-gray)] mt-4">
                   *Save up to 25% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
-                  Not valid with other specials or discounts. New purchases only; order must be authorized for production in July 2026. Valid through July 31, 2026.
+                  Not valid with other specials or discounts. New purchases only; order must be authorized for production in August 2026. Valid through August 31, 2026.
                 </p>
               </>
             )}

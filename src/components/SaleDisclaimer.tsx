@@ -24,7 +24,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
         </p>
         {isExpanded && (
           <div className="mt-2 text-amber-700 space-y-1 border-t border-amber-200 pt-2">
-            <p>Good on new purchases only. Order must be authorized for production in July 2026. Offer expires July 31, 2026.</p>
+            <p>Good on new purchases only. Order must be authorized for production in August 2026. Offer expires August 31, 2026.</p>
             <p>MSRP = Manufacturer's Suggested Retail Price. Subject to credit approval.</p>
             <p>Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. See dealer for complete details.</p>
           </div>
@@ -38,7 +38,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
       <p className={`text-xs text-gray-500 ${className}`}>
         *Save up to 25% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, skirting, taxes, title fees, and optional upgrades.
         Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. Good on new purchases only;
-        order must be authorized for production in July 2026. Valid through July 31, 2026. Subject to credit approval. See dealer for details.
+        order must be authorized for production in August 2026. Valid through August 31, 2026. Subject to credit approval. See dealer for details.
       </p>
     );
   }
@@ -60,7 +60,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
         </p>
         <p>
           This offer is not valid with any other specials or discounts and cannot be used in combination with other specials or discounts.
-          Good on new purchases only, and order must be authorized for production in <strong>July 2026</strong>. Offer expires <strong>July 31, 2026</strong>.
+          Good on new purchases only, and order must be authorized for production in <strong>August 2026</strong>. Offer expires <strong>August 31, 2026</strong>.
           Subject to credit approval. Factory Direct Homes Center reserves the right to modify or cancel this promotion at any time without notice.
         </p>
         <p>
