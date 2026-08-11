@@ -7,7 +7,7 @@ const locationData = {
   stateAbbr: "IN",
   distance: "30 miles",
   deliveryCost: "$3,000",
-  description: "LaGrange County provides a peaceful, rural setting ideal for your new manufactured home. Delivered directly from the Topeka, IN Champion factory, enjoy incredibly low setup costs in LaGrange, Shipshewana, and Howe.",
+  description: "LaGrange County provides a peaceful, rural setting ideal for your new manufactured home. Delivered directly from the Topeka, IN Champion factory, enjoy incredibly low delivery costs in LaGrange, Shipshewana, and Howe.",
   counties: ["LaGrange"],
 };
 

@@ -35,31 +35,31 @@ const steps = [
     n: "2",
     title: "Site Preparation (in parallel)",
     body:
-      "While your home is being built, your site is prepared: clearing and grading, the foundation or pad, and utility connections (water, sewer or septic, and electric). We coordinate with your contractors — or you can use your own to save.",
+      "While your home is being built, your site is prepared: clearing and grading, the foundation or pad, and utility connections (water, sewer or septic, and electric). You hire your own licensed contractors for this work — most buyers save money that way, and we'll share a referral list of licensed and insured contractors past customers have used.",
   },
   {
     n: "3",
     title: "Permitting & Zoning",
     body:
-      "We help verify local zoning and pull the permits required for your county and parcel. Rural counties like DeKalb, Noble, and Whitley are generally manufactured-home friendly; we handle the details so your install is to code.",
+      "You (or your contractor) verify local zoning and pull the permits required for your county and parcel. Rural counties like DeKalb, Noble, and Whitley are generally manufactured-home friendly, and we're happy to point you to the right county offices to ask.",
   },
   {
     n: "4",
     title: "Delivery Day",
     body:
-      "Your home is transported from the factory to your site. A single wide arrives in one piece; a double wide arrives in two sections. Our crew positions the home on the foundation and, for multi-section homes, joins the sections.",
+      "We arrange transport of your home from the factory to your site. A single wide arrives in one piece; a double wide arrives in two sections. Your setup contractor positions the home on the foundation and, for multi-section homes, joins the sections.",
   },
   {
     n: "5",
     title: "Setup & Installation (1–3 days)",
     body:
-      "The crew levels and anchors the home, connects utilities, completes the marriage line and finish work on multi-section homes, and installs skirting and steps as ordered. Timing depends on the home size and site.",
+      "Your setup crew levels and anchors the home, connects utilities, completes the marriage line and finish work on multi-section homes, and installs skirting and steps as ordered. Timing depends on the home size and site.",
   },
   {
     n: "6",
     title: "Final Walkthrough & Move-In",
     body:
-      "We walk the finished home with you to confirm everything is right and answer questions about your warranty and care. Then it's yours — typically 8–12 weeks from order to move-in.",
+      "You walk the finished home with your contractor to confirm everything is right, and we're always available to answer questions about your warranty and care. Then it's yours — typically 8–12 weeks from order to move-in.",
   },
 ];
 
@@ -72,12 +72,12 @@ const faqs = [
   {
     question: "What site work do I need before delivery?",
     answer:
-      "You'll need a prepared site: cleared and graded land, a foundation or pad appropriate for your home, and utility connections for water, sewer or septic, and electric. We coordinate this — or you can use your own contractors to save money, with our guidance to keep it to code.",
+      "You'll need a prepared site: cleared and graded land, a foundation or pad appropriate for your home, and utility connections for water, sewer or septic, and electric. You hire your own licensed contractors for this work — most buyers save money that way, and we'll share a referral list of licensed and insured contractors past customers have used.",
   },
   {
     question: "What happens on delivery day?",
     answer:
-      "Your home is transported from the factory to your site. A single wide arrives in one piece; a double wide arrives in two sections that are joined on site. Our crew positions the home on the foundation, and then setup and installation begins.",
+      "We arrange transport of your home from the factory to your site. A single wide arrives in one piece; a double wide arrives in two sections that are joined on site. Your setup contractor positions the home on the foundation, and then setup and installation begins.",
   },
   {
     question: "How long does setup take once the home arrives?",
@@ -87,7 +87,7 @@ const faqs = [
   {
     question: "Do you handle permits and installation, or do I?",
     answer:
-      "We help verify zoning and handle the permitting and professional installation. You can also use your own contractors for portions of the site work to save money — we'll review their work to make sure everything meets code.",
+      "You do — through your own licensed contractors, and that's by design: it saves most buyers money and keeps you in control of costs. We sell the home factory-direct and arrange delivery to your site. For permits, site work, and installation, ask us for our referral list of licensed and insured contractors past customers have used.",
   },
 ];
 

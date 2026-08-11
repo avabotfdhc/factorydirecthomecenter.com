@@ -43,7 +43,7 @@ const aeoContent = [
     question: "How much does delivery cost to Indianapolis?",
     directAnswer: "Delivery to Indianapolis costs approximately $4,200 for the 110-mile transport from our Auburn showroom.",
     supportingDetails: [
-      "This includes transportation, placement on foundation, and basic setup.",
+      "This covers transportation of the home to your site; setup is handled by the contractor you hire.",
       "Even with delivery, our factory-direct pricing is often competitive with Indianapolis-area dealers."
     ],
     wordCount: 45
@@ -108,7 +108,7 @@ const locationFAQs = [
   },
   {
     question: "Do you offer site work services in the Indianapolis area?",
-    answer: "Yes, we coordinate site work throughout the Indianapolis area including land clearing, foundation installation, utility connections, and driveway preparation. You can use our trusted contractors or bring your own licensed professionals. We provide line-item pricing either way, so Indianapolis buyers have full transparency on all costs."
+    answer: "No — and that's by design. You hire your own licensed contractors for land clearing, foundation installation, utility connections, and driveway preparation, which is how most buyers save money. We'll share a referral list of licensed and insured contractors past customers have used, and our line-item pricing on the home and delivery gives Indianapolis buyers full transparency on all costs."
   }
 ];
 

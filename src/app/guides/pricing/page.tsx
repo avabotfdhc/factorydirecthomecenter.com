@@ -12,11 +12,11 @@ export const metadata = genMeta({
 const pricingFAQs = [
   {
     question: "Can I really use my own contractors?",
-    answer: "Absolutely. Many of our customers save $5,000-$10,000 by using their own excavator, concrete crew, or electrician. We'll review their credentials to ensure everything meets code, but the choice is yours.",
+    answer: "Absolutely — in fact, that's how it works here. You hire your own excavator, concrete crew, and electrician, and many of our customers save $5,000-$10,000 doing it. If you need a starting point, ask for our referral list of licensed and insured contractors past customers have used.",
   },
   {
     question: "What if I don't know any contractors?",
-    answer: "No problem. We have a network of trusted, licensed contractors we've worked with for years. We'll coordinate everything and you'll still see every line item.",
+    answer: "No problem. Ask us for our referral list of licensed and insured contractors that past customers have used. You hire and pay them directly — and you'll still see every line item.",
   },
   {
     question: "Is the home price really the factory invoice plus a fair margin?",
@@ -76,13 +76,13 @@ const lineItems = [
   },
   {
     title: "Setup & Installation",
-    description: "Placing the home on foundation, leveling, securing, and connecting utilities. Critical work that affects your home's longevity.",
+    description: "Performed by the setup crew you hire: placing the home on the foundation, leveling, securing, and connecting utilities. Critical work that affects your home's longevity.",
     example: "$5,000 - $15,000",
     details: ["Foundation placement", "Leveling and anchoring", "Utility connections", "Final inspection prep"],
   },
   {
     title: "Site Work",
-    description: "Everything before delivery: land clearing, foundation, driveway, utilities, landscaping. Most variable cost.",
+    description: "Everything before delivery, handled by your own contractors: land clearing, foundation, driveway, utilities, landscaping. Most variable cost.",
     example: "$5,000 - $50,000+",
     details: ["Land clearing and grading", "Foundation (concrete/block/pier)", "Well/septic or utility hookups", "Driveway and landscaping"],
   },
@@ -263,10 +263,10 @@ export default function PricingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option A: We Handle Everything</H3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option A: Use Our Referral List</H3>
               <p className="text-white/60 text-sm mb-6">
-                We coordinate delivery, setup, and site work with our trusted contractors. 
-                One point of contact, zero hassle.
+                Start with our referral list of licensed and insured contractors past customers
+                have used for setup and site work. You hire them directly — no dealer markup.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Busy families</span>
             </div>
@@ -274,8 +274,8 @@ export default function PricingPage() {
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option B: You Pick Contractors</H3>
               <p className="text-white/60 text-sm mb-6">
-                Use any licensed, insured contractor you choose. We'll review bids and advise. 
-                Save 10-20% managing it yourself.
+                Use any licensed, insured contractor you choose and manage the work yourself.
+                Buyers often save 10-20% this way.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Hands-on buyers</span>
             </div>
@@ -283,8 +283,8 @@ export default function PricingPage() {
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option C: Mix & Match</H3>
               <p className="text-white/60 text-sm mb-6">
-                We handle delivery (required), you pick setup crew, we coordinate site work. 
-                Customized to your needs.
+                We arrange delivery — that's our part. You pick your setup crew and site-work
+                contractors from our referral list, your own contacts, or both.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Custom needs</span>
             </div>
@@ -306,17 +306,19 @@ export default function PricingPage() {
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-3">Can I really use my own contractors?</H3>
               <p className="text-[var(--color-gray)]">
-                Absolutely. Many of our customers save $5,000-$10,000 by using their own excavator, 
-                concrete crew, or electrician. We'll review their credentials to ensure everything 
-                meets code, but the choice is yours.
+                Absolutely — in fact, that's how it works here. You hire your own excavator,
+                concrete crew, and electrician, and many of our customers save $5,000-$10,000
+                doing it. If you need a starting point, ask for our referral list of licensed
+                and insured contractors past customers have used.
               </p>
             </div>
 
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-3">What if I don't know any contractors?</H3>
               <p className="text-[var(--color-gray)]">
-                No problem. We have a network of trusted, licensed contractors we've worked with 
-                for years. We'll coordinate everything and you'll still see every line item.
+                No problem. Ask us for our referral list of licensed and insured contractors
+                that past customers have used. You hire and pay them directly — and you'll
+                still see every line item.
               </p>
             </div>
 

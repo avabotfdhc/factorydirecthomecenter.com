@@ -28,7 +28,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "Can I put a manufactured home on my own land?",
-      answer: "Yes, manufactured homes can be placed on private land in most areas of Indiana, Ohio, and Michigan. Rural counties like Noble, DeKalb, and Whitley have zoning-friendly regulations. We help verify zoning compliance for your specific property and handle all permitting.",
+      answer: "Yes, manufactured homes can be placed on private land in most areas of Indiana, Ohio, and Michigan. Rural counties like Noble, DeKalb, and Whitley have zoning-friendly regulations. You or your contractor verify zoning compliance for your specific property and pull the permits — we can point you to the right county offices.",
     },
     {
       question: "What areas do you serve?",
@@ -40,7 +40,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "What is included in the price of a manufactured home?",
-      answer: "Our line-item pricing shows exactly what you're paying for: the home itself, delivery from the factory, setup and installation, and site work. Unlike dealers who bundle everything, you can choose your own contractors for site work and save thousands.",
+      answer: "Our line-item pricing shows exactly what you're paying for: the home itself and delivery from the factory. Setup, installation, and site work are separate — you hire your own contractors for those, and unlike dealers who bundle everything, that's how most of our buyers save thousands. Ask us for our referral list of licensed and insured contractors.",
     },
   ],
 
@@ -70,11 +70,11 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "Do I need to prepare my land before the home arrives?",
-      answer: "Yes, site preparation includes clearing, grading, foundation, and utility connections. This happens while your home is being built (6-8 weeks). We can coordinate with your contractors or recommend trusted local crews. Proper site prep is essential for a smooth installation.",
+      answer: "Yes, site preparation includes clearing, grading, foundation, and utility connections. This happens while your home is being built (6-8 weeks). You hire your own contractors for this work — ask us for our referral list of licensed and insured crews past customers have used. Proper site prep is essential for a smooth installation.",
     },
     {
       question: "What happens on delivery day?",
-      answer: "Your home sections are transported from our Topeka factory and placed on the foundation. Our crew levels and secures the home, connects utilities, and completes finishing work. This takes 1-3 days depending on complexity. You'll do a final walkthrough before move-in.",
+      answer: "Your home sections are transported from our Topeka factory to your site. The setup crew you've hired places the home on the foundation, levels and secures it, connects utilities, and completes finishing work. This takes 1-3 days depending on complexity. You'll do a final walkthrough before move-in.",
     },
   ],
 };

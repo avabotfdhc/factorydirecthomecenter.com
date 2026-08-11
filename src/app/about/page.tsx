@@ -51,8 +51,8 @@ const aeoContent = [
     question: "What makes Factory Direct Homes Center different from other dealers?",
     directAnswer: "We offer true factory-direct pricing with line-item transparency, meaning you see exactly what you're paying for.",
     supportingDetails: [
-      "Unlike dealers who bundle costs, we itemize every charge: home, delivery, setup, and site work.",
-      "You can use our trusted contractors or bring your own, potentially saving thousands on site work."
+      "Unlike dealers who bundle costs, we quote the home and delivery separately, so you see exactly what each costs.",
+      "You hire your own licensed contractors for site work and setup — most buyers save thousands this way, and we'll share a referral list of licensed and insured contractors past customers have used."
     ],
     wordCount: 46
   },
@@ -113,7 +113,7 @@ const aboutFAQs = [
   },
   {
     question: "Does Factory Direct Homes Center handle delivery and installation?",
-    answer: "Yes, we provide full-service delivery and installation. Our team coordinates transportation from the factory, professional placement on your foundation, leveling, utility connections, and final inspection. You can use our trusted installation crews or bring your own licensed contractors—we provide line-item pricing either way."
+    answer: "We arrange delivery of your home from the factory to your site. Setup, site work, foundations, and utility connections are handled by your own licensed contractors — most buyers save money this way, and it keeps you in control of costs. On request, we'll share a referral list of licensed and insured contractors our past customers have used."
   },
   {
     question: "What kind of warranty comes with homes from Factory Direct?",
@@ -392,8 +392,8 @@ export default function AboutPage() {
                 icon: "🏆"
               },
               {
-                title: "Full-Service Care",
-                description: "Buying a home is one of the biggest decisions you'll make. We walk beside you from first visit through move-in day: selection, customization, financing, delivery, installation, and beyond.",
+                title: "With You Every Step",
+                description: "Buying a home is one of the biggest decisions you'll make. We walk beside you from first visit through move-in day: selection, customization, financing guidance, delivery, and contractor referrals for setup — and we're still here after you move in.",
                 icon: "🤝"
               },
               {

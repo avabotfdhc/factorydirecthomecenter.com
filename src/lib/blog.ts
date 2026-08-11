@@ -111,7 +111,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: "What inspections are required for a manufactured home?",
-        answer: "All manufactured homes are inspected at the factory by HUD-certified inspectors during construction. After delivery and setup, your state or county may require a local installation inspection. Indiana requires an installer certification and site inspection. We coordinate all inspections as part of our delivery and setup process.",
+        answer: "All manufactured homes are inspected at the factory by HUD-certified inspectors during construction. After delivery and setup, your state or county may require a local installation inspection. Indiana requires an installer certification and site inspection. The licensed installer you hire handles these inspections as part of the setup process.",
       },
     ],
     published: true,
@@ -407,7 +407,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       { question: "What does MSRP mean for manufactured homes?", answer: "MSRP stands for Manufacturer's Suggested Retail Price — the price the manufacturer recommends dealers charge for a home. However, most dealers add significant markup above MSRP. At Factory Direct Homes Center, we sell at or below MSRP because we eliminate the middleman and sell directly from the factory." },
       { question: "How much can I save with factory direct pricing?", answer: "Factory direct pricing typically saves buyers 15% to 30% compared to traditional dealer pricing. On a $100,000 manufactured home, that's $15,000 to $30,000 in savings. Our current Summer 2026 promotion offers 25% off MSRP, representing even greater value." },
-      { question: "What's included in factory direct pricing?", answer: "Our factory direct pricing includes the base home, standard features, delivery within 100 miles of our Auburn, IN location, and professional setup. We provide itemized pricing for foundation, utility connections, and optional upgrades so you see exactly what you're paying for — no hidden costs." },
+      { question: "What's included in factory direct pricing?", answer: "Our factory direct pricing includes the base home, standard features, and delivery within 100 miles of our Auburn, IN location. Setup, foundation, utility connections, and site work are separate — you hire your own licensed contractors for those, so you see exactly what you're paying for — no hidden costs. Ask us for our referral list of licensed and insured contractors." },
       { question: "Why do traditional dealers charge more?", answer: "Traditional dealers have higher overhead costs: large lots with multiple model homes, commissioned sales staff, and layers of management. These costs get passed to you. Factory Direct Homes Center operates leaner — we focus on selling quality Champion homes at fair prices without the markup." },
       { question: "Is factory direct the same as buying from the manufacturer?", answer: "Almost. Factory Direct Homes Center is an authorized dealer with a direct relationship to Champion Home Builders. We receive homes directly from Champion's Topeka, IN factory — just 30 miles from our showroom. You get factory-fresh homes without the traditional dealer markup." },
     ],

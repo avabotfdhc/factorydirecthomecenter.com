@@ -77,9 +77,10 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
                 </p>
                 <p>
                   Unlike national chains that treat you like a number, we&apos;re a family-owned 
-                  business that believes in partnership. Every contract shows line-item pricing 
-                  for the home, delivery, setup, and site work. Use our trusted contractors, 
-                  or bring your own and save thousands.
+                  business that believes in partnership. Every contract shows line-item pricing
+                  for the home and delivery, and you hire your own contractors for setup and
+                  site work — most buyers save thousands that way. Ask us for our referral list
+                  of licensed and insured contractors past customers have used.
                 </p>
               </div>
             </div>

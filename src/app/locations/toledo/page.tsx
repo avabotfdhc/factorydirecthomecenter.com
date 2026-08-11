@@ -16,14 +16,14 @@ export const metadata = genMeta({
 
 const aeoContent = [
   { question: "Does Factory Direct deliver manufactured homes to Toledo, Ohio?", directAnswer: "Yes, we deliver manufactured and modular homes throughout Toledo and northwest Ohio.", supportingDetails: ["We serve Lucas County and surrounding areas including Wood, Fulton, and Williams counties.", "Our Auburn showroom is 75 miles from Toledo, making delivery efficient and cost-effective."], wordCount: 46 },
-  { question: "What is the delivery cost to Toledo, Ohio?", directAnswer: "Delivery to Toledo costs approximately $3,500 for the 75-mile transport from our Auburn showroom.", supportingDetails: ["This includes transportation, placement, and basic setup.", "We deliver across the Ohio border regularly and understand the logistics."], wordCount: 43 },
-  { question: "Can I buy a manufactured home in Ohio from an Indiana dealer?", directAnswer: "Yes, we regularly deliver to Ohio customers and handle all interstate requirements.", supportingDetails: ["Champion homes meet both Indiana and Ohio building codes.", "We coordinate permits and inspections with Ohio authorities."], wordCount: 45 }
+  { question: "What is the delivery cost to Toledo, Ohio?", directAnswer: "Delivery to Toledo costs approximately $3,500 for the 75-mile transport from our Auburn showroom.", supportingDetails: ["This covers transportation of the home to your site; setup is handled by the contractor you hire.", "We deliver across the Ohio border regularly and understand the logistics."], wordCount: 43 },
+  { question: "Can I buy a manufactured home in Ohio from an Indiana dealer?", directAnswer: "Yes, we regularly deliver to Ohio customers and handle the interstate transport requirements.", supportingDetails: ["Champion homes meet both Indiana and Ohio building codes.", "Your contractor handles local permits and inspections with Ohio authorities."], wordCount: 45 }
 ];
 
 const locationFAQs = [
   { question: "Do you deliver to Toledo city limits?", answer: "Yes, we deliver throughout Toledo and surrounding communities. We serve all of Lucas County including Maumee, Perrysburg, Sylvania, and Oregon. Our 75-mile service radius from Auburn covers Toledo and most of northwest Ohio." },
   { question: "What Ohio counties do you serve?", answer: "We serve Lucas County (Toledo), Wood County (Bowling Green, Perrysburg), Fulton County (Wauseon), Williams County (Bryan), Henry County (Napoleon), and Defiance County. Our location near the Ohio-Indiana border makes us accessible to northwest Ohio buyers." },
-  { question: "Are there extra costs for Ohio delivery?", answer: "Delivery to Ohio has the same transparent pricing as Indiana deliveries. The $3,500 delivery cost to Toledo includes all transportation, permits, and setup. There are no hidden interstate fees or extra charges for Ohio buyers." }
+  { question: "Are there extra costs for Ohio delivery?", answer: "Delivery to Ohio has the same transparent pricing as Indiana deliveries. The $3,500 delivery cost to Toledo includes transportation and the required transport permits. Setup is arranged separately with the contractor you hire. There are no hidden interstate fees or extra charges for Ohio buyers." }
 ];
 
 const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Locations", url: "/locations" }, { name: "Toledo", url: "/locations/toledo" }];

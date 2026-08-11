@@ -25,7 +25,7 @@ const data: CityLocationData = {
   lat: 41.1573,
   lng: -85.4886,
   tagline:
-    "Champion manufactured & modular homes delivered to Columbia City and Whitley County — factory-direct from our Auburn showroom, with local delivery and setup.",
+    "Champion manufactured & modular homes delivered to Columbia City and Whitley County — factory-direct from our Auburn showroom, with local delivery and contractor referrals for setup.",
   intro: [
     "Columbia City, the seat of Whitley County, has become a popular, growing choice for buyers who want a small-town feel within an easy commute of Fort Wayne. That growth is driving strong demand for affordable new housing — and a factory-direct Champion home is one of the best values in the county.",
     "We deliver single wides, double wides, and IRC-code modular homes throughout Columbia City, South Whitley, Larwill, and the surrounding Whitley County countryside. Because we buy directly from the nearby Champion factory, you get transparent, line-item pricing and shorter delivery times than dealers located farther away.",
@@ -48,17 +48,17 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Columbia City, Indiana?",
       answer:
-        "Yes. Columbia City and Whitley County are about 30 miles from our Auburn showroom. We handle delivery, setup, and installation for homes going on private land, rural acreage, or approved lots throughout the county.",
+        "Yes. Columbia City and Whitley County are about 30 miles from our Auburn showroom. We arrange delivery to private land, rural acreage, or approved lots throughout the county, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I put a manufactured home on land in Whitley County?",
       answer:
-        "In many parts of Whitley County, yes. Rural areas around Columbia City are generally friendly to manufactured and modular homes on private land. We verify the zoning and setback rules for your specific parcel and handle permitting before installation.",
+        "In many parts of Whitley County, yes. Rural areas around Columbia City are generally friendly to manufactured and modular homes on private land. You or your contractor verify the zoning and setback rules for your specific parcel and pull permits before installation — we can point you to the right county offices.",
     },
     {
       question: "Is factory-direct cheaper than a traditional Columbia City dealer?",
       answer:
-        "Buying factory-direct means no traditional dealer markup — you buy straight from the factory through us, with transparent line-item pricing. You see exactly what you're paying for the home, delivery, and setup, and you can use your own contractors for site work to save more.",
+        "Buying factory-direct means no traditional dealer markup — you buy straight from the factory through us, with transparent line-item pricing. You see exactly what you're paying for the home and delivery, and you hire your own contractors for setup and site work — which is how most buyers save even more.",
     },
     {
       question: "What's the closest showroom to Columbia City?",

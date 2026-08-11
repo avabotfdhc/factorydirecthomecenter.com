@@ -119,9 +119,11 @@ export default function NobleCountyPage() {
           <div className="mt-12 bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
             <H3 className="font-serif text-xl font-semibold mb-4">Rural Areas & Acreage</H3>
             <p className="text-[var(--color-gray)]">
-              We specialize in delivering to rural Noble County properties. Whether you have 
-              1 acre or 40, we can coordinate delivery, foundation, and setup. Agricultural 
-              zoning typically allows manufactured homes with minimal restrictions.
+              We specialize in delivering to rural Noble County properties. Whether you have
+              1 acre or 40, we arrange delivery of your home, and your own contractors handle
+              the foundation and setup — ask us for our referral list of licensed and insured
+              crews past customers have used. Agricultural zoning typically allows manufactured
+              homes with minimal restrictions.
             </p>
           </div>
         </div>
@@ -164,9 +166,10 @@ export default function NobleCountyPage() {
             </div>
 
             <div className="bg-[var(--color-charcoal)] text-white rounded-lg p-8 lg:p-12">
-              <H3 className="font-serif text-2xl font-semibold mb-6">We Handle Permits</H3>
+              <H3 className="font-serif text-2xl font-semibold mb-6">The Permit Checklist</H3>
               <p className="text-white/60 mb-8">
-                Don't navigate Noble County permits alone. As part of our service, we:
+                Don't navigate Noble County permits blind. Here's what you and your contractor
+                will take care of — and we can point you to the right county offices:
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3">
@@ -175,15 +178,15 @@ export default function NobleCountyPage() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[var(--color-lime)]">✓</span>
-                  <span>Prepare permit applications</span>
+                  <span>File permit applications with the Building Department</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[var(--color-lime)]">✓</span>
-                  <span>Coordinate inspections</span>
+                  <span>Schedule required inspections</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[var(--color-lime)]">✓</span>
-                  <span>Ensure code compliance</span>
+                  <span>Confirm code-compliant installation</span>
                 </li>
               </ul>
             </div>

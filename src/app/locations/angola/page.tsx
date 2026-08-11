@@ -25,7 +25,7 @@ const data: CityLocationData = {
   lat: 41.635,
   lng: -84.9994,
   tagline:
-    "Champion manufactured & modular homes delivered to Angola and Steuben County — from our Auburn showroom just up I-69, with factory-direct pricing and local setup.",
+    "Champion manufactured & modular homes delivered to Angola and Steuben County — from our Auburn showroom just up I-69, with factory-direct pricing and contractor referrals for setup.",
   intro: [
     "Angola is the heart of Indiana's northeast lake country, and it's an easy 25-mile run up I-69 from our Auburn showroom. That proximity keeps delivery times short and freight costs low for Steuben County buyers — whether your home is going on a lake lot near Lake James and Pokagon State Park, in town, or out on rural acreage.",
     "We carry Champion single wides, double wides, and IRC-code modular homes to fit a range of budgets and lots. Because Champion's Topeka factory is only about 40 miles away, Angola sits in one of the tightest delivery zones we serve.",
@@ -49,17 +49,17 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Angola, Indiana?",
       answer:
-        "Yes. Angola and Steuben County are about 25 miles from our Auburn showroom, straight up I-69, so it's one of our closest delivery areas. We handle delivery, setup, and installation for homes going on lake lots, in-town lots, or rural land.",
+        "Yes. Angola and Steuben County are about 25 miles from our Auburn showroom, straight up I-69, so it's one of our closest delivery areas. We arrange delivery to lake lots, in-town lots, or rural land, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I put a manufactured home on a lake lot near Angola?",
       answer:
-        "Often, yes — but lake-area and shoreline lots can have specific setback, septic, and flood requirements. We help verify Steuben County zoning and permitting for your specific parcel before installation so everything is done to code.",
+        "Often, yes — but lake-area and shoreline lots can have specific setback, septic, and flood requirements. You or your contractor should verify Steuben County zoning and permitting for your specific parcel before installation — we can point you to the right county offices.",
     },
     {
       question: "How much does home delivery cost in the Angola area?",
       answer:
-        "Because Angola is close to both our showroom and the Champion factory, delivery costs here are among the lowest in our region. Exact delivery and setup pricing depends on your site — we provide clear, line-item numbers with your quote.",
+        "Because Angola is close to both our showroom and the Champion factory, delivery costs here are among the lowest in our region. Exact delivery pricing depends on your site — we provide clear, line-item numbers with your quote. Setup costs are separate and paid to the contractor you hire.",
     },
     {
       question: "What types of homes can I buy near Angola?",

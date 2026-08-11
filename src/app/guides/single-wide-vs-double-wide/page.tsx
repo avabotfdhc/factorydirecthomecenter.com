@@ -38,7 +38,7 @@ const faqs = [
   {
     question: "Do I need more land for a double wide?",
     answer:
-      "A double wide needs a wider, well-prepared pad and enough room to bring in and join two sections, so it requires a bit more usable land than a single wide. Both can go on private land, leased lots, or in a community — we verify your site's requirements before delivery.",
+      "A double wide needs a wider, well-prepared pad and enough room to bring in and join two sections, so it requires a bit more usable land than a single wide. Both can go on private land, leased lots, or in a community — we'll go over your site's requirements with you before delivery.",
   },
   {
     question: "Which is better for resale value?",

@@ -51,7 +51,7 @@ const aeoContent = [
     directAnswer: "Delivery to Fort Wayne costs approximately $2,800 due to our proximity—just 30 miles from our Auburn showroom.",
     supportingDetails: [
       "This is significantly less than dealers located 50+ miles away.",
-      "Total cost includes transportation, placement, and basic setup on your foundation."
+      "Total cost covers transportation of the home to your site; setup on your foundation is handled by the contractor you hire."
     ],
     wordCount: 45
   },
@@ -96,7 +96,7 @@ const locationFAQs = [
   },
   {
     question: "Can I put a manufactured home on my land in Allen County?",
-    answer: "Manufactured homes are permitted on private land in many parts of Allen County, particularly in rural townships. Fort Wayne city limits have more restrictions. Agricultural zones and rural residential districts typically welcome manufactured homes. We help verify your specific property's zoning and assist with permits through Allen County Building Department."
+    answer: "Manufactured homes are permitted on private land in many parts of Allen County, particularly in rural townships. Fort Wayne city limits have more restrictions. Agricultural zones and rural residential districts typically welcome manufactured homes. You or your contractor verify your specific property's zoning and pull permits through the Allen County Building Department — we can point you in the right direction."
   },
   {
     question: "How does Fort Wayne's climate affect manufactured homes?",
@@ -104,7 +104,7 @@ const locationFAQs = [
   },
   {
     question: "Are there manufactured home communities near Fort Wayne?",
-    answer: "Yes, several manufactured home communities exist in and around Fort Wayne. These range from age-restricted 55+ communities to family-friendly parks. We can deliver to leased lots in these communities using chattel financing, or help you place a home on your own land. We work with community managers to ensure smooth delivery and setup."
+    answer: "Yes, several manufactured home communities exist in and around Fort Wayne. These range from age-restricted 55+ communities to family-friendly parks. We can deliver to leased lots in these communities using chattel financing, or help you place a home on your own land. We work with community managers to ensure smooth delivery, and the setup crew you hire handles the rest."
   },
   {
     question: "What financing options are available for Fort Wayne buyers?",
@@ -112,11 +112,11 @@ const locationFAQs = [
   },
   {
     question: "Do you offer site work and foundation services in Fort Wayne?",
-    answer: "Yes, we coordinate site work including land clearing, foundation installation, utility connections, and driveway preparation throughout the Fort Wayne area. You can use our trusted local contractors or bring your own licensed professionals. We provide line-item pricing either way, so you know exactly what you're paying for."
+    answer: "No — and that's by design. You hire your own licensed contractors for land clearing, foundation installation, utility connections, and driveway preparation, which is how most buyers save money. We'll share a referral list of licensed and insured local contractors past customers have used, and our line-item pricing on the home and delivery means you know exactly what you're paying for."
   },
   {
     question: "How do I get started buying a manufactured home in Fort Wayne?",
-    answer: "Start by browsing our floor plans online or visiting our Auburn showroom, just 30 minutes from Fort Wayne. Get pre-qualified for financing so you know your budget. We'll help you choose a home, verify zoning for your property, and handle all permitting. From order to move-in typically takes 8-12 weeks."
+    answer: "Start by browsing our floor plans online or visiting our Auburn showroom, just 30 minutes from Fort Wayne. Get pre-qualified for financing so you know your budget. We'll help you choose a home, and you or your contractor verify zoning for your property and handle the permitting. From order to move-in typically takes 8-12 weeks."
   }
 ];
 
@@ -232,7 +232,7 @@ export default function FortWaynePage() {
       {/* 5. Service for Fort Wayne area */}
       <StructuredData data={structuredData.service({
         name: "Manufactured Home Delivery Fort Wayne",
-        description: "Manufactured and modular home delivery, setup, and installation services for Fort Wayne and Allen County, Indiana.",
+        description: "Factory-direct manufactured and modular home sales with delivery to Fort Wayne and Allen County, Indiana.",
         provider: "Factory Direct Homes Center",
         areaServed: "Fort Wayne, Indiana"
       })} />

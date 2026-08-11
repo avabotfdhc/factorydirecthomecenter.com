@@ -68,7 +68,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
       <StructuredData
         data={structuredData.service({
           name: `Manufactured Home Sales & Delivery — ${data.city}, IN`,
-          description: `Manufactured and modular home sales, delivery, setup, and installation for ${data.city} and ${data.county}, Indiana.`,
+          description: `Factory-direct manufactured and modular home sales with delivery to ${data.city} and ${data.county}, Indiana.`,
           provider: "Factory Direct Homes Center",
           areaServed: `${data.city}, Indiana`,
         })}
@@ -212,7 +212,8 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
           <H2 className="font-serif text-3xl font-light mb-4">Get a Factory-Direct Quote for {data.city}</H2>
           <p className="text-white/60 mb-8 max-w-2xl mx-auto">
             We deliver Champion manufactured and modular homes throughout {data.county} from our Auburn
-            showroom — with transparent, line-item pricing and local setup.
+            showroom — with transparent, line-item pricing and a referral list of licensed
+            and insured local contractors for setup.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link

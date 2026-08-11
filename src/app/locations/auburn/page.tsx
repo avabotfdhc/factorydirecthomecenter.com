@@ -53,12 +53,12 @@ const locationFAQs = [
   {
     question: "Can I put a manufactured home on my own land in DeKalb County?",
     answer:
-      "Yes. Manufactured and modular homes can be placed on private land in most of DeKalb County and surrounding rural areas. We help verify zoning and setback requirements for your specific parcel and handle the permitting so your home is installed to code.",
+      "Yes. Manufactured and modular homes can be placed on private land in most of DeKalb County and surrounding rural areas. You or your contractor verify zoning and setback requirements for your specific parcel and pull the permits — and because we're local, we can point you to the right DeKalb County offices.",
   },
   {
     question: "How much does home delivery cost in the Auburn area?",
     answer:
-      "Because our showroom and the Champion factory are both nearby, Auburn-area delivery costs are among the lowest in our service region. Exact delivery and setup costs depend on your site and distance — we provide clear, line-item pricing with your quote.",
+      "Because our showroom and the Champion factory are both nearby, Auburn-area delivery costs are among the lowest in our service region. Exact delivery costs depend on your site and distance — we provide clear, line-item pricing with your quote. Setup costs are separate and paid to the contractor you hire.",
   },
   {
     question: "How far is your showroom from the Champion factory?",
@@ -105,7 +105,7 @@ export default function AuburnLocationPage() {
         data={structuredData.service({
           name: "Manufactured Home Sales & Delivery — Auburn, IN",
           description:
-            "Manufactured and modular home sales, delivery, setup, and installation for Auburn and DeKalb County, Indiana.",
+            "Factory-direct manufactured and modular home sales with delivery to Auburn and DeKalb County, Indiana.",
           provider: "Factory Direct Homes Center",
           areaServed: "Auburn, Indiana",
         })}
@@ -273,7 +273,8 @@ export default function AuburnLocationPage() {
           <H2 className="font-serif text-3xl font-light mb-4">Visit Our Auburn Showroom</H2>
           <p className="text-white/60 mb-8 max-w-2xl mx-auto">
             1211 State Road 8, Auburn, IN 46706. Walk through model homes and get a factory-direct
-            quote from a local team that handles everything from floor plan to setup.
+            quote from a local team that walks you through everything from floor plan to move-in —
+            including referrals to licensed and insured contractors for setup.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link

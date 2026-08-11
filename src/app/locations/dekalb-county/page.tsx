@@ -166,8 +166,9 @@ export default function DeKalbCountyPage() {
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
               <H3 className="font-serif text-xl font-semibold mb-4">Local Dealer</H3>
               <p className="text-[var(--color-gray)]">
-                We're right here in Auburn. No long-distance coordination, no out-of-town 
-                contractors. Local service from start to finish.
+                We're right here in Auburn — no long-distance dealer to chase down. And our
+                referral list features local licensed and insured contractors, not out-of-town
+                crews. Local support from start to finish.
               </p>
             </div>
           </div>

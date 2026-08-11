@@ -84,7 +84,7 @@ const commonQuestions = [
   },
   {
     question: "How long does the permitting process take?",
-    answer: "Varies by location: Indiana typically 2-6 weeks, Ohio 3-8 weeks, Michigan 4-10 weeks. Rural areas are usually faster than municipalities. We help coordinate permits as part of our service.",
+    answer: "Varies by location: Indiana typically 2-6 weeks, Ohio 3-8 weeks, Michigan 4-10 weeks. Rural areas are usually faster than municipalities. You or your contractor pull the permits — we can point you to the right local offices.",
   },
   {
     question: "Can a municipality ban manufactured homes completely?",

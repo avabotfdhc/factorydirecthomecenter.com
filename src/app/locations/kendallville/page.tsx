@@ -28,7 +28,7 @@ const data: CityLocationData = {
     "Champion manufactured & modular homes delivered to Kendallville and Noble County — factory-direct from our Auburn showroom about 20 miles east.",
   intro: [
     "Kendallville is the largest city in Noble County and just a 20-mile drive west from our Auburn showroom. Noble County is known for zoning-friendly, rural placement rules, which makes it one of the easier areas in northeast Indiana to put a manufactured or modular home on your own land.",
-    "We deliver Champion single wides, double wides, and modular homes throughout the Kendallville area, and we handle the zoning verification, permitting, delivery, and setup so your home is installed to code without the guesswork.",
+    "We deliver Champion single wides, double wides, and modular homes throughout the Kendallville area. You hire your own licensed contractors for setup and site work — most buyers save money that way — and we'll share a referral list of licensed and insured contractors past customers have used.",
     <>
       Browse our <Link href="/floor-plans" className="text-[var(--color-teal)] underline">floor plans</Link>, learn about{" "}
       <Link href="/financing" className="text-[var(--color-teal)] underline">financing</Link>, or{" "}
@@ -49,12 +49,12 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Kendallville, Indiana?",
       answer:
-        "Yes. Kendallville and Noble County are about 20 miles west of our Auburn showroom, so it's a close, low-cost delivery area. We provide delivery, setup, and installation for homes on private land, rural acreage, or in-town lots.",
+        "Yes. Kendallville and Noble County are about 20 miles west of our Auburn showroom, so it's a close, low-cost delivery area. We arrange delivery to private land, rural acreage, or in-town lots, and you hire your own contractors for setup — ask us for our referral list of licensed and insured crews past customers have used.",
     },
     {
       question: "Is it easy to place a manufactured home on land in Noble County?",
       answer:
-        "Noble County — including areas around Kendallville, Albion, and Ligonier — generally has zoning-friendly rules for manufactured and modular homes on private land. We verify the specific requirements for your parcel and handle permitting before installation.",
+        "Noble County — including areas around Kendallville, Albion, and Ligonier — generally has zoning-friendly rules for manufactured and modular homes on private land. You or your contractor verify the specific requirements for your parcel and pull permits before installation — we can point you to the right county offices.",
     },
     {
       question: "What's the closest showroom to Kendallville?",

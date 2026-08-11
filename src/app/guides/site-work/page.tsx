@@ -123,9 +123,10 @@ export default function SiteWorkPage() {
                   the water you drink, and the permits that make it legal.
                 </p>
                 <p>
-                  This is where you have the most control over your total project cost. Choose 
-                  your own contractors, do some work yourself, or let us coordinate everything — 
-                  the choice is yours, and every line item is transparent.
+                  This is where you have the most control over your total project cost. You hire
+                  your own licensed contractors — and can even do some work yourself — which is
+                  how most buyers keep the total project cost down. Ask us for our referral list
+                  of licensed and insured contractors past customers have used.
                 </p>
               </div>
             </div>
@@ -267,24 +268,24 @@ export default function SiteWorkPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Use Our Network</H3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Use Our Referral List</H3>
               <p className="text-white/60 text-sm mb-6">
-                We coordinate everything with trusted contractors we've worked with for years. 
-                One point of contact, guaranteed quality.
+                Ask for our referral list of licensed and insured contractors that past
+                customers have used. You hire and pay them directly.
               </p>
               <ul className="space-y-2 text-sm text-white/60">
-                <li>✓ Vetted, licensed contractors</li>
-                <li>✓ Coordinated timeline</li>
-                <li>✓ Warranty protection</li>
-                <li>✓ Less stress for you</li>
+                <li>✓ Licensed &amp; insured referrals</li>
+                <li>✓ Used by past customers</li>
+                <li>✓ You negotiate directly</li>
+                <li>✓ A head start on your search</li>
               </ul>
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Pick Your Own</H3>
               <p className="text-white/60 text-sm mb-6">
-                You choose every contractor. We review their credentials and coordinate 
-                delivery timing. Maximum flexibility, potential savings.
+                You choose and hire every contractor yourself. We&apos;ll time the home&apos;s
+                delivery around your crew&apos;s schedule. Maximum flexibility, potential savings.
               </p>
               <ul className="space-y-2 text-sm text-white/60">
                 <li>✓ Use contractors you trust</li>
@@ -297,8 +298,8 @@ export default function SiteWorkPage() {
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Hybrid Approach</H3>
               <p className="text-white/60 text-sm mb-6">
-                Mix and match. We handle critical items (foundation, utilities), you handle 
-                optional work (driveway, landscaping). Best of both worlds.
+                Mix and match. Hire contractors for the critical items (foundation, utilities)
+                and do the optional work yourself (driveway, landscaping). Best of both worlds.
               </p>
               <ul className="space-y-2 text-sm text-white/60">
                 <li>✓ Expertise where needed</li>
@@ -318,15 +319,15 @@ export default function SiteWorkPage() {
             Need Help With <span className="italic text-[var(--color-teal)]">Site Work?</span>
           </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
-            We can recommend trusted contractors in your area, review bids, or coordinate everything. 
-            Get a site work estimate as part of your custom quote.
+            Ask us for our referral list of licensed and insured contractors past customers
+            have used — a solid head start on gathering bids for your site work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact-us"
               className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
             >
-              Get Site Work Estimate
+              Request Referral List
             </Link>
             <Link
               href="/guides"

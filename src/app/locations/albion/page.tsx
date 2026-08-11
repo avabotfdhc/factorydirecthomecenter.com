@@ -47,12 +47,12 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Albion, Indiana?",
       answer:
-        "Yes. Albion and central Noble County are about 25 miles from our Auburn showroom, so it's a close, low-cost delivery area. We provide delivery, setup, and installation for homes on rural land, lake lots, and in-town parcels.",
+        "Yes. Albion and central Noble County are about 25 miles from our Auburn showroom, so it's a close, low-cost delivery area. We arrange delivery to rural land, lake lots, and in-town parcels, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I put a home on a lake or rural lot near Albion?",
       answer:
-        "Often, yes — though lake-area lots near Chain O'Lakes can have specific setback and septic requirements. We verify Noble County zoning and permitting for your parcel before installation so everything is done to code.",
+        "Often, yes — though lake-area lots near Chain O'Lakes can have specific setback and septic requirements. You or your contractor verify Noble County zoning and permitting for your parcel before installation — we can point you to the right county offices.",
     },
     {
       question: "Is Noble County friendly to manufactured homes?",
