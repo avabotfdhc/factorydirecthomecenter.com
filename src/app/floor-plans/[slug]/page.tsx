@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ZoomableImage, LightboxGallery } from "@/components/ImageLightbox";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiFloorPlanBySlug } from "@/lib/api-content";
@@ -100,8 +101,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
           {/* Image */}
           <div className="rounded-2xl overflow-hidden border border-[var(--color-charcoal)]/8 bg-white aspect-[16/11] relative">
             {plan.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={plan.image} alt={`${plan.name} ${plan.homeType || "manufactured home"} — floor plan`} className="absolute inset-0 w-full h-full object-cover" />
+              <ZoomableImage src={plan.image} alt={`${plan.name} ${plan.homeType || "manufactured home"} — floor plan`} className="absolute inset-0 w-full h-full object-cover" />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)]">No photo</div>
             )}
@@ -168,17 +168,11 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         {plan.gallery.length > 1 && (
           <div className="mt-14">
             <h2 className="font-serif text-2xl font-light mb-6">Gallery &amp; Floor Plan</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {plan.gallery.map((src, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={i}
-                  src={src}
-                  alt={`${plan.name} image ${i + 1}`}
-                  className="w-full rounded-xl border border-[var(--color-charcoal)]/8 bg-white object-cover"
-                />
-              ))}
-            </div>
+            <LightboxGallery
+              images={plan.gallery.map((src, i) => ({ src, alt: `${plan.name} image ${i + 1}` }))}
+              gridClassName="grid grid-cols-2 md:grid-cols-3 gap-4"
+              imgClassName="w-full rounded-xl border border-[var(--color-charcoal)]/8 bg-white object-cover"
+            />
           </div>
         )}
 

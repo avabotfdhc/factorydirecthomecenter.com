@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ZoomableImage } from "@/components/ImageLightbox";
 import { notFound } from "next/navigation";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
@@ -181,13 +181,10 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               </div>
               
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 shadow-lg">
-                <Image
+                <ZoomableImage
                   src={home.image}
                   alt={`${home.name} floor plan - ${home.sqft} sq ft manufactured home on sale`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
               
