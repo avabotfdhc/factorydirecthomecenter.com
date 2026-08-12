@@ -10,7 +10,7 @@ const SITE = "https://factorydirecthomescenter.com";
 export const metadata: Metadata = {
   title: "Champion Floor Plans — Manufactured & Modular Homes",
   description:
-    "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Serving IN, OH, MI, WI, IL & KY.",
+    "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Serving Indiana, Ohio, and Michigan.",
   alternates: { canonical: `${SITE}/floor-plans` },
   keywords: [
     "manufactured home floor plans",
@@ -61,7 +61,7 @@ export default async function FloorPlansPage() {
           </h1>
           <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
             Explore {plans.length}{" "}Champion single wide, double wide, and modular floor plans
-            {" "}— factory-direct pricing from Auburn, Indiana, serving IN, OH, MI, WI, IL &amp; KY.
+            {" "}— factory-direct pricing from Auburn, Indiana, serving IN, OH &amp; MI.
           </p>
         </div>
       </section>

@@ -128,7 +128,7 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div>
               <div className="text-2xl mb-2">70+</div>
-              <p className="text-xs text-[var(--color-gray)]">Floor plans across 6 states</p>
+              <p className="text-xs text-[var(--color-gray)]">Floor plans across Indiana, Ohio & Michigan</p>
             </div>
             <div>
               <div className="text-2xl mb-2">4.8</div>

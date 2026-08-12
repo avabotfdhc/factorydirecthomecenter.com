@@ -129,7 +129,7 @@ export const sitePages: SitePage[] = [
   {
     url: "/locations",
     title: "Locations We Serve",
-    description: "Champion homes delivered throughout Indiana, Ohio, Michigan, Wisconsin, and Kentucky.",
+    description: "Champion homes delivered throughout Indiana, Ohio, and Michigan.",
     topics: ["locations", "delivery", "service-area"],
     cluster: "locations",
     priority: 0.8,

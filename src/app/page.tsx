@@ -242,7 +242,7 @@ export default function Home() {
             </FadeIn>
             <FadeIn direction="up" delay={300}>
               <div className="font-serif text-3xl lg:text-4xl font-bold">
-                <AnimatedCounter end={6} />
+                <AnimatedCounter end={3} />
               </div>
               <div className="text-sm text-white/70 mt-1">States Served</div>
             </FadeIn>
@@ -424,7 +424,7 @@ export default function Home() {
               },
               {
                 q: "What areas do you serve?",
-                a: "We deliver manufactured and modular homes throughout Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky. Our Auburn, Indiana location is centrally located just 20 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs."
+                a: "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana location is centrally located just 20 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs."
               },
               {
                 q: "Do manufactured homes hold their value?",
@@ -509,7 +509,7 @@ export default function Home() {
                 "name": "What areas do you serve?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "We deliver manufactured and modular homes throughout Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky. Our Auburn, Indiana location is centrally located just 20 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs."
+                  "text": "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana location is centrally located just 20 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs."
                 }
               },
               {
