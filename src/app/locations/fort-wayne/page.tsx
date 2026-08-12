@@ -212,9 +212,7 @@ export default function FortWaynePage() {
         }
       }} />
       
-      {/* 2. WebSite */}
-      <StructuredData data={structuredData.website()} />
-      
+      {/* WebSite schema comes from the root layout */}
       {/* 3. BreadcrumbList */}
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       

@@ -20,7 +20,6 @@ export default async function InventoryPage() {
 
   return (
     <>
-      <StructuredData data={structuredData.website()} />
       <StructuredData
         data={structuredData.breadcrumb([
           { name: "Home", url: "/" },

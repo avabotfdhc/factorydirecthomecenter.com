@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Resources & Downloads | Champion Homes Floor Plans & Guides",
   description:
     "Download 2026 Champion Homes floor plans, sales options, decor guide, Aspire literature, and installation manuals. All resources from Factory Direct Homes Center in Auburn, IN.",
+  alternates: {
+    canonical: "/resources",
+  },
 };
 
 interface ResourceCard {

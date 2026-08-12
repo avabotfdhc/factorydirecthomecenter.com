@@ -28,8 +28,6 @@ const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Guides", url: "/guides
 export default function BuyersGuidePage() {
   return (
     <>
-      <StructuredData data={structuredData.localBusiness()} />
-      <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Complete Manufactured Home Buyer's Guide", description: "Everything you need to know about buying a manufactured home", image: "/images/hero-home.jpg", datePublished: "2026-01-15", dateModified: "2026-06-01", author: "Factory Direct Homes Center", url: "/guides/buyers-guide" })} />
       <StructuredData data={structuredData.faqPage(guideFAQs)} />

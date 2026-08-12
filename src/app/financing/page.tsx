@@ -225,12 +225,7 @@ export default function FinancingPage() {
           MAXIMUM STRUCTURED DATA
           ============================================ */}
       
-      {/* 1. LocalBusiness */}
-      <StructuredData data={structuredData.localBusiness()} />
-      
-      {/* 2. WebSite */}
-      <StructuredData data={structuredData.website()} />
-      
+      {/* LocalBusiness + WebSite schema come from the root layout */}
       {/* 3. BreadcrumbList */}
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       

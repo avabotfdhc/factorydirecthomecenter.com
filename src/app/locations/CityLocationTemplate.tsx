@@ -52,7 +52,6 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
           },
         }}
       />
-      <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData
         data={structuredData.article({
