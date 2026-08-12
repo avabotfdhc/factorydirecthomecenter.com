@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in New Haven, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in New Haven, IN",
   description:
     "Champion manufactured and modular homes delivered to New Haven and eastern Allen County, Indiana. Factory-direct pricing from our nearby Auburn showroom — single wides, double wides & modular homes.",
   keywords: [

@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Ligonier, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in Ligonier, IN",
   description:
     "Champion manufactured and modular homes delivered to Ligonier and western Noble County, Indiana. Factory-direct pricing from our Auburn showroom — great for rural and country properties.",
   keywords: [

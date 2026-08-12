@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Churubusco, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in Churubusco, IN",
   description:
     "Champion manufactured and modular homes delivered to Churubusco, Indiana and the Whitley/Allen County line. Factory-direct pricing from our nearby Auburn showroom.",
   keywords: [

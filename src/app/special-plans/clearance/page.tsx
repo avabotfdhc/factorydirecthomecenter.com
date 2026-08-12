@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/VisualEffects";
 import { H2 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Clearance Homes | Factory Direct Homes Center",
+  title: "Clearance Homes",
   description: "Shop clearance manufactured homes at Factory Direct Homes Center. Last chance pricing on select inventory. Single wide, double wide, and modular homes.",
   url: "/special-plans/clearance",
 });

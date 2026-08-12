@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Kendallville, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in Kendallville, IN",
   description:
     "Champion manufactured and modular homes delivered to Kendallville and Noble County, Indiana. Factory-direct pricing from our Auburn showroom — single wides, double wides & modular homes with zoning-friendly rural placement.",
   keywords: [

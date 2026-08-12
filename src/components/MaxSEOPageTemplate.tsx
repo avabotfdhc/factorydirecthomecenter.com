@@ -96,7 +96,7 @@ interface PageTemplateProps {
 
 export function generateMaxMetadata({ title, description, keywords, url }: PageTemplateProps): Metadata {
   return {
-    title: `${title} | Factory Direct Homes Center`,
+    title,
     description: `${description} Serving Indiana, Ohio, Michigan & more from Auburn, IN. Factory-direct pricing with line-item transparency.`,
     keywords: [
       "manufactured homes",
