@@ -29,3 +29,12 @@ export function deriveSeries(...texts: Array<string | undefined | null>): string
   if (PRIME_MODEL_RE.test(hay)) return "Prime";
   return "";
 }
+
+/** Canonicalize a CMS-provided series label so brand-variant labels collapse
+ * into one filter pill — per Kyle, "Dutch Aspire" IS the Aspire series.
+ * Labels we don't recognize pass through unchanged. */
+export function canonicalSeries(label: string | undefined | null): string {
+  const raw = String(label || "").trim();
+  if (!raw) return "";
+  return deriveSeries(raw) || raw;
+}

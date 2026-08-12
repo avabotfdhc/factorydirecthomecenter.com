@@ -1,23 +1,30 @@
 // Renders a blog post's banner image, or an on-brand gradient placeholder when
 // the CMS post has no image set — so a card/article is never a blank gray box.
 // Server-component safe (no client hooks). Drop into any `relative` container.
+// Images route through next/image so multi-megapixel CMS originals are
+// resized, converted to AVIF/WebP, and cached.
+
+import Image from "next/image";
 
 export function PostImage({
   src,
   alt,
   className = "",
+  sizes = "(max-width: 768px) 100vw, 896px",
 }: {
   src?: string;
   alt: string;
   className?: string;
+  sizes?: string;
 }) {
   if (src) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Image
         src={src}
         alt={alt}
-        className={`absolute inset-0 w-full h-full object-cover ${className}`}
+        fill
+        className={`object-cover ${className}`}
+        sizes={sizes}
       />
     );
   }

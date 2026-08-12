@@ -6,7 +6,7 @@
 // Fetches run server-side (Next.js server components), so there is no CORS issue
 // and no API key is exposed to the browser.
 
-import { deriveSeries } from "./series";
+import { deriveSeries, canonicalSeries } from "./series";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -103,7 +103,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       image: s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
       homeType: String(r.homeType || ""),
-      series: String(r?.seriesDetails?.name || r?.series || "") || deriveSeries(r.title, r?.modelNo, r?.description),
+      series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
     }));
   if (plans.length === 0) {
     // HTTP 200 with zero homes is a valid CMS state but almost always means
@@ -113,6 +113,16 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
     console.log(`[cms-api] ${endpoint} OK — ${plans.length} active homes`);
   }
   return plans;
+}
+
+/** Small, presentable set of homes for the homepage featured section — homes
+ * with a real photo and plausible price first. Shared by the server-rendered
+ * homepage and the /api/homes/featured route. */
+export async function getFeaturedHomes(): Promise<ApiFloorPlan[]> {
+  const priceValue = (raw: string) => Number(String(raw).replace(/[^0-9.]/g, "")) || 0;
+  const all = await getApiFloorPlans();
+  const complete = all.filter((h) => h.image && priceValue(h.price) >= 10000);
+  return (complete.length >= 4 ? complete : all.filter((h) => h.image)).slice(0, 4);
 }
 
 export interface ApiFloorPlanDetail extends ApiFloorPlan {
@@ -179,7 +189,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       modelNumber: String(r.modelNumber || ""),
       length: String(r.length || ""),
       width: String(r.width || ""),
-      series: r?.seriesDetails?.name || String(r.series || "") || deriveSeries(r.title, r?.modelNo, r?.description),
+      series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
       brochureUrl: r.brochure ? s3Url(r.brochure) : "",
       virtualTour: String(r.virtualTour || ""),
       gallery,

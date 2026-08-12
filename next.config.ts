@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    // CMS/DealerTide photos live in S3. Routing them through next/image
+    // resizes to the displayed size, serves AVIF/WebP, and adds long-lived
+    // caching — the raw S3 objects are multi-megapixel with no Cache-Control.
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "factory-direct-homescenter.s3.us-east-1.amazonaws.com",
+      },
+    ],
+  },
   async redirects() {
     return [
       {

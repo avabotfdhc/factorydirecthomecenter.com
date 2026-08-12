@@ -1,55 +1,13 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { H3 } from "./Heading";
+import type { ApiFloorPlan } from "@/lib/api-content";
 
-interface Home {
-  slug: string;
-  name: string;
-  homeType: string;
-  sqft: number;
-  beds: number;
-  baths: number;
-  price: string;
-  image: string;
-  brand: string;
-}
-
-export function FeaturedHomes() {
-  const [homes, setHomes] = useState<Home[] | null>(null);
-
-  useEffect(() => {
-    let active = true;
-    fetch("/api/homes/featured")
-      .then((r) => (r.ok ? r.json() : { homes: [] }))
-      .then((d) => {
-        if (active) setHomes(Array.isArray(d.homes) ? d.homes : []);
-      })
-      .catch(() => active && setHomes([]));
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  // Loading skeletons keep layout stable while the CMS responds.
-  if (homes === null) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="bg-white rounded-lg border border-[var(--color-charcoal)]/8 overflow-hidden">
-            <div className="aspect-[16/11] bg-[var(--color-cream-dark)] animate-pulse" />
-            <div className="p-5 space-y-3">
-              <div className="h-4 w-2/3 bg-[var(--color-cream-dark)] rounded animate-pulse" />
-              <div className="h-3 w-1/2 bg-[var(--color-cream-dark)] rounded animate-pulse" />
-              <div className="h-5 w-1/3 bg-[var(--color-cream-dark)] rounded animate-pulse" />
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
+// Featured homes for the homepage. Data arrives server-fetched from the page
+// (see app/page.tsx) so the cards — a frequent LCP element — are in the
+// initial HTML, and the photos route through next/image so the multi-
+// megapixel S3 originals are resized, converted to AVIF/WebP, and cached.
+export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
   if (homes.length === 0) {
     return (
       <p className="text-center text-[var(--color-gray)]">
@@ -61,7 +19,7 @@ export function FeaturedHomes() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {homes.map((plan) => (
+      {homes.map((plan, i) => (
         <Link
           key={plan.slug}
           href={`/floor-plans/${plan.slug}`}
@@ -69,11 +27,13 @@ export function FeaturedHomes() {
         >
           <figure className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden">
             {plan.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={plan.image}
                 alt={`${plan.name} ${plan.homeType} floor plan — ${plan.sqft} sq ft, ${plan.beds} bed, ${plan.baths} bath`}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                loading={i === 0 ? "eager" : "lazy"}
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">No photo</div>
