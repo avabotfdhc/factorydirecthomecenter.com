@@ -4,7 +4,7 @@ import { H2, H3 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "Locations We Serve",
-  description: "Factory Direct Homes Center delivers Champion manufactured and modular homes throughout Indiana, Ohio, Michigan, Wisconsin, and Kentucky. Find your city and get a custom delivery quote.",
+  description: "Factory Direct Homes Center delivers Champion manufactured and modular homes throughout Indiana, Ohio, and Michigan. Find your city and get a custom delivery quote.",
   url: "/locations",
 });
 
@@ -73,9 +73,8 @@ export default function LocationsPage() {
               The Midwest
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-              From our showroom in Auburn, Indiana, we deliver Champion manufactured 
-              and modular homes to families across Indiana, Ohio, Michigan, Wisconsin, 
-              and Kentucky.
+              From our showroom in Auburn, Indiana, we deliver Champion manufactured
+              and modular homes to families across Indiana, Ohio, and Michigan.
             </p>
           </div>
         </div>
@@ -120,7 +119,7 @@ export default function LocationsPage() {
             Don&apos;t See Your City?
           </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
-            We deliver to all of Indiana, Ohio, Michigan, Wisconsin, and Kentucky. 
+            We deliver to all of Indiana, Ohio, and Michigan. 
             Contact us for a custom delivery quote to your location.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -267,8 +267,6 @@ export default function ContactForm() {
                         <option value="Indiana">Indiana</option>
                         <option value="Ohio">Ohio</option>
                         <option value="Michigan">Michigan</option>
-                        <option value="Illinois">Illinois</option>
-                        <option value="Kentucky">Kentucky</option>
                       </select>
                     </div>
 

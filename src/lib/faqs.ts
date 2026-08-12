@@ -32,7 +32,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "What areas do you serve?",
-      answer: "We deliver manufactured and modular homes throughout Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky. Our Auburn, Indiana location is centrally located just 20 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs.",
+      answer: "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana location is centrally located just 20 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs.",
     },
     {
       question: "Do manufactured homes hold their value?",

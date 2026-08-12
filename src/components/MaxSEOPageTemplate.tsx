@@ -97,7 +97,7 @@ interface PageTemplateProps {
 export function generateMaxMetadata({ title, description, keywords, url }: PageTemplateProps): Metadata {
   return {
     title,
-    description: `${description} Serving Indiana, Ohio, Michigan & more from Auburn, IN. Factory-direct pricing with line-item transparency.`,
+    description: `${description} Serving Indiana, Ohio & Michigan from Auburn, IN. Factory-direct pricing with line-item transparency.`,
     keywords: [
       "manufactured homes",
       "modular homes",
@@ -434,7 +434,7 @@ export function EEATSignals() {
             <div className="text-center">
               <div className="text-3xl mb-2">🏆</div>
               <H4 className="font-semibold text-sm mb-1">Selection</H4>
-              <p className="text-xs text-[var(--color-gray)]">70+ floor plans across 6 states</p>
+              <p className="text-xs text-[var(--color-gray)]">70+ floor plans across Indiana, Ohio & Michigan</p>
             </div>
           </FadeIn>
           

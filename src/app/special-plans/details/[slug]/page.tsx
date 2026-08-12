@@ -419,9 +419,6 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                     <option>Indiana</option>
                     <option>Ohio</option>
                     <option>Michigan</option>
-                    <option>Wisconsin</option>
-                    <option>Illinois</option>
-                    <option>Kentucky</option>
                   </select>
                 </div>
 

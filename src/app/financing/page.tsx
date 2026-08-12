@@ -234,7 +234,7 @@ export default function FinancingPage() {
         name: "Manufactured Home Financing",
         description: "Multiple financing options for manufactured and modular homes including chattel loans, land-home packages, and conventional financing.",
         provider: "Factory Direct Homes Center",
-        areaServed: "Indiana, Ohio, Michigan, Wisconsin, Illinois, Kentucky"
+        areaServed: "Indiana, Ohio, Michigan"
       })} />
       
       {/* 5. FAQPage */}

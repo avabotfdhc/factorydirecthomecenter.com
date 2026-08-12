@@ -96,7 +96,7 @@ export const structuredData = {
     "@type": "HomeAndConstructionBusiness",
     "@id": "https://factorydirecthomescenter.com/#business",
     name: "Factory Direct Homes Center LLC",
-    description: "Champion manufactured and modular homes with factory-direct pricing. Serving Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky.",
+    description: "Champion manufactured and modular homes with factory-direct pricing. Serving Indiana, Ohio, and Michigan.",
     url: "https://factorydirecthomescenter.com",
     telephone: "+1-260-308-1457",
     email: "info@factorydirecthomescenter.com",
@@ -120,9 +120,6 @@ export const structuredData = {
       { "@type": "State", name: "Indiana" },
       { "@type": "State", name: "Ohio" },
       { "@type": "State", name: "Michigan" },
-      { "@type": "State", name: "Wisconsin" },
-      { "@type": "State", name: "Illinois" },
-      { "@type": "State", name: "Kentucky" },
     ],
   }),
 

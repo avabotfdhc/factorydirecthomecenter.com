@@ -68,7 +68,7 @@ const aeoContent = [
     question: "What is the best manufactured home dealer near Fort Wayne?",
     directAnswer: "Factory Direct Homes Center is the closest Champion dealer to Fort Wayne, located just 30 miles away in Auburn.",
     supportingDetails: [
-      "We're a family-owned, authorized Champion dealer serving 6 states.",
+      "We're a family-owned, authorized Champion dealer serving Indiana, Ohio, and Michigan.",
       "Our line-item pricing and contractor freedom set us apart from national chains."
     ],
     wordCount: 46
