@@ -173,9 +173,9 @@ export default function ContactForm() {
                   <div>
                     <H3 className="font-semibold mb-1">Phone</H3>
                     <a 
-                      href="tel:+12603081457" 
+                      href="tel:+12603081457"
                       onClick={() => trackPhoneClick("contact_page_showroom", "contact")}
-                      className="text-sm text-[var(--color-teal)] hover:underline"
+                      className="inline-flex min-h-12 items-center text-sm text-[var(--color-teal)] hover:underline"
                     >(260) 308-1457</a>
                   </div>
                 </div>
@@ -187,9 +187,9 @@ export default function ContactForm() {
                   <div>
                     <H3 className="font-semibold mb-1">Email</H3>
                     <a 
-                      href="mailto:sales@factorydirecthomescenter.com" 
+                      href="mailto:sales@factorydirecthomescenter.com"
                       onClick={() => trackEmailClick("contact_page_showroom", "contact")}
-                      className="text-sm text-[var(--color-teal)] hover:underline"
+                      className="inline-flex min-h-12 items-center text-sm text-[var(--color-teal)] hover:underline"
                     >sales@factorydirecthomescenter.com</a>
                   </div>
                 </div>

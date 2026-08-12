@@ -171,7 +171,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             <LightboxGallery
               images={plan.gallery.map((src, i) => ({ src, alt: `${plan.name} image ${i + 1}` }))}
               gridClassName="grid grid-cols-2 md:grid-cols-3 gap-4"
-              imgClassName="w-full rounded-xl border border-[var(--color-charcoal)]/8 bg-white object-cover"
+              imgClassName="w-full aspect-[4/3] rounded-xl border border-[var(--color-charcoal)]/8 bg-white object-cover"
             />
           </div>
         )}

@@ -93,9 +93,9 @@ export const structuredData = {
   // Local Business Schema
   localBusiness: () => ({
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "HomeAndConstructionBusiness",
     "@id": "https://factorydirecthomescenter.com/#business",
-    name: "Factory Direct Homes Center",
+    name: "Factory Direct Homes Center LLC",
     description: "Champion manufactured and modular homes with factory-direct pricing. Serving Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky.",
     url: "https://factorydirecthomescenter.com",
     telephone: "+1-260-308-1457",

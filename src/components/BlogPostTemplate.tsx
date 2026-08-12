@@ -46,7 +46,7 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
             src={post.heroImage}
             alt={post.heroImageAlt}
             fill
-            priority
+            preload
             className="object-cover opacity-30"
             sizes="100vw"
           />
