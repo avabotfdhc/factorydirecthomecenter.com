@@ -1,9 +1,9 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { getApiFloorPlans } from "@/lib/api-content";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
+import { FloorPlansGrid } from "./FloorPlansGrid";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -75,50 +75,7 @@ export default async function FloorPlansPage() {
             and we&apos;ll help you find the right home.
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {plans.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/floor-plans/${p.slug}`}
-                className="group block border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
-              >
-                <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] relative overflow-hidden border-b border-[var(--color-charcoal)]/5">
-                  {p.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={p.image}
-                      alt={`${p.name} — ${p.beds} bed ${p.baths} bath manufactured home floor plan`}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">
-                      No photo
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-
-                <div className="p-6">
-                  <div className="flex items-center justify-between gap-3 mb-2">
-                    <h2 className="font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors">
-                      {p.name}
-                    </h2>
-                    <span className="text-sm font-bold text-[var(--color-lime-dark)] whitespace-nowrap">
-                      {p.price}
-                    </span>
-                  </div>
-                  <p className="text-sm text-[var(--color-teal)] font-medium mb-4">{p.brand}</p>
-                  <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
-                    <span>{p.sqft.toLocaleString()} sq ft</span>
-                    <span className="text-[var(--color-gray-light)]">|</span>
-                    <span>{p.beds} Bed</span>
-                    <span className="text-[var(--color-gray-light)]">|</span>
-                    <span>{p.baths} Bath</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <FloorPlansGrid plans={plans} />
         )}
       </section>
 

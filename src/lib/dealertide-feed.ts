@@ -18,6 +18,7 @@
 //   availability  "in stock" | "out of stock"  ("out of stock" = build-to-order)
 
 import type { ApiFloorPlan, ApiFloorPlanDetail } from "./api-content";
+import { deriveSeries } from "./series";
 
 const FEED_URL = process.env.DEALERTIDE_FEED_URL?.trim();
 
@@ -121,6 +122,7 @@ function toFloorPlan(u: FeedUnit): ApiFloorPlan & { _hasImage: boolean; _inStock
     image,
     brand: String(u.brand || "Champion Homes"),
     homeType: "",
+    series: deriveSeries(String(u.title || ""), desc, String(u.brand || "")),
     _hasImage: Boolean(image),
     _inStock: !order,
   };
@@ -196,7 +198,7 @@ export async function getFeedFloorPlanBySlug(slug: string): Promise<ApiFloorPlan
     modelNumber: vinFrom(String(u.description || "")),
     length: "",
     width: "",
-    series: "",
+    series: base.series,
     brochureUrl: "",
     virtualTour: "",
     gallery,

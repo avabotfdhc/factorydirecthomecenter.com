@@ -6,6 +6,8 @@
 // Fetches run server-side (Next.js server components), so there is no CORS issue
 // and no API key is exposed to the browser.
 
+import { deriveSeries } from "./series";
+
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
 
@@ -20,6 +22,7 @@ export interface ApiFloorPlan {
   image: string;       // absolute S3 URL, or "" if none
   brand: string;
   homeType: string;
+  series: string;      // Champion series (Aspire, Prime, ...) or "" if unknown
 }
 
 // TEMPORARY (pre-launch): hide all home prices until CMS pricing is cleaned up.
@@ -100,6 +103,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       image: s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
       homeType: String(r.homeType || ""),
+      series: String(r?.seriesDetails?.name || r?.series || "") || deriveSeries(r.title, r?.modelNo, r?.description),
     }));
   if (plans.length === 0) {
     // HTTP 200 with zero homes is a valid CMS state but almost always means
@@ -175,7 +179,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       modelNumber: String(r.modelNumber || ""),
       length: String(r.length || ""),
       width: String(r.width || ""),
-      series: r?.seriesDetails?.name || String(r.series || "") || "",
+      series: r?.seriesDetails?.name || String(r.series || "") || deriveSeries(r.title, r?.modelNo, r?.description),
       brochureUrl: r.brochure ? s3Url(r.brochure) : "",
       virtualTour: String(r.virtualTour || ""),
       gallery,
