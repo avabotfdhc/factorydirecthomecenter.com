@@ -149,13 +149,8 @@ export function MaximumStructuredData({
   pageType?: "article" | "product" | "service" | "location";
 }) {
   const schemas = [];
-  
-  // 1. LocalBusiness (on EVERY page)
-  schemas.push(structuredData.localBusiness());
-  
-  // 2. WebSite
-  schemas.push(structuredData.website());
-  
+  // LocalBusiness + WebSite schema come from the root layout — not duplicated here
+
   // 3. BreadcrumbList
   if (pageData.breadcrumbs.length > 0) {
     schemas.push(structuredData.breadcrumb(pageData.breadcrumbs));

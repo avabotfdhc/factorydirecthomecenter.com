@@ -13,7 +13,7 @@ import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Up to 25% Off Select Champion Floor Plans | Factory Direct Homes Center",
+  title: "Up to 25% Off Select Champion Floor Plans",
   description: "Save up to 25% off select new Champion floor plans! Limited time sale on manufactured and modular homes. Single wide, double wide, and modular homes on sale now through August 31, 2026.",
   keywords: [
     "manufactured homes sale",

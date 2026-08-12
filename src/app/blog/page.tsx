@@ -6,7 +6,7 @@ import { PostImage } from "@/components/PostImage";
 const SITE = "https://factorydirecthomescenter.com";
 
 export const metadata: Metadata = {
-  title: "The Manufactured Home Blog | Factory Direct Homes Center",
+  title: "The Manufactured Home Blog",
   description:
     "Expert guides, buyer tips, financing advice, and industry news for manufactured and modular home buyers. From Factory Direct Homes Center in Auburn, IN.",
   alternates: { canonical: `${SITE}/blog` },

@@ -173,8 +173,6 @@ export default function IndianapolisPage() {
   
   return (
     <>
-      <StructuredData data={structuredData.localBusiness()} />
-      <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({
         headline: "Manufactured Homes Indianapolis IN | Champion Dealer",

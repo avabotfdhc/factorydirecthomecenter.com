@@ -32,8 +32,6 @@ const relatedPages = [{ title: "Floor Plans", url: "/floor-plans", description: 
 export default function KalamazooPage() {
   return (
     <>
-      <StructuredData data={structuredData.localBusiness()} />
-      <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Manufactured Homes Kalamazoo MI", description: "Champion homes delivered to Kalamazoo, Michigan", image: "/images/hero-home.jpg", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/kalamazoo" })} />
       <StructuredData data={structuredData.service({ name: "Manufactured Home Delivery Kalamazoo", description: "Manufactured home delivery to Kalamazoo and southwest Michigan", provider: "Factory Direct Homes Center", areaServed: "Kalamazoo, Michigan" })} />

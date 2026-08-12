@@ -46,8 +46,6 @@ const relatedPages = [{ title: "Noble County", url: "/locations/noble-county", d
 export default function RuralIndianaPage() {
   return (
     <>
-      <StructuredData data={structuredData.localBusiness()} />
-      <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Manufactured Homes Rural Indiana", description: "Champion homes for rural Indiana counties", image: "/images/hero-home.jpg", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/rural-indiana" })} />
       <StructuredData data={structuredData.service({ name: "Rural Indiana Manufactured Home Delivery", description: "Manufactured home delivery to rural counties in northeast Indiana", provider: "Factory Direct Homes Center", areaServed: "Rural Indiana" })} />

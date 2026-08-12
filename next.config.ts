@@ -40,8 +40,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/special-plans/details/:slug',
-        destination: '/special-plans/:slug',
+        source: '/about-us',
+        destination: '/about',
         permanent: true,
       },
       {

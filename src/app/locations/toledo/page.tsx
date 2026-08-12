@@ -32,8 +32,6 @@ const relatedPages = [{ title: "Floor Plans", url: "/floor-plans", description: 
 export default function ToledoPage() {
   return (
     <>
-      <StructuredData data={structuredData.localBusiness()} />
-      <StructuredData data={structuredData.website()} />
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Manufactured Homes Toledo OH", description: "Champion homes delivered to Toledo, Ohio", image: "/images/hero-home.jpg", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/toledo" })} />
       <StructuredData data={structuredData.service({ name: "Manufactured Home Delivery Toledo", description: "Manufactured home delivery to Toledo and northwest Ohio", provider: "Factory Direct Homes Center", areaServed: "Toledo, Ohio" })} />
