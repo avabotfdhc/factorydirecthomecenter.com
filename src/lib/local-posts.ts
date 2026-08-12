@@ -193,6 +193,14 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Browse <a href="/floor-plans">floor plans</a>, then <a href="/contact-us">contact us</a> or stop by. Local details on <a href="/locations/butler">our Butler page</a>.</p>
 `,
   },
+];
+
+// Staged city posts awaiting scheduled publication (3-wave rollout, authorized 2026-08-12).
+// Wave 2 (~Aug 15): kendallville, albion, ligonier, angola
+// Wave 3 (~Aug 18): huntertown, new-haven, columbia-city, churubusco, indianapolis
+// To publish a wave: move its entries into localBlogPosts above and set `date`
+// to the actual publish date. This array is intentionally not imported anywhere.
+export const pendingBlogPosts: ApiBlogDetail[] = [
   {
     slug: "manufactured-homes-kendallville-indiana",
     title: "Manufactured Homes in Kendallville, Indiana: Noble County's Straightforward Path to New Construction",
