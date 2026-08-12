@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { ApiFloorPlan } from "@/lib/api-content";
 
 // Client-side series filter over the server-fetched plan list. All cards are
@@ -45,11 +46,12 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
           >
             <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] relative overflow-hidden border-b border-[var(--color-charcoal)]/5">
               {p.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={p.image}
                   alt={`${p.name} — ${p.beds} bed ${p.baths} bath manufactured home floor plan`}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">

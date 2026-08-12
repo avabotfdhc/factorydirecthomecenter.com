@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { getApiFloorPlans } from "@/lib/api-content";
 import { CTABlock } from "@/components/CTABlock";
@@ -66,11 +67,12 @@ export default async function InventoryPage() {
                 >
                   <div className="relative aspect-[16/9] overflow-hidden bg-[var(--color-cream-dark)]">
                     {home.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={home.image}
                         alt={`${home.name} — ${home.beds} bed ${home.baths} bath ${home.homeType || "manufactured home"}`}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">No photo</div>
