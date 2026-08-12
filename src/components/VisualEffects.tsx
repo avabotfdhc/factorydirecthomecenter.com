@@ -244,11 +244,14 @@ interface MagneticButtonProps {
   onClick?: () => void;
 }
 
+// Renders a <div>, not a <button>: callers wrap their own <a>/<Link>/<button>
+// children, and nesting those inside a button is invalid HTML that trips
+// accessibility and tap-target audits.
 export function MagneticButton({ children, className = "", onClick }: MagneticButtonProps) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
@@ -261,9 +264,9 @@ export function MagneticButton({ children, className = "", onClick }: MagneticBu
   };
 
   return (
-    <button
+    <div
       ref={ref}
-      className={`transition-transform duration-200 ease-out ${className}`}
+      className={`inline-block transition-transform duration-200 ease-out ${className}`}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}
@@ -272,7 +275,7 @@ export function MagneticButton({ children, className = "", onClick }: MagneticBu
       onClick={onClick}
     >
       {children}
-    </button>
+    </div>
   );
 }
 

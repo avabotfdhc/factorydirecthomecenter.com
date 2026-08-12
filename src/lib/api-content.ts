@@ -210,6 +210,21 @@ export interface ApiBlogDetail extends ApiBlogPost {
   html: string;
 }
 
+// Repo-authored posts (src/lib/local-posts.ts) merge with CMS posts so the
+// listing, sitemap, and RSS feed all include them. Local wins on slug
+// collisions — getApiBlogBySlug also resolves local posts first.
+async function localPosts(): Promise<ApiBlogPost[]> {
+  const { localBlogPosts } = await import("./local-posts");
+  return localBlogPosts.map(({ slug, title, excerpt, image, date }) => ({ slug, title, excerpt, image, date }));
+}
+
+function mergePosts(cms: ApiBlogPost[], local: ApiBlogPost[]): ApiBlogPost[] {
+  const localSlugs = new Set(local.map((p) => p.slug));
+  return [...local, ...cms.filter((p) => !localSlugs.has(p.slug))].sort(
+    (a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0),
+  );
+}
+
 export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
   const endpoint = "blog/get-all";
   let json: any;
@@ -217,17 +232,17 @@ export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
     const res = await fetch(`${API_BASE}/api/blog/get-all?limit=100`, { next: { revalidate: 300 } });
     if (!res.ok) {
       cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return [];
+      return mergePosts([], await localPosts());
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
     cmsFailure(endpoint, String(err));
-    return [];
+    return mergePosts([], await localPosts());
   }
   {
     const rows: any[] = Array.isArray(json?.data) ? json.data : [];
-    return rows
+    const cmsPosts = rows
       .filter((r) => r?.slug && r?.isActive !== false && r?.isDeleted !== true)
       // Newest posts first — sort by createdAt (falls back to updatedAt) descending
       .sort((a, b) => {
@@ -242,10 +257,16 @@ export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
         image: s3Url(r.bannerImage),
         date: formatDate(r.createdAt),
       }));
+    return mergePosts(cmsPosts, await localPosts());
   }
 }
 
 export async function getApiBlogBySlug(slug: string): Promise<ApiBlogDetail | null> {
+  {
+    const { localBlogPosts } = await import("./local-posts");
+    const local = localBlogPosts.find((p) => p.slug === slug);
+    if (local) return local;
+  }
   const endpoint = `blog/get-details/${slug}`;
   let json: any;
   try {

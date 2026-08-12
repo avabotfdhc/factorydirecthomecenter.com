@@ -21,7 +21,7 @@ import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Manufactured Home Financing | Chattel Loans & Land-Home Packages",
+  title: "Manufactured Home Financing & Chattel Loans",
   description: "Financing options for manufactured homes in Indiana, Ohio, Michigan. Chattel loans, land-home packages, and conventional financing through partners like 21st Mortgage, Triad, and Credit Human. Pre-qualify today.",
   keywords: [
     "manufactured home financing",
