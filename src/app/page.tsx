@@ -533,96 +533,7 @@ export default function Home() {
         }}
       />
 
-      {/* LocalBusiness Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Factory Direct Homes Center",
-            "description": "Champion manufactured and modular homes with factory-direct pricing. Serving Indiana, Ohio, Michigan, Wisconsin, Illinois, and Kentucky.",
-            "url": "https://factorydirecthomescenter.com",
-            "telephone": "+1-260-308-1457",
-            "email": "info@factorydirecthomescenter.com",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "1211 State Road 8",
-              "addressLocality": "Auburn",
-              "addressRegion": "IN",
-              "postalCode": "46706",
-              "addressCountry": "US"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": 41.3668,
-              "longitude": -85.0583
-            },
-            "image": "https://factorydirecthomescenter.com/images/hero-home.jpg",
-            "priceRange": "$$",
-            "openingHours": [
-              "Mo-Fr 09:00-17:00",
-              "Sa 10:00-16:00"
-            ],
-            "areaServed": [
-              {
-                "@type": "State",
-                "name": "Indiana"
-              },
-              {
-                "@type": "State",
-                "name": "Ohio"
-              },
-              {
-                "@type": "State",
-                "name": "Michigan"
-              },
-              {
-                "@type": "State",
-                "name": "Wisconsin"
-              },
-              {
-                "@type": "State",
-                "name": "Illinois"
-              },
-              {
-                "@type": "State",
-                "name": "Kentucky"
-              }
-            ],
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "Manufactured and Modular Homes",
-              "itemListElement": [
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Product",
-                    "name": "Single Wide Manufactured Homes",
-                    "description": "500-1,200 sq ft homes starting at $50,000"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Product",
-                    "name": "Double Wide Manufactured Homes",
-                    "description": "1,000-2,400 sq ft homes starting at $80,000"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Product",
-                    "name": "Modular Homes",
-                    "description": "1,000-2,500+ sq ft IRC-code homes starting at $100,000"
-                  }
-                }
-              ]
-            }
-          })
-        }}
-      />
+      {/* LocalBusiness schema comes from the root layout (structuredData.localBusiness) — not duplicated here */}
 
       {/* ImageObject Schema for Hero */}
       <script
@@ -752,7 +663,7 @@ function ParallaxHeroSection() {
           src="/images/hero-home.jpg"
           alt="Modern manufactured home"
           fill
-          priority
+          preload
           className="object-cover"
           sizes="100vw"
         />

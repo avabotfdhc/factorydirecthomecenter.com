@@ -79,12 +79,12 @@ export function Footer() {
               Visit Us
             </p>
             <address className="not-italic space-y-3 text-sm text-[var(--color-gray-light)]">
-              <p><a href="https://www.google.com/maps/search/?api=1&query=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-lime)] transition-colors">1211 State Road 8<br />Auburn, IN 46706</a></p>
+              <p><a href="https://www.google.com/maps/search/?api=1&query=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-[var(--color-lime)] transition-colors">1211 State Road 8<br />Auburn, IN 46706</a></p>
               <p>
                 <a
                   href="tel:+12603081457"
                   onClick={() => trackPhoneClick("footer_contact", "desktop")}
-                  className="hover:text-[var(--color-lime)] transition-colors"
+                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime)] transition-colors"
                 >
                   (260) 308-1457
                 </a>
@@ -93,7 +93,7 @@ export function Footer() {
                 <a
                   href="mailto:sales@factorydirecthomescenter.com"
                   onClick={() => trackEmailClick("footer_contact", "desktop")}
-                  className="hover:text-[var(--color-lime)] transition-colors"
+                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime)] transition-colors"
                 >
                   sales@factorydirecthomescenter.com
                 </a>

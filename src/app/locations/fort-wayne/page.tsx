@@ -281,7 +281,7 @@ export default function FortWaynePage() {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            priority
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
