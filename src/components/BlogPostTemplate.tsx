@@ -46,7 +46,8 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
             src={post.heroImage}
             alt={post.heroImageAlt}
             fill
-            preload
+            fetchPriority="high"
+            loading="eager"
             className="object-cover opacity-30"
             sizes="100vw"
           />

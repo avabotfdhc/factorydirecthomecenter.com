@@ -147,7 +147,8 @@ export default function SpecialPlansPage() {
             alt="Modern manufactured home with autumn landscaping"
             fill
             className="object-cover"
-            preload
+            fetchPriority="high"
+            loading="eager"
             sizes="100vw"
           />
           {/* Gradient overlay for text readability */}

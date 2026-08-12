@@ -492,7 +492,8 @@ export function MaxSEOPageTemplate(pageData: PageTemplateProps) {
             src={pageData.heroImage}
             alt={pageData.heroImageAlt}
             fill
-            preload
+            fetchPriority="high"
+            loading="eager"
             className="object-cover"
             sizes="100vw"
           />

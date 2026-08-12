@@ -23,7 +23,7 @@ import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
   title: "About Us | Champion Homes Dealer Auburn IN",
-  description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving 6 states with factory-direct pricing, just 20 miles from the Champion factory. Learn about our story, values, and commitment to transparent pricing.",
+  description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving Indiana, Ohio, and Michigan with factory-direct pricing, just 20 miles from the Champion factory. Learn about our story, values, and commitment to transparent pricing.",
   keywords: [
     "factory direct homes center",
     "champion homes dealer",
@@ -89,7 +89,7 @@ const aeoContent = [
 const aboutFAQs = [
   {
     question: "How long has Factory Direct Homes Center been in business?",
-    answer: "Factory Direct Homes Center was founded with a vision to provide quality homes at fair prices through factory-direct partnerships. As a family-owned, authorized Champion dealer, we serve buyers across six states, building our reputation through referrals and repeat customers who appreciate our transparent, line-item approach."
+    answer: "Factory Direct Homes Center was founded with a vision to provide quality homes at fair prices through factory-direct partnerships. As a family-owned, authorized Champion dealer, we serve buyers across Indiana, Ohio, and Michigan, building our reputation through referrals and repeat customers who appreciate our transparent, line-item approach."
   },
   {
     question: "Is Factory Direct Homes Center a local or national company?",
@@ -155,7 +155,7 @@ const relatedPages = [
   {
     title: "Service Areas",
     url: "/locations",
-    description: "See where we deliver homes across 6 states"
+    description: "See where we deliver homes across Indiana, Ohio, and Michigan"
   }
 ];
 
@@ -179,7 +179,7 @@ export default function AboutPage() {
       {/* 4. Article */}
       <StructuredData data={structuredData.article({
         headline: "About Factory Direct Homes Center | Champion Homes Dealer",
-        description: "Family-owned Champion Homes dealer in Auburn, Indiana serving 6 states with factory-direct pricing.",
+        description: "Family-owned Champion Homes dealer in Auburn, Indiana serving Indiana, Ohio, and Michigan with factory-direct pricing.",
         image: "/images/hero-home.jpg",
         datePublished: "2024-01-01",
         dateModified: new Date().toISOString(),
@@ -236,7 +236,8 @@ export default function AboutPage() {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            preload
+            fetchPriority="high"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
@@ -263,7 +264,7 @@ export default function AboutPage() {
               
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">
                 Family-owned Champion Homes dealer in Auburn, Indiana.
-                Serving 6 states from just 20 miles away from the factory, with factory-direct
+                Serving Indiana, Ohio, and Michigan from just 20 miles away from the factory, with factory-direct
                 pricing and line-item transparency.
               </p>
             </div>
@@ -344,7 +345,7 @@ export default function AboutPage() {
                   {[
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
                     { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Paramount, Redman, and Dutch series homes built just 20 miles away." },
-                    { label: "The Community", text: "Families across 6 states now call a Factory Direct home their own. Growth through referrals and repeat customers." },
+                    { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through referrals and repeat customers." },
                   ].map((item, idx) => (
                     <div key={item.label} className="relative">
                       <div className="absolute -left-[41px] top-1 w-5 h-5 bg-[var(--color-teal)] border-4 border-[var(--color-cream)] rounded-full" />
@@ -393,7 +394,7 @@ export default function AboutPage() {
               },
               {
                 title: "Community Roots",
-                description: "We're not a corporate chain. We're your neighbors in Auburn, Indiana. We live in the communities we serve across 6 states, and we take that responsibility seriously.",
+                description: "We're not a corporate chain. We're your neighbors in Auburn, Indiana. We live in the communities we serve across Indiana, Ohio, and Michigan, and we take that responsibility seriously.",
                 icon: "🏠"
               },
             ].map((value, idx) => (

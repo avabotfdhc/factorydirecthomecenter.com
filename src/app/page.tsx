@@ -663,7 +663,8 @@ function ParallaxHeroSection() {
           src="/images/hero-home.jpg"
           alt="Modern manufactured home"
           fill
-          preload
+          fetchPriority="high"
+          loading="eager"
           className="object-cover"
           sizes="100vw"
         />
