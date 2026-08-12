@@ -9,6 +9,48 @@ import type { ApiBlogDetail } from "./api-content";
 
 export const localBlogPosts: ApiBlogDetail[] = [
   {
+    slug: "manufactured-homes-fort-wayne-buyers-guide",
+    title: "Buying a Manufactured Home Near Fort Wayne: A 2026 Buyer's Guide",
+    excerpt:
+      "What Fort Wayne and Allen County buyers should know before purchasing a manufactured or modular home — placement options, costs, delivery, and why the best deals are 25 minutes up the road.",
+    image: "/images/homepage/double-wides.webp",
+    date: "August 12, 2026",
+    html: `
+<p>Fort Wayne's housing market has priced a lot of good people out of a new site-built home. If you're one of them, a new manufactured or modular home is the most realistic path to new construction in northeast Indiana — and Fort Wayne buyers have a geographic advantage most of the country doesn't: you live about 25 minutes from a factory-direct Champion dealer, and under an hour from the largest Champion factory in the country. Here's what that means for you, and what to know before you buy.</p>
+
+<h2>Why Fort Wayne buyers shop in Auburn</h2>
+<p>Our showroom at 1211 State Road 8 in Auburn is about 25 minutes north of Fort Wayne, straight up I-69. That drive matters for two reasons. First, you can walk through real model homes — floor plans on a screen don't tell you how a kitchen feels. Second, the factory that builds these homes is in Topeka, Indiana, about 20 miles from us. Freight is one of the biggest hidden costs in manufactured housing, and homes that travel a short distance cost less to deliver than homes trucked in from hundreds of miles away. That saving shows up in your quote.</p>
+
+<h2>Where can you put a manufactured home around Fort Wayne?</h2>
+<p>You have three main options in the Fort Wayne area:</p>
+<ul>
+  <li><strong>Your own land.</strong> Rural and unincorporated areas of Allen County — and neighboring DeKalb, Whitley, and Noble counties — allow manufactured homes on private land in many zoning districts. Rules vary parcel by parcel, so you or your contractor verify zoning and setbacks and pull the permits for your specific site. Our <a href="/guides/zoning">zoning guide</a> covers how this works in Indiana.</li>
+  <li><strong>A land-lease community.</strong> The Fort Wayne area has established manufactured home communities where you own the home and lease the lot — the lowest cash-to-move-in option.</li>
+  <li><strong>A modular home on a permanent foundation.</strong> Built to the same Indiana residential code as site-built houses, modular homes can go where site-built homes go — including many Fort Wayne suburbs — and finance with conventional mortgages.</li>
+</ul>
+
+<h2>What it costs</h2>
+<p>Most new manufactured homes we sell fall between <strong>$50,000 and $150,000</strong> for the home itself — single wides typically starting around $50,000, double wides around $80,000, and IRC-code modular homes around $100,000. Compare that with what new site-built construction runs in Allen County and the math explains why factory-built housing is the fastest-growing path to homeownership in the region. For a deeper cost breakdown, read our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> — and remember our quotes are line-item: the home, the options, the delivery, each priced separately so you can compare honestly against any other dealer.</p>
+<p>Site work — foundation or pad, utilities, driveway — is separate, and in our model <strong>you hire your own licensed contractors</strong> for it. Most buyers save money that way versus dealer-bundled site work, and we can share a referral list of licensed and insured contractors past customers around Fort Wayne have used.</p>
+
+<h2>How delivery works from here</h2>
+<p>Once your home is built at the Topeka factory, it's transported to your site — a short, low-cost trip anywhere in the Fort Wayne area, including New Haven, Huntertown, Churubusco, Columbia City, and the surrounding counties. From order to move-in typically runs 8&ndash;12 weeks: 6&ndash;8 weeks of factory build time, plus site preparation and permitting that your contractor can run in parallel.</p>
+
+<h2>Financing for Fort Wayne buyers</h2>
+<p>Manufactured home financing is a specialty, and we work with the lenders who do it every day: 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union. Home-only (chattel) loans, land-home packages, and conventional financing for modular homes are all on the table. Start with our <a href="/financing">financing page</a> to see how the options compare.</p>
+
+<h2>FAQ</h2>
+<h3>Do you deliver to Fort Wayne?</h3>
+<p>Yes — Fort Wayne and all of Allen County are squarely in our primary delivery area, about 25 minutes from our Auburn showroom.</p>
+<h3>Can I put a manufactured home inside Fort Wayne city limits?</h3>
+<p>Within city limits, zoning is stricter and typically favors established manufactured home communities or modular construction on permanent foundations. On rural land outside the city, private-land placement is common. Verify the rules for your specific parcel before you buy — we can point you to the right county offices.</p>
+<h3>What's the difference between buying from you and a Fort Wayne area dealer lot?</h3>
+<p>Factory-direct pricing and line-item transparency. We're an authorized Champion dealer 20 miles from the factory, we don't bundle mystery costs, and you stay in control of site work with your own contractors. See <a href="/locations/fort-wayne">our Fort Wayne page</a> for more on how we serve the area.</p>
+<h3>Can I tour homes before buying?</h3>
+<p>Yes — walk through model homes at our Auburn showroom, Mon&ndash;Fri 9&ndash;5 or Saturday 10&ndash;4. Browse our <a href="/floor-plans">70+ Champion floor plans</a> first, then <a href="/contact-us">let us know</a> which ones you want to see in person.</p>
+`,
+  },
+  {
     slug: "manufactured-home-cost-indiana",
     title: "How Much Does a Manufactured Home Cost in Indiana? (2026 Guide)",
     excerpt:
