@@ -12,14 +12,14 @@ const SITE = "https://factorydirecthomescenter.com";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const plan = await getApiFloorPlanBySlug(slug);
-  if (!plan) return { title: "Home Not Found | Factory Direct Homes Center" };
+  if (!plan) return { title: "Home Not Found" };
   const desc = (
     plan.description ||
     `${plan.name}: ${plan.beds} bed, ${plan.baths} bath, ${plan.sqft.toLocaleString()} sq ft ${plan.homeType || "manufactured home"} from Factory Direct Homes Center in Auburn, IN.`
   ).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
   const url = `${SITE}/floor-plans/${plan.slug}`;
   return {
-    title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath ${plan.homeType || "Home"} | Factory Direct Homes Center`,
+    title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath ${plan.homeType || "Home"}`,
     description: desc,
     alternates: { canonical: url },
     openGraph: {

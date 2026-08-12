@@ -10,10 +10,10 @@ const SITE = "https://factorydirecthomescenter.com";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getApiBlogBySlug(slug);
-  if (!post) return { title: "Article Not Found | Factory Direct Homes Center" };
+  if (!post) return { title: "Article Not Found" };
   const url = `${SITE}/blog/${post.slug}`;
   return {
-    title: `${post.title} | Factory Direct Homes Center`,
+    title: post.title,
     description: post.excerpt,
     alternates: { canonical: url },
     openGraph: {

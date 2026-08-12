@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Angola, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in Angola, IN",
   description:
     "Champion manufactured and modular homes delivered to Angola and Steuben County, Indiana. Factory-direct pricing from our nearby Auburn showroom — single wides, double wides & modular homes for lake and rural lots.",
   keywords: [

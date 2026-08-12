@@ -122,14 +122,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!home) {
     return genMeta({
-      title: "Home Not Found | Factory Direct Homes Center",
+      title: "Home Not Found",
       description: "The requested home could not be found.",
       url: "/special-plans",
     });
   }
 
   return genMeta({
-    title: `${home.name} - Up to 25% Off MSRP | Factory Direct Homes Center`,
+    title: `${home.name} - Up to 25% Off MSRP`,
     description: `Save up to 25% off MSRP on the ${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. Contact us for your factory-direct price. Limited time offer!`,
     url: `/special-plans/details/${home.id}`,
   });

@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Huntertown, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in Huntertown, IN",
   description:
     "Champion manufactured and modular homes delivered to Huntertown and northern Allen County, Indiana. Factory-direct pricing from our nearby Auburn showroom — single wides, double wides & modular homes.",
   keywords: [

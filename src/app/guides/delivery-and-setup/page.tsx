@@ -4,7 +4,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { H2, H3 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Manufactured Home Delivery & Setup: What to Expect | Factory Direct Homes Center",
+  title: "Manufactured Home Delivery & Setup: What to Expect",
   description:
     "How manufactured and modular home delivery and setup works — from order to move-in. Timeline, site prep, delivery day, installation, and final walkthrough, explained step by step.",
   keywords: [

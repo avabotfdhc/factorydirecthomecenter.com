@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Albion, IN | Factory Direct Homes Center",
+  title: "Manufactured & Modular Homes in Albion, IN",
   description:
     "Champion manufactured and modular homes delivered to Albion and Noble County, Indiana. Factory-direct pricing from our Auburn showroom — ideal for lake and rural properties near Chain O'Lakes.",
   keywords: [

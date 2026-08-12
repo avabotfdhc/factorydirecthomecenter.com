@@ -5,7 +5,7 @@ import { getAdminToken, cmsGet } from "@/lib/admin-auth";
 import { LogoutButton } from "./LogoutButton";
 
 export const metadata: Metadata = {
-  title: "Admin | Factory Direct Homes Center",
+  title: "Admin",
   robots: { index: false, follow: false },
 };
 
