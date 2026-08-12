@@ -6,7 +6,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Deployment & env vars
 
-**Hosting:** Vercel project `factorydirecthomescenter-com` (team `avabotfdhcs-projects`). Live at https://factorydirecthomescenter-com.vercel.app. Auto-deploys on push to `main`. Migrated from Netlify 2026-04-11 — Netlify site `fdhc-ava.netlify.app` is dead, do not try to deploy there.
+**Hosting:** PRODUCTION is Vercel project `factorydirecthomescenter` (team `kyle-dudgeons-projects`) — it holds the custom domains. Live at https://factorydirecthomescenter.com (primary; www 308s to apex — verified 2026-08-12). A second Vercel project `factorydirecthomescenter-com` (team `avabotfdhcs-projects`) also builds every push but serves no custom domain; its checks occasionally fail transiently — that does not block the public site. Auto-deploys on push to `main`. Netlify site `fdhc-ava` still runs PR deploy previews but is not production — do not deploy there.
 
 **Env vars are managed only on Vercel** — never write `.env.local` in this repo. `.vercelignore` excludes all `.env*` files from Vercel uploads, so a local `.env.local` with stale or placeholder values will NOT reach production, but it WILL break `npm run dev` if you put empty/placeholder values in it. If you need production env vars locally for debugging, use `vercel env pull .vercel/.env.production.local --environment=production --yes` (writes outside the project root) or `vercel env run -- npm run dev` (no file written).
 

@@ -545,8 +545,8 @@ export default function Home() {
             "contentUrl": "https://factorydirecthomescenter.com/images/hero-home.jpg",
             "name": "Modern Manufactured Home Exterior",
             "description": "Modern manufactured home with white siding and black trim on foundation with professional landscaping",
-            "width": 2752,
-            "height": 1536,
+            "width": 1920,
+            "height": 1071,
             "author": {
               "@type": "Organization",
               "name": "Factory Direct Homes Center"
