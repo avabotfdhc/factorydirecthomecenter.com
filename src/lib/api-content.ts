@@ -66,12 +66,39 @@ function cmsFailure(context: string, detail: string): void {
   }
 }
 
+// Repo-published Champion PRIME Series models (src/lib/local-floor-plans.ts)
+// merge with the remote catalog the same way local blog posts do — these
+// models were never entered into the CMS, so the repo is their source of
+// truth. Local wins on slug collisions; getApiFloorPlanBySlug resolves them
+// first, so they stay reachable even when the CMS/feed is down.
+async function localPlans(): Promise<ApiFloorPlan[]> {
+  const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE } = await import("./local-floor-plans");
+  return localFloorPlans.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${PRIME_HOME_TYPE} | Champion PRIME Series`,
+    price: formatPrice(p.fdhcPrice),
+    sqft: p.sqft,
+    beds: p.beds,
+    baths: p.baths,
+    image: "",
+    brand: "Champion Home Builders",
+    homeType: PRIME_HOME_TYPE,
+    series: PRIME_SERIES,
+  }));
+}
+
+function mergePlans(remote: ApiFloorPlan[], local: ApiFloorPlan[]): ApiFloorPlan[] {
+  const localSlugs = new Set(local.map((p) => p.slug));
+  return [...remote.filter((p) => !localSlugs.has(p.slug)), ...local];
+}
+
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
 export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   // Prefer the DealerTide (Renter Insight) inventory feed when configured; the
   // CMS remains the fallback. Imported lazily to avoid a load-time env read.
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
-  if (feedConfigured()) return getFeedFloorPlans();
+  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans());
 
   const endpoint = "floor-plan/get-active";
   let json: any;
@@ -81,13 +108,13 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
     });
     if (!res.ok) {
       cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return [];
+      return localPlans();
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
     cmsFailure(endpoint, String(err));
-    return [];
+    return localPlans();
   }
   const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
   const plans = rows
@@ -112,7 +139,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   } else {
     console.log(`[cms-api] ${endpoint} OK — ${plans.length} active homes`);
   }
-  return plans;
+  return mergePlans(plans, await localPlans());
 }
 
 /** Small, presentable set of homes for the homepage featured section — homes
@@ -139,6 +166,35 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
 
 /** One floor plan by slug, with full detail, from the CMS. */
 export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
+  // Repo-published PRIME models resolve first (same local-first rule as blog posts).
+  {
+    const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, primeDescription } = await import("./local-floor-plans");
+    const p = localFloorPlans.find((x) => x.slug === slug);
+    if (p) {
+      return {
+        slug: p.slug,
+        name: p.name,
+        title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${PRIME_HOME_TYPE} | Champion PRIME Series`,
+        price: formatPrice(p.fdhcPrice),
+        sqft: p.sqft,
+        beds: p.beds,
+        baths: p.baths,
+        image: "",
+        brand: "Champion Home Builders",
+        homeType: PRIME_HOME_TYPE,
+        description: primeDescription(p),
+        floorPlanHtml: `<p>${primeDescription(p)}</p>`,
+        modelNumber: p.modelNumber,
+        length: p.length,
+        width: p.width,
+        series: PRIME_SERIES,
+        brochureUrl: "",
+        virtualTour: "",
+        gallery: [],
+      };
+    }
+  }
+
   const { feedConfigured, getFeedFloorPlanBySlug } = await import("./dealertide-feed");
   if (feedConfigured()) return getFeedFloorPlanBySlug(slug);
 
