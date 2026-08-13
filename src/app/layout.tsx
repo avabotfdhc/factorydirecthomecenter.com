@@ -8,8 +8,7 @@ import { TrackingProvider } from "@/components/TrackingProvider";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { PageFooter } from "@/components/PageFooter";
 import { MobileActionBar } from "@/components/MobileActionBar";
-import { LiveChat } from "@/components/LiveChat";
-import { ExitIntentPopup } from "@/components/ExitIntentPopup";
+import { DeferredOverlays } from "@/components/DeferredOverlays";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -106,8 +105,7 @@ export default function RootLayout({
         <PageFooter />
         <Footer />
         <MobileActionBar />
-        <LiveChat />
-        <ExitIntentPopup />
+        <DeferredOverlays />
       </body>
     </html>
   );
