@@ -77,14 +77,14 @@ async function localPlans(): Promise<ApiFloorPlan[]> {
   return localFloorPlans.map((p) => ({
     slug: p.slug,
     name: p.name,
-    title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${PRIME_HOME_TYPE} | Champion PRIME Series`,
+    title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion PRIME Series`,
     price: formatPrice(p.fdhcPrice),
     sqft: p.sqft,
     beds: p.beds,
     baths: p.baths,
     image: p.image || "",
     brand: "Champion Home Builders",
-    homeType: PRIME_HOME_TYPE,
+    homeType: p.homeType || PRIME_HOME_TYPE,
     series: PRIME_SERIES,
   }));
 }
@@ -175,14 +175,14 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       return {
         slug: p.slug,
         name: p.name,
-        title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${PRIME_HOME_TYPE} | Champion PRIME Series`,
+        title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion PRIME Series`,
         price: formatPrice(p.fdhcPrice),
         sqft: p.sqft,
         beds: p.beds,
         baths: p.baths,
         image: p.image || "",
         brand: "Champion Home Builders",
-        homeType: PRIME_HOME_TYPE,
+        homeType: p.homeType || PRIME_HOME_TYPE,
         description: primeDescription(p),
         floorPlanHtml: `<p>${primeDescription(p)}</p>`,
         modelNumber: p.modelNumber,
@@ -190,7 +190,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         width: p.width,
         series: PRIME_SERIES,
         brochureUrl: "",
-        virtualTour: "",
+        virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),
       };
     }
