@@ -8,6 +8,7 @@
 
 import { deriveSeries, canonicalSeries } from "./series";
 import { virtualTours } from "./virtual-tours";
+import { sqftOverrides } from "./spec-overrides";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -125,7 +126,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       name: shortName(r.title),
       title: String(r.title || ""),
       price: formatPrice(r.price),
-      sqft: Number(r.sqft) || 0,
+      sqft: sqftOverrides[String(r.slug)] ?? (Number(r.sqft) || 0),
       beds: Number(r.beds) || 0,
       baths: Number(r.baths) || 0,
       image: s3Url(r.bannerImage),
@@ -242,7 +243,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       name: shortName(r.title),
       title: String(r.title || ""),
       price: formatPrice(r.price),
-      sqft: Number(r.sqft) || 0,
+      sqft: sqftOverrides[String(r.slug)] ?? (Number(r.sqft) || 0),
       beds: Number(r.beds) || 0,
       baths: Number(r.baths) || 0,
       image: s3Url(r.bannerImage),
