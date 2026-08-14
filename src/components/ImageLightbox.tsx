@@ -136,6 +136,10 @@ export function ZoomableImage({
         src={src}
         alt={alt}
         onClick={() => setOpen(true)}
+        // This is the detail page's above-the-fold hero (the LCP element) —
+        // fetch it at high priority, never lazily.
+        fetchPriority="high"
+        decoding="async"
         className={`${className ?? ""} cursor-zoom-in`}
         title="Click to enlarge"
       />
@@ -167,8 +171,11 @@ export function LightboxGallery({
             src={im.src}
             alt={im.alt}
             onClick={() => setOpenAt(i)}
-            // NOTE: no loading="lazy" — globals.css hides plain <img loading>
-            // behind an opacity fade meant for next/image (site gotcha).
+            // Gallery grids sit below the fold — lazy-load so they never
+            // compete with the LCP hero. (Safe since the old globals.css
+            // opacity-fade rule for [loading] images was removed.)
+            loading="lazy"
+            decoding="async"
             className={`${imgClassName ?? ""} cursor-zoom-in`}
             title="Click to enlarge"
           />

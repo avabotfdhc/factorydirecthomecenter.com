@@ -18,6 +18,8 @@ export interface LocalFloorPlan {
   length: string;
   msrp: number;      // internal reference, not displayed while SHOW_PRICES is off
   fdhcPrice: number; // internal reference, not displayed while SHOW_PRICES is off
+  image?: string;    // banner/card photo (site-relative), from Champion's Prime media library
+  gallery?: string[]; // detail-page gallery, banner first
 }
 
 export const PRIME_SERIES = "Prime";
@@ -231,6 +233,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "60'",
     msrp: 61157,
     fdhcPrice: 55041,
+    image: "/images/prime/vertex-exterior-2.webp",
+    gallery: ["/images/prime/vertex-exterior-2.webp", "/images/prime/vertex-exterior-1.webp", "/images/prime/vertex-living-room.webp", "/images/prime/vertex-kitchen.webp", "/images/prime/vertex-dining.webp", "/images/prime/vertex-primary-bedroom.webp", "/images/prime/vertex-primary-bath.webp", "/images/prime/vertex-bedroom.webp"],
   },
   {
     slug: "prime-vertex-reverse-aisle",
@@ -243,6 +247,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "60'",
     msrp: 61157,
     fdhcPrice: 55041,
+    image: "/images/prime/vertex-exterior-2.webp",
+    gallery: ["/images/prime/vertex-exterior-2.webp", "/images/prime/vertex-exterior-1.webp", "/images/prime/vertex-living-room.webp", "/images/prime/vertex-kitchen.webp", "/images/prime/vertex-dining.webp", "/images/prime/vertex-primary-bedroom.webp", "/images/prime/vertex-primary-bath.webp", "/images/prime/vertex-bedroom.webp"],
   },
   {
     slug: "prime-hickman",
@@ -327,6 +333,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "68'",
     msrp: 65943,
     fdhcPrice: 59349,
+    image: "/images/prime/ridge-living-room.webp",
+    gallery: ["/images/prime/ridge-living-room.webp", "/images/prime/ridge-kitchen-1.webp", "/images/prime/ridge-kitchen-2.webp", "/images/prime/ridge-dining.webp", "/images/prime/ridge-primary-bedroom.webp", "/images/prime/ridge-primary-bath.webp"],
   },
   {
     slug: "prime-ridge-reverse-aisle",
@@ -339,6 +347,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "68'",
     msrp: 65943,
     fdhcPrice: 59349,
+    image: "/images/prime/ridge-living-room.webp",
+    gallery: ["/images/prime/ridge-living-room.webp", "/images/prime/ridge-kitchen-1.webp", "/images/prime/ridge-kitchen-2.webp", "/images/prime/ridge-dining.webp", "/images/prime/ridge-primary-bedroom.webp", "/images/prime/ridge-primary-bath.webp"],
   },
   {
     slug: "prime-monte",
@@ -351,6 +361,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "68'",
     msrp: 67732,
     fdhcPrice: 60959,
+    image: "/images/prime/monte-exterior-1.webp",
+    gallery: ["/images/prime/monte-exterior-1.webp", "/images/prime/monte-exterior-2.webp", "/images/prime/monte-living-room.webp", "/images/prime/monte-kitchen.webp", "/images/prime/monte-dining.webp", "/images/prime/monte-primary-bedroom.webp", "/images/prime/monte-primary-bath.webp", "/images/prime/monte-bedroom.webp"],
   },
   {
     slug: "prime-monte-reverse-aisle",
@@ -363,6 +375,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "68'",
     msrp: 67732,
     fdhcPrice: 60959,
+    image: "/images/prime/monte-exterior-1.webp",
+    gallery: ["/images/prime/monte-exterior-1.webp", "/images/prime/monte-exterior-2.webp", "/images/prime/monte-living-room.webp", "/images/prime/monte-kitchen.webp", "/images/prime/monte-dining.webp", "/images/prime/monte-primary-bedroom.webp", "/images/prime/monte-primary-bath.webp", "/images/prime/monte-bedroom.webp"],
   },
   {
     slug: "prime-somerset",
@@ -387,6 +401,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "68'",
     msrp: 68232,
     fdhcPrice: 61409,
+    image: "/images/prime/floyd-rendering.webp",
+    gallery: ["/images/prime/floyd-rendering.webp"],
   },
   {
     slug: "prime-plateau",
@@ -483,6 +499,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "108'",
     msrp: 99532,
     fdhcPrice: 89579,
+    image: "/images/prime/the-grand-exterior-1.webp",
+    gallery: ["/images/prime/the-grand-exterior-1.webp", "/images/prime/the-grand-elevation.webp", "/images/prime/the-grand-exterior-2.webp", "/images/prime/the-grand-living-room.webp", "/images/prime/the-grand-kitchen.webp", "/images/prime/the-grand-dining.webp", "/images/prime/the-grand-family-room.webp", "/images/prime/the-grand-primary-bedroom.webp", "/images/prime/the-grand-primary-bath.webp"],
   },
   {
     slug: "prime-pinnacle",
