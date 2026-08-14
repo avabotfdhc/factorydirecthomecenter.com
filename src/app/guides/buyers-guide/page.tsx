@@ -76,7 +76,7 @@ export default function BuyersGuidePage() {
                 </div>
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
                   <H3 className="font-semibold text-xl mb-3">Double Wide</H3>
-                  <p className="text-sm text-[var(--color-gray)]">1,000-2,400 sq ft • 2-4 beds • Spacious living • Family favorite</p>
+                  <p className="text-sm text-[var(--color-gray)]">1,000-2,400 sq ft • 3-5 beds • Spacious living • Family favorite</p>
                 </div>
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
                   <H3 className="font-semibold text-xl mb-3">Modular</H3>
