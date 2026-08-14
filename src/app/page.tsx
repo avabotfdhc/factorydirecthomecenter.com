@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getFeaturedHomes, type ApiFloorPlan } from "@/lib/api-content";
 import { FeaturedHomes } from "@/components/FeaturedHomes";
+import { HomeSearchBar } from "@/components/HomeSearchBar";
 import { H2 } from "@/components/Heading";
 import { AnimatedHomeSections, TrustAndProcess } from "./HomeSections";
 
@@ -22,32 +23,7 @@ export default async function Home() {
       {/* Search Bar - Separate from hero */}
       <section className="bg-[var(--color-teal)] py-4">
         <div className="max-w-5xl mx-auto px-4 lg:px-8">
-          <div className="bg-white rounded-lg shadow-lg p-2 flex flex-col sm:flex-row gap-2">
-            <select aria-label="Home type" className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
-              <option>All Types</option>
-              <option>Single Wide</option>
-              <option>Double Wide</option>
-              <option>Modular</option>
-            </select>
-            <select aria-label="Home size" className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
-              <option>Any Size</option>
-              <option>1,000+ sq ft</option>
-              <option>1,500+ sq ft</option>
-              <option>2,000+ sq ft</option>
-            </select>
-            <select aria-label="Bedrooms" className="flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]">
-              <option>Any Beds</option>
-              <option>2+ Beds</option>
-              <option>3+ Beds</option>
-              <option>4+ Beds</option>
-            </select>
-            <Link
-              href="/floor-plans"
-              className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2 text-sm font-bold uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors flex items-center justify-center"
-            >
-              Search
-            </Link>
-          </div>
+          <HomeSearchBar />
         </div>
       </section>
 

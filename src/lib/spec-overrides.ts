@@ -13,3 +13,23 @@ export const sqftOverrides: Record<string, number> = {
   // carries the same figure.
   "dutch-aspire-1652h21083": 789,
 };
+
+// Homes whose floor plan can be optioned with a different bedroom count
+// (a den/bonus/activity room swaps for a bedroom, or vice versa). bedsMax is
+// the highest configurable count; the base listing's beds stays the minimum.
+// Cards show the range ("2–3 Bed"), search matches any count in the range,
+// and the detail page explains the option. Entries require evidence from
+// Champion materials or the dealer — extend as Kyle confirms more plans.
+export interface BedOption {
+  bedsMax: number;
+  note: string;
+}
+
+export const bedOptions: Record<string, BedOption> = {
+  // Champion published separate 2-bedroom and 3-bedroom Matterport scans of
+  // this plan — the third bedroom is an orderable option.
+  "dutch-aspire1676h32089": {
+    bedsMax: 3,
+    note: "This floor plan can be ordered as a 2-bedroom with a larger living area or as a 3-bedroom — your choice at the factory.",
+  },
+};

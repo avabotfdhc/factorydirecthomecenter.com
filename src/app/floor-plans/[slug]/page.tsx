@@ -6,6 +6,7 @@ import { getApiFloorPlanBySlug } from "@/lib/api-content";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
+import { ShareListing } from "@/components/ShareListing";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -121,11 +122,23 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
 
             <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 py-6 border-y border-[var(--color-charcoal)]/8 mb-8">
               <Spec label="Sq Ft" value={plan.sqft ? plan.sqft.toLocaleString() : "—"} />
-              <Spec label="Beds" value={String(plan.beds || "—")} />
+              <Spec
+                label="Beds"
+                value={plan.bedsMax && plan.bedsMax > plan.beds ? `${plan.beds}–${plan.bedsMax}` : String(plan.beds || "—")}
+              />
               <Spec label="Baths" value={String(plan.baths || "—")} />
               {plan.width && <Spec label="Width" value={plan.width} />}
               {plan.length && <Spec label="Length" value={plan.length} />}
             </div>
+
+            {plan.flexNote && (
+              <p className="flex items-start gap-2.5 -mt-4 mb-8 text-sm text-[var(--color-charcoal)]/75 bg-[var(--color-lime)]/15 border border-[var(--color-lime)]/40 rounded-lg px-4 py-3">
+                <svg className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-lime-dark)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+                <span><strong>Flexible bedrooms:</strong> {plan.flexNote}</span>
+              </p>
+            )}
 
             <div className="flex flex-wrap gap-3">
               <Link
@@ -161,6 +174,12 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 </a>
               )}
             </div>
+
+            <ShareListing
+              name={plan.name}
+              url={`${SITE}/floor-plans/${plan.slug}`}
+              summary={`${plan.bedsMax && plan.bedsMax > plan.beds ? `${plan.beds}–${plan.bedsMax}` : plan.beds} bed, ${plan.baths} bath, ${plan.sqft.toLocaleString()} sq ft ${plan.homeType || "manufactured home"}.`}
+            />
           </div>
         </div>
 

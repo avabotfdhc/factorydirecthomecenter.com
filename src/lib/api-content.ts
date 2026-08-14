@@ -8,7 +8,7 @@
 
 import { deriveSeries, canonicalSeries } from "./series";
 import { virtualTours } from "./virtual-tours";
-import { sqftOverrides } from "./spec-overrides";
+import { sqftOverrides, bedOptions } from "./spec-overrides";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -25,6 +25,15 @@ export interface ApiFloorPlan {
   brand: string;
   homeType: string;
   series: string;      // Champion series (Aspire, Prime, ...) or "" if unknown
+  bedsMax?: number;    // set when the plan can be optioned with more bedrooms
+  flexNote?: string;   // human-readable explanation of the bedroom option
+}
+
+// Attach flexible-bedroom info (src/lib/spec-overrides.ts) to a plan. Applied
+// centrally so cards, search, and detail pages all see the same range.
+function withBedOptions<T extends { slug: string }>(p: T): T {
+  const opt = bedOptions[p.slug];
+  return opt ? { ...p, bedsMax: opt.bedsMax, flexNote: opt.note } : p;
 }
 
 // TEMPORARY (pre-launch): hide all home prices until CMS pricing is cleaned up.
@@ -100,7 +109,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   // Prefer the DealerTide (Renter Insight) inventory feed when configured; the
   // CMS remains the fallback. Imported lazily to avoid a load-time env read.
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
-  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans());
+  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).map(withBedOptions);
 
   const endpoint = "floor-plan/get-active";
   let json: any;
@@ -110,13 +119,13 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
     });
     if (!res.ok) {
       cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return localPlans();
+      return (await localPlans()).map(withBedOptions);
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
     cmsFailure(endpoint, String(err));
-    return localPlans();
+    return (await localPlans()).map(withBedOptions);
   }
   const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
   const plans = rows
@@ -141,7 +150,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   } else {
     console.log(`[cms-api] ${endpoint} OK — ${plans.length} active homes`);
   }
-  return mergePlans(plans, await localPlans());
+  return mergePlans(plans, await localPlans()).map(withBedOptions);
 }
 
 /** Small, presentable set of homes for the homepage featured section — homes
@@ -173,7 +182,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, primeDescription } = await import("./local-floor-plans");
     const p = localFloorPlans.find((x) => x.slug === slug);
     if (p) {
-      return {
+      return withBedOptions({
         slug: p.slug,
         name: p.name,
         title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion PRIME Series`,
@@ -193,7 +202,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         brochureUrl: "",
         virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),
-      };
+      });
     }
   }
 
@@ -204,7 +213,8 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   const { feedConfigured, getFeedFloorPlanBySlug } = await import("./dealertide-feed");
   if (feedConfigured()) {
     const d = await getFeedFloorPlanBySlug(slug);
-    return d && !d.virtualTour && localTour ? { ...d, virtualTour: localTour } : d;
+    if (!d) return d;
+    return withBedOptions(!d.virtualTour && localTour ? { ...d, virtualTour: localTour } : d);
   }
 
   const endpoint = `floor-plan/get-details/${slug}`;
@@ -238,7 +248,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     ].filter(Boolean);
     const gallery = [...new Set(rawImgs)].map(s3Url);
 
-    return {
+    return withBedOptions({
       slug: String(r.slug),
       name: shortName(r.title),
       title: String(r.title || ""),
@@ -258,7 +268,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       brochureUrl: r.brochure ? s3Url(r.brochure) : "",
       virtualTour: String(r.virtualTour || "") || localTour,
       gallery,
-    };
+    });
   } catch {
     return null;
   }
