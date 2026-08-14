@@ -124,7 +124,11 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               <Spec label="Sq Ft" value={plan.sqft ? plan.sqft.toLocaleString() : "—"} />
               <Spec
                 label="Beds"
-                value={plan.bedsMax && plan.bedsMax > plan.beds ? `${plan.beds}–${plan.bedsMax}` : String(plan.beds || "—")}
+                value={(() => {
+                  const lo = Math.min(plan.bedsMin ?? plan.beds, plan.beds);
+                  const hi = Math.max(plan.bedsMax ?? plan.beds, plan.beds);
+                  return lo < hi ? `${lo}–${hi}` : String(plan.beds || "—");
+                })()}
               />
               <Spec label="Baths" value={String(plan.baths || "—")} />
               {plan.width && <Spec label="Width" value={plan.width} />}
@@ -136,7 +140,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 <svg className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--color-lime-dark)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                 </svg>
-                <span><strong>Flexible bedrooms:</strong> {plan.flexNote}</span>
+                <span><strong>{plan.bedsMin !== undefined || plan.bedsMax !== undefined ? "Flexible bedrooms" : "Factory option"}:</strong> {plan.flexNote}</span>
               </p>
             )}
 
@@ -178,7 +182,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             <ShareListing
               name={plan.name}
               url={`${SITE}/floor-plans/${plan.slug}`}
-              summary={`${plan.bedsMax && plan.bedsMax > plan.beds ? `${plan.beds}–${plan.bedsMax}` : plan.beds} bed, ${plan.baths} bath, ${plan.sqft.toLocaleString()} sq ft ${plan.homeType || "manufactured home"}.`}
+              summary={`${plan.bedsMin !== undefined || plan.bedsMax !== undefined ? `${Math.min(plan.bedsMin ?? plan.beds, plan.beds)}–${Math.max(plan.bedsMax ?? plan.beds, plan.beds)}` : plan.beds} bed, ${plan.baths} bath, ${plan.sqft.toLocaleString()} sq ft ${plan.homeType || "manufactured home"}.`}
             />
           </div>
         </div>

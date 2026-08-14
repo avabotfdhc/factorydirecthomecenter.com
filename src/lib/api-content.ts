@@ -25,15 +25,22 @@ export interface ApiFloorPlan {
   brand: string;
   homeType: string;
   series: string;      // Champion series (Aspire, Prime, ...) or "" if unknown
+  bedsMin?: number;    // set when the plan can be optioned with fewer bedrooms
   bedsMax?: number;    // set when the plan can be optioned with more bedrooms
-  flexNote?: string;   // human-readable explanation of the bedroom option
+  flexNote?: string;   // human-readable explanation of the factory option
 }
 
 // Attach flexible-bedroom info (src/lib/spec-overrides.ts) to a plan. Applied
 // centrally so cards, search, and detail pages all see the same range.
 function withBedOptions<T extends { slug: string }>(p: T): T {
   const opt = bedOptions[p.slug];
-  return opt ? { ...p, bedsMax: opt.bedsMax, flexNote: opt.note } : p;
+  if (!opt) return p;
+  return {
+    ...p,
+    ...(opt.bedsMin !== undefined ? { bedsMin: opt.bedsMin } : {}),
+    ...(opt.bedsMax !== undefined ? { bedsMax: opt.bedsMax } : {}),
+    flexNote: opt.note,
+  };
 }
 
 // TEMPORARY (pre-launch): hide all home prices until CMS pricing is cleaned up.

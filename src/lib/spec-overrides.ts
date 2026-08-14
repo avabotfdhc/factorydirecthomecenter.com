@@ -14,22 +14,50 @@ export const sqftOverrides: Record<string, number> = {
   "dutch-aspire-1652h21083": 789,
 };
 
-// Homes whose floor plan can be optioned with a different bedroom count
-// (a den/bonus/activity room swaps for a bedroom, or vice versa). bedsMax is
-// the highest configurable count; the base listing's beds stays the minimum.
-// Cards show the range ("2–3 Bed"), search matches any count in the range,
-// and the detail page explains the option. Entries require evidence from
-// Champion materials or the dealer — extend as Kyle confirms more plans.
+// Homes whose floor plan can be ordered with a different bedroom count or a
+// swappable room (study/den in place of a bedroom or dining space). Source:
+// full audit of Champion's 2026 Aspire SALES sheets (Box: Topeka IN/Dutch
+// Housing/2026 Aspire) — every listed model's sheet was checked for option
+// pages; entries below are the ones whose L-102 page prints a bedroom or
+// room option. bedsMin/bedsMax bound the orderable range around the CMS's
+// listed count; cards show the range, bed filters match any count in it,
+// and the detail page explains the option. A note without a range is a
+// non-bedroom factory option (study/den) shown on the detail page only.
 export interface BedOption {
-  bedsMax: number;
+  bedsMin?: number;
+  bedsMax?: number;
   note: string;
 }
 
+const twoBedOption: BedOption = {
+  bedsMin: 2,
+  note: "Champion builds this floor plan as a 3-bedroom or as a 2-bedroom with a larger living area — your choice at the factory.",
+};
+
 export const bedOptions: Record<string, BedOption> = {
-  // Champion published separate 2-bedroom and 3-bedroom Matterport scans of
-  // this plan — the third bedroom is an orderable option.
-  "dutch-aspire1676h32089": {
-    bedsMax: 3,
-    note: "This floor plan can be ordered as a 2-bedroom with a larger living area or as a 3-bedroom — your choice at the factory.",
-  },
+  // 3-bedroom singles with a factory 2-Bedroom Option on the sales sheet
+  "dutch-aspire-1466h32082": twoBedOption,
+  "dutch-aspire-1470h32082": twoBedOption,
+  "dutch-aspire-1472h32082": twoBedOption,
+  "dutch-aspire-1476h32082": twoBedOption,
+  "dutch-aspire-1664h32212": twoBedOption,
+  "dutch-aspire-1666h32085": twoBedOption,
+  "dutch-aspire-1666h32212": twoBedOption,
+  "dutch-aspire-1666h32217": twoBedOption,
+  "dutch-aspire1666h32219": twoBedOption,
+  "dutch-aspire-1668h32085": twoBedOption,
+  "dutch-aspire1668h32087": twoBedOption,
+  "dutch-aspire1676h32089": twoBedOption,
+  "dutch-aspire1676h32212": twoBedOption,
+  "dutch-aspire1676h32221": twoBedOption,
+
+  // Double wides with a factory 2-Bedroom Option
+  "dutch-aspire-monroe-2840h32024": twoBedOption,
+  "appleton": twoBedOption, // 2842H32388
+
+  // Non-bedroom factory options (room swaps) printed on the sales sheets
+  "belvidere": { note: "An optional study can be ordered in place of the formal dining space." }, // 2856H32392
+  "dutch-aspire-verona-3276h42179": { note: "An optional study configuration is available for this floor plan." },
+  "dutch-aspire-summit-2864h42a1c": { note: "An optional study configuration is available for this floor plan." },
+  "dutch-aspire-summit-2868h52a1c": { note: "An optional study configuration is available for this floor plan." },
 };

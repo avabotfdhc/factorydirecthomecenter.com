@@ -49,6 +49,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "56'",
     msrp: 49812,
     fdhcPrice: 44831,
+    image: "/images/prime/peak-rendering.webp",
+    gallery: ["/images/prime/peak-rendering.webp"],
   },
   {
     slug: "prime-peak-reverse-aisle",
@@ -61,6 +63,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "56'",
     msrp: 49812,
     fdhcPrice: 44831,
+    image: "/images/prime/peak-rendering.webp",
+    gallery: ["/images/prime/peak-rendering.webp"],
   },
   {
     slug: "prime-crest",
@@ -121,6 +125,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "36'",
     msrp: 43867,
     fdhcPrice: 39480,
+    image: "/images/prime/pike-rendering.webp",
+    gallery: ["/images/prime/pike-rendering.webp"],
   },
   {
     slug: "prime-fulton",
@@ -205,6 +211,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "60'",
     msrp: 54982,
     fdhcPrice: 49484,
+    image: "/images/prime/spire-rendering.webp",
+    gallery: ["/images/prime/spire-rendering.webp"],
   },
   {
     slug: "prime-spire-reverse-aisle",
@@ -217,6 +225,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "60'",
     msrp: 54982,
     fdhcPrice: 49484,
+    image: "/images/prime/spire-rendering.webp",
+    gallery: ["/images/prime/spire-rendering.webp"],
   },
   {
     slug: "prime-casey",
@@ -271,6 +281,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "66'",
     msrp: 64257,
     fdhcPrice: 57831,
+    image: "/images/prime/hickman-rendering.webp",
+    gallery: ["/images/prime/hickman-rendering.webp"],
   },
   {
     slug: "prime-pendleton",
@@ -344,8 +356,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     msrp: 65943,
     fdhcPrice: 59349,
     virtualTour: "https://my.matterport.com/show/?m=oGGVXBkLNVC",
-    image: "/images/prime/ridge-living-room.webp",
-    gallery: ["/images/prime/ridge-living-room.webp", "/images/prime/ridge-kitchen-1.webp", "/images/prime/ridge-kitchen-2.webp", "/images/prime/ridge-dining.webp", "/images/prime/ridge-primary-bedroom.webp", "/images/prime/ridge-primary-bath.webp"],
+    image: "/images/prime/ridge-rendering.webp",
+    gallery: ["/images/prime/ridge-rendering.webp", "/images/prime/ridge-living-room.webp", "/images/prime/ridge-kitchen-1.webp", "/images/prime/ridge-kitchen-2.webp", "/images/prime/ridge-dining.webp", "/images/prime/ridge-primary-bedroom.webp", "/images/prime/ridge-primary-bath.webp"],
   },
   {
     slug: "prime-ridge-reverse-aisle",
@@ -359,8 +371,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     msrp: 65943,
     fdhcPrice: 59349,
     virtualTour: "https://my.matterport.com/show/?m=oGGVXBkLNVC",
-    image: "/images/prime/ridge-living-room.webp",
-    gallery: ["/images/prime/ridge-living-room.webp", "/images/prime/ridge-kitchen-1.webp", "/images/prime/ridge-kitchen-2.webp", "/images/prime/ridge-dining.webp", "/images/prime/ridge-primary-bedroom.webp", "/images/prime/ridge-primary-bath.webp"],
+    image: "/images/prime/ridge-rendering.webp",
+    gallery: ["/images/prime/ridge-rendering.webp", "/images/prime/ridge-living-room.webp", "/images/prime/ridge-kitchen-1.webp", "/images/prime/ridge-kitchen-2.webp", "/images/prime/ridge-dining.webp", "/images/prime/ridge-primary-bedroom.webp", "/images/prime/ridge-primary-bath.webp"],
   },
   {
     slug: "prime-monte",
@@ -469,6 +481,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 79107,
     fdhcPrice: 71196,
+    image: "/images/prime/churchill-rendering.webp",
+    gallery: ["/images/prime/churchill-rendering.webp"],
     virtualTour: "https://storage.net-fs.com/hosting/8433117/3/",
   },
   {
@@ -483,6 +497,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 81442,
     fdhcPrice: 73298,
+    image: "/images/prime/mercer-rendering.webp",
+    gallery: ["/images/prime/mercer-rendering.webp"],
   },
   {
     slug: "prime-apex",
@@ -496,6 +512,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 83862,
     fdhcPrice: 75476,
+    image: "/images/prime/apex-rendering.webp",
+    gallery: ["/images/prime/apex-rendering.webp"],
     virtualTour: "https://storage.net-fs.com/hosting/8433117/4/",
   },
   {
@@ -510,6 +528,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 85212,
     fdhcPrice: 76691,
+    image: "/images/prime/crown-rendering.webp",
+    gallery: ["/images/prime/crown-rendering.webp"],
   },
   {
     slug: "prime-the-grand",
@@ -539,6 +559,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 108442,
     fdhcPrice: 97598,
+    image: "/images/prime/pinnacle-rendering.webp",
+    gallery: ["/images/prime/pinnacle-rendering.webp"],
     virtualTour: "https://storage.net-fs.com/hosting/8433117/7/",
   },
 ];
