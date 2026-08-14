@@ -11,11 +11,17 @@ import type { ApiFloorPlan } from "@/lib/api-content";
 // params are read from window.location in an effect (NOT useSearchParams,
 // which would bail the whole grid out of server rendering and drop every
 // card from the initial HTML).
-const bedsLabel = (p: ApiFloorPlan) =>
-  p.bedsMax && p.bedsMax > p.beds ? `${p.beds}–${p.bedsMax}` : String(p.beds);
+const bedsRange = (p: ApiFloorPlan): [number, number] => [
+  Math.min(p.bedsMin ?? p.beds, p.beds),
+  Math.max(p.bedsMax ?? p.beds, p.beds),
+];
+const bedsLabel = (p: ApiFloorPlan) => {
+  const [lo, hi] = bedsRange(p);
+  return lo < hi ? `${lo}–${hi}` : String(p.beds);
+};
 
 // A plan matches "N+ beds" if any orderable configuration reaches N.
-const matchesBeds = (p: ApiFloorPlan, min: number) => (p.bedsMax ?? p.beds) >= min;
+const matchesBeds = (p: ApiFloorPlan, min: number) => bedsRange(p)[1] >= min;
 
 export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   const [series, setSeries] = useState<string>("All");
@@ -138,9 +144,9 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
                   {p.series} Series
                 </span>
               )}
-              {p.bedsMax && p.bedsMax > p.beds && (
+              {bedsRange(p)[0] < bedsRange(p)[1] && (
                 <span className="absolute top-3 right-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
-                  {p.beds} or {p.bedsMax} Bed
+                  {bedsRange(p)[0]} or {bedsRange(p)[1]} Bed
                 </span>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
