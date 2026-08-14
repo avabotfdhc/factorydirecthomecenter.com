@@ -109,11 +109,11 @@ function cmsFailure(context: string, detail: string): void {
 // truth. Local wins on slug collisions; getApiFloorPlanBySlug resolves them
 // first, so they stay reachable even when the CMS/feed is down.
 async function localPlans(): Promise<ApiFloorPlan[]> {
-  const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE } = await import("./local-floor-plans");
+  const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, seriesLabel } = await import("./local-floor-plans");
   return localFloorPlans.filter((p) => !p.hidden).map((p) => ({
     slug: p.slug,
     name: p.name,
-    title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion PRIME Series`,
+    title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion ${seriesLabel(p)} Series`,
     price: formatPrice(p.fdhcPrice),
     sqft: p.sqft,
     beds: p.beds,
@@ -121,7 +121,7 @@ async function localPlans(): Promise<ApiFloorPlan[]> {
     image: p.image || "",
     brand: "Champion Home Builders",
     homeType: p.homeType || PRIME_HOME_TYPE,
-    series: PRIME_SERIES,
+    series: p.series || PRIME_SERIES,
   }));
 }
 
@@ -205,14 +205,14 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
 export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
   // Repo-published PRIME models resolve first (same local-first rule as blog posts).
   {
-    const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, primeDescription } = await import("./local-floor-plans");
+    const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, planDescription, seriesLabel } = await import("./local-floor-plans");
     const p = localFloorPlans.find((x) => x.slug === slug);
     if (p?.hidden) return null;
     if (p) {
       return withBedOptions({
         slug: p.slug,
         name: p.name,
-        title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion PRIME Series`,
+        title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion ${seriesLabel(p)} Series`,
         price: formatPrice(p.fdhcPrice),
         sqft: p.sqft,
         beds: p.beds,
@@ -220,12 +220,12 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         image: p.image || "",
         brand: "Champion Home Builders",
         homeType: p.homeType || PRIME_HOME_TYPE,
-        description: primeDescription(p),
-        floorPlanHtml: `<p>${primeDescription(p)}</p>`,
+        description: planDescription(p),
+        floorPlanHtml: `<p>${planDescription(p)}</p>`,
         modelNumber: p.modelNumber,
         length: p.length,
         width: p.width,
-        series: PRIME_SERIES,
+        series: p.series || PRIME_SERIES,
         brochureUrl: "",
         virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),

@@ -13,6 +13,8 @@
 // added. Dollar amounts stay internal — display pricing goes through the
 // same SHOW_PRICES gate as every other home.
 
+import { paramountFloorPlans } from "./paramount-floor-plans";
+
 export interface LocalFloorPlan {
   slug: string;
   hidden?: boolean;  // paused: excluded from listings/sitemap until imagery exists
@@ -26,16 +28,25 @@ export interface LocalFloorPlan {
   msrp: number;      // internal reference, not displayed while SHOW_PRICES is off
   fdhcPrice: number; // internal reference, not displayed while SHOW_PRICES is off
   homeType?: string; // "Double Wide" for multi-section models; defaults to Single Wide
-  virtualTour?: string; // Matterport / 3D Vista link from Champion's Decatur tour sheet
-  image?: string;    // banner/card photo (site-relative), from Champion's Prime media library
+  series?: string;   // Champion series ("Paramount", "Aspire", ...); defaults to Prime
+  virtualTour?: string; // Matterport / 3D Vista link from Champion's tour sheets
+  image?: string;    // banner/card image (site-relative or S3), from Champion's media library
   gallery?: string[]; // detail-page gallery, banner first
 }
 
 export const PRIME_SERIES = "Prime";
 export const PRIME_HOME_TYPE = "Single Wide";
 
-export function primeDescription(p: LocalFloorPlan): string {
-  return `The ${p.name} is a ${p.beds}-bedroom, ${p.baths}-bath Champion PRIME Series ${(p.homeType || PRIME_HOME_TYPE).toLowerCase()} — ${p.sqft.toLocaleString("en-US")} sq ft of conditioned living space at ${p.width} × ${p.length}. Built at Champion's Decatur, Indiana plant and sold factory-direct from our Auburn showroom with line-item pricing. Contact us for your factory-direct quote.`;
+/** Series label as Champion styles it in marketing copy ("PRIME", "Paramount"). */
+export function seriesLabel(p: LocalFloorPlan): string {
+  const s = p.series || PRIME_SERIES;
+  return s === PRIME_SERIES ? "PRIME" : s;
+}
+
+export function planDescription(p: LocalFloorPlan): string {
+  // Prime builds out of Decatur IN; Paramount/Aspire out of Topeka IN.
+  const plant = (p.series || PRIME_SERIES) === PRIME_SERIES ? "Decatur" : "Topeka";
+  return `The ${p.name} is a ${p.beds}-bedroom, ${p.baths}-bath Champion ${seriesLabel(p)} Series ${(p.homeType || PRIME_HOME_TYPE).toLowerCase()} — ${p.sqft.toLocaleString("en-US")} sq ft of conditioned living space at ${p.width} × ${p.length}. Built at Champion's ${plant}, Indiana plant and sold factory-direct from our Auburn showroom with line-item pricing. Contact us for your factory-direct quote.`;
 }
 
 export const localFloorPlans: LocalFloorPlan[] = [
@@ -593,4 +604,29 @@ export const localFloorPlans: LocalFloorPlan[] = [
     gallery: ["/images/prime/pinnacle-rendering.webp"],
     virtualTour: "https://storage.net-fs.com/hosting/8433117/7/",
   },
+
+  // ——— Aspire models missing from the CMS ———
+  // Odyssey 32' — the only current 32-wide Aspire model the CMS never got.
+  // Specs from Champion's 2026 SALES sheet (112APB-3260H32394); tour from the
+  // Topeka Matterport sheet (exact model match).
+  {
+    slug: "dutch-aspire-odyssey-3260h32394",
+    name: "Odyssey",
+    modelNumber: "3260H32394",
+    sqft: 1820,
+    beds: 3,
+    baths: 2,
+    width: "32'",
+    length: "60'",
+    msrp: 0,
+    fdhcPrice: 0,
+    homeType: "Double Wide",
+    series: "Aspire",
+    virtualTour: "https://my.matterport.com/show/?m=kHVGAug33h3",
+    image: "/images/paramount/3260h32394.webp",
+    gallery: ["/images/paramount/3260h32394.webp"],
+  },
+
+  // ——— Full 2026 Paramount Series lineup (repo-published) ———
+  ...paramountFloorPlans,
 ];
