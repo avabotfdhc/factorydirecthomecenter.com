@@ -7,6 +7,7 @@
 // and no API key is exposed to the browser.
 
 import { deriveSeries, canonicalSeries } from "./series";
+import { virtualTours } from "./virtual-tours";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -195,8 +196,15 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     }
   }
 
+  // Repo-mapped Matterport tour (src/lib/virtual-tours.ts) fills in when the
+  // CMS/feed has no tour of its own — a CMS-provided tour always wins.
+  const localTour = virtualTours[slug] || "";
+
   const { feedConfigured, getFeedFloorPlanBySlug } = await import("./dealertide-feed");
-  if (feedConfigured()) return getFeedFloorPlanBySlug(slug);
+  if (feedConfigured()) {
+    const d = await getFeedFloorPlanBySlug(slug);
+    return d && !d.virtualTour && localTour ? { ...d, virtualTour: localTour } : d;
+  }
 
   const endpoint = `floor-plan/get-details/${slug}`;
   let json: any;
@@ -247,7 +255,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       width: String(r.width || ""),
       series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
       brochureUrl: r.brochure ? s3Url(r.brochure) : "",
-      virtualTour: String(r.virtualTour || ""),
+      virtualTour: String(r.virtualTour || "") || localTour,
       gallery,
     };
   } catch {
