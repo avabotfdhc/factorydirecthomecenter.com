@@ -15,6 +15,7 @@
 
 export interface LocalFloorPlan {
   slug: string;
+  hidden?: boolean;  // paused: excluded from listings/sitemap until imagery exists
   name: string;
   modelNumber: string;
   sqft: number;
@@ -77,6 +78,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "60'",
     msrp: 52962,
     fdhcPrice: 47666,
+    image: "/images/prime/crest-floorplan.webp",
+    gallery: ["/images/prime/crest-floorplan.webp"],
   },
   {
     slug: "prime-crest-reverse-aisle",
@@ -89,6 +92,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "60'",
     msrp: 52962,
     fdhcPrice: 47666,
+    image: "/images/prime/crest-floorplan.webp",
+    gallery: ["/images/prime/crest-floorplan.webp"],
   },
   {
     slug: "prime-zenith",
@@ -101,6 +106,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "66'",
     msrp: 56637,
     fdhcPrice: 50973,
+    image: "/images/prime/zenith-floorplan.webp",
+    gallery: ["/images/prime/zenith-floorplan.webp"],
   },
   {
     slug: "prime-zenith-reverse-aisle",
@@ -113,6 +120,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "66'",
     msrp: 56637,
     fdhcPrice: 50973,
+    image: "/images/prime/zenith-floorplan.webp",
+    gallery: ["/images/prime/zenith-floorplan.webp"],
   },
   {
     slug: "prime-pike",
@@ -130,6 +139,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-fulton",
+    hidden: true,
     name: "Fulton",
     modelNumber: "FULTON",
     sqft: 768,
@@ -142,6 +152,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-fulton-reverse-aisle",
+    hidden: true,
     name: "Fulton Reverse Aisle",
     modelNumber: "FULTON-RA",
     sqft: 768,
@@ -154,6 +165,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-gallatin",
+    hidden: true,
     name: "Gallatin",
     modelNumber: "GALLATIN",
     sqft: 832,
@@ -166,6 +178,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-gallatin-reverse-aisle",
+    hidden: true,
     name: "Gallatin Reverse Aisle",
     modelNumber: "GALLATIN-RA",
     sqft: 832,
@@ -187,6 +200,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "56'",
     msrp: 52898,
     fdhcPrice: 47608,
+    image: "/images/prime/barkley-floorplan.webp",
+    gallery: ["/images/prime/barkley-floorplan.webp"],
   },
   {
     slug: "prime-barkley-reverse-aisle",
@@ -199,6 +214,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "56'",
     msrp: 52898,
     fdhcPrice: 47608,
+    image: "/images/prime/barkley-floorplan.webp",
+    gallery: ["/images/prime/barkley-floorplan.webp"],
   },
   {
     slug: "prime-spire",
@@ -230,6 +247,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-casey",
+    hidden: true,
     name: "Casey",
     modelNumber: "CASEY",
     sqft: 910,
@@ -295,9 +313,12 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "66'",
     msrp: 64257,
     fdhcPrice: 57831,
+    image: "/images/prime/pendleton-floorplan.webp",
+    gallery: ["/images/prime/pendleton-floorplan.webp"],
   },
   {
     slug: "prime-bardstown",
+    hidden: true,
     name: "Bardstown",
     modelNumber: "BARDSTOWN",
     sqft: 1092,
@@ -310,6 +331,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-bardstown-reverse-aisle",
+    hidden: true,
     name: "Bardstown Reverse Aisle",
     modelNumber: "BARDSTOWN-RA",
     sqft: 1092,
@@ -322,6 +344,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-ballard",
+    hidden: true,
     name: "Ballard",
     modelNumber: "BALLARD",
     sqft: 1092,
@@ -343,6 +366,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     length: "72'",
     msrp: 65257,
     fdhcPrice: 58731,
+    image: "/images/prime/powell-floorplan.webp",
+    gallery: ["/images/prime/powell-floorplan.webp"],
   },
   {
     slug: "prime-ridge",
@@ -406,6 +431,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
   },
   {
     slug: "prime-somerset",
+    hidden: true,
     name: "Somerset",
     modelNumber: "SOMERSET",
     sqft: 1152,
@@ -455,6 +481,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 82207,
     fdhcPrice: 73986,
+    image: "/images/prime/horizon-floorplan.webp",
+    gallery: ["/images/prime/horizon-floorplan.webp"],
   },
   {
     slug: "prime-estill",
@@ -468,6 +496,8 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 75419,
     fdhcPrice: 67877,
+    image: "/images/prime/estill-floorplan.webp",
+    gallery: ["/images/prime/estill-floorplan.webp"],
   },
   {
     slug: "prime-churchill",

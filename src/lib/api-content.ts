@@ -62,6 +62,25 @@ function shortName(title: string): string {
     .trim() || "Home";
 }
 
+// The CMS leaves homeType empty on most listings (and uses "singleWide" on a
+// few), which silently breaks the type filter — a "Double Wide" search would
+// exclude nearly the whole catalog. Normalize the CMS value, and when it's
+// missing derive the type from the Champion model number (present in the
+// slug, title, or banner-image filename): width prefix 24/28/32 = sectional
+// (Double Wide), 14/16 = Single Wide; an M build code = Modular.
+function normalizeHomeType(raw: unknown, context: string): string {
+  const t = String(raw || "").trim();
+  if (/single/i.test(t)) return "Single Wide";
+  if (/double|sectional|multi/i.test(t)) return "Double Wide";
+  if (/modular/i.test(t)) return "Modular";
+  const m = context.match(/\b(14|16|24|28|32)(\d{2})([hm])\d{2}/i);
+  if (m) {
+    if (m[3].toLowerCase() === "m") return "Modular";
+    return Number(m[1]) >= 24 ? "Double Wide" : "Single Wide";
+  }
+  return t;
+}
+
 function s3Url(path?: string): string {
   if (!path) return "";
   // Many CMS image keys contain spaces/parentheses — encode so the URL is valid
@@ -91,7 +110,7 @@ function cmsFailure(context: string, detail: string): void {
 // first, so they stay reachable even when the CMS/feed is down.
 async function localPlans(): Promise<ApiFloorPlan[]> {
   const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE } = await import("./local-floor-plans");
-  return localFloorPlans.map((p) => ({
+  return localFloorPlans.filter((p) => !p.hidden).map((p) => ({
     slug: p.slug,
     name: p.name,
     title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion PRIME Series`,
@@ -147,7 +166,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       baths: Number(r.baths) || 0,
       image: s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
-      homeType: String(r.homeType || ""),
+      homeType: normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
       series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
     }));
   if (plans.length === 0) {
@@ -188,6 +207,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   {
     const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, primeDescription } = await import("./local-floor-plans");
     const p = localFloorPlans.find((x) => x.slug === slug);
+    if (p?.hidden) return null;
     if (p) {
       return withBedOptions({
         slug: p.slug,
@@ -265,7 +285,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       baths: Number(r.baths) || 0,
       image: s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || "Champion Homes",
-      homeType: String(r.homeType || ""),
+      homeType: normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
       description: String(r.description || ""),
       floorPlanHtml: String(r.floorPlan || ""),
       modelNumber: String(r.modelNumber || ""),
