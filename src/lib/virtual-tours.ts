@@ -43,4 +43,16 @@ export const virtualTours: Record<string, string> = {
   "georgetown": "https://my.matterport.com/show/?m=YPtpvLpSgsf", // 2864H32101
   "fillmore": "https://my.matterport.com/show/?m=4ZXgyJf4TrZ", // 2864H32060
   "belvidere": "https://my.matterport.com/show/?m=vb9wTWyz2uv", // 2856H32392
+
+  // Same-model-family tours: the scanned unit is the same Champion plan at a
+  // different length, so the layout and finishes match what buyers will see.
+  "warren": "https://my.matterport.com/show/?m=YSHhmjLg532", // listing 2856H32172, tour 2852H32172
+  "dutch-aspire-warren-2860h32172": "https://my.matterport.com/show/?m=YSHhmjLg532", // tour 2852H32172
+  "dutch-aspire-lincoln-2856h32171": "https://my.matterport.com/show/?m=poCEg35Lncf", // tour 2852H32171
+  "dutch-aspire-odyssey-2860h32394": "https://my.matterport.com/show/?m=AUzLQJnNkxv", // tour 2868H32394
+  "bay-port": "https://my.matterport.com/show/?m=1LqfFmsAGDk", // listing 2860H32168, tour 2856H32168
+  "dutch-aspire-summit-2868h52a1c": "https://my.matterport.com/show/?m=5pvBSkYRt54", // tour 2864H42A1C
+  "dutch-aspire-silverton-2860h32174": "https://my.matterport.com/show/?m=zUuN931WExB", // tour 2856H32174
+  "dutch-aspire-shelby-3264h32181": "https://my.matterport.com/show/?m=vrK6FVLfsYe", // tour 3260H32181
+  "dutch-aspire-shelby-3268h32181": "https://my.matterport.com/show/?m=vrK6FVLfsYe", // tour 3260H32181
 };

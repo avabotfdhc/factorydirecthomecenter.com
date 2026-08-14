@@ -8,8 +8,8 @@
 // Fulton and Gallatin have no Champion literature in the library yet, so
 // their sheet figures remain pending factory confirmation. Ridge's drawing
 // (1676H32P01) misprints "1533 sq ft" — physically impossible for a
-// 15'2" x 76' box; 1153 (the value on Champion's identical-box 1676 plans)
-// is used instead. Cards without photos render the placeholder until images are
+// 15'2" x 76' box; Ridge and Somerset carry 1152 per the dealer's
+// confirmed figures. Cards without photos render the placeholder until images are
 // added. Dollar amounts stay internal — display pricing goes through the
 // same SHOW_PRICES gate as every other home.
 
@@ -336,7 +336,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
     slug: "prime-ridge",
     name: "Ridge",
     modelNumber: "1676H32P01",
-    sqft: 1153,
+    sqft: 1152,
     beds: 3,
     baths: 2,
     width: "16'",
@@ -351,7 +351,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
     slug: "prime-ridge-reverse-aisle",
     name: "Ridge Reverse Aisle",
     modelNumber: "RIDGE-RA",
-    sqft: 1153,
+    sqft: 1152,
     beds: 3,
     baths: 2,
     width: "16'",
@@ -396,7 +396,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
     slug: "prime-somerset",
     name: "Somerset",
     modelNumber: "SOMERSET",
-    sqft: 1153,
+    sqft: 1152,
     beds: 3,
     baths: 2,
     width: "16'",
