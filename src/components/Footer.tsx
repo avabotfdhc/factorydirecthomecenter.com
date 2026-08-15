@@ -139,7 +139,8 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--color-gray)]">
-            &copy; {new Date().getFullYear()} Factory Direct Homes Center LLC. All rights reserved.
+            &copy; {new Date().getFullYear()} Factory Direct Homes Center LLC. All rights reserved. Floor plans,
+            renderings, specifications, and pricing are approximate and subject to change without notice.
           </p>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-xs text-[var(--color-gray)] hover:text-[var(--color-gray-light)] transition-colors">

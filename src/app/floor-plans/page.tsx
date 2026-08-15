@@ -4,6 +4,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -81,6 +82,7 @@ export default async function FloorPlansPage() {
         ) : (
           <FloorPlansGrid plans={plans} />
         )}
+        <SpecsDisclaimer className="mt-12" />
       </section>
 
       {/* FAQ (adds FAQPage schema) */}
