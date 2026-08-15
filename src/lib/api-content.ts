@@ -276,6 +276,11 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     ].filter(Boolean);
     const gallery = [...new Set(rawImgs)].map(s3Url);
 
+    const homeType = normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`);
+    const series = canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description);
+    // Champion-published series brochure fills in when the CMS record has none.
+    const { seriesBrochure } = await import("./brochures");
+
     return withBedOptions({
       slug: String(r.slug),
       name: shortName(r.title),
@@ -286,14 +291,14 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       baths: Number(r.baths) || 0,
       image: s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || "Champion Homes",
-      homeType: normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
+      homeType,
       description: String(r.description || ""),
       floorPlanHtml: String(r.floorPlan || ""),
       modelNumber: String(r.modelNumber || ""),
       length: String(r.length || ""),
       width: String(r.width || ""),
-      series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
-      brochureUrl: r.brochure ? s3Url(r.brochure) : "",
+      series,
+      brochureUrl: r.brochure ? s3Url(r.brochure) : seriesBrochure(series, homeType),
       virtualTour: String(r.virtualTour || "") || localTour,
       gallery,
     });
