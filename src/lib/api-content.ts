@@ -206,6 +206,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   // Repo-published PRIME models resolve first (same local-first rule as blog posts).
   {
     const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, planDescription, seriesLabel } = await import("./local-floor-plans");
+    const { paramountExtraHtml } = await import("./paramount-content");
     const p = localFloorPlans.find((x) => x.slug === slug);
     if (p?.hidden) return null;
     if (p) {
@@ -221,12 +222,12 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         brand: "Champion Home Builders",
         homeType: p.homeType || PRIME_HOME_TYPE,
         description: planDescription(p),
-        floorPlanHtml: `<p>${planDescription(p)}</p>`,
+        floorPlanHtml: `<p>${planDescription(p)}</p>${paramountExtraHtml(p)}`,
         modelNumber: p.modelNumber,
         length: p.length,
         width: p.width,
         series: p.series || PRIME_SERIES,
-        brochureUrl: "",
+        brochureUrl: p.brochureUrl || "",
         virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),
       });

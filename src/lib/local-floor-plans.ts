@@ -29,6 +29,7 @@ export interface LocalFloorPlan {
   fdhcPrice: number; // internal reference, not displayed while SHOW_PRICES is off
   homeType?: string; // "Double Wide" for multi-section models; defaults to Single Wide
   series?: string;   // Champion series ("Paramount", "Aspire", ...); defaults to Prime
+  brochureUrl?: string; // site-relative PDF from Champion's literature library
   virtualTour?: string; // Matterport / 3D Vista link from Champion's tour sheets
   image?: string;    // banner/card image (site-relative or S3), from Champion's media library
   gallery?: string[]; // detail-page gallery, banner first
@@ -622,9 +623,18 @@ export const localFloorPlans: LocalFloorPlan[] = [
     fdhcPrice: 0,
     homeType: "Double Wide",
     series: "Aspire",
+    brochureUrl: "/brochures/odyssey-by-champion.pdf",
     virtualTour: "https://my.matterport.com/show/?m=kHVGAug33h3",
-    image: "/images/paramount/3260h32394.webp",
-    gallery: ["/images/paramount/3260h32394.webp"],
+    image: "/images/paramount/odyssey-exterior.webp",
+    gallery: [
+      "/images/paramount/odyssey-exterior.webp",
+      "/images/paramount/odyssey-kitchen.webp",
+      "/images/paramount/odyssey-dining.webp",
+      "/images/paramount/odyssey-living.webp",
+      "/images/paramount/odyssey-bedroom.webp",
+      "/images/paramount/odyssey-exterior-b.webp",
+      "/images/paramount/3260h32394.webp",
+    ],
   },
 
   // ——— Full 2026 Paramount Series lineup (repo-published) ———
