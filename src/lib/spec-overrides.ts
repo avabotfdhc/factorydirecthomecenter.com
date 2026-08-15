@@ -61,6 +61,22 @@ export const bedOptions: Record<string, BedOption> = {
   "dutch-aspire-summit-2864h42a1c": { note: "An optional study configuration is available for this floor plan." },
   "dutch-aspire-summit-2868h52a1c": { note: "An optional study configuration is available for this floor plan." },
 
+  // ——— Repo-published Aspire additions (2026 SALES sheets, same audit) ———
+  "dutch-aspire-1660h32206": twoBedOption,
+  "dutch-aspire-1672h32087": twoBedOption,
+  "dutch-aspire-1676h32085": twoBedOption,
+  "dutch-aspire-1676h32087": twoBedOption,
+  "dutch-aspire-sundance-2444h32167": twoBedOption,
+  "dutch-aspire-sundance-2448h32167": twoBedOption,
+  "dutch-aspire-sundance-2452h32167": twoBedOption,
+  "dutch-aspire-monroe-2844h32024": twoBedOption,
+  "dutch-aspire-bayfield-2844h32169": twoBedOption,
+  "dutch-aspire-monroe-2848h32024": twoBedOption,
+  "dutch-aspire-lancaster-2848h32160": twoBedOption,
+  "dutch-aspire-bayfield-2848h32169": twoBedOption,
+  "dutch-aspire-summit-2852h32a1c": { note: "An optional study configuration is available for this floor plan." },
+  "dutch-aspire-summit-2856h32a1c": { note: "An optional study configuration is available for this floor plan." },
+
   // ——— Paramount Series (repo-published; same audit, 2026 Paramount SALES
   // sheets — same floor plans carry the same factory options) ———
   "paramount-1466h32082": twoBedOption,

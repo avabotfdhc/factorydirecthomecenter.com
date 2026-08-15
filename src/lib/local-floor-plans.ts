@@ -14,6 +14,7 @@
 // same SHOW_PRICES gate as every other home.
 
 import { paramountFloorPlans } from "./paramount-floor-plans";
+import { aspireFloorPlans } from "./aspire-floor-plans";
 
 export interface LocalFloorPlan {
   slug: string;
@@ -480,21 +481,25 @@ export const localFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     msrp: 77030,
     fdhcPrice: 69327,
+    image: "/images/prime/plateau-floorplan.webp",
+    gallery: ["/images/prime/plateau-floorplan.webp"],
   },
   {
     slug: "prime-horizon",
     name: "Horizon",
-    modelNumber: "2848H32P02",
-    sqft: 1280,
+    // 2026 plan: Champion moved the Horizon to a 24' x 56' box (2456H32P02,
+    // 1,307 sq ft) — the 2025 28' x 48' drawing stays in the gallery.
+    modelNumber: "2456H32P02",
+    sqft: 1307,
     beds: 3,
     baths: 2,
-    width: "28'",
-    length: "48'",
+    width: "24'",
+    length: "56'",
     homeType: "Double Wide",
     msrp: 82207,
     fdhcPrice: 73986,
-    image: "/images/prime/horizon-floorplan.webp",
-    gallery: ["/images/prime/horizon-floorplan.webp"],
+    image: "/images/prime/horizon-2026-floorplan.webp",
+    gallery: ["/images/prime/horizon-2026-floorplan.webp", "/images/prime/horizon-floorplan.webp"],
   },
   {
     slug: "prime-estill",
@@ -606,6 +611,53 @@ export const localFloorPlans: LocalFloorPlan[] = [
     virtualTour: "https://storage.net-fs.com/hosting/8433117/7/",
   },
 
+  // ——— New 2026 Prime models (Decatur plant) ———
+  // From Champion's "2026 Prime - Decatur" floor-plan folders; specs from each
+  // model's 2026 SALES sheet. Not on the dealer price sheet yet (internal 0).
+  {
+    slug: "prime-spire-2-bedroom",
+    name: "Spire 2-Bedroom",
+    modelNumber: "1660H22P01",
+    sqft: 910,
+    beds: 2,
+    baths: 2,
+    width: "16'",
+    length: "60'",
+    msrp: 0,
+    fdhcPrice: 0,
+    image: "/images/prime/spire-2br-floorplan.webp",
+    gallery: ["/images/prime/spire-2br-floorplan.webp"],
+  },
+  {
+    slug: "prime-spire-2-bedroom-ii",
+    name: "Spire 2-Bedroom II",
+    modelNumber: "1660H22P02",
+    sqft: 910,
+    beds: 2,
+    baths: 2,
+    width: "16'",
+    length: "60'",
+    msrp: 0,
+    fdhcPrice: 0,
+    image: "/images/prime/spire-2br-b-floorplan.webp",
+    gallery: ["/images/prime/spire-2br-b-floorplan.webp"],
+  },
+  {
+    slug: "prime-richmond",
+    name: "Richmond",
+    modelNumber: "2856H42P01",
+    sqft: 1493,
+    beds: 4,
+    baths: 2,
+    width: "28'",
+    length: "56'",
+    msrp: 0,
+    fdhcPrice: 0,
+    homeType: "Double Wide",
+    image: "/images/prime/richmond-floorplan.webp",
+    gallery: ["/images/prime/richmond-floorplan.webp"],
+  },
+
   // ——— Aspire models missing from the CMS ———
   // Odyssey 32' — the only current 32-wide Aspire model the CMS never got.
   // Specs from Champion's 2026 SALES sheet (112APB-3260H32394); tour from the
@@ -639,6 +691,9 @@ export const localFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/3260h32394.webp",
     ],
   },
+
+  // ——— Remaining 2026 Aspire lineup (repo-published; see aspire-floor-plans.ts) ———
+  ...aspireFloorPlans,
 
   // ——— Full 2026 Paramount Series lineup (repo-published) ———
   ...paramountFloorPlans,

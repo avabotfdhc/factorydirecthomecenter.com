@@ -7,7 +7,7 @@
 // and no API key is exposed to the browser.
 
 import { deriveSeries, canonicalSeries } from "./series";
-import { galleryOverlays } from "./gallery-overlays";
+import { galleryOverlays, sheetExtras } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
 import { sqftOverrides, bedOptions } from "./spec-overrides";
 
@@ -277,7 +277,8 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     ].filter(Boolean);
     // Photo-shoot overlay: real photography first, CMS images (drawing) after.
     const overlay = galleryOverlays[String(r.slug)];
-    const gallery = [...(overlay?.gallery || []), ...[...new Set(rawImgs)].map(s3Url)];
+    // Option-layout sheets from the 2026 SALES plan go last, after the CMS images.
+    const gallery = [...(overlay?.gallery || []), ...[...new Set(rawImgs)].map(s3Url), ...(sheetExtras[String(r.slug)] || [])];
 
     const homeType = normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`);
     const series = canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description);
