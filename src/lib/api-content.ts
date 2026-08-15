@@ -7,6 +7,7 @@
 // and no API key is exposed to the browser.
 
 import { deriveSeries, canonicalSeries } from "./series";
+import { galleryOverlays } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
 import { sqftOverrides, bedOptions } from "./spec-overrides";
 
@@ -164,7 +165,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       sqft: sqftOverrides[String(r.slug)] ?? (Number(r.sqft) || 0),
       beds: Number(r.beds) || 0,
       baths: Number(r.baths) || 0,
-      image: s3Url(r.bannerImage),
+      image: galleryOverlays[String(r.slug)]?.image || s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
       homeType: normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
       series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
@@ -274,7 +275,9 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       ...((r.images || []).map((i: any) => i?.imageName || i?.imageLocation)),
       ...((r.galleryImages || []).map((i: any) => i?.imageName || i?.imageLocation)),
     ].filter(Boolean);
-    const gallery = [...new Set(rawImgs)].map(s3Url);
+    // Photo-shoot overlay: real photography first, CMS images (drawing) after.
+    const overlay = galleryOverlays[String(r.slug)];
+    const gallery = [...(overlay?.gallery || []), ...[...new Set(rawImgs)].map(s3Url)];
 
     const homeType = normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`);
     const series = canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description);
@@ -289,7 +292,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       sqft: sqftOverrides[String(r.slug)] ?? (Number(r.sqft) || 0),
       beds: Number(r.beds) || 0,
       baths: Number(r.baths) || 0,
-      image: s3Url(r.bannerImage),
+      image: overlay?.image || s3Url(r.bannerImage),
       brand: r?.brandDetails?.name || "Champion Homes",
       homeType,
       description: String(r.description || ""),
