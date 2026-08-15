@@ -115,6 +115,10 @@ export const structuredData = {
       longitude: -85.0583,
     },
     image: "https://factorydirecthomescenter.com/images/hero-home.jpg",
+    hasMap: "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706",
+    sameAs: [
+      "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN",
+    ],
     openingHours: ["Mo-Fr 09:00-17:00", "Sa 10:00-16:00"],
     areaServed: [
       { "@type": "State", name: "Indiana" },

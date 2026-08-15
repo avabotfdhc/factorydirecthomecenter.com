@@ -204,6 +204,36 @@ export default function ContactForm() {
                   </div>
                 </div>
               </div>
+
+              {/* Google Map — matches the Google Business Profile location */}
+              <div className="rounded-lg overflow-hidden border border-[var(--color-charcoal)]/10">
+                <iframe
+                  title="Factory Direct Homes Center — 1211 State Road 8, Auburn, IN 46706 on Google Maps"
+                  src="https://www.google.com/maps?q=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706&output=embed"
+                  className="w-full h-72 border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
+                >
+                  Get Directions
+                </a>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors"
+                >
+                  Find Us on Google
+                </a>
+              </div>
             </div>
 
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-10">

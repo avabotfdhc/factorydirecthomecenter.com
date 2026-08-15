@@ -7,6 +7,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { ShareListing } from "@/components/ShareListing";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -217,6 +218,10 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         subtitle="Financing, delivery, and placement for your new home"
         faqs={commonFAQs.homepage.slice(0, 6)}
       />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
+        <SpecsDisclaimer />
+      </div>
     </main>
   );
 }
