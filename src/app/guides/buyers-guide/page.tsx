@@ -75,7 +75,7 @@ export default function BuyersGuidePage() {
                   <p className="text-sm text-[var(--color-gray)]">500-1,200 sq ft • 1-3 beds • Most affordable • Faster delivery</p>
                 </div>
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
-                  <H3 className="font-semibold text-xl mb-3">Double Wide</H3>
+                  <H3 className="font-semibold text-xl mb-3">Multi-Section</H3>
                   <p className="text-sm text-[var(--color-gray)]">1,000-2,400 sq ft • 3-5 beds • Spacious living • Family favorite</p>
                 </div>
                 <div className="bg-[var(--color-cream-dark)] p-6 rounded-lg">
@@ -83,6 +83,25 @@ export default function BuyersGuidePage() {
                   <p className="text-sm text-[var(--color-gray)]">1,000-2,500+ sq ft • 2-5 beds • Site-built quality • IRC code</p>
                 </div>
               </div>
+
+              <H2 className="font-serif text-3xl font-light mb-6 mt-12">What Is a Multi-Section Home?</H2>
+              <p className="text-[var(--color-gray)] leading-relaxed mb-6">
+                If you&apos;ve been searching for a <strong>double wide</strong>, you&apos;ve already found it — <strong>multi-section</strong> is
+                the industry&apos;s modern name for the same home. These homes are built as two or more sections at the factory,
+                delivered separately, and joined into one seamless house on your site. Today&apos;s multi-section homes bear little
+                resemblance to the &ldquo;double wides&rdquo; of decades past: they&apos;re built to the federal HUD code with residential
+                drywall, pitched shingle roofs, Shaker cabinetry, kitchen islands, and walk-in closets — which is why the industry
+                (and our listings) moved to a name that better reflects what they actually are.
+              </p>
+              <p className="text-[var(--color-gray)] leading-relaxed mb-6">
+                At 24 to 32 feet wide and up to about 2,400 square feet, a multi-section home lives like a site-built ranch —
+                multiple living areas, three to five bedrooms, and open kitchen layouts — at a fraction of the price per square
+                foot. Browse our{" "}
+                <Link href="/floor-plans?type=multi" className="text-[var(--color-teal)] font-semibold hover:underline">
+                  multi-section floor plans
+                </Link>{" "}
+                to see the current Champion lineup.
+              </p>
 
               <H2 className="font-serif text-3xl font-light mb-6 mt-12">The Buying Process</H2>
               <ol className="space-y-4 list-decimal list-inside">

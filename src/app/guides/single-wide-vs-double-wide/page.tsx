@@ -99,6 +99,11 @@ export default function SingleVsDoubleWidePage() {
             joined on site (about 24–32 ft wide) for more space, multiple living areas, and a house-like feel. The right
             choice comes down to your budget, land, and how much room you need.
           </p>
+          <p className="text-sm text-white/50 leading-relaxed mt-4">
+            One note on names: &ldquo;double wide&rdquo; and <strong className="text-white/80">multi-section</strong> mean
+            the same thing — multi-section is the industry&apos;s modern term, and it&apos;s what you&apos;ll see on our
+            listings.
+          </p>
         </div>
       </section>
 
