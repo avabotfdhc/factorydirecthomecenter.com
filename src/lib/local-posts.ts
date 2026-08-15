@@ -193,21 +193,13 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Browse <a href="/floor-plans">floor plans</a>, then <a href="/contact-us">contact us</a> or stop by. Local details on <a href="/locations/butler">our Butler page</a>.</p>
 `,
   },
-];
-
-// Staged city posts awaiting scheduled publication (3-wave rollout, authorized 2026-08-12).
-// Wave 2 (~Aug 15): kendallville, albion, ligonier, angola
-// Wave 3 (~Aug 18): huntertown, new-haven, columbia-city, churubusco, indianapolis
-// To publish a wave: move its entries into localBlogPosts above and set `date`
-// to the actual publish date. This array is intentionally not imported anywhere.
-export const pendingBlogPosts: ApiBlogDetail[] = [
   {
     slug: "manufactured-homes-kendallville-indiana",
     title: "Manufactured Homes in Kendallville, Indiana: Noble County's Straightforward Path to New Construction",
     excerpt:
       "Kendallville is about 25 minutes from our Auburn showroom. Here's how Noble County buyers put new Champion homes on rural land — and what it costs.",
     image: "/images/homepage/feature-find-land.webp",
-    date: "August 12, 2026",
+    date: "August 15, 2026",
     html: `
 <p>Kendallville is Noble County's commercial hub, and the countryside around it is exactly the kind of place factory-built housing shines: rural parcels, reasonable land prices, and county zoning that accommodates manufactured homes on many private lots. Add a 25-minute drive to our Auburn showroom and Kendallville buyers have one of the simplest paths to new construction in northeast Indiana.</p>
 <h2>Rural Noble County land works in your favor</h2>
@@ -229,7 +221,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "Albion buyers are about half an hour from our Auburn showroom — and steps from the Noble County offices where their permits get pulled. A local look at buying factory-built.",
     image: "/images/homepage/single-wides.webp",
-    date: "August 12, 2026",
+    date: "August 15, 2026",
     html: `
 <p>Albion is Noble County's seat, ringed by farmland and lake country — Chain O'Lakes State Park is just down the road. It's also, quietly, one of the most convenient places in the county to put a manufactured home: rural parcels are plentiful, and the county offices that handle your zoning questions and permits are right in town.</p>
 <h2>The Albion advantage: permits without the runaround</h2>
@@ -251,7 +243,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "Ligonier sits nearer to Champion's Topeka plant than almost anywhere we serve. What that means for delivery costs, timelines, and buying a new home in western Noble County.",
     image: "/images/homepage/double-wides.webp",
-    date: "August 12, 2026",
+    date: "August 15, 2026",
     html: `
 <p>Here's a fact most Ligonier residents don't realize: the largest Champion Homes factory in the country builds homes just up the road in Topeka. If you buy a new manufactured home in Ligonier, it will likely travel fewer miles to reach your site than almost any factory-built home delivered anywhere in America. That's not trivia — it's money.</p>
 <h2>Why factory proximity matters in your quote</h2>
@@ -273,7 +265,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "Steuben County's 101 lakes make Angola one of northeast Indiana's most desirable places to live. Factory-built homes are how buyers get there affordably.",
     image: "/images/homepage/feature-find-home.webp",
-    date: "August 12, 2026",
+    date: "August 15, 2026",
     html: `
 <p>Angola and the Steuben County lake country around it — the county promotes its 101 lakes for good reason — draw two kinds of buyers: families who want to live near the water year-round, and owners replacing an aging lake cottage with something modern. Both keep discovering the same answer: a new Champion manufactured or modular home delivers new construction at a price the lake-area market otherwise doesn't offer.</p>
 <h2>Lake lots and rural Steuben parcels</h2>
@@ -287,6 +279,13 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
 <p>Yes — Angola, Fremont, Hamilton, Pleasant Lake, and the surrounding townships. See <a href="/locations/angola">our Angola page</a> and <a href="/locations/steuben-county">Steuben County page</a>.</p>
 `,
   },
+];
+
+// Staged city posts awaiting scheduled publication (3-wave rollout, authorized 2026-08-12).
+// Wave 3 (~Aug 18): huntertown, new-haven, columbia-city, churubusco, indianapolis
+// To publish a wave: move its entries into localBlogPosts above and set `date`
+// to the actual publish date. This array is intentionally not imported anywhere.
+export const pendingBlogPosts: ApiBlogDetail[] = [
   {
     slug: "manufactured-homes-huntertown-indiana",
     title: "Manufactured Homes Near Huntertown, Indiana: New Construction on the Growing North Side",
