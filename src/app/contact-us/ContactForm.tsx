@@ -252,7 +252,7 @@ export default function ContactForm() {
                     <select id="interest" name="interest" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
                       <option value="">Select an option...</option>
                       <option value="single-wide">Single Wide Home</option>
-                      <option value="double-wide">Double Wide Home</option>
+                      <option value="double-wide">Multi-Section Home</option>
                       <option value="modular">Modular Home</option>
                       <option value="financing">Financing Information</option>
                       <option value="general">General Information</option>

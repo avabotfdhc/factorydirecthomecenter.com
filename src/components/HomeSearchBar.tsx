@@ -30,7 +30,7 @@ export function HomeSearchBar() {
       <select aria-label="Home type" className={selectCls} value={type} onChange={(e) => setType(e.target.value)}>
         <option value="">All Types</option>
         <option value="single">Single Wide</option>
-        <option value="double">Double Wide</option>
+        <option value="multi">Multi-Section</option>
         <option value="modular">Modular</option>
       </select>
       <select aria-label="Home size" className={selectCls} value={sqft} onChange={(e) => setSqft(e.target.value)}>
