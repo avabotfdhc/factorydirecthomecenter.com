@@ -98,6 +98,15 @@ export const sitePages: SitePage[] = [
     changeFrequency: "monthly",
   },
   {
+    url: "/options",
+    title: "Factory Options & Selections",
+    description: "Champion's 2026 interior & exterior selections, option drawings (fireplaces, islands, cabinets, exteriors), and series brochures.",
+    topics: ["options", "selections", "upgrades", "champion-homes"],
+    cluster: "guides",
+    priority: 0.7,
+    changeFrequency: "monthly",
+  },
+  {
     url: "/resources",
     title: "Resources & Downloads",
     description: "Download 2026 Champion Homes floor plans, sales options, decor guide, and installation manuals.",

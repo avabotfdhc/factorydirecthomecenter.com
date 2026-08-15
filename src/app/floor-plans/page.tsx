@@ -61,7 +61,11 @@ export default async function FloorPlansPage() {
           </h1>
           <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
             Explore {plans.length}{" "}Champion single wide, double wide, and modular floor plans
-            {" "}— factory-direct pricing from Auburn, Indiana, serving IN, OH &amp; MI.
+            {" "}— factory-direct pricing from Auburn, Indiana, serving IN, OH &amp; MI. Every home
+            is built to order:{" "}
+            <a href="/options" className="text-[var(--color-teal-light)] underline underline-offset-4">
+              browse factory options &amp; selections
+            </a>.
           </p>
         </div>
       </section>

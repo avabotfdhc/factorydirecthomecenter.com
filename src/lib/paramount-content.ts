@@ -65,7 +65,7 @@ export function paramountExtraHtml(p: LocalFloorPlan): string {
   }
 
   parts.push(
-    `<p>Interior and exterior finishes are your choice at order time — view <a href="/images/paramount/2026-selections.webp" target="_blank" rel="noopener">Champion's 2026 selections chart</a> for countertops, cabinets, flooring, siding, and shingle options.</p>`
+    `<p>Interior and exterior finishes are your choice at order time — view <a href="/images/paramount/2026-selections.webp" target="_blank" rel="noopener">Champion's 2026 selections chart</a>, or browse all <a href="/options">factory options &amp; selections</a> (fireplaces, islands, cabinets, and exterior styles).</p>`
   );
 
   if ((p.homeType || "Single Wide") === "Single Wide") {
