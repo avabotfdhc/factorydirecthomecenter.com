@@ -47,7 +47,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201440H11065.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201440H11065.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201440H11065.png",
+      "/images/paramount/1440h11065-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1444h11023",
@@ -63,7 +66,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1444h11023.webp",
-    gallery: ["/images/paramount/1444h11023.webp"],
+    gallery: [
+      "/images/paramount/1444h11023.webp",
+      "/images/paramount/1444h11023-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1452h21023",
@@ -79,7 +85,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201452H21023.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201452H21023.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201452H21023.png",
+      "/images/paramount/1452h21023-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1452h21081",
@@ -95,7 +104,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201452H21081.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201452H21081.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201452H21081.png",
+      "/images/paramount/1452h21081-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1456h21023",
@@ -111,7 +123,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1456H21023.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1456H21023.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1456H21023.png",
+      "/images/paramount/1456h21023-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1456h21030",
@@ -127,7 +142,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201456H21030.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201456H21030.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201456H21030.png",
+      "/images/paramount/1456h21030-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1460h21216",
@@ -143,7 +161,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201460H21216.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201460H21216.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201460H21216.png",
+      "/images/paramount/1460h21216-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1460h22215",
@@ -159,7 +180,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1476H32082.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1476H32082.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1476H32082.png",
+      "/images/paramount/1460h22215-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1466h32082",
@@ -176,7 +200,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=NASgpGLKV8q",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201466H32082.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201466H32082.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201466H32082.png",
+      "/images/paramount/1466h32082-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1470h32082",
@@ -192,7 +219,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201470H32082.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201470H32082.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201470H32082.png",
+      "/images/paramount/1470h32082-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1472h32082",
@@ -208,7 +238,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201472H32082.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201472H32082.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201472H32082.png",
+      "/images/paramount/1472h32082-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1476h32082",
@@ -224,7 +257,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1476H32082.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1476H32082.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1476H32082.png",
+      "/images/paramount/1476h32082-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1648h21016",
@@ -240,7 +276,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1648h21016.webp",
-    gallery: ["/images/paramount/1648h21016.webp"],
+    gallery: [
+      "/images/paramount/1648h21016.webp",
+      "/images/paramount/1648h21016-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1652h21083",
@@ -256,7 +295,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201652H21083.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201652H21083.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201652H21083.png",
+      "/images/paramount/1652h21083-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1652h21151",
@@ -272,7 +314,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201652H21151.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201652H21151.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201652H21151.png",
+      "/images/paramount/1652h21151-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1656h22208",
@@ -288,7 +333,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201656H22208.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201656H22208.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201656H22208.png",
+      "/images/paramount/1656h22208-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1660h22212",
@@ -304,7 +352,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1660h22212.webp",
-    gallery: ["/images/paramount/1660h22212.webp"],
+    gallery: [
+      "/images/paramount/1660h22212.webp",
+      "/images/paramount/1660h22212-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1660h32206",
@@ -320,7 +371,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1660h32206.webp",
-    gallery: ["/images/paramount/1660h32206.webp"],
+    gallery: [
+      "/images/paramount/1660h32206.webp",
+      "/images/paramount/1660h32206-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1664h32212",
@@ -336,7 +390,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201664H32212.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201664H32212.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201664H32212.png",
+      "/images/paramount/1664h32212-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1666h22091",
@@ -352,7 +409,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1666h22091.webp",
-    gallery: ["/images/paramount/1666h22091.webp"],
+    gallery: [
+      "/images/paramount/1666h22091.webp",
+      "/images/paramount/1666h22091-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1666h22232",
@@ -368,7 +428,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1666h22232.webp",
-    gallery: ["/images/paramount/1666h22232.webp"],
+    gallery: [
+      "/images/paramount/1666h22232.webp",
+      "/images/paramount/1666h22232-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1666h32085",
@@ -385,7 +448,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=uWXCjapKkkW",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1666H32085.floorplan.singlewide.jpg",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1666H32085.floorplan.singlewide.jpg"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/1666H32085.floorplan.singlewide.jpg",
+      "/images/paramount/1666h32085-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1666h32212",
@@ -402,7 +468,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=4PxFEtum7Sr",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201666H32212.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201666H32212.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201666H32212.png",
+      "/images/paramount/1666h32212-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1666h32217",
@@ -418,7 +487,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire1666H32217.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire1666H32217.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire1666H32217.png",
+      "/images/paramount/1666h32217-opt2.webp",
+      "/images/paramount/1666h32217-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1666h32219",
@@ -434,7 +507,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1666h32219.webp",
-    gallery: ["/images/paramount/1666h32219.webp"],
+    gallery: [
+      "/images/paramount/1666h32219.webp",
+      "/images/paramount/1666h32219-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1668h22259",
@@ -450,7 +526,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1668h22259.webp",
-    gallery: ["/images/paramount/1668h22259.webp"],
+    gallery: [
+      "/images/paramount/1668h22259.webp",
+      "/images/paramount/1668h22259-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1668h32085",
@@ -466,7 +545,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32085.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32085.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32085.png",
+      "/images/paramount/1668h32085-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1668h32087",
@@ -482,7 +564,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32087.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32087.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32087.png",
+      "/images/paramount/1668h32087-opt2.webp",
+      "/images/paramount/1668h32087-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1668h32220",
@@ -498,7 +584,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32220.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32220.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201668H32220.png",
+      "/images/paramount/1668h32220-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1672h32087",
@@ -514,7 +603,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1672h32087.webp",
-    gallery: ["/images/paramount/1672h32087.webp"],
+    gallery: [
+      "/images/paramount/1672h32087.webp",
+      "/images/paramount/1672h32087-opt2.webp",
+      "/images/paramount/1672h32087-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1672h32090",
@@ -530,7 +623,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1672h32090.webp",
-    gallery: ["/images/paramount/1672h32090.webp"],
+    gallery: [
+      "/images/paramount/1672h32090.webp",
+      "/images/paramount/1672h32090-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1676h32085",
@@ -546,7 +642,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1676h32085.webp",
-    gallery: ["/images/paramount/1676h32085.webp"],
+    gallery: [
+      "/images/paramount/1676h32085.webp",
+      "/images/paramount/1676h32085-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1676h32087",
@@ -562,7 +661,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1676h32087.webp",
-    gallery: ["/images/paramount/1676h32087.webp"],
+    gallery: [
+      "/images/paramount/1676h32087.webp",
+      "/images/paramount/1676h32087-opt2.webp",
+      "/images/paramount/1676h32087-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1676h32089",
@@ -579,7 +682,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=VuwvcQaBZ6A",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32089.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32089.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32089.png",
+      "/images/paramount/1676h32089-opt2.webp",
+      "/images/paramount/1676h32089-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1676h32090",
@@ -596,7 +703,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=JkJGwJcLA1u",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32090.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32090.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32090.png",
+      "/images/paramount/1676h32090-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1676h32091",
@@ -613,7 +723,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=pTvNN2nwKia",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32091.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32091.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32091.png",
+      "/images/paramount/1676h32091-opt2.webp",
+      "/images/paramount/1676h32091-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1676h32107",
@@ -629,7 +743,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "/images/paramount/1676h32107.webp",
-    gallery: ["/images/paramount/1676h32107.webp"],
+    gallery: [
+      "/images/paramount/1676h32107.webp",
+      "/images/paramount/1676h32107-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1676h32212",
@@ -645,7 +762,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32212.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32212.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32212.png",
+      "/images/paramount/1676h32212-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1676h32221",
@@ -662,7 +782,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=AkmP7A8HE4x",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32221.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32221.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32221.png",
+      "/images/paramount/1676h32221-opt2.webp",
+      "/images/paramount/1676h32221-opt3.webp",
+    ],
   },
   {
     slug: "paramount-1676h32222",
@@ -678,7 +802,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Single Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32222.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32222.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32222.png",
+      "/images/paramount/1676h32222-opt2.webp",
+    ],
   },
   {
     slug: "paramount-1676h32259",
@@ -695,7 +822,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=AWkbFGPfWuD",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32259.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32259.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Dutch%20Aspire%201676H32259.png",
+      "/images/paramount/1676h32259-opt2.webp",
+    ],
   },
   {
     slug: "paramount-casper-2432h21166",
@@ -743,7 +873,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2440h32382.webp",
-    gallery: ["/images/paramount/2440h32382.webp"],
+    gallery: [
+      "/images/paramount/2440h32382.webp",
+      "/images/paramount/2440h32382-opt2.webp",
+    ],
   },
   {
     slug: "paramount-sundance-2444h32167",
@@ -759,7 +892,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2444h32167.webp",
-    gallery: ["/images/paramount/2444h32167.webp"],
+    gallery: [
+      "/images/paramount/2444h32167.webp",
+      "/images/paramount/2444h32167-opt2.webp",
+    ],
   },
   {
     slug: "paramount-sheridan-2444h32382",
@@ -775,7 +911,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2444h32382.webp",
-    gallery: ["/images/paramount/2444h32382.webp"],
+    gallery: [
+      "/images/paramount/2444h32382.webp",
+      "/images/paramount/2444h32382-opt2.webp",
+    ],
   },
   {
     slug: "paramount-sundance-2448h32167",
@@ -791,7 +930,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2448h32167.webp",
-    gallery: ["/images/paramount/2448h32167.webp"],
+    gallery: [
+      "/images/paramount/2448h32167.webp",
+      "/images/paramount/2448h32167-opt2.webp",
+    ],
   },
   {
     slug: "paramount-sheridan-2448h32382",
@@ -807,7 +949,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2448h32382.webp",
-    gallery: ["/images/paramount/2448h32382.webp"],
+    gallery: [
+      "/images/paramount/2448h32382.webp",
+      "/images/paramount/2448h32382-opt2.webp",
+    ],
   },
   {
     slug: "paramount-fairplay-2448h32384",
@@ -855,7 +1000,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2452h32167.webp",
-    gallery: ["/images/paramount/2452h32167.webp"],
+    gallery: [
+      "/images/paramount/2452h32167.webp",
+      "/images/paramount/2452h32167-opt2.webp",
+    ],
   },
   {
     slug: "paramount-broomfield-2456h32160",
@@ -887,7 +1035,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2456h32168.webp",
-    gallery: ["/images/paramount/2456h32168.webp"],
+    gallery: [
+      "/images/paramount/2456h32168.webp",
+      "/images/paramount/2456h32168-opt2.webp",
+    ],
   },
   {
     slug: "paramount-glenrock-2460h42096",
@@ -912,6 +1063,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/glenrock-primary-bedroom.webp",
       "/images/paramount/glenrock-primary-bath.webp",
       "/images/paramount/2460h42096.webp",
+      "/images/paramount/2460h42096-opt2.webp",
     ],
   },
   {
@@ -929,7 +1081,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=gpczG6C2Ydh",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Monroe%202840H32024.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Monroe%202840H32024.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Monroe%202840H32024.png",
+      "/images/paramount/2840h32024-opt2.webp",
+    ],
   },
   {
     slug: "paramount-appleton-2842h32388",
@@ -945,7 +1100,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Appleton%202842H32388.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Appleton%202842H32388.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Appleton%202842H32388.png",
+      "/images/paramount/2842h32388-opt2.webp",
+    ],
   },
   {
     slug: "paramount-monroe-2844h32024",
@@ -961,7 +1119,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2844h32024.webp",
-    gallery: ["/images/paramount/2844h32024.webp"],
+    gallery: [
+      "/images/paramount/2844h32024.webp",
+      "/images/paramount/2844h32024-opt2.webp",
+    ],
   },
   {
     slug: "paramount-bayfield-2844h32169",
@@ -977,7 +1138,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2844h32169.webp",
-    gallery: ["/images/paramount/2844h32169.webp"],
+    gallery: [
+      "/images/paramount/2844h32169.webp",
+      "/images/paramount/2844h32169-opt2.webp",
+    ],
   },
   {
     slug: "paramount-monroe-2848h32024",
@@ -993,7 +1157,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2848h32024.webp",
-    gallery: ["/images/paramount/2848h32024.webp"],
+    gallery: [
+      "/images/paramount/2848h32024.webp",
+      "/images/paramount/2848h32024-opt2.webp",
+    ],
   },
   {
     slug: "paramount-lancaster-2848h32160",
@@ -1009,7 +1176,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2848h32160.webp",
-    gallery: ["/images/paramount/2848h32160.webp"],
+    gallery: [
+      "/images/paramount/2848h32160.webp",
+      "/images/paramount/2848h32160-opt2.webp",
+      "/images/paramount/2848h32160-opt3.webp",
+    ],
   },
   {
     slug: "paramount-bayfield-2848h32169",
@@ -1025,7 +1196,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2848h32169.webp",
-    gallery: ["/images/paramount/2848h32169.webp"],
+    gallery: [
+      "/images/paramount/2848h32169.webp",
+      "/images/paramount/2848h32169-opt2.webp",
+    ],
   },
   {
     slug: "paramount-brighton-2848h32170",
@@ -1041,7 +1215,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2848h32170.webp",
-    gallery: ["/images/paramount/2848h32170.webp"],
+    gallery: [
+      "/images/paramount/2848h32170.webp",
+      "/images/paramount/2848h32170-opt2.webp",
+    ],
   },
   {
     slug: "paramount-lincoln-2848h32171",
@@ -1058,7 +1235,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=5gsHRjVG3Cj",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln%202848H32171.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln%202848H32171.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln%202848H32171.png",
+      "/images/paramount/2848h32171-opt2.webp",
+    ],
   },
   {
     slug: "paramount-ventura-2852h32034",
@@ -1074,7 +1254,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Ventura%202852H32034.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Ventura%202852H32034.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Ventura%202852H32034.png",
+      "/images/paramount/2852h32034-opt2.webp",
+    ],
   },
   {
     slug: "paramount-pontiac-2852h32103",
@@ -1091,7 +1274,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=DDazBkFhtRV",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Pontiac%202852H32103.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Pontiac%202852H32103.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Pontiac%202852H32103.png",
+      "/images/paramount/2852h32103-opt2.webp",
+    ],
   },
   {
     slug: "paramount-lancaster-2852h32160",
@@ -1107,7 +1293,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2852h32160.webp",
-    gallery: ["/images/paramount/2852h32160.webp"],
+    gallery: [
+      "/images/paramount/2852h32160.webp",
+      "/images/paramount/2852h32160-opt2.webp",
+    ],
   },
   {
     slug: "paramount-bayfield-2852h32169",
@@ -1123,7 +1312,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/BayField%202852H32169.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/BayField%202852H32169.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/BayField%202852H32169.png",
+      "/images/paramount/2852h32169-opt2.webp",
+    ],
   },
   {
     slug: "paramount-brighton-2852h32170",
@@ -1147,6 +1339,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/brighton-primary-bedroom.webp",
       "/images/paramount/brighton-primary-bath.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/112APF-2852H32170%20SALES_Page_1.jpg",
+      "/images/paramount/2852h32170-opt2.webp",
     ],
   },
   {
@@ -1173,6 +1366,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/lincoln-bedroom.webp",
       "/images/paramount/lincoln-utility.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln%202852H32171.png",
+      "/images/paramount/2852h32171-opt2.webp",
     ],
   },
   {
@@ -1189,7 +1383,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2852h32172.webp",
-    gallery: ["/images/paramount/2852h32172.webp"],
+    gallery: [
+      "/images/paramount/2852h32172.webp",
+      "/images/paramount/2852h32172-opt2.webp",
+    ],
   },
   {
     slug: "paramount-jackson-2852h32173",
@@ -1237,7 +1434,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2852h32a1c.webp",
-    gallery: ["/images/paramount/2852h32a1c.webp"],
+    gallery: [
+      "/images/paramount/2852h32a1c.webp",
+      "/images/paramount/2852h32a1c-opt2.webp",
+      "/images/paramount/2852h32a1c-opt3.webp",
+    ],
   },
   {
     slug: "paramount-livingston-2852h42096",
@@ -1269,7 +1470,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Ventura%202856H32034.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Ventura%202856H32034.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Ventura%202856H32034.png",
+      "/images/paramount/2856h32034-opt2.webp",
+    ],
   },
   {
     slug: "paramount-pontiac-2856h32103",
@@ -1285,7 +1489,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2856h32103.webp",
-    gallery: ["/images/paramount/2856h32103.webp"],
+    gallery: [
+      "/images/paramount/2856h32103.webp",
+      "/images/paramount/2856h32103-opt2.webp",
+    ],
   },
   {
     slug: "paramount-bay-port-2856h32168",
@@ -1312,6 +1519,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/bayport-bedroom.webp",
       "/images/paramount/bayport-bath.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Bay%20Port%202856H32168.png",
+      "/images/paramount/2856h32168-opt2.webp",
     ],
   },
   {
@@ -1329,7 +1537,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=poCEg35Lncf",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln2856H32171.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln2856H32171.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Lincoln2856H32171.png",
+      "/images/paramount/2856h32171-opt2.webp",
+    ],
   },
   {
     slug: "paramount-warren-2856h32172",
@@ -1346,7 +1557,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=YSHhmjLg532",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Warren%202856H32172.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Warren%202856H32172.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Warren%202856H32172.png",
+      "/images/paramount/2856h32172-opt2.webp",
+    ],
   },
   {
     slug: "paramount-jackson-2856h32173",
@@ -1386,6 +1600,8 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/silverton-primary-bedroom.webp",
       "/images/paramount/silverton-primary-bath.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Silverton%202856H32174.png",
+      "/images/paramount/2856h32174-opt2.webp",
+      "/images/paramount/2856h32174-opt3.webp",
     ],
   },
   {
@@ -1403,7 +1619,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=1WbTQxhZkoF",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Easton%202856H32301.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Easton%202856H32301.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Easton%202856H32301.png",
+      "/images/paramount/2856h32301-opt2.webp",
+    ],
   },
   {
     slug: "paramount-belvidere-2856h32392",
@@ -1428,6 +1647,8 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/belvidere-primary-bedroom.webp",
       "/images/paramount/belvidere-primary-bath.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Belvidere%202856H32392.png",
+      "/images/paramount/2856h32392-opt2.webp",
+      "/images/paramount/2856h32392-opt3.webp",
     ],
   },
   {
@@ -1444,7 +1665,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2856h32449.webp",
-    gallery: ["/images/paramount/2856h32449.webp"],
+    gallery: [
+      "/images/paramount/2856h32449.webp",
+      "/images/paramount/2856h32449-opt2.webp",
+    ],
   },
   {
     slug: "paramount-summit-2856h32a1c",
@@ -1468,6 +1692,8 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/summit-primary-bedroom.webp",
       "/images/paramount/summit-primary-bath.webp",
       "/images/paramount/2856h32a1c.webp",
+      "/images/paramount/2856h32a1c-opt2.webp",
+      "/images/paramount/2856h32a1c-opt3.webp",
     ],
   },
   {
@@ -1485,7 +1711,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=1LqfFmsAGDk",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Bay%20Port%202860H32168.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Bay%20Port%202860H32168.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Bay%20Port%202860H32168.png",
+      "/images/paramount/2860h32168-opt2.webp",
+    ],
   },
   {
     slug: "paramount-warren-2860h32172",
@@ -1502,7 +1731,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=YSHhmjLg532",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Warren%202860H32172.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Warren%202860H32172.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Warren%202860H32172.png",
+      "/images/paramount/2860h32172-opt2.webp",
+    ],
   },
   {
     slug: "paramount-silverton-2860h32174",
@@ -1519,7 +1751,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=zUuN931WExB",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Silverton%202860H32174.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Silverton%202860H32174.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Silverton%202860H32174.png",
+      "/images/paramount/2860h32174-opt2.webp",
+      "/images/paramount/2860h32174-opt3.webp",
+    ],
   },
   {
     slug: "paramount-easton-2860h32301",
@@ -1535,7 +1771,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2860h32301.webp",
-    gallery: ["/images/paramount/2860h32301.webp"],
+    gallery: [
+      "/images/paramount/2860h32301.webp",
+      "/images/paramount/2860h32301-opt2.webp",
+      "/images/paramount/2860h32301-opt3.webp",
+    ],
   },
   {
     slug: "paramount-myrtle-2860h32308",
@@ -1559,6 +1799,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/myrtle-primary-bedroom.webp",
       "/images/paramount/myrtle-primary-bath.webp",
       "/images/paramount/2860h32308.webp",
+      "/images/paramount/2860h32308-opt2.webp",
     ],
   },
   {
@@ -1588,6 +1829,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/odyssey-photo-entry.webp",
       "/images/paramount/odyssey-photo-exterior-2.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Odyssey%202860H32394.png",
+      "/images/paramount/2860h32394-opt2.webp",
     ],
   },
   {
@@ -1605,7 +1847,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=4ZXgyJf4TrZ",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Fillmore%202864H32060.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Fillmore%202864H32060.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Fillmore%202864H32060.png",
+      "/images/paramount/2864h32060-opt2.webp",
+      "/images/paramount/2864h32060-opt3.webp",
+    ],
   },
   {
     slug: "paramount-georgetown-2864h32101",
@@ -1622,7 +1868,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=YPtpvLpSgsf",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Georgetown%202864H32101.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Georgetown%202864H32101.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Georgetown%202864H32101.png",
+      "/images/paramount/2864h32101-opt2.webp",
+    ],
   },
   {
     slug: "paramount-alberta-2864h42177",
@@ -1647,6 +1896,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/alberta-primary-bedroom.webp",
       "/images/paramount/alberta-primary-bath.webp",
       "/images/paramount/2864h42177.webp",
+      "/images/paramount/2864h42177-opt2.webp",
     ],
   },
   {
@@ -1664,7 +1914,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=5pvBSkYRt54",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Summit%202864H42A1C.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Summit%202864H42A1C.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Summit%202864H42A1C.png",
+      "/images/paramount/2864h42a1c-opt2.webp",
+      "/images/paramount/2864h42a1c-opt3.webp",
+    ],
   },
   {
     slug: "paramount-stafford-2868h32179",
@@ -1680,7 +1934,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2868h32179.webp",
-    gallery: ["/images/paramount/2868h32179.webp"],
+    gallery: [
+      "/images/paramount/2868h32179.webp",
+      "/images/paramount/2868h32179-opt2.webp",
+      "/images/paramount/2868h32179-opt3.webp",
+    ],
   },
   {
     slug: "paramount-odyssey-2868h32394",
@@ -1708,6 +1966,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/odyssey-photo-entry.webp",
       "/images/paramount/odyssey-photo-exterior-2.webp",
       "/images/paramount/2868h32394.webp",
+      "/images/paramount/2868h32394-opt2.webp",
     ],
   },
   {
@@ -1725,7 +1984,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=5pvBSkYRt54",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Summit%202868H52A1C.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Summit%202868H52A1C.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Summit%202868H52A1C.png",
+      "/images/paramount/2868h52a1c-opt2.webp",
+      "/images/paramount/2868h52a1c-opt3.webp",
+    ],
   },
   {
     slug: "paramount-stafford-2872h42179",
@@ -1750,6 +2013,8 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/stafford-primary-bath.webp",
       "/images/paramount/stafford-pantry.webp",
       "/images/paramount/2872h42179.webp",
+      "/images/paramount/2872h42179-opt2.webp",
+      "/images/paramount/2872h42179-opt3.webp",
     ],
   },
   {
@@ -1766,7 +2031,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Baldwin%202876H42180.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Baldwin%202876H42180.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Baldwin%202876H42180.png",
+      "/images/paramount/2876h42180-opt2.webp",
+      "/images/paramount/2876h42180-opt3.webp",
+    ],
   },
   {
     slug: "paramount-stafford-2876h43179",
@@ -1782,7 +2051,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/2876h43179.webp",
-    gallery: ["/images/paramount/2876h43179.webp"],
+    gallery: [
+      "/images/paramount/2876h43179.webp",
+      "/images/paramount/2876h43179-opt2.webp",
+      "/images/paramount/2876h43179-opt3.webp",
+    ],
   },
   {
     slug: "paramount-thornton-3252h32377",
@@ -1798,7 +2071,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Thornton%203252H32377.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Thornton%203252H32377.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Thornton%203252H32377.png",
+      "/images/paramount/3252h32377-opt2.webp",
+    ],
   },
   {
     slug: "paramount-thornton-3256h32377",
@@ -1814,7 +2090,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/thornton%203256H32377.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/thornton%203256H32377.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/thornton%203256H32377.png",
+      "/images/paramount/3256h32377-opt2.webp",
+    ],
   },
   {
     slug: "paramount-shelby-3260h32181",
@@ -1831,7 +2110,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=vrK6FVLfsYe",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Shelby%203260H32181.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Shelby%203260H32181.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Shelby%203260H32181.png",
+      "/images/paramount/3260h32181-opt2.webp",
+    ],
   },
   {
     slug: "paramount-fenton-3260h32182",
@@ -1847,7 +2129,13 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/3260h32182.webp",
-    gallery: ["/images/paramount/3260h32182.webp"],
+    gallery: [
+      "/images/paramount/3260h32182.webp",
+      "/images/paramount/3260h32182-opt2.webp",
+      "/images/paramount/3260h32182-opt3.webp",
+      "/images/paramount/3260h32182-opt4.webp",
+      "/images/paramount/3260h32182-opt5.webp",
+    ],
   },
   {
     slug: "paramount-timberlake-3260h32207",
@@ -1880,6 +2168,8 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/timberlake-exterior.webp",
       "/images/paramount/timberlake-exterior-2.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/TimberLake%203260H32207.png",
+      "/images/paramount/3260h32207-opt2.webp",
+      "/images/paramount/3260h32207-opt3.webp",
     ],
   },
   {
@@ -1909,6 +2199,7 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/odyssey-photo-entry.webp",
       "/images/paramount/odyssey-photo-exterior-2.webp",
       "/images/paramount/3260h32394.webp",
+      "/images/paramount/3260h32394-opt2.webp",
     ],
   },
   {
@@ -1926,7 +2217,10 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=vrK6FVLfsYe",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/image001.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/image001.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/image001.png",
+      "/images/paramount/3264h32181-opt2.webp",
+    ],
   },
   {
     slug: "paramount-fenton-3264h32182",
@@ -1942,7 +2236,13 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/3264h32182.webp",
-    gallery: ["/images/paramount/3264h32182.webp"],
+    gallery: [
+      "/images/paramount/3264h32182.webp",
+      "/images/paramount/3264h32182-opt2.webp",
+      "/images/paramount/3264h32182-opt3.webp",
+      "/images/paramount/3264h32182-opt4.webp",
+      "/images/paramount/3264h32182-opt5.webp",
+    ],
   },
   {
     slug: "paramount-shelby-3268h32181",
@@ -1959,7 +2259,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=vrK6FVLfsYe",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Shelby%203268H32181.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Shelby%203268H32181.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Shelby%203268H32181.png",
+      "/images/paramount/3268h32181-opt2.webp",
+      "/images/paramount/3268h32181-opt3.webp",
+    ],
   },
   {
     slug: "paramount-fenton-3268h32182",
@@ -1975,7 +2279,13 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/3268h32182.webp",
-    gallery: ["/images/paramount/3268h32182.webp"],
+    gallery: [
+      "/images/paramount/3268h32182.webp",
+      "/images/paramount/3268h32182-opt2.webp",
+      "/images/paramount/3268h32182-opt3.webp",
+      "/images/paramount/3268h32182-opt4.webp",
+      "/images/paramount/3268h32182-opt5.webp",
+    ],
   },
   {
     slug: "paramount-winston-3272h32186",
@@ -1992,7 +2302,11 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     series: "Paramount",
     virtualTour: "https://my.matterport.com/show/?m=DTqXpJJSKtZ",
     image: "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Winston%203272H32186.png",
-    gallery: ["https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Winston%203272H32186.png"],
+    gallery: [
+      "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/Winston%203272H32186.png",
+      "/images/paramount/3272h32186-opt2.webp",
+      "/images/paramount/3272h32186-opt3.webp",
+    ],
   },
   {
     slug: "paramount-apollo-3272h42185",
@@ -2008,7 +2322,12 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/3272h42185.webp",
-    gallery: ["/images/paramount/3272h42185.webp"],
+    gallery: [
+      "/images/paramount/3272h42185.webp",
+      "/images/paramount/3272h42185-opt2.webp",
+      "/images/paramount/3272h42185-opt3.webp",
+      "/images/paramount/3272h42185-opt4.webp",
+    ],
   },
   {
     slug: "paramount-apollo-3276h42185",
@@ -2024,7 +2343,12 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/3276h42185.webp",
-    gallery: ["/images/paramount/3276h42185.webp"],
+    gallery: [
+      "/images/paramount/3276h42185.webp",
+      "/images/paramount/3276h42185-opt2.webp",
+      "/images/paramount/3276h42185-opt3.webp",
+      "/images/paramount/3276h42185-opt4.webp",
+    ],
   },
   {
     slug: "paramount-red-cedar-3276h43187",
@@ -2040,6 +2364,9 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     homeType: "Double Wide",
     series: "Paramount",
     image: "/images/paramount/3276h43187.webp",
-    gallery: ["/images/paramount/3276h43187.webp"],
+    gallery: [
+      "/images/paramount/3276h43187.webp",
+      "/images/paramount/3276h43187-opt2.webp",
+    ],
   },
 ];
