@@ -206,7 +206,7 @@ export default function DesignSystemPage() {
             <div className="bg-white rounded-lg border border-[var(--color-charcoal)]/8 overflow-hidden hover:shadow-lg transition-shadow">
               <div className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center relative">
                 <span className="text-xs text-[var(--color-gray-light)] uppercase tracking-wider">Image</span>
-                <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">Double Wide</span>
+                <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">Multi-Section</span>
               </div>
               <div className="p-5">
                 <H3 className="font-semibold mb-1">Brighton 2856</H3>
@@ -291,7 +291,7 @@ export default function DesignSystemPage() {
                 <select className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 bg-[var(--color-cream)] text-sm rounded focus:outline-none focus:border-[var(--color-teal)] transition-colors">
                   <option>Select an option...</option>
                   <option>Single Wide</option>
-                  <option>Double Wide</option>
+                  <option>Multi-Section</option>
                   <option>Modular</option>
                 </select>
               </div>

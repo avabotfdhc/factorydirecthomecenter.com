@@ -33,7 +33,7 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   // Seed filters from the homepage search deep link after hydration.
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    if (q.get("type")) setType(q.get("type") || "");
+    if (q.get("type")) setType((q.get("type") || "").replace("double", "multi"));
     if (q.get("sqft")) setMinSqft(Number(q.get("sqft")) || 0);
     if (q.get("beds")) setMinBeds(Number(q.get("beds")) || 0);
     if (q.get("baths")) setMinBaths(Number(q.get("baths")) || 0);
@@ -82,7 +82,7 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
         <select aria-label="Home type" className={selectCls} value={type} onChange={(e) => setType(e.target.value)}>
           <option value="">All Types</option>
           <option value="single">Single Wide</option>
-          <option value="double">Double Wide</option>
+          <option value="multi">Multi-Section</option>
           <option value="modular">Modular</option>
         </select>
         <select aria-label="Minimum size" className={selectCls} value={minSqft || ""} onChange={(e) => setMinSqft(Number(e.target.value) || 0)}>

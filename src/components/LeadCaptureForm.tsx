@@ -44,7 +44,7 @@ const steps: Step[] = [
         id: "homeType",
         label: "Home Type",
         type: "select",
-        options: ["Single Wide", "Double Wide", "Modular", "Not Sure Yet"],
+        options: ["Single Wide", "Multi-Section", "Modular", "Not Sure Yet"],
         required: true,
       },
       {

@@ -58,7 +58,7 @@ export function Footer() {
               Home Types
             </p>
             <ul className="space-y-3">
-              {["Single Wide Homes", "Double Wide Homes", "Modular Homes"].map(
+              {["Single Wide Homes", "Multi-Section Homes", "Modular Homes"].map(
                 (type) => (
                   <li key={type}>
                     <Link

@@ -26,7 +26,7 @@ const homeTypes = [
     image: "/images/homepage/single-wides.webp",
   },
   {
-    title: "Double Wide",
+    title: "Multi-Section",
     subtitle: "Room to Breathe",
     sqft: "1,000 – 2,400 sq ft",
     beds: "3–5 Bed",

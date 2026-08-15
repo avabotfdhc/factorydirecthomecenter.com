@@ -64,20 +64,20 @@ function shortName(title: string): string {
 }
 
 // The CMS leaves homeType empty on most listings (and uses "singleWide" on a
-// few), which silently breaks the type filter — a "Double Wide" search would
+// few), which silently breaks the type filter — a "Multi-Section" search would
 // exclude nearly the whole catalog. Normalize the CMS value, and when it's
 // missing derive the type from the Champion model number (present in the
 // slug, title, or banner-image filename): width prefix 24/28/32 = sectional
-// (Double Wide), 14/16 = Single Wide; an M build code = Modular.
+// (Multi-Section), 14/16 = Single Wide; an M build code = Modular.
 function normalizeHomeType(raw: unknown, context: string): string {
   const t = String(raw || "").trim();
   if (/single/i.test(t)) return "Single Wide";
-  if (/double|sectional|multi/i.test(t)) return "Double Wide";
+  if (/double|sectional|multi/i.test(t)) return "Multi-Section";
   if (/modular/i.test(t)) return "Modular";
   const m = context.match(/\b(14|16|24|28|32)(\d{2})([hm])\d{2}/i);
   if (m) {
     if (m[3].toLowerCase() === "m") return "Modular";
-    return Number(m[1]) >= 24 ? "Double Wide" : "Single Wide";
+    return Number(m[1]) >= 24 ? "Multi-Section" : "Single Wide";
   }
   return t;
 }
