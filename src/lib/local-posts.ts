@@ -30,7 +30,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 </ul>
 
 <h2>What it costs</h2>
-<p>Most new manufactured homes we sell fall between <strong>$50,000 and $150,000</strong> for the home itself — single wides typically starting around $50,000, double wides around $80,000, and IRC-code modular homes around $100,000. Compare that with what new site-built construction runs in Allen County and the math explains why factory-built housing is the fastest-growing path to homeownership in the region. For a deeper cost breakdown, read our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> — and remember our quotes are line-item: the home, the options, the delivery, each priced separately so you can compare honestly against any other dealer.</p>
+<p>Most new manufactured homes we sell fall between <strong>$39,900 and $175,000</strong> for the home itself — single wides typically starting around $39,900, double wides around $80,000, and IRC-code modular homes around $100,000. Compare that with what new site-built construction runs in Allen County and the math explains why factory-built housing is the fastest-growing path to homeownership in the region. For a deeper cost breakdown, read our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> — and remember our quotes are line-item: the home, the options, the delivery, each priced separately so you can compare honestly against any other dealer.</p>
 <p>Site work — foundation or pad, utilities, driveway — is separate, and in our model <strong>you hire your own licensed contractors</strong> for it. Most buyers save money that way versus dealer-bundled site work, and we can share a referral list of licensed and insured contractors past customers around Fort Wayne have used.</p>
 
 <h2>How delivery works from here</h2>
@@ -61,9 +61,9 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>If you've searched for manufactured home prices in Indiana, you've probably noticed something frustrating: almost nobody publishes real numbers. Dealers advertise "affordable homes" and then make you sit through a sales pitch to learn what anything costs. We think you deserve better context before you ever pick up the phone — so here is an honest look at what manufactured and modular homes actually cost in Indiana in 2026, what drives the price up or down, and how to read a quote so you know exactly what you're paying for.</p>
 
 <h2>Indiana manufactured home price ranges in 2026</h2>
-<p>Most new manufactured homes in Indiana fall between <strong>$50,000 and $150,000</strong> for the home itself. Where you land in that range depends mostly on the size and construction type:</p>
+<p>Most new manufactured homes in Indiana fall between <strong>$39,900 and $175,000</strong> for the home itself. Where you land in that range depends mostly on the size and construction type:</p>
 <ul>
-  <li><strong>Single wide homes (500&ndash;1,200 sq ft):</strong> typically start around $50,000. These are efficient, smartly designed homes for first-time buyers, downsizers, or rental land placements.</li>
+  <li><strong>Single wide homes (500&ndash;1,200 sq ft):</strong> typically start around $39,900. These are efficient, smartly designed homes for first-time buyers, downsizers, or rental land placements.</li>
   <li><strong>Double wide homes (1,000&ndash;2,400 sq ft):</strong> typically start around $80,000. Sectional homes like the Brighton and Silverton series offer multiple living areas and layouts that rival site-built houses.</li>
   <li><strong>Modular homes (1,000&ndash;2,500+ sq ft):</strong> typically start around $100,000. Built to Indiana's IRC residential code and placed on permanent foundations, these are financed and appraised like site-built homes.</li>
 </ul>
@@ -119,7 +119,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Placing a home in DeKalb County</h2>
 <p>Much of DeKalb County outside city limits allows manufactured homes on private land, and modular homes on permanent foundations fit nearly anywhere a site-built house can go. Zoning and setbacks are parcel-specific: you or your contractor verify the rules and pull the permits, and because the county offices are minutes away, we can point you to exactly the right desk. Our <a href="/guides/zoning">zoning guide</a> explains the process.</p>
 <h2>The factory question</h2>
-<p>Champion's Topeka plant — the largest Champion factory in the country — is about 20 miles from Auburn. Short freight means lower delivery cost on your line-item quote, and it's why Auburn buyers consistently see some of the lowest delivered prices in our service area. Most homes fall between $50,000 and $150,000 depending on size and options; see the full breakdown in our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Champion's Topeka plant — the largest Champion factory in the country — is about 20 miles from Auburn. Short freight means lower delivery cost on your line-item quote, and it's why Auburn buyers consistently see some of the lowest delivered prices in our service area. Most homes fall between $39,900 and $175,000 depending on size and options; see the full breakdown in our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Do you deliver inside Auburn city limits?</h3>
 <p>We deliver anywhere in the area — city-limit placements depend on zoning, which typically favors established communities or modular construction; rural DeKalb parcels are usually simpler. We'll help you check your specific address.</p>
@@ -141,7 +141,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Land options around Garrett</h2>
 <p>Buyers around Garrett typically choose between rural DeKalb County acreage — where manufactured homes are permitted on many parcels — and placing a modular home on a permanent foundation closer to town. Zoning is parcel-specific; you or your contractor verify requirements and pull permits with the county, and our <a href="/guides/zoning">zoning guide</a> walks through how that works.</p>
 <h2>What Garrett buyers pay</h2>
-<p>Most of our homes land between $50,000 and $150,000 — single wides from around $50,000, double wides from around $80,000, modular from around $100,000 — with delivery costs among the lowest anywhere we serve, because Garrett sits minutes from both our lot and short freight range of Champion's Topeka factory. Our <a href="/blog/manufactured-home-cost-indiana">cost guide</a> explains every line of the quote.</p>
+<p>Most of our homes land between $39,900 and $175,000 — single wides from around $39,900, double wides from around $80,000, modular from around $100,000 — with delivery costs among the lowest anywhere we serve, because Garrett sits minutes from both our lot and short freight range of Champion's Topeka factory. Our <a href="/blog/manufactured-home-cost-indiana">cost guide</a> explains every line of the quote.</p>
 <h2>FAQ</h2>
 <h3>How fast can I be in a new home in Garrett?</h3>
 <p>Typically 8&ndash;12 weeks from order: 6&ndash;8 weeks of factory build, with your contractor's site prep running in parallel.</p>
@@ -163,7 +163,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Your placement options</h2>
 <p>Rural parcels around Waterloo and across DeKalb County commonly allow manufactured homes; modular homes on permanent foundations extend your options closer to town. As everywhere in Indiana, zoning is parcel-by-parcel — you or your contractor confirm the rules and pull permits, and we can point you to the right DeKalb County offices. Details in our <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>Costs, honestly</h2>
-<p>Expect most homes to fall between $50,000 and $150,000 depending on size and options. Every quote we write is line-item — home, options, delivery, each priced separately — so you can compare us against anyone. Start with the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>, then browse <a href="/floor-plans">70+ Champion floor plans</a>.</p>
+<p>Expect most homes to fall between $39,900 and $175,000 depending on size and options. Every quote we write is line-item — home, options, delivery, each priced separately — so you can compare us against anyone. Start with the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>, then browse <a href="/floor-plans">70+ Champion floor plans</a>.</p>
 <h2>FAQ</h2>
 <h3>Can I see homes in person?</h3>
 <p>Yes — model homes are open at our Auburn showroom, Mon&ndash;Fri 9&ndash;5 and Saturday 10&ndash;4, a few minutes' drive from Waterloo. See <a href="/locations/waterloo">our Waterloo page</a> for more.</p>
@@ -185,7 +185,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Placing a home around Butler</h2>
 <p>Eastern DeKalb County is largely rural, and many parcels allow manufactured homes on private land; modular homes on permanent foundations broaden the options further. You or your contractor verify zoning for your parcel and pull the permits — our <a href="/guides/zoning">zoning guide</a> covers the Indiana process, and we serve Ohio buyers across the line too.</p>
 <h2>What it costs</h2>
-<p>Most homes run $50,000&ndash;$150,000 depending on size and options — singles from about $50,000, doubles from about $80,000, modular from about $100,000 — and Butler's proximity to the Topeka factory keeps the delivery line low. Full breakdown in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Most homes run $39,900&ndash;$175,000 depending on size and options — singles from about $39,900, doubles from about $80,000, modular from about $100,000 — and Butler's proximity to the Topeka factory keeps the delivery line low. Full breakdown in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Do you serve buyers just across the Ohio line?</h3>
 <p>Yes — we deliver throughout Ohio, including the countryside just east of Butler. See <a href="/locations">all the areas we serve</a>.</p>
@@ -207,7 +207,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Close to the showroom, close to the factory</h2>
 <p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and your home is built at Champion's Topeka plant — the largest Champion factory in the country — a short freight hop away. Short distances show up as real savings on the delivery line of your quote.</p>
 <h2>The numbers</h2>
-<p>Most homes fall between $50,000 and $150,000: single wides from around $50,000, double wides from around $80,000, IRC-code modular from around $100,000. Quotes are line-item, and site work is handled by your own licensed contractors — most buyers save money that way. Details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Most homes fall between $39,900 and $175,000: single wides from around $39,900, double wides from around $80,000, IRC-code modular from around $100,000. Quotes are line-item, and site work is handled by your own licensed contractors — most buyers save money that way. Details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>What Noble County towns do you serve from Kendallville?</h3>
 <p>All of them — Albion, Ligonier, Rome City, Avilla, Wolcottville, and the surrounding countryside. See <a href="/locations/kendallville">our Kendallville page</a> and <a href="/locations/noble-county">Noble County page</a>.</p>
@@ -229,7 +229,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>A 30-minute trip to compare real homes</h2>
 <p>Our Auburn showroom is about a half-hour drive from Albion. Walk through single wide, double wide, and modular models, then get a line-item quote — home, options, delivery, each priced separately — for the exact configuration you want from our <a href="/floor-plans">70+ Champion floor plans</a>.</p>
 <h2>What Albion buyers spend</h2>
-<p>Most homes land between $50,000 and $150,000 depending on size and options. Site work — pad or foundation, utilities, driveway — is separate and handled by your own licensed contractors, which is where many buyers save real money. The <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> breaks down every driver.</p>
+<p>Most homes land between $39,900 and $175,000 depending on size and options. Site work — pad or foundation, utilities, driveway — is separate and handled by your own licensed contractors, which is where many buyers save real money. The <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> breaks down every driver.</p>
 <h2>FAQ</h2>
 <h3>Can I put a home on lake-area land near Albion?</h3>
 <p>Often yes, subject to the parcel's zoning and any lake-community rules — verify before you buy land. We're happy to walk through what to check.</p>
@@ -251,7 +251,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Placing a home in western Noble County</h2>
 <p>The countryside around Ligonier offers rural parcels where manufactured homes are commonly permitted, and modular homes on permanent foundations open up additional districts. Zoning is parcel-specific: you or your contractor verify requirements and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> shows the steps.</p>
 <h2>Seeing the homes</h2>
-<p>Our Auburn showroom is about a 40-minute drive from Ligonier — model homes open Mon&ndash;Fri 9&ndash;5, Saturday 10&ndash;4. Preview our <a href="/floor-plans">Champion floor plans</a> first, including Aspire-series homes built right in Topeka. Most fall between $50,000 and $150,000; see the <a href="/blog/manufactured-home-cost-indiana">cost guide</a> for what moves the number.</p>
+<p>Our Auburn showroom is about a 40-minute drive from Ligonier — model homes open Mon&ndash;Fri 9&ndash;5, Saturday 10&ndash;4. Preview our <a href="/floor-plans">Champion floor plans</a> first, including Aspire-series homes built right in Topeka. Most fall between $39,900 and $175,000; see the <a href="/blog/manufactured-home-cost-indiana">cost guide</a> for what moves the number.</p>
 <h2>FAQ</h2>
 <h3>How fast can a Ligonier home be delivered once built?</h3>
 <p>The factory-to-site trip is short; the overall order-to-move-in timeline still runs about 8&ndash;12 weeks, driven mostly by factory build time and your contractor's site prep.</p>
@@ -271,7 +271,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Lake lots and rural Steuben parcels</h2>
 <p>Around the lakes, placement depends on the parcel: rural Steuben County land commonly accommodates manufactured homes, while some lake communities have their own standards — and modular homes on permanent foundations fit nearly anywhere a site-built cottage could. Verify zoning for the specific lot (you or your contractor pull the permits); our <a href="/guides/zoning">zoning guide</a> covers what to check before you buy land.</p>
 <h2>A straight shot down I-69</h2>
-<p>Our Auburn showroom is an easy drive south from Angola on I-69. Tour models in person, then get line-item pricing for the exact floor plan and options you want from our <a href="/floor-plans">70+ Champion plans</a>. Most homes run $50,000&ndash;$150,000 — the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> explains the ranges.</p>
+<p>Our Auburn showroom is an easy drive south from Angola on I-69. Tour models in person, then get line-item pricing for the exact floor plan and options you want from our <a href="/floor-plans">70+ Champion plans</a>. Most homes run $39,900&ndash;$175,000 — the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> explains the ranges.</p>
 <h2>FAQ</h2>
 <h3>Can a manufactured home work as a lake home?</h3>
 <p>Yes — modern HUD-code homes are fully insulated, four-season houses, and modular homes on permanent foundations finance and appraise like site-built. Many buyers use them as primary residences near the water.</p>
@@ -298,7 +298,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
 <h2>Between the city and the country</h2>
 <p>Huntertown buyers sit at a sweet spot: minutes from Fort Wayne, but close to rural Allen and DeKalb County land where manufactured homes are commonly permitted on private parcels. Modular homes on permanent foundations extend the options into more developed areas. Zoning is parcel-specific — you or your contractor verify and pull permits; see the <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>The closest dealer to the north side</h2>
-<p>From Huntertown, our Auburn showroom is a short drive north — closer than crossing Fort Wayne. Walk through models, then get line-item quotes on any of our <a href="/floor-plans">Champion floor plans</a>, built about 20 miles away at the Topeka plant. Most homes run $50,000&ndash;$150,000; details in the <a href="/blog/manufactured-home-cost-indiana">cost guide</a> and the <a href="/blog/manufactured-homes-fort-wayne-buyers-guide">Fort Wayne buyer's guide</a>.</p>
+<p>From Huntertown, our Auburn showroom is a short drive north — closer than crossing Fort Wayne. Walk through models, then get line-item quotes on any of our <a href="/floor-plans">Champion floor plans</a>, built about 20 miles away at the Topeka plant. Most homes run $39,900&ndash;$175,000; details in the <a href="/blog/manufactured-home-cost-indiana">cost guide</a> and the <a href="/blog/manufactured-homes-fort-wayne-buyers-guide">Fort Wayne buyer's guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Can I place a manufactured home in Huntertown itself?</h3>
 <p>Within town limits, zoning typically favors modular construction on permanent foundations; manufactured homes are commonly placed on rural land just outside. We'll help you check your specific parcel.</p>
@@ -318,7 +318,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
 <h2>East Allen options</h2>
 <p>East and southeast of New Haven, rural Allen County parcels commonly accommodate manufactured homes on private land, and established manufactured home communities offer the lowest cash-to-move-in path. Modular homes on permanent foundations — built to Indiana's residential code — fit nearly anywhere site-built homes go. As always, zoning is parcel-specific: you or your contractor verify and pull permits (<a href="/guides/zoning">how it works</a>).</p>
 <h2>Getting to us is the easy part</h2>
-<p>Our Auburn showroom is a straightforward drive north of New Haven. Tour single wide, double wide, and modular models, and leave with line-item pricing — home, options, delivery, each its own number. Browse <a href="/floor-plans">70+ Champion floor plans</a> first; most run $50,000&ndash;$150,000 (<a href="/blog/manufactured-home-cost-indiana">full cost guide</a>).</p>
+<p>Our Auburn showroom is a straightforward drive north of New Haven. Tour single wide, double wide, and modular models, and leave with line-item pricing — home, options, delivery, each its own number. Browse <a href="/floor-plans">70+ Champion floor plans</a> first; most run $39,900&ndash;$175,000 (<a href="/blog/manufactured-home-cost-indiana">full cost guide</a>).</p>
 <h2>Financing</h2>
 <p>We work with the manufactured-housing specialists — 21st Mortgage, Triad Financial Services, Credit Human, Lake Michigan Credit Union — for chattel loans, land-home packages, and conventional modular financing. Start at <a href="/financing">financing</a>.</p>
 <h2>FAQ</h2>
@@ -338,7 +338,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
 <h2>Whitley County land is the opportunity</h2>
 <p>Outside municipal limits, much of Whitley County accommodates manufactured homes on private parcels, and modular homes on permanent foundations extend into more developed districts. The county seat is right there in Columbia City, which makes the permit process — handled by you or your contractor — conveniently local. Our <a href="/guides/zoning">zoning guide</a> lays out the steps.</p>
 <h2>Worth the drive to Auburn</h2>
-<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide, double wide, and modular homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at the Topeka plant about 20 miles from our lot. Most homes run $50,000&ndash;$150,000 — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide, double wide, and modular homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at the Topeka plant about 20 miles from our lot. Most homes run $39,900&ndash;$175,000 — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>What Whitley County areas do you serve?</h3>
 <p>All of them — Columbia City, Churubusco, South Whitley, Larwill, and the surrounding townships. See <a href="/locations/columbia-city">our Columbia City page</a> and <a href="/locations/whitley-county">Whitley County page</a>.</p>
@@ -360,7 +360,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
 <h2>Placing a home around Churubusco</h2>
 <p>The countryside around Churubusco — northern Whitley County and neighboring Allen and Noble County townships — commonly accommodates manufactured homes on rural parcels, with modular-on-foundation extending the options. You or your contractor verify parcel zoning and pull permits; the <a href="/guides/zoning">zoning guide</a> shows how.</p>
 <h2>The budget picture</h2>
-<p>Most homes fall between $50,000 and $150,000 depending on size and options, quoted line-item so you see the home, the options, and the delivery — which stays low here, since Champion's Topeka factory is a short freight run away. Full details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Most homes fall between $39,900 and $175,000 depending on size and options, quoted line-item so you see the home, the options, and the delivery — which stays low here, since Champion's Topeka factory is a short freight run away. Full details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>How long from order to move-in?</h3>
 <p>Typically 8&ndash;12 weeks — 6&ndash;8 weeks of factory build, with your contractor's site prep in parallel.</p>
@@ -378,7 +378,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     html: `
 <p>Indianapolis has Indiana's biggest housing market and its steepest affordability squeeze. For buyers with land — or plans to buy land — in the counties around Marion, a factory-direct manufactured or modular home is often the only realistic route to new construction. And here's the part most central Indiana buyers don't know: shopping a factory-direct dealer up north can beat metro-area dealer pricing, even after the longer delivery.</p>
 <h2>The factory-direct math for central Indiana</h2>
-<p>Our dealership in Auburn sits about 20 miles from Champion's largest factory in the country. We buy direct, quote line-item, and don't carry metro-market overhead. Delivery to central Indiana costs more than delivery near Auburn — that's physics — but it's one transparent line on your quote, and the home price itself is the same factory-direct number our local buyers get. Most homes run $50,000&ndash;$150,000 (<a href="/blog/manufactured-home-cost-indiana">cost guide</a>).</p>
+<p>Our dealership in Auburn sits about 20 miles from Champion's largest factory in the country. We buy direct, quote line-item, and don't carry metro-market overhead. Delivery to central Indiana costs more than delivery near Auburn — that's physics — but it's one transparent line on your quote, and the home price itself is the same factory-direct number our local buyers get. Most homes run $39,900&ndash;$175,000 (<a href="/blog/manufactured-home-cost-indiana">cost guide</a>).</p>
 <h2>Where Indy-area buyers place homes</h2>
 <p>Manufactured homes are commonly placed on rural parcels in the counties surrounding Indianapolis, and in established land-lease communities throughout the metro. Modular homes on permanent foundations — IRC-code construction — fit suburban lots where site-built homes go. Zoning is parcel-specific everywhere: you or your contractor verify the rules and pull permits. Start with our <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>How buying from a distance works</h2>

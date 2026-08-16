@@ -16,7 +16,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "How much does a manufactured home cost in Indiana?",
-      answer: "Manufactured homes in Indiana typically range from $50,000 to $150,000 depending on size and features. Single wides start around $50,000, double wides from $80,000, and modular homes from $100,000. Factory Direct offers line-item pricing so you see exactly what you're paying for.",
+      answer: "Manufactured homes in Indiana typically range from $39,900 to $175,000 depending on size and features. Single wides start around $39,900, multi-section homes from $80,000, and modular homes from $100,000. Factory Direct offers line-item pricing so you see exactly what you're paying for.",
     },
     {
       question: "Do you offer financing for manufactured homes?",

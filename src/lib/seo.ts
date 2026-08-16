@@ -100,7 +100,7 @@ export const structuredData = {
     url: "https://factorydirecthomescenter.com",
     telephone: "+1-260-308-1457",
     email: "info@factorydirecthomescenter.com",
-    priceRange: "$$",
+    priceRange: "$39,900 - $175,000",
     address: {
       "@type": "PostalAddress",
       streetAddress: "1211 State Road 8",
