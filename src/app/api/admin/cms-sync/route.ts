@@ -107,6 +107,15 @@ export async function GET(req: NextRequest) {
   // issue GETs. Same trust model as the POST body (HTTPS end to end; abuse
   // as a login oracle is bounded by the CMS's 5/15min auth limiter), and the
   // env secret, when configured, gates this too.
+  // Token reuse: a prior run returns its token; pass it back to skip login.
+  const tokenParam = params.get("token") || "";
+  if (tokenParam) {
+    if (secret && params.get("key") !== secret) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return runSync({ token: tokenParam, write, batch });
+  }
+
   const authParam = params.get("auth");
   if (authParam) {
     if (secret && params.get("key") !== secret) {
@@ -156,18 +165,18 @@ export async function POST(req: NextRequest) {
   if (secret && body?.key !== secret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  if (!body?.user || !body?.pass) {
-    return NextResponse.json({ error: "Body must include user and pass (CMS admin login)." }, { status: 400 });
+  const write = body.write === true || body.write === 1 || body.write === "1";
+  const batch = Number(body.batch);
+  if (body?.token) {
+    return runSync({ token: String(body.token), write, batch });
   }
-  return runSync({
-    user: String(body.user),
-    pass: String(body.pass),
-    write: body.write === true || body.write === 1 || body.write === "1",
-    batch: Number(body.batch),
-  });
+  if (!body?.user || !body?.pass) {
+    return NextResponse.json({ error: "Body must include token, or user and pass (CMS admin login)." }, { status: 400 });
+  }
+  return runSync({ user: String(body.user), pass: String(body.pass), write, batch });
 }
 
-async function runSync(opts: { user: string; pass: string; write: boolean; batch: number }) {
+async function runSync(opts: { user?: string; pass?: string; token?: string; write: boolean; batch: number }) {
   try {
     return await runSyncInner(opts);
   } catch (err) {
@@ -175,24 +184,35 @@ async function runSync(opts: { user: string; pass: string; write: boolean; batch
   }
 }
 
-async function runSyncInner(opts: { user: string; pass: string; write: boolean; batch: number }) {
+async function runSyncInner(opts: { user?: string; pass?: string; token?: string; write: boolean; batch: number }) {
   const write = opts.write;
   const batch = Math.min(Math.max(opts.batch || 3, 1), 5);
 
-  // Login (token also works across runs, but re-logging once per run stays
-  // within the CMS's 5-per-15-min auth limit at our batch cadence).
-  const login = await cmsFetch("/api/authenticate/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userName: opts.user, password: opts.pass }),
-  });
-  const token: string = login?.token || login?.data?.token;
-  if (!token) return NextResponse.json({ error: "CMS login returned no token", login }, { status: 502 });
+  // The CMS rate-limits authenticated requests hard (the auth limiter fires a
+  // "too many login attempts" 429 after only a handful). So: log in AT MOST
+  // once per run, and reuse the returned token across runs by passing it back
+  // in as `token` — a run with a token makes ZERO calls to /authenticate.
+  // The token is echoed in the response for exactly this reuse (HTTPS only;
+  // it's a short-lived CMS admin token for the operator's own site).
+  let token = opts.token || "";
+  if (!token) {
+    if (!opts.user || !opts.pass) {
+      return NextResponse.json({ error: "Provide token, or user+pass to log in." }, { status: 400 });
+    }
+    const login = await cmsFetch("/api/authenticate/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userName: opts.user, password: opts.pass }),
+    });
+    token = login?.token || login?.data?.token;
+    if (!token) return NextResponse.json({ error: "CMS login returned no token", login }, { status: 502 });
+  }
   const auth = { Authorization: `Bearer ${token}` };
 
-  // Existing CMS slugs (get-all includes inactive; soft-deleted rows still
-  // block slugs but don't appear — those surface as create-time errors).
-  const all = await cmsFetch("/api/floor-plan/get-all?limit=1000&page=1", { headers: auth });
+  // Read the existing catalog from the PUBLIC get-active endpoint (no auth →
+  // doesn't count against the auth limiter). Newly-created records are active
+  // by default, so this is an accurate idempotency check across runs.
+  const all = await cmsFetch("/api/floor-plan/get-active?limit=1000");
   const rows: any[] = Array.isArray(all?.data) ? all.data : all?.rows || [];
   const existing = new Set(rows.map((r) => String(r.slug)));
 
@@ -201,7 +221,7 @@ async function runSyncInner(opts: { user: string; pass: string; write: boolean; 
   if (!categoryId) {
     const counts = new Map<string, number>();
     for (const r of rows) {
-      const c = String(r.category ?? "");
+      const c = String(r.category ?? r.categoryId ?? "");
       if (c) counts.set(c, (counts.get(c) || 0) + 1);
     }
     categoryId = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
@@ -233,6 +253,8 @@ async function runSyncInner(opts: { user: string; pass: string; write: boolean; 
     created: [] as string[],
     errors: [] as { slug: string; error: string }[],
     remainingAfterRun: Math.max(0, withImage.length - (write ? queue.length : 0)),
+    // Echoed for reuse on the next run so it skips login (see note above).
+    token,
   };
   if (!write) return NextResponse.json(report);
 
