@@ -680,6 +680,7 @@ export const localFloorPlans: LocalFloorPlan[] = [
     image: "/images/paramount/odyssey-photo-exterior.webp",
     gallery: [
       "/images/paramount/odyssey-photo-exterior.webp",
+      "/images/paramount/3260h32394.webp",
       "/images/paramount/odyssey-photo-kitchen.webp",
       "/images/paramount/odyssey-photo-living.webp",
       "/images/paramount/odyssey-photo-dining.webp",
@@ -688,7 +689,6 @@ export const localFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/odyssey-photo-bedroom.webp",
       "/images/paramount/odyssey-photo-entry.webp",
       "/images/paramount/odyssey-photo-exterior-2.webp",
-      "/images/paramount/3260h32394.webp",
     ],
   },
 

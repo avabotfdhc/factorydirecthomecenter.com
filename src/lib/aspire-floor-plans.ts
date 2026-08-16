@@ -504,14 +504,14 @@ export const aspireFloorPlans: LocalFloorPlan[] = [
     image: "/images/paramount/glenrock-exterior.webp",
     gallery: [
       "/images/paramount/glenrock-exterior.webp",
+      "/images/paramount/2460h42096.webp",
+      "/images/paramount/2460h42096-opt2.webp",
       "/images/paramount/glenrock-kitchen.webp",
       "/images/paramount/glenrock-drone.webp",
       "/images/paramount/glenrock-living.webp",
       "/images/paramount/glenrock-dining.webp",
       "/images/paramount/glenrock-primary-bedroom.webp",
       "/images/paramount/glenrock-primary-bath.webp",
-      "/images/paramount/2460h42096.webp",
-      "/images/paramount/2460h42096-opt2.webp",
     ],
   },
   {
@@ -791,14 +791,14 @@ export const aspireFloorPlans: LocalFloorPlan[] = [
     image: "/images/paramount/summit-exterior.webp",
     gallery: [
       "/images/paramount/summit-exterior.webp",
+      "/images/paramount/2856h32a1c.webp",
+      "/images/paramount/2856h32a1c-opt2.webp",
+      "/images/paramount/2856h32a1c-opt3.webp",
       "/images/paramount/summit-kitchen.webp",
       "/images/paramount/summit-living.webp",
       "/images/paramount/summit-dining.webp",
       "/images/paramount/summit-primary-bedroom.webp",
       "/images/paramount/summit-primary-bath.webp",
-      "/images/paramount/2856h32a1c.webp",
-      "/images/paramount/2856h32a1c-opt2.webp",
-      "/images/paramount/2856h32a1c-opt3.webp",
     ],
   },
   {
@@ -879,6 +879,8 @@ export const aspireFloorPlans: LocalFloorPlan[] = [
     image: "/images/paramount/odyssey-photo-exterior.webp",
     gallery: [
       "/images/paramount/odyssey-photo-exterior.webp",
+      "/images/paramount/2868h32394.webp",
+      "/images/paramount/2868h32394-opt2.webp",
       "/images/paramount/odyssey-photo-kitchen.webp",
       "/images/paramount/odyssey-photo-living.webp",
       "/images/paramount/odyssey-photo-dining.webp",
@@ -887,8 +889,6 @@ export const aspireFloorPlans: LocalFloorPlan[] = [
       "/images/paramount/odyssey-photo-bedroom.webp",
       "/images/paramount/odyssey-photo-entry.webp",
       "/images/paramount/odyssey-photo-exterior-2.webp",
-      "/images/paramount/2868h32394.webp",
-      "/images/paramount/2868h32394-opt2.webp",
     ],
   },
 ];
