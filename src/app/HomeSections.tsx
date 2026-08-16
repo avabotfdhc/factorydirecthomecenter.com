@@ -164,7 +164,7 @@ export function AnimatedHomeSections() {
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
             <FadeIn direction="up" delay={0}>
               <div className="font-serif text-3xl lg:text-4xl font-bold">
-                <AnimatedCounter end={70} suffix="+" />
+                <AnimatedCounter end={260} suffix="+" />
               </div>
               <div className="text-sm text-white/70 mt-1">Floor Plans</div>
             </FadeIn>
@@ -228,6 +228,22 @@ export function AnimatedHomeSections() {
               </FadeIn>
             ))}
           </StaggerContainer>
+
+          <FadeIn direction="up">
+            <p className="text-center mt-10">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-teal)] hover:underline underline-offset-4"
+              >
+                <svg className="w-4 h-4 text-[var(--color-orange)]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                Read our verified reviews on Google →
+              </a>
+            </p>
+          </FadeIn>
         </div>
       </section>
 

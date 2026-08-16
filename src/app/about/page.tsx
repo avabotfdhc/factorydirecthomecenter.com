@@ -319,12 +319,12 @@ export default function AboutPage() {
                   <StaggerContainer staggerDelay={150} className="grid grid-cols-2 gap-6">
                     <div className="text-center">
                       <div className="font-serif text-4xl font-bold">
-                        <AnimatedCounter end={70} suffix="+" />
+                        <AnimatedCounter end={260} suffix="+" />
                       </div>
                       <div className="text-sm text-white/70 mt-1">Floor Plans</div>
                     </div>
                     <div className="text-center">
-                      <div className="font-serif text-4xl font-bold">6</div>
+                      <div className="font-serif text-4xl font-bold">3</div>
                       <div className="text-sm text-white/70 mt-1">States Served</div>
                     </div>
                     <div className="text-center">

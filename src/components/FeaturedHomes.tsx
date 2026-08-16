@@ -43,6 +43,11 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
                 {plan.homeType}
               </span>
             )}
+            {plan.virtualTour && (
+              <span className="absolute top-3 right-3 bg-black/60 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded z-10">
+                3D Tour
+              </span>
+            )}
           </figure>
 
           <div className="p-5">
@@ -56,7 +61,7 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
             </div>
 
             <div className="flex items-center justify-between pt-3 border-t border-[var(--color-charcoal)]/5">
-              <span className="font-serif text-xl font-semibold text-[var(--color-teal)]">{plan.price}</span>
+              <span className="font-serif text-xl font-semibold text-[var(--color-teal)]">{plan.priceFrom || plan.price}</span>
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-lime-dark)] group-hover:text-[var(--color-teal)] transition-colors">
                 View Plan →
               </span>

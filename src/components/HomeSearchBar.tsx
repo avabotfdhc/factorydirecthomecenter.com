@@ -3,15 +3,17 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-// Homepage search bar. The selects build a /floor-plans?type=&sqft=&beds=&baths=
-// URL that FloorPlansGrid reads to pre-apply filters, so the homepage search
-// actually filters the catalog instead of just linking to it.
+// Homepage search bar. The selects build a
+// /floor-plans?type=&width=&sqft=&beds=&baths= URL that FloorPlansGrid reads
+// to pre-apply filters, so the homepage search actually filters the catalog
+// instead of just linking to it.
 const selectCls =
   "flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]";
 
 export function HomeSearchBar() {
   const router = useRouter();
   const [type, setType] = useState("");
+  const [width, setWidth] = useState("");
   const [sqft, setSqft] = useState("");
   const [beds, setBeds] = useState("");
   const [baths, setBaths] = useState("");
@@ -19,6 +21,7 @@ export function HomeSearchBar() {
   const search = () => {
     const q = new URLSearchParams();
     if (type) q.set("type", type);
+    if (width) q.set("width", width);
     if (sqft) q.set("sqft", sqft);
     if (beds) q.set("beds", beds);
     if (baths) q.set("baths", baths);
@@ -32,6 +35,14 @@ export function HomeSearchBar() {
         <option value="single">Single Wide</option>
         <option value="multi">Multi-Section</option>
         <option value="modular">Modular</option>
+      </select>
+      <select aria-label="Home width" className={selectCls} value={width} onChange={(e) => setWidth(e.target.value)}>
+        <option value="">Any Width</option>
+        <option value="14">14&#8242; wide</option>
+        <option value="16">16&#8242; wide</option>
+        <option value="24">24&#8242; wide</option>
+        <option value="28">28&#8242; wide</option>
+        <option value="32">32&#8242; wide</option>
       </select>
       <select aria-label="Home size" className={selectCls} value={sqft} onChange={(e) => setSqft(e.target.value)}>
         <option value="">Any Size</option>

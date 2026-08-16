@@ -63,7 +63,10 @@ interface AnimatedCounterProps {
 }
 
 export function AnimatedCounter({ end, duration = 2000, suffix = "", prefix = "" }: AnimatedCounterProps) {
-  const [count, setCount] = useState(0);
+  // Starts at the FINAL value, not 0: the server-rendered HTML (what crawlers,
+  // audits, and everyone pre-hydration sees) must read "260+", never "0+".
+  // The count-up only runs client-side once the element scrolls into view.
+  const [count, setCount] = useState(end);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -86,6 +89,10 @@ export function AnimatedCounter({ end, duration = 2000, suffix = "", prefix = ""
 
   useEffect(() => {
     if (!isVisible) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setCount(end);
+      return;
+    }
 
     let startTime: number;
     const animate = (currentTime: number) => {

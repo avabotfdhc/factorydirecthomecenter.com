@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, useScrollTracking } from "@/components/VisualEffects";
+import { PaymentCalculator } from "@/components/PaymentCalculator";
 import { H2, H3 } from "@/components/Heading";
 
 export const metadata = genMeta({
@@ -127,6 +128,10 @@ export default function BuyersGuidePage() {
                   <li className="flex justify-between"><span>Setup & Installation</span><span>$5,000 - $15,000</span></li>
                   <li className="flex justify-between"><span>Site Work</span><span>$5,000 - $50,000+</span></li>
                 </ul>
+              </div>
+
+              <div className="my-10">
+                <PaymentCalculator />
               </div>
 
               <H2 className="font-serif text-3xl font-light mb-6 mt-12">Financing Options</H2>

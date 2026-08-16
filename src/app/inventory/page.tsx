@@ -97,7 +97,7 @@ export default async function InventoryPage() {
                     </div>
                     <div className="pt-4 border-t border-[var(--color-charcoal)]/5 flex justify-between items-center mt-auto">
                       <span className="text-sm font-bold text-[var(--color-charcoal)]">Starting At</span>
-                      <span className="text-xl font-bold text-[var(--color-lime-dark)]">{home.price}</span>
+                      <span className="text-xl font-bold text-[var(--color-lime-dark)]">{(home.priceFrom || home.price).replace(/^From /, "")}</span>
                     </div>
                   </div>
                 </Link>

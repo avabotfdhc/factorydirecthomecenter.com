@@ -3,8 +3,9 @@
 import type { FormEvent } from "react";
 import { useState, useEffect } from "react";
 import { H2, H3 } from "@/components/Heading";
-import { 
-  trackLeadFormStart, 
+import { DeliveryChecker } from "@/components/DeliveryChecker";
+import {
+  trackLeadFormStart,
   trackLeadFormError, 
   trackLeadFormSubmit,
   trackPhoneClick,
@@ -22,6 +23,16 @@ export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formStarted, setFormStarted] = useState(false);
+  // Deep-link prefill: detail pages link here with ?home=<name> (Get a Quote)
+  // and &visit=1 (Schedule a Lot Visit), so the message arrives pre-written.
+  const [prefill, setPrefill] = useState<{ home: string; visit: boolean }>({ home: "", visit: false });
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const home = q.get("home") || "";
+    const visit = q.get("visit") === "1" || q.get("tour") === "1";
+    if (home || visit) setPrefill({ home, visit });
+  }, []);
 
   // Track when user starts interacting with form
   useEffect(() => {
@@ -73,8 +84,17 @@ export default function ContactForm() {
       const financingStatus = data.get("financingStatus")?.toString() || "not_specified";
       const deliveryState = data.get("deliveryState")?.toString() || "";
       const bedrooms = data.get("bedrooms")?.toString() || "";
-      const message = data.get("message")?.toString() || "";
-      
+      // Lot-visit preferences ride inside the message so every lead channel
+      // (CRM, email, CMS list) sees them without schema changes.
+      const visitDate = data.get("visitDate")?.toString() || "";
+      const visitTime = data.get("visitTime")?.toString() || "";
+      const message = [
+        data.get("message")?.toString() || "",
+        visitDate || visitTime
+          ? `[Lot visit requested — preferred: ${[visitDate, visitTime].filter(Boolean).join(", ")}]`
+          : "",
+      ].filter(Boolean).join("\n\n");
+
       try {
         // Submit to API
         const response = await fetch("/api/leads", {
@@ -234,6 +254,10 @@ export default function ContactForm() {
                   Find Us on Google
                 </a>
               </div>
+
+              <div className="mt-8">
+                <DeliveryChecker />
+              </div>
             </div>
 
             <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-10">
@@ -367,9 +391,43 @@ export default function ContactForm() {
                     </div>
                   </div>
 
+                  <fieldset className="border border-[var(--color-charcoal)]/10 rounded-lg p-4">
+                    <legend className="text-sm font-medium px-2">Want to see homes in person? Schedule a lot visit <span className="text-[var(--color-gray)] font-normal">(optional)</span></legend>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-1">
+                      <div>
+                        <label htmlFor="visitDate" className="block text-sm font-medium mb-2">Preferred Day</label>
+                        <input type="date" id="visitDate" name="visitDate" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white" />
+                      </div>
+                      <div>
+                        <label htmlFor="visitTime" className="block text-sm font-medium mb-2">Preferred Time</label>
+                        <select id="visitTime" name="visitTime" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white">
+                          <option value="">No preference</option>
+                          <option value="Morning (9 AM - 12 PM)">Morning (9 AM – 12 PM)</option>
+                          <option value="Afternoon (12 - 5 PM)">Afternoon (12 – 5 PM)</option>
+                          <option value="Saturday (10 AM - 4 PM)">Saturday (10 AM – 4 PM)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p className="text-xs text-[var(--color-gray)] mt-3">We&rsquo;ll confirm your visit by phone or email — walk-ins are always welcome too.</p>
+                  </fieldset>
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
-                    <textarea id="message" name="message" rows={4} className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors resize-none"></textarea>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      // Remount when the deep-link prefill resolves so defaultValue applies.
+                      key={`${prefill.home}|${prefill.visit}`}
+                      defaultValue={
+                        prefill.visit
+                          ? `I'd like to schedule a lot visit${prefill.home ? ` to see the ${prefill.home}` : ""}.`
+                          : prefill.home
+                            ? `I'm interested in the ${prefill.home}.`
+                            : ""
+                      }
+                      className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors resize-none"
+                    ></textarea>
                   </div>
 
                   <button type="submit" className="btn-primary w-full bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded">
