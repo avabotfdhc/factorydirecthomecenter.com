@@ -7,6 +7,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { ShareListing } from "@/components/ShareListing";
+import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 
 const SITE = "https://factorydirecthomescenter.com";
@@ -203,6 +204,8 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 </a>
               )}
             </div>
+
+            <EmailBrochureForm homeName={plan.name} modelNumber={plan.modelNumber || undefined} />
 
             <ShareListing
               name={plan.name}
