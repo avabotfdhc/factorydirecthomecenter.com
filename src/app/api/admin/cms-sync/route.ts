@@ -100,9 +100,36 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const secret = process.env.CMS_SYNC_SECRET;
+  const write = params.get("write") === "1";
+  const batch = Number(params.get("batch"));
+
+  // GET with ?auth=base64(user:pass) — for operators whose tooling can only
+  // issue GETs. Same trust model as the POST body (HTTPS end to end; abuse
+  // as a login oracle is bounded by the CMS's 5/15min auth limiter), and the
+  // env secret, when configured, gates this too.
+  const authParam = params.get("auth");
+  if (authParam) {
+    if (secret && params.get("key") !== secret) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    let user = "", pass = "";
+    try {
+      const decoded = Buffer.from(authParam, "base64").toString("utf8");
+      const i = decoded.indexOf(":");
+      user = decoded.slice(0, i);
+      pass = decoded.slice(i + 1);
+    } catch {
+      /* fall through to the error below */
+    }
+    if (!user || !pass) {
+      return NextResponse.json({ error: "auth must be base64(user:pass)" }, { status: 400 });
+    }
+    return runSync({ user, pass, write, batch });
+  }
+
   if (!secret || !process.env.CMS_ADMIN_USER || !process.env.CMS_ADMIN_PASS) {
     return NextResponse.json(
-      { error: "Env mode not configured — POST credentials instead, or set CMS_SYNC_SECRET, CMS_ADMIN_USER, CMS_ADMIN_PASS in Vercel." },
+      { error: "Env mode not configured — POST credentials (or GET ?auth=base64(user:pass)) instead, or set CMS_SYNC_SECRET, CMS_ADMIN_USER, CMS_ADMIN_PASS in Vercel." },
       { status: 503 },
     );
   }
@@ -112,8 +139,8 @@ export async function GET(req: NextRequest) {
   return runSync({
     user: process.env.CMS_ADMIN_USER,
     pass: process.env.CMS_ADMIN_PASS,
-    write: params.get("write") === "1",
-    batch: Number(params.get("batch")),
+    write,
+    batch,
   });
 }
 
