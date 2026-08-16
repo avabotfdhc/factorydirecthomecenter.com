@@ -79,7 +79,7 @@ export function LiveChat() {
     let responseText = "";
 
     if (lowerText.includes("price") || lowerText.includes("cost") || lowerText.includes("how much")) {
-      responseText = "Our homes range from $50,000 for single wides to $150,000+ for modular homes. Would you like me to connect you with a specialist for exact pricing on a specific model?";
+      responseText = "Our homes range from $39,900 to $175,000 depending on size and options — single wides start around $39,900 and our largest multi-section and modular homes run up to about $175,000. For exact pricing on a specific model, our team will put together a line-item quote. Can I get your name and phone number?";
     } else if (lowerText.includes("stock") || lowerText.includes("inventory") || lowerText.includes("available")) {
       responseText = "We have homes in stock for immediate delivery, homes in production, and can order any Champion floor plan. What's your timeline?";
     } else if (lowerText.includes("financ") || lowerText.includes("loan") || lowerText.includes("payment")) {
