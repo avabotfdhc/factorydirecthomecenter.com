@@ -55,7 +55,12 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
     .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 300) ||
     `${plan.name} ${plan.homeType} by ${plan.brand}.`;
 
-  // Product JSON-LD (built inline because CMS images are absolute S3 URLs)
+  // Product JSON-LD (built inline because CMS images are absolute S3 URLs).
+  // Google's product-snippet rules require offers, review, or aggregateRating
+  // on every Product — with prices hidden ("Contact for price") we have none,
+  // and price-less Product markup gets flagged in Search Console. So the
+  // Product block is only emitted when a numeric price exists (i.e. it
+  // returns automatically if prices are ever shown again).
   const priceNumeric = plan.price.replace(/[^0-9.]/g, "");
   const productLd = {
     "@context": "https://schema.org",
@@ -81,7 +86,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
 
   return (
     <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <StructuredData data={productLd} />
+      {priceNumeric ? <StructuredData data={productLd} /> : null}
       <StructuredData
         data={structuredData.breadcrumb([
           { name: "Home", url: "/" },
