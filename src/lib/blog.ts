@@ -95,7 +95,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       {
         question: "How much does a manufactured home cost?",
-        answer: "New manufactured homes range from about $50,000 for a single wide to $80,000 or more for a double wide, and $100,000 or more for a modular home. These are base home prices — total cost includes delivery, setup, foundation, utility connections, and any site work. Factory Direct Homes Center provides line-item pricing so you see exactly what you pay for.",
+        answer: "Pricing depends on the size, construction type, and options you choose — single wides are the most affordable, double wides the mid-range, and modular homes the top of the market. Total cost also includes delivery, setup, foundation, utility connections, and any site work. Factory Direct Homes Center provides line-item pricing so you see exactly what you pay for — contact us for current pricing on any floor plan.",
       },
       {
         question: "What credit score do I need to buy a manufactured home?",
