@@ -127,7 +127,17 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               <p className="text-sm text-[var(--color-gray)] mb-6">Model {plan.modelNumber}</p>
             )}
 
-            <div className="text-2xl font-bold text-[var(--color-lime-dark)] mb-8">{plan.price}</div>
+            <div className="mb-8">
+              <div className="text-2xl font-bold text-[var(--color-lime-dark)]">{plan.priceFrom || plan.price}</div>
+              {plan.priceFrom && (
+                <p className="text-sm text-[var(--color-gray)] mt-1">
+                  Final price depends on options and delivery — we quote line-item, so you see exactly what you pay.{" "}
+                  <Link href="/financing#calculator" className="text-[var(--color-teal)] underline underline-offset-4">
+                    Estimate monthly payments
+                  </Link>
+                </p>
+              )}
+            </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 py-6 border-y border-[var(--color-charcoal)]/8 mb-8">
               <Spec label="Sq Ft" value={plan.sqft ? plan.sqft.toLocaleString() : "—"} />
@@ -159,6 +169,12 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 className="inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
               >
                 Get a Quote
+              </Link>
+              <Link
+                href={`/contact-us?home=${encodeURIComponent(plan.name)}&visit=1`}
+                className="inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
+              >
+                Schedule a Lot Visit
               </Link>
               <a
                 href="tel:+12603081457"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
+import { DeliveryChecker } from "@/components/DeliveryChecker";
 import { H2, H3 } from "@/components/Heading";
 
 export const metadata = genMeta({
@@ -171,6 +172,10 @@ export default function DeliveryAndSetupPage() {
               </li>
             ))}
           </ol>
+
+          <div className="mt-12">
+            <DeliveryChecker />
+          </div>
         </div>
       </section>
 

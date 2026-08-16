@@ -26,6 +26,9 @@ export interface ApiFloorPlan {
   brand: string;
   homeType: string;
   series: string;      // Champion series (Aspire, Prime, ...) or "" if unknown
+  priceFrom?: string;  // range-level anchor ("From $80,000") when exact prices are hidden
+  virtualTour?: string; // Matterport URL when a 3D tour exists (cards show a badge)
+  widthFt?: number;    // home width in feet (14/16/24/28/32), when derivable
   bedsMin?: number;    // set when the plan can be optioned with fewer bedrooms
   bedsMax?: number;    // set when the plan can be optioned with more bedrooms
   flexNote?: string;   // human-readable explanation of the factory option
@@ -53,6 +56,36 @@ function formatPrice(raw: unknown): string {
   if (!SHOW_PRICES) return "Contact for price";
   const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
   return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
+}
+
+// Public pricing is ranges only (Kyle's rule) — while exact prices are hidden,
+// cards and detail pages anchor with the type-level band from the published
+// sitewide range ($39,900–$175,000) instead of a bare "Contact for price".
+// Bands must stay in sync with buyers-guide / FAQ copy.
+function priceFromBand(homeType: string): string {
+  if (SHOW_PRICES) return "";
+  if (/single/i.test(homeType)) return "From $39,900";
+  if (/multi|double|sectional/i.test(homeType)) return "From $80,000";
+  if (/modular/i.test(homeType)) return "From $100,000";
+  return "";
+}
+
+// Home width in feet from a Champion model number ("2856H32392" → 28) found in
+// the slug/title/banner filename — powers the width filter on /floor-plans.
+function deriveWidthFt(context: string): number | undefined {
+  const m = context.match(/\b(14|16|18|24|28|32)(\d{2})([hm])\d{2}/i);
+  return m ? Number(m[1]) : undefined;
+}
+
+// Central decoration applied to every plan on every path (CMS, feed, local):
+// bedroom-option overlays, the range-level price anchor, and the repo-mapped
+// Matterport tour (a CMS/feed-provided tour always wins).
+function decoratePlan<T extends { slug: string; homeType: string; virtualTour?: string }>(p: T): T {
+  return {
+    ...withBedOptions(p),
+    priceFrom: priceFromBand(p.homeType),
+    virtualTour: p.virtualTour || virtualTours[p.slug] || "",
+  };
 }
 
 // CMS titles are long ("Brighton - 3 Bed 2 Bath ... | Champion Aspire").
@@ -123,6 +156,8 @@ async function localPlans(): Promise<ApiFloorPlan[]> {
     brand: "Champion Home Builders",
     homeType: p.homeType || PRIME_HOME_TYPE,
     series: p.series || PRIME_SERIES,
+    virtualTour: p.virtualTour || "",
+    widthFt: parseInt(p.width, 10) || undefined,
   }));
 }
 
@@ -136,7 +171,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   // Prefer the DealerTide (Renter Insight) inventory feed when configured; the
   // CMS remains the fallback. Imported lazily to avoid a load-time env read.
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
-  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).map(withBedOptions);
+  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).map(decoratePlan);
 
   const endpoint = "floor-plan/get-active";
   let json: any;
@@ -146,7 +181,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
     });
     if (!res.ok) {
       cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return (await localPlans()).map(withBedOptions);
+      return (await localPlans()).map(decoratePlan);
     }
     json = await res.json();
   } catch (err) {
@@ -169,6 +204,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
       homeType: normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
       series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
+      widthFt: deriveWidthFt(`${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
     }));
   if (plans.length === 0) {
     // HTTP 200 with zero homes is a valid CMS state but almost always means
@@ -177,7 +213,7 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   } else {
     console.log(`[cms-api] ${endpoint} OK — ${plans.length} active homes`);
   }
-  return mergePlans(plans, await localPlans()).map(withBedOptions);
+  return mergePlans(plans, await localPlans()).map(decoratePlan);
 }
 
 /** Small, presentable set of homes for the homepage featured section — homes
@@ -211,7 +247,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     const p = localFloorPlans.find((x) => x.slug === slug);
     if (p?.hidden) return null;
     if (p) {
-      return withBedOptions({
+      return decoratePlan({
         slug: p.slug,
         name: p.name,
         title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion ${seriesLabel(p)} Series`,
@@ -243,7 +279,8 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   if (feedConfigured()) {
     const d = await getFeedFloorPlanBySlug(slug);
     if (!d) return d;
-    return withBedOptions(!d.virtualTour && localTour ? { ...d, virtualTour: localTour } : d);
+    // decoratePlan applies the repo-mapped tour when the feed has none.
+    return decoratePlan(d);
   }
 
   const endpoint = `floor-plan/get-details/${slug}`;
@@ -290,7 +327,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     // Champion-published series brochure fills in when the CMS record has none.
     const { seriesBrochure } = await import("./brochures");
 
-    return withBedOptions({
+    return decoratePlan({
       slug: String(r.slug),
       name: shortName(r.title),
       title: String(r.title || ""),

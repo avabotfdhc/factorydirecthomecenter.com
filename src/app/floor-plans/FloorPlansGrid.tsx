@@ -26,6 +26,7 @@ const matchesBeds = (p: ApiFloorPlan, min: number) => bedsRange(p)[1] >= min;
 export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   const [series, setSeries] = useState<string>("All");
   const [type, setType] = useState<string>("");
+  const [width, setWidth] = useState<number>(0);
   const [minSqft, setMinSqft] = useState<number>(0);
   const [minBeds, setMinBeds] = useState<number>(0);
   const [minBaths, setMinBaths] = useState<number>(0);
@@ -34,6 +35,7 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     if (q.get("type")) setType((q.get("type") || "").replace("double", "multi"));
+    if (q.get("width")) setWidth(Number(q.get("width")) || 0);
     if (q.get("sqft")) setMinSqft(Number(q.get("sqft")) || 0);
     if (q.get("beds")) setMinBeds(Number(q.get("beds")) || 0);
     if (q.get("baths")) setMinBaths(Number(q.get("baths")) || 0);
@@ -47,16 +49,25 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
   }, [plans]);
 
+  // Width options come from the catalog itself (14/16/24/28/32 today) so the
+  // dropdown never offers a width with zero matches.
+  const widthOptions = useMemo(() => {
+    const widths = new Set<number>();
+    for (const p of plans) if (p.widthFt) widths.add(p.widthFt);
+    return [...widths].sort((a, b) => a - b);
+  }, [plans]);
+
   const visible = plans.filter((p) => {
     if (series !== "All" && p.series !== series) return false;
     if (type && !p.homeType.toLowerCase().includes(type)) return false;
+    if (width && p.widthFt !== width) return false;
     if (minSqft && p.sqft < minSqft) return false;
     if (minBeds && !matchesBeds(p, minBeds)) return false;
     if (minBaths && p.baths < minBaths) return false;
     return true;
   });
 
-  const filtersActive = type || minSqft || minBeds || minBaths;
+  const filtersActive = type || width || minSqft || minBeds || minBaths;
   const selectCls =
     "px-3 py-2.5 bg-white border border-[var(--color-charcoal)]/15 rounded-lg text-sm text-[var(--color-charcoal)] min-h-12";
 
@@ -85,6 +96,12 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
           <option value="multi">Multi-Section</option>
           <option value="modular">Modular</option>
         </select>
+        <select aria-label="Home width" className={selectCls} value={width || ""} onChange={(e) => setWidth(Number(e.target.value) || 0)}>
+          <option value="">Any Width</option>
+          {widthOptions.map((w) => (
+            <option key={w} value={w}>{w}&#8242; wide</option>
+          ))}
+        </select>
         <select aria-label="Minimum size" className={selectCls} value={minSqft || ""} onChange={(e) => setMinSqft(Number(e.target.value) || 0)}>
           <option value="">Any Size</option>
           <option value="1000">1,000+ sq ft</option>
@@ -107,7 +124,7 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
         {filtersActive ? (
           <button
             type="button"
-            onClick={() => { setType(""); setMinSqft(0); setMinBeds(0); setMinBaths(0); }}
+            onClick={() => { setType(""); setWidth(0); setMinSqft(0); setMinBeds(0); setMinBaths(0); }}
             className="min-h-12 px-4 text-sm font-semibold text-[var(--color-teal)] hover:underline"
           >
             Clear filters
@@ -149,6 +166,11 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
                   {bedsRange(p)[0]} or {bedsRange(p)[1]} Bed
                 </span>
               )}
+              {p.virtualTour && (
+                <span className="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
+                  3D Tour
+                </span>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
@@ -158,7 +180,7 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
                   {p.name}
                 </h2>
                 <span className="text-sm font-bold text-[var(--color-lime-dark)] whitespace-nowrap">
-                  {p.price}
+                  {p.priceFrom || p.price}
                 </span>
               </div>
               <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
