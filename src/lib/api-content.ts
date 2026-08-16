@@ -58,12 +58,13 @@ function formatPrice(raw: unknown): string {
   return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
 }
 
-// Public pricing is ranges only (Kyle's rule) — while exact prices are hidden,
-// cards and detail pages anchor with the type-level band from the published
-// sitewide range ($39,900–$175,000) instead of a bare "Contact for price".
-// Bands must stay in sync with buyers-guide / FAQ copy.
+// Kyle reviewed the type-level "From $X" anchors and prefers the plain
+// "Contact for price" (2026-08-16) — flip this to true to bring the bands
+// back. Bands must stay in sync with buyers-guide / FAQ copy.
+const SHOW_PRICE_ANCHORS = false;
+
 function priceFromBand(homeType: string): string {
-  if (SHOW_PRICES) return "";
+  if (!SHOW_PRICE_ANCHORS || SHOW_PRICES) return "";
   if (/single/i.test(homeType)) return "From $39,900";
   if (/multi|double|sectional/i.test(homeType)) return "From $80,000";
   if (/modular/i.test(homeType)) return "From $100,000";
