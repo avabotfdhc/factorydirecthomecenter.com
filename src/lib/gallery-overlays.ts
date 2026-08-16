@@ -26,8 +26,10 @@ export const galleryOverlays: Record<string, GalleryOverlay> = {
     gallery: g(["belvidere-exterior", "belvidere-kitchen", "belvidere-living", "belvidere-dining", "belvidere-primary-bedroom", "belvidere-primary-bath"]),
   },
   "brighton-3-bed-2-bath-manufactured-home-1386-sq-ft-champion-aspire": {
-    image: "/images/paramount/brighton-exterior.webp",
-    gallery: g(["brighton-exterior", "brighton-kitchen", "brighton-living", "brighton-dining", "brighton-primary-bedroom", "brighton-primary-bath"]),
+    // Exterior shot removed per Kyle (2026-08-16): it was a trade-show photo
+    // with a third-party "$139,995" price banner on the home.
+    image: "/images/paramount/brighton-kitchen.webp",
+    gallery: g(["brighton-kitchen", "brighton-living", "brighton-dining", "brighton-primary-bedroom", "brighton-primary-bath"]),
   },
   "silverton-3-bed-2-bath-manufactured-home-1493-sq-ft-28x56-champion-aspire": {
     image: "/images/paramount/silverton-exterior.webp",

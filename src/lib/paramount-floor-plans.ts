@@ -1330,12 +1330,14 @@ export const paramountFloorPlans: LocalFloorPlan[] = [
     fdhcPrice: 0,
     homeType: "Multi-Section",
     series: "Paramount",
-    image: "/images/paramount/brighton-exterior.webp",
+    // The Brighton photo shoot's only exterior was a trade-show shot with a
+    // third-party "$139,995" price banner on the home — removed per Kyle
+    // (2026-08-16). Kitchen photo stands in as the hero.
+    image: "/images/paramount/brighton-kitchen.webp",
     gallery: [
-      "/images/paramount/brighton-exterior.webp",
+      "/images/paramount/brighton-kitchen.webp",
       "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/banner/112APF-2852H32170%20SALES_Page_1.jpg",
       "/images/paramount/2852h32170-opt2.webp",
-      "/images/paramount/brighton-kitchen.webp",
       "/images/paramount/brighton-living.webp",
       "/images/paramount/brighton-dining.webp",
       "/images/paramount/brighton-primary-bedroom.webp",
