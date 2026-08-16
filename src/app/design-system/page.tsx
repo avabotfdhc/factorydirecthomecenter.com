@@ -160,9 +160,9 @@ export default function DesignSystemPage() {
             </div>
             <div className="pt-6">
               <p className="text-sm text-[var(--color-gray)]">
-                {activeTab === 0 && "Content for Single Wides tab — 14–18 ft wide, 500–1,200 sq ft, starting at $39,900."}
-                {activeTab === 1 && "Content for Double Wides tab — 24–32 ft wide, 1,000–2,400 sq ft, starting at $80,000."}
-                {activeTab === 2 && "Content for Modular tab — IRC-code compliant, permanent foundation, starting at $100,000."}
+                {activeTab === 0 && "Content for Single Wides tab — 14–18 ft wide, 500–1,200 sq ft."}
+                {activeTab === 1 && "Content for Double Wides tab — 24–32 ft wide, 1,000–2,400 sq ft."}
+                {activeTab === 2 && "Content for Modular tab — IRC-code compliant, permanent foundation."}
               </p>
             </div>
           </div>
