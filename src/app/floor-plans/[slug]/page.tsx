@@ -103,7 +103,15 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
           {/* Image */}
           <div className="rounded-2xl overflow-hidden border border-[var(--color-charcoal)]/8 bg-white aspect-[16/11] relative">
             {plan.image ? (
-              <ZoomableImage src={plan.image} alt={`${plan.name} ${plan.homeType || "manufactured home"} — floor plan`} className="absolute inset-0 w-full h-full object-cover" />
+              <ZoomableImage
+                src={plan.image}
+                alt={`${plan.name} ${plan.homeType || "manufactured home"} — floor plan`}
+                className="absolute inset-0 w-full h-full object-cover"
+                // Hero click opens the full gallery so buyers can page through
+                // every photo and floor-plan sheet from the first image.
+                images={plan.gallery.map((src, i) => ({ src, alt: `${plan.name} image ${i + 1}` }))}
+                index={Math.max(0, plan.gallery.indexOf(plan.image))}
+              />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)]">No photo</div>
             )}

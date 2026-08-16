@@ -1,11 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 // Click-to-enlarge for floor plans and photos. Floor-plan drawings are dense
 // line art — buyers need them fullscreen and zoomable to read room dimensions,
 // so the overlay offers a 2.5x zoom toggle (click the image) with scroll-pan.
+// Navigation: arrows, arrow keys, and touch swipe move between images; the
+// browser back button closes the overlay (a history entry is pushed on open)
+// so mobile users don't get bounced off the listing when they instinctively
+// hit back to leave a photo.
 export interface LightboxImage {
   src: string;
   alt: string;
@@ -39,6 +43,20 @@ function Overlay({
     setZoomed(false);
   }, [index]);
 
+  // Back button closes the lightbox instead of navigating away from the page.
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+  useEffect(() => {
+    const onPop = () => onCloseRef.current();
+    window.history.pushState({ lightbox: true }, "");
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      // Closed via X/esc/backdrop: consume the entry we pushed.
+      if (window.history.state?.lightbox) window.history.back();
+    };
+  }, []);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -55,6 +73,22 @@ function Overlay({
     };
   }, [onClose, prev, next, many]);
 
+  // Touch swipe between images (disabled while zoomed — panning takes over).
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart.current || zoomed || !many) return;
+    const dx = e.changedTouches[0].clientX - touchStart.current.x;
+    const dy = e.changedTouches[0].clientY - touchStart.current.y;
+    touchStart.current = null;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0) next();
+      else prev();
+    }
+  };
+
   return createPortal(
     <div
       className="fixed inset-0 z-[120] bg-black/92 flex items-center justify-center"
@@ -62,6 +96,8 @@ function Overlay({
       aria-modal="true"
       aria-label={img.alt}
       onClick={onClose}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       <div
         className={`${zoomed ? "overflow-auto" : "overflow-hidden flex items-center justify-center"} w-full h-full p-4 sm:p-8`}
@@ -118,24 +154,32 @@ function Overlay({
   );
 }
 
-/** A single enlargeable image (hero/floor plan). */
+/** A single enlargeable image (hero/floor plan). When `images` is provided,
+ * opening the hero drops the viewer into the FULL gallery (starting at
+ * `index`, default 0) so buyers can move picture-to-picture from the first
+ * click instead of being stuck on a solo image. */
 export function ZoomableImage({
   src,
   alt,
   className,
+  images,
+  index = 0,
 }: {
   src: string;
   alt: string;
   className?: string;
+  images?: LightboxImage[];
+  index?: number;
 }) {
-  const [open, setOpen] = useState(false);
+  const [openAt, setOpenAt] = useState<number | null>(null);
+  const set = images && images.length > 0 ? images : [{ src, alt }];
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={alt}
-        onClick={() => setOpen(true)}
+        onClick={() => setOpenAt(Math.min(index, set.length - 1))}
         // This is the detail page's above-the-fold hero (the LCP element) —
         // fetch it at high priority, never lazily.
         fetchPriority="high"
@@ -143,8 +187,8 @@ export function ZoomableImage({
         className={`${className ?? ""} cursor-zoom-in`}
         title="Click to enlarge"
       />
-      {open && (
-        <Overlay images={[{ src, alt }]} index={0} onClose={() => setOpen(false)} onNavigate={() => {}} />
+      {openAt !== null && (
+        <Overlay images={set} index={openAt} onClose={() => setOpenAt(null)} onNavigate={setOpenAt} />
       )}
     </>
   );

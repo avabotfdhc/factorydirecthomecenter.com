@@ -277,8 +277,13 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     ].filter(Boolean);
     // Photo-shoot overlay: real photography first, CMS images (drawing) after.
     const overlay = galleryOverlays[String(r.slug)];
-    // Option-layout sheets from the 2026 SALES plan go last, after the CMS images.
-    const gallery = [...(overlay?.gallery || []), ...[...new Set(rawImgs)].map(s3Url), ...(sheetExtras[String(r.slug)] || [])];
+    // Buyer-journey ordering: hero photo first, then the floor-plan drawing(s)
+    // from the CMS and the SALES option sheets, then the rest of the photos.
+    const cmsImgs = [...new Set(rawImgs)].map(s3Url);
+    const sheets = sheetExtras[String(r.slug)] || [];
+    const gallery = overlay
+      ? [overlay.gallery[0], ...cmsImgs, ...sheets, ...overlay.gallery.slice(1)]
+      : [...cmsImgs, ...sheets];
 
     const homeType = normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`);
     const series = canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description);
