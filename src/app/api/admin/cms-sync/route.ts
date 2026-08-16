@@ -28,11 +28,15 @@ import { virtualTours } from "@/lib/virtual-tours";
 // re-uploaded multipart.
 //
 // Usage (idempotent — diffs by slug on every run, safe to re-run):
-//   GET /api/admin/cms-sync?key=<CMS_SYNC_SECRET>            → dry run report
-//   GET /api/admin/cms-sync?key=<CMS_SYNC_SECRET>&write=1    → create one batch
-//   Optional: &batch=1..5 (default 3)
-// Env (Vercel, production): CMS_SYNC_SECRET, CMS_ADMIN_USER, CMS_ADMIN_PASS,
-// optional CMS_CATEGORY_ID to pin the category id.
+//   POST /api/admin/cms-sync  body: {user, pass, write?, batch?}
+//     CMS admin credentials ride in the request body over HTTPS — nothing is
+//     stored on Vercel, logged, or echoed back. Dry-run unless write:true.
+//   GET  /api/admin/cms-sync?key=<CMS_SYNC_SECRET>[&write=1][&batch=N]
+//     Alternative env-configured mode (CMS_SYNC_SECRET, CMS_ADMIN_USER,
+//     CMS_ADMIN_PASS in Vercel). Optional CMS_CATEGORY_ID pins the category.
+// Abuse of the POST mode as a login oracle is bounded by the CMS's own
+// 5-per-15-min auth rate limit; when CMS_SYNC_SECRET is set it is required
+// on BOTH modes.
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -96,24 +100,91 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const secret = process.env.CMS_SYNC_SECRET;
+  const write = params.get("write") === "1";
+  const batch = Number(params.get("batch"));
+
+  // GET with ?auth=base64(user:pass) — for operators whose tooling can only
+  // issue GETs. Same trust model as the POST body (HTTPS end to end; abuse
+  // as a login oracle is bounded by the CMS's 5/15min auth limiter), and the
+  // env secret, when configured, gates this too.
+  const authParam = params.get("auth");
+  if (authParam) {
+    if (secret && params.get("key") !== secret) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    let user = "", pass = "";
+    try {
+      const decoded = Buffer.from(authParam, "base64").toString("utf8");
+      const i = decoded.indexOf(":");
+      user = decoded.slice(0, i);
+      pass = decoded.slice(i + 1);
+    } catch {
+      /* fall through to the error below */
+    }
+    if (!user || !pass) {
+      return NextResponse.json({ error: "auth must be base64(user:pass)" }, { status: 400 });
+    }
+    return runSync({ user, pass, write, batch });
+  }
+
   if (!secret || !process.env.CMS_ADMIN_USER || !process.env.CMS_ADMIN_PASS) {
     return NextResponse.json(
-      { error: "Sync not configured: set CMS_SYNC_SECRET, CMS_ADMIN_USER, CMS_ADMIN_PASS in Vercel." },
+      { error: "Env mode not configured — POST credentials (or GET ?auth=base64(user:pass)) instead, or set CMS_SYNC_SECRET, CMS_ADMIN_USER, CMS_ADMIN_PASS in Vercel." },
       { status: 503 },
     );
   }
   if (params.get("key") !== secret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const write = params.get("write") === "1";
-  const batch = Math.min(Math.max(Number(params.get("batch")) || 3, 1), 5);
+  return runSync({
+    user: process.env.CMS_ADMIN_USER,
+    pass: process.env.CMS_ADMIN_PASS,
+    write,
+    batch,
+  });
+}
+
+export async function POST(req: NextRequest) {
+  let body: any;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  // When an env secret exists it gates this mode too.
+  const secret = process.env.CMS_SYNC_SECRET;
+  if (secret && body?.key !== secret) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!body?.user || !body?.pass) {
+    return NextResponse.json({ error: "Body must include user and pass (CMS admin login)." }, { status: 400 });
+  }
+  return runSync({
+    user: String(body.user),
+    pass: String(body.pass),
+    write: body.write === true || body.write === 1 || body.write === "1",
+    batch: Number(body.batch),
+  });
+}
+
+async function runSync(opts: { user: string; pass: string; write: boolean; batch: number }) {
+  try {
+    return await runSyncInner(opts);
+  } catch (err) {
+    return NextResponse.json({ error: String(err).slice(0, 500) }, { status: 502 });
+  }
+}
+
+async function runSyncInner(opts: { user: string; pass: string; write: boolean; batch: number }) {
+  const write = opts.write;
+  const batch = Math.min(Math.max(opts.batch || 3, 1), 5);
 
   // Login (token also works across runs, but re-logging once per run stays
   // within the CMS's 5-per-15-min auth limit at our batch cadence).
   const login = await cmsFetch("/api/authenticate/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userName: process.env.CMS_ADMIN_USER, password: process.env.CMS_ADMIN_PASS }),
+    body: JSON.stringify({ userName: opts.user, password: opts.pass }),
   });
   const token: string = login?.token || login?.data?.token;
   if (!token) return NextResponse.json({ error: "CMS login returned no token", login }, { status: 502 });
