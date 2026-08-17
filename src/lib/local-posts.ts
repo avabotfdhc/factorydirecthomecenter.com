@@ -10,6 +10,54 @@ import type { ApiBlogDetail } from "./api-content";
 
 export const localBlogPosts: ApiBlogDetail[] = [
   {
+    slug: "road-to-housing-act-manufactured-homes-2026",
+    title: "New Federal Law Expands Access to Affordable Manufactured Homes: What the ROAD to Housing Act Means for Indiana, Ohio & Michigan Buyers",
+    excerpt:
+      "The 21st Century ROAD to Housing Act modernizes manufactured housing at the federal level — a new definition, expanded financing, and community grants. Here's what it means for buyers across our Indiana, Ohio, and Michigan service area.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "August 17, 2026",
+    html: `
+<p>If you've been priced out of a new site-built home, there's real news worth your attention. A sweeping, bipartisan federal housing law — the <strong>21st Century ROAD to Housing Act</strong> — took effect in July 2026, and one of its central goals is to make manufactured homes more affordable, easier to finance, and more widely accepted. For families across our Indiana, Ohio, and Michigan service area, it's one of the most significant changes to factory-built housing in decades. Here's a plain-English breakdown of what changed and what it means for you.</p>
+
+<h2>What the ROAD to Housing Act actually does</h2>
+<p>The law is a broad package aimed at reducing the barriers that keep housing expensive and in short supply. Several of its provisions speak directly to manufactured and modular homes:</p>
+<ul>
+  <li><strong>A modernized definition of "manufactured home."</strong> For decades, federal law defined a manufactured home as a house built <em>on a permanent steel chassis</em>. The Act rewrites that to "<strong>with or without a permanent chassis</strong>" — a long-sought change that lets these homes look, sit, and finance more like traditional site-built houses.</li>
+  <li><strong>Lower costs.</strong> Removing the required steel chassis on eligible homes is projected by the bill's analysts to cut construction costs by roughly <strong>$5,000 to $10,000 per home</strong> nationally — savings that can put ownership within reach for more families.</li>
+  <li><strong>Expanded financing.</strong> The law raises FHA Title I loan limits for manufactured homes and home improvements, extends that financing to accessory dwelling units (ADUs), and directs HUD to review its construction-financing programs to remove barriers for modular and manufactured-home builders.</li>
+  <li><strong>Support for communities.</strong> It authorizes grants to preserve and improve manufactured-home communities, support resident-owned communities, and help replace very old homes with safe, energy-efficient new ones.</li>
+</ul>
+
+<h2>Why this matters in Ohio, Indiana, and Michigan</h2>
+<p>Demand for factory-built housing is already surging across the region. In Ohio alone, the Department of Commerce's Manufactured Homes Program reported receiving <strong>as many manufactured-home park applications in 2024 as in the previous five years combined</strong>, with roughly 1,500 operating communities and more than 111,000 home sites statewide. Nationwide, more than 20 million Americans already call a manufactured home their own.</p>
+<p>The reason is simple: factory-built homes cost far less per square foot than new site-built construction, and they're built under a federal quality-control code in a climate-controlled plant. The ROAD to Housing Act leans into that momentum — making the homes easier to finance and, over time, more house-like in appearance and placement.</p>
+
+<h2>What "chassis-free" homes mean for buyers — and a caution</h2>
+<p>The new definition is a green light for a category of home that installs on a permanent foundation and reads, to most eyes, as a conventional house — while keeping the cost advantages of factory construction. One important detail from the law: <strong>each state must certify that it treats chassis-free homes on par with traditional HUD-code manufactured homes</strong> for financing, sale, installation, and title. States that don't certify must prohibit the sale of those homes within their borders, so exactly how and when these appear will depend on Indiana, Ohio, and Michigan completing that process. We're watching it closely and will help you understand which options are available for your location as the rules roll out.</p>
+<p>In the meantime, today's HUD-code <a href="/floor-plans">Champion manufactured homes</a> and IRC-code <a href="/guides/manufactured-vs-modular">modular homes</a> already deliver the affordability and quality this law is built to expand — you don't have to wait to take advantage of factory-direct pricing.</p>
+
+<h2>How Factory Direct Homes Center fits in</h2>
+<p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 20 miles from Champion's Topeka plant — one of the largest factory-built home facilities in the country. That means short freight distances, direct access to the full Aspire, Prime, and Paramount lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
+<p>On financing, we already work with the lenders who specialize in this space every day — 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union — across chattel (home-only) loans, land-home packages, and conventional mortgages for modular homes. As the Act's expanded FHA options take shape, those same partners are positioned to help you use them. Our <a href="/financing">financing page</a> walks through how each loan type works.</p>
+<p>And as always, site work — foundation or pad, utilities, and driveway — is handled by <strong>your own licensed contractors</strong>, which is where many buyers save real money versus dealer-bundled site work. We're glad to share a referral list of licensed and insured contractors past customers have used.</p>
+
+<h2>The bottom line</h2>
+<p>The 21st Century ROAD to Housing Act is a clear signal from Washington that factory-built housing is a serious answer to the affordability crisis — not a fallback. For buyers across northeast Indiana, northwest Ohio, and southern Michigan, it means more financing options and, in time, more home styles to choose from. If you've been wondering whether a new manufactured or modular home is the right move, this is a good moment to start the conversation.</p>
+
+<h2>FAQ</h2>
+<h3>Is the ROAD to Housing Act in effect now?</h3>
+<p>Yes — the law took effect in 2026. Some provisions, like the new chassis-free home category, depend on federal rulemaking and state certification, so they'll phase in over the coming months. Financing and community-grant provisions are moving forward now.</p>
+<h3>Does the new law change how much a home costs at Factory Direct?</h3>
+<p>The chassis-free provision is projected to lower construction costs on eligible homes nationally, but exact pricing always depends on the model, size, and options you choose. We quote every home line by line — <a href="/contact-us">contact us</a> for current factory-direct pricing on any floor plan.</p>
+<h3>Do you serve Ohio and Michigan buyers?</h3>
+<p>Yes. We deliver across northeast Indiana, northwest Ohio (including the <a href="/locations/toledo">Toledo</a> area), and southern Michigan (including <a href="/locations/kalamazoo">Kalamazoo</a>). See our <a href="/locations">locations page</a> for the full service area.</p>
+<h3>Where can I learn the basics before I buy?</h3>
+<p>Start with our <a href="/guides/buyers-guide">complete buyer's guide</a>, then browse <a href="/floor-plans">our Champion floor plans</a> and <a href="/contact-us">reach out</a> when you're ready to see homes in person at our Auburn showroom.</p>
+
+<p style="font-size:0.85em;opacity:0.7;margin-top:2rem"><em>Sources: <a href="https://www.limaohio.com/top-stories/2026/08/16/manufactured-housing-law-expands-access-to-affordable-homes/" target="_blank" rel="noopener noreferrer">Lima News — "Manufactured housing law expands access to affordable homes"</a>; U.S. Senate Committee on Banking, Housing, and Urban Affairs, 21st Century ROAD to Housing Act section-by-section summary. This article is general information, not legal or financial advice.</em></p>
+`,
+  },
+  {
     slug: "manufactured-homes-fort-wayne-buyers-guide",
     title: "Buying a Manufactured Home Near Fort Wayne: A 2026 Buyer's Guide",
     excerpt:
