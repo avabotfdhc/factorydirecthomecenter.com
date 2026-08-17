@@ -22,35 +22,52 @@ export interface DesignerPlan {
 
 type Swatch = { label: string; hex: string };
 
-const EXTERIOR_COLORS: Swatch[] = [
-  { label: "White", hex: "#f4f3ef" },
-  { label: "Sand", hex: "#d8cbb2" },
-  { label: "Clay", hex: "#b98b6d" },
-  { label: "Sage", hex: "#8f9b7f" },
-  { label: "Slate Blue", hex: "#5f7183" },
-  { label: "Warm Gray", hex: "#9c968d" },
-  { label: "Charcoal", hex: "#3f4145" },
-  { label: "Barn Red", hex: "#7c3b34" },
+// Real Champion 2026 Aspire selections (from the official color board, Dec
+// 2025). Hex values approximate the printed swatch for the on-screen chip;
+// exact color is confirmed against physical samples — /options shows the full
+// board.
+const SIDING_COLORS: Swatch[] = [
+  // Standard vinyl siding
+  { label: "Pearl", hex: "#e7e2cf" },
+  { label: "Clay", hex: "#8f867b" },
+  { label: "Flint", hex: "#8a9092" },
+  { label: "White", hex: "#f6f5f2" },
+  // Upgrade vinyl siding
+  { label: "Cypress (upgrade)", hex: "#7f8a68" },
+  { label: "Wedgewood (upgrade)", hex: "#54707f" },
+  { label: "Shadow (upgrade)", hex: "#4a3f37" },
+  { label: "Brunswick (upgrade)", hex: "#232f3b" },
+  { label: "Dublin (upgrade)", hex: "#3a4a43" },
+];
+const SHINGLE_COLORS: Swatch[] = [
+  { label: "Black", hex: "#2c2c30" },
+  { label: "Weatherwood", hex: "#5b5140" },
+];
+const SHUTTER_COLORS: Swatch[] = [
+  { label: "Clay", hex: "#b1a68a" },
+  { label: "Wine", hex: "#5a2530" },
+  { label: "Blue", hex: "#3a4c60" },
+  { label: "White", hex: "#eeece6" },
+  { label: "Black", hex: "#1d1d1f" },
 ];
 const CABINET_COLORS: Swatch[] = [
-  { label: "White", hex: "#efece5" },
-  { label: "Gray", hex: "#9a9a97" },
-  { label: "Espresso", hex: "#4a3a2f" },
-  { label: "Natural Oak", hex: "#c39a68" },
-  { label: "Navy", hex: "#33415c" },
+  { label: "Urban Oak", hex: "#c8a97c" },
+  { label: "Destin White", hex: "#ece9e0" },
+  { label: "Boho (upgrade)", hex: "#9a9b86" },
+  { label: "Timberwolf (upgrade)", hex: "#7d766f" },
 ];
 const FLOORING: Swatch[] = [
-  { label: "Light Oak", hex: "#d8bd97" },
-  { label: "Natural", hex: "#c2a074" },
-  { label: "Driftwood", hex: "#a99e90" },
-  { label: "Gray", hex: "#8d8c8a" },
-  { label: "Espresso", hex: "#5a4636" },
+  { label: "Natural", hex: "#b89a72" },
+  { label: "Thunder", hex: "#6d6a62" },
+  { label: "Serenity", hex: "#b5b6a7" },
 ];
 const COUNTERTOPS: Swatch[] = [
-  { label: "White Marble-look", hex: "#eeeae4" },
-  { label: "Gray Granite-look", hex: "#8a8b8d" },
-  { label: "Butcher Block", hex: "#c69a5f" },
-  { label: "Solid White", hex: "#f3f2ee" },
+  { label: "Glacier Quartzite", hex: "#a7a29a" },
+  { label: "Aluma Marble", hex: "#ece7df" },
+  { label: "Bello Romano", hex: "#b2a48b" },
+  { label: "Lisola", hex: "#463c34" },
+  { label: "Pietra Viva", hex: "#c8c6be" },
+  { label: "Roca Bosco", hex: "#8e8c87" },
 ];
 
 const UPGRADES = [
@@ -119,7 +136,9 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
   const [bedroomLayout, setBedroomLayout] = useState("");
   const [kitchen, setKitchen] = useState("");
   const [primaryBath, setPrimaryBath] = useState("");
-  const [exterior, setExterior] = useState("");
+  const [siding, setSiding] = useState("");
+  const [shingle, setShingle] = useState("");
+  const [shutter, setShutter] = useState("");
   const [cabinet, setCabinet] = useState("");
   const [flooring, setFlooring] = useState("");
   const [countertop, setCountertop] = useState("");
@@ -187,7 +206,9 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
       bedroomLayout && `Bedroom layout: ${bedroomLayout}`,
       kitchen && `Kitchen: ${kitchen}`,
       primaryBath && `Primary bath: ${primaryBath}`,
-      exterior && `Exterior color: ${exterior}`,
+      siding && `Siding color: ${siding}`,
+      shingle && `Shingle color: ${shingle}`,
+      shutter && `Shutter color: ${shutter}`,
       cabinet && `Cabinet finish: ${cabinet}`,
       flooring && `Flooring: ${flooring}`,
       countertop && `Countertop: ${countertop}`,
@@ -331,18 +352,31 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
         </div>
       </fieldset>
 
-      {/* 3. Colors & finishes */}
+      {/* 3. Colors & finishes — real Champion 2026 Aspire selections */}
       <fieldset className={sectionCls}>
         <legend className={legendCls}><span className="text-[var(--color-lime-dark)] font-bold">3.</span> Colors &amp; finishes</legend>
         <p className="text-sm text-[var(--color-gray)] mb-5">
-          A starting palette — exact Champion selections are confirmed with our team.{" "}
-          <Link href="/options" target="_blank" className="text-[var(--color-teal)] underline underline-offset-4">See full color charts &amp; option photos</Link>.
+          Champion&apos;s 2026 selections — the actual colors you&rsquo;ll choose. On-screen chips are a guide;
+          confirm against physical samples.{" "}
+          <Link href="/options" target="_blank" className="text-[var(--color-teal)] underline underline-offset-4">See the full color board</Link>.
         </p>
-        <div className="space-y-5">
-          <div><span className="block text-sm font-medium mb-2">Exterior color</span><SwatchPicker name="Exterior color" options={EXTERIOR_COLORS} value={exterior} onChange={setExterior} /></div>
-          <div><span className="block text-sm font-medium mb-2">Cabinet finish</span><SwatchPicker name="Cabinet finish" options={CABINET_COLORS} value={cabinet} onChange={setCabinet} /></div>
-          <div><span className="block text-sm font-medium mb-2">Flooring</span><SwatchPicker name="Flooring" options={FLOORING} value={flooring} onChange={setFlooring} /></div>
-          <div><span className="block text-sm font-medium mb-2">Countertop</span><SwatchPicker name="Countertop" options={COUNTERTOPS} value={countertop} onChange={setCountertop} /></div>
+        <div className="space-y-6">
+          <div>
+            <p className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-lime-dark)] mb-3">Exterior</p>
+            <div className="space-y-4">
+              <div><span className="block text-sm font-medium mb-2">Siding color</span><SwatchPicker name="Siding color" options={SIDING_COLORS} value={siding} onChange={setSiding} /></div>
+              <div><span className="block text-sm font-medium mb-2">Shingles</span><SwatchPicker name="Shingles" options={SHINGLE_COLORS} value={shingle} onChange={setShingle} /></div>
+              <div><span className="block text-sm font-medium mb-2">Shutters</span><SwatchPicker name="Shutters" options={SHUTTER_COLORS} value={shutter} onChange={setShutter} /></div>
+            </div>
+          </div>
+          <div className="border-t border-[var(--color-charcoal)]/8 pt-6">
+            <p className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-lime-dark)] mb-3">Interior</p>
+            <div className="space-y-4">
+              <div><span className="block text-sm font-medium mb-2">Cabinet finish</span><SwatchPicker name="Cabinet finish" options={CABINET_COLORS} value={cabinet} onChange={setCabinet} /></div>
+              <div><span className="block text-sm font-medium mb-2">Vinyl flooring</span><SwatchPicker name="Vinyl flooring" options={FLOORING} value={flooring} onChange={setFlooring} /></div>
+              <div><span className="block text-sm font-medium mb-2">Countertop</span><SwatchPicker name="Countertop" options={COUNTERTOPS} value={countertop} onChange={setCountertop} /></div>
+            </div>
+          </div>
         </div>
       </fieldset>
 
