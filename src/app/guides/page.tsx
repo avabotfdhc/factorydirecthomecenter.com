@@ -65,6 +65,13 @@ const guides = [
     icon: "📋",
     readTime: "15 min",
   },
+  {
+    title: "Champion Homes & Our Series",
+    description: "Who builds the homes we sell, and how the Aspire, Prime, and Paramount series differ — plus how factory-built quality and the HUD code work.",
+    href: "/champion-homes",
+    icon: "🏆",
+    readTime: "7 min",
+  },
 ];
 
 export default function GuidesPage() {

@@ -32,6 +32,8 @@ export function Footer() {
             <ul className="space-y-3">
               {[
                 { href: "/floor-plans", label: "Floor Plans" },
+                { href: "/design-your-home", label: "Design Your Home" },
+                { href: "/champion-homes", label: "Champion Homes" },
                 { href: "/inventory", label: "Available Homes" },
                 { href: "/financing", label: "Financing" },
                 { href: "/resources", label: "Resources" },
