@@ -10,6 +10,80 @@ import type { ApiBlogDetail } from "./api-content";
 
 export const localBlogPosts: ApiBlogDetail[] = [
   {
+    slug: "champion-vs-clayton-homes",
+    title: "Champion vs. Clayton Homes: How to Choose in 2026",
+    excerpt:
+      "Both build quality factory-built homes — the real difference is who you buy from and how the deal is structured. An honest comparison for northeast Indiana buyers weighing Champion and Clayton.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "August 17, 2026",
+    html: `
+<p>If you're shopping for a manufactured or modular home in northeast Indiana, two names come up fast: <strong>Clayton</strong> and <strong>Champion</strong>. Both build quality homes to the same federal standards. The real difference isn't the hammer and nails — it's <em>who you buy from and how the deal is structured.</em> Here's an honest breakdown to help you choose.</p>
+
+<h2>Who they are</h2>
+<ul>
+  <li><strong>Clayton Homes</strong> is the largest builder of factory-built homes in the country, owned by Berkshire Hathaway. Clayton builds its own family of brands and sells them primarily through company-owned Clayton Homes retail centers. It's a vertically integrated model — the same company builds the home, runs the store, and (through affiliated companies) offers the mortgage and insurance.</li>
+  <li><strong>Champion Homes</strong> is one of the largest factory-built home producers in North America, sold through <em>independent, authorized dealers</em> — like Factory Direct Homes Center. We're a local, family-run business, not a corporate store, and we build every home at Champion's Indiana plants, most of them 20 miles up the road in Topeka.</li>
+</ul>
+
+<h2>Build quality: honestly, both are strong</h2>
+<p>Every home from both builders is constructed to the federal HUD Code (or state IRC code for modular), inspected at the factory, and backed by a manufacturer's warranty. You won't go wrong on construction with either. Champion's <a href="/champion-homes">Aspire, Prime, and Paramount lines</a> give you a wide range of layouts and finishes.</p>
+
+<h2>Financing: independent vs. in-house</h2>
+<p>This is where the models differ most. A vertically integrated builder typically steers you toward its own affiliated lender. As an independent dealer, we work with <em>multiple</em> lenders — 21st Mortgage, Triad Financial, Credit Human, and Lake Michigan Credit Union — so you can compare offers and pick the best one for your situation instead of taking the first one handed to you. Always compare rates, no matter who you buy from. Our <a href="/financing">financing page</a> explains the options.</p>
+
+<h2>The buying experience</h2>
+<p>With a national chain you get a big-brand process. With a local independent dealer you get a name, a face, and someone 20 minutes away who answers the phone after the sale. We also let you stay in control of your own site work with your own licensed contractors — where many buyers save real money — rather than bundling everything into one price.</p>
+
+<h2>How to decide</h2>
+<p>Want a national brand's footprint and one-stop process? Clayton delivers that. Want an independent local partner, the Champion lineup, the ability to compare financing, and line-item pricing with no bundled mystery costs? That's us. Either way, tour homes in person and get every cost in writing before you sign.</p>
+
+<h2>FAQ</h2>
+<h3>Is Champion or Clayton better quality?</h3>
+<p>Both build to the same federal HUD Code (or state IRC code for modular homes), are factory-inspected, and carry manufacturer warranties. Quality is comparable — the meaningful differences are brand selection, financing flexibility, and whether you buy from a corporate store or an independent local dealer.</p>
+<h3>Is Factory Direct Homes Center a Clayton dealer?</h3>
+<p>No — we're an independent, authorized <strong>Champion Homes</strong> dealer in Auburn, Indiana. We sell Champion's Aspire, Prime, and Paramount series, built at Champion's Indiana plants.</p>
+<h3>Can I compare Champion homes in person near Fort Wayne?</h3>
+<p>Yes. Our Auburn showroom is about 25 minutes from Fort Wayne. Browse our <a href="/floor-plans">Champion floor plans</a> or <a href="/design-your-home">design your home online</a>, then <a href="/contact-us">visit us</a> to walk through models in person.</p>
+`,
+  },
+  {
+    slug: "how-to-read-manufactured-home-quote",
+    title: "How to Read a Manufactured Home Quote: Line-Item vs. Bundled Pricing",
+    excerpt:
+      "Two dealers can quote what looks like the same home and mean very different things. Here's how to read a manufactured home quote line by line — and the questions to ask before you sign.",
+    image: "/images/homepage/feature-financing.webp",
+    date: "August 17, 2026",
+    html: `
+<p>The most important skill when buying a manufactured home isn't picking the floor plan — it's <strong>reading the quote</strong>. Two dealers can quote what looks like the same home and mean very different things. Here's how to tell what you're actually paying for.</p>
+
+<h2>Bundled pricing vs. line-item pricing</h2>
+<ul>
+  <li>A <strong>bundled</strong> quote gives you one big number — home, delivery, setup, and sometimes site work rolled together. It looks simple, but you can't see what each piece costs, which makes it impossible to compare dealers or know where you could save.</li>
+  <li>A <strong>line-item</strong> quote breaks it out: the home, each factory option, delivery, and setup, each priced separately. That's how we quote at Factory Direct Homes Center — so you see exactly what you're paying for and can compare us honestly against anyone.</li>
+</ul>
+
+<h2>The costs every buyer should ask about — separately</h2>
+<ul>
+  <li><strong>The home itself</strong> — the base plan plus the factory options you choose.</li>
+  <li><strong>Delivery</strong> from the factory to your site — distance matters, which is why being 20 miles from Champion's Topeka plant keeps this line low.</li>
+  <li><strong>Setup &amp; installation</strong> — leveling, anchoring, utility hookups, and the marriage line on multi-section homes.</li>
+  <li><strong>Site work</strong> — pad or foundation, utilities, driveway. <em>This is the big one.</em> In our model, you hire your own licensed contractors for site work, which is where many buyers save the most money versus a dealer marking it up inside a bundle.</li>
+</ul>
+
+<h2>Questions to ask any dealer before you sign</h2>
+<ol>
+  <li>Can I see this quote broken out line by line?</li>
+  <li>What exactly is included in "setup"?</li>
+  <li>Is site work included or separate — and can I use my own contractor?</li>
+  <li>Are there any fees not shown here?</li>
+</ol>
+<p>A dealer who gladly itemizes everything is a dealer you can trust. One who won't is telling you something. <a href="/contact-us">Contact us for a line-item quote</a> on any floor plan — you'll see every number.</p>
+
+<h2>Learn more</h2>
+<p>Our <a href="/guides/pricing">pricing guide</a> explains how line-item pricing works, the <a href="/guides/buyers-guide">complete buyer's guide</a> walks the whole process, and the <a href="/guides/site-work">site work guide</a> covers what you or your contractor handle before the home arrives.</p>
+`,
+  },
+  {
     slug: "road-to-housing-act-manufactured-homes-2026",
     title: "New Federal Law Expands Access to Affordable Manufactured Homes: What the ROAD to Housing Act Means for Indiana, Ohio & Michigan Buyers",
     excerpt:
