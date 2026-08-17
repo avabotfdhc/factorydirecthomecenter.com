@@ -130,19 +130,38 @@ export default function OptionsPage() {
         </div>
       </section>
 
-      {/* 2026 selections */}
+      {/* 2026 selections — official Champion color board */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <h2 className="font-serif text-3xl font-light mb-3">2026 Interior &amp; Exterior Selections</h2>
-        <p className="text-[var(--color-charcoal)]/70 max-w-3xl mb-8">
-          Champion&apos;s current palette: countertops, cabinet styles, vinyl flooring, ceramic tile,
-          siding colors, shingles, and shutters. Every combination is chosen at order time at no
-          change to the base floor plan.
+        <h2 className="font-serif text-3xl font-light mb-3">2026 Champion Color Board</h2>
+        <p className="text-[var(--color-charcoal)]/70 max-w-3xl mb-6">
+          Champion&apos;s official 2026 interior &amp; exterior selections — the actual colors and finishes
+          you choose at order time, at no change to the base floor plan.{" "}
+          <strong>Tap the board to zoom in.</strong>
         </p>
+        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1.5 max-w-3xl mb-8 text-sm text-[var(--color-charcoal)]/75">
+          <li>&bull; Countertops (laminate)</li>
+          <li>&bull; Shaker cabinets</li>
+          <li>&bull; Vinyl flooring</li>
+          <li>&bull; Ceramic tile</li>
+          <li>&bull; Wall board colors</li>
+          <li>&bull; Vinyl siding</li>
+          <li>&bull; Shingles</li>
+          <li>&bull; Shutters</li>
+          <li>&bull; Shake &amp; vertical accents</li>
+        </ul>
         <LightboxGallery
-          images={[{ src: "/images/paramount/2026-selections.webp", alt: "Champion Homes 2026 interior and exterior selections chart" }]}
-          gridClassName="max-w-3xl"
+          images={[{ src: "/images/options/aspire-color-board.webp", alt: "Champion Homes 2026 interior and exterior selections color board — countertops, cabinets, flooring, tile, siding, shingles, and shutters" }]}
+          gridClassName="max-w-4xl"
           imgClassName="w-full rounded-xl border border-[var(--color-charcoal)]/8 bg-white cursor-zoom-in"
         />
+        <p className="text-xs text-[var(--color-charcoal)]/50 mt-3">
+          Samples shown are for illustration only — see actual products for accurate color and pattern. Champion Homes, Dec. 2025.
+        </p>
+        <div className="mt-6">
+          <a href="/design-your-home" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-teal)] hover:underline underline-offset-4">
+            Pick your colors in the Home Designer &rarr;
+          </a>
+        </div>
       </section>
 
       {/* Brochures */}
