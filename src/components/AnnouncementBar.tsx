@@ -1,12 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// The promo's end — after this the banner hides itself so it can never
+// display an expired "Ends August 31st" offer. Update both this timestamp and
+// the visible text below when the offer changes. (Aug 31 2026, 11:59pm ET.)
+const PROMO_END_TS = Date.parse("2026-09-01T03:59:59-04:00");
 
 export function AnnouncementBar() {
   const [isDismissed, setIsDismissed] = useState(false);
+  // Start visible so server and first client render match (no hydration
+  // mismatch); hide after mount if the promo has already ended.
+  const [expired, setExpired] = useState(false);
+  useEffect(() => {
+    if (Date.now() > PROMO_END_TS) setExpired(true);
+  }, []);
 
-  if (isDismissed) return null;
+  if (isDismissed || expired) return null;
 
   return (
     <div className="bg-gradient-to-r from-[#1a365d] via-[#2c7a7b] to-[#1a365d] text-white relative overflow-hidden">
