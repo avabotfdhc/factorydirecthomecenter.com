@@ -114,12 +114,19 @@ export default function OptionsPage() {
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mb-5">
             Factory Options &amp; <span className="italic text-[var(--color-teal-light)]">Selections</span>
           </h1>
-          <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
+          <p className="text-lg text-white/60 max-w-2xl leading-relaxed mb-8">
             Every home we sell is built to order at Champion&apos;s Indiana plants — which means colors,
             finishes, fireplaces, islands, cabinets, and exterior styling are your call. Browse
             Champion&apos;s factory literature below, then{" "}
             <a href="/contact-us" className="text-[var(--color-teal-light)] underline underline-offset-4">ask us to price the options you want</a>.
           </p>
+          <a
+            href="/design-your-home"
+            className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
+          >
+            Design Your Home Online
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+          </a>
         </div>
       </section>
 

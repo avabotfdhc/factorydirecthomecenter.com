@@ -171,8 +171,14 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
 
             <div className="flex flex-wrap gap-3">
               <Link
-                href={`/contact-us?home=${encodeURIComponent(plan.name)}`}
+                href={`/design-your-home?home=${encodeURIComponent(plan.slug)}`}
                 className="inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
+              >
+                Design This Home
+              </Link>
+              <Link
+                href={`/contact-us?home=${encodeURIComponent(plan.name)}`}
+                className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/30 text-[var(--color-teal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
               >
                 Get a Quote
               </Link>
