@@ -7,7 +7,13 @@ import { usePathname, useSearchParams } from "next/navigation";
 // ============================================
 // CONFIGURATION - Environment Variables
 // ============================================
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
+// GA4 Measurement ID. A GA4 ID is a PUBLIC value (it ships in the page source
+// on every request), so committing it is safe — this is not a secret. Kyle
+// can't readily set Vercel env vars, so the real ID lives here as the default
+// and analytics work out of the box; a NEXT_PUBLIC_GA_MEASUREMENT_ID set in
+// Vercel still overrides it. (This is the one tracking ID intentionally in
+// source for that reason; keys/secrets never go here.)
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-6PMB9SZX4H";
 export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || "";
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
 export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "";
