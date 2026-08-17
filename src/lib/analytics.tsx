@@ -16,7 +16,11 @@ import { usePathname, useSearchParams } from "next/navigation";
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-6PMB9SZX4H";
 export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || "";
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
-export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "";
+// Microsoft Clarity project ID — public (ships in page source), same
+// rationale as GA4 above: committed as the default so session recordings and
+// heatmaps work without a Vercel env var; NEXT_PUBLIC_CLARITY_PROJECT_ID
+// overrides it if ever set.
+export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "tjh2nfoq85";
 
 // ============================================
 // TYPE DEFINITIONS
