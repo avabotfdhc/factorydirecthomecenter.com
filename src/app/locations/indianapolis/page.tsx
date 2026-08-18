@@ -35,7 +35,7 @@ const aeoContent = [
     directAnswer: "Yes, Factory Direct Homes Center delivers manufactured and modular homes throughout Indianapolis and central Indiana.",
     supportingDetails: [
       "We serve Marion County and surrounding areas including Hamilton, Johnson, Hendricks, and Boone counties.",
-      "While we're 110 miles from Indianapolis, our factory-direct pricing often beats local dealers even with delivery costs."
+      "Even at 110 miles from Indianapolis, our factory-direct pricing stays competitive once delivery is included."
     ],
     wordCount: 49
   },
@@ -44,7 +44,7 @@ const aeoContent = [
     directAnswer: "Delivery to Indianapolis costs approximately $4,200 for the 110-mile transport from our Auburn showroom.",
     supportingDetails: [
       "This covers transportation of the home to your site; setup is handled by the contractor you hire.",
-      "Even with delivery, our factory-direct pricing is often competitive with Indianapolis-area dealers."
+      "Even with delivery included, our factory-direct pricing stays competitive for Indianapolis buyers."
     ],
     wordCount: 45
   },
@@ -67,7 +67,7 @@ const aeoContent = [
     wordCount: 46
   },
   {
-    question: "Why choose Factory Direct over Indianapolis dealers?",
+    question: "What makes Factory Direct worth the drive from Indianapolis?",
     directAnswer: "Factory Direct offers true factory-direct pricing from Champion's largest manufacturing facility, often offsetting delivery costs.",
     supportingDetails: [
       "Our line-item transparency lets you see exactly what you're paying for.",

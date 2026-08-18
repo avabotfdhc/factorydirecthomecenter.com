@@ -42,7 +42,7 @@ const aeoContent = [
     directAnswer: "Factory Direct Homes Center delivers manufactured and modular homes throughout Fort Wayne and Allen County from our Auburn showroom, just 30 miles away.",
     supportingDetails: [
       "We serve all Fort Wayne neighborhoods including Aboite, Southwest Allen, and New Haven.",
-      "Our central location means shorter delivery times and lower costs than dealers farther from the factory."
+      "Our central location means short delivery times and low freight costs on every Fort Wayne delivery."
     ],
     wordCount: 48
   },
@@ -50,7 +50,7 @@ const aeoContent = [
     question: "How much does it cost to deliver a manufactured home to Fort Wayne?",
     directAnswer: "Delivery to Fort Wayne costs approximately $2,800 due to our proximity—just 30 miles from our Auburn showroom.",
     supportingDetails: [
-      "This is significantly less than dealers located 50+ miles away.",
+      "That short 30-mile haul from our Auburn showroom keeps your freight cost low.",
       "Total cost covers transportation of the home to your site; setup on your foundation is handled by the contractor you hire."
     ],
     wordCount: 45
@@ -69,7 +69,7 @@ const aeoContent = [
     directAnswer: "Factory Direct Homes Center is the closest Champion dealer to Fort Wayne, located just 30 miles away in Auburn.",
     supportingDetails: [
       "We're a family-owned, authorized Champion dealer serving Indiana, Ohio, and Michigan.",
-      "Our line-item pricing and contractor freedom set us apart from national chains."
+      "Our line-item pricing and contractor freedom mean real transparency and savings on every home."
     ],
     wordCount: 46
   },
@@ -78,7 +78,7 @@ const aeoContent = [
     directAnswer: "From order to move-in typically takes 8-12 weeks for Fort Wayne deliveries.",
     supportingDetails: [
       "Manufacturing takes 6-8 weeks at the Topeka factory, just 20 miles from our showroom.",
-      "Our proximity means faster delivery than dealers who must transport from farther away."
+      "Our proximity means fast delivery — the home travels a short distance to your site."
     ],
     wordCount: 45
   }
@@ -445,9 +445,8 @@ export default function FortWaynePage() {
                 
                 <div className="mt-8 p-4 bg-[var(--color-cream-dark)] rounded-lg">
                   <p className="text-sm text-[var(--color-gray)]">
-                    <strong>Local advantage:</strong> Being just 30 miles from Fort Wayne 
-                    means lower delivery costs and faster service than dealers located 
-                    50+ miles away in other cities.
+                    <strong>Local advantage:</strong> Being just 30 miles from Fort Wayne
+                    means low delivery costs and fast, local service you can count on.
                   </p>
                 </div>
               </div>
