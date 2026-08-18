@@ -5,6 +5,17 @@ import { H2, H3 } from "@/components/Heading";
 import { useEffect } from "react";
 import { trackLocationView, trackCTAClick } from "@/lib/analytics";
 
+interface LocationFAQ {
+  question: string;
+  answer: string;
+}
+
+interface LocationSection {
+  heading: string;
+  // Plain paragraphs; each string becomes its own <p>.
+  paragraphs: string[];
+}
+
 interface LocationPageProps {
   city: string;
   state: string;
@@ -13,15 +24,58 @@ interface LocationPageProps {
   deliveryCost: string;
   description: string;
   counties: string[];
+  // Optional unique, hand-written local content — the SEO moat against thin
+  // national-chain templates. When present, renders a distinct local section
+  // and an FAQ block (with FAQPage schema), and richer LocalBusiness schema.
+  localSections?: LocationSection[];
+  faqs?: LocationFAQ[];
+  nearbyTowns?: string[];
 }
 
-export function LocationPageTemplate({ city, state, stateAbbr, distance, deliveryCost, description, counties }: LocationPageProps) {
+export function LocationPageTemplate({ city, state, stateAbbr, distance, deliveryCost, description, counties, localSections, faqs, nearbyTowns }: LocationPageProps) {
   useEffect(() => {
     trackLocationView(city, state);
   }, [city, state]);
 
+  const ldGraph: Record<string, unknown>[] = [
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": `https://factorydirecthomescenter.com/locations/${city.toLowerCase().replace(/\s+/g, "-")}#business`,
+      name: "Factory Direct Homes Center",
+      description: `Authorized Champion Homes dealer serving ${city}, ${state} and the surrounding ${counties.map((c) => `${c} County`).join(", ")} area with factory-direct manufactured and modular homes.`,
+      url: `https://factorydirecthomescenter.com/locations/${city.toLowerCase().replace(/\s+/g, "-")}`,
+      telephone: "+1-260-308-1457",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "1211 State Road 8",
+        addressLocality: "Auburn",
+        addressRegion: "IN",
+        postalCode: "46706",
+        addressCountry: "US",
+      },
+      areaServed: [
+        { "@type": "City", name: `${city}, ${state}` },
+        ...counties.map((c) => ({ "@type": "AdministrativeArea" as const, name: `${c} County, ${state}` })),
+      ],
+    },
+    ...(faqs && faqs.length
+      ? [{
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
+        }]
+      : []),
+  ];
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": ldGraph }) }}
+      />
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -76,8 +130,8 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
                   lower costs and faster move-in dates.
                 </p>
                 <p>
-                  Unlike national chains that treat you like a number, we&apos;re a family-owned 
-                  business that believes in partnership. Every contract shows line-item pricing
+                  As a family-owned business, we believe in partnership and treat every
+                  buyer like a neighbor. Every contract shows line-item pricing
                   for the home and delivery, and you hire your own contractors for setup and
                   site work — most buyers save thousands that way. Ask us for our referral list
                   of licensed and insured contractors past customers have used.
@@ -111,6 +165,26 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
         </div>
       </section>
 
+      {/* Unique local content — the SEO moat vs. thin national templates */}
+      {localSections && localSections.length > 0 && (
+        <section className="py-20 lg:py-28 border-t border-[var(--color-charcoal)]/5">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <div className="space-y-12">
+              {localSections.map((sec) => (
+                <div key={sec.heading}>
+                  <H2 className="font-serif text-3xl font-light mb-5">{sec.heading}</H2>
+                  <div className="space-y-4 text-[var(--color-charcoal)]/80 leading-relaxed">
+                    {sec.paragraphs.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Counties */}
       <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -120,9 +194,14 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
               We Serve <span className="italic text-[var(--color-teal)]">All of {state}</span>
             </H2>
             <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-              From {city} to every corner of {state}, we deliver Champion manufactured 
+              From {city} to every corner of {state}, we deliver Champion manufactured
               and modular homes with factory-direct pricing.
             </p>
+            {nearbyTowns && nearbyTowns.length > 0 && (
+              <p className="text-sm text-[var(--color-gray)] mt-4 max-w-3xl mx-auto">
+                Serving {city} and nearby communities including {nearbyTowns.join(", ")}.
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -137,6 +216,25 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
           </div>
         </div>
       </section>
+
+      {/* Location FAQ (emits FAQPage schema above) */}
+      {faqs && faqs.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-10 text-center">
+              {city} Manufactured Homes — <span className="italic text-[var(--color-teal)]">Common Questions</span>
+            </H2>
+            <div className="space-y-6">
+              {faqs.map((f) => (
+                <div key={f.question} className="border-b border-[var(--color-charcoal)]/8 pb-6">
+                  <H3 className="font-semibold text-lg mb-2">{f.question}</H3>
+                  <p className="text-[var(--color-charcoal)]/75 leading-relaxed">{f.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">

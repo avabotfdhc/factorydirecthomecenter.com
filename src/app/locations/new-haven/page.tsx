@@ -58,7 +58,7 @@ const data: CityLocationData = {
     {
       question: "How is buying factory-direct different near Fort Wayne?",
       answer:
-        "Instead of paying a traditional dealer markup, you buy directly from the factory through us. That means line-item pricing — you see exactly what you're paying for the home and delivery, and you hire your own contractor for setup — and shorter delivery times because the Champion factory is close by.",
+        "You buy directly from the factory through us, so your money goes into the home. That means line-item pricing — you see exactly what you're paying for the home and delivery, and you hire your own contractor for setup — and short delivery times because the Champion factory is close by.",
     },
     {
       question: "What homes can I buy near New Haven?",

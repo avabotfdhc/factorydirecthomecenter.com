@@ -28,7 +28,7 @@ const data: CityLocationData = {
     "Champion manufactured & modular homes delivered to Columbia City and Whitley County — factory-direct from our Auburn showroom, with local delivery and contractor referrals for setup.",
   intro: [
     "Columbia City, the seat of Whitley County, has become a popular, growing choice for buyers who want a small-town feel within an easy commute of Fort Wayne. That growth is driving strong demand for affordable new housing — and a factory-direct Champion home is one of the best values in the county.",
-    "We deliver single wides, double wides, and IRC-code modular homes throughout Columbia City, South Whitley, Larwill, and the surrounding Whitley County countryside. Because we buy directly from the nearby Champion factory, you get transparent, line-item pricing and shorter delivery times than dealers located farther away.",
+    "We deliver single wides, double wides, and IRC-code modular homes throughout Columbia City, South Whitley, Larwill, and the surrounding Whitley County countryside. Because we buy directly from the nearby Champion factory, you get transparent, line-item pricing and short delivery times because the Champion factory is nearby.",
     <>
       See our <Link href="/floor-plans" className="text-[var(--color-teal)] underline">floor plans</Link>, explore{" "}
       <Link href="/financing" className="text-[var(--color-teal)] underline">financing</Link>, or{" "}

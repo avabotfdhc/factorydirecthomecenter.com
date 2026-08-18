@@ -47,8 +47,8 @@ export default function DeKalbCountyPage() {
               </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
-                  We're not a national chain calling from Topeka or Nappanee. We're your 
-                  neighbors in Auburn, right here in DeKalb County. That means:
+                  We're your neighbors in Auburn, right here in DeKalb County. Being
+                  local means:
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">

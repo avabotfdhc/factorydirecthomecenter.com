@@ -212,9 +212,9 @@ export default function AuburnLocationPage() {
             <H2 className="font-serif text-3xl font-light mb-4">Your Local Manufactured Home Dealer in Auburn</H2>
             <p className="text-[var(--color-gray)] leading-relaxed mb-4">
               Factory Direct Homes Center is based right in Auburn, Indiana — the county seat of DeKalb
-              County. Unlike online-only sellers or dealers located hours away, we&rsquo;re local: you can
-              visit our showroom at 1211 State Road 8, walk through real Champion homes, and work
-              face-to-face with a team that knows DeKalb County zoning, permitting, and site work.
+              County. Because we&rsquo;re local, you can visit our showroom at 1211 State Road 8, walk
+              through real Champion homes, and work face-to-face with a team that knows DeKalb County
+              zoning, permitting, and site work.
             </p>
             <p className="text-[var(--color-gray)] leading-relaxed mb-4">
               Because we&rsquo;re only 20 miles from the Champion factory in Topeka — the largest Champion
