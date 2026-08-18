@@ -88,7 +88,7 @@ const locationFAQs = [
   },
   {
     question: "Is it worth buying from Factory Direct if I'm in Indianapolis?",
-    answer: "Many Indianapolis buyers find our factory-direct pricing competitive even with delivery costs. We're 110 miles away, but we source directly from Champion's largest factory with no middleman markups. Our line-item pricing and contractor flexibility often result in total costs comparable to or better than local dealers, plus you get our transparent, no-pressure approach."
+    answer: "Many Indianapolis buyers find our factory-direct pricing competitive even with delivery costs. We're 110 miles away, but we source directly from Champion's largest factory. Our line-item pricing and contractor flexibility often make the total a smart buy, plus you get our transparent, no-pressure approach."
   },
   {
     question: "What is the best location for a manufactured home near Indianapolis?",
