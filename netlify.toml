@@ -1,0 +1,13 @@
+# Netlify is intentionally disabled — this project deploys via Vercel only.
+#
+# The `fdhc-ava` Netlify site is still connected to this repo at the GitHub-app
+# level (dashboard side), so pushes/PRs would otherwise trigger Netlify preview
+# builds. Netlify runs this `ignore` command before every build and CANCELS the
+# build when the command exits 0. `exit 0` therefore cancels every build, so no
+# Netlify deploy or deploy-preview is ever produced.
+#
+# To re-enable Netlify, remove this file (or set ignore to exit 1) AND reconnect
+# the site in the Netlify dashboard. For a permanent disconnect, unlink the repo
+# from the `fdhc-ava` site in Netlify (dashboard) — that stops the check entirely.
+[build]
+  ignore = "exit 0"
