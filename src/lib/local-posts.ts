@@ -402,20 +402,13 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Yes — Angola, Fremont, Hamilton, Pleasant Lake, and the surrounding townships. See <a href="/locations/angola">our Angola page</a> and <a href="/locations/steuben-county">Steuben County page</a>.</p>
 `,
   },
-];
-
-// Staged city posts awaiting scheduled publication (3-wave rollout, authorized 2026-08-12).
-// Wave 3 (~Aug 18): huntertown, new-haven, columbia-city, churubusco, indianapolis
-// To publish a wave: move its entries into localBlogPosts above and set `date`
-// to the actual publish date. This array is intentionally not imported anywhere.
-export const pendingBlogPosts: ApiBlogDetail[] = [
   {
     slug: "manufactured-homes-huntertown-indiana",
     title: "Manufactured Homes Near Huntertown, Indiana: New Construction on the Growing North Side",
     excerpt:
       "Huntertown is one of Allen County's fastest-growing corridors — and site-built prices show it. How north-side buyers use factory-built homes to keep new construction affordable.",
     image: "/images/homepage/about-2.webp",
-    date: "August 12, 2026",
+    date: "August 18, 2026",
     html: `
 <p>Huntertown and the corridor north of Fort Wayne have been growing fast, and new site-built subdivisions there price accordingly. If you want new construction on the north side without a subdivision price tag, factory-built housing is the honest alternative — especially with our showroom just up the road in Auburn.</p>
 <h2>Between the city and the country</h2>
@@ -435,7 +428,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "New Haven buyers east of Fort Wayne can reach rural east-Allen land, established communities, and our Auburn showroom with ease. Here's the local playbook.",
     image: "/images/homepage/feature-financing.webp",
-    date: "August 12, 2026",
+    date: "August 18, 2026",
     html: `
 <p>New Haven has always been Fort Wayne's practical eastern neighbor — close to everything, easier on the wallet. The same logic points straight at factory-built housing: for the price of a dated fixer-upper in east Allen County, you can own brand-new construction with a manufacturer warranty.</p>
 <h2>East Allen options</h2>
@@ -455,7 +448,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "Columbia City buyers on the US-30 corridor commute everywhere — Fort Wayne, Warsaw, and beyond. Here's how they're putting new Champion homes on Whitley County land.",
     image: "/images/homepage/single-wides.webp",
-    date: "August 12, 2026",
+    date: "August 18, 2026",
     html: `
 <p>Columbia City works hard: the US-30 corridor carries Whitley County commuters to Fort Wayne one way and Warsaw the other. What the corridor hasn't carried lately is affordable new housing — which is why more Whitley County families are looking at factory-built homes on their own land.</p>
 <h2>Whitley County land is the opportunity</h2>
@@ -475,7 +468,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "Turtle Town USA sits an easy half-hour from our Auburn showroom. How Churubusco buyers get new Champion homes on Whitley County land without big-city prices.",
     image: "/images/homepage/double-wides.webp",
-    date: "August 12, 2026",
+    date: "August 18, 2026",
     html: `
 <p>Churubusco — Turtle Town USA, if you know your local festivals — is the kind of small town people move to on purpose: quiet roads, real community, and a quick hop to Fort Wayne when you need it. The housing challenge is the same as everywhere: not much new construction, and what exists costs plenty. A new manufactured or modular home solves both problems at once.</p>
 <h2>An easy 30 minutes to compare homes</h2>
@@ -497,7 +490,7 @@ export const pendingBlogPosts: ApiBlogDetail[] = [
     excerpt:
       "Indianapolis-area buyers face the state's steepest housing costs. Here's when it makes sense to buy factory-direct from northeast Indiana — and how delivery to central Indiana works.",
     image: "/images/homepage/feature-find-land.webp",
-    date: "August 12, 2026",
+    date: "August 18, 2026",
     html: `
 <p>Indianapolis has Indiana's biggest housing market and its steepest affordability squeeze. For buyers with land — or plans to buy land — in the counties around Marion, a factory-direct manufactured or modular home is often the only realistic route to new construction. And here's the part most central Indiana buyers don't know: shopping a factory-direct dealer up north can beat metro-area dealer pricing, even after the longer delivery.</p>
 <h2>The factory-direct math for central Indiana</h2>
