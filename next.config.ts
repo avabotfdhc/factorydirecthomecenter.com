@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { legacyFloorPlanRedirects } from "./src/lib/legacy-redirects";
 
 const nextConfig: NextConfig = {
   images: {
@@ -66,6 +67,9 @@ const nextConfig: NextConfig = {
         destination: '/resources',
         permanent: false,
       },
+      // 301s for the retired pre-CMS floor-plan URLs (old short slugs) →
+      // current homes, so old indexed/linked pages don't 404.
+      ...legacyFloorPlanRedirects,
     ];
   },
   async headers() {
