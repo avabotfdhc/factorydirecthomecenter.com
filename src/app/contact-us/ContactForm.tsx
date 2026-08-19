@@ -4,6 +4,7 @@ import type { FormEvent } from "react";
 import { useState, useEffect } from "react";
 import { H2, H3 } from "@/components/Heading";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
+import { LeadConsent, LeadUrgency } from "@/components/LeadConsent";
 import {
   trackLeadFormStart,
   trackLeadFormError, 
@@ -430,9 +431,11 @@ export default function ContactForm() {
                     ></textarea>
                   </div>
 
+                  <LeadUrgency className="mb-3" />
                   <button type="submit" className="btn-primary w-full bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300 rounded">
                     Send Message
                   </button>
+                  <LeadConsent className="mt-3" />
                 </form>
               )}
             </div>

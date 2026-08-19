@@ -8,6 +8,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
+import { FloorPlanQuoteCTA } from "@/components/QuoteModal";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 
 const SITE = "https://factorydirecthomescenter.com";
@@ -176,18 +177,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               >
                 Design This Home
               </Link>
-              <Link
-                href={`/contact-us?home=${encodeURIComponent(plan.name)}`}
-                className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/30 text-[var(--color-teal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
-              >
-                Get a Quote
-              </Link>
-              <Link
-                href={`/contact-us?home=${encodeURIComponent(plan.name)}&visit=1`}
-                className="inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
-              >
-                Schedule a Lot Visit
-              </Link>
+              <FloorPlanQuoteCTA homeName={plan.name} />
               <a
                 href="tel:+12603081457"
                 className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors"

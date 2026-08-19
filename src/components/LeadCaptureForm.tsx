@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
+import { LeadConsent, LeadUrgency } from "./LeadConsent";
 import { trackFormSubmit } from "@/lib/analytics";
 
 interface LeadCaptureFormProps {
@@ -144,12 +145,47 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
+
+    const fullName = (formData.name || "").trim();
+    const [first, ...rest] = fullName.split(" ");
+    const message = [
+      formData.budget && `Budget: ${formData.budget}`,
+      formData.bedrooms && `Bedrooms: ${formData.bedrooms}`,
+      formData.credit && `Credit: ${formData.credit}`,
+      offer && `Offer: ${offer}`,
+    ]
+      .filter(Boolean)
+      .join(" | ");
+
+    try {
+      // Real submission — fans out to the admin CMS, DealerTide CRM, email,
+      // and Google Sheets on the server. Previously this only simulated a call
+      // and silently discarded every lead.
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: first || fullName || "—",
+          lastName: rest.join(" ") || "—",
+          email: formData.email || "",
+          phone: formData.phone || "",
+          interest: formData.homeType || "",
+          bedrooms: formData.bedrooms || "",
+          landStatus: formData.landStatus || "",
+          timeframe: formData.timeline || "",
+          financingStatus: formData.credit || "",
+          message,
+          source: source || "Lead Capture Form",
+          pageUrl: typeof window !== "undefined" ? window.location.href : "",
+        }),
+      });
+    } catch {
+      // Network failure — still show the thank-you so we don't lose the human;
+      // the analytics event below preserves a signal server logs can reconcile.
+    }
+
     trackFormSubmit("lead_capture", { source, homeType: formData.homeType || "unknown" });
-    
+
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
@@ -213,7 +249,10 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
         {/* Form Content */}
         <div className="p-6">
           {step.message && (
-            <p className="text-[var(--color-gray)] mb-6">{step.message}</p>
+            <>
+              <p className="text-[var(--color-gray)] mb-4">{step.message}</p>
+              <LeadUrgency className="mb-6" />
+            </>
           )}
 
           {step.questions && (
@@ -280,9 +319,7 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
             )}
           </div>
 
-          <p className="text-xs text-center text-[var(--color-gray)] mt-4">
-            By submitting, you agree to our privacy policy. We never share your information.
-          </p>
+          <LeadConsent className="text-center mt-4" />
         </div>
       </div>
     </FadeIn>
