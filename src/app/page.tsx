@@ -245,7 +245,7 @@ function ParallaxHeroSection() {
       <div className="relative h-full flex flex-col justify-center px-4 lg:px-8 pt-4">
         <div className="max-w-7xl mx-auto w-full">
           {/* Sale Badge */}
-          <Link href="/special-plans" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
+          <Link href="/homes-on-sale" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
             <span className="animate-pulse">🎉</span>
             <span>Save up to 25% off select new Champion floor plans!</span>
             <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">Ends August 31</span>
