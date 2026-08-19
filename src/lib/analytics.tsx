@@ -678,7 +678,42 @@ export function trackVideoComplete(videoName: string) {
 // COMPLETE TRACKING COMPONENT
 // ============================================
 
+// Defer loading the (heavy) third-party tracking scripts until the first real
+// user interaction, or an idle fallback (~6s) so non-interacting visits still
+// get counted. This keeps GA4/GTM/Meta Pixel/Clarity off the critical path,
+// which is the single biggest lever for mobile TBT/INP/Lighthouse score.
+function useDeferUntilInteraction(timeoutMs = 6000): boolean {
+  const [ready, setReady] = React.useState(false);
+  useEffect(() => {
+    if (ready) return;
+    const events: Array<keyof WindowEventMap> = [
+      "scroll",
+      "keydown",
+      "pointerdown",
+      "touchstart",
+      "mousemove",
+      "click",
+    ];
+    const opts: AddEventListenerOptions = { once: true, passive: true, capture: true };
+    let timer = 0;
+    const trigger = () => {
+      cleanup();
+      setReady(true);
+    };
+    const cleanup = () => {
+      window.clearTimeout(timer);
+      events.forEach((e) => window.removeEventListener(e, trigger, opts));
+    };
+    events.forEach((e) => window.addEventListener(e, trigger, opts));
+    timer = window.setTimeout(trigger, timeoutMs);
+    return cleanup;
+  }, [ready]);
+  return ready;
+}
+
 export function AnalyticsProvider() {
+  const ready = useDeferUntilInteraction();
+  if (!ready) return null;
   return (
     <React.Fragment>
       <GoogleTagManager />
