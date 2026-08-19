@@ -124,14 +124,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return genMeta({
       title: "Home Not Found",
       description: "The requested home could not be found.",
-      url: "/special-plans",
+      url: "/homes-on-sale",
     });
   }
 
   return genMeta({
     title: `${home.name} - Up to 25% Off MSRP`,
     description: `Save up to 25% off MSRP on the ${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. Contact us for your factory-direct price. Limited time offer!`,
-    url: `/special-plans/details/${home.id}`,
+    url: `/homes-on-sale/details/${home.id}`,
   });
 }
 
@@ -151,7 +151,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
           <nav className="flex items-center gap-2 text-sm text-gray-600">
             <Link href="/" className="hover:text-[#2c7a7b]">Home</Link>
             <span>/</span>
-            <Link href="/special-plans" className="hover:text-[#2c7a7b]">On Sale</Link>
+            <Link href="/homes-on-sale" className="hover:text-[#2c7a7b]">On Sale</Link>
             <span>/</span>
             <span className="text-gray-900 font-medium">{home.name}</span>
           </nav>

@@ -24,7 +24,7 @@ export const metadata = genMeta({
     "modular home sale",
     "summer home sale"
   ],
-  url: "/special-plans",
+  url: "/homes-on-sale",
 });
 
 // Sale disclaimer
@@ -228,13 +228,13 @@ export default function SpecialPlansPage() {
           <div className="flex flex-wrap gap-4 items-center justify-between">
             <div className="flex gap-2">
               <Link
-                href="/special-plans"
+                href="/homes-on-sale"
                 className="px-6 py-2 bg-[#2c7a7b] text-white rounded-full font-medium"
               >
                 On Sale
               </Link>
               <Link
-                href="/special-plans/clearance"
+                href="/homes-on-sale/clearance"
                 className="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50"
               >
                 Clearance
@@ -381,7 +381,7 @@ export default function SpecialPlansPage() {
 
                     {/* CTA */}
                     <Link
-                      href={`/special-plans/details/${home.id}`}
+                      href={`/homes-on-sale/details/${home.id}`}
                       className="block w-full text-center py-3 bg-[#2c7a7b] hover:bg-[#1a365d] text-white font-semibold rounded-lg transition-colors"
                     >
                       View Details

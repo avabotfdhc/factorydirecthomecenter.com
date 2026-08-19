@@ -67,6 +67,23 @@ const nextConfig: NextConfig = {
         destination: '/resources',
         permanent: false,
       },
+      // Sale page renamed /special-plans → /homes-on-sale (SEO-friendlier slug).
+      // 301 the old paths so indexed/linked URLs keep their equity.
+      {
+        source: '/special-plans/clearance',
+        destination: '/homes-on-sale/clearance',
+        permanent: true,
+      },
+      {
+        source: '/special-plans/details/:slug',
+        destination: '/homes-on-sale/details/:slug',
+        permanent: true,
+      },
+      {
+        source: '/special-plans',
+        destination: '/homes-on-sale',
+        permanent: true,
+      },
       // 301s for the retired pre-CMS floor-plan URLs (old short slugs) →
       // current homes, so old indexed/linked pages don't 404.
       ...legacyFloorPlanRedirects,

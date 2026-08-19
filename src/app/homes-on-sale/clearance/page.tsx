@@ -6,7 +6,7 @@ import { H2 } from "@/components/Heading";
 export const metadata = genMeta({
   title: "Clearance Homes",
   description: "Shop clearance manufactured homes at Factory Direct Homes Center. Last chance pricing on select inventory. Single wide, double wide, and modular homes.",
-  url: "/special-plans/clearance",
+  url: "/homes-on-sale/clearance",
 });
 
 export default function ClearancePage() {
@@ -31,13 +31,13 @@ export default function ClearancePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex gap-2">
             <Link
-              href="/special-plans"
+              href="/homes-on-sale"
               className="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50"
             >
               On Sale
             </Link>
             <Link
-              href="/special-plans/clearance"
+              href="/homes-on-sale/clearance"
               className="px-6 py-2 bg-[#2c7a7b] text-white rounded-full font-medium"
             >
               Clearance
@@ -60,13 +60,13 @@ export default function ClearancePage() {
             </h2>
             <p className="text-gray-600 mb-8 max-w-lg mx-auto">
               Our clearance inventory moves fast! Check out our current 
-              <Link href="/special-plans" className="text-[#2c7a7b] hover:underline font-medium"> 20% off sale</Link> for 
+              <Link href="/homes-on-sale" className="text-[#2c7a7b] hover:underline font-medium"> 20% off sale</Link> for 
               the best deals on new Champion homes, or browse our full 
               <Link href="/floor-plans" className="text-[#2c7a7b] hover:underline font-medium"> floor plan collection</Link>.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/special-plans"
+                href="/homes-on-sale"
                 className="inline-flex items-center justify-center px-8 py-3 bg-[#2c7a7b] hover:bg-[#1a365d] text-white font-semibold rounded-lg transition-colors"
               >
                 View 20% Off Sale

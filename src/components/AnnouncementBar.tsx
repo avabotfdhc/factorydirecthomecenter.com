@@ -29,7 +29,7 @@ export function AnnouncementBar() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center py-2.5">
           <Link 
-            href="/special-plans" 
+            href="/homes-on-sale" 
             className="flex items-center gap-2 text-sm font-medium hover:underline transition-all"
           >
             <span className="animate-pulse">🎉</span>
