@@ -25,7 +25,7 @@ const saleHomes = [
     length: "56'",
     msrp: 89900,
     salePrice: 71920,
-    image: "/floorplans/Dutch Aspire 1656H22208.png",
+    image: "/images/paramount/1656h22208-opt2.webp",
     description: "Champion 16'x56' 2 Beds 2 baths Single Wide Dutch Aspire",
     features: ["Smart Floor Plan", "Modern Kitchen", "Comfortable Living Area", "Spacious Bedrooms"]
   },
@@ -41,7 +41,7 @@ const saleHomes = [
     length: "52'",
     msrp: 84900,
     salePrice: 67920,
-    image: "/floorplans/Dutch Aspire 1652H21151.png",
+    image: "/images/paramount/1652h21151-opt2.webp",
     description: "Champion 16'x52' 2 Beds 1 bath Single Wide Dutch Aspire",
     features: ["Efficient Layout", "Modern Kitchen", "Cozy Living Space"]
   },
@@ -58,7 +58,7 @@ const saleHomes = [
     length: "52'",
     msrp: 145000,
     salePrice: 116000,
-    image: "/floorplans/Brighton.png",
+    image: "/images/paramount/2852h32170-opt2.webp",
     description: "Champion 28'x52' 3 Beds 2 baths Double Wide",
     features: ["Open Concept", "Master Suite", "Large Kitchen Island"]
   },
@@ -75,7 +75,7 @@ const saleHomes = [
     length: "64'",
     msrp: 169000,
     salePrice: 135200,
-    image: "/floorplans/Fillmore.png",
+    image: "/images/paramount/2864h32060-opt2.webp",
     description: "Champion 28'x64' 3 Beds 2 baths Double Wide",
     features: ["Spacious Layout", "Walk-in Closets", "Gourmet Kitchen"]
   },
@@ -92,7 +92,7 @@ const saleHomes = [
     length: "56'",
     msrp: 155000,
     salePrice: 124000,
-    image: "/floorplans/Silverton.png",
+    image: "/images/paramount/silverton-exterior.webp",
     description: "Champion 28'x56' 3 Beds 2 baths Double Wide",
     features: ["Modern Design", "Vaulted Ceilings", "Large Windows"]
   },
@@ -109,7 +109,7 @@ const saleHomes = [
     length: "60'",
     msrp: 162000,
     salePrice: 129600,
-    image: "/floorplans/Bay Port.png",
+    image: "/images/paramount/bayport-exterior.webp",
     description: "Champion 28'x60' 3 Beds 2 baths Double Wide",
     features: ["Family Friendly", "Bonus Room", "Luxury Finishes"]
   }

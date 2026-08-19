@@ -51,7 +51,7 @@ const saleHomes = [
     length: "56'",
     msrp: 89900,
     salePrice: 67425,
-    image: "/floorplans/Dutch Aspire 1656H22208.png",
+    image: "/images/paramount/1656h22208-opt2.webp",
     tag: "On Sale"
   },
   {
@@ -66,7 +66,7 @@ const saleHomes = [
     length: "52'",
     msrp: 84900,
     salePrice: 63675,
-    image: "/floorplans/Dutch Aspire 1652H21151.png",
+    image: "/images/paramount/1652h21151-opt2.webp",
     tag: "On Sale"
   },
   {
@@ -82,7 +82,7 @@ const saleHomes = [
     length: "52'",
     msrp: 145000,
     salePrice: 108750,
-    image: "/floorplans/Brighton.png",
+    image: "/images/paramount/2852h32170-opt2.webp",
     tag: "On Sale"
   },
   {
@@ -98,7 +98,7 @@ const saleHomes = [
     length: "64'",
     msrp: 169000,
     salePrice: 126750,
-    image: "/floorplans/Fillmore.png",
+    image: "/images/paramount/2864h32060-opt2.webp",
     tag: "On Sale"
   },
   {
@@ -114,7 +114,7 @@ const saleHomes = [
     length: "56'",
     msrp: 155000,
     salePrice: 116250,
-    image: "/floorplans/Silverton.png",
+    image: "/images/paramount/silverton-exterior.webp",
     tag: "On Sale"
   },
   {
@@ -130,7 +130,7 @@ const saleHomes = [
     length: "60'",
     msrp: 162000,
     salePrice: 121500,
-    image: "/floorplans/Bay Port.png",
+    image: "/images/paramount/bayport-exterior.webp",
     tag: "On Sale"
   }
 ];
