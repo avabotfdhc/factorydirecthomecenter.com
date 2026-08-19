@@ -143,12 +143,11 @@ export default function SpecialPlansPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/2026-03-22-hero-autumn.png"
+            src="/images/2026-03-22-hero-autumn.webp"
             alt="Modern manufactured home with autumn landscaping"
             fill
+            priority
             className="object-cover"
-            fetchPriority="high"
-            loading="eager"
             sizes="100vw"
           />
           {/* Gradient overlay for text readability */}
