@@ -329,7 +329,7 @@ export function AnimatedHomeSections() {
             </div>
 
             <div className="aspect-square lg:aspect-[4/3] bg-gray-100 rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
-              <iframe title="Factory Direct Homes Center location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3003.5!2d-85.0583!3d41.3668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDIyJzAwLjUiTiA4NcKwMDMnMjkuOSJX!5e0!3m2!1sen!2sus!4v1" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+              <iframe title="Factory Direct Homes Center location" src="https://www.google.com/maps?q=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706&output=embed" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
           </div>
         </div>
