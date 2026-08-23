@@ -8,7 +8,7 @@ import { H2 } from "@/components/Heading";
 // ============================================
 // SALE HOME DETAIL PAGE
 // ============================================
-// Individual sale home details with 20% off pricing
+// Individual sale home details with 25% off pricing
 // ============================================
 
 // Sale homes data (same as main page)
@@ -24,7 +24,7 @@ const saleHomes = [
     width: "16'",
     length: "56'",
     msrp: 89900,
-    salePrice: 71920,
+    salePrice: 67425,
     image: "/images/paramount/1656h22208-opt2.webp",
     description: "Champion 16'x56' 2 Beds 2 baths Single Wide Dutch Aspire",
     features: ["Smart Floor Plan", "Modern Kitchen", "Comfortable Living Area", "Spacious Bedrooms"]
@@ -40,7 +40,7 @@ const saleHomes = [
     width: "16'",
     length: "52'",
     msrp: 84900,
-    salePrice: 67920,
+    salePrice: 63675,
     image: "/images/paramount/1652h21151-opt2.webp",
     description: "Champion 16'x52' 2 Beds 1 bath Single Wide Dutch Aspire",
     features: ["Efficient Layout", "Modern Kitchen", "Cozy Living Space"]
@@ -57,7 +57,7 @@ const saleHomes = [
     width: "28'",
     length: "52'",
     msrp: 145000,
-    salePrice: 116000,
+    salePrice: 108750,
     image: "/images/paramount/2852h32170-opt2.webp",
     description: "Champion 28'x52' 3 Beds 2 baths Double Wide",
     features: ["Open Concept", "Master Suite", "Large Kitchen Island"]
@@ -74,7 +74,7 @@ const saleHomes = [
     width: "28'",
     length: "64'",
     msrp: 169000,
-    salePrice: 135200,
+    salePrice: 126750,
     image: "/images/paramount/2864h32060-opt2.webp",
     description: "Champion 28'x64' 3 Beds 2 baths Double Wide",
     features: ["Spacious Layout", "Walk-in Closets", "Gourmet Kitchen"]
@@ -91,7 +91,7 @@ const saleHomes = [
     width: "28'",
     length: "56'",
     msrp: 155000,
-    salePrice: 124000,
+    salePrice: 116250,
     image: "/images/paramount/silverton-exterior.webp",
     description: "Champion 28'x56' 3 Beds 2 baths Double Wide",
     features: ["Modern Design", "Vaulted Ceilings", "Large Windows"]
@@ -108,7 +108,7 @@ const saleHomes = [
     width: "28'",
     length: "60'",
     msrp: 162000,
-    salePrice: 129600,
+    salePrice: 121500,
     image: "/images/paramount/bayport-exterior.webp",
     description: "Champion 28'x60' 3 Beds 2 baths Double Wide",
     features: ["Family Friendly", "Bonus Room", "Luxury Finishes"]
@@ -331,7 +331,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
           <FadeIn>
             <div className="bg-white rounded-xl shadow-lg p-8">
               <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">
-                Claim This 20% Off Deal
+                Claim This 25% Off Deal
               </h2>
               <p className="text-center text-gray-600 mb-8">
                 Fill out the form below and our team will contact you within 24 hours 
