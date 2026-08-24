@@ -16,8 +16,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const token = await getAdminToken();
   if (!token) redirect("/admin/login");
 
+  // cmsGet already returns null on a 401/expired token, so a bad token can't get
+  // here. Accept the profile when the CMS signals success OR simply returns the
+  // profile payload — the auth endpoints don't consistently include a top-level
+  // `success` flag, and requiring it caused an infinite bounce back to /login
+  // even after a valid sign-in.
   const profile = await cmsGet("/api/authenticate/get-profile", token);
-  if (!profile?.success) redirect("/admin/login");
+  if (!profile || (!profile.success && !profile.data)) redirect("/admin/login");
 
   const userName = profile?.data?.name || profile?.data?.username || "Admin";
 
