@@ -60,7 +60,7 @@ export default function ClearancePage() {
             </h2>
             <p className="text-gray-600 mb-8 max-w-lg mx-auto">
               Our clearance inventory moves fast! Check out our current 
-              <Link href="/homes-on-sale" className="text-[#2c7a7b] hover:underline font-medium"> 20% off sale</Link> for 
+              <Link href="/homes-on-sale" className="text-[#2c7a7b] hover:underline font-medium"> 25% off sale</Link> for
               the best deals on new Champion homes, or browse our full 
               <Link href="/floor-plans" className="text-[#2c7a7b] hover:underline font-medium"> floor plan collection</Link>.
             </p>
@@ -69,7 +69,7 @@ export default function ClearancePage() {
                 href="/homes-on-sale"
                 className="inline-flex items-center justify-center px-8 py-3 bg-[#2c7a7b] hover:bg-[#1a365d] text-white font-semibold rounded-lg transition-colors"
               >
-                View 20% Off Sale
+                View 25% Off Sale
               </Link>
               <Link
                 href="/floor-plans"
