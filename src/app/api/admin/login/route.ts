@@ -27,7 +27,13 @@ export async function POST(request: Request) {
     });
     const json = await res.json().catch(() => ({}));
 
-    if (!res.ok || !json?.success || !json?.token) {
+    // The CMS returns the JWT either top-level or nested under `data` (and does
+    // not always include a `success` flag). Resolve it the same defensive way
+    // the cms-sync route does — requiring only a reachable 200 and a token —
+    // otherwise valid credentials were being rejected as "invalid".
+    const token = json?.token || json?.data?.token || json?.accessToken;
+
+    if (!res.ok || !token) {
       return NextResponse.json(
         { success: false, message: json?.message || "Invalid username or password" },
         { status: 401 },
@@ -35,7 +41,7 @@ export async function POST(request: Request) {
     }
 
     const response = NextResponse.json({ success: true });
-    response.cookies.set(ADMIN_COOKIE, json.token, {
+    response.cookies.set(ADMIN_COOKIE, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
