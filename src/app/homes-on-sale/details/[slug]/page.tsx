@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
 import { H2 } from "@/components/Heading";
+import { SaleClaimForm } from "@/components/SaleClaimForm";
 
 // ============================================
 // SALE HOME DETAIL PAGE
@@ -338,113 +339,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                 to secure your discount on the {home.name}.
               </p>
 
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]"
-                      placeholder="First name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]"
-                      placeholder="Last name"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]"
-                      placeholder="(260) 555-0123"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Finance Options
-                    </label>
-                    <select aria-label="Finance option" className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
-                      <option>Select finance option</option>
-                      <option>Cash</option>
-                      <option>Finance</option>
-                      <option>Credit</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Home Placement
-                    </label>
-                    <select aria-label="Home placement" className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
-                      <option>Select placement option</option>
-                      <option>In a community</option>
-                      <option>I have land</option>
-                      <option>Still looking</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Delivery State
-                  </label>
-                  <select aria-label="Delivery state" className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]">
-                    <option>Select state</option>
-                    <option>Indiana</option>
-                    <option>Ohio</option>
-                    <option>Michigan</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message (Optional)
-                  </label>
-                  <textarea
-                    rows={4}
-                    className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]"
-                    placeholder="Tell us about your timeline or any questions..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full py-4 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors"
-                >
-                  Submit Request
-                </button>
-
-                <p className="text-xs text-gray-500 text-center">
-                  By submitting, you agree to be contacted about this offer. 
-                  We respect your privacy and will never share your information.
-                </p>
-              </form>
+              <SaleClaimForm homeName={home.name} />
             </div>
           </FadeIn>
         </div>

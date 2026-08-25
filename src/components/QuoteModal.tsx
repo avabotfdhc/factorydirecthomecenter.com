@@ -92,7 +92,7 @@ function QuoteDialog({
     const timeframe = data.get("timeframe")?.toString() || "";
     const note = (data.get("message")?.toString() || "").trim();
 
-    if (!fullName || !email) {
+    if (!fullName || !email || phone.replace(/\D/g, "").length < 10) {
       setStatus("error");
       return;
     }
@@ -200,8 +200,8 @@ function QuoteDialog({
               <Field label="Email" required>
                 <input name="email" type="email" required autoComplete="email" className="w-full px-3.5 py-2.5 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:outline-none focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30" placeholder="you@email.com" />
               </Field>
-              <Field label="Phone">
-                <input name="phone" type="tel" autoComplete="tel" className="w-full px-3.5 py-2.5 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:outline-none focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30" placeholder="(260) 000-0000" />
+              <Field label="Phone" required>
+                <input name="phone" type="tel" required autoComplete="tel" className="w-full px-3.5 py-2.5 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:outline-none focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30" placeholder="(260) 000-0000" />
               </Field>
             </div>
             <Field label={mode === "visit" ? "Preferred timing" : "When do you need your home?"}>
@@ -225,7 +225,7 @@ function QuoteDialog({
 
             {status === "error" && (
               <p className="text-sm text-red-600">
-                Please add your name and a valid email, or call us at (260) 308-1457.
+                Please add your name, a valid email, and a phone number, or call us at (260) 308-1457.
               </p>
             )}
 

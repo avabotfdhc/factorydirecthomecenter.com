@@ -18,6 +18,7 @@ interface FormErrors {
   firstName?: string;
   lastName?: string;
   email?: string;
+  phone?: string;
 }
 
 export default function ContactForm() {
@@ -65,6 +66,9 @@ export default function ContactForm() {
     const email = data.get("email")?.toString().trim() || "";
     if (!email) errs.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "Please enter a valid email address.";
+    const phone = data.get("phone")?.toString().trim() || "";
+    if (!phone) errs.phone = "Phone number is required.";
+    else if (phone.replace(/\D/g, "").length < 10) errs.phone = "Please enter a valid phone number.";
     return errs;
   }
 
@@ -298,8 +302,9 @@ export default function ContactForm() {
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone</label>
-                    <input type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors" />
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone <span className="text-red-500" aria-hidden="true">*</span></label>
+                    <input type="tel" id="phone" name="phone" aria-required="true" aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} className={`w-full px-4 py-3 border rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors ${errors.phone ? "border-red-400" : "border-[var(--color-charcoal)]/10"}`} />
+                    {errors.phone && <p id="phone-error" className="mt-1 text-xs text-red-600">{errors.phone}</p>}
                   </div>
 
                   <div>
