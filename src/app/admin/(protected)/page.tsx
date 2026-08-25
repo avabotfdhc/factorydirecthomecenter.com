@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAdminToken, cmsGet, CMS_API } from "@/lib/admin-auth";
+import { getAdminToken, fetchLeads, CMS_API } from "@/lib/admin-auth";
 import { LeadsTable, type LeadRow } from "./LeadsTable";
 
 export const dynamic = "force-dynamic";
@@ -17,9 +17,9 @@ function StatCard({ label, value, hint }: { label: string; value: string | numbe
 export default async function AdminDashboard() {
   const token = (await getAdminToken())!; // layout guarantees a valid token
 
-  // Leads (authenticated) + public catalog counts, fetched in parallel.
+  // Leads (authenticated, endpoint auto-detected) + public catalog counts.
   const [leadsRes, plansRes, blogRes] = await Promise.all([
-    cmsGet("/api/authenticate/get/enquiry-form?limit=100&page=1", token),
+    fetchLeads(token, { limit: 100, page: 1 }),
     fetch(`${CMS_API}/api/floor-plan/get-active?limit=500`, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null),
@@ -28,8 +28,8 @@ export default async function AdminDashboard() {
       .catch(() => null),
   ]);
 
-  const leads: LeadRow[] = Array.isArray(leadsRes?.data) ? leadsRes.data : [];
-  const totalLeads: number = leadsRes?.pagination?.totalCount ?? leads.length;
+  const leads: LeadRow[] = leadsRes.rows as LeadRow[];
+  const totalLeads: number = leadsRes.total;
   const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
   const leadsThisWeek = leads.filter((l) => l.createdAt && Date.parse(l.createdAt) >= weekAgo).length;
   const planCount = Array.isArray(plansRes?.data) ? plansRes.data.length : "—";
@@ -56,6 +56,47 @@ export default async function AdminDashboard() {
         </Link>
       </div>
       <LeadsTable leads={leads.slice(0, 8)} />
+
+      {leadsRes.source && (
+        <p className="mt-3 text-xs text-[var(--color-gray)]">
+          Leads source: <code>{leadsRes.source}</code>
+        </p>
+      )}
+
+      {/* TEMPORARY diagnostic — shows what each candidate CMS endpoint returned
+          so the correct leads endpoint/shape can be pinned down. Remove once the
+          leads list is confirmed populating. */}
+      {leads.length === 0 && (
+        <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4">
+          <p className="text-sm font-semibold text-amber-900 mb-2">
+            Leads endpoint diagnostic (no rows matched)
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="text-left text-amber-800">
+                  <th className="p-2">Endpoint</th>
+                  <th className="p-2">Status</th>
+                  <th className="p-2">Rows</th>
+                  <th className="p-2">Response keys</th>
+                  <th className="p-2">First-row keys</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leadsRes.probes.map((p) => (
+                  <tr key={p.endpoint} className="border-t border-amber-200 align-top">
+                    <td className="p-2 font-mono">{p.endpoint}</td>
+                    <td className="p-2">{p.status}</td>
+                    <td className="p-2">{p.rowCount}</td>
+                    <td className="p-2 font-mono">{p.keys.join(", ") || "—"}</td>
+                    <td className="p-2 font-mono">{p.firstRowKeys.join(", ") || "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </>
   );
 }
