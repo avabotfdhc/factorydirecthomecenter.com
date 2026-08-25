@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAdminToken, cmsGet } from "@/lib/admin-auth";
+import { getAdminToken, fetchLeads } from "@/lib/admin-auth";
 import { LeadsTable, type LeadRow } from "../LeadsTable";
 
 export const dynamic = "force-dynamic";
@@ -15,10 +15,10 @@ export default async function AdminLeadsPage({
   const page = Math.max(1, Number(pageParam) || 1);
   const token = (await getAdminToken())!; // layout guarantees a valid token
 
-  const res = await cmsGet(`/api/authenticate/get/enquiry-form?limit=${PER_PAGE}&page=${page}`, token);
-  const leads: LeadRow[] = Array.isArray(res?.data) ? res.data : [];
-  const totalCount: number = res?.pagination?.totalCount ?? leads.length;
-  const totalPages: number = res?.pagination?.totalPages ?? 1;
+  const res = await fetchLeads(token, { limit: PER_PAGE, page });
+  const leads: LeadRow[] = res.rows as LeadRow[];
+  const totalCount: number = res.total;
+  const totalPages: number = Math.max(1, Math.ceil(totalCount / PER_PAGE));
 
   return (
     <>
