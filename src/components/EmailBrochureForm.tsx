@@ -30,8 +30,13 @@ export function EmailBrochureForm({
     const email = data.get("email")?.toString().trim() || "";
     const phone = data.get("phone")?.toString().trim() || "";
 
-    if (!firstName || !lastName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please fill in your name and a valid email address.");
+    if (
+      !firstName ||
+      !lastName ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      phone.replace(/\D/g, "").length < 10
+    ) {
+      setError("Please fill in your name, a valid email address, and a phone number.");
       trackLeadFormError("brochure_email_form", ["validation"]);
       return;
     }
@@ -139,7 +144,7 @@ export function EmailBrochureForm({
         <input
           type="tel"
           name="phone"
-          placeholder="Phone (optional)"
+          placeholder="Phone *"
           aria-label="Phone"
           className="px-3 py-2.5 border border-[var(--color-charcoal)]/10 rounded text-sm focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none"
         />

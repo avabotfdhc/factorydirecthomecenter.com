@@ -194,6 +194,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
     if (!firstName) errs.push("First name is required.");
     if (!lastName) errs.push("Last name is required.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push("A valid email is required.");
+    if (phone.replace(/\D/g, "").length < 10) errs.push("A valid phone number is required.");
     setErrors(errs);
     if (errs.length) {
       trackLeadFormError("home_designer", errs);
@@ -437,7 +438,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
           <label className="block"><span className="block text-sm font-medium mb-2">First name <span className="text-red-500" aria-hidden="true">*</span></span><input name="firstName" className={field} /></label>
           <label className="block"><span className="block text-sm font-medium mb-2">Last name <span className="text-red-500" aria-hidden="true">*</span></span><input name="lastName" className={field} /></label>
           <label className="block"><span className="block text-sm font-medium mb-2">Email <span className="text-red-500" aria-hidden="true">*</span></span><input type="email" name="email" className={field} /></label>
-          <label className="block"><span className="block text-sm font-medium mb-2">Phone</span><input type="tel" name="phone" className={field} /></label>
+          <label className="block"><span className="block text-sm font-medium mb-2">Phone <span className="text-red-500" aria-hidden="true">*</span></span><input type="tel" name="phone" className={field} /></label>
           <label className="block">
             <span className="block text-sm font-medium mb-2">Delivery state</span>
             <select name="deliveryState" className={field}>
