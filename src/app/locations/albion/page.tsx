@@ -19,6 +19,7 @@ const data: CityLocationData = {
   city: "Albion",
   county: "Noble County",
   slug: "albion",
+  heroImage: "/images/paramount/alberta-exterior.webp",
   distanceMi: 25,
   driveMin: 32,
   lat: 41.3945,

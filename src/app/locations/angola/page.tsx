@@ -20,6 +20,7 @@ const data: CityLocationData = {
   city: "Angola",
   county: "Steuben County",
   slug: "angola",
+  heroImage: "/images/paramount/belvidere-exterior.webp",
   distanceMi: 25,
   driveMin: 30,
   lat: 41.635,

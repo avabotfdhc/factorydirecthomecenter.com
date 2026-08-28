@@ -20,6 +20,7 @@ const data: CityLocationData = {
   city: "Huntertown",
   county: "Allen County",
   slug: "huntertown",
+  heroImage: "/images/paramount/timberlake-exterior.webp",
   distanceMi: 18,
   driveMin: 25,
   lat: 41.2314,

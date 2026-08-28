@@ -33,7 +33,7 @@ export default function ToledoPage() {
   return (
     <>
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
-      <StructuredData data={structuredData.article({ headline: "Manufactured Homes Toledo OH", description: "Champion homes delivered to Toledo, Ohio", image: "/images/hero-home.jpg", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/toledo" })} />
+      <StructuredData data={structuredData.article({ headline: "Manufactured Homes Toledo OH", description: "Champion homes delivered to Toledo, Ohio", image: "/images/paramount/timberlake-exterior-2.webp", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/toledo" })} />
       <StructuredData data={structuredData.service({ name: "Manufactured Home Delivery Toledo", description: "Manufactured home delivery to Toledo and northwest Ohio", provider: "Factory Direct Homes Center", areaServed: "Toledo, Ohio" })} />
       <StructuredData data={structuredData.faqPage(locationFAQs)} />
 
@@ -52,7 +52,7 @@ export default function ToledoPage() {
 
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/hero-home.jpg" alt={generateAltText("location", { name: "Manufactured Homes Toledo Ohio", location: "Toledo, OH" })} fill className="object-cover opacity-30" sizes="100vw" fetchPriority="high" loading="eager" />
+          <Image src="/images/paramount/timberlake-exterior-2.webp" alt={generateAltText("location", { name: "Manufactured Homes Toledo Ohio", location: "Toledo, OH" })} fill className="object-cover opacity-30" sizes="100vw" fetchPriority="high" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">

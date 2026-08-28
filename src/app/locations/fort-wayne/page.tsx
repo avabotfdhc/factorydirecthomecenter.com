@@ -220,7 +220,7 @@ export default function FortWaynePage() {
       <StructuredData data={structuredData.article({
         headline: "Manufactured Homes Fort Wayne IN | Champion Homes Dealer",
         description: "Champion manufactured and modular homes delivered to Fort Wayne, Indiana. 30 miles from Auburn showroom.",
-        image: "/images/hero-home.jpg",
+        image: "/images/homepage/double-wide-exterior.webp",
         datePublished: "2024-01-01",
         dateModified: new Date().toISOString(),
         author: "Factory Direct Homes Center",
@@ -240,7 +240,7 @@ export default function FortWaynePage() {
       
       {/* 7. ImageObject */}
       <StructuredData data={structuredData.imageObject({
-        url: "/images/hero-home.jpg",
+        url: "/images/homepage/double-wide-exterior.webp",
         name: "Manufactured Homes Delivered to Fort Wayne Indiana",
         description: "Champion manufactured homes delivered to Fort Wayne, Allen County, Indiana from Factory Direct Homes Center",
         width: 1200,
@@ -274,7 +274,7 @@ export default function FortWaynePage() {
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-home.jpg"
+            src="/images/homepage/double-wide-exterior.webp"
             alt={generateAltText("location", { name: "Manufactured Homes Fort Wayne Indiana", location: "Fort Wayne, IN" })}
             fill
             className="object-cover opacity-30"

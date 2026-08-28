@@ -177,7 +177,7 @@ export default function IndianapolisPage() {
       <StructuredData data={structuredData.article({
         headline: "Manufactured Homes Indianapolis IN | Champion Dealer",
         description: "Champion manufactured and modular homes delivered to Indianapolis, Indiana.",
-        image: "/images/hero-home.jpg",
+        image: "/images/paramount/silverton-exterior.webp",
         datePublished: "2024-01-01",
         dateModified: new Date().toISOString(),
         author: "Factory Direct Homes Center",
@@ -191,7 +191,7 @@ export default function IndianapolisPage() {
       })} />
       <StructuredData data={structuredData.faqPage(locationFAQs)} />
       <StructuredData data={structuredData.imageObject({
-        url: "/images/hero-home.jpg",
+        url: "/images/paramount/silverton-exterior.webp",
         name: "Manufactured Homes Indianapolis Indiana",
         description: "Champion manufactured homes delivered to Indianapolis and central Indiana",
         width: 1200,
@@ -219,7 +219,7 @@ export default function IndianapolisPage() {
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-home.jpg"
+            src="/images/paramount/silverton-exterior.webp"
             alt={generateAltText("location", { name: "Manufactured Homes Indianapolis Indiana", location: "Indianapolis, IN" })}
             fill
             className="object-cover opacity-30"
