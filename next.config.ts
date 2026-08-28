@@ -96,6 +96,10 @@ const nextConfig: NextConfig = {
         headers: [
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
+          // HSTS — tells browsers to always use HTTPS for this domain and its
+          // subdomains (fixes the "No HSTS support" audit notice). Two-year
+          // max-age with preload eligibility.
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           {
             key: 'Permissions-Policy',
