@@ -20,6 +20,7 @@ const data: CityLocationData = {
   city: "Kendallville",
   county: "Noble County",
   slug: "kendallville",
+  heroImage: "/images/paramount/summit-exterior.webp",
   distanceMi: 20,
   driveMin: 25,
   lat: 41.4414,

@@ -20,6 +20,7 @@ const data: CityLocationData = {
   city: "Columbia City",
   county: "Whitley County",
   slug: "columbia-city",
+  heroImage: "/images/paramount/myrtle-exterior.webp",
   distanceMi: 30,
   driveMin: 40,
   lat: 41.1573,

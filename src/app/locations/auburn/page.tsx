@@ -93,7 +93,7 @@ export default function AuburnLocationPage() {
           headline: "Manufactured & Modular Homes in Auburn, IN",
           description:
             "Champion manufactured and modular homes at our Auburn, DeKalb County showroom. Factory-direct pricing, local service.",
-          image: "/images/hero-home.jpg",
+          image: "/images/paramount/odyssey-exterior.webp",
           datePublished: "2024-01-01",
           dateModified: new Date().toISOString(),
           author: "Factory Direct Homes Center",
@@ -134,7 +134,7 @@ export default function AuburnLocationPage() {
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-home.jpg"
+            src="/images/paramount/odyssey-exterior.webp"
             alt="Manufactured and modular homes at the Factory Direct Homes Center showroom in Auburn, Indiana"
             fill
             className="object-cover opacity-30"

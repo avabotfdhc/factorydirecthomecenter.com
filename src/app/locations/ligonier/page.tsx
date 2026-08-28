@@ -19,6 +19,7 @@ const data: CityLocationData = {
   city: "Ligonier",
   county: "Noble County",
   slug: "ligonier",
+  heroImage: "/images/paramount/odyssey-exterior-b.webp",
   distanceMi: 32,
   driveMin: 42,
   lat: 41.467,

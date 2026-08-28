@@ -19,6 +19,7 @@ const data: CityLocationData = {
   city: "Churubusco",
   county: "Whitley County",
   slug: "churubusco",
+  heroImage: "/images/paramount/lincoln-exterior.webp",
   distanceMi: 22,
   driveMin: 30,
   lat: 41.2306,

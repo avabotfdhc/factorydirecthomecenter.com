@@ -20,6 +20,7 @@ const data: CityLocationData = {
   city: "New Haven",
   county: "Allen County",
   slug: "new-haven",
+  heroImage: "/images/options/mod-exteriors-1.webp",
   distanceMi: 28,
   driveMin: 35,
   lat: 41.07,

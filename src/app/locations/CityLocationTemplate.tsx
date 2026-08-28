@@ -20,6 +20,9 @@ export interface CityLocationData {
   lng: number;
   /** One-line hero subheading. */
   tagline: string;
+  /** Per-page hero photo (a distinct home exterior so each location page is
+   *  visually unique for SEO/UX). Falls back to the generic hero. */
+  heroImage?: string;
   /** Body paragraphs of genuine local content (can include JSX for links). */
   intro: React.ReactNode[];
   nearby: { name: string; href?: string }[];
@@ -57,7 +60,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
         data={structuredData.article({
           headline: `Manufactured & Modular Homes in ${data.city}, IN`,
           description: `Champion manufactured and modular homes delivered to ${data.city} and ${data.county}, Indiana from Factory Direct Homes Center in Auburn.`,
-          image: "/images/hero-home.jpg",
+          image: data.heroImage || "/images/hero-home.jpg",
           datePublished: "2024-01-01",
           dateModified: new Date().toISOString(),
           author: "Factory Direct Homes Center",
@@ -97,7 +100,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-home.jpg"
+            src={data.heroImage || "/images/hero-home.jpg"}
             alt={`Manufactured and modular homes delivered to ${data.city}, Indiana`}
             fill
             className="object-cover opacity-30"
