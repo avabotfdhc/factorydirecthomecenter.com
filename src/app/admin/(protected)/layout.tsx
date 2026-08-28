@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { getAdminToken, cmsGet } from "@/lib/admin-auth";
+import { getAdminToken, verifyAdmin } from "@/lib/admin-auth";
 import { LogoutButton } from "./LogoutButton";
 
 export const metadata: Metadata = {
@@ -16,13 +16,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const token = await getAdminToken();
   if (!token) redirect("/admin/login");
 
-  // cmsGet already returns null on a 401/expired token, so a bad token can't get
-  // here. Accept the profile when the CMS signals success OR simply returns the
-  // profile payload — the auth endpoints don't consistently include a top-level
-  // `success` flag, and requiring it caused an infinite bounce back to /login
-  // even after a valid sign-in.
-  const profile = await cmsGet("/api/authenticate/get-profile", token);
-  if (!profile || (!profile.success && !profile.data)) redirect("/admin/login");
+  // Only a definitive 401/403 from the CMS bounces the session — a transient CMS
+  // error must not, or a flaky get-profile call sends a validly-logged-in
+  // operator into an infinite redirect loop back to /login.
+  const { authorized, profile } = await verifyAdmin(token);
+  if (!authorized) redirect("/admin/login");
 
   const userName = profile?.data?.name || profile?.data?.username || "Admin";
 

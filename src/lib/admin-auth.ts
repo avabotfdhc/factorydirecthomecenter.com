@@ -30,6 +30,29 @@ export async function cmsGet(path: string, token: string): Promise<any | null> {
   }
 }
 
+/**
+ * Verify an admin token against the CMS. Only a definitive 401/403 from the CMS
+ * counts as unauthorized; a transient CMS error (5xx, timeout, network) does NOT
+ * — the operator already holds a token the CMS issued at login, so a flaky
+ * get-profile call must not bounce them back to /login in a redirect loop.
+ */
+export async function verifyAdmin(
+  token: string,
+): Promise<{ authorized: boolean; profile: any | null }> {
+  try {
+    const res = await fetch(`${CMS_API}/api/authenticate/get-profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+    if (res.status === 401 || res.status === 403) return { authorized: false, profile: null };
+    const profile = await res.json().catch(() => null);
+    return { authorized: true, profile };
+  } catch {
+    // CMS unreachable/transient — keep the valid session rather than lock out.
+    return { authorized: true, profile: null };
+  }
+}
+
 // Pull the row array out of whatever shape the CMS wraps it in.
 export function extractRows(json: any): any[] {
   if (Array.isArray(json)) return json;

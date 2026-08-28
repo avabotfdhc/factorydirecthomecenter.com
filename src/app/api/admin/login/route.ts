@@ -25,7 +25,13 @@ export async function POST(request: Request) {
       body: JSON.stringify({ userName: body.userName, password: body.password }),
       cache: "no-store",
     });
-    const json = await res.json().catch(() => ({}));
+    const raw = await res.text();
+    let json: any = {};
+    try {
+      json = raw ? JSON.parse(raw) : {};
+    } catch {
+      /* non-JSON body — surfaced in the diagnostic below */
+    }
 
     // The CMS returns the JWT either top-level or nested under `data` (and does
     // not always include a `success` flag). Resolve it the same defensive way
@@ -34,8 +40,18 @@ export async function POST(request: Request) {
     const token = json?.token || json?.data?.token || json?.accessToken;
 
     if (!res.ok || !token) {
+      // TEMPORARY diagnostic on failure only — never logs the password, and a
+      // failed login carries no valid token. Lets the reason be read from the
+      // browser Network tab. Remove once login is confirmed working.
+      const debug = {
+        cmsStatus: res.status,
+        topLevelKeys: Object.keys(json || {}),
+        dataKeys: json?.data && typeof json.data === "object" ? Object.keys(json.data) : null,
+        hasToken: !!token,
+        rawSnippet: raw.slice(0, 200),
+      };
       return NextResponse.json(
-        { success: false, message: json?.message || "Invalid username or password" },
+        { success: false, message: json?.message || "Invalid username or password", debug },
         { status: 401 },
       );
     }
