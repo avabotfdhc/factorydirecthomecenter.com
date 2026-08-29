@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://factorydirecthomescenter.com"),
   title: {
     default: "Factory Direct Homes Center | New Champion Homes in Auburn, IN",
-    template: "%s | Factory Direct Homes Center",
+    template: "%s | Factory Direct Homes",
   },
   description:
     "Factory-direct pricing on new Champion manufactured and modular homes. Single wides, double wides & modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN. Contact us for pricing.",

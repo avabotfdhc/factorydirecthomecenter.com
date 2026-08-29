@@ -9,7 +9,7 @@ import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 const SITE = "https://factorydirecthomescenter.com";
 
 export const metadata: Metadata = {
-  title: "Champion Floor Plans — Manufactured & Modular Homes",
+  title: "Champion Floor Plans & Home Models",
   description:
     "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Serving Indiana, Ohio, and Michigan.",
   alternates: { canonical: `${SITE}/floor-plans` },

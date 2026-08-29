@@ -12,13 +12,13 @@ const citationsBank: Citation[] = [
   // HUD & Federal Standards
   {
     source: "U.S. Department of Housing and Urban Development (HUD)",
-    url: "https://www.hud.gov/program_offices/housing/rmra/mhs/mhshome",
+    url: "https://www.hud.gov/program_offices/housing/mhs/mhshome",
     description: "Federal manufactured housing construction and safety standards",
     topics: ["manufactured-homes", "hud-standards", "modular"],
   },
   {
     source: "HUD Manufactured Housing Program",
-    url: "https://www.hud.gov/hudprograms/mhp",
+    url: "https://www.hud.gov/hud-partners/manufactured-home",
     description: "Overview of manufactured housing regulations and consumer protections",
     topics: ["manufactured-homes", "buying-process", "first-time-buyers"],
   },
@@ -74,7 +74,7 @@ const citationsBank: Citation[] = [
   },
   {
     source: "Indiana Department of Homeland Security — Manufactured Homes",
-    url: "https://www.in.gov/dhs/fire-prevention-and-building-safety/manufactured-structures-program/",
+    url: "https://www.in.gov/dhs/fire-and-building-safety/code-enforcement/industrialized-building-systems-modularmobile-structures/",
     description: "Indiana state installation standards and inspection requirements",
     topics: ["indiana", "site-work", "foundations", "permits"],
   },
@@ -90,7 +90,7 @@ const citationsBank: Citation[] = [
   // Energy & Construction
   {
     source: "ENERGY STAR Manufactured Homes",
-    url: "https://www.energystar.gov/newhomes/homes_earn_label/manufactured_homes",
+    url: "https://www.energystar.gov/partner-resources/residential-new/manufactured-national-page",
     description: "Energy efficiency standards and certifications for manufactured homes",
     topics: ["modular", "manufactured-homes", "site-work"],
   },
@@ -98,13 +98,13 @@ const citationsBank: Citation[] = [
   // Ohio & Michigan Specific
   {
     source: "Ohio Manufactured Homes Commission",
-    url: "https://com.ohio.gov/divisions-and-programs/industrial-compliance/manufactured-homes",
+    url: "https://com.ohio.gov/divisions-and-programs/manufactured-homes-program",
     description: "Ohio state regulations for manufactured home installation and standards",
     topics: ["ohio", "toledo", "lucas-county", "zoning", "permits"],
   },
   {
     source: "Michigan Department of Licensing and Regulatory Affairs",
-    url: "https://www.michigan.gov/lara/bureau-list/bcc/manufactured-housing",
+    url: "https://www.michigan.gov/lara/bureau-list/bcc",
     description: "Michigan manufactured housing licensing and installation standards",
     topics: ["michigan", "kalamazoo", "zoning", "permits"],
   },
@@ -134,7 +134,7 @@ const citationsBank: Citation[] = [
   // Insurance
   {
     source: "National Association of Insurance Commissioners (NAIC)",
-    url: "https://content.naic.org/consumer/manufactured-housing",
+    url: "https://content.naic.org/consumer.htm",
     description: "Manufactured home insurance guidance and consumer information",
     topics: ["manufactured-homes", "buying-process"],
   },

@@ -3,7 +3,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Columbia City, IN",
+  title: "Manufactured Homes in Columbia City, IN",
   description:
     "Champion manufactured and modular homes delivered to Columbia City and Whitley County, Indiana. Factory-direct pricing from our Auburn showroom — single wides, double wides & modular homes.",
   keywords: [
