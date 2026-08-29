@@ -19,8 +19,8 @@ const pricingFAQs = [
     answer: "No problem. Ask us for our referral list of licensed and insured contractors that past customers have used. You hire and pay them directly — and you'll still see every line item.",
   },
   {
-    question: "Is the home price really the factory invoice plus a fair margin?",
-    answer: "Yes. We show you the factory base price and add a transparent dealer margin (typically 10-15%, not the 20-40% you'll find elsewhere). No games, no hidden fees.",
+    question: "Is the home price really factory-direct plus a fair margin?",
+    answer: "Yes. Our pricing is factory-direct with a transparent dealer margin (typically 10-15%, not the 20-40% you'll find elsewhere). No games, no hidden fees.",
   },
   {
     question: "What costs are fixed vs. variable?",
@@ -33,7 +33,7 @@ const comparisonData = [
     item: "Home (Base Price)",
     factoryDirect: "$89,900",
     traditional: "$95,000 - $105,000",
-    notes: "Factory invoice + fair margin vs. 20-40% markup",
+    notes: "Factory-direct + fair margin vs. 20-40% markup",
   },
   {
     item: "Delivery",
@@ -64,9 +64,9 @@ const comparisonData = [
 const lineItems = [
   {
     title: "The Home",
-    description: "Your manufactured or modular home from Champion's factory. We show you the factory invoice and add only a fair margin. Most dealers markup 20-40% here.",
+    description: "Your manufactured or modular home from Champion's factory. We add only a fair margin on our factory-direct cost. Most dealers markup 20-40% here.",
     example: "$89,900",
-    details: ["Factory base price visible", "Customization costs itemized", "Fair dealer margin (not 20-40%)", "No 'destination charges' or hidden fees"],
+    details: ["Factory-direct base pricing", "Customization costs itemized", "Fair dealer margin (not 20-40%)", "No 'destination charges' or hidden fees"],
   },
   {
     title: "Delivery",
@@ -323,9 +323,9 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <H3 className="font-serif text-xl font-semibold mb-3">Is the home price really the factory invoice plus a fair margin?</H3>
+              <H3 className="font-serif text-xl font-semibold mb-3">Is the home price really factory-direct plus a fair margin?</H3>
               <p className="text-[var(--color-gray)]">
-                Yes. We show you the factory base price and add a transparent dealer margin 
+                Yes. Our pricing is factory-direct with a transparent dealer margin
                 (typically 10-15%, not the 20-40% you'll find elsewhere). No games, no hidden fees.
               </p>
             </div>
