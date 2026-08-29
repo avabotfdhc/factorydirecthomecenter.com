@@ -7,7 +7,7 @@ import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Manufactured Homes Kalamazoo MI | Champion Dealer",
+  title: "Manufactured Homes in Kalamazoo, MI",
   description: "Champion manufactured & modular homes delivered to Kalamazoo, Michigan. 95 miles from Auburn. Serving Kalamazoo, Calhoun, Branch counties. Factory-direct pricing.",
   keywords: ["manufactured homes kalamazoo", "modular homes kalamazoo michigan", "mobile homes kalamazoo", "champion homes kalamazoo", "kalamazoo county manufactured homes"],
   url: "/locations/kalamazoo",

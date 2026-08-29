@@ -3,7 +3,7 @@ import Link from "next/link";
 import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Zoning Laws for Manufactured Homes | Indiana, Ohio, Michigan",
+  title: "Manufactured Home Zoning Laws",
   description: "Manufactured home zoning regulations explained for Indiana, Ohio, and Michigan. What you need to know about placement, permits, and local restrictions.",
   url: "/guides/zoning",
   type: "article",

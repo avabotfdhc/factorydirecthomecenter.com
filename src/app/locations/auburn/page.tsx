@@ -13,7 +13,7 @@ import { H2, H3 } from "@/components/Heading";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Manufactured & Modular Homes in Auburn, IN",
+  title: "Manufactured Homes in Auburn, IN",
   description:
     "Champion manufactured and modular homes in Auburn, Indiana. Visit our DeKalb County showroom at 1211 State Road 8 — factory-direct pricing, single wides, double wides & modular homes. Serving Auburn, Garrett, Waterloo, Butler & Fort Wayne.",
   keywords: [

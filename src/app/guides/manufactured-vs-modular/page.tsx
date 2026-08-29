@@ -4,7 +4,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { H2, H3 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Manufactured vs. Modular vs. Mobile Homes: What's the Difference?",
+  title: "Manufactured vs. Modular vs. Mobile",
   description:
     "Manufactured, modular, and mobile homes explained. Learn how building codes (HUD vs. IRC), foundations, financing, and appreciation differ — and which factory-built home is right for you in Indiana.",
   keywords: [

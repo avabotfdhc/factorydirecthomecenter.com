@@ -7,7 +7,7 @@ import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Manufactured Homes Toledo OH | Champion Dealer",
+  title: "Manufactured Homes in Toledo, OH",
   description: "Champion manufactured & modular homes delivered to Toledo, Ohio. 75 miles from Auburn. Serving Lucas, Wood, Fulton counties. Factory-direct pricing.",
   keywords: ["manufactured homes toledo", "modular homes toledo ohio", "mobile homes toledo", "champion homes toledo", "lucas county manufactured homes"],
   url: "/locations/toledo",

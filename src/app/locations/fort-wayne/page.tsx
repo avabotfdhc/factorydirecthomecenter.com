@@ -21,7 +21,7 @@ import { H2, H3, H4 } from "@/components/Heading";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Manufactured Homes Fort Wayne IN | Champion Homes Dealer",
+  title: "Manufactured Homes in Fort Wayne, IN",
   description: "Champion manufactured & modular homes delivered to Fort Wayne, Indiana. 30 miles from Auburn showroom. Serving Allen, Whitley, Noble counties. Factory-direct pricing, line-item transparency.",
   keywords: [
     "manufactured homes fort wayne",

@@ -7,7 +7,7 @@ import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 
 export const metadata = genMeta({
-  title: "Manufactured Homes Rural Indiana | Noble, DeKalb, Whitley, Steuben",
+  title: "Manufactured Homes in Rural Indiana",
   description: "Champion manufactured homes for rural Indiana. Noble, DeKalb, Whitley, Steuben, LaGrange, Wells, Adams counties. Zoning-friendly, affordable acreage. Factory-direct pricing.",
   keywords: ["manufactured homes rural indiana", "mobile homes noble county", "modular homes dekalb county", "manufactured homes whitley county", "affordable acreage indiana"],
   url: "/locations/rural-indiana",

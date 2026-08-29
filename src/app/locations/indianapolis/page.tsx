@@ -16,7 +16,7 @@ import { H2, H3, H4 } from "@/components/Heading";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Manufactured Homes Indianapolis IN | Champion Dealer",
+  title: "Manufactured Homes in Indianapolis, IN",
   description: "Champion manufactured & modular homes delivered to Indianapolis, Indiana. 110 miles from Auburn. Serving Marion, Hamilton, Johnson counties. Factory-direct pricing.",
   keywords: [
     "manufactured homes indianapolis",
