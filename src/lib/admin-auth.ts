@@ -80,18 +80,21 @@ export interface LeadsResult {
   probes: LeadsProbe[];
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 // The admin panel doesn't know the exact CMS endpoint that lists website
 // enquiries, so try the known candidates (leads are WRITTEN to
-// /api/enquiry/rash-enquiry) and use the first that returns rows. Each attempt
-// is recorded so the dashboard can surface a diagnostic when none return data.
+// /api/enquiry/rash-enquiry). The CMS rate-limits authenticated requests HARD
+// (429), so we must not burst: the /api/enquiry/* paths go first (they avoid
+// the /authenticate limiter), calls are paced, and a 429 backs off and retries
+// once. Stop at the first endpoint that returns real rows.
 const LEAD_ENDPOINTS = [
-  "/api/authenticate/get/enquiry-form",
-  "/api/authenticate/get/rash-enquiry",
-  "/api/authenticate/get/enquiry",
-  "/api/authenticate/get/enquiry-list",
   "/api/enquiry/get-all",
   "/api/enquiry/get-list",
+  "/api/enquiry/get-enquiry",
   "/api/enquiry/rash-enquiry",
+  "/api/authenticate/get/enquiry-form",
+  "/api/authenticate/get/enquiry",
 ];
 
 export async function fetchLeads(
@@ -99,20 +102,33 @@ export async function fetchLeads(
   { limit = 100, page = 1 }: { limit?: number; page?: number } = {},
 ): Promise<LeadsResult> {
   const probes: LeadsProbe[] = [];
-  for (const base of LEAD_ENDPOINTS) {
+  let firstOkSource: { rows: any[]; total: number; source: string } | null = null;
+
+  for (let i = 0; i < LEAD_ENDPOINTS.length; i++) {
+    const base = LEAD_ENDPOINTS[i];
     const endpoint = `${base}?limit=${limit}&page=${page}`;
     let status: number | string = "error";
     let json: any = null;
-    try {
-      const res = await fetch(`${CMS_API}${endpoint}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        cache: "no-store",
-      });
-      status = res.status;
-      json = await res.json().catch(() => null);
-    } catch (e) {
-      status = (e as { name?: string })?.name || "fetch-failed";
+
+    // Up to 2 attempts: a 429 backs off then retries once.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch(`${CMS_API}${endpoint}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
+        });
+        status = res.status;
+        if (res.status === 429 && attempt === 0) {
+          await sleep(2000); // rate-limited — wait out the window, then retry
+          continue;
+        }
+        json = await res.json().catch(() => null);
+      } catch (e) {
+        status = (e as { name?: string })?.name || "fetch-failed";
+      }
+      break;
     }
+
     const rows = extractRows(json);
     probes.push({
       endpoint: base,
@@ -121,15 +137,27 @@ export async function fetchLeads(
       rowCount: rows.length,
       firstRowKeys: rows[0] && typeof rows[0] === "object" ? Object.keys(rows[0]) : [],
     });
+
+    const total =
+      json?.pagination?.totalCount ??
+      json?.totalCount ??
+      json?.total ??
+      json?.data?.totalCount ??
+      rows.length;
+
     if (rows.length > 0) {
-      const total =
-        json?.pagination?.totalCount ??
-        json?.totalCount ??
-        json?.total ??
-        json?.data?.totalCount ??
-        rows.length;
       return { rows, total, source: base, probes };
     }
+    // Remember a 200 that simply had no rows (correct endpoint, empty result)
+    // as a fallback, but keep looking for one with data.
+    if (status === 200 && !firstOkSource) {
+      firstOkSource = { rows, total, source: base };
+    }
+
+    // Pace the calls so we don't trip the CMS auth rate limiter.
+    if (i < LEAD_ENDPOINTS.length - 1) await sleep(400);
   }
+
+  if (firstOkSource) return { ...firstOkSource, probes };
   return { rows: [], total: 0, source: null, probes };
 }
