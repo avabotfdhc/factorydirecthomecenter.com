@@ -15,7 +15,9 @@ const SITE = "https://factorydirecthomescenter.com";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const plan = await getApiFloorPlanBySlug(slug);
+  // A cold page hit during a transient CMS failure would otherwise throw and
+  // 500; degrade to a graceful "not found" instead.
+  const plan = await getApiFloorPlanBySlug(slug).catch(() => null);
   if (!plan) return { title: "Home Not Found" };
   const desc = (
     plan.description ||
@@ -49,7 +51,9 @@ const Spec = ({ label, value }: { label: string; value: string }) => (
 
 export default async function FloorPlanDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const plan = await getApiFloorPlanBySlug(slug);
+  // Don't 500 a public page when the CMS is transiently unavailable — a cold
+  // render that throws degrades to notFound() (404) instead of a server error.
+  const plan = await getApiFloorPlanBySlug(slug).catch(() => null);
   if (!plan) notFound();
 
   const cleanDesc = (plan.description || plan.floorPlanHtml || "")
