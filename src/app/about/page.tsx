@@ -97,7 +97,7 @@ const aboutFAQs = [
   },
   {
     question: "What does 'factory-direct pricing' actually mean?",
-    answer: "Factory-direct pricing means we buy homes directly from Champion's manufacturing facility and pass those savings to you. We show you the factory invoice and add only a fair dealer margin. Unlike some dealers who markup 20-40%, our transparent pricing lets you see exactly where every dollar goes."
+    answer: "Factory-direct pricing means we buy homes directly from Champion's manufacturing facility and pass those savings to you, adding only a fair dealer margin. Our transparent, itemized pricing lets you see exactly where every dollar goes."
   },
   {
     question: "Does Factory Direct Homes Center offer financing?",
