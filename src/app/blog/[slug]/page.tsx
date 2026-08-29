@@ -9,7 +9,7 @@ const SITE = "https://factorydirecthomescenter.com";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getApiBlogBySlug(slug);
+  const post = await getApiBlogBySlug(slug).catch(() => null);
   if (!post) return { title: "Article Not Found" };
   const url = `${SITE}/blog/${post.slug}`;
   return {
@@ -32,7 +32,7 @@ export const revalidate = 300;
 
 export default async function BlogDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getApiBlogBySlug(slug);
+  const post = await getApiBlogBySlug(slug).catch(() => null);
   if (!post) notFound();
 
   const articleLd = {
