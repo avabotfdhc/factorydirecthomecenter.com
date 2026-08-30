@@ -114,6 +114,7 @@ export function LiveChat() {
           setIsOpen(!isOpen);
           setHasNotification(false);
         }}
+        style={{ marginBottom: "var(--consent-h, 0px)" }}
         className="fixed bottom-24 right-4 lg:bottom-8 z-50 w-14 h-14 bg-[var(--color-teal)] text-white rounded-full shadow-lg hover:bg-[var(--color-teal-dark)] transition-all hover:scale-110 flex items-center justify-center"
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
@@ -133,7 +134,7 @@ export function LiveChat() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-40 right-4 lg:bottom-24 z-50 w-[calc(100vw-2rem)] max-w-sm bg-white rounded-2xl shadow-2xl border border-[var(--color-charcoal)]/10 overflow-hidden">
+        <div style={{ marginBottom: "var(--consent-h, 0px)" }} className="fixed bottom-40 right-4 lg:bottom-24 z-50 w-[calc(100vw-2rem)] max-w-sm bg-white rounded-2xl shadow-2xl border border-[var(--color-charcoal)]/10 overflow-hidden">
           {/* Header */}
           <div className="bg-[var(--color-teal)] text-white p-4 flex justify-between items-center">
             <div className="flex items-center gap-3">

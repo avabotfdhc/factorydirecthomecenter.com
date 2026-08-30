@@ -58,10 +58,16 @@ function formatPrice(raw: unknown): string {
   return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
 }
 
-// Kyle reviewed the type-level "From $X" anchors and prefers the plain
-// "Contact for price" (2026-08-16) — flip this to true to bring the bands
-// back. Bands must stay in sync with buyers-guide / FAQ copy.
-const SHOW_PRICE_ANCHORS = false;
+// Type-level "From $X" anchors. Turned off on 2026-08-16 in favour of a plain
+// "Contact for price", then turned back on 2026-08-30: shoppers comparing
+// dealers need a number to anchor on, and a page with no price at all reads as
+// "expensive" and loses the click. These are deliberately range-level (per home
+// type), NOT per-home prices — SHOW_PRICES below still governs those, and stays
+// off until the CMS price data is cleaned up.
+//
+// Bands must stay in sync with the /guides/pricing worked example
+// ($89,900 base double wide) and the buyers-guide / FAQ copy.
+const SHOW_PRICE_ANCHORS = true;
 
 function priceFromBand(homeType: string): string {
   if (!SHOW_PRICE_ANCHORS || SHOW_PRICES) return "";

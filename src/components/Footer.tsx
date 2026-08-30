@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
+import { CookiePreferencesLink } from "./CookiePreferencesLink";
 
 export function Footer() {
   return (
@@ -34,7 +35,7 @@ export function Footer() {
                 { href: "/floor-plans", label: "Floor Plans" },
                 { href: "/design-your-home", label: "Design Your Home" },
                 { href: "/champion-homes", label: "Champion Homes" },
-                { href: "/inventory", label: "Available Homes" },
+                { href: "/homes-on-sale", label: "Homes on Sale" },
                 { href: "/financing", label: "Financing" },
                 { href: "/resources", label: "Resources" },
                 { href: "/guides", label: "Guides" },
@@ -151,6 +152,7 @@ export function Footer() {
             <Link href="/terms" className="text-xs text-[var(--color-gray)] hover:text-[var(--color-gray-light)] transition-colors">
               Terms
             </Link>
+            <CookiePreferencesLink className="text-xs text-[var(--color-gray)] hover:text-[var(--color-gray-light)] transition-colors" />
           </div>
         </div>
       </div>

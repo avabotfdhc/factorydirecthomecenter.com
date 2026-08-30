@@ -11,7 +11,7 @@ import { revalidatePath } from "next/cache";
 // secret unnecessary: the worst an attacker can do is refresh our own cache.
 export async function POST() {
   revalidatePath("/floor-plans");
-  revalidatePath("/inventory");
+  revalidatePath("/design-your-home");
   revalidatePath("/");
   return NextResponse.json({ ok: true, revalidated: true });
 }

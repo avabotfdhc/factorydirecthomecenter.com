@@ -3,6 +3,7 @@
 import React, { useEffect, useCallback } from "react";
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
+import { getServerConsentSnapshot, getTrackingAllowedSnapshot, subscribeConsent } from "./consent";
 
 // ============================================
 // CONFIGURATION - Environment Variables
@@ -713,7 +714,10 @@ function useDeferUntilInteraction(timeoutMs = 6000): boolean {
 
 export function AnalyticsProvider() {
   const ready = useDeferUntilInteraction();
-  if (!ready) return null;
+  const allowed = useTrackingAllowed();
+  // Both gates must pass: `ready` defers the scripts past first interaction for
+  // performance, `allowed` is the visitor's privacy choice (see src/lib/consent).
+  if (!ready || !allowed) return null;
   return (
     <React.Fragment>
       <GoogleTagManager />
@@ -721,6 +725,24 @@ export function AnalyticsProvider() {
       <FacebookPixel />
       <MicrosoftClarity />
     </React.Fragment>
+  );
+}
+
+/**
+ * Whether tracking scripts may load. Starts false so the server render and the
+ * first client render agree (localStorage and Global Privacy Control can only
+ * be read in the browser); resolves right after mount and again whenever the
+ * visitor changes their choice from the banner or the footer link.
+ *
+ * A visitor who declines after tags have already loaded keeps those tags for
+ * the current page — scripts can't be unloaded — but they never load again on
+ * any subsequent navigation or visit.
+ */
+function useTrackingAllowed(): boolean {
+  return React.useSyncExternalStore(
+    subscribeConsent,
+    getTrackingAllowedSnapshot,
+    getServerConsentSnapshot,
   );
 }
 

@@ -13,12 +13,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static/registry pages, minus stale sample detail URLs — the real
   // floor-plan and blog detail pages are sourced live from the CMS below.
   const staticEntries: MetadataRoute.Sitemap = getAllPages()
-    // Exclude the sample detail URL, blog stubs, and /inventory (which 301/302
-    // redirects to /floor-plans) — a redirecting URL shouldn't be in the sitemap.
+    // Exclude the sample detail URL and blog stubs — the real blog posts are
+    // sourced live from the CMS below.
     .filter(
       (page) =>
         page.url !== "/floor-plans/emerald-sky" &&
-        page.url !== "/inventory" &&
         !page.url.startsWith("/blog/"),
     )
     .map((page) => ({
