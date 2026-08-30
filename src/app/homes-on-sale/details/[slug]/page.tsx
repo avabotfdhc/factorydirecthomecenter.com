@@ -43,10 +43,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: sale.active
       ? `${home.name} — Up to ${sale.discountPercent}% Off MSRP`
       : `${home.name} — Champion Home`,
-    description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. MSRP ${formatUsd(home.msrp)}${
+    // A price only appears here when MSRP, sale price and savings can all be
+    // stated together — the same all-or-nothing rule the page itself follows.
+    description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. ${
       sale.active
-        ? `; save up to ${sale.discountPercent}% off MSRP base price during the ${sale.name}.`
-        : ", home only, at factory-direct pricing."
+        ? `MSRP ${formatUsd(home.msrp)}, sale price ${formatUsd(
+            salePriceFor(home.msrp, sale.discountPercent),
+          )} — save ${formatUsd(
+            home.msrp - salePriceFor(home.msrp, sale.discountPercent),
+          )} during the ${sale.name}.`
+        : "Call for pricing."
     }`,
     url: `/homes-on-sale/details/${home.id}`,
   });

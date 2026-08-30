@@ -350,25 +350,28 @@ export default function CampaignsAdminPage() {
           <h2 className="font-serif text-xl font-light mb-4">Pricing Formula Reference</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
             <div>
-              <h4 className="font-semibold mb-2">Factory Cost</h4>
-              <p className="text-[var(--color-gray)]">Base Price + (Sq Ft × Surcharge)</p>
-              <p className="text-[var(--color-gray)]">Surcharge: $0.50/sqft (singles), $0.65/sqft (sectional)</p>
+              <h4 className="font-semibold mb-2">Dealer Cost</h4>
+              <p className="text-[var(--color-gray)]">Net Base + (Sq Ft × Surcharge) + $3,000 Dealer Pack</p>
+              <p className="text-[var(--color-gray)]">Surcharge: $1.80/sqft (singles), $1.95/sqft (HUD sectional)</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">MSRP</h4>
-              <p className="text-[var(--color-gray)]">(Factory Cost + $2,500 Pack) × 1.65</p>
-              <p className="text-[var(--color-gray)]">65% markup on cost + pack</p>
+              <p className="text-[var(--color-gray)]">Dealer Cost × 1.85</p>
+              <p className="text-[var(--color-gray)]">85% markup on dealer cost</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">FDHC Price</h4>
-              <p className="text-[var(--color-gray)]">MSRP × 0.90</p>
-              <p className="text-[var(--color-gray)]">10% off MSRP</p>
+              <h4 className="font-semibold mb-2">Factory Direct Price</h4>
+              <p className="text-[var(--color-gray)]">MSRP − 5%</p>
+              <p className="text-[var(--color-gray)]">Everyday price when no campaign is running</p>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t border-[var(--color-teal)]/20">
             <h4 className="font-semibold mb-2">Sales Campaign Price</h4>
-            <p className="text-[var(--color-gray)]">FDHC Price × (1 - Campaign Discount%)</p>
-            <p className="text-[var(--color-gray)]">Additional discount off FDHC price for limited time</p>
+            <p className="text-[var(--color-gray)]">MSRP × (1 − Campaign Discount%)</p>
+            <p className="text-[var(--color-gray)]">
+              Campaign discounts apply to MSRP, not to the Factory Direct Price. Figures match the
+              FDHC master price sheet (Controls rows 2&ndash;6), reproduced in src/lib/price-sheet.ts.
+            </p>
           </div>
         </div>
       </main>
