@@ -6,6 +6,7 @@ import Image from "next/image";
 import { FadeIn } from "@/components/VisualEffects";
 import type { SaleHome } from "@/lib/sale-homes";
 import { PriceTriple, PricingDisclaimer } from "@/components/Pricing";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 import { salePriceFor } from "@/lib/sale";
 
 // The sale page previously rendered a full set of controls — a search box, a
@@ -138,12 +139,17 @@ export function SaleHomesGrid({
               <option value="2">2+ baths</option>
             </select>
 
-            <select aria-label="Maximum sale price" className={selectCls} value={maxPrice || ""} onChange={(e) => setMaxPrice(Number(e.target.value) || 0)}>
-              <option value="">Any price</option>
-              <option value="75000">Under $75,000</option>
-              <option value="110000">Under $110,000</option>
-              <option value="130000">Under $130,000</option>
-            </select>
+            {/* Offered only while prices are on the page. With no campaign
+                running every card reads "Call for pricing", and a filter
+                labelled "Under $75,000" would imply figures we aren't showing. */}
+            {SHOW_SALE_PRICES && saleActive && (
+              <select aria-label="Maximum sale price" className={selectCls} value={maxPrice || ""} onChange={(e) => setMaxPrice(Number(e.target.value) || 0)}>
+                <option value="">Any price</option>
+                <option value="75000">Under $75,000</option>
+                <option value="110000">Under $110,000</option>
+                <option value="130000">Under $130,000</option>
+              </select>
+            )}
 
             <select aria-label="Minimum square feet" className={selectCls} value={minSqft || ""} onChange={(e) => setMinSqft(Number(e.target.value) || 0)}>
               <option value="">Any size</option>

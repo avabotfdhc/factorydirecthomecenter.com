@@ -87,7 +87,7 @@ export default async function FloorPlansPage() {
           </p>
           <p className="text-sm text-[var(--color-charcoal)]/60">
             <a href="/homes-on-sale" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
-              See current prices on every floor plan
+              See what&rsquo;s on sale right now
             </a>
             {" · "}
             <a href="/guides/pricing" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">

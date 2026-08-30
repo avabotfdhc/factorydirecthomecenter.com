@@ -2,6 +2,7 @@ import { generateMetadata as genMeta, StructuredData, structuredData } from "@/l
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 export const metadata = genMeta({
   title: "How Our Pricing Works",
@@ -13,7 +14,7 @@ export const metadata = genMeta({
 const pricingFAQs = [
   {
     question: "Can I really use my own contractors?",
-    answer: "Absolutely — in fact, that's how it works here. You hire your own excavator, concrete crew, and electrician, and many of our customers save $5,000-$10,000 doing it. If you need a starting point, ask for our referral list of licensed and insured contractors past customers have used.",
+    answer: "Absolutely — in fact, that's how it works here. You hire your own excavator, concrete crew, and electrician, and many of our customers save real money doing it. If you need a starting point, ask for our referral list of licensed and insured contractors past customers have used.",
   },
   {
     question: "What if I don't know any contractors?",
@@ -158,7 +159,9 @@ export default function PricingPage() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
                   <span className="text-[var(--color-gray)]">Your Home</span>
-                  <span className="font-semibold text-lg">$125,000</span>
+                  <span className="font-semibold text-lg">
+                    {SHOW_SALE_PRICES ? "$125,000" : "One bundled number"}
+                  </span>
                 </div>
                 <div className="text-sm text-[var(--color-gray)] italic">
                   "Includes everything!" (But what does that mean?)
@@ -193,7 +196,9 @@ export default function PricingPage() {
               <div key={idx} className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
                 <div className="flex items-start justify-between mb-4">
                   <H3 className="font-serif text-2xl font-semibold">{item.title}</H3>
-                  <span className="text-[var(--color-teal)] font-bold text-lg">{item.example}</span>
+                  <span className="text-[var(--color-teal)] font-bold text-lg">
+                    {SHOW_SALE_PRICES ? item.example : "Call for pricing"}
+                  </span>
                 </div>
                 <p className="text-[var(--color-gray)] mb-6">{item.description}</p>
                 <ul className="space-y-2">
@@ -218,38 +223,79 @@ export default function PricingPage() {
             Side-by-Side <span className="italic text-[var(--color-teal)]">Comparison</span>
           </H2>
 
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-[var(--color-charcoal)]">
-                  <th className="text-left py-4 font-semibold">Cost Item</th>
-                  <th className="text-left py-4 font-semibold text-[var(--color-teal)]">Factory Direct</th>
-                  <th className="text-left py-4 font-semibold text-[var(--color-gray)]">Traditional Dealer</th>
-                  <th className="text-left py-4 font-semibold">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonData.map((row, idx) => (
-                  <tr key={idx} className="border-b border-[var(--color-charcoal)]/10">
-                    <td className="py-4 font-medium">{row.item}</td>
-                    <td className="py-4 text-[var(--color-teal)] font-semibold">{row.factoryDirect}</td>
-                    <td className="py-4 text-[var(--color-gray)]">{row.traditional}</td>
-                    <td className="py-4 text-sm text-[var(--color-gray)]">{row.notes}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {/* The comparison rests on a worked example built from a home price
+              and ends in a savings figure, so it comes down with every other
+              published number — see src/lib/price-visibility.ts. The argument
+              it makes (itemised vs bundled) is made in prose either way. */}
+          {SHOW_SALE_PRICES ? (
+            <>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b-2 border-[var(--color-charcoal)]">
+                      <th className="text-left py-4 font-semibold">Cost Item</th>
+                      <th className="text-left py-4 font-semibold text-[var(--color-teal)]">Factory Direct</th>
+                      <th className="text-left py-4 font-semibold text-[var(--color-gray)]">Traditional Dealer</th>
+                      <th className="text-left py-4 font-semibold">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comparisonData.map((row, idx) => (
+                      <tr key={idx} className="border-b border-[var(--color-charcoal)]/10">
+                        <td className="py-4 font-medium">{row.item}</td>
+                        <td className="py-4 text-[var(--color-teal)] font-semibold">{row.factoryDirect}</td>
+                        <td className="py-4 text-[var(--color-gray)]">{row.traditional}</td>
+                        <td className="py-4 text-sm text-[var(--color-gray)]">{row.notes}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-          <div className="mt-8 bg-[var(--color-lime)]/10 rounded-lg p-6 flex items-center justify-between">
-            <div>
-              <span className="text-sm text-[var(--color-gray)]">Your Potential Savings</span>
-              <div className="font-serif text-3xl font-semibold text-[var(--color-lime-dark)]">$13,600 - $28,600</div>
+              <div className="mt-8 bg-[var(--color-lime)]/10 rounded-lg p-6 flex items-center justify-between">
+                <div>
+                  <span className="text-sm text-[var(--color-gray)]">Your Potential Savings</span>
+                  <div className="font-serif text-3xl font-semibold text-[var(--color-lime-dark)]">$13,600 - $28,600</div>
+                </div>
+                <div className="text-right text-sm text-[var(--color-gray)] max-w-xs">
+                  Through line-item transparency and contractor freedom
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b-2 border-[var(--color-charcoal)]">
+                    <th className="text-left py-4 font-semibold">Cost Item</th>
+                    <th className="text-left py-4 font-semibold text-[var(--color-teal)]">Factory Direct</th>
+                    <th className="text-left py-4 font-semibold">How it differs</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonData
+                    // The total row's note is itself a savings figure, so it
+                    // comes out with the numbers rather than standing alone.
+                    .filter((row) => !/total/i.test(row.item))
+                    .map((row, idx) => (
+                      <tr key={idx} className="border-b border-[var(--color-charcoal)]/10">
+                        <td className="py-4 font-medium">{row.item}</td>
+                        <td className="py-4 text-[var(--color-teal)] font-semibold">Quoted separately</td>
+                        <td className="py-4 text-sm text-[var(--color-gray)]">{row.notes}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+              <p className="mt-8 text-[var(--color-gray)] max-w-2xl">
+                Every one of these is a separate line on your quotation, and you hire your own
+                contractors wherever it saves you money. Call{" "}
+                <a href="tel:+12603081457" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+                  (260) 308-1457
+                </a>{" "}
+                and we&rsquo;ll put real numbers against every line, in writing.
+              </p>
             </div>
-            <div className="text-right text-sm text-[var(--color-gray)] max-w-xs">
-              Through line-item transparency and contractor freedom
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -309,7 +355,7 @@ export default function PricingPage() {
               <H3 className="font-serif text-xl font-semibold mb-3">Can I really use my own contractors?</H3>
               <p className="text-[var(--color-gray)]">
                 Absolutely — in fact, that's how it works here. You hire your own excavator,
-                concrete crew, and electrician, and many of our customers save $5,000-$10,000
+                concrete crew, and electrician, and many of our customers save real money
                 doing it. If you need a starting point, ask for our referral list of licensed
                 and insured contractors past customers have used.
               </p>

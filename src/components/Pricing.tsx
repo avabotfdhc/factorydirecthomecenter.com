@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // One place that decides how a price may appear anywhere on the site.
 //
@@ -54,7 +55,10 @@ export function PriceTriple({
   size?: "sm" | "md" | "lg";
   className?: string;
 }) {
+  // While prices are hidden site-wide nothing is published, whatever was passed
+  // in — see src/lib/price-visibility.ts.
   const complete =
+    SHOW_SALE_PRICES &&
     Number.isFinite(msrp) && msrp > 0 &&
     typeof salePrice === "number" && Number.isFinite(salePrice) &&
     salePrice > 0 && salePrice < msrp;

@@ -8,6 +8,7 @@ import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 import { getSaleHome, saleHomes } from "@/lib/sale-homes";
 import { formatUsd, PriceTriple, PricingDisclaimer } from "@/components/Pricing";
 import { getSaleStatus, saleDeadlineLabel, salePriceFor } from "@/lib/sale";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // ============================================
 // SALE HOME DETAIL PAGE
@@ -43,10 +44,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: sale.active
       ? `${home.name} — Up to ${sale.discountPercent}% Off MSRP`
       : `${home.name} — Champion Home`,
-    description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. MSRP ${formatUsd(home.msrp)}${
-      sale.active
-        ? `; save up to ${sale.discountPercent}% off MSRP base price during the ${sale.name}.`
-        : ", home only, at factory-direct pricing."
+    // A price only appears here when MSRP, sale price and savings can all be
+    // stated together — the same all-or-nothing rule the page itself follows.
+    description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. ${
+      SHOW_SALE_PRICES && sale.active
+        ? `MSRP ${formatUsd(home.msrp)}, sale price ${formatUsd(
+            salePriceFor(home.msrp, sale.discountPercent),
+          )} — save ${formatUsd(
+            home.msrp - salePriceFor(home.msrp, sale.discountPercent),
+          )} during the ${sale.name}.`
+        : "Call for pricing."
     }`,
     url: `/homes-on-sale/details/${home.id}`,
   });
@@ -61,6 +68,10 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
   }
 
   const sale = getSaleStatus();
+  const galleryImages = home.gallery.map((src, i) => ({
+    src,
+    alt: `${home.name} — image ${i + 1} of ${home.gallery.length}`,
+  }));
 
   return (
     <main className="min-h-screen bg-white">
@@ -101,22 +112,79 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               )}
               
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 shadow-lg">
-                <ZoomableImage
-                  src={home.image ?? ""}
-                  alt={`${home.name} floor plan - ${home.sqft} sq ft manufactured home on sale`}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {home.image ? (
+                  <ZoomableImage
+                    src={home.image}
+                    alt={`${home.name} — ${home.sqft} sq ft Champion ${home.homeType.toLowerCase()} on sale`}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    // Every published photograph and floor-plan sheet for this
+                    // home, so the hero opens the whole set rather than itself.
+                    images={galleryImages}
+                    index={0}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                    Photography for this plan is on the way — call for photos and the floor plan.
+                  </div>
+                )}
               </div>
-              
-              {/* Tap the photo to zoom — the previous "View 360 Tour" button
-                  here had no handler and no tour URL behind it. */}
-              <p className="mt-3 text-center text-sm text-gray-500">
-                Tap the photo to enlarge, or{" "}
-                <Link href="/floor-plans" className="text-[#2c7a7b] font-medium hover:underline">
-                  browse the full catalog
-                </Link>{" "}
-                — many homes have a 3D walkthrough.
+
+              {/* The rest of the gallery. Champion publishes the floor-plan
+                  sheet alongside the photographs, so this is where a buyer
+                  finds the plan drawing without leaving the sale page. */}
+              {home.gallery.length > 1 && (
+                <ul className="mt-3 grid grid-cols-4 gap-2">
+                  {home.gallery.slice(1, 9).map((src, i) => (
+                    <li key={src} className="relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
+                      <ZoomableImage
+                        src={src}
+                        alt={`${home.name} — photo ${i + 2} of ${home.gallery.length}`}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        images={galleryImages}
+                        index={i + 1}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <p className="mt-3 text-sm text-gray-500">
+                {home.gallery.length > 1
+                  ? `Tap any photo to enlarge — ${home.gallery.length} images including the floor-plan sheet.`
+                  : "Tap the photo to enlarge."}
               </p>
+
+              {/* Everything else Champion publishes for this plan. */}
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium">
+                {home.slug && (
+                  <Link href={`/floor-plans/${home.slug}`} className="text-[#2c7a7b] hover:underline">
+                    Full floor plan &amp; specifications →
+                  </Link>
+                )}
+                {home.virtualTour && (
+                  <a
+                    href={home.virtualTour}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2c7a7b] hover:underline"
+                  >
+                    3D walkthrough →
+                  </a>
+                )}
+                {home.brochureUrl && (
+                  <a
+                    href={home.brochureUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2c7a7b] hover:underline"
+                  >
+                    Champion brochure (PDF) →
+                  </a>
+                )}
+                <Link href="/floor-plans" className="text-gray-500 hover:underline">
+                  Browse the full catalog
+                </Link>
+              </div>
             </div>
           </FadeIn>
 

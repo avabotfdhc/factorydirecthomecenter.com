@@ -10,6 +10,7 @@ import { SaleHomesGrid } from "./SaleHomesGrid";
 import { AllSaleHomesTable } from "./AllSaleHomesTable";
 import { saleHomes, saleListings } from "@/lib/sale-homes";
 import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // ============================================
 // HOMES ON SALE — current promotional campaign
@@ -136,12 +137,6 @@ export default function HomesOnSalePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </Link>
-                <Link
-                  href="#all-homes"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-base backdrop-blur-sm"
-                >
-                  See all {saleListings.length} prices
-                </Link>
               </div>
 
               <div className="mt-4 flex flex-wrap justify-center gap-4 text-white/70 text-xs md:text-sm">
@@ -186,9 +181,11 @@ export default function HomesOnSalePage() {
                 {sale.active ? "Homes Included in This Sale" : "Featured Champion Homes"}
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                {sale.active
-                  ? `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. Every one of our ${saleListings.length} floor plans is on sale at the same ${sale.discountPercent}% off MSRP; the full price list is below.`
-                  : `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full price list is below.`}
+                {!sale.active
+                  ? `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full list is below.`
+                  : SHOW_SALE_PRICES
+                    ? `The ${saleHomes.length} homes we publish a price on — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for a price on any of the others.`
+                    : `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for the price on any of them.`}
               </p>
             </div>
           </FadeIn>
@@ -204,10 +201,21 @@ export default function HomesOnSalePage() {
             Every Floor Plan on Sale
           </H2>
           <p className="text-lg text-gray-600 max-w-3xl mb-8">
-            All {saleListings.length} Champion floor plans we sell, with MSRP and
-            {sale.active ? ` the ${sale.discountPercent}% ` : " "}
-            {sale.active ? "sale price" : "factory-direct pricing"} for each. Every price comes
-            straight from our master price sheet.
+            All {saleListings.length} Champion floor plans we sell
+            {sale.active ? `, every one of them ${sale.discountPercent}% off MSRP` : ""}.{" "}
+            {SHOW_SALE_PRICES ? (
+              <>
+                The {saleHomes.length} featured homes above show MSRP, sale price and savings —
+                every one straight from our master price sheet. Call{" "}
+              </>
+            ) : (
+              <>Call{" "}</>
+            )}
+            <a href="tel:+12603081457" className="text-[#2c7a7b] font-semibold hover:underline">
+              (260) 308-1457
+            </a>{" "}
+            for a price on any plan and we&rsquo;ll quote it in writing: MSRP, the sale price and
+            what you save.
           </p>
           <AllSaleHomesTable
             listings={saleListings}
