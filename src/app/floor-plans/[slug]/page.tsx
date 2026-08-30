@@ -150,9 +150,14 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               ) : (
                 <p className="text-sm text-[var(--color-gray)] mt-1">
                   We quote line-item — home, delivery, setup and site work priced separately.{" "}
+                  <a href="tel:+12603081457" className="text-[var(--color-teal)] underline underline-offset-4">
+                    Call (260) 308-1457
+                  </a>{" "}
+                  for this plan&rsquo;s price, or{" "}
                   <Link href="/homes-on-sale" className="text-[var(--color-teal)] underline underline-offset-4">
-                    See this plan&rsquo;s current price
+                    see what&rsquo;s on sale
                   </Link>
+                  .
                 </p>
               )}
             </div>

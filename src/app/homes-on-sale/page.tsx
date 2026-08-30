@@ -136,12 +136,6 @@ export default function HomesOnSalePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </Link>
-                <Link
-                  href="#all-homes"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-base backdrop-blur-sm"
-                >
-                  See all {saleListings.length} prices
-                </Link>
               </div>
 
               <div className="mt-4 flex flex-wrap justify-center gap-4 text-white/70 text-xs md:text-sm">
