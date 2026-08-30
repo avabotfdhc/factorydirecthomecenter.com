@@ -180,7 +180,7 @@ export function PricingDisclaimer({
           necessarily a price at which homes have been sold. Savings are calculated against MSRP.
         </p>
         <p>
-          <strong>Availability and financing.</strong> Models, floor plans, options, colours and
+          <strong>Availability and financing.</strong> Models, floor plans, options, colors and
           finishes are subject to availability and change without notice, and may be discontinued by
           the manufacturer. Financing, where mentioned, is subject to credit approval by a
           third-party lender; we do not guarantee approval, rates or terms. Pricing applies only
