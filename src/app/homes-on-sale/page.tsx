@@ -7,7 +7,7 @@ import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 import { SalesAlertForm } from "@/components/SalesAlertForm";
 import { SaleHomesGrid } from "./SaleHomesGrid";
 import { saleHomes } from "@/lib/sale-homes";
-import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 // ============================================
 // HOMES ON SALE — current promotional campaign
@@ -23,21 +23,26 @@ import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 // after the offer ends, without waiting for a deploy.
 export const revalidate = 3600;
 
-const status = getSaleStatus();
-
-export const metadata = genMeta({
-  title: `Up to ${SALE.discountPercent}% Off Select Champion Floor Plans`,
-  description: `Save up to ${SALE.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${status.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`,
-  keywords: [
-    "manufactured homes sale",
-    "champion floor plans sale",
-    "champion homes discount",
-    "factory direct sale",
-    "mobile home clearance",
-    "modular home sale",
-  ],
-  url: "/homes-on-sale",
-});
+export function generateMetadata() {
+  const sale = getSaleStatus();
+  return genMeta({
+    title: sale.active
+      ? `${sale.name} — Up to ${sale.discountPercent}% Off Select Champion Floor Plans`
+      : "Champion Floor Plans on Sale",
+    description: sale.active
+      ? `${sale.name}: save up to ${sale.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${sale.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`
+      : "Featured Champion manufactured and modular homes at factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Call for the discounts running right now.",
+    keywords: [
+      "manufactured homes sale",
+      "champion floor plans sale",
+      "champion homes discount",
+      "factory direct sale",
+      "mobile home clearance",
+      "modular home sale",
+    ],
+    url: "/homes-on-sale",
+  });
+}
 
 export default function HomesOnSalePage() {
   // Recomputed per render (not per build) so an ISR refresh picks up the flip.
@@ -70,8 +75,9 @@ export default function HomesOnSalePage() {
                     <span aria-hidden="true">🔥</span>
                   </div>
 
+                  <p className="text-lg md:text-xl text-white font-semibold mb-1">{sale.name}</p>
                   <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
-                    UP TO {SALE.discountPercent}% OFF
+                    UP TO {sale.discountPercent}% OFF
                   </h1>
                   <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
                     Select New Champion Floor Plans
@@ -80,10 +86,23 @@ export default function HomesOnSalePage() {
                     Save thousands on your new Champion manufactured home. Factory-direct pricing
                     just got better.
                   </p>
-                  <p className="text-yellow-300 font-bold mb-4 text-sm md:text-base">
+                  <p className="text-yellow-300 font-bold mb-2 text-sm md:text-base">
                     ⏰ {saleDeadlineLabel(sale)}
                     {sale.endingSoon && sale.daysLeft > 2 ? ` — only ${sale.daysLeft} days left` : ""}
                   </p>
+                  {/* A stepped campaign should say what comes next, so the first
+                      tier ending doesn't read as the whole event ending. */}
+                  {sale.nextPhase && (
+                    <p className="text-white/70 text-sm mb-4">
+                      Then up to {sale.nextPhase.discountPercent}% off through{" "}
+                      {new Date(`${sale.nextPhase.endDate}T00:00:00Z`).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        timeZone: "UTC",
+                      })}
+                      .
+                    </p>
+                  )}
                 </>
               ) : (
                 <>
@@ -92,7 +111,7 @@ export default function HomesOnSalePage() {
                   </div>
 
                   <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-                    Our {SALE.discountPercent}% Off Sale Has Ended
+                    Our {sale.name} Has Ended
                   </h1>
                   <p className="text-lg text-white/85 max-w-2xl mx-auto mb-3">
                     The homes below are still available to order at factory-direct pricing, and we
@@ -166,7 +185,7 @@ export default function HomesOnSalePage() {
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 {sale.active
-                  ? `These ${saleHomes.length} floor plans are the ones eligible for up to ${SALE.discountPercent}% off MSRP. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`
+                  ? `These ${saleHomes.length} floor plans are the ones eligible for up to ${sale.discountPercent}% off MSRP. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`
                   : `These floor plans were part of our last promotion and are still available to order. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`}
               </p>
             </div>
@@ -174,7 +193,7 @@ export default function HomesOnSalePage() {
         </div>
       </div>
 
-      <SaleHomesGrid homes={saleHomes} discountPercent={SALE.discountPercent} saleActive={sale.active} />
+      <SaleHomesGrid homes={saleHomes} discountPercent={sale.discountPercent} saleActive={sale.active} />
 
       {/* Terms */}
       <section className="bg-gray-100 py-12">
@@ -190,7 +209,7 @@ export default function HomesOnSalePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="text-3xl font-bold text-white mb-4">
-              {sale.active ? "Don't Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
+              {sale.active ? "Don&rsquo;t Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
             </h2>
             <p className="text-white/80 mb-8 max-w-2xl mx-auto">
               Sign up for our Sales Alert and we&rsquo;ll email you when new promotions, clearance

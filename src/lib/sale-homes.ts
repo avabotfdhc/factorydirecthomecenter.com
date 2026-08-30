@@ -5,9 +5,12 @@
 // a home would appear on the grid and 404 on click. It now lives here once and
 // both pages import it.
 //
-// MSRP and sale price are the campaign figures signed off in
-// 25-OFF-MSRP-CAMPAIGN-CHANGELOG.md (sale price = MSRP less the campaign
-// discount, home only). Terms live in src/lib/sale.ts.
+// MSRP is the campaign figure signed off in 25-OFF-MSRP-CAMPAIGN-CHANGELOG.md.
+// The sale price is NOT stored here: it is derived from MSRP and whichever
+// campaign phase is running (see salePriceFor in src/lib/sale.ts). It used to
+// be a hardcoded field, frozen at the August campaign's 25% — which meant a new
+// campaign at a different discount would have gone live still showing the old
+// prices, with the old savings, under the new percentage.
 
 export interface SaleHome {
   id: string;
@@ -23,7 +26,6 @@ export interface SaleHome {
   /** Length in feet. */
   lengthFt: number;
   msrp: number;
-  salePrice: number;
   image: string;
   description: string;
   features: string[];
@@ -41,7 +43,6 @@ export const saleHomes: SaleHome[] = [
     widthFt: 16,
     lengthFt: 56,
     msrp: 89900,
-    salePrice: 67425,
     image: "/images/paramount/1656h22208-opt2.webp",
     description: "Champion 16'x56' 2 Beds 2 baths Single Wide Dutch Aspire",
     features: ["Smart Floor Plan", "Modern Kitchen", "Comfortable Living Area", "Spacious Bedrooms"],
@@ -57,7 +58,6 @@ export const saleHomes: SaleHome[] = [
     widthFt: 16,
     lengthFt: 52,
     msrp: 84900,
-    salePrice: 63675,
     image: "/images/paramount/1652h21151-opt2.webp",
     description: "Champion 16'x52' 2 Beds 1 bath Single Wide Dutch Aspire",
     features: ["Efficient Layout", "Modern Kitchen", "Cozy Living Space"],
@@ -74,7 +74,6 @@ export const saleHomes: SaleHome[] = [
     widthFt: 28,
     lengthFt: 52,
     msrp: 145000,
-    salePrice: 108750,
     image: "/images/paramount/2852h32170-opt2.webp",
     description: "Champion 28'x52' 3 Beds 2 baths Double Wide",
     features: ["Open Concept", "Master Suite", "Large Kitchen Island"],
@@ -91,7 +90,6 @@ export const saleHomes: SaleHome[] = [
     widthFt: 28,
     lengthFt: 64,
     msrp: 169000,
-    salePrice: 126750,
     image: "/images/paramount/2864h32060-opt2.webp",
     description: "Champion 28'x64' 3 Beds 2 baths Double Wide",
     features: ["Spacious Layout", "Walk-in Closets", "Gourmet Kitchen"],
@@ -108,7 +106,6 @@ export const saleHomes: SaleHome[] = [
     widthFt: 28,
     lengthFt: 56,
     msrp: 155000,
-    salePrice: 116250,
     image: "/images/paramount/silverton-exterior.webp",
     description: "Champion 28'x56' 3 Beds 2 baths Double Wide",
     features: ["Modern Design", "Vaulted Ceilings", "Large Windows"],
@@ -125,7 +122,6 @@ export const saleHomes: SaleHome[] = [
     widthFt: 28,
     lengthFt: 60,
     msrp: 162000,
-    salePrice: 121500,
     image: "/images/paramount/bayport-exterior.webp",
     description: "Champion 28'x60' 3 Beds 2 baths Double Wide",
     features: ["Family Friendly", "Bonus Room", "Luxury Finishes"],

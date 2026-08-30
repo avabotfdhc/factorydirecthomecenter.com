@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 import { trackFormSubmit } from "@/lib/analytics";
-import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 interface ExitIntentPopupProps {
   offer?: string;
@@ -18,7 +18,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
   const headline =
     offer ??
     (sale.active
-      ? `Save up to ${SALE.discountPercent}% off select Champion floor plans!`
+      ? `${sale.name}: save up to ${sale.discountPercent}% off select Champion floor plans!`
       : "Get a free, line-item factory-direct quote");
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
@@ -124,7 +124,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                     <span className="text-[var(--color-lime-dark)]">✓</span>
                     <span className="text-sm text-[var(--color-charcoal)]">
                       {sale.active ? (
-                        <><strong>Up to {SALE.discountPercent}% off MSRP</strong> base price</>
+                        <><strong>Up to {sale.discountPercent}% off MSRP</strong> base price</>
                       ) : (
                         <><strong>Line-item pricing</strong> — home, delivery, setup and site work priced separately</>
                       )}
@@ -159,8 +159,8 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
 
                 {sale.active && (
                   <p className="text-xs text-center text-[var(--color-gray)] mt-4">
-                    *Save up to {SALE.discountPercent}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
-                    Not valid with other specials or discounts. New purchases only; order must be authorized for production in {SALE.productionMonth}. Valid through {sale.endDateLabel}.
+                    *Save up to {sale.discountPercent}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
+                    Not valid with other specials or discounts. New purchases only; order must be authorized for production in {sale.productionMonth}. Valid through {sale.endDateLabel}.
                   </p>
                 )}
               </>

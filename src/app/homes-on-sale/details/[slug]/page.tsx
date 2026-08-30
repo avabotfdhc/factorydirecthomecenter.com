@@ -6,7 +6,7 @@ import { FadeIn } from "@/components/VisualEffects";
 import { SaleClaimForm } from "@/components/SaleClaimForm";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 import { getSaleHome, saleHomes, formatUsd } from "@/lib/sale-homes";
-import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleDeadlineLabel, salePriceFor } from "@/lib/sale";
 
 // ============================================
 // SALE HOME DETAIL PAGE
@@ -28,6 +28,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const home = getSaleHome(slug);
+  const sale = getSaleStatus();
 
   if (!home) {
     return genMeta({
@@ -38,8 +39,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return genMeta({
-    title: `${home.name} — Up to ${SALE.discountPercent}% Off MSRP`,
-    description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. MSRP ${formatUsd(home.msrp)}; save up to ${SALE.discountPercent}% off MSRP base price on select new Champion floor plans.`,
+    title: sale.active
+      ? `${home.name} — Up to ${sale.discountPercent}% Off MSRP`
+      : `${home.name} — Champion Home`,
+    description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. MSRP ${formatUsd(home.msrp)}${
+      sale.active
+        ? `; save up to ${sale.discountPercent}% off MSRP base price during the ${sale.name}.`
+        : ", home only, at factory-direct pricing."
+    }`,
     url: `/homes-on-sale/details/${home.id}`,
   });
 }
@@ -74,7 +81,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
         <div className="bg-gradient-to-r from-red-500 to-red-600 text-white py-3">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="font-bold text-lg">
-              🔥 LIMITED TIME: Save up to {SALE.discountPercent}% off select new Champion floor plans! 🔥
+              🔥 {sale.name}: save up to {sale.discountPercent}% off select new Champion floor plans! 🔥
             </p>
             <p className="text-sm text-white/90">{saleDeadlineLabel(sale)}</p>
           </div>
@@ -88,7 +95,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
             <div className="relative">
               {sale.active && (
                 <div className="absolute top-4 left-4 z-10 bg-red-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
-                  {SALE.discountPercent}% OFF
+                  {sale.discountPercent}% OFF
                 </div>
               )}
               
@@ -161,14 +168,14 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                 {sale.active ? (
                   <>
                     <p className="text-sm text-red-600 font-semibold mb-1">
-                      SAVE UP TO {SALE.discountPercent}% OFF MSRP
+                      SAVE UP TO {sale.discountPercent}% OFF MSRP
                     </p>
                     <p className="text-lg text-gray-500">
                       MSRP <s>{formatUsd(home.msrp)}</s>
                     </p>
-                    <p className="text-4xl font-bold text-[#2c7a7b]">{formatUsd(home.salePrice)}</p>
+                    <p className="text-4xl font-bold text-[#2c7a7b]">{formatUsd(salePriceFor(home.msrp, sale.discountPercent))}</p>
                     <p className="text-sm font-semibold text-[#65a30d] mt-1">
-                      You save {formatUsd(home.msrp - home.salePrice)}
+                      You save {formatUsd(home.msrp - salePriceFor(home.msrp, sale.discountPercent))}
                     </p>
                   </>
                 ) : (
@@ -247,7 +254,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
           <FadeIn>
             <div className="bg-white rounded-xl shadow-lg p-8">
               <h2 className="text-2xl font-bold text-center text-gray-900 mb-2">
-                {sale.active ? `Claim This ${SALE.discountPercent}% Off Deal` : "Request a Quote on This Home"}
+                {sale.active ? `Claim This ${sale.discountPercent}% Off Deal` : "Request a Quote on This Home"}
               </h2>
               <p className="text-center text-gray-600 mb-8">
                 Fill out the form below and our team will contact you within one business day

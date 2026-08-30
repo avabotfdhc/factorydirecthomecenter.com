@@ -2,7 +2,7 @@ import Link from "next/link";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
 import { SalesAlertForm } from "@/components/SalesAlertForm";
-import { SALE, getSaleStatus } from "@/lib/sale";
+import { getSaleStatus } from "@/lib/sale";
 
 export const metadata = genMeta({
   title: "Clearance Homes",
@@ -64,7 +64,7 @@ export default function ClearancePage() {
             <p className="text-gray-600 mb-8 max-w-lg mx-auto">
               Our clearance inventory moves fast! {sale.active ? "Check out our current " : "See our "}
               <Link href="/homes-on-sale" className="text-[#2c7a7b] hover:underline font-medium">
-                {sale.active ? `${SALE.discountPercent}% off sale` : "featured homes"}
+                {sale.active ? `${sale.discountPercent}% off sale` : "featured homes"}
               </Link>{" "}
               for the best deals on new Champion homes, or browse our full{" "}
               <Link href="/floor-plans" className="text-[#2c7a7b] hover:underline font-medium">floor plan collection</Link>.
@@ -74,7 +74,7 @@ export default function ClearancePage() {
                 href="/homes-on-sale"
                 className="inline-flex items-center justify-center px-8 py-3 bg-[#2c7a7b] hover:bg-[#1a365d] text-white font-semibold rounded-lg transition-colors"
               >
-                {sale.active ? `View ${SALE.discountPercent}% Off Sale` : "View Featured Homes"}
+                {sale.active ? `View ${sale.discountPercent}% Off Sale` : "View Featured Homes"}
               </Link>
               <Link
                 href="/floor-plans"

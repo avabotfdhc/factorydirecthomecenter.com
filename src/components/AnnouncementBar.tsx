@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 // The banner hides itself once the promo ends so it can never display an
 // expired offer. Both the cut-off and the visible copy come from
@@ -14,8 +14,13 @@ export function AnnouncementBar() {
   // Start visible so server and first client render match (no hydration
   // mismatch); hide after mount if the promo has already ended.
   const [expired, setExpired] = useState(false);
+  // Read on the client so a phase change is picked up on the next page view
+  // without waiting for a rebuild of the cached shell.
+  const [sale, setSale] = useState(() => getSaleStatus());
   useEffect(() => {
-    if (!getSaleStatus().active) setExpired(true);
+    const current = getSaleStatus();
+    setSale(current);
+    if (!current.active) setExpired(true);
   }, []);
 
   if (isDismissed || expired) return null;
@@ -35,13 +40,13 @@ export function AnnouncementBar() {
           >
             <span className="animate-pulse">🎉</span>
             <span className="hidden sm:inline">
-              <strong>Save up to {SALE.discountPercent}% off</strong> select new Champion floor plans!
+              <strong>Save up to {sale.discountPercent}% off</strong> select new Champion floor plans!
             </span>
             <span className="sm:hidden">
-              <strong>Up to {SALE.discountPercent}% off</strong> Champion plans!
+              <strong>Up to {sale.discountPercent}% off</strong> Champion plans!
             </span>
             <span className="text-yellow-300 font-semibold whitespace-nowrap">
-              {saleDeadlineLabel()}
+              {saleDeadlineLabel(sale)}
             </span>
             <span className="hidden sm:inline-flex items-center gap-1 ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">
               Shop Now

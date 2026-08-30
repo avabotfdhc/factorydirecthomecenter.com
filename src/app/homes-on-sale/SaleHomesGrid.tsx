@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn } from "@/components/VisualEffects";
 import { formatUsd, saleHomeType, type SaleHome } from "@/lib/sale-homes";
+import { salePriceFor } from "@/lib/sale";
 
 // The sale page previously rendered a full set of controls — a search box, a
 // "Search" button, Bedrooms / Bathroom / Price / Square Feet / Sort By buttons,
@@ -36,6 +37,13 @@ export function SaleHomesGrid({
   discountPercent: number;
   saleActive: boolean;
 }) {
+  // Sale prices come from the running campaign phase, so filtering, sorting and
+  // the card all agree and none of them can show a previous campaign's numbers.
+  // Memoized on the discount so it can be a dependency of the list below.
+  const priceOf = useCallback(
+    (h: SaleHome) => salePriceFor(h.msrp, discountPercent),
+    [discountPercent],
+  );
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
   const [minBeds, setMinBeds] = useState(0);
@@ -51,7 +59,7 @@ export function SaleHomesGrid({
       if (type && saleHomeType(h) !== type) return false;
       if (minBeds && h.beds < minBeds) return false;
       if (minBaths && h.baths < minBaths) return false;
-      if (maxPrice && h.salePrice > maxPrice) return false;
+      if (maxPrice && priceOf(h) > maxPrice) return false;
       if (minSqft && h.sqft < minSqft) return false;
       return true;
     });
@@ -59,10 +67,10 @@ export function SaleHomesGrid({
     const sorted = [...filtered];
     switch (sort) {
       case "price-asc":
-        sorted.sort((a, b) => a.salePrice - b.salePrice);
+        sorted.sort((a, b) => priceOf(a) - priceOf(b));
         break;
       case "price-desc":
-        sorted.sort((a, b) => b.salePrice - a.salePrice);
+        sorted.sort((a, b) => priceOf(b) - priceOf(a));
         break;
       case "sqft-asc":
         sorted.sort((a, b) => a.sqft - b.sqft);
@@ -77,7 +85,7 @@ export function SaleHomesGrid({
         break; // "featured" keeps the curated order
     }
     return sorted;
-  }, [homes, query, type, minBeds, minBaths, maxPrice, minSqft, sort]);
+  }, [homes, query, type, minBeds, minBaths, maxPrice, minSqft, sort, priceOf]);
 
   const filtersActive = Boolean(query || type || minBeds || minBaths || maxPrice || minSqft);
 
@@ -243,9 +251,9 @@ export function SaleHomesGrid({
                               MSRP <s>{formatUsd(home.msrp)}</s>
                             </p>
                             <p className="text-2xl font-bold text-[#2c7a7b]">
-                              {formatUsd(home.salePrice)}
+                              {formatUsd(priceOf(home))}
                               <span className="text-sm font-semibold text-[#65a30d] ml-2">
-                                save {formatUsd(home.msrp - home.salePrice)}
+                                save {formatUsd(home.msrp - priceOf(home))}
                               </span>
                             </p>
                             <p className="text-xs text-gray-500 mt-1">
