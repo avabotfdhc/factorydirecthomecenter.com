@@ -85,7 +85,8 @@ export function AllSaleHomesTable({
         </div>
         <select aria-label="Series" className={selectCls} value={series} onChange={(e) => setSeries(e.target.value)}>
           <option value="">All series</option>
-          <option value="Dutch Aspire">Dutch Aspire</option>
+          <option value="Aspire">Aspire</option>
+          <option value="Paramount">Paramount</option>
           <option value="Prime">Prime</option>
         </select>
         <select aria-label="Home type" className={selectCls} value={type} onChange={(e) => setType(e.target.value)}>

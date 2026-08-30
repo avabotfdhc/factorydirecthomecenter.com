@@ -186,8 +186,8 @@ export default function HomesOnSalePage() {
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 {sale.active
-                  ? `A shortlist of ${saleHomes.length} — five single sections and five multi-section homes from each series, picked to span the range. Every one of our ${saleListings.length} floor plans is on sale at the same ${sale.discountPercent}% off MSRP; the full price list is below.`
-                  : `A shortlist of ${saleHomes.length} across both series. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full price list is below.`}
+                  ? `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. Every one of our ${saleListings.length} floor plans is on sale at the same ${sale.discountPercent}% off MSRP; the full price list is below.`
+                  : `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full price list is below.`}
               </p>
             </div>
           </FadeIn>

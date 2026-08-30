@@ -1,7 +1,7 @@
 // The homes on sale.
 //
-// Every model on the master price sheet is on sale — `saleListings` is the full
-// 148 — while `saleHomes` is the curated subset that gets a photo card at the
+// Every model on the master price sheet is on sale — `saleListings` is all of
+// them — while `saleHomes` is the curated thirty that get a photo card at the
 // top of the page. Both derive their money from the same place:
 //
 //   MSRP       from the price sheet (src/lib/price-sheet.ts)
@@ -13,14 +13,15 @@
 // $41k on a double, inflating every "you save $X" computed from it.
 
 import { PRICE_SHEET, msrpFor, type PriceSheetModel } from "./price-sheet";
-import { catalogLinkFor } from "./model-catalog";
+import { catalogImageFor } from "./model-catalog";
+import { catalogEntryFor, fallbackSeries } from "./catalog-index";
 
 export interface SaleListing {
   /** Champion model number — the key to the price sheet and the catalog. */
   modelNo: string;
   /** Display name. Dutch Aspire rows are named by model number. */
   name: string;
-  /** "Dutch Aspire" / "Prime". */
+  /** Series as the published catalogue labels it: Aspire, Paramount or Prime. */
   series: string;
   /** "Single Wide" / "Multi-Section". */
   homeType: "Single Wide" | "Multi-Section";
@@ -46,40 +47,56 @@ export interface SaleHome extends SaleListing {
   features?: string[];
 }
 
-// ── The featured twenty ─────────────────────────────────────────────────────
-// Five singles and five multi-section homes from each series. Chosen so that
-// each group is a price ladder rather than a cluster — an entry home, a couple
-// of mid-range configurations, and the top of the range — with distinct bed and
-// bath counts, and only models the catalog has a photo for. Reverse-aisle
-// variants are left out of the featured set: they are the mirror image of a
-// home already shown, so featuring both would spend a card on a duplicate.
+// ── The featured thirty ─────────────────────────────────────────────────────
+// Ten from each series the catalogue publishes — Aspire, Paramount and Prime —
+// split five single-section and five multi-section.
+//
+// Each group of five is built as a price ladder rather than a cluster: an entry
+// home, two or three mid-range configurations, and the top of that series'
+// range, with the bed and bath counts varied so consecutive cards represent a
+// real choice rather than the same home at a slightly different length. Only
+// models the catalogue has a photograph for are eligible, and reverse-aisle
+// variants are excluded — they are the mirror image of a home already shown, so
+// featuring both would spend a card on a duplicate.
 //
 // Order here is the order they appear on the page.
 const FEATURED: Array<{ model: string; why: string }> = [
-  // Dutch Aspire — single section
-  { model: "1432H11214", why: "Entry point: the least expensive new home on the lot." },
-  { model: "1652H21151", why: "Two bedrooms at 16 ft wide, still under the mid-range." },
-  { model: "1656H22208", why: "First two-bath single — the step most buyers actually want." },
-  { model: "1660H32206", why: "Least expensive three-bed, two-bath single section." },
-  { model: "1676H32085", why: "Largest practical single at 1,153 sq ft." },
-  // Prime — single section
-  { model: "1636H11P01", why: "Prime's entry home." },
-  { model: "1456H22P01", why: "Least expensive two-bed, two-bath in the series." },
-  { model: "1656H22P01", why: "Same two-bath layout at 16 ft wide, 100 sq ft larger." },
-  { model: "1666H32P01", why: "Least expensive Prime three-bed, two-bath." },
-  { model: "1676H32P01", why: "Largest Prime single section." },
-  // Prime — multi-section
-  { model: "2844H32P01", why: "Entry double: three bedrooms under $95k MSRP." },
-  { model: "2848H32P06", why: "The 28x48 three-bed, a common first double." },
-  { model: "2856H32P01", why: "The volume 28x56 three-bed, two-bath." },
-  { model: "2856H42P01", why: "Same footprint as the Apex with a fourth bedroom." },
-  { model: "2876H53P01", why: "Flagship: five bedrooms, three baths, 2,027 sq ft." },
-  // Dutch Aspire — multi-section
-  { model: "2432H21166", why: "Least expensive double on the price sheet." },
-  { model: "2840H32024", why: "Least expensive 28 ft wide three-bed, two-bath." },
-  { model: "2852H32170", why: "The Brighton — the best-known plan in the series." },
+  // ── Aspire — single section ($62,672 – $92,972 across the series) ──
+  { model: "1444H11023", why: "Entry point, and the only one-bedroom Aspire single." },
+  { model: "1660H32206", why: "Least expensive three-bed, two-bath in the series." },
+  { model: "1660H22212", why: "Same 16x60 footprint as the 1660H32206, two beds instead of three." },
+  { model: "1668H22259", why: "Two-bed two-bath with 1,031 sq ft — space over bedroom count." },
+  { model: "1676H32085", why: "Largest Aspire single at 1,153 sq ft." },
+  // ── Aspire — multi-section ($79,923 – $137,400) ──
+  { model: "2432H21166", why: "Casper: the least expensive double on the price sheet." },
+  { model: "2440H32382", why: "Sheridan: three bedrooms under $100k MSRP." },
+  { model: "2848H32170", why: "Brighton at 28x48 — the best-known plan in the series." },
+  { model: "2460H42096", why: "Glenrock: the four-bedroom option in this range." },
+  { model: "2868H32394", why: "Odyssey at 68 ft, the series flagship." },
+  // ── Paramount — single section ($54,138 – $99,410) ──
+  { model: "1432H11214", why: "The least expensive new home we sell." },
+  { model: "1452H21081", why: "Least expensive two-bedroom." },
+  { model: "1656H22208", why: "First two-bath single, and 16 ft wide — the step most buyers want." },
+  { model: "1666H32085", why: "Least expensive 16 ft wide three-bed, two-bath." },
+  { model: "1676H32091", why: "Top of the single-section range at 1,153 sq ft." },
+  // ── Paramount — multi-section ($98,338 – $161,420) ──
+  { model: "2840H32024", why: "Monroe: the least expensive 28 ft wide three-bed, under $100k." },
+  { model: "2852H42096", why: "Livingston: a fourth bedroom for the same money as the Brighton." },
+  { model: "2852H32170", why: "The 52 ft Brighton — the plan people ask for by name." },
   { model: "2864H32060", why: "Fillmore: 1,707 sq ft, the large-family three-bed." },
-  { model: "3272H32186", why: "Top of the range at 2,184 sq ft." },
+  { model: "3272H32186", why: "Winston: 2,184 sq ft, the largest home on the price sheet." },
+  // ── Prime — single section ($56,384 – $85,227) ──
+  { model: "1636H11P01", why: "Pike: Prime's entry home." },
+  { model: "1456H22P01", why: "Peak: least expensive two-bed, two-bath in the series." },
+  { model: "1656H22P01", why: "Barkley: the same two-bath layout at 16 ft wide, 100 sq ft larger." },
+  { model: "1666H32P01", why: "Vertex: least expensive Prime three-bed, two-bath." },
+  { model: "1676H32P01", why: "Ridge: largest Prime single section." },
+  // ── Prime — multi-section ($93,383 – $131,253) ──
+  { model: "2844H32P01", why: "Estill: entry double, three bedrooms under $95k." },
+  { model: "2848H32P06", why: "Churchill: the 28x48 three-bed." },
+  { model: "2856H32P01", why: "Apex: the volume 28x56 three-bed, two-bath." },
+  { model: "2868H42P01", why: "The Grand: four bedrooms at 1,813 sq ft." },
+  { model: "2876H53P01", why: "Pinnacle: five bedrooms, three baths, 2,027 sq ft." },
 ];
 
 // Hand-written copy for the homes that have it. Everything else gets a factual
@@ -118,8 +135,10 @@ const CURATED: Record<string, { image?: string; description?: string; features?:
   },
 };
 
+// The price sheet lumps Aspire and Paramount together as "Dutch Aspire"; the
+// published catalogue tells them apart. See src/lib/catalog-index.ts.
 const seriesOf = (m: PriceSheetModel): string =>
-  m.family.startsWith("Prime") ? "Prime" : "Dutch Aspire";
+  catalogEntryFor(m.model)?.series ?? fallbackSeries(m.family);
 
 const bathLabel = (n: number) => (n === 1 ? "1 bath" : `${n} baths`);
 
@@ -138,7 +157,8 @@ function saleHomeId(m: PriceSheetModel): string {
 function toListing(m: PriceSheetModel): SaleListing | null {
   const msrp = msrpFor(m.model);
   if (msrp === undefined) return null;
-  const link = catalogLinkFor(m.model, m.name);
+  const entry = catalogEntryFor(m.model);
+  const image = catalogImageFor(m.model, m.name);
   return {
     modelNo: m.model,
     name: m.name,
@@ -149,8 +169,8 @@ function toListing(m: PriceSheetModel): SaleListing | null {
     baths: m.baths,
     sqft: m.sqft,
     msrp,
-    slug: link?.slug,
-    image: link?.image || undefined,
+    slug: entry?.slug,
+    image: image || undefined,
   };
 }
 

@@ -19,6 +19,15 @@ export interface CatalogLink {
   image: string;
 }
 
+/**
+ * Hero image for a model. Slug and series come from CATALOG_INDEX (taken from
+ * the published catalogue); only the picture is looked up here, because the
+ * repo's two catalogue files disagree about series but agree about artwork.
+ */
+export function catalogImageFor(model: string, name?: string): string {
+  return catalogLinkFor(model, name)?.image ?? "";
+}
+
 const CATALOG: LocalFloorPlan[] = [...paramountFloorPlans, ...localFloorPlans];
 
 const normalizeName = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
