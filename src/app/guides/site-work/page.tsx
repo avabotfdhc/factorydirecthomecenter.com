@@ -1,6 +1,7 @@
 import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3, H4 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Site Work & Preparation Guide",
@@ -99,6 +100,7 @@ export default function SiteWorkPage() {
               Site Work &<br />
               <span className="italic text-[var(--color-teal-light)]">Preparation</span>
             </h1>
+            <GuideMeta href="/guides/site-work" />
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
               Everything that needs to happen before your home arrives. Foundations, 
               utilities, permits, and site work — explained with real costs.

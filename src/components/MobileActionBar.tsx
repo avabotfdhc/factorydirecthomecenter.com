@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { trackPhoneClick, trackFormSubmit } from "@/lib/analytics";
+import { useBottomBarHeight } from "@/lib/bottom-bars";
 
 export function MobileActionBar() {
   const [isVisible, setIsVisible] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
   const [showTextModal, setShowTextModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
@@ -37,12 +39,20 @@ export function MobileActionBar() {
     }, 2000);
   };
 
+  // Publishes --mobile-bar-h so the compare bar can sit above this one. The
+  // bar is lg:hidden, so on desktop it measures 0 and drops out of the stack.
+  useBottomBarHeight("--mobile-bar-h", barRef, isVisible);
+
   if (!isVisible) return null;
 
   return (
     <>
       {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[var(--color-charcoal)]/10 shadow-lg lg:hidden">
+      <div
+        ref={barRef}
+        style={{ bottom: "var(--consent-h, 0px)" }}
+        className="fixed left-0 right-0 z-50 bg-white border-t border-[var(--color-charcoal)]/10 shadow-lg lg:hidden"
+      >
         <div className="flex items-center justify-around p-2">
           {/* Call Button */}
           <a

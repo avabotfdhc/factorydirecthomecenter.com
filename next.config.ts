@@ -20,10 +20,13 @@ const nextConfig: NextConfig = {
         destination: '/contact-us',
         permanent: true,
       },
+      // We order every home to spec — there is no separate standing-inventory
+      // feed, so /inventory was always a thin duplicate of the catalog. 301 so
+      // the indexed URL consolidates into /floor-plans.
       {
         source: '/inventory',
         destination: '/floor-plans',
-        permanent: false,
+        permanent: true,
       },
       // Fix duplicate content issues - redirect old URL patterns to canonical versions
       {

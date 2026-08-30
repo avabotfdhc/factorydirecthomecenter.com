@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           <h1 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
             Privacy <span className="italic text-[var(--color-teal-light)]">Policy</span>
           </h1>
-          <p className="mt-4 text-sm text-white/50">Last updated: July 6, 2026</p>
+          <p className="mt-4 text-sm text-white/50">Last updated: August 30, 2026</p>
         </div>
       </section>
 
@@ -89,7 +89,15 @@ export default function PrivacyPage() {
             <li><strong>Microsoft Clarity</strong> &mdash; provides session recordings and heatmaps to improve usability</li>
           </ul>
           <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
-            You can opt out of Google Analytics by installing the{" "}
+            <strong className="text-[var(--color-charcoal)]">Turning tracking off:</strong> when you first
+            visit we show a notice with an <strong>Accept</strong> and a <strong>Decline</strong> button.
+            Choosing Decline stops all four services above from loading, on that visit and every later one.
+            You can change your answer any time with the{" "}
+            <strong>Cookie Preferences</strong> link at the bottom of every page. Declining does not
+            change how the Site works or what you can see.
+          </p>
+          <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
+            You can also opt out of Google Analytics by installing the{" "}
             <a href="https://tools.google.com/dlpage/gaoptout" className="text-[var(--color-teal)] underline" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>,
             and you can manage interest-based advertising through the{" "}
             <a href="https://optout.aboutads.info" className="text-[var(--color-teal)] underline" target="_blank" rel="noopener noreferrer">Digital Advertising Alliance</a>{" "}
@@ -97,8 +105,11 @@ export default function PrivacyPage() {
             parts of the Site may not function properly without them.
           </p>
           <p className="text-[var(--color-gray)] mb-8 leading-relaxed">
-            Some browsers offer a &ldquo;Do Not Track&rdquo; (DNT) signal. Because there is no common industry standard for
-            DNT, our Site does not currently respond differently to DNT signals.
+            Some browsers offer a legacy &ldquo;Do Not Track&rdquo; (DNT) signal. Because there is no common
+            industry standard for DNT, our Site does not respond differently to it. We do, however, honour{" "}
+            <strong className="text-[var(--color-charcoal)]">Global Privacy Control</strong> (GPC): if your
+            browser or extension sends a GPC signal, we treat it as an opt-out and no analytics or advertising
+            technologies load at all &mdash; you will not even see the tracking notice.
           </p>
 
           <H2 className="font-serif text-2xl font-light mb-4">Information Sharing</H2>

@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
-// The promo's end — after this the banner hides itself so it can never
-// display an expired "Ends August 31st" offer. Update both this timestamp and
-// the visible text below when the offer changes. (Aug 31 2026, 11:59pm ET.)
-const PROMO_END_TS = Date.parse("2026-09-01T03:59:59-04:00");
+// The banner hides itself once the promo ends so it can never display an
+// expired offer. Both the cut-off and the visible copy come from
+// src/lib/sale.ts — they used to be two hand-maintained constants that could
+// (and did) disagree with the sale page.
 
 export function AnnouncementBar() {
   const [isDismissed, setIsDismissed] = useState(false);
@@ -14,7 +15,7 @@ export function AnnouncementBar() {
   // mismatch); hide after mount if the promo has already ended.
   const [expired, setExpired] = useState(false);
   useEffect(() => {
-    if (Date.now() > PROMO_END_TS) setExpired(true);
+    if (!getSaleStatus().active) setExpired(true);
   }, []);
 
   if (isDismissed || expired) return null;
@@ -34,13 +35,13 @@ export function AnnouncementBar() {
           >
             <span className="animate-pulse">🎉</span>
             <span className="hidden sm:inline">
-              <strong>Save up to 25% off</strong> select new Champion floor plans!
+              <strong>Save up to {SALE.discountPercent}% off</strong> select new Champion floor plans!
             </span>
             <span className="sm:hidden">
-              <strong>Up to 25% off</strong> Champion plans!
+              <strong>Up to {SALE.discountPercent}% off</strong> Champion plans!
             </span>
             <span className="text-yellow-300 font-semibold whitespace-nowrap">
-              Ends August 31st
+              {saleDeadlineLabel()}
             </span>
             <span className="hidden sm:inline-flex items-center gap-1 ml-2 text-xs bg-white/20 px-2 py-0.5 rounded-full">
               Shop Now

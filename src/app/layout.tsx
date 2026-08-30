@@ -9,6 +9,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { PageFooter } from "@/components/PageFooter";
 import { MobileActionBar } from "@/components/MobileActionBar";
 import { DeferredOverlays } from "@/components/DeferredOverlays";
+import { ConsentBanner } from "@/components/ConsentBanner";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -96,7 +97,9 @@ export default function RootLayout({
         {/* Google Tag Manager NoScript (required for GTM) */}
         <GoogleTagManagerNoScript />
         
-        {/* Analytics Provider — loads GA4, Facebook Pixel, GTM, Clarity */}
+        {/* Analytics — loads GA4, Facebook Pixel, GTM and Clarity, but only
+            after first interaction AND only if the visitor hasn't opted out
+            (see src/lib/consent.ts and <ConsentBanner /> below). */}
         <AnalyticsProvider />
         
         <TrackingProvider />
@@ -106,6 +109,7 @@ export default function RootLayout({
         <Footer />
         <MobileActionBar />
         <DeferredOverlays />
+        <ConsentBanner />
       </body>
     </html>
   );

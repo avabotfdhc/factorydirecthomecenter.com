@@ -2,6 +2,7 @@ import Link from "next/link";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { H2, H3 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Manufactured vs. Modular vs. Mobile",
@@ -57,18 +58,6 @@ export default function ManufacturedVsModularPage() {
     <>
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(faqs)} />
-      <StructuredData
-        data={structuredData.article({
-          headline: "Manufactured vs. Modular vs. Mobile Homes: What's the Difference?",
-          description:
-            "How manufactured, modular, and mobile homes differ by building code, foundation, financing, and appreciation.",
-          image: "/images/hero-home.jpg",
-          datePublished: "2024-01-01",
-          dateModified: new Date().toISOString(),
-          author: "Factory Direct Homes Center",
-          url: "/guides/manufactured-vs-modular",
-        })}
-      />
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="bg-[var(--color-cream-dark)] py-4">
@@ -93,6 +82,7 @@ export default function ManufacturedVsModularPage() {
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mt-4 mb-6">
             Manufactured vs. Modular vs. <span className="italic text-[var(--color-teal-light)]">Mobile Homes</span>
           </h1>
+          <GuideMeta href="/guides/manufactured-vs-modular" />
           <p className="text-lg text-white/70 leading-relaxed">
             The short version: <strong className="text-white">manufactured homes</strong> are built to the federal HUD
             Code on a steel chassis; <strong className="text-white">modular homes</strong> are built to the same local

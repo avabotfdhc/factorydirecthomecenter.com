@@ -2,6 +2,7 @@ import Link from "next/link";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { H2, H3 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Single Wide vs. Double Wide: Which Manufactured Home Is Right for You?",
@@ -57,18 +58,6 @@ export default function SingleVsDoubleWidePage() {
     <>
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(faqs)} />
-      <StructuredData
-        data={structuredData.article({
-          headline: "Single Wide vs. Double Wide: Which Manufactured Home Is Right for You?",
-          description:
-            "Single wide vs. double wide manufactured homes compared by size, layout, price, and land needs.",
-          image: "/images/hero-home.jpg",
-          datePublished: "2024-01-01",
-          dateModified: new Date().toISOString(),
-          author: "Factory Direct Homes Center",
-          url: "/guides/single-wide-vs-double-wide",
-        })}
-      />
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="bg-[var(--color-cream-dark)] py-4">
@@ -93,6 +82,7 @@ export default function SingleVsDoubleWidePage() {
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mt-4 mb-6">
             Single Wide vs. <span className="italic text-[var(--color-teal-light)]">Double Wide</span>
           </h1>
+          <GuideMeta href="/guides/single-wide-vs-double-wide" />
           <p className="text-lg text-white/70 leading-relaxed">
             A <strong className="text-white">single wide</strong> is one section (about 14–18 ft wide) delivered in one
             piece — the most affordable new home. A <strong className="text-white">double wide</strong> is two sections

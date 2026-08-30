@@ -361,7 +361,7 @@ export default function DesignSystemPage() {
               {[
                 { value: "70+", label: "Floor Plans" },
                 { value: "4.8\u2605", label: "Customer Rating" },
-                { value: "6", label: "States Served" },
+                { value: "3", label: "States Served" },
                 { value: "$50K", label: "Starting Price" },
               ].map((s) => (
                 <div key={s.label}>

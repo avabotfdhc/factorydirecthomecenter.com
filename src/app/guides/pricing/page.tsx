@@ -1,6 +1,7 @@
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "How Our Pricing Works",
@@ -107,6 +108,7 @@ export default function PricingPage() {
               Line-Item<br />
               <span className="italic text-[var(--color-teal-light)]">Transparency</span>
             </h1>
+            <GuideMeta href="/guides/pricing" />
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
               Most dealers give you one mysterious number. We itemize every cost 
               so you know exactly what you're paying for — and where you can save.

@@ -5,6 +5,7 @@ import { FeaturedHomes } from "@/components/FeaturedHomes";
 import { HomeSearchBar } from "@/components/HomeSearchBar";
 import { H2 } from "@/components/Heading";
 import { AnimatedHomeSections, TrustAndProcess } from "./HomeSections";
+import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -225,6 +226,8 @@ export default async function Home() {
 
 // Parallax Hero Section Component
 function ParallaxHeroSection() {
+  const sale = getSaleStatus();
+
   return (
     <section className="relative h-[320px] sm:h-[360px] lg:h-[420px]" aria-label="Hero section">
       {/* Background Image */}
@@ -243,15 +246,19 @@ function ParallaxHeroSection() {
       {/* Hero Content */}
       <div className="relative h-full flex flex-col justify-center px-4 lg:px-8 pt-4">
         <div className="max-w-7xl mx-auto w-full">
-          {/* Sale Badge */}
-          <Link href="/homes-on-sale" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
-            <span className="animate-pulse">🎉</span>
-            <span>Save up to 25% off select new Champion floor plans!</span>
-            <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">Ends August 31</span>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+          {/* Sale badge — only while the campaign is live (src/lib/sale.ts). It
+              previously hardcoded the discount and "Ends August 31", so it kept
+              promoting the offer after it expired. */}
+          {sale.active && (
+            <Link href="/homes-on-sale" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
+              <span aria-hidden="true">🎉</span>
+              <span>Save up to {SALE.discountPercent}% off select new Champion floor plans!</span>
+              <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">{saleDeadlineLabel(sale)}</span>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          )}
           
           <p className="text-xs sm:text-sm font-bold tracking-wider uppercase text-[var(--color-lime)] mb-2">
             Factory Direct Homes Center — Auburn, Indiana
