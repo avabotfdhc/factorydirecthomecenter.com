@@ -13,7 +13,6 @@
 // supplies imagery, and getApiFloorPlanBySlug returns null for one — linking a
 // sale listing to it would send a shopper to a 404.
 
-import { paramountFloorPlans } from "./paramount-floor-plans";
 import { localFloorPlans } from "./local-floor-plans";
 import type { LocalFloorPlan } from "./local-floor-plans";
 
@@ -26,11 +25,18 @@ export interface CatalogLink {
   gallery: string[];
   /** Champion's PDF brochure, where the literature library has one. */
   brochureUrl?: string;
+  /** Champion's dimensioned floor-plan sheet (PDF), where one is published. */
+  floorPlanUrl?: string;
   /** Matterport / 3D Vista walkthrough, where Champion publishes one. */
   virtualTour?: string;
 }
 
-const CATALOG: LocalFloorPlan[] = [...paramountFloorPlans, ...localFloorPlans];
+// localFloorPlans already contains the Prime, Aspire and Paramount lineups, and
+// it is the enriched build — the one carrying inherited floor-plan drawings and
+// the repo's floor-plan sheets. Reading paramountFloorPlans separately (as this
+// did) put the raw, unenriched Paramount entries first in the lookup, so a sale
+// listing for a Paramount model got neither its sheet nor its brochure.
+const CATALOG: LocalFloorPlan[] = localFloorPlans;
 
 const normalizeName = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 
@@ -67,6 +73,7 @@ export function catalogLinkFor(model: string, name?: string): CatalogLink | unde
     image: hero,
     gallery: hero ? [hero, ...rest] : rest,
     brochureUrl: plan.brochureUrl,
+    floorPlanUrl: plan.floorPlanUrl,
     virtualTour: plan.virtualTour,
   };
 }

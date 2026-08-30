@@ -200,6 +200,7 @@ export async function getFeedFloorPlanBySlug(slug: string): Promise<ApiFloorPlan
     width: "",
     series: base.series,
     brochureUrl: "",
+    floorPlanUrl: "",
     virtualTour: "",
     gallery,
   };

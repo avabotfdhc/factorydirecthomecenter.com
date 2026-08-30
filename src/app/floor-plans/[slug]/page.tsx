@@ -210,6 +210,16 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                   3D Virtual Tour
                 </a>
               )}
+              {plan.floorPlanUrl && (
+                <a
+                  href={plan.floorPlanUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/30 text-[var(--color-teal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
+                >
+                  Floor Plan (PDF)
+                </a>
+              )}
               {plan.brochureUrl && (
                 <a
                   href={plan.brochureUrl}

@@ -161,6 +161,16 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                     Full floor plan &amp; specifications →
                   </Link>
                 )}
+                {home.floorPlanUrl && (
+                  <a
+                    href={home.floorPlanUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2c7a7b] hover:underline"
+                  >
+                    Floor plan sheet (PDF) →
+                  </a>
+                )}
                 {home.virtualTour && (
                   <a
                     href={home.virtualTour}
