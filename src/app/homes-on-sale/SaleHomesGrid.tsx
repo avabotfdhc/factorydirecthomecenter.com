@@ -1,10 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn } from "@/components/VisualEffects";
-import { formatUsd, saleHomeType, type SaleHome } from "@/lib/sale-homes";
+import type { SaleHome } from "@/lib/sale-homes";
+import { PriceTriple, PricingDisclaimer } from "@/components/Pricing";
+import { salePriceFor } from "@/lib/sale";
 
 // The sale page previously rendered a full set of controls — a search box, a
 // "Search" button, Bedrooms / Bathroom / Price / Square Feet / Sort By buttons,
@@ -36,6 +38,13 @@ export function SaleHomesGrid({
   discountPercent: number;
   saleActive: boolean;
 }) {
+  // Sale prices come from the running campaign phase, so filtering, sorting and
+  // the card all agree and none of them can show a previous campaign's numbers.
+  // Memoized on the discount so it can be a dependency of the list below.
+  const priceOf = useCallback(
+    (h: SaleHome) => salePriceFor(h.msrp, discountPercent),
+    [discountPercent],
+  );
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
   const [minBeds, setMinBeds] = useState(0);
@@ -48,10 +57,10 @@ export function SaleHomesGrid({
     const q = query.trim().toLowerCase();
     const filtered = homes.filter((h) => {
       if (q && !`${h.name} ${h.modelNo} ${h.series}`.toLowerCase().includes(q)) return false;
-      if (type && saleHomeType(h) !== type) return false;
+      if (type && h.homeType !== type) return false;
       if (minBeds && h.beds < minBeds) return false;
       if (minBaths && h.baths < minBaths) return false;
-      if (maxPrice && h.salePrice > maxPrice) return false;
+      if (maxPrice && priceOf(h) > maxPrice) return false;
       if (minSqft && h.sqft < minSqft) return false;
       return true;
     });
@@ -59,10 +68,10 @@ export function SaleHomesGrid({
     const sorted = [...filtered];
     switch (sort) {
       case "price-asc":
-        sorted.sort((a, b) => a.salePrice - b.salePrice);
+        sorted.sort((a, b) => priceOf(a) - priceOf(b));
         break;
       case "price-desc":
-        sorted.sort((a, b) => b.salePrice - a.salePrice);
+        sorted.sort((a, b) => priceOf(b) - priceOf(a));
         break;
       case "sqft-asc":
         sorted.sort((a, b) => a.sqft - b.sqft);
@@ -77,7 +86,7 @@ export function SaleHomesGrid({
         break; // "featured" keeps the curated order
     }
     return sorted;
-  }, [homes, query, type, minBeds, minBaths, maxPrice, minSqft, sort]);
+  }, [homes, query, type, minBeds, minBaths, maxPrice, minSqft, sort, priceOf]);
 
   const filtersActive = Boolean(query || type || minBeds || minBaths || maxPrice || minSqft);
 
@@ -203,19 +212,25 @@ export function SaleHomesGrid({
                     )}
 
                     <div className="relative h-56 bg-gray-100">
-                      <Image
-                        src={home.image}
-                        alt={`${home.name} — ${home.sqft} sq ft, ${home.beds} bed ${home.baths} bath Champion home`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                      {home.image ? (
+                        <Image
+                          src={home.image}
+                          alt={`${home.name} — ${home.sqft} sq ft, ${home.beds} bed ${home.baths} bath Champion home`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">
+                          Photo coming soon
+                        </div>
+                      )}
                     </div>
 
                     <div className="p-6 flex flex-col flex-grow">
                       <h3 className="text-xl font-bold text-gray-900 mb-1">{home.name}</h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Model {home.modelNo} · {saleHomeType(home)}
+                        Model {home.modelNo} · {home.series} · {home.homeType}
                       </p>
 
                       <div className="grid grid-cols-3 gap-3 mb-4">
@@ -231,35 +246,15 @@ export function SaleHomesGrid({
                         ))}
                       </div>
 
-                      <p className="text-sm text-gray-600 mb-4">
-                        {home.widthFt}&#8242; &times; {home.lengthFt}&#8242;
-                      </p>
+                      <p className="text-sm text-gray-600 mb-4">{home.size}</p>
 
-                      {/* Pricing — MSRP struck through against the campaign price */}
+                      {/* All three figures, or nothing — see components/Pricing */}
                       <div className="border-t pt-4 mb-4 mt-auto">
-                        {saleActive ? (
-                          <>
-                            <p className="text-sm text-gray-500">
-                              MSRP <s>{formatUsd(home.msrp)}</s>
-                            </p>
-                            <p className="text-2xl font-bold text-[#2c7a7b]">
-                              {formatUsd(home.salePrice)}
-                              <span className="text-sm font-semibold text-[#65a30d] ml-2">
-                                save {formatUsd(home.msrp - home.salePrice)}
-                              </span>
-                            </p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              Home only — excludes delivery, setup, site work, taxes &amp; fees.*
-                            </p>
-                          </>
-                        ) : (
-                          <>
-                            <p className="text-2xl font-bold text-[#2c7a7b]">{formatUsd(home.msrp)}</p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              MSRP, home only. Ask us what discounts are running right now.
-                            </p>
-                          </>
-                        )}
+                        <PriceTriple
+                          msrp={home.msrp}
+                          salePrice={saleActive ? priceOf(home) : undefined}
+                          size="md"
+                        />
                       </div>
 
                       <Link
@@ -274,6 +269,7 @@ export function SaleHomesGrid({
               ))}
             </div>
           )}
+          <PricingDisclaimer variant="short" className="mt-8 max-w-3xl" />
         </div>
       </section>
     </>

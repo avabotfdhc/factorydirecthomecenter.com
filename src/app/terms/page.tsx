@@ -20,7 +20,7 @@ export default function TermsPage() {
           <h1 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
             Terms of <span className="italic text-[var(--color-teal-light)]">Use</span>
           </h1>
-          <p className="mt-4 text-sm text-white/50">Last updated: July 6, 2026</p>
+          <p className="mt-4 text-sm text-white/50">Last updated: August 30, 2026</p>
         </div>
       </section>
 
@@ -45,13 +45,46 @@ export default function TermsPage() {
             website&rsquo;s operation.
           </p>
 
-          <H2 className="font-serif text-2xl font-light mb-4">Pricing and Availability</H2>
-          <p className="text-[var(--color-gray)] mb-8 leading-relaxed">
+          <H2 id="pricing" className="font-serif text-2xl font-light mb-4 scroll-mt-28">Pricing and Availability</H2>
+          <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
             All prices, floor plans, specifications, and availability shown on this website are subject to change without
-            notice. Prices displayed are base prices and do not include delivery, setup, site work, permits, utility
-            connections, or other costs associated with home placement. Final pricing is determined at the time of purchase
-            and will be provided in a written purchase agreement. Images and renderings are for illustration purposes and
-            may not represent exact features, colors, or options of the home as delivered.
+            notice. Prices displayed are base prices for the home only and do not include delivery, setup and installation,
+            site work, foundation, skirting, steps, permits, utility connections, options and upgrades, sales or other
+            taxes, title and documentary fees, insurance, land, or other costs associated with home placement. Final
+            pricing is determined at the time of purchase and will be provided in a written purchase agreement. Images and
+            renderings are for illustration purposes and may not represent exact features, colors, or options of the home
+            as delivered.
+          </p>
+          <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
+            <strong className="text-[var(--color-charcoal)]">Errors and omissions.</strong> Prices, specifications,
+            dimensions, square footages, features, availability, and photographs may contain typographical, clerical,
+            data-entry, calculation, display, or photographic errors, and may become out of date. We reserve the right to
+            correct any such error at any time, and to refuse, cancel, or rescind any order, quotation, or purchase based
+            on an erroneous, omitted, or misstated price &mdash; including after an order has been submitted or
+            acknowledged &mdash; and to notify you and give you the choice of proceeding at the corrected price or
+            cancelling. Nothing on this website waives our right to correct an error.
+          </p>
+          <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
+            <strong className="text-[var(--color-charcoal)]">Manufacturer price increases and surcharges.</strong> Prices
+            depend on the manufacturer&rsquo;s current published cost, which we do not control. Champion Home Builders may
+            change base prices, option prices, or freight, or apply material, tariff, energy, or other surcharges at any
+            time. Where a price increase, surcharge, or specification change takes effect before your home is authorized
+            for production, the increase may be passed through to you, and we will tell you before proceeding. Quoted
+            prices are valid only for the period stated on the quotation.
+          </p>
+          <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
+            <strong className="text-[var(--color-charcoal)]">Previous purchases and prior sales.</strong> Advertised prices
+            and promotional discounts apply to new orders placed during the promotional period only. They are not
+            retroactive, cannot be applied to a home already ordered, purchased, delivered, or under a signed agreement,
+            and no price adjustment, credit, rebate, or refund will be made on a prior purchase. Offers cannot be combined
+            with any other offer, discount, rebate, or prior sale, and all homes are subject to prior sale.
+          </p>
+          <p className="text-[var(--color-gray)] mb-8 leading-relaxed">
+            <strong className="text-[var(--color-charcoal)]">MSRP and savings.</strong> MSRP means the
+            manufacturer&rsquo;s suggested retail price and is a reference figure; it is not necessarily a price at which
+            homes have been sold. Any advertised savings are calculated against MSRP. Financing, where mentioned, is
+            subject to credit approval by a third-party lender; we do not guarantee approval, rates, or terms. Pricing
+            applies only within our normal Indiana, Ohio, and Michigan market area.
           </p>
 
           <H2 className="font-serif text-2xl font-light mb-4">No Offer; Purchases Governed by Written Agreement</H2>

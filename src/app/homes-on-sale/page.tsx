@@ -4,10 +4,12 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
 import { H2 } from "@/components/Heading";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
+import { PricingDisclaimer } from "@/components/Pricing";
 import { SalesAlertForm } from "@/components/SalesAlertForm";
 import { SaleHomesGrid } from "./SaleHomesGrid";
-import { saleHomes } from "@/lib/sale-homes";
-import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { AllSaleHomesTable } from "./AllSaleHomesTable";
+import { saleHomes, saleListings } from "@/lib/sale-homes";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 // ============================================
 // HOMES ON SALE — current promotional campaign
@@ -23,21 +25,26 @@ import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 // after the offer ends, without waiting for a deploy.
 export const revalidate = 3600;
 
-const status = getSaleStatus();
-
-export const metadata = genMeta({
-  title: `Up to ${SALE.discountPercent}% Off Select Champion Floor Plans`,
-  description: `Save up to ${SALE.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${status.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`,
-  keywords: [
-    "manufactured homes sale",
-    "champion floor plans sale",
-    "champion homes discount",
-    "factory direct sale",
-    "mobile home clearance",
-    "modular home sale",
-  ],
-  url: "/homes-on-sale",
-});
+export function generateMetadata() {
+  const sale = getSaleStatus();
+  return genMeta({
+    title: sale.active
+      ? `${sale.name} — Up to ${sale.discountPercent}% Off Select Champion Floor Plans`
+      : "Champion Floor Plans on Sale",
+    description: sale.active
+      ? `${sale.name}: save up to ${sale.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${sale.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`
+      : "Featured Champion manufactured and modular homes at factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Call for the discounts running right now.",
+    keywords: [
+      "manufactured homes sale",
+      "champion floor plans sale",
+      "champion homes discount",
+      "factory direct sale",
+      "mobile home clearance",
+      "modular home sale",
+    ],
+    url: "/homes-on-sale",
+  });
+}
 
 export default function HomesOnSalePage() {
   // Recomputed per render (not per build) so an ISR refresh picks up the flip.
@@ -70,8 +77,9 @@ export default function HomesOnSalePage() {
                     <span aria-hidden="true">🔥</span>
                   </div>
 
+                  <p className="text-lg md:text-xl text-white font-semibold mb-1">{sale.name}</p>
                   <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
-                    UP TO {SALE.discountPercent}% OFF
+                    UP TO {sale.discountPercent}% OFF
                   </h1>
                   <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
                     Select New Champion Floor Plans
@@ -80,10 +88,23 @@ export default function HomesOnSalePage() {
                     Save thousands on your new Champion manufactured home. Factory-direct pricing
                     just got better.
                   </p>
-                  <p className="text-yellow-300 font-bold mb-4 text-sm md:text-base">
+                  <p className="text-yellow-300 font-bold mb-2 text-sm md:text-base">
                     ⏰ {saleDeadlineLabel(sale)}
                     {sale.endingSoon && sale.daysLeft > 2 ? ` — only ${sale.daysLeft} days left` : ""}
                   </p>
+                  {/* A stepped campaign should say what comes next, so the first
+                      tier ending doesn't read as the whole event ending. */}
+                  {sale.nextPhase && (
+                    <p className="text-white/70 text-sm mb-4">
+                      Then up to {sale.nextPhase.discountPercent}% off through{" "}
+                      {new Date(`${sale.nextPhase.endDate}T00:00:00Z`).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        timeZone: "UTC",
+                      })}
+                      .
+                    </p>
+                  )}
                 </>
               ) : (
                 <>
@@ -92,7 +113,7 @@ export default function HomesOnSalePage() {
                   </div>
 
                   <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-                    Our {SALE.discountPercent}% Off Sale Has Ended
+                    Our {sale.name} Has Ended
                   </h1>
                   <p className="text-lg text-white/85 max-w-2xl mx-auto mb-3">
                     The homes below are still available to order at factory-direct pricing, and we
@@ -116,10 +137,10 @@ export default function HomesOnSalePage() {
                   </svg>
                 </Link>
                 <Link
-                  href="/contact-us"
+                  href="#all-homes"
                   className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-base backdrop-blur-sm"
                 >
-                  Contact Sales
+                  See all {saleListings.length} prices
                 </Link>
               </div>
 
@@ -166,21 +187,44 @@ export default function HomesOnSalePage() {
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 {sale.active
-                  ? `These ${saleHomes.length} floor plans are the ones eligible for up to ${SALE.discountPercent}% off MSRP. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`
-                  : `These floor plans were part of our last promotion and are still available to order. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`}
+                  ? `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. Every one of our ${saleListings.length} floor plans is on sale at the same ${sale.discountPercent}% off MSRP; the full price list is below.`
+                  : `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full price list is below.`}
               </p>
             </div>
           </FadeIn>
         </div>
       </div>
 
-      <SaleHomesGrid homes={saleHomes} discountPercent={SALE.discountPercent} saleActive={sale.active} />
+      <SaleHomesGrid homes={saleHomes} discountPercent={sale.discountPercent} saleActive={sale.active} />
+
+      {/* Every home on the price sheet, not just the featured ones */}
+      <section id="all-homes" className="bg-white border-t border-gray-200 py-14 scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <H2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            Every Floor Plan on Sale
+          </H2>
+          <p className="text-lg text-gray-600 max-w-3xl mb-8">
+            All {saleListings.length} Champion floor plans we sell, with MSRP and
+            {sale.active ? ` the ${sale.discountPercent}% ` : " "}
+            {sale.active ? "sale price" : "factory-direct pricing"} for each. Every price comes
+            straight from our master price sheet.
+          </p>
+          <AllSaleHomesTable
+            listings={saleListings}
+            discountPercent={sale.discountPercent}
+            saleActive={sale.active}
+          />
+        </div>
+      </section>
 
       {/* Terms */}
       <section className="bg-gray-100 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <SaleDisclaimer variant="full" />
+            <div className="space-y-6">
+              <SaleDisclaimer variant="full" />
+              <PricingDisclaimer variant="full" />
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -190,7 +234,7 @@ export default function HomesOnSalePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="text-3xl font-bold text-white mb-4">
-              {sale.active ? "Don't Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
+              {sale.active ? "Don&rsquo;t Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
             </h2>
             <p className="text-white/80 mb-8 max-w-2xl mx-auto">
               Sign up for our Sales Alert and we&rsquo;ll email you when new promotions, clearance

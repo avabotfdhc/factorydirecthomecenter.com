@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SALE, getSaleStatus } from "@/lib/sale";
+import { getSaleStatus } from "@/lib/sale";
 
 interface SaleDisclaimerProps {
   variant?: "compact" | "full" | "inline";
@@ -14,8 +14,9 @@ interface SaleDisclaimerProps {
 // would silently disagree with the prices the page was showing.
 export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclaimerProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { active, endDateLabel } = getSaleStatus();
-  const pct = SALE.discountPercent;
+  // Terms follow whichever campaign phase is running, so a stepped campaign's
+  // second tier never inherits the first tier's percentage or production month.
+  const { active, endDateLabel, discountPercent: pct, productionMonth } = getSaleStatus();
   // Past tense once the offer is over, so an archived page doesn't read as a
   // live offer to a visitor who lands on it later.
   const expiry = active
@@ -36,7 +37,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
         </p>
         {isExpanded && (
           <div className="mt-2 text-amber-700 space-y-1 border-t border-amber-200 pt-2">
-            <p>Good on new purchases only. Order must be authorized for production in {SALE.productionMonth}. {expiry}.</p>
+            <p>Good on new purchases only. Order must be authorized for production in {productionMonth}. {expiry}.</p>
             <p>MSRP = Manufacturer&rsquo;s Suggested Retail Price. Subject to credit approval.</p>
             <p>Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. See dealer for complete details.</p>
           </div>
@@ -50,7 +51,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
       <p className={`text-xs text-gray-500 ${className}`}>
         *Save up to {pct}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, skirting, taxes, title fees, and optional upgrades.
         Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. Good on new purchases only;
-        order must be authorized for production in {SALE.productionMonth}. {expiry}. Subject to credit approval. See dealer for details.
+        order must be authorized for production in {productionMonth}. {expiry}. Subject to credit approval. See dealer for details.
       </p>
     );
   }
@@ -78,7 +79,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
         </p>
         <p>
           This offer is not valid with any other specials or discounts and cannot be used in combination with other specials or discounts.
-          Good on new purchases only, and order must be authorized for production in <strong>{SALE.productionMonth}</strong>. {expiry}.
+          Good on new purchases only, and order must be authorized for production in <strong>{productionMonth}</strong>. {expiry}.
           Subject to credit approval. Factory Direct Homes Center reserves the right to modify or cancel this promotion at any time without notice.
         </p>
         <p>

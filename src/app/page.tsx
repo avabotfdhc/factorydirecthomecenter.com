@@ -5,7 +5,7 @@ import { FeaturedHomes } from "@/components/FeaturedHomes";
 import { HomeSearchBar } from "@/components/HomeSearchBar";
 import { H2 } from "@/components/Heading";
 import { AnimatedHomeSections, TrustAndProcess } from "./HomeSections";
-import { SALE, getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -252,7 +252,7 @@ function ParallaxHeroSection() {
           {sale.active && (
             <Link href="/homes-on-sale" className="inline-flex items-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 rounded-full text-sm font-bold mb-4 hover:bg-[var(--color-lime-dark)] transition-colors">
               <span aria-hidden="true">🎉</span>
-              <span>Save up to {SALE.discountPercent}% off select new Champion floor plans!</span>
+              <span>{sale.name}: save up to {sale.discountPercent}% off select new Champion floor plans!</span>
               <span className="hidden sm:inline text-xs bg-white/30 px-2 py-0.5 rounded-full">{saleDeadlineLabel(sale)}</span>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
