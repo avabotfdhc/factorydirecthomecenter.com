@@ -101,7 +101,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 shadow-lg">
                 <ZoomableImage
-                  src={home.image}
+                  src={home.image ?? ""}
                   alt={`${home.name} floor plan - ${home.sqft} sq ft manufactured home on sale`}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -153,14 +153,9 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
-                  Width: {home.widthFt}&#8242;
+                  Size: {home.size}
                 </span>
-                <span className="flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                  </svg>
-                  Length: {home.lengthFt}&#8242;
-                </span>
+
               </div>
 
               {/* Pricing */}
@@ -193,20 +188,22 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               {/* Description */}
               <p className="text-gray-600 mb-6">{home.description}</p>
 
-              {/* Features */}
-              <div className="mb-6">
-                <h2 className="font-bold text-gray-900 mb-3">Key Features</h2>
-                <ul className="space-y-2">
-                  {home.features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-2 text-gray-600">
-                      <svg className="w-5 h-5 text-[#84cc16]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* Features — only where someone has written real copy */}
+              {home.features && home.features.length > 0 && (
+                <div className="mb-6">
+                  <h2 className="font-bold text-gray-900 mb-3">Key Features</h2>
+                  <ul className="space-y-2">
+                    {home.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-gray-600">
+                        <svg className="w-5 h-5 text-[#84cc16]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                        </svg>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-4">

@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn } from "@/components/VisualEffects";
-import { formatUsd, saleHomeType, type SaleHome } from "@/lib/sale-homes";
+import { formatUsd, type SaleHome } from "@/lib/sale-homes";
 import { salePriceFor } from "@/lib/sale";
 
 // The sale page previously rendered a full set of controls — a search box, a
@@ -56,7 +56,7 @@ export function SaleHomesGrid({
     const q = query.trim().toLowerCase();
     const filtered = homes.filter((h) => {
       if (q && !`${h.name} ${h.modelNo} ${h.series}`.toLowerCase().includes(q)) return false;
-      if (type && saleHomeType(h) !== type) return false;
+      if (type && h.homeType !== type) return false;
       if (minBeds && h.beds < minBeds) return false;
       if (minBaths && h.baths < minBaths) return false;
       if (maxPrice && priceOf(h) > maxPrice) return false;
@@ -211,19 +211,25 @@ export function SaleHomesGrid({
                     )}
 
                     <div className="relative h-56 bg-gray-100">
-                      <Image
-                        src={home.image}
-                        alt={`${home.name} — ${home.sqft} sq ft, ${home.beds} bed ${home.baths} bath Champion home`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                      {home.image ? (
+                        <Image
+                          src={home.image}
+                          alt={`${home.name} — ${home.sqft} sq ft, ${home.beds} bed ${home.baths} bath Champion home`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">
+                          Photo coming soon
+                        </div>
+                      )}
                     </div>
 
                     <div className="p-6 flex flex-col flex-grow">
                       <h3 className="text-xl font-bold text-gray-900 mb-1">{home.name}</h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Model {home.modelNo} · {saleHomeType(home)}
+                        Model {home.modelNo} · {home.series} · {home.homeType}
                       </p>
 
                       <div className="grid grid-cols-3 gap-3 mb-4">
@@ -239,9 +245,7 @@ export function SaleHomesGrid({
                         ))}
                       </div>
 
-                      <p className="text-sm text-gray-600 mb-4">
-                        {home.widthFt}&#8242; &times; {home.lengthFt}&#8242;
-                      </p>
+                      <p className="text-sm text-gray-600 mb-4">{home.size}</p>
 
                       {/* Pricing — MSRP struck through against the campaign price */}
                       <div className="border-t pt-4 mb-4 mt-auto">

@@ -6,7 +6,8 @@ import { H2 } from "@/components/Heading";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 import { SalesAlertForm } from "@/components/SalesAlertForm";
 import { SaleHomesGrid } from "./SaleHomesGrid";
-import { saleHomes } from "@/lib/sale-homes";
+import { AllSaleHomesTable } from "./AllSaleHomesTable";
+import { saleHomes, saleListings } from "@/lib/sale-homes";
 import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 // ============================================
@@ -135,10 +136,10 @@ export default function HomesOnSalePage() {
                   </svg>
                 </Link>
                 <Link
-                  href="/contact-us"
+                  href="#all-homes"
                   className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-base backdrop-blur-sm"
                 >
-                  Contact Sales
+                  See all {saleListings.length} prices
                 </Link>
               </div>
 
@@ -185,8 +186,8 @@ export default function HomesOnSalePage() {
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 {sale.active
-                  ? `These ${saleHomes.length} floor plans are the ones eligible for up to ${sale.discountPercent}% off MSRP. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`
-                  : `These floor plans were part of our last promotion and are still available to order. Every home includes Champion's manufacturer warranty and our line-item, factory-direct pricing.`}
+                  ? `A shortlist of ${saleHomes.length} — five single sections and five multi-section homes from each series, picked to span the range. Every one of our ${saleListings.length} floor plans is on sale at the same ${sale.discountPercent}% off MSRP; the full price list is below.`
+                  : `A shortlist of ${saleHomes.length} across both series. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full price list is below.`}
               </p>
             </div>
           </FadeIn>
@@ -194,6 +195,26 @@ export default function HomesOnSalePage() {
       </div>
 
       <SaleHomesGrid homes={saleHomes} discountPercent={sale.discountPercent} saleActive={sale.active} />
+
+      {/* Every home on the price sheet, not just the featured ones */}
+      <section id="all-homes" className="bg-white border-t border-gray-200 py-14 scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <H2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            Every Floor Plan on Sale
+          </H2>
+          <p className="text-lg text-gray-600 max-w-3xl mb-8">
+            All {saleListings.length} Champion floor plans we sell, with MSRP and
+            {sale.active ? ` the ${sale.discountPercent}% ` : " "}
+            {sale.active ? "sale price" : "factory-direct pricing"} for each. Every price comes
+            straight from our master price sheet.
+          </p>
+          <AllSaleHomesTable
+            listings={saleListings}
+            discountPercent={sale.discountPercent}
+            saleActive={sale.active}
+          />
+        </div>
+      </section>
 
       {/* Terms */}
       <section className="bg-gray-100 py-12">
