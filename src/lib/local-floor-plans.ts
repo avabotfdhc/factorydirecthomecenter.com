@@ -785,6 +785,67 @@ const FLOOR_PLAN_SHEETS: Record<string, { floorPlan: string; sales: string }> = 
   "2876H42180": { floorPlan: "/images/floor-plans/pdfs/silverton-2876-floor-plan.pdf", sales: "/images/floor-plans/pdfs/silverton-2876-sales.pdf" },
 };
 
+// ——— Photograph sets held in the repo but attached to nothing ——————————
+//
+// public/images/floor-plans/<home>/ holds three sets of interior and exterior
+// photographs, 34 in all, that no listing referenced. The folder names follow
+// the same convention as the floor-plan sheets beside them, and each sheet
+// names its Champion model number inside the PDF, so the folders resolve to
+// real models rather than to a guess from the folder name. Exteriors lead, so
+// a gallery opens on the home rather than on a bathroom.
+const PHOTO_SETS: Record<string, string[]> = {
+  "1672H32087": [
+    "/images/floor-plans/aspire-1672/exterior-1.jpg",
+    "/images/floor-plans/aspire-1672/exterior-2.jpg",
+    "/images/floor-plans/aspire-1672/exterior-3.jpg",
+    "/images/floor-plans/aspire-1672/bath.jpg",
+    "/images/floor-plans/aspire-1672/dining-kitchen.jpg",
+    "/images/floor-plans/aspire-1672/kitchen-1.jpg",
+    "/images/floor-plans/aspire-1672/kitchen-2.jpg",
+    "/images/floor-plans/aspire-1672/living-room-1.jpg",
+    "/images/floor-plans/aspire-1672/living-room-2.jpg",
+    "/images/floor-plans/aspire-1672/primary-bath-1.jpg",
+    "/images/floor-plans/aspire-1672/primary-bedroom-1.jpg",
+    "/images/floor-plans/aspire-1672/primary-bedroom-2.jpg",
+  ],
+  "2860H32047": [
+    "/images/floor-plans/aspire-modular-2860/exterior-1.jpg",
+    "/images/floor-plans/aspire-modular-2860/exterior-2.jpg",
+    "/images/floor-plans/aspire-modular-2860/exterior-3.jpg",
+    "/images/floor-plans/aspire-modular-2860/dining-area.jpg",
+    "/images/floor-plans/aspire-modular-2860/entry.jpg",
+    "/images/floor-plans/aspire-modular-2860/kitchen-1.jpg",
+    "/images/floor-plans/aspire-modular-2860/kitchen-2.jpg",
+    "/images/floor-plans/aspire-modular-2860/living-room-1.jpg",
+    "/images/floor-plans/aspire-modular-2860/living-room-2.jpg",
+    "/images/floor-plans/aspire-modular-2860/primary-bath-1.jpg",
+    "/images/floor-plans/aspire-modular-2860/primary-bedroom-1.jpg",
+  ],
+  "2856H32171": [
+    "/images/floor-plans/brighton-2856/exterior-1.jpg",
+    "/images/floor-plans/brighton-2856/exterior-2.jpg",
+    "/images/floor-plans/brighton-2856/exterior-3.jpg",
+    "/images/floor-plans/brighton-2856/dining-room.jpg",
+    "/images/floor-plans/brighton-2856/entry.jpg",
+    "/images/floor-plans/brighton-2856/kitchen-1.jpg",
+    "/images/floor-plans/brighton-2856/kitchen-2.jpg",
+    "/images/floor-plans/brighton-2856/living-room-1.jpg",
+    "/images/floor-plans/brighton-2856/living-room-2.jpg",
+    "/images/floor-plans/brighton-2856/primary-bath-1.jpg",
+    "/images/floor-plans/brighton-2856/primary-bedroom-1.jpg",
+  ],
+};
+
+function withPhotoSets(plans: LocalFloorPlan[]): LocalFloorPlan[] {
+  return plans.map((p) => {
+    const photos = PHOTO_SETS[(p.modelNumber || "").toUpperCase()];
+    if (!photos) return p;
+    const gallery = [...(p.gallery ?? [])];
+    for (const src of photos) if (!gallery.includes(src)) gallery.push(src);
+    return { ...p, gallery };
+  });
+}
+
 function withFloorPlanSheets(plans: LocalFloorPlan[]): LocalFloorPlan[] {
   return plans.map((p) => {
     const sheet = FLOOR_PLAN_SHEETS[(p.modelNumber || "").toUpperCase()];
@@ -803,5 +864,5 @@ function withFloorPlanSheets(plans: LocalFloorPlan[]): LocalFloorPlan[] {
  * drawing and sheet wherever one exists anywhere in the catalogue.
  */
 export const localFloorPlans: LocalFloorPlan[] = withInheritedDrawings(
-  withFloorPlanSheets(RAW_FLOOR_PLANS),
+  withPhotoSets(withFloorPlanSheets(RAW_FLOOR_PLANS)),
 );
