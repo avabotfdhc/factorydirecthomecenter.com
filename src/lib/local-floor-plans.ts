@@ -31,6 +31,7 @@ export interface LocalFloorPlan {
   homeType?: string; // "Multi-Section" for sectional models; defaults to Single Wide
   series?: string;   // Champion series ("Paramount", "Aspire", ...); defaults to Prime
   brochureUrl?: string; // site-relative PDF from Champion's literature library
+  floorPlanUrl?: string; // Champion's dimensioned floor-plan sheet (PDF)
   virtualTour?: string; // Matterport / 3D Vista link from Champion's tour sheets
   image?: string;    // banner/card image (site-relative or S3), from Champion's media library
   gallery?: string[]; // detail-page gallery, banner first
@@ -51,7 +52,7 @@ export function planDescription(p: LocalFloorPlan): string {
   return `The ${p.name} is a ${p.beds}-bedroom, ${p.baths}-bath Champion ${seriesLabel(p)} Series ${(p.homeType || PRIME_HOME_TYPE).toLowerCase()} — ${p.sqft.toLocaleString("en-US")} sq ft of conditioned living space at ${p.width} × ${p.length}. Built at Champion's ${plant}, Indiana plant and sold factory-direct from our Auburn showroom with line-item pricing. Contact us for your factory-direct quote.`;
 }
 
-export const localFloorPlans: LocalFloorPlan[] = [
+const RAW_FLOOR_PLANS: LocalFloorPlan[] = [
   {
     slug: "prime-peak",
     name: "Peak",
@@ -698,3 +699,109 @@ export const localFloorPlans: LocalFloorPlan[] = [
   // ——— Full 2026 Paramount Series lineup (repo-published) ———
   ...paramountFloorPlans,
 ];
+
+// ——— Floor-plan drawings shared across listings of the same model ————————
+//
+// Champion publishes one drawing per model number, but the same model is often
+// listed twice — once as Aspire and once as Paramount — and only one of the two
+// listings carries the drawing. A buyer landing on the other one could see
+// photographs of the home and never its layout. 41 of the 193 published plans
+// were in exactly that state.
+//
+// So a plan with no drawing of its own inherits the drawing (and the brochure)
+// from another listing of the same model. Only the plan drawing and the
+// brochure travel: photographs stay with the listing that published them,
+// because two listings of one model can be photographed in different decor.
+//
+// This runs over the data rather than being written into it so a plan added
+// later inherits automatically, and so there is one copy of each asset path.
+
+/** A Champion plan drawing, as opposed to a photograph of the finished home. */
+function isPlanDrawing(src: string): boolean {
+  return /floorplan|floor-plan|\/banner\//i.test(src);
+}
+
+const planDrawings = (p: LocalFloorPlan): string[] =>
+  [p.image, ...(p.gallery ?? [])].filter((s): s is string => Boolean(s)).filter(isPlanDrawing);
+
+const normalizePlanName = (s: string) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+function withInheritedDrawings(plans: LocalFloorPlan[]): LocalFloorPlan[] {
+  const byModel = new Map<string, LocalFloorPlan[]>();
+  const byName = new Map<string, LocalFloorPlan[]>();
+  for (const p of plans) {
+    if (p.modelNumber) {
+      const k = p.modelNumber.toUpperCase();
+      byModel.set(k, [...(byModel.get(k) ?? []), p]);
+    }
+    const n = normalizePlanName(p.name);
+    if (n) byName.set(n, [...(byName.get(n) ?? []), p]);
+  }
+
+  return plans.map((p) => {
+    if (planDrawings(p).length > 0 && p.brochureUrl && p.floorPlanUrl) return p;
+
+    // Model number first — it is the thing Champion draws against. Name is the
+    // fallback for Prime, whose listings record plant codes inconsistently.
+    const siblings = [
+      ...(p.modelNumber ? (byModel.get(p.modelNumber.toUpperCase()) ?? []) : []),
+      ...(byName.get(normalizePlanName(p.name)) ?? []),
+    ].filter((q) => q !== p);
+
+    const drawings =
+      planDrawings(p).length > 0
+        ? []
+        : siblings.flatMap(planDrawings).filter((src, i, a) => a.indexOf(src) === i);
+    const brochureUrl = p.brochureUrl ?? siblings.find((q) => q.brochureUrl)?.brochureUrl;
+    const floorPlanUrl = p.floorPlanUrl ?? siblings.find((q) => q.floorPlanUrl)?.floorPlanUrl;
+
+    if (drawings.length === 0 && brochureUrl === p.brochureUrl && floorPlanUrl === p.floorPlanUrl) {
+      return p;
+    }
+
+    const gallery = [...(p.gallery ?? [])];
+    for (const src of drawings) if (!gallery.includes(src)) gallery.push(src);
+    return { ...p, gallery, brochureUrl, floorPlanUrl };
+  });
+}
+
+// ——— Champion floor-plan sheets held in the repo ————————————————————————
+//
+// public/images/floor-plans/pdfs/ carries nine dimensioned floor-plan sheets
+// and their matching sales sheets, and not one of them was referenced from
+// anywhere — a buyer could not reach a single one. The filenames are unreliable
+// (brighton-2856-floor-plan.pdf is actually the Lincoln), so each is keyed by
+// the Champion model number printed inside the PDF itself rather than by its
+// name. Two more sheets in that folder, 3268M32052 and 3276M42179, are the
+// modular versions of the Madison and Verona, and neither has a catalogue page
+// to attach to yet.
+const FLOOR_PLAN_SHEETS: Record<string, { floorPlan: string; sales: string }> = {
+  "1456H21023": { floorPlan: "/images/floor-plans/pdfs/aspire-1456-floor-plan.pdf", sales: "/images/floor-plans/pdfs/aspire-1456-sales.pdf" },
+  "1460H21216": { floorPlan: "/images/floor-plans/pdfs/dutch-1460-floor-plan.pdf", sales: "/images/floor-plans/pdfs/dutch-1460-sales.pdf" },
+  "1672H32087": { floorPlan: "/images/floor-plans/pdfs/aspire-1672-floor-plan.pdf", sales: "/images/floor-plans/pdfs/aspire-1672-sales.pdf" },
+  "2852H32170": { floorPlan: "/images/floor-plans/pdfs/brighton-2852-floor-plan.pdf", sales: "/images/floor-plans/pdfs/brighton-2852-sales.pdf" },
+  "2856H32171": { floorPlan: "/images/floor-plans/pdfs/brighton-2856-floor-plan.pdf", sales: "/images/floor-plans/pdfs/brighton-2856-sales.pdf" },
+  "2860H32047": { floorPlan: "/images/floor-plans/pdfs/aspire-modular-2860-floor-plan.pdf", sales: "/images/floor-plans/pdfs/aspire-modular-2860-sales.pdf" },
+  "2876H42180": { floorPlan: "/images/floor-plans/pdfs/silverton-2876-floor-plan.pdf", sales: "/images/floor-plans/pdfs/silverton-2876-sales.pdf" },
+};
+
+function withFloorPlanSheets(plans: LocalFloorPlan[]): LocalFloorPlan[] {
+  return plans.map((p) => {
+    const sheet = FLOOR_PLAN_SHEETS[(p.modelNumber || "").toUpperCase()];
+    if (!sheet) return p;
+    return {
+      ...p,
+      floorPlanUrl: p.floorPlanUrl ?? sheet.floorPlan,
+      // The sales sheet is the model's spec brochure; it only fills a gap.
+      brochureUrl: p.brochureUrl ?? sheet.sales,
+    };
+  });
+}
+
+/**
+ * The published catalogue, with every listing carrying its model's floor-plan
+ * drawing and sheet wherever one exists anywhere in the catalogue.
+ */
+export const localFloorPlans: LocalFloorPlan[] = withInheritedDrawings(
+  withFloorPlanSheets(RAW_FLOOR_PLANS),
+);

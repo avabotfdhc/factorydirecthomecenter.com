@@ -244,6 +244,7 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
   width: string;
   series: string;
   brochureUrl: string;     // absolute S3 URL or ""
+  floorPlanUrl: string;    // Champion's dimensioned floor-plan sheet (PDF), or ""
   virtualTour: string;     // e.g. Matterport URL or ""
   gallery: string[];       // absolute image URLs (banner first)
 }
@@ -275,6 +276,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         width: p.width,
         series: p.series || PRIME_SERIES,
         brochureUrl: p.brochureUrl || "",
+        floorPlanUrl: p.floorPlanUrl || "",
         virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),
       });
@@ -355,6 +357,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       width: String(r.width || ""),
       series,
       brochureUrl: r.brochure ? s3Url(r.brochure) : seriesBrochure(series, homeType),
+      floorPlanUrl: "",
       virtualTour: String(r.virtualTour || "") || localTour,
       gallery,
     });

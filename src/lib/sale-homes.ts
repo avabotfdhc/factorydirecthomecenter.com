@@ -39,6 +39,8 @@ export interface SaleListing {
   gallery: string[];
   /** Champion's PDF brochure, where one is published. */
   brochureUrl?: string;
+  /** Champion's dimensioned floor-plan sheet (PDF), where one is published. */
+  floorPlanUrl?: string;
   /** 3D walkthrough, where Champion publishes one. */
   virtualTour?: string;
   /**
@@ -194,6 +196,7 @@ function toListing(m: PriceSheetModel): SaleListing | null {
     image: link?.image || undefined,
     gallery: link?.gallery ?? [],
     brochureUrl: link?.brochureUrl,
+    floorPlanUrl: link?.floorPlanUrl,
     virtualTour: link?.virtualTour,
     featured: FEATURED_MODELS.has(m.model.toUpperCase()),
   };
