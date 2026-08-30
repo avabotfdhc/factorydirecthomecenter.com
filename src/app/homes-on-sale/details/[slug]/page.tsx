@@ -8,6 +8,7 @@ import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 import { getSaleHome, saleHomes } from "@/lib/sale-homes";
 import { formatUsd, PriceTriple, PricingDisclaimer } from "@/components/Pricing";
 import { getSaleStatus, saleDeadlineLabel, salePriceFor } from "@/lib/sale";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // ============================================
 // SALE HOME DETAIL PAGE
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // A price only appears here when MSRP, sale price and savings can all be
     // stated together — the same all-or-nothing rule the page itself follows.
     description: `${home.name} — ${home.sqft} sq ft, ${home.beds} bed, ${home.baths} bath Champion home. ${
-      sale.active
+      SHOW_SALE_PRICES && sale.active
         ? `MSRP ${formatUsd(home.msrp)}, sale price ${formatUsd(
             salePriceFor(home.msrp, sale.discountPercent),
           )} — save ${formatUsd(

@@ -6,6 +6,7 @@ import Image from "next/image";
 import type { SaleListing } from "@/lib/sale-homes";
 import { CallForPricing, formatUsd, PricingDisclaimer } from "@/components/Pricing";
 import { salePriceFor } from "@/lib/sale";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // The complete list of homes on sale. Every model on the master price sheet is
 // on sale, so all of them are published here — the photo cards above are a
@@ -78,7 +79,7 @@ export function AllSaleHomesTable({
   // Three price columns are worth their width only when some visible row can
   // fill them. With no campaign running, or once filters exclude every featured
   // home, the table collapses to a single "Price" column of "Call for pricing".
-  const anyPriced = saleActive && visible.some((l) => l.featured);
+  const anyPriced = SHOW_SALE_PRICES && saleActive && visible.some((l) => l.featured);
 
   return (
     <div>

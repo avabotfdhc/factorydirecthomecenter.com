@@ -6,6 +6,7 @@ import Image from "next/image";
 import { FadeIn } from "@/components/VisualEffects";
 import type { SaleHome } from "@/lib/sale-homes";
 import { PriceTriple, PricingDisclaimer } from "@/components/Pricing";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 import { salePriceFor } from "@/lib/sale";
 
 // The sale page previously rendered a full set of controls — a search box, a
@@ -141,7 +142,7 @@ export function SaleHomesGrid({
             {/* Offered only while prices are on the page. With no campaign
                 running every card reads "Call for pricing", and a filter
                 labelled "Under $75,000" would imply figures we aren't showing. */}
-            {saleActive && (
+            {SHOW_SALE_PRICES && saleActive && (
               <select aria-label="Maximum sale price" className={selectCls} value={maxPrice || ""} onChange={(e) => setMaxPrice(Number(e.target.value) || 0)}>
                 <option value="">Any price</option>
                 <option value="75000">Under $75,000</option>
