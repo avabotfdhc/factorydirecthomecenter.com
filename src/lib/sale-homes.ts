@@ -13,7 +13,7 @@
 // $41k on a double, inflating every "you save $X" computed from it.
 
 import { PRICE_SHEET, msrpFor, type PriceSheetModel } from "./price-sheet";
-import { catalogImageFor } from "./model-catalog";
+import { catalogLinkFor } from "./model-catalog";
 import { catalogEntryFor, fallbackSeries } from "./catalog-index";
 
 export interface SaleListing {
@@ -35,6 +35,18 @@ export interface SaleListing {
   slug?: string;
   /** Catalog hero image, when there is one. */
   image?: string;
+  /** Every published photograph and floor-plan sheet, hero first. */
+  gallery: string[];
+  /** Champion's PDF brochure, where one is published. */
+  brochureUrl?: string;
+  /** 3D walkthrough, where Champion publishes one. */
+  virtualTour?: string;
+  /**
+   * Whether this home is one of the featured thirty. Only featured homes
+   * publish a price; everything else is listed as on sale and quoted by
+   * phone. See the note above FEATURED.
+   */
+  featured: boolean;
 }
 
 /** A featured home: a listing plus whatever curated copy we have for it. */
@@ -99,6 +111,9 @@ const FEATURED: Array<{ model: string; why: string }> = [
   { model: "2876H53P01", why: "Pinnacle: five bedrooms, three baths, 2,027 sq ft." },
 ];
 
+/** Fast membership test for toListing — the featured thirty by model number. */
+const FEATURED_MODELS = new Set(FEATURED.map((f) => f.model.toUpperCase()));
+
 // Hand-written copy for the homes that have it. Everything else gets a factual
 // description built from the price sheet — better a plain, true sentence than
 // invented "features" for a home nobody has written about.
@@ -157,8 +172,14 @@ function saleHomeId(m: PriceSheetModel): string {
 function toListing(m: PriceSheetModel): SaleListing | null {
   const msrp = msrpFor(m.model);
   if (msrp === undefined) return null;
+  // Two catalogue sources, and both are needed. CATALOG_INDEX is the published
+  // catalogue's own model-to-slug mapping and settles the series; the repo's
+  // floor-plan files carry the artwork and a handful of pages the index misses
+  // (the price sheet's CASEY is catalogued as the Spire, its "The Crown" as the
+  // Crown). Prefer the index for the slug, fall back to the repo, and take
+  // every picture from the repo.
   const entry = catalogEntryFor(m.model);
-  const image = catalogImageFor(m.model, m.name);
+  const link = catalogLinkFor(m.model, m.name);
   return {
     modelNo: m.model,
     name: m.name,
@@ -169,8 +190,12 @@ function toListing(m: PriceSheetModel): SaleListing | null {
     baths: m.baths,
     sqft: m.sqft,
     msrp,
-    slug: entry?.slug,
-    image: image || undefined,
+    slug: entry?.slug ?? link?.slug,
+    image: link?.image || undefined,
+    gallery: link?.gallery ?? [],
+    brochureUrl: link?.brochureUrl,
+    virtualTour: link?.virtualTour,
+    featured: FEATURED_MODELS.has(m.model.toUpperCase()),
   };
 }
 
@@ -204,12 +229,19 @@ export const saleHomes: SaleHome[] = FEATURED.flatMap(({ model }) => {
   const listing = toListing(m);
   if (!listing) return [];
   const curated = CURATED[m.model.toUpperCase()] ?? {};
+  const image = curated.image ?? listing.image;
+  // Whichever picture leads the card must also lead the gallery, or tapping it
+  // opens the lightbox on a different home's photograph.
+  const gallery = image
+    ? [image, ...listing.gallery.filter((src) => src !== image)]
+    : listing.gallery;
   return [
     {
       ...listing,
       id: saleHomeId(m),
       brand: "Champion Home Builders",
-      image: curated.image ?? listing.image,
+      image,
+      gallery,
       description: curated.description ?? describe(m),
       features: curated.features,
     },

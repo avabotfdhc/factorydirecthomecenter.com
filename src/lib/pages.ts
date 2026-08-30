@@ -26,21 +26,11 @@ export const sitePages: SitePage[] = [
   {
     url: "/floor-plans",
     title: "Manufactured Home Floor Plans",
-    description: "Browse 20+ Champion floor plans. Single wide, double wide, and modular homes with factory-direct pricing.",
+    description: "Browse every Champion floor plan we sell. Single wide, double wide, and modular homes with factory-direct pricing.",
     topics: ["floor-plans", "single-wide", "double-wide", "modular", "champion-homes"],
     cluster: "products",
     priority: 0.9,
     changeFrequency: "weekly",
-  },
-  {
-    url: "/floor-plans/emerald-sky",
-    title: "Emerald Sky | 3 Bed 2 Bath Modular Home",
-    description: "1,680 sq ft modular home with 3 bedrooms, 2 baths, fireplace, kitchen island, and office/flex room.",
-    topics: ["floor-plans", "modular", "champion-homes"],
-    cluster: "products",
-    pillar: "/floor-plans",
-    priority: 0.8,
-    changeFrequency: "monthly",
   },
   {
     url: "/homes-on-sale",

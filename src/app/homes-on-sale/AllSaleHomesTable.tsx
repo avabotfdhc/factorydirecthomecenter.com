@@ -2,17 +2,23 @@
 
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { SaleListing } from "@/lib/sale-homes";
 import { CallForPricing, formatUsd, PricingDisclaimer } from "@/components/Pricing";
 import { salePriceFor } from "@/lib/sale";
 
-// The complete price list. Every model on the master price sheet is on sale, so
-// all of them are published here with MSRP and the campaign price — the photo
-// cards above are a curated shortlist, not the extent of the offer.
+// The complete list of homes on sale. Every model on the master price sheet is
+// on sale, so all of them are published here — the photo cards above are a
+// curated shortlist, not the extent of the offer.
 //
-// A table rather than more cards: 148 homes is a shopping list, and a buyer
-// comparing this many wants to scan sizes and prices in a column, not scroll
-// through 148 photographs.
+// Prices appear only on the featured homes. Everything else is listed with its
+// specifications and quoted by phone, so a published figure always belongs to a
+// home someone has checked rather than to a row generated in bulk.
+//
+// A table rather than more cards: 147 homes is a shopping list, and a buyer
+// comparing this many wants to scan sizes side by side, not scroll through 147
+// photographs — so each row carries a thumbnail and links to the home's own
+// floor-plan page for the full gallery.
 
 type SortKey = "price-asc" | "price-desc" | "sqft-desc" | "sqft-asc" | "name-asc";
 
@@ -69,6 +75,11 @@ export function AllSaleHomesTable({
 
   const filtersActive = Boolean(query || series || type || minBeds);
 
+  // Three price columns are worth their width only when some visible row can
+  // fill them. With no campaign running, or once filters exclude every featured
+  // home, the table collapses to a single "Price" column of "Call for pricing".
+  const anyPriced = saleActive && visible.some((l) => l.featured);
+
   return (
     <div>
       {/* Controls */}
@@ -124,7 +135,8 @@ export function AllSaleHomesTable({
       <div className="overflow-x-auto border border-gray-200 rounded-xl bg-white">
         <table className="w-full min-w-[720px] text-sm border-collapse">
           <caption className="sr-only">
-            Every Champion floor plan on sale, with MSRP and sale price
+            Every Champion floor plan on sale. Featured homes show MSRP, sale price and
+            savings; the rest are quoted by phone.
           </caption>
           <thead className="bg-gray-50 text-left">
             <tr className="border-b border-gray-200">
@@ -134,7 +146,7 @@ export function AllSaleHomesTable({
               <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Beds</th>
               <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Baths</th>
               <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Sq ft</th>
-              {saleActive ? (
+              {anyPriced ? (
                 <>
                   <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">MSRP</th>
                   <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Sale price</th>
@@ -149,14 +161,35 @@ export function AllSaleHomesTable({
             {visible.map((l) => (
               <tr key={l.modelNo} className="border-b border-gray-100 last:border-0 hover:bg-gray-50">
                 <th scope="row" className="px-4 py-3 text-left font-normal">
-                  {l.slug ? (
-                    <Link href={`/floor-plans/${l.slug}`} className="font-semibold text-[#2c7a7b] hover:underline">
-                      {l.name}
-                    </Link>
-                  ) : (
-                    <span className="font-semibold text-gray-900">{l.name}</span>
-                  )}
-                  <span className="block text-xs text-gray-500">{l.modelNo}</span>
+                  <span className="flex items-center gap-3">
+                    <span className="relative flex-shrink-0 w-16 h-12 rounded-md overflow-hidden bg-gray-100">
+                      {l.image ? (
+                        <Image
+                          src={l.image}
+                          alt=""
+                          fill
+                          className="object-cover"
+                          sizes="64px"
+                        />
+                      ) : (
+                        <span className="absolute inset-0 flex items-center justify-center text-[10px] leading-tight text-center text-gray-400">
+                          Photo
+                          <br />
+                          soon
+                        </span>
+                      )}
+                    </span>
+                    <span>
+                      {l.slug ? (
+                        <Link href={`/floor-plans/${l.slug}`} className="font-semibold text-[#2c7a7b] hover:underline">
+                          {l.name}
+                        </Link>
+                      ) : (
+                        <span className="font-semibold text-gray-900">{l.name}</span>
+                      )}
+                      <span className="block text-xs text-gray-500">{l.modelNo}</span>
+                    </span>
+                  </span>
                 </th>
                 <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
                   {l.series}
@@ -168,20 +201,29 @@ export function AllSaleHomesTable({
                 <td className="px-4 py-3 text-gray-600 text-right">{l.beds}</td>
                 <td className="px-4 py-3 text-gray-600 text-right">{l.baths}</td>
                 <td className="px-4 py-3 text-gray-600 text-right">{l.sqft.toLocaleString()}</td>
-                {saleActive ? (
+                {anyPriced && saleActive && l.featured ? (
                   <>
                     <td className="px-4 py-3 text-right whitespace-nowrap text-gray-500">
+                      <span className="sr-only">MSRP </span>
                       <s>{formatUsd(l.msrp)}</s>
                     </td>
                     <td className="px-4 py-3 text-right font-bold text-[#2c7a7b] whitespace-nowrap">
+                      <span className="sr-only">Sale price </span>
                       {formatUsd(priceOf(l))}
                     </td>
                     <td className="px-4 py-3 text-right font-bold text-[#65a30d] whitespace-nowrap">
+                      <span className="sr-only">You save </span>
                       {formatUsd(l.msrp - priceOf(l))}
                     </td>
                   </>
                 ) : (
-                  <td className="px-4 py-3 text-right whitespace-nowrap">
+                  // One cell across the three price columns: a partial figure is
+                  // never published, so an unfeatured home shows the phone
+                  // number where its price would be.
+                  <td
+                    colSpan={anyPriced ? 3 : 1}
+                    className="px-4 py-3 text-right whitespace-nowrap"
+                  >
                     <CallForPricing />
                   </td>
                 )}
