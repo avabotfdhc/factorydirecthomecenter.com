@@ -140,11 +140,18 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
 
             <div className="mb-8">
               <div className="text-2xl font-bold text-[var(--color-lime-dark)]">{plan.priceFrom || plan.price}</div>
-              {plan.priceFrom && (
+              {plan.priceFrom ? (
                 <p className="text-sm text-[var(--color-gray)] mt-1">
                   Final price depends on options and delivery — we quote line-item, so you see exactly what you pay.{" "}
                   <Link href="/financing#calculator" className="text-[var(--color-teal)] underline underline-offset-4">
                     Estimate monthly payments
+                  </Link>
+                </p>
+              ) : (
+                <p className="text-sm text-[var(--color-gray)] mt-1">
+                  We quote line-item — home, delivery, setup and site work priced separately.{" "}
+                  <Link href="/homes-on-sale" className="text-[var(--color-teal)] underline underline-offset-4">
+                    See this plan&rsquo;s current price
                   </Link>
                 </p>
               )}

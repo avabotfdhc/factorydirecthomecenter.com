@@ -59,23 +59,17 @@ function formatPrice(raw: unknown): string {
   return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
 }
 
-// Type-level "From $X" anchors. Turned off on 2026-08-16 in favour of a plain
-// "Contact for price", then turned back on 2026-08-30: shoppers comparing
-// dealers need a number to anchor on, and a page with no price at all reads as
-// "expensive" and loses the click. These are deliberately range-level (per home
-// type), NOT per-home prices — SHOW_PRICES below still governs those, and stays
-// off until the CMS price data is cleaned up.
+// Range-level "From $X" anchors are switched off. They were withdrawn on
+// 2026-08-30 at Kyle's direction: a single figure standing in for a whole home
+// type set an expectation the eventual line-item quote had to climb away from,
+// and the previous hand-entered numbers had drifted badly enough to prove the
+// point ("From $39,900" sat $11,600 under the cheapest single actually sold).
 //
-// Bands must stay in sync with the /guides/pricing worked example
-// ($89,900 base double wide) and the buyers-guide / FAQ copy.
-const SHOW_PRICE_ANCHORS = true;
+// Real per-home prices are published on /homes-on-sale, where all 147 models
+// carry an MSRP and a sale price straight from the master price sheet. Set this
+// to true to bring the type-level anchors back.
+const SHOW_PRICE_ANCHORS = false;
 
-// Anchors come from the master price sheet rather than being typed in. The old
-// hand-entered figures had drifted badly: "From $39,900" on single wides was
-// $11,500 under the cheapest single we actually sell, so a shopper anchored on
-// $39,900 met a quote half again as large. Modular is deliberately absent — the
-// sheet carries no modular line, and an unverifiable anchor is what caused the
-// problem in the first place.
 function priceFromBand(homeType: string): string {
   if (!SHOW_PRICE_ANCHORS || SHOW_PRICES) return "";
   const anchor = /multi|double|sectional/i.test(homeType)

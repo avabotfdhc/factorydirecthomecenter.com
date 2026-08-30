@@ -5,7 +5,6 @@ import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
-import { anchorPriceFor } from "@/lib/price-sheet";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -72,41 +71,31 @@ export default async function FloorPlansPage() {
         </div>
       </section>
 
-      {/* What the "From $X" figures on the cards mean. Shoppers comparing
-          dealers need a number to anchor on, but an unqualified one invites
-          "why was my quote higher?" — so say up front what is and isn't in it. */}
+      {/* Prices are not published per home here. Every model's MSRP and sale
+          price is on /homes-on-sale, from the master price sheet; a single
+          "from" figure standing in for a whole home type only set an
+          expectation the line-item quote had to climb away from. */}
       <section className="bg-white border-b border-[var(--color-charcoal)]/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
-          <h2 className="font-serif text-2xl font-light mb-3">What these prices include</h2>
-          <p className="text-[var(--color-charcoal)]/70 max-w-3xl mb-6">
-            The <strong>&ldquo;From&rdquo;</strong> figure on each card is a starting point for that
-            type of home — the base home at factory-direct pricing, before options. Delivery, setup,
-            and site work are quoted separately, line by line, so you can see every number and hire
-            your own contractors where it saves you money.
+          <h2 className="font-serif text-2xl font-light mb-3">What a home costs</h2>
+          <p className="text-[var(--color-charcoal)]/70 max-w-3xl mb-5">
+            We quote line by line — the home, delivery, setup, and site work as separate numbers,
+            so you can see every one and hire your own contractors where it saves you money. That
+            means the price depends on the plan and options you choose and on your property, which
+            is why you won&apos;t find a single headline figure on these cards.
           </p>
-          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-sm">
-            {[
-              { term: "Single wide", detail: `From $${anchorPriceFor("single")?.toLocaleString("en-US")} — base home` },
-              { term: "Double wide / multi-section", detail: `From $${anchorPriceFor("multi")?.toLocaleString("en-US")} — base home` },
-              { term: "Delivery + setup", detail: "$2,500–$8,000 and $5,000–$15,000, quoted per site" },
-              { term: "Options & upgrades", detail: "Quoted line by line — ask for the models you're considering" },
-            ].map((row) => (
-              <div key={row.term} className="bg-[var(--color-cream)] rounded-lg p-4">
-                <dt className="font-semibold text-[var(--color-charcoal)]">{row.term}</dt>
-                <dd className="text-[var(--color-charcoal)]/70 mt-1">{row.detail}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="text-sm text-[var(--color-charcoal)]/60 mt-5">
-            Options, upgrades, taxes, and site work vary by home and property.{" "}
+          <p className="text-sm text-[var(--color-charcoal)]/60">
+            <a href="/homes-on-sale" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+              See current prices on every floor plan
+            </a>
+            {" · "}
             <a href="/guides/pricing" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
-              See exactly how our line-item pricing works
-            </a>{" "}
-            — or{" "}
+              How our line-item pricing works
+            </a>
+            {" · "}
             <a href="/contact-us" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
-              ask for a line-item quote
-            </a>{" "}
-            on any plan below.
+              Ask for a quote on any plan
+            </a>
           </p>
         </div>
       </section>
