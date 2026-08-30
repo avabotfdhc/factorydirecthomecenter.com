@@ -54,9 +54,9 @@ function withBedOptions<T extends { slug: string }>(p: T): T {
 const SHOW_PRICES = false;
 
 function formatPrice(raw: unknown): string {
-  if (!SHOW_PRICES) return "Contact for price";
+  if (!SHOW_PRICES) return "Call for pricing";
   const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
+  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Call for pricing";
 }
 
 // Range-level "From $X" anchors are switched off. They were withdrawn on

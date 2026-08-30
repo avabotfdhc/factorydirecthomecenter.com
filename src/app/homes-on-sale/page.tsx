@@ -4,6 +4,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
 import { H2 } from "@/components/Heading";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
+import { PricingDisclaimer } from "@/components/Pricing";
 import { SalesAlertForm } from "@/components/SalesAlertForm";
 import { SaleHomesGrid } from "./SaleHomesGrid";
 import { AllSaleHomesTable } from "./AllSaleHomesTable";
@@ -220,7 +221,10 @@ export default function HomesOnSalePage() {
       <section className="bg-gray-100 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <SaleDisclaimer variant="full" />
+            <div className="space-y-6">
+              <SaleDisclaimer variant="full" />
+              <PricingDisclaimer variant="full" />
+            </div>
           </FadeIn>
         </div>
       </section>

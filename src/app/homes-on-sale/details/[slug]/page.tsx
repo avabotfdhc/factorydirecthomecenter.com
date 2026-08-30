@@ -5,7 +5,8 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
 import { SaleClaimForm } from "@/components/SaleClaimForm";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
-import { getSaleHome, saleHomes, formatUsd } from "@/lib/sale-homes";
+import { getSaleHome, saleHomes } from "@/lib/sale-homes";
+import { formatUsd, PriceTriple, PricingDisclaimer } from "@/components/Pricing";
 import { getSaleStatus, saleDeadlineLabel, salePriceFor } from "@/lib/sale";
 
 // ============================================
@@ -158,30 +159,21 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
 
               </div>
 
-              {/* Pricing */}
+              {/* All three figures, or nothing — see components/Pricing */}
               <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl mb-6 border border-red-100">
-                {sale.active ? (
-                  <>
-                    <p className="text-sm text-red-600 font-semibold mb-1">
-                      SAVE UP TO {sale.discountPercent}% OFF MSRP
-                    </p>
-                    <p className="text-lg text-gray-500">
-                      MSRP <s>{formatUsd(home.msrp)}</s>
-                    </p>
-                    <p className="text-4xl font-bold text-[#2c7a7b]">{formatUsd(salePriceFor(home.msrp, sale.discountPercent))}</p>
-                    <p className="text-sm font-semibold text-[#65a30d] mt-1">
-                      You save {formatUsd(home.msrp - salePriceFor(home.msrp, sale.discountPercent))}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-sm text-gray-600 font-semibold mb-1">MSRP</p>
-                    <p className="text-4xl font-bold text-[#2c7a7b]">{formatUsd(home.msrp)}</p>
-                  </>
+                {sale.active && (
+                  <p className="text-sm text-red-600 font-semibold mb-2">
+                    {sale.name.toUpperCase()} — SAVE UP TO {sale.discountPercent}% OFF MSRP
+                  </p>
                 )}
-                <p className="text-sm text-gray-500 mt-2">
-                  Home only — delivery, setup, site work, taxes and options are quoted separately,
-                  line by line. Call (260) 308-1457 for your full factory-direct quote.*
+                <PriceTriple
+                  msrp={home.msrp}
+                  salePrice={sale.active ? salePriceFor(home.msrp, sale.discountPercent) : undefined}
+                  size="lg"
+                />
+                <p className="text-sm text-gray-500 mt-3">
+                  Home only. Delivery, setup, site work, taxes and options are quoted separately,
+                  line by line. Call (260) 308-1457 for a written quotation.
                 </p>
               </div>
 
@@ -239,9 +231,10 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
           </FadeIn>
         </div>
 
-        {/* Terms — shared component so the wording and the expiry can't drift */}
-        <div className="mt-12">
+        {/* Terms — shared components so wording, expiry and pricing terms can't drift */}
+        <div className="mt-12 space-y-6">
           <SaleDisclaimer variant="full" />
+          <PricingDisclaimer variant="full" />
         </div>
       </div>
 

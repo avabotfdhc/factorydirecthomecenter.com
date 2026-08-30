@@ -2,7 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
-import { formatUsd, type SaleListing } from "@/lib/sale-homes";
+import type { SaleListing } from "@/lib/sale-homes";
+import { CallForPricing, formatUsd, PricingDisclaimer } from "@/components/Pricing";
 import { salePriceFor } from "@/lib/sale";
 
 // The complete price list. Every model on the master price sheet is on sale, so
@@ -133,9 +134,14 @@ export function AllSaleHomesTable({
               <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Beds</th>
               <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Baths</th>
               <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Sq ft</th>
-              <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">MSRP</th>
-              {saleActive && (
-                <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Sale price</th>
+              {saleActive ? (
+                <>
+                  <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">MSRP</th>
+                  <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Sale price</th>
+                  <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">You save</th>
+                </>
+              ) : (
+                <th scope="col" className="px-4 py-3 font-semibold text-gray-900 text-right">Price</th>
               )}
             </tr>
           </thead>
@@ -162,12 +168,21 @@ export function AllSaleHomesTable({
                 <td className="px-4 py-3 text-gray-600 text-right">{l.beds}</td>
                 <td className="px-4 py-3 text-gray-600 text-right">{l.baths}</td>
                 <td className="px-4 py-3 text-gray-600 text-right">{l.sqft.toLocaleString()}</td>
-                <td className="px-4 py-3 text-right whitespace-nowrap">
-                  {saleActive ? <s className="text-gray-500">{formatUsd(l.msrp)}</s> : formatUsd(l.msrp)}
-                </td>
-                {saleActive && (
-                  <td className="px-4 py-3 text-right font-bold text-[#2c7a7b] whitespace-nowrap">
-                    {formatUsd(priceOf(l))}
+                {saleActive ? (
+                  <>
+                    <td className="px-4 py-3 text-right whitespace-nowrap text-gray-500">
+                      <s>{formatUsd(l.msrp)}</s>
+                    </td>
+                    <td className="px-4 py-3 text-right font-bold text-[#2c7a7b] whitespace-nowrap">
+                      {formatUsd(priceOf(l))}
+                    </td>
+                    <td className="px-4 py-3 text-right font-bold text-[#65a30d] whitespace-nowrap">
+                      {formatUsd(l.msrp - priceOf(l))}
+                    </td>
+                  </>
+                ) : (
+                  <td className="px-4 py-3 text-right whitespace-nowrap">
+                    <CallForPricing />
                   </td>
                 )}
               </tr>
@@ -184,10 +199,7 @@ export function AllSaleHomesTable({
         </p>
       )}
 
-      <p className="text-xs text-gray-500 mt-4">
-        Prices are for the home only, at factory-direct pricing before options. Delivery, setup,
-        site work, taxes and upgrades are quoted separately, line by line.*
-      </p>
+      <PricingDisclaimer variant="short" className="mt-4 max-w-3xl" />
     </div>
   );
 }

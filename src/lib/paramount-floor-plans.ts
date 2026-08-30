@@ -12,7 +12,7 @@
 // /images/paramount/. Virtual tours are Champion's Topeka Matterport scans,
 // matched by model number (same-plan matches Kyle approved for Aspire).
 // Pricing is intentionally 0 (internal-only fields; the site shows
-// "Contact for price" while SHOW_PRICES is off).
+// "Call for pricing" while SHOW_PRICES is off).
 
 import type { LocalFloorPlan } from "./local-floor-plans";
 

@@ -62,7 +62,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
 
   // Product JSON-LD (built inline because CMS images are absolute S3 URLs).
   // Google's product-snippet rules require offers, review, or aggregateRating
-  // on every Product — with prices hidden ("Contact for price") we have none,
+  // on every Product — with prices hidden ("Call for pricing") we have none,
   // and price-less Product markup gets flagged in Search Console. So the
   // Product block is only emitted when a numeric price exists (i.e. it
   // returns automatically if prices are ever shown again).

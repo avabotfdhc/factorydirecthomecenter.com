@@ -4,7 +4,8 @@ import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn } from "@/components/VisualEffects";
-import { formatUsd, type SaleHome } from "@/lib/sale-homes";
+import type { SaleHome } from "@/lib/sale-homes";
+import { PriceTriple, PricingDisclaimer } from "@/components/Pricing";
 import { salePriceFor } from "@/lib/sale";
 
 // The sale page previously rendered a full set of controls — a search box, a
@@ -247,31 +248,13 @@ export function SaleHomesGrid({
 
                       <p className="text-sm text-gray-600 mb-4">{home.size}</p>
 
-                      {/* Pricing — MSRP struck through against the campaign price */}
+                      {/* All three figures, or nothing — see components/Pricing */}
                       <div className="border-t pt-4 mb-4 mt-auto">
-                        {saleActive ? (
-                          <>
-                            <p className="text-sm text-gray-500">
-                              MSRP <s>{formatUsd(home.msrp)}</s>
-                            </p>
-                            <p className="text-2xl font-bold text-[#2c7a7b]">
-                              {formatUsd(priceOf(home))}
-                              <span className="text-sm font-semibold text-[#65a30d] ml-2">
-                                save {formatUsd(home.msrp - priceOf(home))}
-                              </span>
-                            </p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              Home only — excludes delivery, setup, site work, taxes &amp; fees.*
-                            </p>
-                          </>
-                        ) : (
-                          <>
-                            <p className="text-2xl font-bold text-[#2c7a7b]">{formatUsd(home.msrp)}</p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              MSRP, home only. Ask us what discounts are running right now.
-                            </p>
-                          </>
-                        )}
+                        <PriceTriple
+                          msrp={home.msrp}
+                          salePrice={saleActive ? priceOf(home) : undefined}
+                          size="md"
+                        />
                       </div>
 
                       <Link
@@ -286,6 +269,7 @@ export function SaleHomesGrid({
               ))}
             </div>
           )}
+          <PricingDisclaimer variant="short" className="mt-8 max-w-3xl" />
         </div>
       </section>
     </>

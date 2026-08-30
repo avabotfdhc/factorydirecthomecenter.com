@@ -5,6 +5,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { PricingDisclaimer } from "@/components/Pricing";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -112,6 +113,7 @@ export default async function FloorPlansPage() {
           <FloorPlansGrid plans={plans} />
         )}
         <SpecsDisclaimer className="mt-12" />
+        <PricingDisclaimer variant="short" className="mt-6 max-w-3xl" />
       </section>
 
       {/* FAQ (adds FAQPage schema) */}
