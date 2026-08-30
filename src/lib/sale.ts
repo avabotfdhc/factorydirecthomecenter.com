@@ -40,14 +40,14 @@ export const SALE_PHASES: SalePhase[] = [
   },
   {
     name: "Fall into Savings Sales Event",
-    discountPercent: 22,
+    discountPercent: 20,
     startDate: "2026-09-01",
     endDate: "2026-09-15",
     productionMonth: "September 2026",
   },
   {
     name: "Fall into Savings Sales Event",
-    discountPercent: 18,
+    discountPercent: 20,
     startDate: "2026-09-16",
     endDate: "2026-09-30",
     productionMonth: "September 2026",
@@ -111,9 +111,10 @@ export interface SaleStatus {
   /** True on the final three days of a phase. */
   endingSoon: boolean;
   /**
-   * The phase that starts the day after this one ends. Lets the page say
-   * "22% through Sept 15, then 18% through Sept 30" instead of implying the
-   * whole event ends when the first phase does.
+   * The next phase, and only when its discount actually differs — the cue for
+   * "20% through Sept 15, then 15% through Sept 30". Adjacent phases at the
+   * same rate are one offer as far as a shopper is concerned, so they are
+   * merged into the dates above rather than announced as a change.
    */
   nextPhase: SalePhase | null;
 }
@@ -151,10 +152,15 @@ export function getSaleStatus(now: Date = new Date()): SaleStatus {
     };
   }
 
-  const daysLeft = phase ? daysBetween(today, phase.endDate) + 1 : 0;
-  const nextPhase = phase
-    ? SALE_PHASES.find((p) => daysBetween(phase.endDate, p.startDate) === 1) ?? null
-    : null;
+  // An event may be split into rows that carry the same discount — two halves
+  // of one promotion, kept separate so either can be repriced later. Those read
+  // to a shopper as a single offer, so walk forward through any contiguous run
+  // at the same rate and treat the end of that run as the deadline. Without
+  // this, a 20%-then-20% campaign would announce "Ends today" on the 15th while
+  // the identical discount carried on to the 30th.
+  const runEnd = phase ? endOfSameRateRun(phase) : reference;
+  const daysLeft = phase ? daysBetween(today, runEnd.endDate) + 1 : 0;
+  const nextPhase = phase ? phaseAfter(runEnd) : null;
 
   return {
     active: Boolean(phase),
@@ -162,11 +168,29 @@ export function getSaleStatus(now: Date = new Date()): SaleStatus {
     name: reference.name,
     discountPercent: reference.discountPercent,
     productionMonth: reference.productionMonth,
-    endDateLabel: formatSaleDate(reference.endDate),
+    endDateLabel: formatSaleDate(phase ? runEnd.endDate : reference.endDate),
     daysLeft,
     endingSoon: Boolean(phase) && daysLeft <= 3,
     nextPhase,
   };
+}
+
+/** The phase that picks up the day after `phase` ends, if any. */
+function phaseAfter(phase: SalePhase): SalePhase | null {
+  return SALE_PHASES.find((p) => daysBetween(phase.endDate, p.startDate) === 1) ?? null;
+}
+
+/**
+ * The last phase in the unbroken run of same-name, same-discount phases that
+ * starts at `phase`. Returns `phase` itself when the next one differs.
+ */
+function endOfSameRateRun(phase: SalePhase): SalePhase {
+  let last = phase;
+  for (;;) {
+    const next = phaseAfter(last);
+    if (!next || next.discountPercent !== last.discountPercent || next.name !== last.name) return last;
+    last = next;
+  }
 }
 
 /** "Ends September 15, 2026" / "Ends tomorrow" / "Ended September 30, 2026". */
