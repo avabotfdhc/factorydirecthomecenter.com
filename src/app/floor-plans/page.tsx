@@ -5,6 +5,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { anchorPriceFor } from "@/lib/price-sheet";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -85,10 +86,10 @@ export default async function FloorPlansPage() {
           </p>
           <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-sm">
             {[
-              { term: "Single wide", detail: "From $39,900 — base home" },
-              { term: "Double wide / multi-section", detail: "From $80,000 — base home" },
-              { term: "Modular", detail: "From $100,000 — base home" },
+              { term: "Single wide", detail: `From $${anchorPriceFor("single")?.toLocaleString("en-US")} — base home` },
+              { term: "Double wide / multi-section", detail: `From $${anchorPriceFor("multi")?.toLocaleString("en-US")} — base home` },
               { term: "Delivery + setup", detail: "$2,500–$8,000 and $5,000–$15,000, quoted per site" },
+              { term: "Options & upgrades", detail: "Quoted line by line — ask for the models you're considering" },
             ].map((row) => (
               <div key={row.term} className="bg-[var(--color-cream)] rounded-lg p-4">
                 <dt className="font-semibold text-[var(--color-charcoal)]">{row.term}</dt>

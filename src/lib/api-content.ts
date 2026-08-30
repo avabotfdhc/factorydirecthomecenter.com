@@ -10,6 +10,7 @@ import { deriveSeries, canonicalSeries } from "./series";
 import { galleryOverlays, sheetExtras } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
 import { sqftOverrides, bedOptions } from "./spec-overrides";
+import { anchorPriceFor } from "./price-sheet";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -69,12 +70,20 @@ function formatPrice(raw: unknown): string {
 // ($89,900 base double wide) and the buyers-guide / FAQ copy.
 const SHOW_PRICE_ANCHORS = true;
 
+// Anchors come from the master price sheet rather than being typed in. The old
+// hand-entered figures had drifted badly: "From $39,900" on single wides was
+// $11,500 under the cheapest single we actually sell, so a shopper anchored on
+// $39,900 met a quote half again as large. Modular is deliberately absent — the
+// sheet carries no modular line, and an unverifiable anchor is what caused the
+// problem in the first place.
 function priceFromBand(homeType: string): string {
   if (!SHOW_PRICE_ANCHORS || SHOW_PRICES) return "";
-  if (/single/i.test(homeType)) return "From $39,900";
-  if (/multi|double|sectional/i.test(homeType)) return "From $80,000";
-  if (/modular/i.test(homeType)) return "From $100,000";
-  return "";
+  const anchor = /multi|double|sectional/i.test(homeType)
+    ? anchorPriceFor("multi")
+    : /single/i.test(homeType)
+      ? anchorPriceFor("single")
+      : undefined;
+  return anchor === undefined ? "" : `From $${anchor.toLocaleString("en-US")}`;
 }
 
 // Home width in feet from a Champion model number ("2856H32392" → 28) found in

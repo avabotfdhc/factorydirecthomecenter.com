@@ -40,9 +40,18 @@ export interface SalesCampaign {
 }
 
 // Constants
-const PACK_AMOUNT = 2500;
-const MSRP_MULTIPLIER = 1.65; // Factory cost + pack, then 65% markup
-const FDHC_DISCOUNT = 0.10; // 10% off MSRP
+//
+// DEPRECATED — do not build on this. The authority on pricing is the master
+// price sheet, in src/lib/price-sheet.ts (msrpFor / factoryDirectPriceFor).
+// Every constant here was wrong against that sheet: the pack was $2,500 rather
+// than $3,000, the markup 1.65 rather than 1.85, and the per-sqft surcharge
+// $0.50 rather than $1.80 (single) / $1.95 (sectional). Together they produced
+// an MSRP roughly 25% below the real one. Nothing renders from this file today
+// (only its campaign helpers are imported, by the admin page), and the values
+// are corrected here so that stays harmless if anyone ever calls it.
+const PACK_AMOUNT = 3000;
+const MSRP_MULTIPLIER = 1.85; // (factory cost + pack) x 1.85
+const FDHC_DISCOUNT = 0.05; // Factory Direct Price = MSRP - 5%
 
 // Factory cost database (from CSV files)
 export const factoryCosts: Record<string, FactoryCost> = {

@@ -5,12 +5,19 @@
 // a home would appear on the grid and 404 on click. It now lives here once and
 // both pages import it.
 //
-// MSRP is the campaign figure signed off in 25-OFF-MSRP-CAMPAIGN-CHANGELOG.md.
-// The sale price is NOT stored here: it is derived from MSRP and whichever
-// campaign phase is running (see salePriceFor in src/lib/sale.ts). It used to
-// be a hardcoded field, frozen at the August campaign's 25% — which meant a new
-// campaign at a different discount would have gone live still showing the old
-// prices, with the old savings, under the new percentage.
+// Nothing about price is stored here any more. Each home names a Champion model
+// number, and both numbers on the card are derived:
+//
+//   MSRP       from the master price sheet (src/lib/price-sheet.ts)
+//   sale price from that MSRP and the running campaign phase (src/lib/sale.ts)
+//
+// Both used to be hand-entered, and both had gone wrong. `salePrice` was frozen
+// at the August campaign's 25%, so a new campaign would have shown old prices
+// under a new percentage. `msrp` had drifted above the price sheet by $12k on a
+// single wide and up to $41k on a double, which inflated every "you save $X"
+// figure computed from it.
+
+import { msrpFor } from "./price-sheet";
 
 export interface SaleHome {
   id: string;
@@ -25,13 +32,14 @@ export interface SaleHome {
   widthFt: number;
   /** Length in feet. */
   lengthFt: number;
+  /** From the price sheet, via the model number — never typed in by hand. */
   msrp: number;
   image: string;
   description: string;
   features: string[];
 }
 
-export const saleHomes: SaleHome[] = [
+const saleHomeDetails: Omit<SaleHome, "msrp">[] = [
   {
     id: "dutch-aspire-1656h22208",
     name: "Dutch Aspire 1656H22208",
@@ -42,7 +50,6 @@ export const saleHomes: SaleHome[] = [
     baths: 2,
     widthFt: 16,
     lengthFt: 56,
-    msrp: 89900,
     image: "/images/paramount/1656h22208-opt2.webp",
     description: "Champion 16'x56' 2 Beds 2 baths Single Wide Dutch Aspire",
     features: ["Smart Floor Plan", "Modern Kitchen", "Comfortable Living Area", "Spacious Bedrooms"],
@@ -57,7 +64,6 @@ export const saleHomes: SaleHome[] = [
     baths: 1,
     widthFt: 16,
     lengthFt: 52,
-    msrp: 84900,
     image: "/images/paramount/1652h21151-opt2.webp",
     description: "Champion 16'x52' 2 Beds 1 bath Single Wide Dutch Aspire",
     features: ["Efficient Layout", "Modern Kitchen", "Cozy Living Space"],
@@ -73,7 +79,6 @@ export const saleHomes: SaleHome[] = [
     baths: 2,
     widthFt: 28,
     lengthFt: 52,
-    msrp: 145000,
     image: "/images/paramount/2852h32170-opt2.webp",
     description: "Champion 28'x52' 3 Beds 2 baths Double Wide",
     features: ["Open Concept", "Master Suite", "Large Kitchen Island"],
@@ -89,7 +94,6 @@ export const saleHomes: SaleHome[] = [
     baths: 2,
     widthFt: 28,
     lengthFt: 64,
-    msrp: 169000,
     image: "/images/paramount/2864h32060-opt2.webp",
     description: "Champion 28'x64' 3 Beds 2 baths Double Wide",
     features: ["Spacious Layout", "Walk-in Closets", "Gourmet Kitchen"],
@@ -105,7 +109,6 @@ export const saleHomes: SaleHome[] = [
     baths: 2,
     widthFt: 28,
     lengthFt: 56,
-    msrp: 155000,
     image: "/images/paramount/silverton-exterior.webp",
     description: "Champion 28'x56' 3 Beds 2 baths Double Wide",
     features: ["Modern Design", "Vaulted Ceilings", "Large Windows"],
@@ -121,12 +124,25 @@ export const saleHomes: SaleHome[] = [
     baths: 2,
     widthFt: 28,
     lengthFt: 60,
-    msrp: 162000,
     image: "/images/paramount/bayport-exterior.webp",
     description: "Champion 28'x60' 3 Beds 2 baths Double Wide",
     features: ["Family Friendly", "Bonus Room", "Luxury Finishes"],
   },
 ];
+
+/**
+ * The sale homes, with MSRP resolved from the master price sheet. A model the
+ * sheet does not carry is dropped rather than shown at an invented price — a
+ * missing card is recoverable, a wrong price on a discount claim is not.
+ */
+export const saleHomes: SaleHome[] = saleHomeDetails.flatMap((home) => {
+  const msrp = msrpFor(home.modelNo);
+  if (msrp === undefined) {
+    console.error(`[sale-homes] ${home.modelNo} is not in the price sheet — omitting from the sale.`);
+    return [];
+  }
+  return [{ ...home, msrp }];
+});
 
 export function getSaleHome(id: string): SaleHome | undefined {
   return saleHomes.find((h) => h.id === id);
