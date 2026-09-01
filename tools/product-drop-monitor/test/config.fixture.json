@@ -1,0 +1,41 @@
+{
+  "target": {
+    "name": "Fixture Thing",
+    "productUrl": "http://localhost:8787/product",
+    "pollIntervalMs": 15000,
+    "jitterMs": 0,
+    "navigationTimeoutMs": 20000,
+    "respectRobotsTxt": false
+  },
+  "selectors": {
+    "inStock": ["button[data-test='add-to-cart']:not([disabled])"],
+    "outOfStock": ["[data-test='sold-out']"],
+    "addToCart": "button[data-test='add-to-cart']",
+    "cartConfirmation": "[data-test='cart-added-drawer']",
+    "goToCart": "#drawer a[href='/cart']",
+    "checkoutButton": "button[data-test='checkout']",
+    "checkoutConfirmation": "[data-test='payment-form']"
+  },
+  "stockText": { "inStock": ["add to cart"], "outOfStock": ["sold out"] },
+  "queue": {
+    "urlPatterns": ["/waitingroom"],
+    "selectors": ["#queueSection"],
+    "positionSelector": ".queue-position",
+    "progressPollMs": 5000,
+    "maxWaitMs": 120000
+  },
+  "blockers": { "urlPatterns": [], "selectors": ["#px-captcha"], "bodyText": ["access denied"] },
+  "behavior": {
+    "autoAddToCart": true,
+    "autoProceedToCheckout": true,
+    "pauseAtCheckout": true,
+    "headless": true,
+    "maxConsecutiveErrors": 3
+  },
+  "notify": {
+    "discord": { "enabled": true, "webhookUrl": "http://localhost:8787/hook", "mentionOnUrgent": "@here" },
+    "slack": { "enabled": false, "webhookUrl": "", "botToken": "", "channel": "" },
+    "sms": { "enabled": false, "accountSid": "", "authToken": "", "from": "", "to": "", "urgentOnly": true }
+  },
+  "paths": { "userDataDir": ".profile-test", "storageState": ".auth/test-state.json", "artifacts": "artifacts" }
+}

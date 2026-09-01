@@ -1,0 +1,12 @@
+node_modules/
+dist/
+
+# Secrets and session state — never commit these.
+config.json
+.auth/
+.profile/
+
+# Runtime output
+artifacts/
+*.log
+.profile-test/

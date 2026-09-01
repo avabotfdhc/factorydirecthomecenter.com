@@ -8,3 +8,7 @@
 .env.development
 .env.production
 .env.test
+
+# Standalone local tools with their own package.json — they are run by hand on a
+# workstation and are no part of the Next.js build.
+tools/

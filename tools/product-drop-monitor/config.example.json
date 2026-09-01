@@ -1,0 +1,81 @@
+{
+  "target": {
+    "name": "Example Product",
+    "productUrl": "https://www.example-store.com/products/the-thing",
+    "pollIntervalMs": 60000,
+    "jitterMs": 15000,
+    "navigationTimeoutMs": 45000,
+    "respectRobotsTxt": true
+  },
+
+  "selectors": {
+    "inStock": ["button[data-test='add-to-cart']:not([disabled])"],
+    "outOfStock": ["button[data-test='add-to-cart'][disabled]", "[data-test='sold-out']"],
+    "addToCart": "button[data-test='add-to-cart']",
+    "cartConfirmation": "[data-test='cart-added-drawer'], [data-test='cart-count']",
+    "goToCart": "a[href='/cart']",
+    "checkoutButton": "button[data-test='checkout']",
+    "checkoutConfirmation": "form[action*='checkout'], [data-test='payment-form']"
+  },
+
+  "stockText": {
+    "inStock": ["add to cart", "add to bag", "buy now"],
+    "outOfStock": ["sold out", "out of stock", "notify me", "coming soon", "unavailable"]
+  },
+
+  "queue": {
+    "urlPatterns": ["queue-it.net", "queue.", "/waitingroom", "/queue"],
+    "selectors": ["#queueSection", ".queue-position", "[id*='waitingRoom']"],
+    "positionSelector": ".queue-position, #QueueNumber, [class*='position']",
+    "progressPollMs": 20000,
+    "maxWaitMs": 10800000
+  },
+
+  "blockers": {
+    "urlPatterns": ["/blocked", "/challenge", "captcha"],
+    "selectors": [
+      "iframe[src*='recaptcha']",
+      "iframe[src*='hcaptcha']",
+      "iframe[title*='challenge']",
+      "#px-captcha",
+      "#cf-challenge-running"
+    ],
+    "bodyText": ["access denied", "verify you are human", "unusual traffic"]
+  },
+
+  "behavior": {
+    "autoAddToCart": true,
+    "autoProceedToCheckout": true,
+    "pauseAtCheckout": true,
+    "headless": false,
+    "maxConsecutiveErrors": 5
+  },
+
+  "notify": {
+    "discord": {
+      "enabled": false,
+      "webhookUrl": "",
+      "mentionOnUrgent": "@here"
+    },
+    "slack": {
+      "enabled": false,
+      "webhookUrl": "",
+      "botToken": "",
+      "channel": ""
+    },
+    "sms": {
+      "enabled": false,
+      "accountSid": "",
+      "authToken": "",
+      "from": "+15555550100",
+      "to": "+15555550199",
+      "urgentOnly": true
+    }
+  },
+
+  "paths": {
+    "userDataDir": ".profile",
+    "storageState": ".auth/state.json",
+    "artifacts": "artifacts"
+  }
+}
