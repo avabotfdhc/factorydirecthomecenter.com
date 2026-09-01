@@ -140,11 +140,32 @@ function s3Url(path?: string): string {
 // generated page and retry on the next request. During `next build` we stay
 // graceful (empty result) so a CMS blip can't fail unrelated deploys — the
 // error still lands in the build log.
+//
+// Use this only where there is nothing of our own to serve in the CMS's place.
 function cmsFailure(context: string, detail: string): void {
   console.error(`[cms-api] ${context} FAILED: ${detail}`);
   if (process.env.NEXT_PHASE !== "phase-production-build") {
     throw new Error(`[cms-api] ${context}: ${detail}`);
   }
+}
+
+/**
+ * The same failure, where the repo can answer instead.
+ *
+ * The listing paths each end in a `return` that falls back to repo-published
+ * content, but they called cmsFailure() first — which throws — so the fallback
+ * below it was unreachable and the page errored instead. That went unnoticed
+ * until the CMS returned 502 for three days straight (2026-08-29 onwards) and
+ * took /, /floor-plans and /blog down with it, when the repo had 193 published
+ * floor plans sitting right there.
+ *
+ * So: log, don't throw, and let the caller serve what we do have. The result is
+ * cached for the route's revalidate window (five minutes), which is the honest
+ * trade — a short window of catalogue-only content beats an error page, and it
+ * heals itself within five minutes of the CMS coming back.
+ */
+function cmsDegraded(context: string, detail: string): void {
+  console.error(`[cms-api] ${context} DEGRADED (serving repo-published content): ${detail}`);
 }
 
 // Repo-published Champion PRIME Series models (src/lib/local-floor-plans.ts)
@@ -190,14 +211,14 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       next: { revalidate: 300 },
     });
     if (!res.ok) {
-      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      cmsDegraded(endpoint, `HTTP ${res.status} ${res.statusText}`);
       return (await localPlans()).map(decoratePlan);
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsFailure(endpoint, String(err));
-    return (await localPlans()).map(withBedOptions);
+    cmsDegraded(endpoint, String(err));
+    return (await localPlans()).map(decoratePlan);
   }
   const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
   const plans = rows
@@ -412,13 +433,13 @@ export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
   try {
     const res = await fetch(`${API_BASE}/api/blog/get-all?limit=100`, { next: { revalidate: 300 } });
     if (!res.ok) {
-      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      cmsDegraded(endpoint, `HTTP ${res.status} ${res.statusText}`);
       return mergePosts([], await localPosts());
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsFailure(endpoint, String(err));
+    cmsDegraded(endpoint, String(err));
     return mergePosts([], await localPosts());
   }
   {
