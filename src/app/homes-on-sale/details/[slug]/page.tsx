@@ -20,7 +20,9 @@ import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 // once the offer ends.
 // ============================================
 
-export const revalidate = 3600;
+// Five minutes, for the same reason as the sale index: these pages carry the
+// campaign name and rate, which turn over at midnight Eastern.
+export const revalidate = 300;
 
 export function generateStaticParams() {
   return saleHomes.map((home) => ({ slug: home.id }));

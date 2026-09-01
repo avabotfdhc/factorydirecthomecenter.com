@@ -24,7 +24,11 @@ import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // Re-render daily so the page flips itself to the expired state on the morning
 // after the offer ends, without waiting for a deploy.
-export const revalidate = 3600;
+// Five minutes, not an hour: this page announces a dated offer, and the
+// campaign turns over at midnight Eastern. At revalidate = 3600 the Fall
+// event's first morning was served the ended Summer event at 25% — a
+// discount higher than the one actually running.
+export const revalidate = 300;
 
 export function generateMetadata() {
   const sale = getSaleStatus();
