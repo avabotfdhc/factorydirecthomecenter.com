@@ -4,6 +4,14 @@ import { FadeIn } from "@/components/VisualEffects";
 import { SalesAlertForm } from "@/components/SalesAlertForm";
 import { getSaleStatus } from "@/lib/sale";
 
+// This page prints the running discount rate ("View 25% Off Sale"), so it
+// cannot be a build-time static page: it froze at the deploy that built it and
+// went on advertising the Summer event's 25% after that event ended and the
+// Fall event started at 20%. Five minutes, matching the homepage, so a campaign
+// that turns over at midnight is right within minutes rather than at the mercy
+// of the next deploy.
+export const revalidate = 300;
+
 export const metadata = genMeta({
   title: "Clearance Homes",
   description: "Shop clearance manufactured homes at Factory Direct Homes Center. Last chance pricing on select inventory. Single wide, double wide, and modular homes.",
