@@ -169,8 +169,14 @@ function mergePlans(remote: ApiFloorPlan[], local: ApiFloorPlan[]): ApiFloorPlan
 
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
 export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
-  // Prefer the DealerTide (Renter Insight) inventory feed when configured; the
-  // CMS remains the fallback. Imported lazily to avoid a load-time env read.
+  // Source priority (imported lazily to avoid load-time env reads):
+  //   1. Supabase — the new owned CMS, used whenever its env vars are set.
+  //   2. DealerTide (Renter Insight) inventory feed.
+  //   3. Legacy CMS (below) as the final fallback.
+  // Repo-published local plans always merge in on top of the chosen source.
+  const { supabaseConfigured, getSupabaseFloorPlans } = await import("./supabase-content");
+  if (supabaseConfigured()) return mergePlans(await getSupabaseFloorPlans(), await localPlans()).map(decoratePlan);
+
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
   if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).map(decoratePlan);
 
@@ -275,6 +281,14 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   // Repo-mapped Matterport tour (src/lib/virtual-tours.ts) fills in when the
   // CMS/feed has no tour of its own — a CMS-provided tour always wins.
   const localTour = virtualTours[slug] || "";
+
+  // Supabase (new owned CMS) is the source of truth for a slug when configured.
+  const { supabaseConfigured, getSupabaseFloorPlanBySlug } = await import("./supabase-content");
+  if (supabaseConfigured()) {
+    const d = await getSupabaseFloorPlanBySlug(slug);
+    if (!d) return d;
+    return decoratePlan(d);
+  }
 
   const { feedConfigured, getFeedFloorPlanBySlug } = await import("./dealertide-feed");
   if (feedConfigured()) {
