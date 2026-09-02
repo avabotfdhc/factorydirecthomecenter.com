@@ -143,3 +143,89 @@ export async function uploadObject(path: string, body: ArrayBuffer | Uint8Array 
   if (!res.ok) throw new Error(`[supabase-admin] upload ${res.status} ${await res.text()}`);
   return key;
 }
+
+// ---------- Bulk import helpers ----------
+
+/**
+ * Create a signed upload URL so the BROWSER can PUT a file straight into the
+ * public floor-plans bucket, bypassing the Vercel function body-size limit.
+ * Returns the absolute URL the client must PUT the file body to.
+ */
+export async function createSignedUploadUrl(path: string): Promise<string> {
+  if (!SUPABASE_URL) throw new Error("[supabase-admin] NEXT_PUBLIC_SUPABASE_URL not set");
+  const key = path.replace(/^\//, "");
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/upload/sign/${BUCKET}/${key}`, {
+    method: "POST",
+    headers: headers({ "Content-Type": "application/json" }),
+    body: JSON.stringify({}),
+  });
+  if (!res.ok) throw new Error(`[supabase-admin] sign ${res.status} ${await res.text()}`);
+  const json = (await res.json()) as { url?: string };
+  if (!json.url) throw new Error("[supabase-admin] sign: no url returned");
+  return `${SUPABASE_URL}/storage/v1${json.url}`;
+}
+
+/** Patch selected columns of one floor plan by slug. */
+export async function patchFloorPlanBySlug(slug: string, fields: Partial<AdminFloorPlan>): Promise<void> {
+  const res = await rest(`floor_plans?slug=eq.${encodeURIComponent(slug)}`, {
+    method: "PATCH",
+    headers: headers({ "Content-Type": "application/json", Prefer: "return=minimal" }),
+    body: JSON.stringify(fields),
+  });
+  if (!res.ok) throw new Error(`[supabase-admin] patch ${slug} ${res.status} ${await res.text()}`);
+}
+
+/** Append one image to a plan's gallery (by slug), at the end. */
+export async function appendImageBySlug(slug: string, path: string, kind = "gallery"): Promise<void> {
+  const look = await rest(`floor_plans?slug=eq.${encodeURIComponent(slug)}&select=id,floor_plan_images(sort_order)`, { headers: headers() });
+  if (!look.ok) throw new Error(`[supabase-admin] lookup ${slug} ${look.status}`);
+  const rows = (await look.json()) as { id: string; floor_plan_images?: { sort_order: number }[] }[];
+  const plan = rows[0];
+  if (!plan) throw new Error(`[supabase-admin] no plan for slug ${slug}`);
+  const next = Math.max(-1, ...(plan.floor_plan_images ?? []).map((i) => i.sort_order ?? 0)) + 1;
+  const ins = await rest("floor_plan_images", {
+    method: "POST",
+    headers: headers({ "Content-Type": "application/json", Prefer: "return=minimal" }),
+    body: JSON.stringify([{ floor_plan_id: plan.id, path, kind, sort_order: next }]),
+  });
+  if (!ins.ok) throw new Error(`[supabase-admin] append image ${res_text(ins)}`);
+}
+async function res_text(r: Response): Promise<string> { return `${r.status} ${await r.text()}`; }
+
+export interface AdminLiterature {
+  id?: string;
+  title: string;
+  category: string;
+  home_type?: string;
+  path?: string;
+  box_file_id?: string;
+  box_filename?: string;
+  sort_order?: number;
+  is_active?: boolean;
+}
+
+export async function listLiterature(): Promise<AdminLiterature[]> {
+  const res = await rest("literature?select=*&order=category.asc,sort_order.asc", { headers: headers() });
+  if (!res.ok) throw new Error(`[supabase-admin] literature list ${res.status}`);
+  return res.json();
+}
+
+/** Set the stored file path on an existing literature row. */
+export async function setLiteraturePath(id: string, path: string): Promise<void> {
+  const res = await rest(`literature?id=eq.${encodeURIComponent(id)}`, {
+    method: "PATCH",
+    headers: headers({ "Content-Type": "application/json", Prefer: "return=minimal" }),
+    body: JSON.stringify({ path }),
+  });
+  if (!res.ok) throw new Error(`[supabase-admin] literature patch ${res.status} ${await res.text()}`);
+}
+
+/** Insert a new literature row (used when an imported file matches no known doc). */
+export async function insertLiterature(row: AdminLiterature): Promise<void> {
+  const res = await rest("literature", {
+    method: "POST",
+    headers: headers({ "Content-Type": "application/json", Prefer: "return=minimal" }),
+    body: JSON.stringify([row]),
+  });
+  if (!res.ok) throw new Error(`[supabase-admin] literature insert ${res.status} ${await res.text()}`);
+}

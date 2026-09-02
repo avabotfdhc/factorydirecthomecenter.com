@@ -44,12 +44,20 @@ export default async function FloorPlansAdminPage() {
           <h1 className="font-serif text-2xl">Floor Plans</h1>
           <p className="text-sm text-black/50">{plans.length} total · managed in the new Supabase CMS</p>
         </div>
+        <div className="flex gap-2">
+        <Link
+          href="/admin/floor-plans/import"
+          className="px-4 py-2 rounded-lg border border-black/15 text-sm font-medium hover:bg-black/[0.03]"
+        >
+          Import from Box folder
+        </Link>
         <Link
           href="/admin/floor-plans/new"
           className="px-4 py-2 rounded-lg bg-[var(--color-teal)] text-white text-sm font-medium hover:opacity-90"
         >
           + New Home
         </Link>
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-black/10 bg-white">
