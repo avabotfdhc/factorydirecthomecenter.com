@@ -42,9 +42,9 @@ function imgUrl(ref?: string | null): string {
 }
 
 function formatPrice(raw: unknown): string {
-  if (!SHOW_PRICES) return "Contact for price";
+  if (!SHOW_PRICES) return "Call for pricing";
   const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) && n > 0 ? `$${Math.round(n).toLocaleString("en-US")}` : "Contact for price";
+  return Number.isFinite(n) && n > 0 ? `$${Math.round(n).toLocaleString("en-US")}` : "Call for pricing";
 }
 
 interface FloorPlanRow {
@@ -164,6 +164,9 @@ export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloor
     width: String(r.width || ""),
     series: base.series,
     brochureUrl: imgUrl(r.brochure_url),
+    // The imported "…SALES.pdf" sheet is Champion's dimensioned floor-plan
+    // sheet, which the detail page offers as the floor-plan PDF download.
+    floorPlanUrl: imgUrl(r.brochure_url),
     virtualTour: String(r.virtual_tour || ""),
     gallery,
   };
