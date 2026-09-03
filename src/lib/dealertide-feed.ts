@@ -96,9 +96,9 @@ function num(re: RegExp, s: string): number {
 }
 
 function formatPrice(raw?: string): string {
-  if (!SHOW_PRICES) return "Contact for price";
+  if (!SHOW_PRICES) return "Call for pricing";
   const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) && n > 0 ? `$${Math.round(n).toLocaleString("en-US")}` : "Contact for price";
+  return Number.isFinite(n) && n > 0 ? `$${Math.round(n).toLocaleString("en-US")}` : "Call for pricing";
 }
 
 function vinFrom(desc: string): string {
@@ -200,6 +200,7 @@ export async function getFeedFloorPlanBySlug(slug: string): Promise<ApiFloorPlan
     width: "",
     series: base.series,
     brochureUrl: "",
+    floorPlanUrl: "",
     virtualTour: "",
     gallery,
   };

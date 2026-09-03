@@ -10,17 +10,10 @@ export const revalidate = 3600;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
 
-  // Static/registry pages, minus stale sample detail URLs — the real
-  // floor-plan and blog detail pages are sourced live from the CMS below.
+  // Static/registry pages, minus blog stubs — the real floor-plan and blog
+  // detail pages are sourced live from the CMS below.
   const staticEntries: MetadataRoute.Sitemap = getAllPages()
-    // Exclude the sample detail URL, blog stubs, and /inventory (which 301/302
-    // redirects to /floor-plans) — a redirecting URL shouldn't be in the sitemap.
-    .filter(
-      (page) =>
-        page.url !== "/floor-plans/emerald-sky" &&
-        page.url !== "/inventory" &&
-        !page.url.startsWith("/blog/"),
-    )
+    .filter((page) => !page.url.startsWith("/blog/"))
     .map((page) => ({
       url: `${BASE_URL}${page.url === "/" ? "" : page.url}`,
       lastModified,

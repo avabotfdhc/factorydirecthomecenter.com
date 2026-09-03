@@ -1,6 +1,7 @@
 import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3, H4 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Financing Options for Manufactured Homes",
@@ -120,6 +121,7 @@ export default function FinancingPage() {
               Financing<br />
               <span className="italic text-[var(--color-teal-light)]">Options</span>
             </h1>
+            <GuideMeta href="/guides/financing" />
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
               Chattel, land-home, and conventional loans — explained. Find the best financing
               option for your manufactured or modular home purchase.

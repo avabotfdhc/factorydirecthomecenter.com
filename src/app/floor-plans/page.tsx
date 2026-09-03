@@ -5,6 +5,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { PricingDisclaimer } from "@/components/Pricing";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -71,6 +72,35 @@ export default async function FloorPlansPage() {
         </div>
       </section>
 
+      {/* Prices are not published per home here. Every model's MSRP and sale
+          price is on /homes-on-sale, from the master price sheet; a single
+          "from" figure standing in for a whole home type only set an
+          expectation the line-item quote had to climb away from. */}
+      <section className="bg-white border-b border-[var(--color-charcoal)]/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+          <h2 className="font-serif text-2xl font-light mb-3">What a home costs</h2>
+          <p className="text-[var(--color-charcoal)]/70 max-w-3xl mb-5">
+            We quote line by line — the home, delivery, setup, and site work as separate numbers,
+            so you can see every one and hire your own contractors where it saves you money. That
+            means the price depends on the plan and options you choose and on your property, which
+            is why you won&apos;t find a single headline figure on these cards.
+          </p>
+          <p className="text-sm text-[var(--color-charcoal)]/60">
+            <a href="/homes-on-sale" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+              See what&rsquo;s on sale right now
+            </a>
+            {" · "}
+            <a href="/guides/pricing" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+              How our line-item pricing works
+            </a>
+            {" · "}
+            <a href="/contact-us" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+              Ask for a quote on any plan
+            </a>
+          </p>
+        </div>
+      </section>
+
       {/* Grid */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
         {plans.length === 0 ? (
@@ -83,6 +113,7 @@ export default async function FloorPlansPage() {
           <FloorPlansGrid plans={plans} />
         )}
         <SpecsDisclaimer className="mt-12" />
+        <PricingDisclaimer variant="short" className="mt-6 max-w-3xl" />
       </section>
 
       {/* FAQ (adds FAQPage schema) */}

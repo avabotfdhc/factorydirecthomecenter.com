@@ -2,145 +2,63 @@ import Link from "next/link";
 import Image from "next/image";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
-import { H2, H3 } from "@/components/Heading";
+import { H2 } from "@/components/Heading";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
+import { PricingDisclaimer } from "@/components/Pricing";
+import { SalesAlertForm } from "@/components/SalesAlertForm";
+import { SaleHomesGrid } from "./SaleHomesGrid";
+import { AllSaleHomesTable } from "./AllSaleHomesTable";
+import { saleHomes, saleListings } from "@/lib/sale-homes";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // ============================================
-// SPECIAL PLANS / ON SALE PAGE - UP TO 25% OFF CAMPAIGN
+// HOMES ON SALE — current promotional campaign
 // ============================================
-// Promotional page for current sales and clearance
-// Updated: August 2026 - Up to 25% off select new Champion floor plans
+// The campaign's discount, production month, and end date come from
+// src/lib/sale.ts; the homes come from src/lib/sale-homes.ts. Nothing about the
+// offer is hardcoded here, so the page can't drift out of sync with the terms —
+// and once the end date passes it renders an honest "offer has ended" state
+// instead of advertising a dead promotion.
 // ============================================
 
-export const metadata = genMeta({
-  title: "Up to 25% Off Select Champion Floor Plans",
-  description: "Save up to 25% off select new Champion floor plans! Limited time sale on manufactured and modular homes. Single wide, double wide, and modular homes on sale now through August 31, 2026.",
-  keywords: [
-    "manufactured homes sale",
-    "champion floor plans sale",
-    "champion homes discount",
-    "factory direct sale",
-    "mobile home clearance",
-    "modular home sale",
-    "summer home sale"
-  ],
-  url: "/homes-on-sale",
-});
+// Re-render daily so the page flips itself to the expired state on the morning
+// after the offer ends, without waiting for a deploy.
+// Five minutes, not an hour: this page announces a dated offer, and the
+// campaign turns over at midnight Eastern. At revalidate = 3600 the Fall
+// event's first morning was served the ended Summer event at 25% — a
+// discount higher than the one actually running.
+export const revalidate = 300;
 
-// Sale disclaimer
-const saleDisclaimer = `
-*Save up to 25% off MSRP (Manufacturer's Suggested Retail Price) on select new Champion floor
-plans. Discount applies to MSRP base price only and does not include options, upgrades, delivery,
-setup, or other fees. This offer is not valid with any other specials or discounts and cannot be
-used in combination with other specials or discounts. Good on new purchases only, and order must
-be authorized for production in August 2026. See dealer for complete details. Financing subject to
-credit approval. Offer expires August 31, 2026 or while supplies last.
-`;
+export function generateMetadata() {
+  const sale = getSaleStatus();
+  return genMeta({
+    title: sale.active
+      ? `${sale.name} — Up to ${sale.discountPercent}% Off Select Champion Floor Plans`
+      : "Champion Floor Plans on Sale",
+    description: sale.active
+      ? `${sale.name}: save up to ${sale.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${sale.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`
+      : "Featured Champion manufactured and modular homes at factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Call for the discounts running right now.",
+    keywords: [
+      "manufactured homes sale",
+      "champion floor plans sale",
+      "champion homes discount",
+      "factory direct sale",
+      "mobile home clearance",
+      "modular home sale",
+    ],
+    url: "/homes-on-sale",
+  });
+}
 
-// Featured sale homes
-const saleHomes = [
-  {
-    id: "dutch-aspire-1656h22208",
-    name: "Dutch Aspire 1656H22208",
-    series: "Dutch Aspire",
-    modelNo: "1656H22208",
-    sqft: 849,
-    beds: 2,
-    baths: 2,
-    width: "16'",
-    length: "56'",
-    msrp: 89900,
-    salePrice: 67425,
-    image: "/images/paramount/1656h22208-opt2.webp",
-    tag: "On Sale"
-  },
-  {
-    id: "dutch-aspire-1652h21151",
-    name: "Dutch Aspire 1652H21151",
-    series: "Dutch Aspire",
-    modelNo: "1652H21151",
-    sqft: 789,
-    beds: 2,
-    baths: 1,
-    width: "16'",
-    length: "52'",
-    msrp: 84900,
-    salePrice: 63675,
-    image: "/images/paramount/1652h21151-opt2.webp",
-    tag: "On Sale"
-  },
-  {
-    id: "brighton-2852",
-    name: "Brighton",
-    series: "Aspire",
-    brand: "Champion Home Builders",
-    modelNo: "2852H32170",
-    sqft: 1386,
-    beds: 3,
-    baths: 2,
-    width: "28'",
-    length: "52'",
-    msrp: 145000,
-    salePrice: 108750,
-    image: "/images/paramount/2852h32170-opt2.webp",
-    tag: "On Sale"
-  },
-  {
-    id: "fillmore-2864",
-    name: "Fillmore",
-    series: "Aspire",
-    brand: "Champion Home Builders",
-    modelNo: "2864H32060",
-    sqft: 1707,
-    beds: 3,
-    baths: 2,
-    width: "28'",
-    length: "64'",
-    msrp: 169000,
-    salePrice: 126750,
-    image: "/images/paramount/2864h32060-opt2.webp",
-    tag: "On Sale"
-  },
-  {
-    id: "silverton-2856",
-    name: "Silverton",
-    series: "Aspire",
-    brand: "Champion Home Builders",
-    modelNo: "2856H32174",
-    sqft: 1493,
-    beds: 3,
-    baths: 2,
-    width: "28'",
-    length: "56'",
-    msrp: 155000,
-    salePrice: 116250,
-    image: "/images/paramount/silverton-exterior.webp",
-    tag: "On Sale"
-  },
-  {
-    id: "bay-port-2860",
-    name: "Bay Port",
-    series: "Aspire",
-    brand: "Champion Home Builders",
-    modelNo: "2860H32168",
-    sqft: 1600,
-    beds: 3,
-    baths: 2,
-    width: "28'",
-    length: "60'",
-    msrp: 162000,
-    salePrice: 121500,
-    image: "/images/paramount/bayport-exterior.webp",
-    tag: "On Sale"
-  }
-];
+export default function HomesOnSalePage() {
+  // Recomputed per render (not per build) so an ISR refresh picks up the flip.
+  const sale = getSaleStatus();
 
-export default function SpecialPlansPage() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero Banner - 25% Off MSRP Campaign - COMPACT VERSION */}
+      {/* Hero */}
       <section className="relative w-full min-h-[400px] md:min-h-[450px] flex items-center">
-        {/* Background Image */}
         <div className="absolute inset-0">
           <Image
             src="/images/2026-03-22-hero-autumn.webp"
@@ -150,292 +68,191 @@ export default function SpecialPlansPage() {
             className="object-cover"
             sizes="100vw"
           />
-          {/* Gradient overlay for text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a365d]/95 via-[#1a365d]/80 to-[#2c7a7b]/70" />
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <FadeIn>
             <div className="text-center">
-              {/* Sale Badge */}
-              <div className="inline-flex items-center gap-2 bg-yellow-400 text-[#1a365d] px-4 py-1.5 rounded-full font-bold text-sm mb-4">
-                <span className="animate-pulse">🔥</span>
-                <span>LIMITED TIME OFFER</span>
-                <span className="animate-pulse">🔥</span>
-              </div>
-              
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
-                UP TO 25% OFF
-              </h1>
-              <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
-                Select New Champion Floor Plans
-              </p>
-              <p className="text-base text-white/80 max-w-xl mx-auto mb-3">
-                Save thousands on your new Champion manufactured home. Factory direct pricing just got better.
-              </p>
-              <p className="text-yellow-300 font-bold mb-4 text-sm md:text-base">
-                ⏰ Ends August 31, 2026
-              </p>
-              
+              {sale.active ? (
+                <>
+                  <div className="inline-flex items-center gap-2 bg-yellow-400 text-[#1a365d] px-4 py-1.5 rounded-full font-bold text-sm mb-4">
+                    <span aria-hidden="true">🔥</span>
+                    <span>LIMITED TIME OFFER</span>
+                    <span aria-hidden="true">🔥</span>
+                  </div>
+
+                  <p className="text-lg md:text-xl text-white font-semibold mb-1">{sale.name}</p>
+                  <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
+                    UP TO {sale.discountPercent}% OFF
+                  </h1>
+                  <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
+                    Select New Champion Floor Plans
+                  </p>
+                  <p className="text-base text-white/80 max-w-xl mx-auto mb-3">
+                    Save thousands on your new Champion manufactured home. Factory-direct pricing
+                    just got better.
+                  </p>
+                  <p className="text-yellow-300 font-bold mb-2 text-sm md:text-base">
+                    ⏰ {saleDeadlineLabel(sale)}
+                    {sale.endingSoon && sale.daysLeft > 2 ? ` — only ${sale.daysLeft} days left` : ""}
+                  </p>
+                  {/* A stepped campaign should say what comes next, so the first
+                      tier ending doesn't read as the whole event ending. */}
+                  {sale.nextPhase && (
+                    <p className="text-white/70 text-sm mb-4">
+                      Then up to {sale.nextPhase.discountPercent}% off through{" "}
+                      {new Date(`${sale.nextPhase.endDate}T00:00:00Z`).toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        timeZone: "UTC",
+                      })}
+                      .
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-1.5 rounded-full font-bold text-sm mb-4">
+                    <span>THIS OFFER HAS ENDED</span>
+                  </div>
+
+                  <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
+                    Our {sale.name} Has Ended
+                  </h1>
+                  <p className="text-lg text-white/85 max-w-2xl mx-auto mb-3">
+                    The homes below are still available to order at factory-direct pricing, and we
+                    run new promotions regularly. Call or sign up below and we&rsquo;ll tell you
+                    exactly what&rsquo;s discounted today.
+                  </p>
+                  <p className="text-white/70 font-medium mb-4 text-sm md:text-base">
+                    Previous offer ended {sale.endDateLabel}
+                  </p>
+                </>
+              )}
+
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="#sale-homes"
                   className="inline-flex items-center justify-center px-6 py-3 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors text-base"
                 >
-                  View Sale Homes
-                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {sale.active ? "View Sale Homes" : "View These Homes"}
+                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </Link>
-                <Link
-                  href="/contact-us"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-base backdrop-blur-sm"
-                >
-                  Contact Sales
-                </Link>
               </div>
-              
-              {/* Trust badges - compact */}
+
               <div className="mt-4 flex flex-wrap justify-center gap-4 text-white/70 text-xs md:text-sm">
-                <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                  </svg>
-                  Factory Direct
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                  </svg>
-                  Champion Quality
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-                  </svg>
-                  6-State Delivery
-                </span>
+                {["Factory Direct", "Champion Quality", "Delivered in IN, OH & MI"].map((badge) => (
+                  <span key={badge} className="flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {badge}
+                  </span>
+                ))}
               </div>
             </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Filter Tabs */}
+      {/* Section tabs */}
       <section className="bg-gray-50 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap gap-4 items-center justify-between">
-            <div className="flex gap-2">
-              <Link
-                href="/homes-on-sale"
-                className="px-6 py-2 bg-[#2c7a7b] text-white rounded-full font-medium"
-              >
-                On Sale
-              </Link>
-              <Link
-                href="/homes-on-sale/clearance"
-                className="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50"
-              >
-                Clearance
-              </Link>
-            </div>
-            
-            {/* Search */}
-            <div className="flex gap-2">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search Floor Plan"
-                  className="pl-10 pr-4 py-2 border rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-[#2c7a7b]"
-                />
-                <svg className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <button className="px-6 py-2 bg-[#84cc16] text-white rounded-lg font-medium hover:bg-[#65a30d]">
-                Search
-              </button>
-            </div>
-          </div>
-          
-          {/* Filter buttons */}
-          <div className="flex flex-wrap gap-3 mt-4">
-            <button className="px-4 py-2 bg-white border rounded-full text-sm hover:bg-gray-50">
-              Bedrooms
-            </button>
-            <button className="px-4 py-2 bg-white border rounded-full text-sm hover:bg-gray-50">
-              Bathroom
-            </button>
-            <button className="px-4 py-2 bg-white border rounded-full text-sm hover:bg-gray-50">
-              Price
-            </button>
-            <button className="px-4 py-2 bg-white border rounded-full text-sm hover:bg-gray-50 flex items-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-              </svg>
-              Square Feet
-            </button>
-            <button className="px-4 py-2 bg-white border rounded-full text-sm hover:bg-gray-50 flex items-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              Sort By
-            </button>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex gap-2">
+          <span className="px-6 py-2 bg-[#2c7a7b] text-white rounded-full font-medium" aria-current="page">
+            {sale.active ? "On Sale" : "Featured Homes"}
+          </span>
+          <Link
+            href="/homes-on-sale/clearance"
+            className="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50"
+          >
+            Clearance
+          </Link>
         </div>
       </section>
 
-      {/* Sale Homes Grid */}
-      <section id="sale-homes" className="py-12 md:py-16">
+      <div className="pt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
               <H2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Featured Sale Homes
+                {sale.active ? "Homes Included in This Sale" : "Featured Champion Homes"}
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Take advantage of our biggest sale of the year. Each home includes Champion's 
-                industry-leading warranty and our factory-direct service promise.
+                {!sale.active
+                  ? `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full list is below.`
+                  : SHOW_SALE_PRICES
+                    ? `The ${saleHomes.length} homes we publish a price on — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for a price on any of the others.`
+                    : `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for the price on any of them.`}
               </p>
             </div>
           </FadeIn>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {saleHomes.map((home, index) => (
-              <FadeIn key={home.id} delay={index * 0.1}>
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden border hover:shadow-xl transition-shadow">
-                  {/* Sale Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                      {home.tag}
-                    </span>
-                  </div>
-                  
-                  {/* Savings Badge */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="bg-[#84cc16] text-white px-3 py-1 rounded-full text-sm font-bold">
-                      Up to 25% Off
-                    </span>
-                  </div>
+      <SaleHomesGrid homes={saleHomes} discountPercent={sale.discountPercent} saleActive={sale.active} />
 
-                  {/* Image */}
-                  <div className="relative h-56 bg-gray-100">
-                    <Image
-                      src={home.image}
-                      alt={`${home.name} floor plan - ${home.sqft} sq ft manufactured home`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                      <p className="text-white text-sm font-medium">360° view available</p>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{home.name}</h3>
-                    
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
-                      <span>Model: {home.modelNo}</span>
-                    </div>
-
-                    {/* Specs */}
-                    <div className="grid grid-cols-3 gap-4 mb-4">
-                      <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <p className="text-2xl font-bold text-[#2c7a7b]">{home.sqft}</p>
-                        <p className="text-xs text-gray-500">Sq. Ft</p>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <p className="text-2xl font-bold text-[#2c7a7b]">{home.beds}</p>
-                        <p className="text-xs text-gray-500">Beds</p>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 rounded-lg">
-                        <p className="text-2xl font-bold text-[#2c7a7b]">{home.baths}</p>
-                        <p className="text-xs text-gray-500">Baths</p>
-                      </div>
-                    </div>
-
-                    {/* Dimensions */}
-                    <div className="flex gap-4 text-sm text-gray-600 mb-4">
-                      <span className="flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                        </svg>
-                        Width: {home.width}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                        </svg>
-                        Length: {home.length}
-                      </span>
-                    </div>
-
-                    {/* Pricing — temporarily hidden pre-launch */}
-                    <div className="border-t pt-4 mb-4">
-                      <p className="text-2xl font-bold text-[#2c7a7b]">Contact for Price</p>
-                      <p className="text-sm text-gray-500">Save up to 25% off select new Champion floor plans</p>
-                    </div>
-
-                    {/* CTA */}
-                    <Link
-                      href={`/homes-on-sale/details/${home.id}`}
-                      className="block w-full text-center py-3 bg-[#2c7a7b] hover:bg-[#1a365d] text-white font-semibold rounded-lg transition-colors"
-                    >
-                      View Details
-                    </Link>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-
-          {/* Load More */}
-          <div className="text-center mt-12">
-            <button className="inline-flex items-center gap-2 px-8 py-3 border-2 border-[#2c7a7b] text-[#2c7a7b] font-semibold rounded-lg hover:bg-[#2c7a7b] hover:text-white transition-colors">
-              Load More Homes
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
+      {/* Every home on the price sheet, not just the featured ones */}
+      <section id="all-homes" className="bg-white border-t border-gray-200 py-14 scroll-mt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <H2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            Every Floor Plan on Sale
+          </H2>
+          <p className="text-lg text-gray-600 max-w-3xl mb-8">
+            All {saleListings.length} Champion floor plans we sell
+            {sale.active ? `, every one of them ${sale.discountPercent}% off MSRP` : ""}.{" "}
+            {SHOW_SALE_PRICES ? (
+              <>
+                The {saleHomes.length} featured homes above show MSRP, sale price and savings —
+                every one straight from our master price sheet. Call{" "}
+              </>
+            ) : (
+              <>Call{" "}</>
+            )}
+            <a href="tel:+12603081457" className="text-[#2c7a7b] font-semibold hover:underline">
+              (260) 308-1457
+            </a>{" "}
+            for a price on any plan and we&rsquo;ll quote it in writing: MSRP, the sale price and
+            what you save.
+          </p>
+          <AllSaleHomesTable
+            listings={saleListings}
+            discountPercent={sale.discountPercent}
+            saleActive={sale.active}
+          />
         </div>
       </section>
 
-      {/* Disclaimer Section */}
+      {/* Terms */}
       <section className="bg-gray-100 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <SaleDisclaimer variant="full" />
+            <div className="space-y-6">
+              <SaleDisclaimer variant="full" />
+              <PricingDisclaimer variant="full" />
+            </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* Sales Alert CTA */}
+      {/* Sales alert */}
       <section className="py-16 bg-gradient-to-r from-[#1a365d] to-[#2c7a7b]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="text-3xl font-bold text-white mb-4">
-              Don't Miss Out on These Savings
+              {sale.active ? "Don&rsquo;t Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
             </h2>
             <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-              Sign up for our Sales Alert to be the first to know about new promotions, 
-              clearance inventory, and exclusive factory-direct deals.
+              Sign up for our Sales Alert and we&rsquo;ll email you when new promotions, clearance
+              inventory, and exclusive factory-direct deals go live.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#84cc16]"
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors"
-              >
-                Get Alert
-              </button>
-            </form>
+            <SalesAlertForm />
           </FadeIn>
         </div>
       </section>

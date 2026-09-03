@@ -10,6 +10,7 @@ import { deriveSeries, canonicalSeries } from "./series";
 import { galleryOverlays, sheetExtras } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
 import { sqftOverrides, bedOptions } from "./spec-overrides";
+import { anchorPriceFor } from "./price-sheet";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -53,22 +54,30 @@ function withBedOptions<T extends { slug: string }>(p: T): T {
 const SHOW_PRICES = false;
 
 function formatPrice(raw: unknown): string {
-  if (!SHOW_PRICES) return "Contact for price";
+  if (!SHOW_PRICES) return "Call for pricing";
   const n = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Contact for price";
+  return Number.isFinite(n) && n > 0 ? `$${n.toLocaleString("en-US")}` : "Call for pricing";
 }
 
-// Kyle reviewed the type-level "From $X" anchors and prefers the plain
-// "Contact for price" (2026-08-16) — flip this to true to bring the bands
-// back. Bands must stay in sync with buyers-guide / FAQ copy.
+// Range-level "From $X" anchors are switched off. They were withdrawn on
+// 2026-08-30 at Kyle's direction: a single figure standing in for a whole home
+// type set an expectation the eventual line-item quote had to climb away from,
+// and the previous hand-entered numbers had drifted badly enough to prove the
+// point ("From $39,900" sat $11,600 under the cheapest single actually sold).
+//
+// Real per-home prices are published on /homes-on-sale, where all 147 models
+// carry an MSRP and a sale price straight from the master price sheet. Set this
+// to true to bring the type-level anchors back.
 const SHOW_PRICE_ANCHORS = false;
 
 function priceFromBand(homeType: string): string {
   if (!SHOW_PRICE_ANCHORS || SHOW_PRICES) return "";
-  if (/single/i.test(homeType)) return "From $39,900";
-  if (/multi|double|sectional/i.test(homeType)) return "From $80,000";
-  if (/modular/i.test(homeType)) return "From $100,000";
-  return "";
+  const anchor = /multi|double|sectional/i.test(homeType)
+    ? anchorPriceFor("multi")
+    : /single/i.test(homeType)
+      ? anchorPriceFor("single")
+      : undefined;
+  return anchor === undefined ? "" : `From $${anchor.toLocaleString("en-US")}`;
 }
 
 // Home width in feet from a Champion model number ("2856H32392" → 28) found in
@@ -131,11 +140,32 @@ function s3Url(path?: string): string {
 // generated page and retry on the next request. During `next build` we stay
 // graceful (empty result) so a CMS blip can't fail unrelated deploys — the
 // error still lands in the build log.
+//
+// Use this only where there is nothing of our own to serve in the CMS's place.
 function cmsFailure(context: string, detail: string): void {
   console.error(`[cms-api] ${context} FAILED: ${detail}`);
   if (process.env.NEXT_PHASE !== "phase-production-build") {
     throw new Error(`[cms-api] ${context}: ${detail}`);
   }
+}
+
+/**
+ * The same failure, where the repo can answer instead.
+ *
+ * The listing paths each end in a `return` that falls back to repo-published
+ * content, but they called cmsFailure() first — which throws — so the fallback
+ * below it was unreachable and the page errored instead. That went unnoticed
+ * until the CMS returned 502 for three days straight (2026-08-29 onwards) and
+ * took /, /floor-plans and /blog down with it, when the repo had 193 published
+ * floor plans sitting right there.
+ *
+ * So: log, don't throw, and let the caller serve what we do have. The result is
+ * cached for the route's revalidate window (five minutes), which is the honest
+ * trade — a short window of catalogue-only content beats an error page, and it
+ * heals itself within five minutes of the CMS coming back.
+ */
+function cmsDegraded(context: string, detail: string): void {
+  console.error(`[cms-api] ${context} DEGRADED (serving repo-published content): ${detail}`);
 }
 
 // Repo-published Champion PRIME Series models (src/lib/local-floor-plans.ts)
@@ -187,14 +217,14 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
       next: { revalidate: 300 },
     });
     if (!res.ok) {
-      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      cmsDegraded(endpoint, `HTTP ${res.status} ${res.statusText}`);
       return (await localPlans()).map(decoratePlan);
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsFailure(endpoint, String(err));
-    return (await localPlans()).map(withBedOptions);
+    cmsDegraded(endpoint, String(err));
+    return (await localPlans()).map(decoratePlan);
   }
   const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
   const plans = rows
@@ -241,6 +271,7 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
   width: string;
   series: string;
   brochureUrl: string;     // absolute S3 URL or ""
+  floorPlanUrl: string;    // Champion's dimensioned floor-plan sheet (PDF), or ""
   virtualTour: string;     // e.g. Matterport URL or ""
   gallery: string[];       // absolute image URLs (banner first)
 }
@@ -272,6 +303,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         width: p.width,
         series: p.series || PRIME_SERIES,
         brochureUrl: p.brochureUrl || "",
+        floorPlanUrl: p.floorPlanUrl || "",
         virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),
       });
@@ -360,6 +392,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
       width: String(r.width || ""),
       series,
       brochureUrl: r.brochure ? s3Url(r.brochure) : seriesBrochure(series, homeType),
+      floorPlanUrl: "",
       virtualTour: String(r.virtualTour || "") || localTour,
       gallery,
     });
@@ -414,13 +447,13 @@ export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
   try {
     const res = await fetch(`${API_BASE}/api/blog/get-all?limit=100`, { next: { revalidate: 300 } });
     if (!res.ok) {
-      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
+      cmsDegraded(endpoint, `HTTP ${res.status} ${res.statusText}`);
       return mergePosts([], await localPosts());
     }
     json = await res.json();
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsFailure(endpoint, String(err));
+    cmsDegraded(endpoint, String(err));
     return mergePosts([], await localPosts());
   }
   {

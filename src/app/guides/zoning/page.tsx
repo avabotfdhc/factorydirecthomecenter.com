@@ -1,6 +1,7 @@
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3, H4 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Manufactured Home Zoning Laws",
@@ -115,6 +116,7 @@ export default function ZoningPage() {
               Zoning Laws &<br />
               <span className="italic text-[var(--color-teal-light)]">Regulations</span>
             </h1>
+            <GuideMeta href="/guides/zoning" />
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
               What you need to know about manufactured home placement in Indiana, Ohio, 
               and Michigan. State laws, local restrictions, and permit requirements.

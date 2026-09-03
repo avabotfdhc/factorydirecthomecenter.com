@@ -4,6 +4,7 @@ import { StructuredData, structuredData, generateMetadata as genMeta } from "@/l
 import { FadeIn, StaggerContainer, useScrollTracking } from "@/components/VisualEffects";
 import { PaymentCalculator } from "@/components/PaymentCalculator";
 import { H2, H3 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Complete Manufactured Home Buyer's Guide",
@@ -30,7 +31,6 @@ export default function BuyersGuidePage() {
   return (
     <>
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
-      <StructuredData data={structuredData.article({ headline: "Complete Manufactured Home Buyer's Guide", description: "Everything you need to know about buying a manufactured home", image: "/images/hero-home.jpg", datePublished: "2026-01-15", dateModified: "2026-06-01", author: "Factory Direct Homes Center", url: "/guides/buyers-guide" })} />
       <StructuredData data={structuredData.faqPage(guideFAQs)} />
 
 
@@ -56,6 +56,7 @@ export default function BuyersGuidePage() {
                 <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">Free Guide</span>
               </div>
               <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">Complete Buyer's <span className="italic text-[var(--color-teal-light)]">Guide</span></h1>
+              <GuideMeta href="/guides/buyers-guide" />
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">Everything you need to know about buying a manufactured home. From types and financing to costs and timeline.</p>
             </div>
           </FadeIn>

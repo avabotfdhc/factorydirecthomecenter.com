@@ -2,6 +2,7 @@ import Link from "next/link";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { H2, H3 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Champion Homes & Our Series — Aspire, Prime & Paramount",
@@ -83,6 +84,7 @@ export default function ChampionHomesPage() {
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mb-5">
             Champion Homes, built <span className="italic text-[var(--color-teal-light)]">20 miles away</span>
           </h1>
+          <GuideMeta href="/champion-homes" />
           <p className="text-lg text-white/60 leading-relaxed max-w-2xl">
             Factory Direct Homes Center is an authorized Champion Homes dealer. Every home we sell is
             built by one of North America&rsquo;s largest factory-built home makers — most of them at

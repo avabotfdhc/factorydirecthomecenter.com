@@ -9,7 +9,6 @@ import { AnnouncementBar } from "./AnnouncementBar";
 const navLinks = [
   { href: "/floor-plans", label: "Floor Plans" },
   { href: "/design-your-home", label: "Design Your Home" },
-  { href: "/inventory", label: "Inventory" },
   { href: "/locations", label: "Locations" },
   { href: "/guides", label: "Guides" },
   { href: "/blog", label: "Blog" },

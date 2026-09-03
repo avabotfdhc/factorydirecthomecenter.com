@@ -3,6 +3,7 @@ import { generateMetadata as genMeta, StructuredData, structuredData } from "@/l
 import { FAQSection } from "@/components/FAQSection";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
 import { H2, H3 } from "@/components/Heading";
+import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Manufactured Home Delivery & Setup: What to Expect",
@@ -98,17 +99,6 @@ export default function DeliveryAndSetupPage() {
       <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(faqs)} />
       <StructuredData
-        data={structuredData.article({
-          headline: "Manufactured Home Delivery & Setup: What to Expect",
-          description: "Step-by-step: how manufactured and modular home delivery and setup works, from order to move-in.",
-          image: "/images/hero-home.jpg",
-          datePublished: "2024-01-01",
-          dateModified: new Date().toISOString(),
-          author: "Factory Direct Homes Center",
-          url: "/guides/delivery-and-setup",
-        })}
-      />
-      <StructuredData
         data={{
           "@context": "https://schema.org",
           "@type": "HowTo",
@@ -147,6 +137,7 @@ export default function DeliveryAndSetupPage() {
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mt-4 mb-6">
             Delivery &amp; <span className="italic text-[var(--color-teal-light)]">Setup</span>
           </h1>
+          <GuideMeta href="/guides/delivery-and-setup" />
           <p className="text-lg text-white/70 leading-relaxed">
             From the day you order to the day you move in is typically <strong className="text-white">8–12 weeks</strong>.
             Here&rsquo;s exactly what happens at each step — factory build, site prep, permitting, delivery, installation,

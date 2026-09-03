@@ -4,13 +4,22 @@ import { useState, useEffect, useCallback } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 import { trackFormSubmit } from "@/lib/analytics";
+import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 
 interface ExitIntentPopupProps {
   offer?: string;
   delay?: number;
 }
 
-export function ExitIntentPopup({ offer = "Save up to 25% off select Champion floor plans!", delay = 5000 }: ExitIntentPopupProps) {
+export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
+  // Every sale claim below is gated on the campaign still running — otherwise
+  // this popup would keep pitching an expired discount to every visitor.
+  const sale = getSaleStatus();
+  const headline =
+    offer ??
+    (sale.active
+      ? `${sale.name}: save up to ${sale.discountPercent}% off select Champion floor plans!`
+      : "Get a free, line-item factory-direct quote");
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [email, setEmail] = useState("");
@@ -88,8 +97,10 @@ export function ExitIntentPopup({ offer = "Save up to 25% off select Champion fl
               </svg>
             </div>
             <H3 className="font-serif text-2xl font-light mb-2">Wait! Don't Miss Out</H3>
-            <p className="text-white/80 text-lg font-semibold">{offer}</p>
-            <p className="text-yellow-300 text-sm mt-1">Ends August 31, 2026</p>
+            <p className="text-white/80 text-lg font-semibold">{headline}</p>
+            {sale.active && (
+              <p className="text-yellow-300 text-sm mt-1">{saleDeadlineLabel(sale)}</p>
+            )}
           </div>
 
           {/* Content */}
@@ -111,7 +122,13 @@ export function ExitIntentPopup({ offer = "Save up to 25% off select Champion fl
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
-                    <span className="text-sm text-[var(--color-charcoal)]"><strong>Up to 25% off MSRP</strong> base price</span>
+                    <span className="text-sm text-[var(--color-charcoal)]">
+                      {sale.active ? (
+                        <><strong>Up to {sale.discountPercent}% off MSRP</strong> base price</>
+                      ) : (
+                        <><strong>Line-item pricing</strong> — home, delivery, setup and site work priced separately</>
+                      )}
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
@@ -136,14 +153,16 @@ export function ExitIntentPopup({ offer = "Save up to 25% off select Champion fl
                     type="submit"
                     className="w-full py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
                   >
-                    Claim My Savings
+                    {sale.active ? "Claim My Savings" : "Get My Quote"}
                   </button>
                 </form>
 
-                <p className="text-xs text-center text-[var(--color-gray)] mt-4">
-                  *Save up to 25% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
-                  Not valid with other specials or discounts. New purchases only; order must be authorized for production in August 2026. Valid through August 31, 2026.
-                </p>
+                {sale.active && (
+                  <p className="text-xs text-center text-[var(--color-gray)] mt-4">
+                    *Save up to {sale.discountPercent}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
+                    Not valid with other specials or discounts. New purchases only; order must be authorized for production in {sale.productionMonth}. Valid through {sale.endDateLabel}.
+                  </p>
+                )}
               </>
             )}
           </div>
