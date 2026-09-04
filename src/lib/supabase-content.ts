@@ -118,11 +118,21 @@ export async function getSupabaseFloorPlans(): Promise<ApiFloorPlan[]> {
       `floor_plans?is_active=eq.true&order=sort_order.asc,created_at.desc&select=${select}`,
     )) as FloorPlanRow[];
   } catch (err) {
-    // Degrade gracefully during `next build` so a Supabase blip can't fail a
-    // deploy; at runtime rethrow so ISR keeps serving the last good page.
-    console.error(`[supabase] floor_plans list failed: ${err instanceof Error ? err.message : err}`);
-    if (process.env.NEXT_PHASE === "phase-production-build") return [];
-    throw err;
+    // Never throw from here. The only caller merges this list with the
+    // repo-published catalogue (getApiFloorPlans in api-content.ts), so
+    // returning [] serves the 193 plans the repo already holds instead of
+    // 500-ing the page.
+    //
+    // The original intent — rethrow so ISR keeps serving the last good page —
+    // only helps where a good page is already cached. On a cold cache entry or
+    // a fresh deploy there is nothing to keep and the request 500s. Between
+    // 2026-09-02 and 09-04 that took the homepage down for 404 users while
+    // Supabase answered 404 to every floor_plans query, and /floor-plans and
+    // /design-your-home with it.
+    console.error(
+      `[supabase] floor_plans list DEGRADED (serving repo-published content): ${err instanceof Error ? err.message : err}`,
+    );
+    return [];
   }
   const plans = (Array.isArray(rows) ? rows : []).filter((r) => r?.slug).map(toFloorPlan);
   console.log(`[supabase] ${plans.length} active floor plans`);
