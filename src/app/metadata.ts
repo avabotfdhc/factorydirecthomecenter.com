@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { languageAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Manufactured & Modular Homes Indiana | Factory Direct Homes Center",
@@ -39,6 +40,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://factorydirecthomescenter.com",
+    languages: languageAlternates("https://factorydirecthomescenter.com"),
   },
   verification: {
     google: "your-google-verification-code",

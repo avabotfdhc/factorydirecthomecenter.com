@@ -11,6 +11,7 @@ import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanQuoteCTA } from "@/components/QuoteModal";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { languageAlternates } from "@/lib/seo";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath ${plan.homeType || "Home"}`,
     description: desc,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {
       title: `${plan.name} | Factory Direct Homes Center`,
       description: desc,

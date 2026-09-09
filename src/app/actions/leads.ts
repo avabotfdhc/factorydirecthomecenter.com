@@ -15,7 +15,10 @@ import { headers } from "next/headers";
 
 export interface LeadSubmission {
   name: string;
+  /** Phone number (required). */
   contact: string;
+  /** Email address (optional). */
+  email?: string;
   county: string;
   timeframe: string;
   modelName: string;
@@ -50,7 +53,7 @@ async function insertSupabaseLead(lead: LeadSubmission): Promise<string | null> 
     cache: "no-store",
     body: JSON.stringify({
       full_name: clean(lead.name, 120),
-      contact_info: clean(lead.contact, 160),
+      contact_info: [clean(lead.contact, 60), clean(lead.email, 120)].filter(Boolean).join(" · "),
       target_county: clean(lead.county, 120),
       timeline: clean(lead.timeframe, 60),
       model_interest: clean(lead.modelName, 160),
@@ -71,8 +74,8 @@ async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
   if (!host) return;
   const proto = h.get("x-forwarded-proto") || (host.startsWith("localhost") ? "http" : "https");
   const [firstName, ...rest] = clean(lead.name, 120).split(/\s+/);
-  const contact = clean(lead.contact, 160);
-  const isEmail = /@/.test(contact);
+  const phone = clean(lead.contact, 60);
+  const email = clean(lead.email, 120);
   const res = await fetch(`${proto}://${host}/api/leads`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -80,8 +83,8 @@ async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
     body: JSON.stringify({
       firstName: firstName || "Website",
       lastName: rest.join(" ") || "—",
-      email: isEmail ? contact : "no-email@factorydirecthomescenter.com",
-      phone: isEmail ? "" : contact,
+      email: email || "no-email@factorydirecthomescenter.com",
+      phone,
       interest: clean(lead.modelName, 160),
       deliveryState: clean(lead.county, 120),
       timeframe: clean(lead.timeframe, 60),
@@ -96,15 +99,16 @@ async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
 export async function submitLead(payload: LeadSubmission): Promise<LeadResult> {
   const lead: LeadSubmission = {
     name: clean(payload?.name, 120),
-    contact: clean(payload?.contact, 160),
+    contact: clean(payload?.contact, 60),
+    email: clean(payload?.email, 120),
     county: clean(payload?.county, 120),
     timeframe: clean(payload?.timeframe, 60) || "Just researching",
     modelName: clean(payload?.modelName, 160) || "Direct Inquiry",
     series: clean(payload?.series, 60) || "Champion",
     sourcePage: clean(payload?.sourcePage, 300),
   };
-  if (!lead.name || !lead.contact || !lead.county) {
-    return { success: false, error: "Name, contact and county are required" };
+  if (!lead.name || lead.contact.replace(/\D/g, "").length < 10 || !lead.county) {
+    return { success: false, error: "Name, a phone number and county are required" };
   }
 
   const [db, api] = await Promise.allSettled([insertSupabaseLead(lead), fanOutToLeadsApi(lead)]);

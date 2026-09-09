@@ -56,11 +56,13 @@
     "submitting": "Enviando…",
     "tcpa": "Al hacer clic en desbloquear, usted autoriza a Factory Direct Homes Center a contactarlo sobre su consulta. El consentimiento no es condición de compra.",
     "privacy": "Política de privacidad",
-    "error": "Indique su nombre, un teléfono o correo electrónico y su condado.",
+    "error": "Indique su nombre, un número de teléfono y su condado.",
     "successTitle": "Su paquete de precios va en camino",
     "successBody": "Nuestro equipo en Auburn está preparando el precio detallado, las hojas de opciones y la entrega estimada para la {model}. Nos comunicaremos con usted en {contact} en breve.",
     "continue": "Seguir explorando",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "phone": "Número de teléfono",
+    "email": "Correo electrónico (opcional)"
   },
   "mobileBar": {
     "call": "Llamar",

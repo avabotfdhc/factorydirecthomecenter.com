@@ -64,12 +64,14 @@ export default function PriceQuoteModal({ isOpen, onClose, modelName, series = "
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = (data.get("name")?.toString() || "").trim();
-    const contactValue = (data.get("contact")?.toString() || "").trim();
+    const contactValue = (data.get("phone")?.toString() || "").trim();
+    const emailValue = (data.get("email")?.toString() || "").trim();
     const county = (data.get("county")?.toString() || "").trim();
     const timeframe = data.get("timeframe")?.toString() || TIMEFRAMES[1].value;
 
-    const looksLikeContact = /@/.test(contactValue) || contactValue.replace(/\D/g, "").length >= 10;
-    if (!name || !county || !looksLikeContact) {
+    const looksLikePhone = contactValue.replace(/\D/g, "").length >= 10;
+    const looksLikeEmail = !emailValue || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+    if (!name || !county || !looksLikePhone || !looksLikeEmail) {
       setError(t("error"));
       setStatus("error");
       return;
@@ -80,6 +82,7 @@ export default function PriceQuoteModal({ isOpen, onClose, modelName, series = "
     const res = await submitLead({
       name,
       contact: contactValue,
+      email: emailValue,
       county,
       timeframe,
       modelName,
@@ -88,11 +91,10 @@ export default function PriceQuoteModal({ isOpen, onClose, modelName, series = "
     });
     if (res.success) {
       setContact(contactValue);
-      const isEmail = /@/.test(contactValue);
       trackLeadFormSubmit("instant_quote", {
         name,
-        email: isEmail ? contactValue : "",
-        phone: isEmail ? "" : contactValue,
+        email: emailValue,
+        phone: contactValue,
         interest: modelName,
       });
       setStatus("done");
@@ -156,10 +158,16 @@ export default function PriceQuoteModal({ isOpen, onClose, modelName, series = "
               <span className="block text-sm font-semibold text-[var(--color-charcoal)] mb-1.5">{t("name")} <span className="text-red-500">*</span></span>
               <input ref={firstFieldRef} name="name" type="text" required autoComplete="name" placeholder="Jane Smith" className={inputCls} />
             </label>
-            <label className="block">
-              <span className="block text-sm font-semibold text-[var(--color-charcoal)] mb-1.5">{t("contact")} <span className="text-red-500">*</span></span>
-              <input name="contact" type="text" required autoComplete="tel" inputMode="email" placeholder="(260) 000-0000 or you@email.com" className={inputCls} />
-            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label className="block">
+                <span className="block text-sm font-semibold text-[var(--color-charcoal)] mb-1.5">{t("phone")} <span className="text-red-500">*</span></span>
+                <input name="phone" type="tel" required autoComplete="tel" inputMode="tel" placeholder="(260) 000-0000" className={inputCls} />
+              </label>
+              <label className="block">
+                <span className="block text-sm font-semibold text-[var(--color-charcoal)] mb-1.5">{t("email")}</span>
+                <input name="email" type="email" autoComplete="email" inputMode="email" placeholder="you@email.com" className={inputCls} />
+              </label>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <label className="block">
                 <span className="block text-sm font-semibold text-[var(--color-charcoal)] mb-1.5">{t("county")} <span className="text-red-500">*</span></span>
