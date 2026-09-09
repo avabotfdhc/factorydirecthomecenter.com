@@ -4,6 +4,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
+import { SiteSearch } from "@/components/SiteSearch";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { PricingDisclaimer } from "@/components/Pricing";
 
@@ -110,7 +111,10 @@ export default async function FloorPlansPage() {
             and we&apos;ll help you find the right home.
           </p>
         ) : (
-          <FloorPlansGrid plans={plans} />
+          <>
+            <div className="mb-8 max-w-2xl"><SiteSearch /></div>
+            <FloorPlansGrid plans={plans} />
+          </>
         )}
         <SpecsDisclaimer className="mt-12" />
         <PricingDisclaimer variant="short" className="mt-6 max-w-3xl" />

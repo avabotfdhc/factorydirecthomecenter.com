@@ -1,10 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import { CompareTray, MAX_COMPARE } from "./CompareTray";
+import { FloorPlanCard } from "@/components/FloorPlanCard";
 
 // Client-side filters over the server-fetched plan list. All cards are in the
 // initial HTML (the unfiltered view), so crawlers see the full catalog. The
@@ -223,87 +222,32 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
       <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${compare.length ? "pb-24" : ""}`}>
         {visible.map((p) => {
           const selected = compare.includes(p.slug);
-          // The checkbox sits outside the card's <Link> — nesting an input in
-          // an anchor would make ticking it navigate to the plan instead.
           return (
-          <div key={p.slug} className="relative">
-          <Link
-            href={`/floor-plans/${p.slug}`}
-            className="group block border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1 h-full"
-          >
-            <div className="aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] relative overflow-hidden border-b border-[var(--color-charcoal)]/5">
-              {p.image ? (
-                <Image
-                  src={p.image}
-                  alt={`${p.name} — ${bedsLabel(p)} bed ${p.baths} bath manufactured home floor plan`}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">
-                  No photo
-                </div>
-              )}
-              {p.series && (
-                <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
-                  {p.series} Series
-                </span>
-              )}
-              {bedsRange(p)[0] < bedsRange(p)[1] && (
-                <span className="absolute top-3 right-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
-                  {bedsRange(p)[0]} or {bedsRange(p)[1]} Bed
-                </span>
-              )}
-              {p.virtualTour && (
-                <span className="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
-                  3D Tour
-                </span>
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-center justify-between gap-3 mb-2">
-                <h2 className="font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors">
-                  {p.name}
-                </h2>
-                <span className="text-sm font-bold text-[var(--color-lime-dark)] whitespace-nowrap">
-                  {p.priceFrom || p.price}
-                </span>
-              </div>
-              <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
-                {p.brand}
-                {p.series ? ` · ${p.series} Series` : ""}
-              </p>
-              <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
-                <span>{p.sqft.toLocaleString()} sq ft</span>
-                <span className="text-[var(--color-gray-light)]">|</span>
-                <span>{bedsLabel(p)} Bed</span>
-                <span className="text-[var(--color-gray-light)]">|</span>
-                <span>{p.baths} Bath</span>
-              </div>
-            </div>
-          </Link>
-
-          <label
-            className={`absolute bottom-4 right-4 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer border transition-colors ${
-              selected
-                ? "bg-[var(--color-teal)] text-white border-[var(--color-teal)]"
-                : "bg-white/95 text-[var(--color-charcoal)] border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/50"
-            } ${!selected && compare.length >= MAX_COMPARE ? "opacity-50 cursor-not-allowed" : ""}`}
-          >
-            <input
-              type="checkbox"
-              className="w-4 h-4 accent-[var(--color-teal)]"
-              checked={selected}
-              disabled={!selected && compare.length >= MAX_COMPARE}
-              onChange={() => toggleCompare(p.slug)}
+            <FloorPlanCard
+              key={p.slug}
+              plan={p}
+              bedsLabel={bedsLabel(p)}
+              bedsFlex={bedsRange(p)[0] < bedsRange(p)[1]}
+              compareSlot={
+                <label
+                  className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer border transition-colors ${
+                    selected
+                      ? "bg-[var(--color-teal)] text-white border-[var(--color-teal)]"
+                      : "bg-white text-[var(--color-charcoal)] border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/50"
+                  } ${!selected && compare.length >= MAX_COMPARE ? "opacity-50 cursor-not-allowed" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 accent-[var(--color-teal)]"
+                    checked={selected}
+                    disabled={!selected && compare.length >= MAX_COMPARE}
+                    onChange={() => toggleCompare(p.slug)}
+                  />
+                  <span>Compare</span>
+                  <span className="sr-only">{p.name}</span>
+                </label>
+              }
             />
-            <span>Compare</span>
-            <span className="sr-only">{p.name}</span>
-          </label>
-          </div>
           );
         })}
       </div>

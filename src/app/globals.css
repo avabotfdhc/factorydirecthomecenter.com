@@ -345,3 +345,14 @@ button {
   opacity: 0.2;
   font-family: Georgia, serif;
 }
+
+/* Keep the chat launcher clear of the sticky mobile action bar (Call/Text/Quote)
+   — applies to our own Ava bubble and any third-party chat iframe. */
+@media (max-width: 768px) {
+  #chat-widget-container,
+  .chat-launcher-button,
+  iframe[title*="chat" i] {
+    bottom: 4.75rem !important;
+    right: 1rem !important;
+  }
+}

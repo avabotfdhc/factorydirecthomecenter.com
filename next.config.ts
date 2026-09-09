@@ -28,17 +28,8 @@ const nextConfig: NextConfig = {
         destination: '/floor-plans',
         permanent: true,
       },
-      // Fix duplicate content issues - redirect old URL patterns to canonical versions
-      {
-        source: '/series/prime',
-        destination: '/floor-plans',
-        permanent: true,
-      },
-      {
-        source: '/series/paramount',
-        destination: '/floor-plans',
-        permanent: true,
-      },
+      // /series/<slug> are series hub pages (src/app/series/[slug]) — the
+      // old redirects to /floor-plans were removed 2026-09-09.
       {
         source: '/brands/champion/series/aspire/floor-plans/Sectionals/:slug',
         destination: '/floor-plans/:slug',

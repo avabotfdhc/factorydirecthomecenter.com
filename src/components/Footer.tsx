@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 import { CookiePreferencesLink } from "./CookiePreferencesLink";
 
@@ -139,8 +140,13 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Regulation Z + HUD disclosures */}
+        <div className="mt-10 pt-8 border-t border-white/10">
+          <ComplianceDisclaimers className="max-w-4xl [&_p]:text-[var(--color-gray)]" />
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--color-gray)]">
             &copy; {new Date().getFullYear()} Factory Direct Homes Center LLC. All rights reserved. Floor plans,
             renderings, specifications, and pricing are approximate and subject to change without notice.

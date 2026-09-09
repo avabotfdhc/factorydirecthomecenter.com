@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 
@@ -323,6 +324,7 @@ export function PaymentCalculator() {
                 <p className="text-xs text-center text-[var(--color-gray)]">
                   This is an estimate. Actual rates and terms may vary based on credit approval.
                 </p>
+                <ComplianceDisclaimers className="pt-3 border-t border-[var(--color-charcoal)]/10" />
               </div>
             </div>
           </div>

@@ -40,6 +40,7 @@ const cities: ServedCity[] = [
   { name: "Columbia City", miles: 30, slug: "columbia-city", state: "Indiana" },
   { name: "LaGrange County", miles: 30, slug: "lagrange-county", state: "Indiana" },
   { name: "Fort Wayne", miles: 30, slug: "fort-wayne", state: "Indiana" },
+  { name: "Allen County", miles: 25, slug: "allen-county", state: "Indiana" },
   { name: "Ligonier", miles: 32, slug: "ligonier", state: "Indiana" },
   { name: "Noble County", miles: 35, slug: "noble-county", state: "Indiana" },
   { name: "Whitley County", miles: 35, slug: "whitley-county", state: "Indiana" },

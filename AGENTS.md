@@ -16,6 +16,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `NEXT_PUBLIC_FB_PIXEL_ID` — Meta/Facebook Pixel
 - `NEXT_PUBLIC_CLARITY_PROJECT_ID` — Microsoft Clarity
 
+**Feature env vars** (also Vercel-only):
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` — the "FDHC Site" Supabase project: catalogue, `/admin`, the `leads` table and `/api/search`. Without the URL + anon key the site serves the repo-published catalogue and search falls back to it.
+- `OPENAI_API_KEY` (optional `OPENAI_CHAT_MODEL`, default `gpt-4o-mini`) — powers Ava (`/api/chat`). Unset → the chat widget uses its scripted replies.
+- `RESEND_API_KEY`, `LEAD_EMAIL_TO`, `GOOGLE_SHEETS_ID`, `GOOGLE_SERVICE_ACCOUNT_KEY`, DealerTide keys — lead fan-out channels in `/api/leads`; each is skipped when unset.
+
 Adding a new tracking platform: scaffold the component in `src/lib/analytics.tsx`, reference it from `AnalyticsProvider`, then `vercel env add NEW_VAR production` and redeploy. Do NOT commit IDs into source.
 
 # Coordinating with other Ava sessions
