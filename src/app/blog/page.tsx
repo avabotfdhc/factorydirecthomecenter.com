@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getApiBlogPosts } from "@/lib/api-content";
 import { PostImage } from "@/components/PostImage";
+import { languageAlternates } from "@/lib/seo";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: "The Manufactured Home Blog",
   description:
     "Expert guides, buyer tips, financing advice, and industry news for manufactured and modular home buyers. From Factory Direct Homes Center in Auburn, IN.",
-  alternates: { canonical: `${SITE}/blog` },
+  alternates: { canonical: `${SITE}/blog`, languages: languageAlternates(`${SITE}/blog`) },
   keywords: [
     "manufactured home blog",
     "modular home tips",

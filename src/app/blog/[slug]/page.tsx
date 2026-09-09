@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
 import { StructuredData } from "@/lib/seo";
 import { PostImage } from "@/components/PostImage";
+import { languageAlternates } from "@/lib/seo";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: post.title,
     description: post.excerpt,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {
       title: post.title,
       description: post.excerpt,

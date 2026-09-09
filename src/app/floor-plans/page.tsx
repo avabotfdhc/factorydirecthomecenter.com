@@ -7,6 +7,7 @@ import { FloorPlansGrid } from "./FloorPlansGrid";
 import { SiteSearch } from "@/components/SiteSearch";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { PricingDisclaimer } from "@/components/Pricing";
+import { languageAlternates } from "@/lib/seo";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
   title: "Champion Floor Plans & Home Models",
   description:
     "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Serving Indiana, Ohio, and Michigan.",
-  alternates: { canonical: `${SITE}/floor-plans` },
+  alternates: { canonical: `${SITE}/floor-plans`, languages: languageAlternates(`${SITE}/floor-plans`) },
   keywords: [
     "manufactured home floor plans",
     "champion homes floor plans",

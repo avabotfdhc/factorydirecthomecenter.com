@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { languageAlternates } from "@/lib/seo";
 
 export function generateLocationMetadata({ city, state }: { city: string; state: string }): Metadata {
   // Title only — the root layout metadata template wraps this with
@@ -9,6 +10,7 @@ export function generateLocationMetadata({ city, state }: { city: string; state:
     description: `Champion manufactured and modular homes delivered to ${city}, ${state}. Factory-direct pricing, line-item transparency, serving Indiana, Ohio, and Michigan from Auburn, IN.`,
     alternates: {
       canonical: `/locations/${city.toLowerCase().replace(/\s+/g, "-")}`,
+      languages: languageAlternates(`/locations/${city.toLowerCase().replace(/\s+/g, "-")}`),
     },
   };
 }

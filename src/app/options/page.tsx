@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { LightboxGallery } from "@/components/ImageLightbox";
+import { languageAlternates } from "@/lib/seo";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   title: "Factory Options & Selections — Champion Homes",
   description:
     "Browse Champion's factory options for your new manufactured or modular home: interior and exterior selections, fireplaces, kitchen islands, optional cabinets, exterior styles, and full series brochures — from Factory Direct Homes Center in Auburn, Indiana.",
-  alternates: { canonical: `${SITE}/options` },
+  alternates: { canonical: `${SITE}/options`, languages: languageAlternates(`${SITE}/options`) },
   keywords: [
     "manufactured home options",
     "champion homes options",
