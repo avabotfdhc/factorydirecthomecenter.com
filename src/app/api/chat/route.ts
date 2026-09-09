@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { buildAvaKnowledge } from "@/lib/ava-knowledge";
+import { submitLead } from "@/app/actions/leads";
 
 // POST /api/chat — Ava, the site's sales copilot.
 //
@@ -39,6 +40,48 @@ interface ChatMessage {
   content: string;
 }
 
+// Ava converts: once she has a name, a phone/email and a county she calls
+// this tool and the lead goes through the same pipeline as the quote form
+// (Supabase leads table + email/CRM fan-out via submitLead).
+const CAPTURE_LEAD_TOOL = {
+  type: "function",
+  function: {
+    name: "capture_lead",
+    description:
+      "Send the visitor's details to the Auburn sales team for a line-item quote and spec package. Call it as soon as you have their full name, a phone number or email, and the delivery county/state.",
+    parameters: {
+      type: "object",
+      properties: {
+        name: { type: "string", description: "Full name" },
+        contact: { type: "string", description: "Phone number or email address" },
+        county: { type: "string", description: "Delivery county and state, e.g. DeKalb County, IN" },
+        timeframe: { type: "string", description: "Move-in timeline in the visitor's words" },
+        modelName: { type: "string", description: "Floor plan or home type they are interested in" },
+        series: { type: "string", description: "Champion series, if known" },
+        notes: { type: "string", description: "Land status, bedrooms, budget tier, anything else useful" },
+      },
+      required: ["name", "contact", "county"],
+    },
+  },
+} as const;
+
+interface LeadArgs {
+  name?: string;
+  contact?: string;
+  county?: string;
+  timeframe?: string;
+  modelName?: string;
+  series?: string;
+  notes?: string;
+}
+
+interface OpenAIChoice {
+  message?: {
+    content?: string | null;
+    tool_calls?: { id: string; type: string; function: { name: string; arguments: string } }[];
+  };
+}
+
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 1500;
 
@@ -69,30 +112,88 @@ export async function POST(request: Request) {
 
   try {
     const knowledge = await buildAvaKnowledge();
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_CHAT_MODEL || "gpt-4o-mini",
-        temperature: 0.4,
-        max_tokens: 450,
-        messages: [
-          { role: "system", content: `${AVA_SYSTEM_PROMPT}\n\nKNOWLEDGE BASE (authoritative — prefer it over general knowledge):\n${knowledge}` },
-          ...messages,
-        ],
-      }),
-    });
-    if (!res.ok) {
-      console.error("[chat] OpenAI HTTP", res.status, (await res.text()).slice(0, 300));
-      return NextResponse.json({ error: "Chat unavailable" }, { status: 502 });
+    const systemMessage = {
+      role: "system",
+      content: `${AVA_SYSTEM_PROMPT}\n\nKNOWLEDGE BASE (authoritative — prefer it over general knowledge):\n${knowledge}`,
+    };
+    const model = process.env.OPENAI_CHAT_MODEL || "gpt-4o-mini";
+    const complete = async (msgs: unknown[], withTools: boolean) => {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model,
+          temperature: 0.4,
+          max_tokens: 450,
+          messages: msgs,
+          ...(withTools ? { tools: [CAPTURE_LEAD_TOOL], tool_choice: "auto" } : {}),
+        }),
+      });
+      if (!res.ok) {
+        console.error("[chat] OpenAI HTTP", res.status, (await res.text()).slice(0, 300));
+        return null;
+      }
+      const data = (await res.json()) as { choices?: OpenAIChoice[] };
+      return data.choices?.[0]?.message ?? null;
+    };
+
+    const first = await complete([systemMessage, ...messages], true);
+    if (!first) return NextResponse.json({ error: "Chat unavailable" }, { status: 502 });
+
+    const call = first.tool_calls?.find((c) => c.function?.name === "capture_lead");
+    if (!call) {
+      const reply = first.content?.trim();
+      if (!reply) return NextResponse.json({ error: "Chat unavailable" }, { status: 502 });
+      return NextResponse.json({ reply });
     }
-    const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
-    const reply = data.choices?.[0]?.message?.content?.trim();
-    if (!reply) return NextResponse.json({ error: "Chat unavailable" }, { status: 502 });
-    return NextResponse.json({ reply });
+
+    // Ava decided to convert: save the lead, then let her confirm naturally.
+    let args: LeadArgs = {};
+    try {
+      args = JSON.parse(call.function.arguments || "{}") as LeadArgs;
+    } catch {
+      args = {};
+    }
+    const sourcePage = (() => {
+      try {
+        return new URL(request.headers.get("referer") || "").pathname;
+      } catch {
+        return "/chat";
+      }
+    })();
+    const result = await submitLead({
+      name: String(args.name || ""),
+      contact: String(args.contact || ""),
+      county: String(args.county || ""),
+      timeframe: String(args.timeframe || "Just researching"),
+      modelName: String(args.modelName || "Chat inquiry"),
+      series: String(args.series || "Champion"),
+      sourcePage: `${sourcePage} (Ava chat)${args.notes ? ` — ${String(args.notes).slice(0, 200)}` : ""}`,
+    });
+
+    const followUp = await complete(
+      [
+        systemMessage,
+        ...messages,
+        { role: "assistant", content: first.content || null, tool_calls: first.tool_calls },
+        {
+          role: "tool",
+          tool_call_id: call.id,
+          content: JSON.stringify(
+            result.success
+              ? { status: "saved", next: "A home specialist will reach out within one business day. Offer a lot visit at 1211 State Road 8, Auburn." }
+              : { status: "failed", next: "Apologize briefly and give the phone number (260) 308-1457 and the Get Pricing button as the fallback." },
+          ),
+        },
+      ],
+      false,
+    );
+    const reply =
+      followUp?.content?.trim() ||
+      (result.success
+        ? `Got it, ${args.name}. Our Auburn team will reach out at ${args.contact} within one business day with your line-item quote and spec sheet. Would you like to set up a lot visit as well?`
+        : "I couldn't save that just now. Please call or text (260) 308-1457, or use the Get Pricing button on any floor plan, and the team will take it from there.");
+    return NextResponse.json({ reply, leadCaptured: result.success });
   } catch (err) {
     console.error("[chat] failed:", err);
     return NextResponse.json({ error: "Chat unavailable" }, { status: 500 });

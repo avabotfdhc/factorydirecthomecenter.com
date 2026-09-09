@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { H4 } from "./Heading";
+import PriceQuoteModal from "./PriceQuoteModal";
 
 // Ava — the site's sales copilot. Replies come from /api/chat (OpenAI with
 // Ava's sales persona and a live catalogue snapshot). When that route is not
@@ -40,6 +41,8 @@ export function AvaChatWidget() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+  const [leadCaptured, setLeadCaptured] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   // Once the API answers 503 (not configured) we stop asking it.
   const apiAvailable = useRef(true);
@@ -110,7 +113,8 @@ export function AvaChatWidget() {
         return null;
       }
       if (!res.ok) return null;
-      const json = (await res.json()) as { reply?: string };
+      const json = (await res.json()) as { reply?: string; leadCaptured?: boolean };
+      if (json.leadCaptured) setLeadCaptured(true);
       return json.reply?.trim() || null;
     } catch {
       return null;
@@ -237,6 +241,13 @@ export function AvaChatWidget() {
 
           {/* Quick Replies */}
           <div className="p-2 border-t border-[var(--color-charcoal)]/10 flex gap-2 overflow-x-auto">
+            <button
+              type="button"
+              onClick={() => setQuoteOpen(true)}
+              className="px-3 py-1.5 bg-[var(--color-teal)] text-white text-xs font-bold rounded-full whitespace-nowrap hover:bg-[var(--color-teal-dark)] transition-colors"
+            >
+              {leadCaptured ? "✓ Request received" : "Get my quote"}
+            </button>
             {quickReplies.map((reply) => (
               <button
                 key={reply}
@@ -275,6 +286,8 @@ export function AvaChatWidget() {
           </form>
         </div>
       )}
+
+      <PriceQuoteModal isOpen={quoteOpen} onClose={() => setQuoteOpen(false)} modelName="Chat inquiry" />
     </>
   );
 }
