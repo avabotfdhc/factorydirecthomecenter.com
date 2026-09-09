@@ -37,7 +37,10 @@ export function planFiles(files: File[], plans: PlanRef[], lit: LitRef[], series
 
   for (const f of files) {
     const name = f.name;
-    const m = name.match(MODEL_RE);
+    // Champion's photo folders are named for the model ("2844M32169 - BAYFIELD/
+    // exterior.jpg"), so the folder path counts when the filename carries no code.
+    const relPath = (f as File & { webkitRelativePath?: string }).webkitRelativePath || "";
+    const m = name.match(MODEL_RE) || relPath.match(MODEL_RE);
     if (m) {
       const slug = byModel.get(m[1].toUpperCase());
       if (!slug) { unmatched.push(`${name} (model ${m[1]} not in catalog)`); continue; }
