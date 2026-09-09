@@ -181,7 +181,7 @@ export default function ChampionHomesPage() {
             <Link href="/floor-plans" className="bg-white text-[var(--color-teal)] px-6 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-cream)] transition-colors">
               Browse Floor Plans
             </Link>
-            <Link href="/design-your-home" className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors">
+            <Link href="/design-your-home" className="bg-[var(--color-lime)] text-white px-6 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors">
               Design Your Home
             </Link>
           </div>

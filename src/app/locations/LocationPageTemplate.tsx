@@ -97,7 +97,7 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
               <Link
                 href="/floor-plans"
                 onClick={() => trackCTAClick("browse_floor_plans", `location_${city.toLowerCase().replace(/\s+/g, '_')}`)}
-                className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
+                className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
               >
                 Browse Floor Plans
               </Link>

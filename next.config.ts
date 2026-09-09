@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
         destination: '/floor-plans',
         permanent: true,
       },
+      // County pages: "-in" aliases → canonical slugs
+      ...["allen", "dekalb", "noble", "steuben"].map((c) => ({
+        source: `/locations/${c}-county-in`,
+        destination: `/locations/${c}-county`,
+        permanent: true,
+      })),
       // /series/<slug> are series hub pages (src/app/series/[slug]) — the
       // old redirects to /floor-plans were removed 2026-09-09.
       {

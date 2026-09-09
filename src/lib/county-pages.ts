@@ -14,6 +14,8 @@ export interface CountyPage {
   driveNote: string;
   points: string[];        // why-this-county bullets
   zoningNote: string;      // honest, non-legal guidance
+  milesFromTopeka: string; // delivery distance from Champion's Topeka plant
+  frostDepth: string;      // foundation frost-line guidance
 }
 
 export const countyPages: CountyPage[] = [
@@ -33,6 +35,9 @@ export const countyPages: CountyPage[] = [
       "Chattel, land-home and FHA Title I lenders active throughout the Fort Wayne market",
       "Modular (IRC) homes available where a site calls for a stick-built appraisal",
     ],
+    milesFromTopeka: "about 45 miles",
+    frostDepth:
+      "Allen County footings go below the local frost line, generally 36 inches. Piers and perimeter foundations for a HUD-code home, and the full foundation for a modular, are inspected to that depth, so plan the concrete before the home ships.",
     zoningNote:
       "Allen County's Department of Planning Services handles zoning and building permits for unincorporated areas; Fort Wayne, New Haven and the towns have their own offices. Manufactured homes are allowed on many residential and agricultural lots outside city limits, often with foundation and skirting standards. We'll check your parcel's zoning before you commit to a home.",
   },
@@ -52,6 +57,9 @@ export const countyPages: CountyPage[] = [
       "Rural lots with wells and septic are the norm, and our referral list covers both",
       "Same factory-direct pricing whether the home goes on a farm or a town lot",
     ],
+    milesFromTopeka: "about 30 miles",
+    frostDepth:
+      "DeKalb County uses a 36-inch frost depth for footings and piers. We coordinate the pier layout with your foundation contractor from Champion's set-up drawing so the home lands on cured concrete.",
     zoningNote:
       "DeKalb County Planning & Building in Auburn issues permits for the unincorporated county; Auburn, Garrett and Butler permit within their city limits. Most residential and agricultural districts allow HUD-code manufactured homes on a permanent foundation. Bring us the parcel number and we'll confirm before you order.",
   },
@@ -71,11 +79,42 @@ export const countyPages: CountyPage[] = [
       "Closest county to the Topeka factory after LaGrange",
       "Affordable land compared with the Fort Wayne metro",
     ],
+    milesFromTopeka: "about 15 miles",
+    frostDepth:
+      "Noble County footings are set below the 36-inch frost line; lake-area lots often need engineered fill or deeper piers, which the county inspector will call out at permit.",
     zoningNote:
       "The Noble County Plan Commission in Albion issues permits for unincorporated areas; Kendallville and Ligonier permit within their limits. Most agricultural and residential districts allow manufactured homes on a permanent foundation. We'll pull your parcel's zoning before you order.",
   },
+  {
+    slug: "steuben-county",
+    county: "Steuben County",
+    state: "Indiana",
+    eyebrow: "Lakes Country",
+    intro:
+      "Steuben County's 101 lakes draw year-round and seasonal buyers alike, and a factory-built home is the fastest way onto a lake lot or a rural parcel near Angola or Fremont. We deliver Champion homes from the Topeka plant with factory-direct pricing.",
+    towns: ["Angola", "Fremont", "Hamilton", "Orland", "Ashley", "Hudson", "Clear Lake"],
+    milesFromAuburn: "about 25 miles",
+    driveNote: "Auburn to Angola is a straight run up I-69, and the Topeka plant is about an hour west, so delivery and set-up crews are local to the job.",
+    points: [
+      "Lake and rural lots throughout the county",
+      "Popular with seasonal owners replacing an older cottage",
+      "Short haul from the Topeka factory keeps freight low",
+      "Modular (IRC) homes for lake associations that require them",
+    ],
+    milesFromTopeka: "about 40 miles",
+    frostDepth:
+      "Steuben County footings go 36 inches below grade, and many lake lots also need flood-elevation and setback checks. Confirm both with the county before ordering; we'll help you read the plat.",
+    zoningNote:
+      "The Steuben County Plan Commission in Angola issues permits for the unincorporated county; Angola and Fremont permit within their limits. Manufactured homes are allowed in most residential and agricultural districts on a permanent foundation. Some lake associations have covenants beyond zoning, so we check those too.",
+  },
 ];
 
+/** "<slug>-in" aliases (allen-county-in …) resolve to the canonical county slug. */
+export function canonicalCountySlug(slug: string): string {
+  return slug.replace(/-in$/, "");
+}
+
 export function getCountyPage(slug: string): CountyPage | undefined {
-  return countyPages.find((c) => c.slug === slug);
+  const canonical = canonicalCountySlug(slug);
+  return countyPages.find((c) => c.slug === canonical);
 }

@@ -95,7 +95,7 @@ export default function CampaignsAdminPage() {
             </div>
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-3 font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
+              className="bg-[var(--color-lime)] text-white px-6 py-3 font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
             >
               {showForm ? "Cancel" : "+ New Campaign"}
             </button>
@@ -268,7 +268,7 @@ export default function CampaignsAdminPage() {
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="font-semibold text-lg">{campaign.name}</h3>
                         {active && (
-                          <span className="px-2 py-1 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-xs font-bold uppercase rounded">
+                          <span className="px-2 py-1 bg-[var(--color-lime)] text-white text-xs font-bold uppercase rounded">
                             Active
                           </span>
                         )}

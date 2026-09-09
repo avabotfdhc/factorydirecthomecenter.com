@@ -8,7 +8,7 @@ import {
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
-import { PaymentCalculator } from "@/components/PaymentCalculator";
+import { FinancingCalculator } from "@/components/FinancingCalculator";
 import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 
 // ============================================
@@ -372,11 +372,11 @@ export default function FinancingPage() {
                 Calculate Your <span className="italic text-[var(--color-teal)]">Monthly Payment</span>
               </H2>
               <p className="text-[var(--color-gray)] max-w-2xl mx-auto">
-                Estimate your monthly payment based on home price, down payment, credit score, and loan type.
+                Estimate principal &amp; interest for a chattel (home-only) or land-home loan. Slide the price and down payment, pick the loan type, and call us to get pre-qualified.
               </p>
             </div>
           </FadeIn>
-          <PaymentCalculator />
+          <FinancingCalculator />
         </div>
       </section>
 

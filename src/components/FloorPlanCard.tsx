@@ -3,8 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
+
+// Category badge key from whatever the source calls the home type.
+function typeKey(homeType: string): "singleWide" | "multiSection" | "modular" {
+  if (/modular/i.test(homeType)) return "modular";
+  if (/multi|double|section/i.test(homeType)) return "multiSection";
+  return "singleWide";
+}
 
 // One home in the /floor-plans grid.
 //
@@ -25,6 +33,7 @@ interface Props {
 }
 
 export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Props) {
+  const t = useTranslations("card");
   const hasDrawing = Boolean(p.floorPlanImage && p.floorPlanImage !== p.image);
   const [view, setView] = useState<"photo" | "plan">("photo");
   const [quoteOpen, setQuoteOpen] = useState(false);
@@ -45,11 +54,11 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
                   : `${p.name} — ${bedsLabel} bed ${p.baths} bath manufactured home floor plan`
               }
               fill
-              className={showingPlan ? "object-contain p-3 bg-white" : "object-cover group-hover:scale-105 transition-transform duration-700"}
+              className={showingPlan ? "object-contain p-3 bg-slate-50" : "object-cover group-hover:scale-105 transition-transform duration-700"}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">No photo</div>
+            <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">{t("noPhoto")}</div>
           )}
           {!showingPlan && <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />}
         </Link>
@@ -60,7 +69,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
           </span>
         )}
         {bedsFlex && (
-          <span className="absolute top-3 right-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none">
+          <span className="absolute top-3 right-3 bg-[var(--color-lime)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none">
             {bedsLabel} Bed
           </span>
         )}
@@ -82,7 +91,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
               aria-pressed={view === "photo"}
               className={`px-2.5 py-1 rounded ${view === "photo" ? "bg-[var(--color-teal)] text-white" : "text-[var(--color-charcoal)]"}`}
             >
-              Photo
+              {t("photo")}
             </button>
             <button
               type="button"
@@ -90,7 +99,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
               aria-pressed={view === "plan"}
               className={`px-2.5 py-1 rounded ${view === "plan" ? "bg-[var(--color-teal)] text-white" : "text-[var(--color-charcoal)]"}`}
             >
-              Plan
+              {t("plan")}
             </button>
           </div>
         )}
@@ -107,14 +116,14 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
         </div>
         <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
           {p.brand}
-          {p.series ? ` · ${p.series} Series` : ""}
+          {p.series ? ` · ${t("series", { series: p.series })}` : ""}
         </p>
         <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
-          <span>{p.sqft.toLocaleString()} sq ft</span>
+          <span>{p.sqft.toLocaleString()} {t("sqft")}</span>
           <span className="text-[var(--color-gray-light)]">|</span>
-          <span>{bedsLabel} Bed</span>
+          <span>{bedsLabel} {t("bed")}</span>
           <span className="text-[var(--color-gray-light)]">|</span>
-          <span>{p.baths} Bath</span>
+          <span>{p.baths} {t("bath")}</span>
         </div>
 
         <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
@@ -123,13 +132,13 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
             onClick={() => setQuoteOpen(true)}
             className="rounded-lg bg-[var(--color-teal)] py-2.5 text-xs font-bold tracking-wider uppercase text-white hover:bg-[var(--color-teal-dark)] transition-colors"
           >
-            Get Pricing
+            {t("getPricing")}
           </button>
           <Link
             href={`/floor-plans/${p.slug}`}
             className="flex items-center justify-center rounded-lg border border-[var(--color-charcoal)]/15 py-2.5 text-xs font-bold tracking-wider uppercase text-[var(--color-charcoal)] hover:border-[var(--color-teal)]/50 hover:text-[var(--color-teal)] transition-colors"
           >
-            View Plan →
+            {t("viewPlan")}
           </Link>
         </div>
         {compareSlot && <div className="mt-3">{compareSlot}</div>}

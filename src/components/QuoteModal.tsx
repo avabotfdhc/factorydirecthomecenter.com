@@ -31,7 +31,7 @@ export function FloorPlanQuoteCTA({ homeName }: { homeName: string }) {
       <button
         type="button"
         onClick={() => openWith("visit")}
-        className="inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
+        className="inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
       >
         Schedule a Lot Visit
       </button>
@@ -232,7 +232,7 @@ function QuoteDialog({
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="w-full px-6 py-3.5 bg-[var(--color-lime)] text-[var(--color-charcoal)] font-bold tracking-wide rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors disabled:opacity-60"
+              className="w-full px-6 py-3.5 bg-[var(--color-lime)] text-white font-bold tracking-wide rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors disabled:opacity-60"
             >
               {status === "submitting" ? "Sending…" : cta}
             </button>

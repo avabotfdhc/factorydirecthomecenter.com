@@ -122,7 +122,7 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
               </p>
               <Link
                 href="/contact-us"
-                className="inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
+                className="inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
               >
                 Request a {hub.name} quote
               </Link>

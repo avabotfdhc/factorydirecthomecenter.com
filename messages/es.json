@@ -1,0 +1,81 @@
+{
+  "header": {
+    "nav": {
+      "floorPlans": "Planos",
+      "designYourHome": "Diseña tu casa",
+      "locations": "Ubicaciones",
+      "guides": "Guías",
+      "blog": "Blog",
+      "resources": "Recursos",
+      "financing": "Financiamiento",
+      "about": "Nosotros",
+      "contact": "Contacto"
+    },
+    "call": "Llamar",
+    "callFull": "Llamar al (260) 308-1457",
+    "search": "Buscar",
+    "menu": "Abrir o cerrar menú",
+    "skip": "Ir al contenido principal",
+    "language": "Idioma"
+  },
+  "hero": {
+    "eyebrow": "Factory Direct Homes Center — Auburn, Indiana",
+    "title": "Casas prefabricadas y modulares en Indiana, Ohio y Michigan"
+  },
+  "card": {
+    "getPricing": "Ver precio",
+    "viewPlan": "Ver plano →",
+    "photo": "Foto",
+    "plan": "Plano",
+    "bed": "Rec.",
+    "bath": "Baño",
+    "sqft": "pies²",
+    "series": "Serie {series}",
+    "noPhoto": "Sin foto",
+    "type": {
+      "singleWide": "Sencilla",
+      "multiSection": "Multisección",
+      "modular": "Modular"
+    }
+  },
+  "quote": {
+    "badge": "Precio directo de fábrica",
+    "title": "Cotización detallada — {model}",
+    "intro": "Precio directo de fábrica, hojas de opciones y costo estimado de entrega a su condado. Sin recargo por el trabajo en el terreno.",
+    "name": "Nombre completo",
+    "contact": "Teléfono o correo electrónico",
+    "county": "Condado y estado de entrega",
+    "timeframe": "Plazo de compra",
+    "timeframes": {
+      "now": "De inmediato",
+      "short": "1 a 3 meses",
+      "mid": "3 a 6 meses",
+      "research": "Solo estoy investigando"
+    },
+    "submit": "Ver precio y ficha técnica",
+    "submitting": "Enviando…",
+    "tcpa": "Al hacer clic en desbloquear, usted autoriza a Factory Direct Homes Center a contactarlo sobre su consulta. El consentimiento no es condición de compra.",
+    "privacy": "Política de privacidad",
+    "error": "Indique su nombre, un teléfono o correo electrónico y su condado.",
+    "successTitle": "Su paquete de precios va en camino",
+    "successBody": "Nuestro equipo en Auburn está preparando el precio detallado, las hojas de opciones y la entrega estimada para la {model}. Nos comunicaremos con usted en {contact} en breve.",
+    "continue": "Seguir explorando",
+    "close": "Cerrar"
+  },
+  "mobileBar": {
+    "call": "Llamar",
+    "text": "Mensaje",
+    "quote": "Cotizar"
+  },
+  "search": {
+    "title": "Buscar en el sitio",
+    "placeholder": "Busque casas, series, números de modelo, guías…",
+    "hint": "Escriba al menos dos caracteres. Pruebe un número de modelo, una serie (Prime, Aspire, Paramount) o un tema como financiamiento.",
+    "searching": "Buscando…",
+    "empty": "Sin resultados. Pruebe otra palabra o llame al (260) 308-1457.",
+    "results": "Resultados de búsqueda",
+    "navigate": "navegar",
+    "open": "abrir",
+    "close": "cerrar"
+  }
+}

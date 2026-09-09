@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiFloorPlanBySlug } from "@/lib/api-content";
 import { StructuredData, structuredData } from "@/lib/seo";
+import { SingleFamilyResidenceSchema } from "@/components/JsonLd";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { ShareListing } from "@/components/ShareListing";
@@ -92,6 +93,18 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
   return (
     <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
       {priceNumeric ? <StructuredData data={productLd} /> : null}
+      <SingleFamilyResidenceSchema
+        name={plan.name}
+        slug={plan.slug}
+        description={cleanDesc}
+        image={plan.image || undefined}
+        sqft={plan.sqft}
+        beds={plan.beds}
+        baths={plan.baths}
+        brand={plan.brand}
+        modelNumber={plan.modelNumber}
+        homeType={plan.homeType}
+      />
       <StructuredData
         data={structuredData.breadcrumb([
           { name: "Home", url: "/" },

@@ -11,7 +11,7 @@ import { countyPages, getCountyPage } from "@/lib/county-pages";
 
 export const dynamicParams = false;
 
-const STATIC_LOCATION_SLUGS = new Set(["dekalb-county", "noble-county"]);
+const STATIC_LOCATION_SLUGS = new Set(["dekalb-county", "noble-county", "steuben-county"]);
 
 export function generateStaticParams() {
   return countyPages
@@ -88,6 +88,9 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
               <p className="text-sm text-[var(--color-gray)] mb-2">
                 <strong className="text-[var(--color-charcoal)]">Distance from our Auburn lot:</strong> {c.milesFromAuburn}
               </p>
+              <p className="text-sm text-[var(--color-gray)] mb-2">
+                <strong className="text-[var(--color-charcoal)]">Delivery from Champion&rsquo;s Topeka plant:</strong> {c.milesFromTopeka}
+              </p>
               <p className="text-sm text-[var(--color-gray)]">
                 Delivery and set-up are quoted line by line for your exact site. See{" "}
                 <Link href="/guides/delivery-and-setup" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
@@ -105,6 +108,8 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
             Zoning &amp; permits in <span className="italic text-[var(--color-teal)]">{c.county}</span>
           </H2>
           <p className="text-[var(--color-gray)] leading-relaxed mb-6">{c.zoningNote}</p>
+          <H3 className="font-serif text-xl font-semibold mb-3">Foundations &amp; frost depth</H3>
+          <p className="text-[var(--color-gray)] leading-relaxed mb-6">{c.frostDepth}</p>
           <p className="text-[var(--color-gray)] leading-relaxed">
             Read our{" "}
             <Link href="/guides/zoning" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
@@ -131,7 +136,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/floor-plans"
-              className="inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
+              className="inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
             >
               Browse Floor Plans
             </Link>

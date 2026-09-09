@@ -18,6 +18,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 **Feature env vars** (also Vercel-only):
 - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` — the "FDHC Site" Supabase project: catalogue, `/admin`, the `leads` table and `/api/search`. Without the URL + anon key the site serves the repo-published catalogue and search falls back to it.
+- `LEAD_WEBHOOK_SECRET` (+ optional `LEAD_ALERT_EMAIL_TO`, default sales@) — Supabase Database Webhook on `leads` INSERT posts to `/api/webhooks/new-lead` with header `x-webhook-secret`; the route emails the lead via Resend.
 - `OPENAI_API_KEY` (optional `OPENAI_CHAT_MODEL`, default `gpt-4o-mini`) — powers Ava (`/api/chat`). Unset → the chat widget uses its scripted replies.
 - `RESEND_API_KEY`, `LEAD_EMAIL_TO`, `GOOGLE_SHEETS_ID`, `GOOGLE_SERVICE_ACCOUNT_KEY`, DealerTide keys — lead fan-out channels in `/api/leads`; each is skipped when unset.
 
