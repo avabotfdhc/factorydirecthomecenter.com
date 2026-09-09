@@ -45,8 +45,10 @@ async function rest(path, init = {}) {
     ...init,
     headers: { ...headers, "Content-Type": "application/json", ...(init.headers || {}) },
   });
-  if (!res.ok) throw new Error(`${init.method || "GET"} ${path} -> ${res.status} ${await res.text()}`);
-  return res.status === 204 ? null : res.json();
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${init.method || "GET"} ${path} -> ${res.status} ${text}`);
+  // Writes with Prefer: return=minimal answer 201/204 with an empty body.
+  return text ? JSON.parse(text) : null;
 }
 
 /** Active plans with no card image and no photos, plus their sheets. */
