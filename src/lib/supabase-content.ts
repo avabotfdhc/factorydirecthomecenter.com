@@ -71,6 +71,7 @@ interface FloorPlanRow {
   brochure_url?: string | null;
   virtual_tour?: string | null;
   floor_plan_images?: { path: string; kind?: string | null; sort_order?: number | null }[];
+  floor_plan_documents?: { path: string; title?: string | null; kind?: string | null; sort_order?: number | null }[];
 }
 
 async function rest(path: string): Promise<unknown> {
@@ -158,7 +159,7 @@ export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloor
   try {
     rows = (await rest(
       `floor_plans?slug=eq.${encodeURIComponent(slug)}&is_active=eq.true&limit=1` +
-        `&select=*,floor_plan_images(path,kind,sort_order)`,
+        `&select=*,floor_plan_images(path,kind,sort_order),floor_plan_documents(path,title,kind,sort_order)`,
     )) as FloorPlanRow[];
   } catch (err) {
     console.error(`[supabase] floor_plan get-details ${slug} failed: ${err instanceof Error ? err.message : err}`);
@@ -177,6 +178,12 @@ export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloor
     .filter(Boolean);
   // Banner first, then the ordered gallery/drawings, deduped.
   const gallery = [...new Set([banner, ...images].filter(Boolean))];
+  // Every sales sheet / option sheet Champion publishes for the model (APB and
+  // APF variants, L-101/L-102, LIT-1 colour sheets), imported from Box.
+  const documents = [...(r.floor_plan_documents || [])]
+    .sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0))
+    .map((d) => ({ title: String(d.title || d.path.split("/").pop() || "Floor plan sheet"), url: imgUrl(d.path) }))
+    .filter((d) => d.url);
 
   return {
     ...base,
@@ -192,5 +199,6 @@ export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloor
     floorPlanUrl: imgUrl(r.brochure_url),
     virtualTour: String(r.virtual_tour || ""),
     gallery,
+    documents,
   };
 }
