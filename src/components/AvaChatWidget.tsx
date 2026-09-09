@@ -26,9 +26,11 @@ const initialMessages: Message[] = [
 ];
 
 const quickReplies = [
-  "What's your price range?",
-  "Do you have homes in stock?",
+  "Which series fits a tight budget?",
+  "Show me 3-bedroom homes",
+  "Manufactured vs. modular?",
   "How does financing work?",
+  "What happens on delivery day?",
   "Schedule a tour",
 ];
 

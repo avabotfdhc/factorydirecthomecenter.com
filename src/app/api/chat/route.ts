@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { getApiFloorPlans } from "@/lib/api-content";
+import { buildAvaKnowledge } from "@/lib/ava-knowledge";
 
 // POST /api/chat — Ava, the site's sales copilot.
 //
 // Uses OpenAI (gpt-4o-mini: cheapest capable model) with a fixed sales
-// persona and a compact, live snapshot of the catalogue so answers cite real
-// homes. Requires OPENAI_API_KEY on Vercel; without it the route answers 503
+// persona plus the full knowledge base in src/lib/ava-knowledge.ts (company,
+// series, every floor plan, Champion, the industry, the site's FAQs), so
+// answers cite real homes and match what the pages say. Requires OPENAI_API_KEY on Vercel; without it the route answers 503
 // and the widget falls back to its scripted replies, so the site never shows
 // a broken chat.
 
@@ -29,7 +30,8 @@ SALES RULES:
 2. Emphasize transparent line-item pricing.
 3. Guide the conversation toward sending a complete factory spec package & price sheet (collect Name, Phone/Email, and Target County).
 4. Never quote a dollar price. Pricing is shared by the Auburn team in a line-item quote; offer to send one instead.
-5. Keep replies short (2–4 sentences), warm, and specific. Recommend homes from the FEATURED INVENTORY list when it fits.
+5. Keep replies short (2–4 sentences), warm, and specific. Recommend homes from the CATALOGUE in the knowledge base when it fits, linking /floor-plans/<slug>.
+6. Series note: Aspire, Paramount, Redman and Dutch are built in Topeka; Prime is built at Champion's Decatur, Indiana plant.
 `;
 
 interface ChatMessage {
@@ -46,18 +48,6 @@ function sanitize(messages: unknown): ChatMessage[] {
     .filter((m): m is ChatMessage => Boolean(m) && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
     .slice(-MAX_MESSAGES)
     .map((m) => ({ role: m.role, content: m.content.trim().slice(0, MAX_CHARS) }));
-}
-
-async function inventorySnapshot(): Promise<string> {
-  try {
-    const plans = await getApiFloorPlans();
-    return plans
-      .slice(0, 25)
-      .map((p) => `${p.name} (${p.series || "Champion"}, ${p.homeType}): ${p.sqft} sqft, ${p.beds}bd/${p.baths}ba — /floor-plans/${p.slug}`)
-      .join("\n");
-  } catch {
-    return "(catalogue temporarily unavailable — invite the visitor to browse /floor-plans)";
-  }
 }
 
 export async function POST(request: Request) {
@@ -78,7 +68,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const inventory = await inventorySnapshot();
+    const knowledge = await buildAvaKnowledge();
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -88,9 +78,9 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         model: process.env.OPENAI_CHAT_MODEL || "gpt-4o-mini",
         temperature: 0.4,
-        max_tokens: 350,
+        max_tokens: 450,
         messages: [
-          { role: "system", content: `${AVA_SYSTEM_PROMPT}\n\nFEATURED INVENTORY:\n${inventory}` },
+          { role: "system", content: `${AVA_SYSTEM_PROMPT}\n\nKNOWLEDGE BASE (authoritative — prefer it over general knowledge):\n${knowledge}` },
           ...messages,
         ],
       }),
