@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { prepareImport, finalizeImport, type PlannedUpload } from "./actions";
 
-interface PlanRef { slug: string; model_number: string }
+interface PlanRef { slug: string; model_number: string; series: string }
 interface LitRef { id: string; box_filename: string; title: string; category: string }
 
 const MODEL_RE = /(\d{4}[HM]\d{2}[A-Z0-9]{3})/i;
@@ -25,8 +25,11 @@ function litCategory(name: string): string | null {
 }
 
 /** Pure classifier: decide what each dropped file is and where it goes. */
-export function planFiles(files: File[], plans: PlanRef[], lit: LitRef[]) {
-  const byModel = new Map(plans.map((p) => [p.model_number.toUpperCase(), p.slug]));
+export function planFiles(files: File[], plans: PlanRef[], lit: LitRef[], series?: string) {
+  // Aspire (Dutch) and Paramount (Redman) publish the same AP model numbers,
+  // so the caller picks the series and only its plans are matched.
+  const pool = series ? plans.filter((p) => p.series === series) : plans;
+  const byModel = new Map(pool.map((p) => [p.model_number.toUpperCase(), p.slug]));
   const litByName = new Map(lit.map((l) => [norm(l.box_filename), l]));
   const planned: (PlannedUpload & { file: File })[] = [];
   const skipped: string[] = [];
@@ -64,8 +67,10 @@ export default function ImportClient({ plans, lit }: { plans: PlanRef[]; lit: Li
   const [log, setLog] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ ok: number; failed: string[] } | null>(null);
+  const seriesOptions = [...new Set(plans.map((p) => p.series).filter(Boolean))].sort();
+  const [series, setSeries] = useState<string>(seriesOptions.includes("Aspire") ? "Aspire" : seriesOptions[0] ?? "");
 
-  const preview = files.length ? planFiles(files, plans, lit) : null;
+  const preview = files.length ? planFiles(files, plans, lit, series) : null;
 
   async function run() {
     if (!preview) return;
@@ -113,11 +118,24 @@ export default function ImportClient({ plans, lit }: { plans: PlanRef[]; lit: Li
     <div className="space-y-6 max-w-3xl">
       <div className="bg-white rounded-xl border border-black/10 p-6 space-y-3">
         <p className="text-sm text-black/70">
-          Select your downloaded Box <strong>“2026 Aspire”</strong> folder (the whole tree). Files are matched
+          Pick the series, then select the downloaded Box folder for it (the whole tree). Files are matched
           automatically: each <code>…SALES.pdf</code> attaches to its model by model number, photos go to that
           model’s gallery, and standards/brochures/options/exteriors/cabinets file into the literature library.
           Files upload straight from your browser to storage.
         </p>
+        <label className="block text-sm">
+          <span className="text-black/60">Series for this batch</span>
+          <select
+            value={series}
+            disabled={busy}
+            onChange={(e) => setSeries(e.target.value)}
+            className="ml-2 border border-black/20 rounded px-2 py-1 text-sm"
+          >
+            {seriesOptions.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </label>
         <input
           type="file"
           multiple
