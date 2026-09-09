@@ -33,12 +33,16 @@ export function supabaseConfigured(): boolean {
 }
 
 /** Resolve a stored image reference to a loadable URL. Absolute URLs pass
- *  through (encoded); bare paths resolve against the public storage bucket. */
+ *  through (encoded); site-relative paths ("/images/...", files shipped in
+ *  public/) are served by the site itself; bare storage keys resolve against
+ *  the public storage bucket. Most catalogue rows carry "/images/..." paths,
+ *  so treating them as storage keys pointed 400+ images at an empty bucket. */
 function imgUrl(ref?: string | null): string {
   const s = String(ref || "").trim();
   if (!s) return "";
   if (/^https?:\/\//.test(s)) return encodeURI(s);
-  return encodeURI(`${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${s.replace(/^\//, "")}`);
+  if (s.startsWith("/")) return encodeURI(s);
+  return encodeURI(`${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${s}`);
 }
 
 function formatPrice(raw: unknown): string {
