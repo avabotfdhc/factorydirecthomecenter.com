@@ -28,3 +28,11 @@ Adding a new tracking platform: scaffold the component in `src/lib/analytics.tsx
 # Coordinating with other Ava sessions
 
 Multiple Ava sessions can run in parallel (Telegram-triggered, cron jobs, manual). They share this working tree. If you're about to do something race-prone (edit `.env.local`, run `npm run build`, modify `src/lib/pages.ts` while another session is adding pages), check `ps aux | grep claude` first. A prior session wrote a partial `.env.local` on 2026-04-11 and silently broke tracking on production for an hour — that's the kind of thing `.vercelignore` now prevents but coordination would prevent sooner.
+
+# Catalogue media from Champion's Box library
+
+Champion shares its literature and photo library through two Box folders (Topeka IN, Decatur IN). On 2026-09-09 every 2026 sales sheet (APB/APF, L-101/L-102, LIT-1), WEB-size photo set and literature PDF was copied into the `floor-plans` storage bucket and attached in the CMS (`floor_plan_documents`, `floor_plan_images`, `literature`), without downloads:
+- `public/seed/box-import-manifest.json` — Box file ids and target storage paths (`<series>/<MODEL>/plans/…`, `…/photos/…`, `literature/…`). The folder **share tokens are not in the repo**.
+- Supabase edge function `box-import` (project `mvetqzhjszlullttfkwa`) v4 fetched each file from Box's shared-link download URL and wrote it to storage; it is parked as a 410 stub. Redeploy v4 and POST `{ tokens: {T,D}, manifestUrl, offset, limit }` (via `pg_net` from SQL) to re-run.
+- Storage paths carry series + model, so `floor_plan_documents` / `floor_plan_images` rows can be regenerated from `storage.objects` with the SQL pattern in this session's history (join on `lower(series)` and `upper(model_number)`).
+- Box download URL for a file inside a shared folder: `https://app.box.com/index.php?rm=box_download_shared_file&shared_name=<token>&file_id=f_<id>`.
