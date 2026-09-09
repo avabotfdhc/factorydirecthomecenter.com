@@ -56,11 +56,13 @@
     "submitting": "Sending…",
     "tcpa": "By clicking unlock, you authorize Factory Direct Homes Center to contact you regarding your inquiry. Consent is not a condition of purchase.",
     "privacy": "Privacy Policy",
-    "error": "Please add your name, a phone number or email, and your county.",
+    "error": "Please add your name, a phone number and your county.",
     "successTitle": "Pricing package on its way",
     "successBody": "Our Auburn team is putting together line-item pricing, option sheets and estimated delivery for the {model}. We'll reach you at {contact} shortly.",
     "continue": "Continue Browsing",
-    "close": "Close"
+    "close": "Close",
+    "phone": "Phone number",
+    "email": "Email (optional)"
   },
   "mobileBar": {
     "call": "Call",

@@ -48,26 +48,28 @@ const CAPTURE_LEAD_TOOL = {
   function: {
     name: "capture_lead",
     description:
-      "Send the visitor's details to the Auburn sales team for a line-item quote and spec package. Call it as soon as you have their full name, a phone number or email, and the delivery county/state.",
+      "Send the visitor's details to the Auburn sales team for a line-item quote and spec package. Call it as soon as you have their full name, a phone number, and the delivery county/state (ask for an email too, but it is optional).",
     parameters: {
       type: "object",
       properties: {
         name: { type: "string", description: "Full name" },
-        contact: { type: "string", description: "Phone number or email address" },
+        phone: { type: "string", description: "Phone number (required; digits, any format)" },
+        email: { type: "string", description: "Email address, if they shared one" },
         county: { type: "string", description: "Delivery county and state, e.g. DeKalb County, IN" },
         timeframe: { type: "string", description: "Move-in timeline in the visitor's words" },
         modelName: { type: "string", description: "Floor plan or home type they are interested in" },
         series: { type: "string", description: "Champion series, if known" },
         notes: { type: "string", description: "Land status, bedrooms, budget tier, anything else useful" },
       },
-      required: ["name", "contact", "county"],
+      required: ["name", "phone", "county"],
     },
   },
 } as const;
 
 interface LeadArgs {
   name?: string;
-  contact?: string;
+  phone?: string;
+  email?: string;
   county?: string;
   timeframe?: string;
   modelName?: string;
@@ -163,7 +165,8 @@ export async function POST(request: Request) {
     })();
     const result = await submitLead({
       name: String(args.name || ""),
-      contact: String(args.contact || ""),
+      contact: String(args.phone || ""),
+      email: String(args.email || ""),
       county: String(args.county || ""),
       timeframe: String(args.timeframe || "Just researching"),
       modelName: String(args.modelName || "Chat inquiry"),
@@ -191,7 +194,7 @@ export async function POST(request: Request) {
     const reply =
       followUp?.content?.trim() ||
       (result.success
-        ? `Got it, ${args.name}. Our Auburn team will reach out at ${args.contact} within one business day with your line-item quote and spec sheet. Would you like to set up a lot visit as well?`
+        ? `Got it, ${args.name}. Our Auburn team will call or text you at ${args.phone} within one business day with your line-item quote and spec sheet. Would you like to set up a lot visit as well?`
         : "I couldn't save that just now. Please call or text (260) 308-1457, or use the Get Pricing button on any floor plan, and the team will take it from there.");
     return NextResponse.json({ reply, leadCaptured: result.success });
   } catch (err) {
