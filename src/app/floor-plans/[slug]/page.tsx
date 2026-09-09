@@ -131,7 +131,9 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               <ZoomableImage
                 src={plan.image}
                 alt={`${plan.name} ${plan.homeType || "manufactured home"} — floor plan`}
-                className="absolute inset-0 w-full h-full object-cover"
+                // A rendered sales sheet (the only image for plans without
+                // photos) is shown whole; photos fill the frame.
+                className={`absolute inset-0 w-full h-full ${plan.floorPlanImage && plan.image === plan.floorPlanImage ? "object-contain p-3 bg-slate-50" : "object-cover"}`}
                 // Hero click opens the full gallery so buyers can page through
                 // every photo and floor-plan sheet from the first image.
                 images={plan.gallery.map((src, i) => ({ src, alt: `${plan.name} image ${i + 1}` }))}
