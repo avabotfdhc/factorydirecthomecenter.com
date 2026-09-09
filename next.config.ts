@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "factory-direct-homescenter.s3.us-east-1.amazonaws.com",
       },
+      // Supabase Storage: plan photos and drawings imported from Champion's Box library.
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
   async redirects() {
