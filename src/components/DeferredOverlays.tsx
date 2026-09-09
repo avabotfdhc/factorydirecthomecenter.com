@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-// LiveChat and ExitIntentPopup are overlays that no visitor needs during the
+// AvaChatWidget and ExitIntentPopup are overlays that no visitor needs during the
 // first seconds of a page view, yet they hydrated on every page and contributed
 // to mobile Total Blocking Time. Load them after the browser goes idle so the
 // main thread is free while the page becomes interactive.
-const LiveChat = dynamic(() => import("./LiveChat").then((m) => m.LiveChat), { ssr: false });
+const AvaChatWidget = dynamic(() => import("./AvaChatWidget").then((m) => m.AvaChatWidget), { ssr: false });
 const ExitIntentPopup = dynamic(() => import("./ExitIntentPopup").then((m) => m.ExitIntentPopup), { ssr: false });
 
 export function DeferredOverlays() {
@@ -26,7 +26,7 @@ export function DeferredOverlays() {
   if (!ready) return null;
   return (
     <>
-      <LiveChat />
+      <AvaChatWidget />
       <ExitIntentPopup />
     </>
   );

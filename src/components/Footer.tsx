@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 import { CookiePreferencesLink } from "./CookiePreferencesLink";
 
@@ -15,7 +16,7 @@ export function Footer() {
               <span className="font-serif text-3xl font-semibold tracking-tight">
                 Factory Direct
               </span>
-              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[var(--color-lime)]">
+              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[var(--color-lime-light)]">
                 Homes Center
               </span>
             </div>
@@ -46,7 +47,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime)] transition-colors duration-300"
+                    className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime-light)] transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
@@ -66,7 +67,7 @@ export function Footer() {
                   <li key={type}>
                     <Link
                       href="/floor-plans"
-                      className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime)] transition-colors duration-300"
+                      className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime-light)] transition-colors duration-300"
                     >
                       {type}
                     </Link>
@@ -82,12 +83,12 @@ export function Footer() {
               Visit Us
             </p>
             <address className="not-italic space-y-3 text-sm text-[var(--color-gray-light)]">
-              <p><a href="https://www.google.com/maps/search/?api=1&query=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-[var(--color-lime)] transition-colors">1211 State Road 8<br />Auburn, IN 46706</a></p>
+              <p><a href="https://www.google.com/maps/search/?api=1&query=1211+State+Road+8+Auburn+IN+46706" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-[var(--color-lime-light)] transition-colors">1211 State Road 8<br />Auburn, IN 46706</a></p>
               <p>
                 <a
                   href="tel:+12603081457"
                   onClick={() => trackPhoneClick("footer_contact", "desktop")}
-                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime)] transition-colors"
+                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime-light)] transition-colors"
                 >
                   (260) 308-1457
                 </a>
@@ -96,7 +97,7 @@ export function Footer() {
                 <a
                   href="mailto:sales@factorydirecthomescenter.com"
                   onClick={() => trackEmailClick("footer_contact", "desktop")}
-                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime)] transition-colors"
+                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime-light)] transition-colors"
                 >
                   sales@factorydirecthomescenter.com
                 </a>
@@ -131,7 +132,7 @@ export function Footer() {
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-sm font-bold tracking-wide rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
+                className="px-6 py-3 bg-[var(--color-lime)] text-white text-sm font-bold tracking-wide rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
               >
                 Subscribe
               </button>
@@ -139,8 +140,13 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Regulation Z + HUD disclosures */}
+        <div className="mt-10 pt-8 border-t border-white/10">
+          <ComplianceDisclaimers className="max-w-4xl [&_p]:text-[var(--color-gray)]" />
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--color-gray)]">
             &copy; {new Date().getFullYear()} Factory Direct Homes Center LLC. All rights reserved. Floor plans,
             renderings, specifications, and pricing are approximate and subject to change without notice.

@@ -14,7 +14,7 @@ import { useEffect, type RefObject } from "react";
 //
 // Registered variables:
 //   --consent-h      the consent notice (bottom-most; it interrupts everything)
-//   --mobile-bar-h   the mobile action bar (0 at lg and above)
+//   --mobile-bar-h   the mobile action bar (0 at md and above)
 export function useBottomBarHeight(
   cssVar: `--${string}`,
   ref: RefObject<HTMLElement | null>,

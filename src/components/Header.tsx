@@ -3,25 +3,43 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { trackPhoneClick } from "@/lib/analytics";
 import { AnnouncementBar } from "./AnnouncementBar";
+import { GlobalSearchModal, useGlobalSearch } from "./GlobalSearchModal";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
+// Nav labels come from messages/*.json (header.nav.*).
 const navLinks = [
-  { href: "/floor-plans", label: "Floor Plans" },
-  { href: "/design-your-home", label: "Design Your Home" },
-  { href: "/locations", label: "Locations" },
-  { href: "/guides", label: "Guides" },
-  { href: "/blog", label: "Blog" },
-  { href: "/resources", label: "Resources" },
-  { href: "/financing", label: "Financing" },
-  { href: "/about", label: "About" },
-  { href: "/contact-us", label: "Contact" },
-];
+  { href: "/floor-plans", key: "floorPlans" },
+  { href: "/design-your-home", key: "designYourHome" },
+  { href: "/locations", key: "locations" },
+  { href: "/guides", key: "guides" },
+  { href: "/blog", key: "blog" },
+  { href: "/resources", key: "resources" },
+  { href: "/financing", key: "financing" },
+  { href: "/about", key: "about" },
+  { href: "/contact-us", key: "contact" },
+] as const;
+
+const PhoneIcon = () => (
+  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+  </svg>
+);
+
+const SearchIcon = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+  </svg>
+);
 
 export function Header() {
+  const t = useTranslations("header");
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const { open: searchOpen, openSearch, closeSearch } = useGlobalSearch();
 
   const closeMenu = useCallback(() => {
     setMobileOpen(false);
@@ -63,110 +81,134 @@ export function Header() {
   return (
     <>
       <AnnouncementBar />
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[var(--color-charcoal)]/5">
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-[var(--color-teal)] focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
+      {/* Solid background + shadow so the logo and phone pill never blend into
+          content while scrolling; safe-area padding keeps them clear of the
+          notch on phones. */}
+      <header
+        className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-[var(--color-charcoal)]/10"
+        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
       >
-        Skip to main content
-      </a>
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/logo.png"
-              alt="Factory Direct Homes Center"
-              width={180}
-              height={50}
-              className="h-12 w-auto"
-              preload
-            />
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-5">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs font-medium text-[var(--color-charcoal)]/70 hover:text-[var(--color-teal)] transition-colors duration-300"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href="tel:+12603081457"
-              onClick={() => trackPhoneClick("header_nav", "desktop")}
-              className="btn-primary inline-flex items-center gap-1.5 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-4 py-2 text-xs font-bold tracking-wide rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
-            >
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              (260) 308-1457
-            </a>
-          </nav>
-
-          <div className="lg:hidden flex items-center gap-2">
-            <a
-              href="tel:+12603081457"
-              onClick={() => trackPhoneClick("header_mobile", "mobile")}
-              className="inline-flex items-center gap-1.5 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-3 py-2 text-xs font-bold tracking-wide rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
-              aria-label="Call (260) 308-1457"
-            >
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              <span className="hidden sm:inline">(260) 308-1457</span>
-              <span className="sm:hidden">Call</span>
-            </a>
-            <button
-              ref={toggleRef}
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 text-[var(--color-charcoal)]"
-              aria-label="Toggle menu"
-              aria-expanded={mobileOpen}
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false">
-                {mobileOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {mobileOpen && (
-        <div
-          ref={menuRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigation menu"
-          className="lg:hidden border-t border-[var(--color-charcoal)]/5 bg-white"
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-[var(--color-teal)] focus:text-white focus:px-4 focus:py-2 focus:rounded focus:outline-none"
         >
-          <div className="px-6 py-6 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={closeMenu}
-                className="text-base font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors"
+          {t("skip")}
+        </a>
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between h-16 gap-3">
+            <Link href="/" className="flex items-center flex-none">
+              <Image
+                src="/images/logo.png"
+                alt="Factory Direct Homes Center"
+                width={180}
+                height={50}
+                className="h-11 sm:h-12 w-auto"
+                preload
+              />
+            </Link>
+
+            <nav className="hidden lg:flex items-center gap-5">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-xs font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors duration-300"
+                >
+                  {t(`nav.${link.key}`)}
+                </Link>
+              ))}
+              <button
+                type="button"
+                onClick={openSearch}
+                aria-label={t("search")}
+                title={`${t("search")} (⌘K)`}
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full text-[var(--color-charcoal)]/70 hover:text-[var(--color-teal)] hover:bg-[var(--color-cream-dark)] transition-colors"
               >
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href="tel:+12603081457"
-              onClick={() => trackPhoneClick("header_mobile_menu", "mobile")}
-              className="mt-2 inline-flex items-center justify-center gap-2 bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-3 text-sm font-bold rounded"
-            >
-              Call (260) 308-1457
-            </a>
+                <SearchIcon />
+              </button>
+              <LanguageSwitcher />
+              <a
+                href="tel:2603081457"
+                onClick={() => trackPhoneClick("header_nav", "desktop")}
+                className="btn-primary inline-flex items-center gap-1.5 bg-[var(--color-teal)] text-white px-4 py-2.5 text-xs font-bold tracking-wide rounded-full hover:bg-[var(--color-teal-dark)] transition-colors duration-300 whitespace-nowrap"
+              >
+                <PhoneIcon />
+                (260) 308-1457
+              </a>
+            </nav>
+
+            <div className="lg:hidden flex items-center gap-1">
+              <button
+                type="button"
+                onClick={openSearch}
+                aria-label={t("search")}
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)]"
+              >
+                <SearchIcon />
+              </button>
+              <a
+                href="tel:2603081457"
+                onClick={() => trackPhoneClick("header_mobile", "mobile")}
+                className="inline-flex items-center gap-1.5 bg-[var(--color-teal)] text-white px-3.5 py-2.5 text-xs font-bold tracking-wide rounded-full hover:bg-[var(--color-teal-dark)] transition-colors duration-300 whitespace-nowrap"
+                aria-label={t("callFull")}
+              >
+                <PhoneIcon />
+                <span className="hidden sm:inline">(260) 308-1457</span>
+                <span className="sm:hidden">{t("call")}</span>
+              </a>
+              <button
+                ref={toggleRef}
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="inline-flex items-center justify-center w-11 h-11 text-[var(--color-charcoal)]"
+                aria-label={t("menu")}
+                aria-expanded={mobileOpen}
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true" focusable="false">
+                  {mobileOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      )}
-    </header>
+
+        {mobileOpen && (
+          <div
+            ref={menuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("menu")}
+            className="lg:hidden border-t border-[var(--color-charcoal)]/10 bg-white max-h-[calc(100vh-4rem)] overflow-y-auto"
+          >
+            <div className="px-6 py-6 flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={closeMenu}
+                  className="text-base font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors py-1"
+                >
+                  {t(`nav.${link.key}`)}
+                </Link>
+              ))}
+              <LanguageSwitcher className="mt-2" />
+              <a
+                href="tel:2603081457"
+                onClick={() => trackPhoneClick("header_mobile_menu", "mobile")}
+                className="mt-2 inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-6 py-3 text-sm font-bold rounded-lg"
+              >
+                <PhoneIcon />
+                {t("callFull")}
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
+
+      <GlobalSearchModal open={searchOpen} onClose={closeSearch} />
     </>
   );
 }

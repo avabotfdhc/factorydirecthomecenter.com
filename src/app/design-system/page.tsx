@@ -88,8 +88,8 @@ export default function DesignSystemPage() {
           <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
             <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Primary (Lime)</H3>
             <div className="flex flex-wrap gap-4 mb-8">
-              <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Primary Button</button>
-              <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2.5 text-xs font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Small</button>
+              <button className="btn-primary bg-[var(--color-lime)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Primary Button</button>
+              <button className="btn-primary bg-[var(--color-lime)] text-white px-6 py-2.5 text-xs font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Small</button>
               <button className="bg-[var(--color-lime)]/50 text-[var(--color-charcoal)]/50 px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded cursor-not-allowed">Disabled</button>
             </div>
 
@@ -107,7 +107,7 @@ export default function DesignSystemPage() {
 
             <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Dark Background</H3>
             <div className="bg-[var(--color-charcoal)] rounded-lg p-6 flex flex-wrap gap-4">
-              <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Primary on Dark</button>
+              <button className="btn-primary bg-[var(--color-lime)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">Primary on Dark</button>
               <button className="border-2 border-white/20 text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-white/5 transition-colors">Outline on Dark</button>
             </div>
           </div>
@@ -270,7 +270,7 @@ export default function DesignSystemPage() {
           <H3 className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-4">Badges</H3>
           <div className="flex flex-wrap gap-3">
             <span className="bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">Single Wide</span>
-            <span className="bg-[var(--color-lime)] text-[var(--color-charcoal)] text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">On Sale</span>
+            <span className="bg-[var(--color-lime)] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">On Sale</span>
             <span className="bg-[var(--color-orange)] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">Featured</span>
             <span className="bg-[var(--color-charcoal)] text-white text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">New</span>
             <span className="border border-[var(--color-teal)] text-[var(--color-teal)] text-[10px] font-bold tracking-wider uppercase px-3 py-1 rounded">Modular</span>
@@ -333,7 +333,7 @@ export default function DesignSystemPage() {
                 <H3 className="font-serif text-2xl font-semibold mb-3">Schedule a Visit</H3>
                 <p className="text-sm text-[var(--color-gray)] mb-6">Come see our model homes in person at our Auburn, IN showroom.</p>
                 <div className="flex gap-3">
-                  <a href="tel:+12603081457" className="btn-primary flex-1 text-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-3 text-sm font-bold rounded hover:bg-[var(--color-lime-dark)] transition-colors">Call Now</a>
+                  <a href="tel:+12603081457" className="btn-primary flex-1 text-center bg-[var(--color-lime)] text-white px-6 py-3 text-sm font-bold rounded hover:bg-[var(--color-lime-dark)] transition-colors">Call Now</a>
                   <button onClick={() => setModalOpen(false)} className="flex-1 border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-6 py-3 text-sm font-bold rounded hover:bg-[var(--color-charcoal)]/5 transition-colors">Close</button>
                 </div>
               </div>
@@ -390,7 +390,7 @@ export default function DesignSystemPage() {
               <select className="flex-1 px-4 py-3.5 border border-[var(--color-charcoal)]/10 rounded text-sm bg-white focus:outline-none focus:border-[var(--color-teal)]">
                 <option>Any Bathroom</option>
               </select>
-              <button className="btn-primary bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors whitespace-nowrap">
+              <button className="btn-primary bg-[var(--color-lime)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors whitespace-nowrap">
                 SEARCH
               </button>
             </div>

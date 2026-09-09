@@ -2,22 +2,28 @@
 
 :root {
   /* Brand colors matched from factorydirecthomescenter.com */
-  --color-teal: #1B6B7D;
-  --color-teal-light: #238A9F;
-  --color-teal-dark: #155768;
+  /* Brand primary: deep forest emerald (harmonized 2026-09-09). The legacy
+     token names are kept so 1,400+ call sites keep working; the values are
+     the new palette. --color-lime now equals the primary so every CTA is one
+     green; --color-lime-light is the accent for text on dark surfaces. */
+  --color-teal: #047857;
+  --color-teal-light: #059669;
+  --color-teal-dark: #065f46;
   --color-orange: #E8922A;
   --color-orange-light: #F0A94E;
   --color-orange-dark: #C87A1E;
-  --color-lime: #8AC540;
-  --color-lime-light: #9FD45C;
-  --color-lime-dark: #588028; /* WCAG AA: 4.6:1 on white for small text (was #74A835 @ 2.8:1) */
-  --color-charcoal: #2A2A2A;
-  --color-charcoal-light: #3D3D3D;
-  --color-charcoal-lighter: #555555;
+  --color-lime: #047857;
+  --color-lime-light: #34d399;
+  --color-lime-dark: #065f46;
+  /* Dark surface: warm slate instead of muddy charcoal */
+  --color-charcoal: #1e293b;
+  --color-charcoal-light: #334155;
+  --color-charcoal-lighter: #475569;
   --color-cream: #F8F7F4;
   --color-cream-dark: #EDECEA;
-  --color-gray: #666666;
-  --color-gray-light: #AAAAAA;
+  /* Neutral text: slate-500 (4.7:1 on white) / slate-400 */
+  --color-gray: #64748b;
+  --color-gray-light: #94a3b8;
   --color-white: #FFFFFF;
   
   /* Enhanced shadows */
@@ -344,4 +350,15 @@ button {
   color: var(--color-teal);
   opacity: 0.2;
   font-family: Georgia, serif;
+}
+
+/* Keep the chat launcher clear of the sticky mobile action bar (Call/Text/Quote)
+   — applies to our own Ava bubble and any third-party chat iframe. */
+@media (max-width: 768px) {
+  #chat-widget-container,
+  .chat-launcher-button,
+  iframe[title*="chat" i] {
+    bottom: 4.75rem !important;
+    right: 1rem !important;
+  }
 }

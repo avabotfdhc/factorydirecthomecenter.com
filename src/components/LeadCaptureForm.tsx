@@ -312,7 +312,7 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex-1 px-6 py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors disabled:opacity-50"
+                className="flex-1 px-6 py-3 bg-[var(--color-lime)] text-white font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors disabled:opacity-50"
               >
                 {isSubmitting ? "Submitting..." : "Get My Quote"}
               </button>

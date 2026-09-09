@@ -73,6 +73,14 @@ export function generateMetadata(config: SEOConfig): Metadata {
     },
     alternates: {
       canonical: fullUrl,
+      // hreflang: the UI chrome renders in Spanish and Burmese via ?lang=
+      // (see src/i18n); English is the default and x-default.
+      languages: {
+        en: fullUrl,
+        es: `${fullUrl}?lang=es`,
+        my: `${fullUrl}?lang=my`,
+        "x-default": fullUrl,
+      },
     },
     robots: {
       index: true,

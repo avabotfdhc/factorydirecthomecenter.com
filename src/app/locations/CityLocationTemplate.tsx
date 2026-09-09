@@ -127,7 +127,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/floor-plans"
-                  className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
+                  className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
                 >
                   Browse Floor Plans
                 </Link>
@@ -221,7 +221,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="/contact-us"
-              className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors"
+              className="bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors"
             >
               Get a Quote
             </Link>

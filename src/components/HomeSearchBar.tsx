@@ -66,7 +66,7 @@ export function HomeSearchBar() {
       <button
         type="button"
         onClick={search}
-        className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-6 py-2 text-sm font-bold uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors flex items-center justify-center"
+        className="bg-[var(--color-lime)] text-white px-6 py-2 text-sm font-bold uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors flex items-center justify-center"
       >
         Search
       </button>

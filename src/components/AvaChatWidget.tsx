@@ -3,6 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import { H4 } from "./Heading";
 
+// Ava — the site's sales copilot. Replies come from /api/chat (OpenAI with
+// Ava's sales persona and a live catalogue snapshot). When that route is not
+// configured (no OPENAI_API_KEY) or fails, the widget answers from the
+// scripted replies below so the visitor is never left hanging.
+
 
 interface Message {
   id: string;
@@ -15,7 +20,7 @@ const initialMessages: Message[] = [
   {
     id: "1",
     type: "bot",
-    text: "Hi! I'm Ava, your virtual home assistant. How can I help you today?",
+    text: "Hi! I'm Ava with Factory Direct Homes Center in Auburn. Do you already own land, or are you still looking? I can match you with the right Champion home and get you a line-item quote.",
     timestamp: new Date(),
   },
 ];
@@ -27,13 +32,18 @@ const quickReplies = [
   "Schedule a tour",
 ];
 
-export function LiveChat() {
+export function AvaChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasNotification, setHasNotification] = useState(false);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  // Once the API answers 503 (not configured) we stop asking it.
+  const apiAvailable = useRef(true);
+  // Monotonic message ids (the greeting is "1").
+  const nextId = useRef(2);
+  const newId = () => String(nextId.current++);
 
   // Show notification after 10 seconds
   useEffect(() => {
@@ -54,24 +64,55 @@ export function LiveChat() {
   const handleSend = async (text: string = inputText) => {
     if (!text.trim()) return;
 
-    // Add user message
     const userMessage: Message = {
-      id: Date.now().toString(),
+      id: newId(),
       type: "user",
       text: text,
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const history = [...messages, userMessage];
+    setMessages(history);
     setInputText("");
     setIsTyping(true);
 
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponse = generateBotResponse(text);
-      setMessages((prev) => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 1500);
+    const reply = await askAva(history);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: newId(),
+        type: "bot",
+        text: reply ?? generateBotResponse(text).text,
+        timestamp: new Date(),
+      },
+    ]);
+    setIsTyping(false);
+  };
+
+  // Live reply from /api/chat, or null to fall back to the scripted answers.
+  const askAva = async (history: Message[]): Promise<string | null> => {
+    if (!apiAvailable.current) return null;
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: history
+            .slice(1) // drop the canned greeting
+            .slice(-12)
+            .map((m) => ({ role: m.type === "user" ? "user" : "assistant", content: m.text })),
+        }),
+      });
+      if (res.status === 503) {
+        apiAvailable.current = false;
+        return null;
+      }
+      if (!res.ok) return null;
+      const json = (await res.json()) as { reply?: string };
+      return json.reply?.trim() || null;
+    } catch {
+      return null;
+    }
   };
 
   const generateBotResponse = (userText: string): Message => {
@@ -95,7 +136,7 @@ export function LiveChat() {
     }
 
     return {
-      id: (Date.now() + 1).toString(),
+      id: newId(),
       type: "bot",
       text: responseText,
       timestamp: new Date(),
@@ -115,7 +156,7 @@ export function LiveChat() {
           setHasNotification(false);
         }}
         style={{ marginBottom: "var(--consent-h, 0px)" }}
-        className="fixed bottom-24 right-4 lg:bottom-8 z-50 w-14 h-14 bg-[var(--color-teal)] text-white rounded-full shadow-lg hover:bg-[var(--color-teal-dark)] transition-all hover:scale-110 flex items-center justify-center"
+        className="fixed bottom-[4.75rem] right-4 lg:bottom-8 z-50 w-14 h-14 bg-[var(--color-teal)] text-white rounded-full shadow-lg hover:bg-[var(--color-teal-dark)] transition-all hover:scale-110 flex items-center justify-center"
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         {isOpen ? (
@@ -134,7 +175,7 @@ export function LiveChat() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div style={{ marginBottom: "var(--consent-h, 0px)" }} className="fixed bottom-40 right-4 lg:bottom-24 z-50 w-[calc(100vw-2rem)] max-w-sm bg-white rounded-2xl shadow-2xl border border-[var(--color-charcoal)]/10 overflow-hidden">
+        <div style={{ marginBottom: "var(--consent-h, 0px)" }} className="fixed bottom-[8.75rem] right-4 lg:bottom-24 z-50 w-[calc(100vw-2rem)] max-w-sm bg-white rounded-2xl shadow-2xl border border-[var(--color-charcoal)]/10 overflow-hidden">
           {/* Header */}
           <div className="bg-[var(--color-teal)] text-white p-4 flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -143,7 +184,7 @@ export function LiveChat() {
               </div>
               <div>
                 <H4 className="font-serif text-lg font-semibold">Ava</H4>
-                <p className="text-xs text-white/80">Virtual Home Assistant</p>
+                <p className="text-xs text-white/80">Housing &amp; Sales Specialist</p>
               </div>
             </div>
             <button

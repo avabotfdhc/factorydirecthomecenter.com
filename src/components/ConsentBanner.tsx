@@ -43,7 +43,7 @@ export function ConsentBanner() {
           We use cookies and similar technologies (Google Analytics, Google Tag Manager, the Meta
           Pixel, and Microsoft Clarity) to understand how visitors use this site and to measure our
           advertising. You can turn this off — the site works exactly the same either way. See our{" "}
-          <Link href="/privacy" className="underline hover:text-[var(--color-lime)]">
+          <Link href="/privacy" className="underline hover:text-[var(--color-lime-light)]">
             Privacy Policy
           </Link>
           .
@@ -59,7 +59,7 @@ export function ConsentBanner() {
           <button
             type="button"
             onClick={() => writeConsent("granted")}
-            className="min-h-12 px-6 bg-[var(--color-lime)] text-[var(--color-charcoal)] text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
+            className="min-h-12 px-6 bg-[var(--color-lime)] text-white text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
           >
             Accept
           </button>

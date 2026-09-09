@@ -182,7 +182,7 @@ export default function DeliveryAndSetupPage() {
             factory-direct from our Auburn, Indiana showroom.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/floor-plans" className="bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">
+            <Link href="/floor-plans" className="bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors">
               Browse Floor Plans
             </Link>
             <Link href="/contact-us" className="border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase rounded hover:bg-white/5 transition-colors">

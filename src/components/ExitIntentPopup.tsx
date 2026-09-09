@@ -151,7 +151,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                   />
                   <button
                     type="submit"
-                    className="w-full py-3 bg-[var(--color-lime)] text-[var(--color-charcoal)] font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
+                    className="w-full py-3 bg-[var(--color-lime)] text-white font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
                   >
                     {sale.active ? "Claim My Savings" : "Get My Quote"}
                   </button>

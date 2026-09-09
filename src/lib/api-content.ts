@@ -33,6 +33,15 @@ export interface ApiFloorPlan {
   bedsMin?: number;    // set when the plan can be optioned with fewer bedrooms
   bedsMax?: number;    // set when the plan can be optioned with more bedrooms
   flexNote?: string;   // human-readable explanation of the factory option
+  floorPlanImage?: string; // dimensioned floor-plan drawing (image), for the card's Photo/Plan toggle
+}
+
+// Pick the floor-plan drawing out of a set of image URLs. Champion's drawings
+// and option-layout sheets are named for what they are ("...-floorplan.webp",
+// "...-opt2.webp", "...layout..."); photos never are.
+const DRAWING_RE = /floor-?plan|layout|-opt\d|drawing|schematic|blueprint/i;
+export function pickDrawing(urls: Array<string | undefined | null>): string {
+  return urls.find((u) => u && DRAWING_RE.test(u)) || "";
 }
 
 // Attach flexible-bedroom info (src/lib/spec-overrides.ts) to a plan. Applied
@@ -90,11 +99,16 @@ function deriveWidthFt(context: string): number | undefined {
 // Central decoration applied to every plan on every path (CMS, feed, local):
 // bedroom-option overlays, the range-level price anchor, and the repo-mapped
 // Matterport tour (a CMS/feed-provided tour always wins).
-function decoratePlan<T extends { slug: string; homeType: string; virtualTour?: string }>(p: T): T {
+function decoratePlan<T extends { slug: string; homeType: string; virtualTour?: string; floorPlanImage?: string }>(p: T): T {
   return {
     ...withBedOptions(p),
     priceFrom: priceFromBand(p.homeType),
     virtualTour: p.virtualTour || virtualTours[p.slug] || "",
+    // The card's "Plan" view: whatever drawing the source supplied, else the
+    // repo-held drawing/option sheet for this slug.
+    floorPlanImage:
+      p.floorPlanImage ||
+      pickDrawing([...(galleryOverlays[p.slug]?.gallery || []), ...(sheetExtras[p.slug] || [])]),
   };
 }
 
@@ -189,6 +203,7 @@ async function localPlans(): Promise<ApiFloorPlan[]> {
     series: p.series || PRIME_SERIES,
     virtualTour: p.virtualTour || "",
     widthFt: parseInt(p.width, 10) || undefined,
+    floorPlanImage: pickDrawing([...(p.gallery || []), p.image]),
   }));
 }
 

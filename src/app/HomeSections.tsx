@@ -10,8 +10,10 @@ import {
   useTimeOnPageTracking,
   MagneticButton,
 } from "@/components/VisualEffects";
+import { useState } from "react";
 import { trackPhoneClick } from "@/lib/analytics";
 import { H2, H3 } from "@/components/Heading";
+import PriceQuoteModal from "@/components/PriceQuoteModal";
 
 const homeTypes = [
   {
@@ -21,7 +23,7 @@ const homeTypes = [
     beds: "1–3 Bed",
     baths: "1–2 Bath",
     startingAt: "Contact for pricing",
-    description: "Thoughtfully designed for smart, comfortable living. Perfect for first-time buyers, downsizers, or anyone who values quality over excess.",
+    description: "Thoughtfully designed for smart, comfortable living. Champion\u2019s Prime and Aspire single-wides are perfect for first-time buyers, downsizers, or anyone who values quality over excess.",
     features: ["14–18 ft wide", "Up to 80 ft long", "Open floor plans"],
     image: "/images/homepage/single-wides.webp",
   },
@@ -32,7 +34,7 @@ const homeTypes = [
     beds: "3–5 Bed",
     baths: "2–3 Bath",
     startingAt: "Contact for pricing",
-    description: "Spacious sectional homes that rival site-built quality. The Brighton and Silverton series offer generous layouts for growing families.",
+    description: "Spacious sectional homes that rival site-built quality. Champion\u2019s Redman and Dutch lines from the Topeka plant offer kitchen islands, big primary suites and generous layouts for growing families.",
     features: ["24–32 ft wide", "Multiple living areas", "Walk-in closets"],
     image: "/images/homepage/double-wide-exterior.webp",
   },
@@ -43,7 +45,7 @@ const homeTypes = [
     beds: "2–5 Bed",
     baths: "2+ Bath",
     startingAt: "Contact for pricing",
-    description: "IRC-code compliant homes placed on permanent foundations. Indistinguishable from site-built, with factory precision and pricing.",
+    description: "IRC-code Dutch modular homes placed on permanent foundations. Finished drywall and a higher roof pitch make them indistinguishable from site-built, with factory precision and pricing.",
     features: ["Permanent foundation", "IRC building codes", "Fully customizable"],
     image: "/images/homepage/feature-find-home.webp",
   },
@@ -60,6 +62,8 @@ const testimonials = [
 export function AnimatedHomeSections() {
   useScrollTracking();
   useTimeOnPageTracking();
+  // Which home type's pricing modal is open ("" = none).
+  const [quoteFor, setQuoteFor] = useState("");
 
   return (
     <>
@@ -76,7 +80,7 @@ export function AnimatedHomeSections() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 auto-rows-fr pb-2">
             {[
               { title: "Largest Champion Factory", desc: "Topeka, IN — the largest Champion plant in the country. Aspire, Prime, Paramount, Redman, and Dutch series, all built 20 miles away.", icon: "M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
               { title: "Factory-Direct Pricing", desc: "No middlemen. We buy directly from the factory — shorter delivery, lower costs, passed on to you with line-item transparency.", icon: "M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" },
@@ -104,12 +108,12 @@ export function AnimatedHomeSections() {
             <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
               Browse by Home Type
             </H2>
-            <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
+            <div className="w-16 h-1 bg-[var(--color-lime-light)] mx-auto" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 auto-rows-fr">
             {homeTypes.map((home) => (
-              <div key={home.title} className="group bg-white/5 border border-white/10 rounded-lg hover:border-[var(--color-teal)]/40 transition-all duration-500 overflow-hidden">
+              <div key={home.title} className="group flex flex-col bg-white/5 border border-white/10 rounded-lg hover:border-[var(--color-lime-light)]/50 transition-all duration-500 overflow-hidden">
                 <figure className="aspect-[16/10] relative overflow-hidden">
                   <Image
                     src={home.image}
@@ -122,31 +126,40 @@ export function AnimatedHomeSections() {
                   <figcaption className="sr-only">{home.title} - {home.description}</figcaption>
                 </figure>
                 <div className="p-8 pb-6 border-b border-white/10">
-                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-lime)]">{home.subtitle}</span>
-                  <H3 className="font-serif text-3xl font-semibold mt-2 mb-4">{home.title}</H3>
-                  <div className="flex gap-4 text-xs tracking-wider uppercase text-white/50">
+                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-lime-light)]">{home.subtitle}</span>
+                  <H3 className="font-serif text-3xl font-semibold mt-2 mb-4 text-white">{home.title}</H3>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs tracking-wider uppercase text-slate-200">
                     <span>{home.sqft}</span>
-                    <span className="text-white/20">|</span>
+                    <span className="text-white/30">|</span>
                     <span>{home.beds}</span>
-                    <span className="text-white/20">|</span>
+                    <span className="text-white/30">|</span>
                     <span>{home.baths}</span>
                   </div>
                 </div>
-                <div className="p-8">
-                  <p className="text-sm text-white/60 leading-relaxed mb-6">{home.description}</p>
-                  <ul className="space-y-2 mb-8">
+                <div className="p-8 flex flex-col flex-1">
+                  <p className="text-sm text-slate-200 leading-relaxed mb-6">{home.description}</p>
+                  <ul className="flex flex-wrap gap-2 mb-8" aria-label={`${home.title} features`}>
                     {home.features.map((f) => (
-                      <li key={f} className="flex items-center gap-3 text-sm text-white/70">
-                        <div className="w-1.5 h-1.5 bg-[var(--color-lime)] rounded-full flex-shrink-0" />
+                      <li key={f} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-slate-200 text-xs font-medium">
+                        <svg className="w-3.5 h-3.5 text-[var(--color-lime-light)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
                         {f}
                       </li>
                     ))}
                   </ul>
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <div className="font-serif text-xl font-semibold text-[var(--color-lime)]">{home.startingAt}</div>
-                    </div>
-                    <Link href="/floor-plans" className="text-sm font-semibold text-white/60 hover:text-[var(--color-lime)] transition-colors flex items-center gap-1">
+                  <div className="mt-auto flex items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setQuoteFor(home.title)}
+                      className="inline-flex items-center justify-center min-h-11 px-5 rounded-lg bg-[var(--color-teal)] text-white text-sm font-bold tracking-wide hover:bg-[var(--color-teal-dark)] transition-colors"
+                    >
+                      Get Pricing
+                    </button>
+                    <Link
+                      href="/floor-plans"
+                      className="inline-flex items-center justify-center gap-1 min-h-11 min-w-11 px-4 rounded-lg text-sm font-semibold text-slate-100 hover:text-white hover:bg-white/10 transition-colors"
+                    >
                       Explore
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                     </Link>
@@ -156,6 +169,11 @@ export function AnimatedHomeSections() {
             ))}
           </div>
         </div>
+        <PriceQuoteModal
+          isOpen={Boolean(quoteFor)}
+          onClose={() => setQuoteFor("")}
+          modelName={quoteFor ? `${quoteFor} home` : "Direct Inquiry"}
+        />
       </section>
 
       {/* Stats with Animated Counters */}
@@ -271,7 +289,7 @@ export function AnimatedHomeSections() {
             <MagneticButton>
               <Link 
                 href="/financing" 
-                className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
+                className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
               >
                 Explore Financing
               </Link>
@@ -309,7 +327,7 @@ export function AnimatedHomeSections() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <MagneticButton>
                   <a 
-                    href="https://maps.google.com/?q=1211+State+Road+8+Auburn+IN+46706" 
+                    href="https://www.google.com/maps/dir/?api=1&destination=1211+State+Road+8+Auburn+IN+46706" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors duration-300"

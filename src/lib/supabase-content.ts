@@ -16,7 +16,7 @@
 // true are ever returned to the public site. All writes happen server-side in
 // the admin with the service-role key and never touch this module.
 
-import type { ApiFloorPlan, ApiFloorPlanDetail } from "./api-content";
+import { pickDrawing, type ApiFloorPlan, type ApiFloorPlanDetail } from "./api-content";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
 const SUPABASE_KEY =
@@ -103,7 +103,15 @@ function toFloorPlan(r: FloorPlanRow): ApiFloorPlan {
     homeType: String(r.home_type || ""),
     series: String(r.series || ""),
     widthFt: widthFtFrom(r.width, `${r.slug} ${r.title || ""} ${r.model_number || ""}`),
+    floorPlanImage: drawingFrom(r.floor_plan_images),
   };
+}
+
+// A "floorplan"-kind image wins; otherwise a gallery image named as a drawing.
+function drawingFrom(images: FloorPlanRow["floor_plan_images"]): string {
+  const sorted = [...(images || [])].sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
+  const tagged = sorted.find((i) => String(i.kind || "").toLowerCase() === "floorplan");
+  return imgUrl(tagged?.path) || pickDrawing(sorted.map((i) => imgUrl(i.path)));
 }
 
 /** All active floor plans, mapped to the card shape the design uses. */
@@ -111,6 +119,7 @@ export async function getSupabaseFloorPlans(): Promise<ApiFloorPlan[]> {
   const select = [
     "slug", "name", "title", "price", "sqft", "beds", "baths",
     "home_type", "series", "brand", "model_number", "width", "banner_image",
+    "floor_plan_images(path,kind,sort_order)",
   ].join(",");
   let rows: FloorPlanRow[];
   try {
