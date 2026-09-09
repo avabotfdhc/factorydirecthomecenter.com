@@ -98,21 +98,21 @@ export async function GET(request: Request) {
   const q = (new URL(request.url).searchParams.get("q") || "").trim().slice(0, 100);
   if (q.length < 2) return NextResponse.json({ results: [] });
 
-  let catalog: SearchResult[] = [];
-  let source = "supabase";
+  // Supabase holds the imported catalogue (Aspire today); the PRIME and
+  // Paramount homes are repo-published, so the repo catalogue is always
+  // searched too and the two are merged by URL.
+  let remote: SearchResult[] = [];
+  let source = "supabase+local";
   try {
-    const remote = await searchSupabase(q);
-    if (remote) {
-      catalog = remote;
-    } else {
-      source = "local";
-      catalog = await searchLocalPlans(q);
-    }
+    remote = (await searchSupabase(q)) || [];
+    if (!SUPABASE_URL || !SUPABASE_KEY) source = "local";
   } catch (err) {
-    console.error("[search] Supabase search failed, using repo catalogue:", err);
+    console.error("[search] Supabase search failed, using repo catalogue only:", err);
     source = "local";
-    catalog = await searchLocalPlans(q);
   }
+  const seen = new Set(remote.map((r) => r.url));
+  const local = (await searchLocalPlans(q)).filter((r) => !seen.has(r.url));
+  const catalog = [...remote, ...local].sort((a, b) => b.rank - a.rank);
 
   return NextResponse.json(
     { results: [...catalog, ...searchGuides(q)].slice(0, 30), source },
