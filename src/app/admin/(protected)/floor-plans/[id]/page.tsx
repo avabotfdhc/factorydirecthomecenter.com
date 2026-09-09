@@ -9,7 +9,8 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
 function publicUrl(path: string): string {
   if (!path) return "";
   if (/^https?:\/\//.test(path)) return path;
-  return `${SUPABASE_URL}/storage/v1/object/public/floor-plans/${path.replace(/^\//, "")}`;
+  if (path.startsWith("/")) return path; // shipped in public/, served by the site
+  return `${SUPABASE_URL}/storage/v1/object/public/floor-plans/${path}`;
 }
 
 const FIELD = "w-full rounded-lg border border-black/15 px-3 py-2 text-sm";
