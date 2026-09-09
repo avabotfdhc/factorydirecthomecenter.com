@@ -13,10 +13,11 @@ export default async function ImportPage() {
       <Link href="/admin/floor-plans" className="text-sm text-black/50 hover:text-black">← All floor plans</Link>
       <h1 className="font-serif text-2xl mt-2 mb-1">Import from Box folder</h1>
       <p className="text-sm text-black/50 mb-6">
-        {plans.length} models in the catalog · {lit.length} literature docs expected
+        {plans.length} models in the catalog · {lit.length} literature docs expected. Import one series at a
+        time: Aspire and Paramount share model numbers, so the series you pick decides which plan a file attaches to.
       </p>
       <ImportClient
-        plans={plans.map((p) => ({ slug: p.slug, model_number: p.model_number }))}
+        plans={plans.map((p) => ({ slug: p.slug, model_number: p.model_number, series: p.series }))}
         lit={lit.filter((l) => l.id).map((l) => ({ id: l.id!, box_filename: l.box_filename || "", title: l.title, category: l.category }))}
       />
     </div>

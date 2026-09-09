@@ -207,9 +207,41 @@ async function localPlans(): Promise<ApiFloorPlan[]> {
   }));
 }
 
+// Champion model code as it appears in a slug ("aspire-bayfield-2852h32169",
+// "paramount-1432h11214"). Used to spot the same plan published under two slugs.
+function modelKey(p: { slug: string; series: string }): string {
+  const m = p.slug.match(/(\d{4}[hm]\d{2}[a-z0-9]{3})/i);
+  return m ? `${p.series.toLowerCase()}|${m[1].toLowerCase()}` : "";
+}
+
+// Media the CMS may hold for a repo-published plan (imported Box photos,
+// drawings, tours). CMS media wins when present; the repo copy fills gaps.
+function overlayMedia<T extends ApiFloorPlan>(local: T, remote: ApiFloorPlan | undefined): T {
+  if (!remote) return local;
+  return {
+    ...local,
+    image: remote.image || local.image,
+    floorPlanImage: remote.floorPlanImage || local.floorPlanImage,
+    virtualTour: remote.virtualTour || local.virtualTour,
+  };
+}
+
 function mergePlans(remote: ApiFloorPlan[], local: ApiFloorPlan[]): ApiFloorPlan[] {
+  const remoteBySlug = new Map(remote.map((p) => [p.slug, p]));
+  const remoteByModel = new Map<string, ApiFloorPlan>();
+  for (const p of remote) {
+    const k = modelKey(p);
+    if (k) remoteByModel.set(k, p);
+  }
   const localSlugs = new Set(local.map((p) => p.slug));
-  return [...remote.filter((p) => !localSlugs.has(p.slug)), ...local];
+  // A repo plan that the CMS also publishes under a different slug (same
+  // series + model code) is the same home: the CMS copy is the one the admin
+  // edits and imports photos into, so it wins and the repo twin drops out.
+  const kept = local.filter((p) => remoteBySlug.has(p.slug) || !remoteByModel.has(modelKey(p)));
+  return [
+    ...remote.filter((p) => !localSlugs.has(p.slug)),
+    ...kept.map((p) => overlayMedia(p, remoteBySlug.get(p.slug))),
+  ];
 }
 
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
@@ -300,7 +332,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     const p = localFloorPlans.find((x) => x.slug === slug);
     if (p?.hidden) return null;
     if (p) {
-      return decoratePlan({
+      const local = decoratePlan({
         slug: p.slug,
         name: p.name,
         title: `${p.name} - ${p.beds} Bed ${p.baths} Bath ${p.homeType || PRIME_HOME_TYPE} | Champion ${seriesLabel(p)} Series`,
@@ -322,6 +354,20 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         virtualTour: p.virtualTour || "",
         gallery: p.gallery ?? (p.image ? [p.image] : []),
       });
+      // Same slug in the CMS (seeded from this catalogue, then enriched via the
+      // /admin importer): its photos, drawings, sales sheet and tour lead.
+      const { supabaseConfigured, getSupabaseFloorPlanBySlug } = await import("./supabase-content");
+      if (!supabaseConfigured()) return local;
+      const remote = await getSupabaseFloorPlanBySlug(slug).catch(() => null);
+      if (!remote) return local;
+      return {
+        ...overlayMedia(local, remote),
+        description: remote.description || local.description,
+        floorPlanHtml: remote.floorPlanHtml || local.floorPlanHtml,
+        brochureUrl: remote.brochureUrl || local.brochureUrl,
+        floorPlanUrl: remote.floorPlanUrl || local.floorPlanUrl,
+        gallery: [...new Set([...remote.gallery, ...local.gallery])],
+      };
     }
   }
 
