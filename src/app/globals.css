@@ -9,9 +9,11 @@
   --color-teal: #047857;
   --color-teal-light: #059669;
   --color-teal-dark: #065f46;
-  --color-orange: #E8922A;
-  --color-orange-light: #F0A94E;
-  --color-orange-dark: #C87A1E;
+  /* Logo orange (measured from the FDHC logo) — the outline on every green
+     button, star ratings and small accents. */
+  --color-orange: #E07820;
+  --color-orange-light: #F2A35A;
+  --color-orange-dark: #C46516;
   --color-lime: #047857;
   --color-lime-light: #34d399;
   --color-lime-dark: #065f46;
@@ -67,8 +69,36 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Improved focus states */
 :focus-visible {
-  outline: 2px solid var(--color-teal);
+  outline: 2px solid var(--color-orange);
   outline-offset: 2px;
+}
+
+/* Brand buttons: green fill with the logo-orange outline (Kyle, 2026-09-09).
+   Every filled-green <a>/<button> gets the ring automatically — the [class~=]
+   selector matches the exact utility token, so outline buttons that only fill
+   on hover (hover:bg-…) are left alone. */
+a[class~="bg-[var(--color-teal)]"],
+a[class~="bg-[var(--color-teal-dark)]"],
+a[class~="bg-[var(--color-lime)]"],
+a[class~="bg-[var(--color-lime-dark)]"],
+button[class~="bg-[var(--color-teal)]"],
+button[class~="bg-[var(--color-teal-dark)]"],
+button[class~="bg-[var(--color-lime)]"],
+button[class~="bg-[var(--color-lime-dark)]"],
+.btn-brand {
+  box-shadow: 0 0 0 2px var(--color-orange);
+}
+
+a[class~="bg-[var(--color-teal)]"]:hover,
+a[class~="bg-[var(--color-teal-dark)]"]:hover,
+a[class~="bg-[var(--color-lime)]"]:hover,
+a[class~="bg-[var(--color-lime-dark)]"]:hover,
+button[class~="bg-[var(--color-teal)]"]:hover,
+button[class~="bg-[var(--color-teal-dark)]"]:hover,
+button[class~="bg-[var(--color-lime)]"]:hover,
+button[class~="bg-[var(--color-lime-dark)]"]:hover,
+.btn-brand:hover {
+  box-shadow: 0 0 0 2px var(--color-orange-light), 0 8px 18px -6px rgba(4, 120, 87, 0.45);
 }
 
 /* Better link transitions */
@@ -214,7 +244,7 @@ button {
 .decorative-line-lg {
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, var(--color-teal) 0%, var(--color-teal-light) 50%, var(--color-lime) 100%);
+  background: linear-gradient(90deg, var(--color-teal) 0%, var(--color-teal-light) 50%, var(--color-orange) 100%);
   border-radius: 2px;
 }
 
@@ -275,7 +305,7 @@ button {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px -5px rgba(27, 107, 125, 0.3);
+  box-shadow: 0 0 0 2px var(--color-orange-light), 0 10px 20px -5px rgba(4, 120, 87, 0.35);
 }
 
 .btn-primary:hover::after {
