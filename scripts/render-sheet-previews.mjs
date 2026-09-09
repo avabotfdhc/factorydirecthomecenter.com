@@ -83,14 +83,15 @@ async function download(storageKey) {
 }
 
 async function renderFirstPage(pdfBytes) {
-  const doc = await getDocument({
+  const task = getDocument({
     data: pdfBytes,
     useSystemFonts: false,
     standardFontDataUrl: new URL("../node_modules/pdfjs-dist/standard_fonts/", import.meta.url).href,
     cMapUrl: new URL("../node_modules/pdfjs-dist/cmaps/", import.meta.url).href,
     cMapPacked: true,
-  }).promise;
+  });
   try {
+    const doc = await task.promise;
     const page = await doc.getPage(1);
     const base = page.getViewport({ scale: 1 });
     const viewport = page.getViewport({ scale: MAX_WIDTH / base.width });
@@ -101,7 +102,8 @@ async function renderFirstPage(pdfBytes) {
     await page.render({ canvasContext: ctx, viewport, canvas }).promise;
     return { jpeg: await canvas.encode("jpeg", JPEG_QUALITY), width: canvas.width, height: canvas.height };
   } finally {
-    await doc.destroy();
+    // pdf.js v6: cleanup lives on the loading task, not the document proxy.
+    await task.destroy();
   }
 }
 
