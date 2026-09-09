@@ -321,6 +321,7 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
   floorPlanUrl: string;    // Champion's dimensioned floor-plan sheet (PDF), or ""
   virtualTour: string;     // e.g. Matterport URL or ""
   gallery: string[];       // absolute image URLs (banner first)
+  documents?: { title: string; url: string }[]; // every sales-sheet / option-sheet PDF for the plan
 }
 
 /** One floor plan by slug, with full detail, from the CMS. */
@@ -367,6 +368,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         brochureUrl: remote.brochureUrl || local.brochureUrl,
         floorPlanUrl: remote.floorPlanUrl || local.floorPlanUrl,
         gallery: [...new Set([...remote.gallery, ...local.gallery])],
+        documents: remote.documents,
       };
     }
   }

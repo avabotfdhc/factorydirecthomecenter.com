@@ -246,6 +246,29 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               )}
             </div>
 
+            {plan.documents && plan.documents.length > 1 && (
+              <div className="mt-6">
+                <h2 className="text-xs font-bold tracking-widest uppercase text-[var(--color-gray)] mb-2">
+                  Floor plan sheets from Champion
+                </h2>
+                <ul className="divide-y divide-[var(--color-charcoal)]/10 border-y border-[var(--color-charcoal)]/10">
+                  {plan.documents.map((d) => (
+                    <li key={d.url}>
+                      <a
+                        href={d.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between gap-4 py-2.5 text-sm text-[var(--color-teal)] hover:underline underline-offset-4"
+                      >
+                        <span>{d.title}</span>
+                        <span className="text-xs text-[var(--color-gray)]">PDF</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <EmailBrochureForm homeName={plan.name} modelNumber={plan.modelNumber || undefined} />
 
             <ShareListing
