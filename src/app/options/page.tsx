@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   description:
     "Browse Champion's factory options for your new manufactured or modular home: interior and exterior selections, fireplaces, kitchen islands, optional cabinets, exterior styles, and full series brochures — from Factory Direct Homes Center in Auburn, Indiana.",
   alternates: { canonical: `${SITE}/options`, languages: languageAlternates(`${SITE}/options`) },
+  openGraph: {
+    title: "Factory Options & Selections — Champion Homes | Factory Direct Homes Center",
+    url: `${SITE}/options`,
+    type: "website",
+    images: [{ url: `${SITE}/images/options/aspire-color-board.webp`, alt: "Champion Homes 2026 interior and exterior selections color board" }],
+  },
+  twitter: { card: "summary_large_image", images: [{ url: `${SITE}/images/options/aspire-color-board.webp`, alt: "Champion Homes 2026 interior and exterior selections color board" }] },
   keywords: [
     "manufactured home options",
     "champion homes options",

@@ -12,6 +12,7 @@ import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanQuoteCTA } from "@/components/QuoteModal";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { languageAlternates } from "@/lib/seo";
+import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     `${plan.name}: ${plan.beds} bed, ${plan.baths} bath, ${plan.sqft.toLocaleString()} sq ft ${plan.homeType || "manufactured home"} from Factory Direct Homes Center in Auburn, IN.`
   ).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
   const url = `${SITE}/floor-plans/${plan.slug}`;
+  const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
   return {
     title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath ${plan.homeType || "Home"}`,
     description: desc,
@@ -35,7 +37,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: desc,
       url,
       type: "website",
-      images: plan.image ? [{ url: plan.image }] : undefined,
+      images: plan.image ? [{ url: absoluteImageUrl(plan.image), alt: heroAlt }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${plan.name} | Factory Direct Homes Center`,
+      description: desc,
+      images: plan.image ? [{ url: absoluteImageUrl(plan.image), alt: heroAlt }] : undefined,
     },
   };
 }
@@ -69,12 +77,20 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
   // Product block is only emitted when a numeric price exists (i.e. it
   // returns automatically if prices are ever shown again).
   const priceNumeric = plan.price.replace(/[^0-9.]/g, "");
+  // Every photo and sheet, as absolute URLs, for structured data and the
+  // image sitemap (banner first, deduped).
+  const imageUrls = [...new Set([plan.image, ...plan.gallery].filter(Boolean).map(absoluteImageUrl))];
+  const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
+  const galleryImages = plan.gallery.map((src, i) => ({
+    src,
+    alt: planImageAlt(src, plan.name, plan.homeType, i, plan.gallery.length),
+  }));
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: plan.name,
     description: cleanDesc,
-    ...(plan.image ? { image: plan.image } : {}),
+    ...(imageUrls.length ? { image: imageUrls } : {}),
     ...(plan.modelNumber ? { sku: plan.modelNumber } : {}),
     brand: { "@type": "Brand", name: plan.brand || "Champion Homes" },
     ...(priceNumeric
@@ -98,7 +114,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         name={plan.name}
         slug={plan.slug}
         description={cleanDesc}
-        image={plan.image || undefined}
+        image={imageUrls.length ? imageUrls : undefined}
         sqft={plan.sqft}
         beds={plan.beds}
         baths={plan.baths}
@@ -130,13 +146,13 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             {plan.image ? (
               <ZoomableImage
                 src={plan.image}
-                alt={`${plan.name} ${plan.homeType || "manufactured home"} — floor plan`}
+                alt={heroAlt}
                 // A rendered sales sheet (the only image for plans without
                 // photos) is shown whole; photos fill the frame.
                 className={`absolute inset-0 w-full h-full ${plan.floorPlanImage && plan.image === plan.floorPlanImage ? "object-contain p-3 bg-slate-50" : "object-cover"}`}
                 // Hero click opens the full gallery so buyers can page through
                 // every photo and floor-plan sheet from the first image.
-                images={plan.gallery.map((src, i) => ({ src, alt: `${plan.name} image ${i + 1}` }))}
+                images={galleryImages}
                 index={Math.max(0, plan.gallery.indexOf(plan.image))}
               />
             ) : (
@@ -286,9 +302,10 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
           <div className="mt-14">
             <h2 className="font-serif text-2xl font-light mb-6">Gallery &amp; Floor Plan</h2>
             <LightboxGallery
-              images={plan.gallery.map((src, i) => ({ src, alt: `${plan.name} image ${i + 1}` }))}
+              images={galleryImages}
               gridClassName="grid grid-cols-2 md:grid-cols-3 gap-4"
               imgClassName="w-full aspect-[4/3] rounded-xl border border-[var(--color-charcoal)]/8 bg-white object-cover"
+              sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 400px"
             />
           </div>
         )}

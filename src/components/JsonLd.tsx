@@ -57,7 +57,7 @@ export interface ResidenceSchemaProps {
   name: string;
   slug: string;
   description: string;
-  image?: string;
+  image?: string | string[];
   sqft?: number;
   beds?: number;
   baths?: number;

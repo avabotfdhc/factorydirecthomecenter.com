@@ -90,17 +90,7 @@ export const aspectRatios = {
 export const imagePaths = {
   hero: "/images/hero-home.jpg",
   logo: "/images/logo.svg",
-  singleWide: "/images/2026-03-21-singlewide-exterior.png",
-  doubleWide: "/images/2026-03-21-doublewide-exterior.png",
-  family: "/images/2026-03-21-family-keys.png",
-  sunset: "/images/2026-03-21-sunset-home.png",
-  dusk: "/images/2026-03-21-dusk-modular.png",
-  aerial: "/images/2026-03-21-aerial-community.png",
-  whiteBlack: {
-    landscape: "/images/2026-03-21-home-white-black-landscape.png",
-    front: "/images/2026-03-21-home-white-black-front.png",
-    side: "/images/2026-03-21-home-white-black-side.png",
-  },
+  doubleWide: "/images/doublewide-exterior.webp",
 };
 
 // Validate image URL
@@ -113,7 +103,7 @@ export function getPlaceholderImage(type: "home" | "interior" | "exterior" = "ho
   const placeholders = {
     home: "/images/hero-home.jpg",
     interior: "/images/hero-home.jpg",
-    exterior: "/images/2026-03-21-singlewide-exterior.png",
+    exterior: "/images/doublewide-exterior.webp",
   };
   return placeholders[type];
 }

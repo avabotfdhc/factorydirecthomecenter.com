@@ -5,6 +5,7 @@ import { getApiBlogBySlug } from "@/lib/api-content";
 import { StructuredData } from "@/lib/seo";
 import { PostImage } from "@/components/PostImage";
 import { languageAlternates } from "@/lib/seo";
+import { absoluteImageUrl } from "@/lib/image-alt";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -22,7 +23,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.excerpt,
       url,
       type: "article",
-      images: post.image ? [{ url: post.image }] : undefined,
+      ...(post.date ? { publishedTime: new Date(post.date).toISOString() } : {}),
+      images: post.image ? [{ url: absoluteImageUrl(post.image), alt: post.title }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.image ? [{ url: absoluteImageUrl(post.image), alt: post.title }] : undefined,
     },
   };
 }

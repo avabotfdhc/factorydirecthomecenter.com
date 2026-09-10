@@ -10,6 +10,13 @@ export const metadata: Metadata = {
     canonical: "/resources",
     languages: languageAlternates("/resources"),
   },
+  openGraph: {
+    title: "Floor Plans & Buyer Guide Downloads | Factory Direct Homes Center",
+    url: "https://factorydirecthomescenter.com/resources",
+    type: "website",
+    images: [{ url: "/images/hero-home.jpg", width: 1920, height: 1071, alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana" }],
+  },
+  twitter: { card: "summary_large_image", images: [{ url: "/images/hero-home.jpg", alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana" }] },
 };
 
 interface ResourceCard {

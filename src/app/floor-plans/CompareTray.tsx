@@ -106,7 +106,7 @@ export function CompareTray({
                   <th key={p.slug} scope="col" className="text-left align-bottom pb-4 px-3">
                     <div className="relative aspect-[16/10] mb-3 rounded-lg overflow-hidden bg-[var(--color-cream-dark)]">
                       {p.image ? (
-                        <Image src={p.image} alt="" fill className="object-cover" sizes="200px" />
+                        <Image src={p.image} alt={`${p.name} ${p.homeType || "manufactured home"}`} fill className="object-cover" sizes="200px" />
                       ) : null}
                     </div>
                     <Link

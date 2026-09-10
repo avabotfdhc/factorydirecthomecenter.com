@@ -16,6 +16,15 @@ export const metadata: Metadata = {
   description:
     "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Serving Indiana, Ohio, and Michigan.",
   alternates: { canonical: `${SITE}/floor-plans`, languages: languageAlternates(`${SITE}/floor-plans`) },
+  openGraph: {
+    title: "Champion Floor Plans & Home Models | Factory Direct Homes Center",
+    description:
+      "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Auburn, Indiana.",
+    url: `${SITE}/floor-plans`,
+    type: "website",
+    images: [{ url: `${SITE}/images/hero-home.jpg`, width: 1920, height: 1071, alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana" }],
+  },
+  twitter: { card: "summary_large_image", images: [{ url: `${SITE}/images/hero-home.jpg`, width: 1920, height: 1071, alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana" }] },
   keywords: [
     "manufactured home floor plans",
     "champion homes floor plans",

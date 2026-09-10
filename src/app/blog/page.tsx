@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   description:
     "Expert guides, buyer tips, financing advice, and industry news for manufactured and modular home buyers. From Factory Direct Homes Center in Auburn, IN.",
   alternates: { canonical: `${SITE}/blog`, languages: languageAlternates(`${SITE}/blog`) },
+  openGraph: {
+    title: "The Manufactured Home Blog | Factory Direct Homes Center",
+    description:
+      "Expert guides, buyer tips, financing advice, and industry news for manufactured and modular home buyers.",
+    url: `${SITE}/blog`,
+    type: "website",
+    images: [{ url: `${SITE}/images/hero-home.jpg`, width: 1920, height: 1071, alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana" }],
+  },
+  twitter: { card: "summary_large_image", images: [{ url: `${SITE}/images/hero-home.jpg`, width: 1920, height: 1071, alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana" }] },
   keywords: [
     "manufactured home blog",
     "modular home tips",

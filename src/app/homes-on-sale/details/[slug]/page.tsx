@@ -58,6 +58,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         : "Call for pricing."
     }`,
     url: `/homes-on-sale/details/${home.id}`,
+    image: home.image || undefined,
+    imageAlt: `${home.name} — ${home.sqft} sq ft Champion ${home.homeType.toLowerCase()}`,
   });
 }
 
@@ -144,6 +146,8 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                         className="absolute inset-0 w-full h-full object-cover"
                         images={galleryImages}
                         index={i + 1}
+                        priority={false}
+                        sizes="(max-width: 1024px) 25vw, 160px"
                       />
                     </li>
                   ))}

@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { isOptimizableImage } from "@/lib/image-alt";
 import { createPortal } from "react-dom";
 
 // Click-to-enlarge for floor plans and photos. Floor-plan drawings are dense
@@ -164,26 +166,34 @@ export function ZoomableImage({
   className,
   images,
   index = 0,
+  priority = true,
+  sizes = "(max-width: 1024px) 100vw, 50vw",
 }: {
   src: string;
   alt: string;
   className?: string;
   images?: LightboxImage[];
   index?: number;
+  /** Above-the-fold hero (the LCP element): preload and never lazy-load. */
+  priority?: boolean;
+  sizes?: string;
 }) {
   const [openAt, setOpenAt] = useState<number | null>(null);
   const set = images && images.length > 0 ? images : [{ src, alt }];
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      {/* Rendered through next/image (resized, AVIF/WebP) inside the caller's
+          sized `relative` box; the full-resolution original only loads in the
+          overlay. Hosts outside images.remotePatterns are served as-is. */}
+      <Image
         src={src}
         alt={alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        loading={priority ? undefined : "lazy"}
+        unoptimized={!isOptimizableImage(src)}
         onClick={() => setOpenAt(Math.min(index, set.length - 1))}
-        // This is the detail page's above-the-fold hero (the LCP element) —
-        // fetch it at high priority, never lazily.
-        fetchPriority="high"
-        decoding="async"
         className={`${className ?? ""} cursor-zoom-in`}
         title="Click to enlarge"
       />
@@ -199,30 +209,41 @@ export function LightboxGallery({
   images,
   gridClassName,
   imgClassName,
+  sizes = "(max-width: 768px) 50vw, 33vw",
 }: {
   images: LightboxImage[];
   gridClassName?: string;
+  /** Classes for each tile (aspect ratio, border, radius, object-fit). */
   imgClassName?: string;
+  /** next/image `sizes` for the tiles, matching the grid's column widths. */
+  sizes?: string;
 }) {
   const [openAt, setOpenAt] = useState<number | null>(null);
+  // Tiles are resized thumbnails via next/image; the wrapper carries the
+  // tile's aspect ratio and chrome, the image fills it with the caller's
+  // object-fit. Below the fold, so lazy-loaded.
+  const tile = imgClassName ?? "w-full aspect-[4/3] rounded-xl object-cover";
+  const fit = /\bobject-contain\b/.test(tile) ? "object-contain" : "object-cover";
   return (
     <>
       <div className={gridClassName ?? "grid grid-cols-2 md:grid-cols-3 gap-4"}>
         {images.map((im, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <div
             key={i}
-            src={im.src}
-            alt={im.alt}
-            onClick={() => setOpenAt(i)}
-            // Gallery grids sit below the fold — lazy-load so they never
-            // compete with the LCP hero. (Safe since the old globals.css
-            // opacity-fade rule for [loading] images was removed.)
-            loading="lazy"
-            decoding="async"
-            className={`${imgClassName ?? ""} cursor-zoom-in`}
-            title="Click to enlarge"
-          />
+            className={`relative overflow-hidden ${tile.replace(/\bobject-(cover|contain)\b/g, "")} ${/aspect-/.test(tile) ? "" : "aspect-[4/3]"}`}
+          >
+            <Image
+              src={im.src}
+              alt={im.alt}
+              fill
+              sizes={sizes}
+              loading="lazy"
+              unoptimized={!isOptimizableImage(im.src)}
+              onClick={() => setOpenAt(i)}
+              className={`${fit} cursor-zoom-in`}
+              title="Click to enlarge"
+            />
+          </div>
         ))}
       </div>
       {openAt !== null && (
