@@ -10,7 +10,7 @@ import type { LocalFloorPlan } from "./local-floor-plans";
 // buyer-relevant items only, grouped the way the sheet groups them.
 // Applies to the 14' and 16' single-wide models; the sectional standards
 // live in the series brochure and are not repo-published yet.
-const singlesStandardFeatures: Array<[string, string[]]> = [
+export const singlesStandardFeatures: Array<[string, string[]]> = [
   ["Structure & exterior", [
     "8' sidewalls with a nominal 3/12 roof pitch and 30 lb roof load",
     "25-year shingles with upgraded ice & water shield",
@@ -45,7 +45,7 @@ const singlesStandardFeatures: Array<[string, string[]]> = [
 // "FLOOR PLANS w/ SUMMIT KITCHEN" flyer. (The flyer's 2864H32A1C is not in
 // the 2026 lineup — the current 64' Summit is 2864H42A1C — so it's omitted
 // rather than guessed.)
-const summitKitchenModels = new Set([
+export const summitKitchenModels = new Set([
   "2848H32160", "2848H32170", "2852H32160", "2852H32170",
   "2852H32A1C", "2856H32A1C", "2856H32301", "2860H32301",
   "2868H32179", "2872H42179", "2876H43179",

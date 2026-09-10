@@ -24,6 +24,10 @@ export interface LeadSubmission {
   modelName: string;
   series?: string;
   sourcePage?: string;
+  /** Lead source label for email/CRM ("Instant Quote", "Ava Chat — Showroom Visit"). */
+  source?: string;
+  /** Free-text note for the team (preferred visit time, must-haves, land status). */
+  message?: string;
 }
 
 export interface LeadResult {
@@ -88,8 +92,10 @@ async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
       interest: clean(lead.modelName, 160),
       deliveryState: clean(lead.county, 120),
       timeframe: clean(lead.timeframe, 60),
-      message: `Instant price quote request for ${clean(lead.modelName, 160)} (${clean(lead.series, 60) || "Champion"}). Delivery: ${clean(lead.county, 120)}.`,
-      source: "Instant Quote",
+      message:
+        clean(lead.message, 600) ||
+        `Instant price quote request for ${clean(lead.modelName, 160)} (${clean(lead.series, 60) || "Champion"}). Delivery: ${clean(lead.county, 120)}.`,
+      source: clean(lead.source, 80) || "Instant Quote",
       pageUrl: clean(lead.sourcePage, 300),
     }),
   });
@@ -106,6 +112,8 @@ export async function submitLead(payload: LeadSubmission): Promise<LeadResult> {
     modelName: clean(payload?.modelName, 160) || "Direct Inquiry",
     series: clean(payload?.series, 60) || "Champion",
     sourcePage: clean(payload?.sourcePage, 300),
+    source: clean(payload?.source, 80),
+    message: clean(payload?.message, 600),
   };
   if (!lead.name || lead.contact.replace(/\D/g, "").length < 10 || !lead.county) {
     return { success: false, error: "Name, a phone number and county are required" };
