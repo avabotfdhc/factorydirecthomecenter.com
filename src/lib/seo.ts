@@ -15,6 +15,11 @@ interface SEOConfig {
   locale?: string;
 }
 
+/** Absolute URL for a site-relative path; absolute URLs (S3, Supabase) pass through. */
+function absUrl(path: string): string {
+  return /^https?:\/\//i.test(path) ? path : `https://factorydirecthomescenter.com${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
 export function generateMetadata(config: SEOConfig): Metadata {
   const {
     title,
@@ -31,7 +36,10 @@ export function generateMetadata(config: SEOConfig): Metadata {
   } = config;
 
   const fullUrl = `https://factorydirecthomescenter.com${url}`;
-  const fullImage = image.startsWith("http") ? image : `https://factorydirecthomescenter.com${image}`;
+  const fullImage = absUrl(image);
+  // Only the shared hero has known dimensions (1920×1071); per-page photos
+  // vary, and a wrong declared size is worse than none.
+  const imageDims = image === "/images/hero-home.jpg" ? { width: 1920, height: 1071 } : {};
 
   return {
     title,
@@ -51,14 +59,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
       description,
       url: fullUrl,
       siteName: "Factory Direct Homes Center",
-      images: [
-        {
-          url: fullImage,
-          width: 1200,
-          height: 630,
-          alt: imageAlt,
-        },
-      ],
+      images: [{ url: fullImage, alt: imageAlt, ...imageDims }],
       locale,
       type,
       ...(publishedTime && { publishedTime }),
@@ -69,7 +70,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
       card: "summary_large_image",
       title,
       description,
-      images: [fullImage],
+      images: [{ url: fullImage, alt: imageAlt }],
     },
     alternates: {
       canonical: fullUrl,
@@ -191,7 +192,7 @@ export const structuredData = {
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: `https://factorydirecthomescenter.com${product.image}`,
+    image: absUrl(product.image),
     sku: product.sku,
     brand: {
       "@type": "Brand",
@@ -222,7 +223,7 @@ export const structuredData = {
   }) => ({
     "@context": "https://schema.org",
     "@type": "ImageObject",
-    contentUrl: `https://factorydirecthomescenter.com${image.url}`,
+    contentUrl: absUrl(image.url),
     name: image.name,
     description: image.description,
     width: image.width,
@@ -355,7 +356,7 @@ export const structuredData = {
     "@type": "Article",
     headline: article.headline,
     description: article.description,
-    image: `https://factorydirecthomescenter.com${article.image}`,
+    image: absUrl(article.image),
     datePublished: article.datePublished,
     dateModified: article.dateModified || article.datePublished,
     author: {

@@ -164,7 +164,7 @@ function ParallaxHeroSection() {
       <div className="absolute inset-0">
         <Image
           src="/images/hero-home.jpg"
-          alt="Modern manufactured home"
+          alt="New Champion manufactured home exterior — Factory Direct Homes Center, Auburn, Indiana"
           fill
           priority
           className="object-cover"

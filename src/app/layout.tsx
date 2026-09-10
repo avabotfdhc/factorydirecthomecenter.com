@@ -71,8 +71,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/images/hero-home.jpg",
-        width: 1200,
-        height: 630,
+        width: 1920,
+        height: 1071,
         alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana",
       },
     ],
@@ -82,7 +82,19 @@ export const metadata: Metadata = {
     title: "Factory Direct Homes Center | New Champion Homes in Auburn, IN",
     description:
       "Factory-direct pricing on new Champion manufactured and modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN.",
-    images: ["/images/hero-home.jpg"],
+    images: [
+      {
+        url: "/images/hero-home.jpg",
+        alt: "Factory Direct Homes Center - Champion Manufactured Homes in Auburn, Indiana",
+      },
+    ],
+  },
+  // Let Google show large image previews of every page (pages that build
+  // their own metadata via genMeta repeat this).
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
 };
 

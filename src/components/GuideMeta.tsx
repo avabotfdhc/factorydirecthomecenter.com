@@ -35,7 +35,7 @@ export function GuideMeta({
             name: "Factory Direct Homes Center",
             logo: {
               "@type": "ImageObject",
-              url: "https://factorydirecthomescenter.com/logo.png",
+              url: "https://factorydirecthomescenter.com/images/logo.png",
             },
           },
           mainEntityOfPage: {

@@ -103,7 +103,7 @@ export function Header() {
                 width={180}
                 height={50}
                 className="h-11 sm:h-12 w-auto"
-                preload
+                priority
               />
             </Link>
 

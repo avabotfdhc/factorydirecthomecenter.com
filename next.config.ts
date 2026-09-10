@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     // CMS/DealerTide photos live in S3. Routing them through next/image
     // resizes to the displayed size, serves AVIF/WebP, and adds long-lived
     // caching — the raw S3 objects are multi-megapixel with no Cache-Control.
+    formats: ["image/avif", "image/webp"],
+    // Optimised variants are immutable for a month (catalogue photos change
+    // by getting a new path, not by being overwritten).
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       {
         protocol: "https",
@@ -97,6 +101,12 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        // Shipped images are versioned by filename; let browsers and the CDN
+        // keep them for a year.
+        source: '/images/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
       {
         source: '/(.*)',
         headers: [

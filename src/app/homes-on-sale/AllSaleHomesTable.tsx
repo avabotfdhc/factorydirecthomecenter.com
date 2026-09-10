@@ -167,7 +167,7 @@ export function AllSaleHomesTable({
                       {l.image ? (
                         <Image
                           src={l.image}
-                          alt=""
+                          alt={`${l.name} Champion home`}
                           fill
                           className="object-cover"
                           sizes="64px"
