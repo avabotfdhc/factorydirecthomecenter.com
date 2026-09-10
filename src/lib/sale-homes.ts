@@ -74,7 +74,7 @@ export interface SaleHome extends SaleListing {
 // featuring both would spend a card on a duplicate.
 //
 // Order here is the order they appear on the page.
-const FEATURED: Array<{ model: string; why: string }> = [
+export const FEATURED: Array<{ model: string; why: string }> = [
   // ── Aspire — single section ($62,672 – $92,972 across the series) ──
   { model: "1444H11023", why: "Entry point, and the only one-bedroom Aspire single." },
   { model: "1660H32206", why: "Least expensive three-bed, two-bath in the series." },

@@ -1,9 +1,8 @@
 # Ava — Site Chat Assistant Spec
 
 Owner-approved ground rules (Kyle, 2026-08-16) for the customer-facing chat
-assistant. The scripted `src/components/LiveChat.tsx` widget is the placeholder
-UI; the production build will be Claude-API-backed (pending `ANTHROPIC_API_KEY`
-in Vercel) and must follow this spec.
+assistant. Implemented in `src/components/AvaChatWidget.tsx` + `/api/chat`
+(see Status below); the rules here still govern it.
 
 ## Pricing policy (hard rule)
 - **No dollar figures for home prices at all — not even ranges** (tightened by
@@ -47,8 +46,15 @@ in Vercel) and must follow this spec.
 - Hours: Mon–Fri 9–5, Sat 10–4 ET; outside hours, set the expectation of a
   next-business-day response.
 
-## Outstanding to go live
-1. `ANTHROPIC_API_KEY` in Vercel (Kyle) + monthly budget cap.
-2. Kyle's top-20 Q&A playbook (optional, improves quality).
-3. Build: replace keyword script in LiveChat with API-backed route
-   (`/api/chat`), mount widget in layout, generate knowledge base at build.
+## Status (2026-09-10)
+Live: `src/components/AvaChatWidget.tsx` → `POST /api/chat` on OpenAI
+(`OPENAI_API_KEY`, default model `gpt-4o-mini`), knowledge base assembled at
+request time by `src/lib/ava-knowledge.ts` (live catalogue, the running sale
+from `src/lib/sale.ts`, showroom clock, options and standard features,
+financing, discovery / objection / appointment playbooks). Tools:
+`lookup_floor_plan`, `capture_lead`, `book_showroom_visit`; leads go through
+`submitLead` labelled "Ava Chat — …". Verify with `node scripts/ava-smoke.mjs
+--spawn`. The pricing policy above is unchanged and enforced in the prompt.
+
+Still optional: Kyle's own top-20 Q&A (add to the OBJECTIONS / FAQ sections of
+`ava-knowledge.ts`) and a monthly spend cap on the OpenAI key.

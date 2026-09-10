@@ -1,13 +1,20 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { H4 } from "./Heading";
 import PriceQuoteModal from "./PriceQuoteModal";
+import { getSaleStatus } from "@/lib/sale";
 
 // Ava — the site's sales copilot. Replies come from /api/chat (OpenAI with
-// Ava's sales persona and a live catalogue snapshot). When that route is not
-// configured (no OPENAI_API_KEY) or fails, the widget answers from the
-// scripted replies below so the visitor is never left hanging.
+// Ava's sales persona, the running sale, the live catalogue and her sales
+// playbook). The widget tells the route which page the visitor is on and
+// whether a quote or a showroom visit has already been requested in this
+// session. When the route is not configured (no OPENAI_API_KEY) or fails, the
+// widget answers from the scripted replies below so the visitor is never left
+// hanging.
+
+const PHONE_DISPLAY = "(260) 308-1457";
+const PHONE_TEL = "tel:+12603081457";
 
 
 interface Message {
@@ -17,32 +24,88 @@ interface Message {
   timestamp: Date;
 }
 
-const initialMessages: Message[] = [
-  {
+// The greeting names the running sale (from src/lib/sale.ts, so it can never
+// advertise an ended offer) and opens with the first qualifying question.
+function greeting(): Message {
+  const sale = getSaleStatus();
+  const hook = sale.active
+    ? ` The ${sale.name} is on — ${sale.discountPercent}% off MSRP base price on orders through ${sale.endDateLabel}.`
+    : "";
+  return {
     id: "1",
     type: "bot",
-    text: "Hi! I'm Ava with Factory Direct Homes Center in Auburn. Do you already own land, or are you still looking? I can match you with the right Champion home and get you a line-item quote.",
+    text: `Hi! I'm Ava with Factory Direct Homes Center in Auburn.${hook} Do you already own land, or are you still looking? I can match you with the right Champion home, get you a line-item quote, or book a showroom visit.`,
     timestamp: new Date(),
-  },
-];
+  };
+}
 
-const quickReplies = [
-  "Which series fits a tight budget?",
-  "Show me 3-bedroom homes",
-  "Manufactured vs. modular?",
-  "How does financing work?",
-  "What happens on delivery day?",
-  "Schedule a tour",
-];
+function quickReplies(): string[] {
+  const sale = getSaleStatus();
+  return [
+    "Book a showroom visit",
+    sale.active ? "What's on sale right now?" : "Which series fits a tight budget?",
+    "Show me 3-bedroom homes",
+    "How does financing work?",
+    "What comes standard?",
+    "Manufactured vs. modular?",
+  ];
+}
+
+// Ava writes links as bare site paths ("/floor-plans/brighton"), sometimes as
+// markdown links, and gives out the phone number. Make all of them tappable;
+// everything else is rendered as plain text.
+const RICH_RE =
+  /\[([^\]]+)\]\(([^)\s]+)\)|(https?:\/\/[^\s<>()]+)|(^|[\s(])(\/(?:floor-plans|series|homes-on-sale|options|design-your-home|financing|guides|resources|locations|contact-us|champion-homes|about|blog)\b[\w\-./]*)|(\(260\)\s?308-1457|260-308-1457)/g;
+const TRAILING_PUNCT = /[.,;:!?)]+$/;
+
+function linkNode(href: string, label: string, key: number): ReactNode {
+  const external = /^https?:\/\//.test(href) && !/factorydirecthomescenter\.com/.test(href);
+  return (
+    <a
+      key={key}
+      href={href}
+      className="underline font-semibold break-words"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {label}
+    </a>
+  );
+}
+
+function renderRich(text: string): ReactNode[] {
+  const src = text.replace(/\*\*/g, "");
+  const out: ReactNode[] = [];
+  let last = 0;
+  let key = 0;
+  for (const m of src.matchAll(RICH_RE)) {
+    const start = m.index ?? 0;
+    if (start > last) out.push(src.slice(last, start));
+    if (m[1] && m[2]) {
+      out.push(linkNode(m[2], m[1], key++));
+    } else if (m[3]) {
+      const trimmed = m[3].replace(TRAILING_PUNCT, "");
+      out.push(linkNode(trimmed, trimmed, key++), m[3].slice(trimmed.length));
+    } else if (m[5] !== undefined) {
+      const trimmed = m[5].replace(TRAILING_PUNCT, "");
+      out.push(m[4], linkNode(trimmed, trimmed, key++), m[5].slice(trimmed.length));
+    } else if (m[6]) {
+      out.push(linkNode(PHONE_TEL, m[6], key++));
+    }
+    last = start + m[0].length;
+  }
+  if (last < src.length) out.push(src.slice(last));
+  return out;
+}
 
 export function AvaChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasNotification, setHasNotification] = useState(false);
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>(() => [greeting()]);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [leadCaptured, setLeadCaptured] = useState(false);
+  const [visitRequested, setVisitRequested] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   // Once the API answers 503 (not configured) we stop asking it.
   const apiAvailable = useRef(true);
@@ -106,6 +169,8 @@ export function AvaChatWidget() {
             .slice(1) // drop the canned greeting
             .slice(-12)
             .map((m) => ({ role: m.type === "user" ? "user" : "assistant", content: m.text })),
+          page: window.location.pathname,
+          captured: { lead: leadCaptured, visit: visitRequested },
         }),
       });
       if (res.status === 503) {
@@ -113,8 +178,9 @@ export function AvaChatWidget() {
         return null;
       }
       if (!res.ok) return null;
-      const json = (await res.json()) as { reply?: string; leadCaptured?: boolean };
+      const json = (await res.json()) as { reply?: string; leadCaptured?: boolean; visitRequested?: boolean };
       if (json.leadCaptured) setLeadCaptured(true);
+      if (json.visitRequested) setVisitRequested(true);
       return json.reply?.trim() || null;
     } catch {
       return null;
@@ -125,14 +191,23 @@ export function AvaChatWidget() {
     const lowerText = userText.toLowerCase();
     let responseText = "";
 
-    if (lowerText.includes("price") || lowerText.includes("cost") || lowerText.includes("how much")) {
+    const sale = getSaleStatus();
+    if (lowerText.includes("sale") || lowerText.includes("discount") || lowerText.includes("deal") || lowerText.includes("promotion")) {
+      responseText = sale.active
+        ? `The ${sale.name} is running now: ${sale.discountPercent}% off MSRP base price on new floor-plan orders authorized for ${sale.productionMonth} production, through ${sale.endDateLabel}. See the featured homes at /homes-on-sale, or tell me your name and phone number and the team will quote any plan with the discount applied.`
+        : `There's no promotion running at the moment, but every home is factory-direct with line-item pricing. Tell me your name and phone number and the team will send a quote on any plan.`;
+    } else if (lowerText.includes("visit") || lowerText.includes("appointment") || lowerText.includes("tour") || lowerText.includes("showroom") || lowerText.includes("book")) {
+      responseText = `We'd love to show you around. The showroom at 1211 State Road 8, Auburn (just off I-69) is open Mon–Fri 9–5 and Sat 10–4, with model homes to walk through. What day and time work for you? Leave your name and phone number and the team will confirm — or call/text ${PHONE_DISPLAY}.`;
+    } else if (lowerText.includes("standard") || lowerText.includes("option") || lowerText.includes("upgrade") || lowerText.includes("feature")) {
+      responseText = "Every plan comes with residential standards — drywall or finished interiors, full kitchens with appliance packages, low-E windows and insulation — and you choose colors, cabinets, flooring and siding at order time. Fireplaces, islands, extra cabinets and exterior styles are priced options; see /options. Which floor plan are you considering?";
+    } else if (lowerText.includes("price") || lowerText.includes("cost") || lowerText.includes("how much")) {
       responseText = "Great question — pricing depends on the model, size, and options, so we quote every home line by line with no hidden markups. Our team can put together an exact quote for any floor plan, usually same day. Can I get your name and phone number so we can send it over?";
     } else if (lowerText.includes("stock") || lowerText.includes("inventory") || lowerText.includes("available")) {
       responseText = "We have homes in stock for immediate delivery, homes in production, and can order any Champion floor plan. What's your timeline?";
     } else if (lowerText.includes("financ") || lowerText.includes("loan") || lowerText.includes("payment")) {
       responseText = "We work with lenders offering chattel loans, land-home packages, and conventional financing. Your best option depends on your credit score and whether you own land. Want to get pre-qualified?";
-    } else if (lowerText.includes("tour") || lowerText.includes("visit") || lowerText.includes("see")) {
-      responseText = "Our showroom in Auburn, IN is open Mon-Fri 9-5, Sat 10-4. We have model homes you can walk through. Would you like to schedule a tour?";
+    } else if (lowerText.includes("see")) {
+      responseText = `Our showroom in Auburn, IN is open Mon–Fri 9–5, Sat 10–4, with model homes you can walk through. Want to pick a day? Leave your name and phone number, or call/text ${PHONE_DISPLAY}.`;
     } else if (lowerText.includes("land") || lowerText.includes("lot") || lowerText.includes("property")) {
       responseText = "You can place a manufactured home on owned land, a leased lot, or in a community. Do you already have land, or do you need help finding a location?";
     } else if (lowerText.includes("hello") || lowerText.includes("hi") || lowerText.includes("hey")) {
@@ -218,7 +293,7 @@ export function AvaChatWidget() {
                       : "bg-white text-[var(--color-charcoal)] border border-[var(--color-charcoal)]/10 rounded-bl-none"
                   }`}
                 >
-                  <p>{message.text}</p>
+                  <p className="whitespace-pre-line">{renderRich(message.text)}</p>
                   <span className={`text-xs mt-1 block ${message.type === "user" ? "text-white/70" : "text-[var(--color-gray)]"}`}>
                     {formatTime(message.timestamp)}
                   </span>
@@ -246,9 +321,9 @@ export function AvaChatWidget() {
               onClick={() => setQuoteOpen(true)}
               className="px-3 py-1.5 bg-[var(--color-teal)] text-white text-xs font-bold rounded-full whitespace-nowrap hover:bg-[var(--color-teal-dark)] transition-colors"
             >
-              {leadCaptured ? "✓ Request received" : "Get my quote"}
+              {leadCaptured ? "✓ Quote requested" : visitRequested ? "✓ Visit requested" : "Get my quote"}
             </button>
-            {quickReplies.map((reply) => (
+            {quickReplies().map((reply) => (
               <button
                 key={reply}
                 onClick={() => handleSend(reply)}
