@@ -1,7 +1,20 @@
 import type { NextConfig } from "next";
+import { HTML_LIMITED_BOT_UA_RE } from "next/dist/shared/lib/router/utils/html-bots";
 import { legacyFloorPlanRedirects } from "./src/lib/legacy-redirects";
 
+// Crawlers that must get <title>/<meta> in <head>. Next.js streams metadata
+// into the <body> for every user agent that is not on its built-in
+// "HTML-limited bots" list (Bingbot, facebookexternalhit, …). SEO audit
+// crawlers such as Semrush's SiteAuditBot are not on that list and do not run
+// JavaScript, so they reported the homepage as having no title tag and no meta
+// description (Semrush On Page SEO Checker, 2026-08-20). Setting
+// `htmlLimitedBots` replaces the default list, so the default regex is
+// re-included and the audit crawlers appended.
+const SEO_AUDIT_BOT_UA_RE = /SemrushBot|SiteAuditBot|SplitSignalBot|AhrefsBot|AhrefsSiteAudit|Screaming Frog|MJ12bot|DotBot|rogerbot|SeznamBot|PetalBot/;
+const htmlLimitedBots = new RegExp(`${HTML_LIMITED_BOT_UA_RE.source}|${SEO_AUDIT_BOT_UA_RE.source}`, "i");
+
 const nextConfig: NextConfig = {
+  htmlLimitedBots,
   images: {
     // CMS/DealerTide photos live in S3. Routing them through next/image
     // resizes to the displayed size, serves AVIF/WebP, and adds long-lived
