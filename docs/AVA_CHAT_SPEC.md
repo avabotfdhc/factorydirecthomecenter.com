@@ -56,5 +56,15 @@ financing, discovery / objection / appointment playbooks). Tools:
 `submitLead` labelled "Ava Chat — …". Verify with `node scripts/ava-smoke.mjs
 --spawn`. The pricing policy above is unchanged and enforced in the prompt.
 
+Guardrails (Kyle, 2026-09-10 — "no open web, tight professional scope, only
+assigned tasks"): enforced in `src/lib/ava-guardrails.ts` + the route, not
+just the prompt. No browsing or tools beyond plan lookup / quote / visit;
+visitor text sanitized; injection and persona-swap attempts refused without
+reaching the model; 30 messages per 10 min per IP; replies post-filtered for
+off-site links, home prices and prompt leakage; OpenAI `store:false`. Conduct
+rules (allowed tasks, declines, fair housing, tone, abuse, emergencies,
+sensitive data) live in the SCOPE, CONDUCT AND SAFETY block of
+`ava-knowledge.ts`.
+
 Still optional: Kyle's own top-20 Q&A (add to the OBJECTIONS / FAQ sections of
 `ava-knowledge.ts`) and a monthly spend cap on the OpenAI key.

@@ -177,6 +177,11 @@ export function AvaChatWidget() {
         apiAvailable.current = false;
         return null;
       }
+      if (res.status === 429) {
+        // Message budget reached: the route sends a friendly hand-off line.
+        const json = (await res.json().catch(() => ({}))) as { reply?: string };
+        return json.reply?.trim() || null;
+      }
       if (!res.ok) return null;
       const json = (await res.json()) as { reply?: string; leadCaptured?: boolean; visitRequested?: boolean };
       if (json.leadCaptured) setLeadCaptured(true);
@@ -265,7 +270,7 @@ export function AvaChatWidget() {
               </div>
               <div>
                 <H4 className="font-serif text-lg font-semibold">Ava</H4>
-                <p className="text-xs text-white/80">Housing &amp; Sales Specialist</p>
+                <p className="text-xs text-white/80">Virtual sales assistant · a person follows up</p>
               </div>
             </div>
             <button
@@ -347,6 +352,7 @@ export function AvaChatWidget() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Type your message..."
+              maxLength={500}
               className="flex-1 px-4 py-2 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-full text-sm focus:ring-2 focus:ring-[var(--color-teal)] focus:border-transparent"
             />
             <button
