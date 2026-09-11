@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import { LeadConsent, LeadUrgency } from "./LeadConsent";
 import { trackLeadFormStart, trackLeadFormSubmit } from "@/lib/analytics";
 
@@ -20,6 +21,8 @@ export function SaleClaimForm({ homeName }: { homeName: string }) {
       trackLeadFormStart("sale_claim");
     }
   };
+
+  const antiSpam = useAntiSpam();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,6 +57,7 @@ export function SaleClaimForm({ homeName }: { homeName: string }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...antiSpam.payload(),
           firstName,
           lastName,
           email,
@@ -101,6 +105,7 @@ export function SaleClaimForm({ homeName }: { homeName: string }) {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit} onFocus={onFirstInput}>
+      {antiSpam.fields}
       <LeadUrgency className="bg-[#84cc16]/10 border border-[#84cc16]/40 rounded-lg px-3 py-2.5" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
