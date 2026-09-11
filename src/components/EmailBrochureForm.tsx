@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import { trackLeadFormStart, trackLeadFormError, trackLeadFormSubmit } from "@/lib/analytics";
 
 // One-click brochure lead magnet on home detail pages. Deliberately NOT a
@@ -21,6 +22,8 @@ export function EmailBrochureForm({
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [started, setStarted] = useState(false);
+
+  const antiSpam = useAntiSpam();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,6 +50,7 @@ export function EmailBrochureForm({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...antiSpam.payload(),
           firstName,
           lastName,
           email,
@@ -112,6 +116,7 @@ export function EmailBrochureForm({
       className="mt-6 bg-white border border-[var(--color-charcoal)]/10 rounded-lg p-5"
       noValidate
     >
+      {antiSpam.fields}
       <p className="text-sm font-semibold mb-1">Get the {homeName} floor plan by email</p>
       <p className="text-xs text-[var(--color-gray)] mb-4">
         We&rsquo;ll send the floor plan and current availability — no spam, no obligation.

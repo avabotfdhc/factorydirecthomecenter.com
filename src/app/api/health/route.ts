@@ -39,6 +39,7 @@ export async function GET() {
     leadWebhookSecret: set("LEAD_WEBHOOK_SECRET"),
     googleSheets: set("GOOGLE_SHEETS_ID") && set("GOOGLE_SERVICE_ACCOUNT_KEY"),
     dealerTide: set("DEALERTIDE_API_KEY"),
+    legacyCmsLeads: set("LEGACY_CMS_LEADS"),
     cmsSync: set("CMS_SYNC_SECRET") && set("CMS_ADMIN_USER") && set("CMS_ADMIN_PASS"),
     apiUrlOverride: set("NEXT_PUBLIC_API_URL"),
     ga4: set("NEXT_PUBLIC_GA_MEASUREMENT_ID"),

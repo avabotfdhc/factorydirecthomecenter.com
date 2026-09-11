@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import Link from "next/link";
 import { trackLeadFormStart, trackLeadFormSubmit } from "@/lib/analytics";
 
@@ -25,6 +26,8 @@ export function SalesAlertForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
     }
   };
 
+  const antiSpam = useAntiSpam();
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -46,6 +49,7 @@ export function SalesAlertForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...antiSpam.payload(),
           firstName,
           lastName,
           email,
@@ -75,6 +79,7 @@ export function SalesAlertForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
     <div className="max-w-lg mx-auto">
       <form className="flex flex-col sm:flex-row gap-3" onSubmit={handleSubmit} onFocus={onFirstInput}>
+        {antiSpam.fields}
         <label htmlFor="alert-name" className="sr-only">
           Your name
         </label>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import type { FormEvent } from "react";
 import Link from "next/link";
 import { trackLeadFormStart, trackLeadFormError, trackLeadFormSubmit } from "@/lib/analytics";
@@ -179,6 +180,8 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
     }
   }
 
+  const antiSpam = useAntiSpam();
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -227,6 +230,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...antiSpam.payload(),
           firstName,
           lastName,
           email,
@@ -286,6 +290,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
 
   return (
     <form onSubmit={handleSubmit} onChange={markStarted} className="space-y-6" noValidate>
+      {antiSpam.fields}
       {errors.length > 0 && (
         <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
           <ul className="list-disc list-inside space-y-1">

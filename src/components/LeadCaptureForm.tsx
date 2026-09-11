@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 import { LeadConsent, LeadUrgency } from "./LeadConsent";
@@ -143,6 +144,8 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
     }
   };
 
+  const antiSpam = useAntiSpam();
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
@@ -165,6 +168,7 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...antiSpam.payload(),
           firstName: first || fullName || "—",
           lastName: rest.join(" ") || "—",
           email: formData.email || "",
@@ -230,6 +234,7 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
   return (
     <FadeIn direction="up">
       <div className="bg-white rounded-2xl shadow-xl border border-[var(--color-charcoal)]/5 overflow-hidden">
+        {antiSpam.fields}
         {/* Header */}
         <div className="bg-[var(--color-teal)] text-white p-6">
           <div className="flex justify-between items-center mb-4">
