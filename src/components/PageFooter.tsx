@@ -24,8 +24,10 @@ export function PageFooter() {
 
   return (
     <>
-      {/* Breadcrumb Structured Data */}
-      {breadcrumbs.length > 1 && (
+      {/* Breadcrumb Structured Data. Floor-plan detail pages emit their own
+          (Home › Floor Plans › Series › Home); the URL-derived trail here
+          would be a second, conflicting BreadcrumbList on those pages. */}
+      {breadcrumbs.length > 1 && !pathname.startsWith("/floor-plans/") && (
         <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       )}
 

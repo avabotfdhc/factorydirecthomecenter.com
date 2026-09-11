@@ -1,6 +1,8 @@
 // JSON-LD structured data blocks. Each renders one <script type="application/ld+json">.
 
-const SITE = "https://factorydirecthomescenter.com";
+import { businessJsonLd, SITE_URL } from "@/lib/business";
+
+const SITE = SITE_URL;
 
 function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
@@ -11,46 +13,10 @@ function JsonLd({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-/** Auburn showroom as a RealEstateAgent + HomeAndConstructionBusiness. */
+/** The Auburn showroom (RealEstateAgent + HomeAndConstructionBusiness), from
+ *  the single source of business facts in src/lib/business.ts. */
 export function LocalBusinessSchema() {
-  return (
-    <JsonLd
-      data={{
-        "@context": "https://schema.org",
-        "@type": ["RealEstateAgent", "HomeAndConstructionBusiness"],
-        "@id": `${SITE}/#business`,
-        name: "Factory Direct Homes Center LLC",
-        description:
-          "Champion manufactured and modular homes with factory-direct, line-item pricing. Auburn, Indiana showroom serving Indiana, Ohio and Michigan.",
-        url: SITE,
-        telephone: "+1-260-308-1457",
-        email: "info@factorydirecthomescenter.com",
-        image: `${SITE}/images/hero-home.jpg`,
-        logo: `${SITE}/images/logo.png`,
-        priceRange: "$$",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "1211 State Road 8",
-          addressLocality: "Auburn",
-          addressRegion: "IN",
-          postalCode: "46706",
-          addressCountry: "US",
-        },
-        geo: { "@type": "GeoCoordinates", latitude: 41.3653, longitude: -85.0747 },
-        hasMap: "https://www.google.com/maps/dir/?api=1&destination=1211+State+Road+8+Auburn+IN+46706",
-        openingHoursSpecification: [
-          { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "17:00" },
-          { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "16:00" },
-        ],
-        areaServed: [
-          { "@type": "State", name: "Indiana" },
-          { "@type": "State", name: "Ohio" },
-          { "@type": "State", name: "Michigan" },
-        ],
-        makesOffer: { "@type": "Offer", itemOffered: { "@type": "Product", name: "Champion manufactured and modular homes" } },
-      }}
-    />
-  );
+  return <JsonLd data={businessJsonLd()} />;
 }
 
 export interface ResidenceSchemaProps {

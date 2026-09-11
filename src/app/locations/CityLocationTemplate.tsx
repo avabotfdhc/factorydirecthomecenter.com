@@ -47,7 +47,6 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
             name: data.city,
             containedInPlace: { "@type": "AdministrativeArea", name: `${data.county}, Indiana` },
           },
-          hasMap: `https://maps.google.com/?q=${encodeURIComponent(data.city + " IN")}`,
           serviceArea: {
             "@type": "GeoCircle",
             geoMidpoint: { "@type": "GeoCoordinates", latitude: data.lat, longitude: data.lng },

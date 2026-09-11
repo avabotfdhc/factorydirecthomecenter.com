@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
+import { BUSINESS } from "@/lib/business";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { H2, H3 } from "@/components/Heading";
@@ -79,10 +80,9 @@ export default function AuburnLocationPage() {
             name: "Auburn",
             containedInPlace: { "@type": "AdministrativeArea", name: "DeKalb County, Indiana" },
           },
-          hasMap: "https://maps.google.com/?q=1211+State+Road+8+Auburn+IN+46706",
           serviceArea: {
             "@type": "GeoCircle",
-            geoMidpoint: { "@type": "GeoCoordinates", latitude: 41.3675, longitude: -85.0586 },
+            geoMidpoint: { "@type": "GeoCoordinates", latitude: BUSINESS.latitude, longitude: BUSINESS.longitude },
             geoRadius: "50 miles",
           },
         }}

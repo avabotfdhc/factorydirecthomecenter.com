@@ -75,6 +75,7 @@ interface FloorPlanRow {
   banner_image?: string | null;
   brochure_url?: string | null;
   virtual_tour?: string | null;
+  updated_at?: string | null;
   floor_plan_images?: { path: string; kind?: string | null; sort_order?: number | null }[];
   floor_plan_documents?: { path: string; title?: string | null; kind?: string | null; sort_order?: number | null }[];
 }
@@ -114,6 +115,7 @@ function toFloorPlan(r: FloorPlanRow): ApiFloorPlan {
     series: String(r.series || ""),
     widthFt: widthFtFrom(r.width, `${r.slug} ${r.title || ""} ${r.model_number || ""}`),
     floorPlanImage: drawingFrom(r.floor_plan_images),
+    ...(r.updated_at ? { updatedAt: String(r.updated_at) } : {}),
   };
 }
 
@@ -128,7 +130,7 @@ function drawingFrom(images: FloorPlanRow["floor_plan_images"]): string {
 export async function getSupabaseFloorPlans(): Promise<ApiFloorPlan[]> {
   const select = [
     "slug", "name", "title", "price", "sqft", "beds", "baths",
-    "home_type", "series", "brand", "model_number", "width", "banner_image",
+    "home_type", "series", "brand", "model_number", "width", "banner_image", "updated_at",
     "floor_plan_images(path,kind,sort_order)",
   ].join(",");
   let rows: FloorPlanRow[];

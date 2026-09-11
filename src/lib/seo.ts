@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import { businessJsonLd } from "./business";
 
 interface SEOConfig {
   title: string;
@@ -104,37 +105,11 @@ export function languageAlternates(url: string): Record<string, string> {
 
 // Structured Data Generators
 export const structuredData = {
-  // Local Business Schema
+  // Local Business Schema — the shared `#business` node (src/lib/business.ts)
+  // plus the granular county/city footprint that mirrors /locations. Location
+  // pages spread this and narrow `areaServed` to their own city.
   localBusiness: () => ({
-    "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    "@id": "https://factorydirecthomescenter.com/#business",
-    name: "Factory Direct Homes Center LLC",
-    description: "Champion manufactured and modular homes with factory-direct pricing. Serving Indiana, Ohio, and Michigan.",
-    url: "https://factorydirecthomescenter.com",
-    telephone: "+1-260-308-1457",
-    email: "info@factorydirecthomescenter.com",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "1211 State Road 8",
-      addressLocality: "Auburn",
-      addressRegion: "IN",
-      postalCode: "46706",
-      addressCountry: "US",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 41.3668,
-      longitude: -85.0583,
-    },
-    image: "https://factorydirecthomescenter.com/images/hero-home.jpg",
-    hasMap: "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706",
-    sameAs: [
-      "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN",
-    ],
-    openingHours: ["Mo-Fr 09:00-17:00", "Sa 10:00-16:00"],
-    // States, key counties, and cities we serve — a granular geographic
-    // footprint for local search. Mirrors the /locations pages.
+    ...businessJsonLd(),
     areaServed: [
       { "@type": "State", name: "Indiana" },
       { "@type": "State", name: "Ohio" },
