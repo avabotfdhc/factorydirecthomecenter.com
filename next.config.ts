@@ -16,18 +16,13 @@ const htmlLimitedBots = new RegExp(`${HTML_LIMITED_BOT_UA_RE.source}|${SEO_AUDIT
 const nextConfig: NextConfig = {
   htmlLimitedBots,
   images: {
-    // CMS/DealerTide photos live in S3. Routing them through next/image
-    // resizes to the displayed size, serves AVIF/WebP, and adds long-lived
-    // caching — the raw S3 objects are multi-megapixel with no Cache-Control.
+    // Catalogue photos live in Supabase Storage; next/image resizes to the
+    // displayed size, serves AVIF/WebP and caches the variants.
     formats: ["image/avif", "image/webp"],
     // Optimised variants are immutable for a month (catalogue photos change
     // by getting a new path, not by being overwritten).
     minimumCacheTTL: 2678400,
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "factory-direct-homescenter.s3.us-east-1.amazonaws.com",
-      },
       // Supabase Storage: plan photos and drawings imported from Champion's Box library.
       {
         protocol: "https",

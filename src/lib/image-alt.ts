@@ -69,10 +69,7 @@ export function isOptimizableImage(src: string): boolean {
   if (src.startsWith("/")) return true;
   try {
     const u = new URL(src);
-    return (
-      u.hostname === "factory-direct-homescenter.s3.us-east-1.amazonaws.com" ||
-      (u.hostname.endsWith(".supabase.co") && u.pathname.startsWith("/storage/v1/object/public/"))
-    );
+    return u.hostname.endsWith(".supabase.co") && u.pathname.startsWith("/storage/v1/object/public/");
   } catch {
     return false;
   }
