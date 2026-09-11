@@ -300,7 +300,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               {/* Download Brochure */}
               <div className="mt-4 text-center">
                 <a
-                  href="https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/brochure/Perfect%20Options%20Brochure%202024.pdf"
+                  href="https://mvetqzhjszlullttfkwa.supabase.co/storage/v1/object/public/floor-plans/legacy/perfect-options-brochure-2024.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-[#2c7a7b] hover:text-[#1a365d] font-medium"
