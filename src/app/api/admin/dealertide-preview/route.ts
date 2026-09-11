@@ -1,22 +1,15 @@
 import { NextResponse } from "next/server";
-import { getAdminToken, cmsGet } from "@/lib/admin-auth";
+import { isAdminRequest } from "@/lib/admin-auth";
 import { dealertideConfigured, getDealertideVehiclesRaw } from "@/lib/dealertide";
 
 export const dynamic = "force-dynamic";
 
 // Admin-only inspection of the DealerTide /vehicles payload, used once to pin
 // down the field mapping for the site feed. Gated on the same live-validated
-// CMS admin session as the dashboard — this must never be publicly reachable
+// Supabase admin session as the dashboard — this must never be publicly reachable
 // because inventory records may carry non-public fields.
 export async function GET() {
-  const token = await getAdminToken();
-  if (!token) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  const profile = await cmsGet("/api/authenticate/get-profile", token);
-  // cmsGet returns null on a 401/expired token; accept success OR a profile
-  // payload since the CMS auth response doesn't always include `success`.
-  if (!profile || (!profile.success && !profile.data)) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
+  if (!(await isAdminRequest())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   if (!dealertideConfigured()) {
     return NextResponse.json({

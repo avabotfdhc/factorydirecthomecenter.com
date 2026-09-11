@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAdminToken, cmsGet } from "@/lib/admin-auth";
+import { isAdminRequest } from "@/lib/admin-auth";
 import { feedConfigured, getFeedFloorPlans } from "@/lib/dealertide-feed";
 
 export const dynamic = "force-dynamic";
@@ -9,14 +9,7 @@ export const dynamic = "force-dynamic";
 // session as the dashboard — never publicly reachable (feed carries a token and
 // may include non-public inventory fields).
 export async function GET() {
-  const token = await getAdminToken();
-  if (!token) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  const profile = await cmsGet("/api/authenticate/get-profile", token);
-  // cmsGet returns null on a 401/expired token; accept success OR a profile
-  // payload since the CMS auth response doesn't always include `success`.
-  if (!profile || (!profile.success && !profile.data)) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
+  if (!(await isAdminRequest())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   if (!feedConfigured()) {
     return NextResponse.json({

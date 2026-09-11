@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "node scripts/render-sheet-previews.mjs",
+    "postbuild": "node scripts/render-sheet-previews.mjs && node scripts/migrate-legacy-media.mjs",
     "start": "next start",
     "lint": "eslint",
-    "sheet-previews": "node scripts/render-sheet-previews.mjs"
+    "sheet-previews": "node scripts/render-sheet-previews.mjs",
+    "legacy-media": "node scripts/migrate-legacy-media.mjs"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.9",

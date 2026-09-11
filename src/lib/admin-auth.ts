@@ -1,163 +1,181 @@
 import { cookies } from "next/headers";
 
-// Admin auth = the SAME accounts as the existing CMS admin panel
-// (admin.factorydirecthomescenter.com). We proxy the CMS login endpoint and
-// keep the JWT in an httpOnly cookie so it never touches browser storage.
+// Admin auth = Supabase Auth (email + password) on the same project that holds
+// the catalogue and leads. The GoTrue REST endpoints are called directly (no
+// client library); the access token lives in an httpOnly cookie and a refresh
+// token in a second one, so nothing touches browser storage.
+//
+// Only users whose app_metadata.role is "admin" may sign in. app_metadata is
+// set server-side (SQL / dashboard) and cannot be edited by the user, so a
+// stray self-signup can never reach /admin.
 
 export const ADMIN_COOKIE = "fdhc_admin";
+export const ADMIN_REFRESH_COOKIE = "fdhc_admin_refresh";
 
-export const CMS_API = (
-  process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com"
-).replace(/\/$/, "");
+const SUPABASE_URL = (process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "");
+const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
-/** JWT from the httpOnly admin cookie, or null. */
+export function adminAuthConfigured(): boolean {
+  return Boolean(SUPABASE_URL && ANON_KEY);
+}
+
+export interface AdminSession {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  user: AdminUser;
+}
+
+export interface AdminUser {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
+interface GotrueUser {
+  id?: string;
+  email?: string;
+  user_metadata?: { name?: string };
+  app_metadata?: { role?: string };
+}
+
+interface TokenResponse {
+  access_token?: string;
+  refresh_token?: string;
+  expires_in?: number;
+  user?: GotrueUser;
+  error?: string;
+  error_description?: string;
+  msg?: string;
+}
+
+function toUser(u: GotrueUser | undefined): AdminUser {
+  return {
+    id: String(u?.id || ""),
+    email: String(u?.email || ""),
+    name: String(u?.user_metadata?.name || u?.email || "Admin"),
+    role: String(u?.app_metadata?.role || ""),
+  };
+}
+
+async function gotrue(path: string, init: RequestInit & { token?: string } = {}): Promise<Response> {
+  const { token, ...rest } = init;
+  return fetch(`${SUPABASE_URL}/auth/v1/${path}`, {
+    ...rest,
+    cache: "no-store",
+    headers: {
+      apikey: ANON_KEY,
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(rest.headers || {}),
+    },
+    signal: AbortSignal.timeout(8000),
+  });
+}
+
+/** Email + password sign-in. Returns null on bad credentials or a non-admin user. */
+export async function signInWithPassword(
+  email: string,
+  password: string,
+): Promise<{ session: AdminSession | null; error?: string }> {
+  const res = await gotrue("token?grant_type=password", { method: "POST", body: JSON.stringify({ email, password }) });
+  const json = (await res.json().catch(() => ({}))) as TokenResponse;
+  if (!res.ok || !json?.access_token) {
+    return { session: null, error: json?.error_description || json?.msg || json?.error || "Invalid email or password" };
+  }
+  const user = toUser(json.user);
+  if (user.role !== "admin") return { session: null, error: "This account is not an admin" };
+  return {
+    session: {
+      accessToken: json.access_token,
+      refreshToken: String(json.refresh_token || ""),
+      expiresIn: Number(json.expires_in) || 3600,
+      user,
+    },
+  };
+}
+
+/** Trade a refresh token for a new session (rotates the refresh token). */
+export async function refreshSession(refreshToken: string): Promise<AdminSession | null> {
+  const res = await gotrue("token?grant_type=refresh_token", {
+    method: "POST",
+    body: JSON.stringify({ refresh_token: refreshToken }),
+  });
+  const json = (await res.json().catch(() => ({}))) as TokenResponse;
+  if (!res.ok || !json?.access_token) return null;
+  const user = toUser(json.user);
+  if (user.role !== "admin") return null;
+  return {
+    accessToken: json.access_token,
+    refreshToken: String(json.refresh_token || ""),
+    expiresIn: Number(json.expires_in) || 3600,
+    user,
+  };
+}
+
+/** Best-effort server-side sign-out (revokes the refresh token). */
+export async function signOut(token: string): Promise<void> {
+  try {
+    await gotrue("logout", { method: "POST", token });
+  } catch {
+    /* the cookies are cleared regardless */
+  }
+}
+
+/** Access token from the httpOnly admin cookie, or null. */
 export async function getAdminToken(): Promise<string | null> {
   const jar = await cookies();
   return jar.get(ADMIN_COOKIE)?.value ?? null;
 }
 
-/** Authenticated GET against the CMS API. Returns parsed JSON or null on 401/error. */
-export async function cmsGet(path: string, token: string): Promise<any | null> {
-  try {
-    const res = await fetch(`${CMS_API}${path}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
+export async function getAdminRefreshToken(): Promise<string | null> {
+  const jar = await cookies();
+  return jar.get(ADMIN_REFRESH_COOKIE)?.value ?? null;
 }
 
 /**
- * Verify an admin token against the CMS. Only a definitive 401/403 from the CMS
- * counts as unauthorized; a transient CMS error (5xx, timeout, network) does NOT
- * — the operator already holds a token the CMS issued at login, so a flaky
- * get-profile call must not bounce them back to /login in a redirect loop.
+ * Verify an access token with Supabase Auth.
+ *  - "ok": valid admin session (user returned)
+ *  - "expired": Supabase rejected the token (401/403) — try a refresh
+ *  - "error": Supabase unreachable — keep the session rather than lock out
  */
 export async function verifyAdmin(
   token: string,
-): Promise<{ authorized: boolean; profile: any | null }> {
+): Promise<{ status: "ok" | "expired" | "error"; user: AdminUser | null }> {
   try {
-    const res = await fetch(`${CMS_API}/api/authenticate/get-profile`, {
-      headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
-    });
-    if (res.status === 401 || res.status === 403) return { authorized: false, profile: null };
-    const profile = await res.json().catch(() => null);
-    return { authorized: true, profile };
+    const res = await gotrue("user", { token });
+    if (res.status === 401 || res.status === 403) return { status: "expired", user: null };
+    if (!res.ok) return { status: "error", user: null };
+    const user = toUser((await res.json()) as GotrueUser);
+    if (user.role !== "admin") return { status: "expired", user: null };
+    return { status: "ok", user };
   } catch {
-    // CMS unreachable/transient — keep the valid session rather than lock out.
-    return { authorized: true, profile: null };
+    return { status: "error", user: null };
   }
 }
 
-// Pull the row array out of whatever shape the CMS wraps it in.
-export function extractRows(json: any): any[] {
-  if (Array.isArray(json)) return json;
-  if (Array.isArray(json?.data)) return json.data;
-  if (Array.isArray(json?.data?.data)) return json.data.data;
-  if (Array.isArray(json?.data?.rows)) return json.data.rows;
-  if (Array.isArray(json?.rows)) return json.rows;
-  if (Array.isArray(json?.result)) return json.result;
-  if (Array.isArray(json?.enquiries)) return json.enquiries;
-  return [];
+/** Cookie options shared by login and refresh. */
+export function sessionCookies(session: AdminSession) {
+  const secure = process.env.NODE_ENV === "production";
+  return [
+    {
+      name: ADMIN_COOKIE,
+      value: session.accessToken,
+      options: { httpOnly: true, secure, sameSite: "lax" as const, path: "/", maxAge: session.expiresIn },
+    },
+    {
+      name: ADMIN_REFRESH_COOKIE,
+      value: session.refreshToken,
+      options: { httpOnly: true, secure, sameSite: "lax" as const, path: "/", maxAge: 60 * 60 * 24 * 30 },
+    },
+  ];
 }
 
-export interface LeadsProbe {
-  endpoint: string;
-  status: number | string;
-  keys: string[];
-  rowCount: number;
-  firstRowKeys: string[];
-}
-
-export interface LeadsResult {
-  rows: any[];
-  total: number;
-  source: string | null;
-  probes: LeadsProbe[];
-}
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-// The admin panel doesn't know the exact CMS endpoint that lists website
-// enquiries, so try the known candidates (leads are WRITTEN to
-// /api/enquiry/rash-enquiry). The CMS rate-limits authenticated requests HARD
-// (429), so we must not burst: the /api/enquiry/* paths go first (they avoid
-// the /authenticate limiter), calls are paced, and a 429 backs off and retries
-// once. Stop at the first endpoint that returns real rows.
-const LEAD_ENDPOINTS = [
-  "/api/enquiry/get-all",
-  "/api/enquiry/get-list",
-  "/api/enquiry/get-enquiry",
-  "/api/enquiry/rash-enquiry",
-  "/api/authenticate/get/enquiry-form",
-  "/api/authenticate/get/enquiry",
-];
-
-export async function fetchLeads(
-  token: string,
-  { limit = 100, page = 1 }: { limit?: number; page?: number } = {},
-): Promise<LeadsResult> {
-  const probes: LeadsProbe[] = [];
-  let firstOkSource: { rows: any[]; total: number; source: string } | null = null;
-
-  for (let i = 0; i < LEAD_ENDPOINTS.length; i++) {
-    const base = LEAD_ENDPOINTS[i];
-    const endpoint = `${base}?limit=${limit}&page=${page}`;
-    let status: number | string = "error";
-    let json: any = null;
-
-    // Up to 2 attempts: a 429 backs off then retries once.
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const res = await fetch(`${CMS_API}${endpoint}`, {
-          headers: { Authorization: `Bearer ${token}` },
-          cache: "no-store",
-        });
-        status = res.status;
-        if (res.status === 429 && attempt === 0) {
-          await sleep(2000); // rate-limited — wait out the window, then retry
-          continue;
-        }
-        json = await res.json().catch(() => null);
-      } catch (e) {
-        status = (e as { name?: string })?.name || "fetch-failed";
-      }
-      break;
-    }
-
-    const rows = extractRows(json);
-    probes.push({
-      endpoint: base,
-      status,
-      keys: json && typeof json === "object" ? Object.keys(json) : [],
-      rowCount: rows.length,
-      firstRowKeys: rows[0] && typeof rows[0] === "object" ? Object.keys(rows[0]) : [],
-    });
-
-    const total =
-      json?.pagination?.totalCount ??
-      json?.totalCount ??
-      json?.total ??
-      json?.data?.totalCount ??
-      rows.length;
-
-    if (rows.length > 0) {
-      return { rows, total, source: base, probes };
-    }
-    // Remember a 200 that simply had no rows (correct endpoint, empty result)
-    // as a fallback, but keep looking for one with data.
-    if (status === 200 && !firstOkSource) {
-      firstOkSource = { rows, total, source: base };
-    }
-
-    // Pace the calls so we don't trip the CMS auth rate limiter.
-    if (i < LEAD_ENDPOINTS.length - 1) await sleep(400);
-  }
-
-  if (firstOkSource) return { ...firstOkSource, probes };
-  return { rows: [], total: 0, source: null, probes };
+/** Route-handler guard: true when the request carries a valid admin session. */
+export async function isAdminRequest(): Promise<boolean> {
+  const token = await getAdminToken();
+  if (!token) return false;
+  const { status } = await verifyAdmin(token);
+  return status === "ok";
 }

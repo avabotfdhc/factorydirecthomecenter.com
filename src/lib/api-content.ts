@@ -1,20 +1,13 @@
-// Data layer that reads content from the existing Factory Direct Homes Center
-// admin CMS / backend API (api.factorydirecthomescenter.com). This is the bridge
-// that lets the new (Vercel/Tailwind) design render live, CMS-managed content
-// instead of hardcoded data — so Kyle keeps editing in the admin panel.
-//
-// Fetches run server-side (Next.js server components), so there is no CORS issue
-// and no API key is exposed to the browser.
+// Catalogue and blog data layer. Sources, in priority order: Supabase (the
+// owned CMS), the DealerTide inventory feed, and the repo-published data files
+// (src/lib/*-floor-plans.ts, src/lib/local-posts.ts), which always merge in.
+// Everything runs server-side; no key reaches the browser.
 
-import { deriveSeries, canonicalSeries } from "./series";
 import { galleryOverlays, sheetExtras } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
-import { sqftOverrides, bedOptions } from "./spec-overrides";
+import { bedOptions } from "./spec-overrides";
 import { anchorPriceFor } from "./price-sheet";
-import { encodeImageUrl } from "./encode-url";
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
-const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
 
 export interface ApiFloorPlan {
   slug: string;
@@ -90,12 +83,6 @@ function priceFromBand(homeType: string): string {
   return anchor === undefined ? "" : `From $${anchor.toLocaleString("en-US")}`;
 }
 
-// Home width in feet from a Champion model number ("2856H32392" → 28) found in
-// the slug/title/banner filename — powers the width filter on /floor-plans.
-function deriveWidthFt(context: string): number | undefined {
-  const m = context.match(/\b(14|16|18|24|28|32)(\d{2})([hm])\d{2}/i);
-  return m ? Number(m[1]) : undefined;
-}
 
 // Central decoration applied to every plan on every path (CMS, feed, local):
 // bedroom-option overlays, the range-level price anchor, and the repo-mapped
@@ -113,42 +100,8 @@ function decoratePlan<T extends { slug: string; homeType: string; virtualTour?: 
   };
 }
 
-// CMS titles are long ("Brighton - 3 Bed 2 Bath ... | Champion Aspire").
-// Use the first segment as the card's display name.
-function shortName(title: string): string {
-  return String(title || "")
-    .split(/\s[-|–]\s/)[0]
-    .trim() || "Home";
-}
 
-// The CMS leaves homeType empty on most listings (and uses "singleWide" on a
-// few), which silently breaks the type filter — a "Multi-Section" search would
-// exclude nearly the whole catalog. Normalize the CMS value, and when it's
-// missing derive the type from the Champion model number (present in the
-// slug, title, or banner-image filename): width prefix 24/28/32 = sectional
-// (Multi-Section), 14/16 = Single Wide; an M build code = Modular.
-function normalizeHomeType(raw: unknown, context: string): string {
-  const t = String(raw || "").trim();
-  if (/single/i.test(t)) return "Single Wide";
-  if (/double|sectional|multi/i.test(t)) return "Multi-Section";
-  if (/modular/i.test(t)) return "Modular";
-  const m = context.match(/\b(14|16|24|28|32)(\d{2})([hm])\d{2}/i);
-  if (m) {
-    if (m[3].toLowerCase() === "m") return "Modular";
-    return Number(m[1]) >= 24 ? "Multi-Section" : "Single Wide";
-  }
-  return t;
-}
 
-function s3Url(path?: string): string {
-  if (!path) return "";
-  // Many CMS image keys contain spaces/parentheses — encode so the URL is valid
-  // everywhere (social-preview scrapers and strict crawlers won't auto-encode).
-  // encodeImageUrl keeps already-encoded %XX sequences as they are (plain
-  // encodeURI would double them to %25XX and break the link).
-  const raw = /^https?:\/\//.test(path) ? path : `${S3_BASE}/${String(path).replace(/^\//, "")}`;
-  return encodeImageUrl(raw);
-}
 
 // A CMS API failure must NOT be swallowed into an empty result: ISR would then
 // cache a zero-home page over the last good one for every visitor. Throwing
@@ -157,13 +110,6 @@ function s3Url(path?: string): string {
 // graceful (empty result) so a CMS blip can't fail unrelated deploys — the
 // error still lands in the build log.
 //
-// Use this only where there is nothing of our own to serve in the CMS's place.
-function cmsFailure(context: string, detail: string): void {
-  console.error(`[cms-api] ${context} FAILED: ${detail}`);
-  if (process.env.NEXT_PHASE !== "phase-production-build") {
-    throw new Error(`[cms-api] ${context}: ${detail}`);
-  }
-}
 
 /**
  * The same failure, where the repo can answer instead.
@@ -180,9 +126,6 @@ function cmsFailure(context: string, detail: string): void {
  * trade — a short window of catalogue-only content beats an error page, and it
  * heals itself within five minutes of the CMS coming back.
  */
-function cmsDegraded(context: string, detail: string): void {
-  console.error(`[cms-api] ${context} DEGRADED (serving repo-published content): ${detail}`);
-}
 
 // Repo-published Champion PRIME Series models (src/lib/local-floor-plans.ts)
 // merge with the remote catalog the same way local blog posts do — these
@@ -259,47 +202,8 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
   if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).map(decoratePlan);
 
-  const endpoint = "floor-plan/get-active";
-  let json: any;
-  try {
-    const res = await fetch(`${API_BASE}/api/${endpoint}?limit=500`, {
-      next: { revalidate: 300 },
-    });
-    if (!res.ok) {
-      cmsDegraded(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return (await localPlans()).map(decoratePlan);
-    }
-    json = await res.json();
-  } catch (err) {
-    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsDegraded(endpoint, String(err));
-    return (await localPlans()).map(decoratePlan);
-  }
-  const rows: any[] = Array.isArray(json?.data) ? json.data : (json?.rows || []);
-  const plans = rows
-    .filter((r) => r?.slug)
-    .map((r) => ({
-      slug: String(r.slug),
-      name: shortName(r.title),
-      title: String(r.title || ""),
-      price: formatPrice(r.price),
-      sqft: sqftOverrides[String(r.slug)] ?? (Number(r.sqft) || 0),
-      beds: Number(r.beds) || 0,
-      baths: Number(r.baths) || 0,
-      image: galleryOverlays[String(r.slug)]?.image || s3Url(r.bannerImage),
-      brand: r?.brandDetails?.name || r?.seriesDetails?.name || "Champion Homes",
-      homeType: normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
-      series: canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description),
-      widthFt: deriveWidthFt(`${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`),
-    }));
-  if (plans.length === 0) {
-    // HTTP 200 with zero homes is a valid CMS state but almost always means
-    // someone deactivated everything — make it impossible to miss in the logs.
-    console.warn(`[cms-api] ${endpoint} returned 0 active homes — floor plan pages will render empty`);
-  } else {
-    console.log(`[cms-api] ${endpoint} OK — ${plans.length} active homes`);
-  }
-  return mergePlans(plans, await localPlans()).map(decoratePlan);
+  // No CMS configured: the repo-published catalogue is the site.
+  return (await localPlans()).map(decoratePlan);
 }
 
 /** Small, presentable set of homes for the homepage featured section — homes
@@ -375,10 +279,6 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     }
   }
 
-  // Repo-mapped Matterport tour (src/lib/virtual-tours.ts) fills in when the
-  // CMS/feed has no tour of its own — a CMS-provided tour always wins.
-  const localTour = virtualTours[slug] || "";
-
   // Supabase (new owned CMS) is the source of truth for a slug when configured.
   const { supabaseConfigured, getSupabaseFloorPlanBySlug } = await import("./supabase-content");
   if (supabaseConfigured()) {
@@ -395,89 +295,12 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
     return decoratePlan(d);
   }
 
-  const endpoint = `floor-plan/get-details/${slug}`;
-  let json: any;
-  try {
-    const res = await fetch(
-      `${API_BASE}/api/floor-plan/get-details/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 300 } },
-    );
-    // 404 is a genuinely unknown slug -> notFound(). Anything else (5xx, rate
-    // limit) must not masquerade as "home doesn't exist".
-    if (res.status === 404) return null;
-    if (!res.ok) {
-      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return null;
-    }
-    json = await res.json();
-  } catch (err) {
-    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsFailure(endpoint, String(err));
-    return null;
-  }
-  try {
-    const r: any = json?.data || json;
-    if (!r?.slug) return null;
-
-    const rawImgs = [
-      r.bannerImage,
-      ...((r.images || []).map((i: any) => i?.imageName || i?.imageLocation)),
-      ...((r.galleryImages || []).map((i: any) => i?.imageName || i?.imageLocation)),
-    ].filter(Boolean);
-    // Photo-shoot overlay: real photography first, CMS images (drawing) after.
-    const overlay = galleryOverlays[String(r.slug)];
-    // Buyer-journey ordering: hero photo first, then the floor-plan drawing(s)
-    // from the CMS and the SALES option sheets, then the rest of the photos.
-    const cmsImgs = [...new Set(rawImgs)].map(s3Url);
-    const sheets = sheetExtras[String(r.slug)] || [];
-    const gallery = overlay
-      ? [overlay.gallery[0], ...cmsImgs, ...sheets, ...overlay.gallery.slice(1)]
-      : [...cmsImgs, ...sheets];
-
-    const homeType = normalizeHomeType(r.homeType, `${r.slug} ${r.title} ${r.modelNumber || ""} ${r.bannerImage || ""}`);
-    const series = canonicalSeries(r?.seriesDetails?.name || r?.series) || deriveSeries(r.title, r?.modelNo, r?.description);
-    // Champion-published series brochure fills in when the CMS record has none.
-    const { seriesBrochure } = await import("./brochures");
-
-    return decoratePlan({
-      slug: String(r.slug),
-      name: shortName(r.title),
-      title: String(r.title || ""),
-      price: formatPrice(r.price),
-      sqft: sqftOverrides[String(r.slug)] ?? (Number(r.sqft) || 0),
-      beds: Number(r.beds) || 0,
-      baths: Number(r.baths) || 0,
-      image: overlay?.image || s3Url(r.bannerImage),
-      brand: r?.brandDetails?.name || "Champion Homes",
-      homeType,
-      description: String(r.description || ""),
-      floorPlanHtml: String(r.floorPlan || ""),
-      modelNumber: String(r.modelNumber || ""),
-      length: String(r.length || ""),
-      width: String(r.width || ""),
-      series,
-      brochureUrl: r.brochure ? s3Url(r.brochure) : seriesBrochure(series, homeType),
-      floorPlanUrl: "",
-      virtualTour: String(r.virtualTour || "") || localTour,
-      gallery,
-    });
-  } catch {
-    return null;
-  }
+  return null;
 }
 
 // ---------- Blog ----------
 
-function stripHtmlLocal(s: string): string {
-  return String(s || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-}
 
-function formatDate(iso: string): string {
-  if (!iso) return "";
-  const t = Date.parse(iso);
-  if (Number.isNaN(t)) return "";
-  return new Date(t).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-}
 
 export interface ApiBlogPost {
   slug: string;
@@ -507,75 +330,10 @@ function mergePosts(cms: ApiBlogPost[], local: ApiBlogPost[]): ApiBlogPost[] {
 }
 
 export async function getApiBlogPosts(): Promise<ApiBlogPost[]> {
-  const endpoint = "blog/get-all";
-  let json: any;
-  try {
-    const res = await fetch(`${API_BASE}/api/blog/get-all?limit=100`, { next: { revalidate: 300 } });
-    if (!res.ok) {
-      cmsDegraded(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return mergePosts([], await localPosts());
-    }
-    json = await res.json();
-  } catch (err) {
-    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsDegraded(endpoint, String(err));
-    return mergePosts([], await localPosts());
-  }
-  {
-    const rows: any[] = Array.isArray(json?.data) ? json.data : [];
-    const cmsPosts = rows
-      .filter((r) => r?.slug && r?.isActive !== false && r?.isDeleted !== true)
-      // Newest posts first — sort by createdAt (falls back to updatedAt) descending
-      .sort((a, b) => {
-        const ta = new Date(a?.createdAt || a?.updatedAt || 0).getTime();
-        const tb = new Date(b?.createdAt || b?.updatedAt || 0).getTime();
-        return tb - ta;
-      })
-      .map((r) => ({
-        slug: String(r.slug),
-        title: String(r.title || ""),
-        excerpt: stripHtmlLocal(r.description || "").slice(0, 170),
-        image: s3Url(r.bannerImage),
-        date: formatDate(r.createdAt),
-      }));
-    return mergePosts(cmsPosts, await localPosts());
-  }
+  return mergePosts([], await localPosts());
 }
 
 export async function getApiBlogBySlug(slug: string): Promise<ApiBlogDetail | null> {
-  {
-    const { localBlogPosts } = await import("./local-posts");
-    const local = localBlogPosts.find((p) => p.slug === slug);
-    if (local) return local;
-  }
-  const endpoint = `blog/get-details/${slug}`;
-  let json: any;
-  try {
-    const res = await fetch(
-      `${API_BASE}/api/blog/get-details/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 300 } },
-    );
-    if (res.status === 404) return null;
-    if (!res.ok) {
-      cmsFailure(endpoint, `HTTP ${res.status} ${res.statusText}`);
-      return null;
-    }
-    json = await res.json();
-  } catch (err) {
-    if (err instanceof Error && err.message.startsWith("[cms-api]")) throw err;
-    cmsFailure(endpoint, String(err));
-    return null;
-  }
-  {
-    const r: any = json?.data || json;
-    if (!r?.slug) return null;
-    return {
-      slug: String(r.slug),
-      title: String(r.title || ""),
-      excerpt: stripHtmlLocal(r.description || "").slice(0, 170),
-      image: s3Url(r.bannerImage),
-      date: formatDate(r.createdAt),
-      html: String(r.description || ""),
-    };
-  }
+  const { localBlogPosts } = await import("./local-posts");
+  return localBlogPosts.find((p) => p.slug === slug) ?? null;
 }

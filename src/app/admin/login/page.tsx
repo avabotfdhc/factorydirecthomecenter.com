@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-// Admin login — same credentials as the existing CMS admin panel.
+// Admin login — Supabase Auth email + password (admin role only).
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -19,14 +19,14 @@ export default function AdminLoginPage() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userName, password }),
+        body: JSON.stringify({ email, password }),
       });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.success) {
         router.push("/admin");
         router.refresh();
       } else {
-        setError(json.message || "Login failed. Check your username and password.");
+        setError(json.message || "Login failed. Check your email and password.");
         setBusy(false);
       }
     } catch {
@@ -46,20 +46,20 @@ export default function AdminLoginPage() {
             Admin <span className="italic text-[var(--color-teal-light)]">Sign In</span>
           </h1>
           <p className="text-sm text-white/50 mt-3">
-            Use your existing CMS admin username and password.
+            Sign in with your admin email and password.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-2xl p-8 space-y-5">
           <div>
-            <label htmlFor="userName" className="block text-sm font-medium mb-2 text-[var(--color-charcoal)]">
-              Username or Email
+            <label htmlFor="email" className="block text-sm font-medium mb-2 text-[var(--color-charcoal)]">
+              Email
             </label>
             <input
-              id="userName"
-              type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               autoComplete="username"
               required
               className="w-full px-4 py-3 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)] focus:border-transparent focus:outline-none"
@@ -94,7 +94,7 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="text-center text-xs text-white/30 mt-6">
-          Authorized staff only. Sessions expire after 12 hours.
+          Authorized staff only. Sessions renew automatically for 30 days.
         </p>
       </div>
     </main>

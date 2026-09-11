@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { getAdminToken, verifyAdmin } from "@/lib/admin-auth";
+import { getAdminRefreshToken, getAdminToken, verifyAdmin } from "@/lib/admin-auth";
 import { LogoutButton } from "./LogoutButton";
 
 export const metadata: Metadata = {
@@ -9,20 +9,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Server-side guard: every page in this group requires a valid CMS admin token.
-// Invalid/expired tokens bounce to /admin/login (validated against the live API,
-// not just cookie presence, so a stale cookie can't show an empty dashboard).
+// Server-side guard: every page in this group requires a valid Supabase Auth
+// admin session (see src/proxy.ts for the silent renewal of expired tokens).
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const token = await getAdminToken();
-  if (!token) redirect("/admin/login");
+  const refresh = await getAdminRefreshToken();
+  // src/proxy.ts already routes "no access cookie but a refresh cookie" through
+  // /api/admin/refresh with the exact page; here only the no-session case is left.
+  if (!token) redirect(refresh ? "/api/admin/refresh?next=/admin" : "/admin/login");
 
-  // Only a definitive 401/403 from the CMS bounces the session — a transient CMS
-  // error must not, or a flaky get-profile call sends a validly-logged-in
-  // operator into an infinite redirect loop back to /login.
-  const { authorized, profile } = await verifyAdmin(token);
-  if (!authorized) redirect("/admin/login");
+  const { status, user } = await verifyAdmin(token);
+  if (status === "expired") redirect(refresh ? "/api/admin/refresh?next=/admin" : "/admin/login");
+  // status "error" (Supabase unreachable) keeps the session rather than
+  // bouncing a validly signed-in operator into a redirect loop.
 
-  const userName = profile?.data?.name || profile?.data?.username || "Admin";
+  const userName = user?.name || "Admin";
 
   const nav = [
     { href: "/admin", label: "Dashboard" },
@@ -52,14 +53,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </nav>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <a
-              href="https://admin.factorydirecthomescenter.com/dashboard"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/50 hover:text-white transition-colors"
-            >
-              Full CMS ↗
-            </a>
             <Link href="/" className="text-white/50 hover:text-white transition-colors">
               View Site ↗
             </Link>
