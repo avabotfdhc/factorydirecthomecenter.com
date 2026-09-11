@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { NO_EMAIL_PLACEHOLDER, pushLeadToDealertide } from "@/lib/dealertide";
 import { leadsStoreConfigured, storeLead } from "@/lib/leads-store";
+import { spamVerdict } from "@/lib/anti-spam";
 
 // DealerTide is tried twice with a 6s timeout each (see lib/dealertide.ts) and
 // the other channels run alongside it. Give the function room so a slow CRM
@@ -40,6 +41,13 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  // Bots get the same 200 a person gets and nothing is forwarded or stored.
+  const spam = spamVerdict(body);
+  if (spam) {
+    console.log(`[leads] Dropped as spam (${spam})`);
+    return NextResponse.json({ success: true, message: "Lead received" }, { status: 200 });
   }
 
   // A lead needs a name and one way to reach the person. Requiring an email
@@ -141,6 +149,21 @@ export async function POST(request: Request) {
     console.error(`[leads] DealerTide channel failed after ${dtResult.value.attempts} attempt(s): ${dtResult.value.detail}`);
   }
 
+  // Tell a human when the CRM of record did not get a clean 201 — a failure,
+  // or a 202 "duplicate" (a repeat inquiry DealerTide skipped, which means the
+  // second request's content never reached the CRM). Inert until
+  // RESEND_API_KEY is set; never throws; never blocks the visitor.
+  if (dtResult.status === "rejected") {
+    await notifyLeadProblem(lead, "failed", String(dtResult.reason));
+  } else if (!dtResult.value.ok) {
+    await notifyLeadProblem(lead, "failed", dtResult.value.detail);
+  } else if (dtResult.value.status === 202) {
+    await notifyLeadProblem(lead, "duplicate", dtResult.value.detail);
+  }
+  if (storeResult.status === "rejected") {
+    await notifyLeadProblem(lead, "store-failed", String(storeResult.reason));
+  }
+
   return NextResponse.json({ success: true, message: "Lead received" });
 }
 
@@ -148,11 +171,85 @@ export async function POST(request: Request) {
 
 // ─── Channel 1: Resend email ───────────────────────────────────────────────
 
-async function sendEmail(lead: Record<string, string>) {
+// Visitor-typed text goes into HTML email bodies below. Escape it.
+function escapeHtml(v: unknown): string {
+  return String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+function escapeAll(lead: Record<string, string>): Record<string, string> {
+  return Object.fromEntries(Object.entries(lead).map(([k, v]) => [k, escapeHtml(v)]));
+}
+
+async function resendSend(subject: string, html: string): Promise<void> {
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
+    body: JSON.stringify({ from: "leads@factorydirecthomescenter.com", to: LEAD_EMAIL_TO, subject, html }),
+    signal: AbortSignal.timeout(8_000),
+  });
+  if (!res.ok) throw new Error(`Resend API error ${res.status}: ${await res.text()}`);
+}
+
+type LeadProblem = "failed" | "duplicate" | "store-failed";
+
+/**
+ * Email the sales inbox when a lead did not land cleanly in the CRM of record.
+ * Skipped when RESEND_API_KEY is unset (the failure is still in the logs).
+ * Never throws: alerting must not break lead capture.
+ */
+async function notifyLeadProblem(rawLead: Record<string, string>, kind: LeadProblem, detail: string): Promise<void> {
+  if (!RESEND_API_KEY) return;
+  const lead = escapeAll(rawLead);
+  const name = `${lead.firstName} ${lead.lastName}`.trim();
+  const headline =
+    kind === "failed"
+      ? "⚠️ Lead NOT delivered to DealerTide"
+      : kind === "duplicate"
+        ? "ℹ️ Repeat inquiry — DealerTide skipped it as a duplicate"
+        : "⚠️ Lead not saved to Supabase";
+  const action =
+    kind === "failed"
+      ? "Enter this lead in DealerTide by hand. A copy is in Supabase → leads."
+      : kind === "duplicate"
+        ? "DealerTide matched an existing contact and did not record this new request. Check the contact and add this inquiry to it. A copy is in Supabase → leads."
+        : "DealerTide has this lead; the Supabase copy failed. Nothing to enter by hand, but the reconciliation table is missing a row.";
+  const html = `
+    <h2 style="color:#1a1a1a">${headline}</h2>
+    <p style="font-family:sans-serif;font-size:14px"><strong>${escapeHtml(action)}</strong></p>
+    <table cellpadding="6" cellspacing="0" style="font-family:sans-serif;font-size:14px">
+      <tr><td><strong>Name</strong></td><td>${name}</td></tr>
+      <tr><td><strong>Phone</strong></td><td>${lead.phone || "—"}</td></tr>
+      <tr><td><strong>Email</strong></td><td>${lead.email || "—"}</td></tr>
+      <tr><td><strong>Interest</strong></td><td>${lead.interest || "—"}</td></tr>
+      <tr><td><strong>Delivery</strong></td><td>${lead.deliveryState || "—"}</td></tr>
+      <tr><td><strong>Timeframe</strong></td><td>${lead.timeframe || "—"}</td></tr>
+      <tr><td><strong>Financing</strong></td><td>${lead.financingStatus || "—"}</td></tr>
+      <tr><td><strong>Message</strong></td><td>${lead.message || "—"}</td></tr>
+      <tr><td><strong>Form</strong></td><td>${lead.source}</td></tr>
+      <tr><td><strong>Page</strong></td><td>${lead.pageUrl || "—"}</td></tr>
+      <tr><td><strong>Submitted</strong></td><td>${lead.submittedAt}</td></tr>
+      <tr><td><strong>Detail</strong></td><td><code>${escapeHtml(detail)}</code></td></tr>
+    </table>
+  `;
+  try {
+    await resendSend(`${headline}: ${name}`, html);
+    console.log(`[leads] Problem alert emailed (${kind}) to`, LEAD_EMAIL_TO);
+  } catch (err) {
+    console.error(`[leads] Problem alert (${kind}) could not be emailed:`, err instanceof Error ? err.message : err);
+  }
+}
+
+// ─── Channel 1: Resend email ───────────────────────────────────────────────
+async function sendEmail(rawLead: Record<string, string>) {
   if (!RESEND_API_KEY) {
     console.log("[leads] Email skipped — RESEND_API_KEY not set");
     return;
   }
+  const lead = escapeAll(rawLead);
 
   const html = `
     <h2 style="color:#1a1a1a">New Website Lead</h2>

@@ -2,6 +2,7 @@
 
 import type { FormEvent } from "react";
 import { useState, useEffect } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import { H2, H3 } from "@/components/Heading";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
 import { LeadConsent, LeadUrgency } from "@/components/LeadConsent";
@@ -72,6 +73,8 @@ export default function ContactForm() {
     return errs;
   }
 
+  const antiSpam = useAntiSpam();
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const errs = validate(e.currentTarget);
@@ -106,6 +109,7 @@ export default function ContactForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+          ...antiSpam.payload(),
             firstName,
             lastName,
             email,
@@ -277,6 +281,7 @@ export default function ContactForm() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  {antiSpam.fields}
                   {Object.keys(errors).length > 0 && (
                     <div role="alert" aria-live="polite" className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
                       Please fix the errors below to continue.

@@ -21,7 +21,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `GET /api/health` reports (booleans only) which of the vars below are set and the Supabase host with a live `floor_plans` probe. Env var changes on Vercel only reach deployments created after the change — redeploy, then read `/api/health`.
 - `LEAD_WEBHOOK_SECRET` (+ optional `LEAD_ALERT_EMAIL_TO`, default sales@) — Supabase Database Webhook on `leads` INSERT posts to `/api/webhooks/new-lead` with header `x-webhook-secret`; the route emails the lead via Resend.
 - `OPENAI_API_KEY` (optional `OPENAI_CHAT_MODEL`, default `gpt-4o-mini`; `OPENAI_BASE_URL` only for the local mock) — powers Ava (`/api/chat`). Unset → the chat widget uses its scripted replies. See "Ava" below.
-- `RESEND_API_KEY`, `LEAD_EMAIL_TO`, `GOOGLE_SHEETS_ID`, `GOOGLE_SERVICE_ACCOUNT_KEY`, DealerTide keys — lead fan-out channels in `/api/leads`; each is skipped when unset.
+- `RESEND_API_KEY`, `LEAD_EMAIL_TO`, `GOOGLE_SHEETS_ID`, `GOOGLE_SERVICE_ACCOUNT_KEY`, DealerTide keys — lead fan-out channels in `/api/leads`; each is skipped when unset. When `RESEND_API_KEY` is set the route also emails `LEAD_EMAIL_TO` whenever DealerTide rejects a lead, skips it as a duplicate (202), or the Supabase copy fails.
+- `LEGACY_CMS_LEADS=1` — re-enables the legacy CMS enquiry channel in `/api/leads`. Off by default since 2026-09-11: that API has answered 5xx since 2026-08-29 and `/admin` reads leads from Supabase.
+- `/api/leads` drops submissions with the hidden `website` honeypot filled or submitted under 2.5s after the form mounted (`src/lib/anti-spam.ts`, `src/lib/use-anti-spam.tsx`), answering 200 so bots learn nothing. Platform-level rate limiting is a Vercel Firewall rule, not code.
+
+`npm test` runs `tests/*.test.ts` (node:test via tsx) against a scripted mock of DealerTide's `POST /leads`; `.github/workflows/test.yml` runs it plus `tsc --noEmit` on every PR.
 
 Adding a new tracking platform: scaffold the component in `src/lib/analytics.tsx`, reference it from `AnalyticsProvider`, then `vercel env add NEW_VAR production` and redeploy. Do NOT commit IDs into source.
 

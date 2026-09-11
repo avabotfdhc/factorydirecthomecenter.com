@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, type FormEvent } from "react";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import { LeadConsent, LeadUrgency } from "./LeadConsent";
 import { trackLeadFormStart, trackLeadFormSubmit } from "@/lib/analytics";
 
@@ -83,6 +84,8 @@ function QuoteDialog({
     }
   };
 
+  const antiSpam = useAntiSpam();
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -114,6 +117,7 @@ function QuoteDialog({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          ...antiSpam.payload(),
           firstName,
           lastName,
           email,
@@ -183,6 +187,7 @@ function QuoteDialog({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-5 space-y-4" onFocus={onFirstInput}>
+            {antiSpam.fields}
             <LeadUrgency className="bg-[var(--color-lime)]/10 border border-[var(--color-lime)]/40 rounded-lg px-3 py-2.5" />
 
             <Field label="Full name" required>
