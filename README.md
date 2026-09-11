@@ -33,29 +33,20 @@ AGENTS.md → "Deployment & env vars" for the wired tracking IDs and how to add 
 
 ## Where images are stored
 
-Production images come from **two** places:
+Production images come from **two** places, neither on AWS:
 
-1. **In this repo, under `public/`** — committed to git, deployed with the Vercel build, and
-   served from Vercel's CDN. Referenced by root-relative paths like
-   `/images/paramount/brighton-living.webp` and rendered through `next/image`. Main folders:
-   - `public/images/paramount/` — Paramount-series photos & renderings
-   - `public/images/prime/` — Prime-series photos
-   - `public/images/floor-plans/` — floor-plan renderings & spec/sales PDFs
-   - `public/images/homepage/`, `public/images/options/` — site/homepage art
-   - `public/brochures/`, plus top-level hero and logo images
-   This is where curated, static imagery lives. To add one, drop the file in the appropriate
-   `public/images/**` folder and reference it by its `/images/...` path (there is **no**
-   `public/floorplans/` folder — use `public/images/...`).
+1. **In this repo, under `public/`** — committed to git, deployed with the Vercel build and
+   served from Vercel's CDN through `next/image` (`/images/paramount/…`, `/images/prime/…`,
+   `/images/options/…`, `/images/homepage/…`).
+2. **Supabase Storage, bucket `floor-plans`** (project `mvetqzhjszlullttfkwa`) — the CMS
+   catalogue: Champion sales sheets (`<series>/<MODEL>/plans/`), photo sets (`…/photos/`),
+   rendered card previews (`…/previews/`), literature PDFs (`literature/`) and the photos
+   migrated off the retired S3 bucket (`legacy/`). Paths are stored as bucket keys in
+   `floor_plans.banner_image`, `floor_plan_images.path`, `floor_plan_documents.path` and
+   `literature.path`; `imgUrl()` in `src/lib/supabase-content.ts` turns a key into the public URL.
 
-2. **AWS S3 — `factory-direct-homescenter.s3.us-east-1.amazonaws.com`** — the DealerTide/CMS
-   catalog photos and some banner renderings/brochures. These are referenced by full
-   `https://…s3…amazonaws.com/…` URLs and are allowed through `next/image` via `remotePatterns`
-   in [`next.config.ts`](./next.config.ts). They're consumed mainly by `src/lib/api-content.ts`
-   (the CMS feed) and the catalog data files (`src/lib/*-floor-plans.ts`).
-
-**Rule of thumb:** static site imagery (heroes, homepage, curated model photos) lives in
-`public/`; dynamic catalog/inventory photos come from the S3 bucket through the CMS feed.
-
+The legacy S3 bucket and the Express/MySQL CMS on EC2 were retired on 2026-09-11 — see
+AGENTS.md → "AWS is retired".
 ## Analytics & tracking
 
 Google Analytics 4, Google Tag Manager, Meta Pixel, and Microsoft Clarity are wired in

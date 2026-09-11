@@ -49,7 +49,7 @@ before(async () => {
   process.env.DEALERTIDE_API_BASE = `http://127.0.0.1:${port}`;
   process.env.DEALERTIDE_API_KEY = "test-key-not-real";
   for (const k of ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
-                   "RESEND_API_KEY", "GOOGLE_SHEETS_ID", "GOOGLE_SERVICE_ACCOUNT_KEY", "LEGACY_CMS_LEADS"]) {
+                   "RESEND_API_KEY", "GOOGLE_SHEETS_ID", "GOOGLE_SERVICE_ACCOUNT_KEY"]) {
     delete process.env[k];
   }
 
@@ -158,10 +158,9 @@ test("no anti-spam signals at all is still accepted (server action / chat path)"
   const res = await post({ firstName: "Ava", lastName: "Chat", phone: "2605550000" });
   assert.equal(res.status, 200); assert.equal(received.length, 1);
 });
-test("legacy CMS channel is off by default and says so", async () => {
+test("no request is made to the retired legacy CMS", async () => {
   plan = [{ status: 201 }];
   await post({ firstName: "A", lastName: "B", phone: "2605550000" });
-  assert.ok(logged("Legacy CMS channel disabled (LEGACY_CMS_LEADS unset)"));
   assert.ok(!logged("CMS channel failed"), "no failing CMS request should be made");
 });
 test("DealerTide failure is logged with the reason and does not break the response", async () => {

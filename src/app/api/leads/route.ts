@@ -101,7 +101,7 @@ export async function POST(request: Request) {
     .join("\n");
 
   // Run all channels concurrently; no single failure blocks the response
-  const [storeResult, emailResult, sheetsResult, cmsResult, dtResult] = await Promise.allSettled([
+  const [storeResult, emailResult, sheetsResult, dtResult] = await Promise.allSettled([
     // Durable copy first, so nothing downstream can lose the lead.
     skipStore
       ? Promise.resolve<string | null>(null)
@@ -115,7 +115,6 @@ export async function POST(request: Request) {
         }),
     sendEmail(lead),
     appendToSheet(lead),
-    postToCms(lead),
     // DealerTide CRM — key's inbound-lead automation handles source defaulting,
     // Auburn location assignment, and email/phone dedupe on their side.
     pushLeadToDealertide({
@@ -139,9 +138,6 @@ export async function POST(request: Request) {
   }
   if (sheetsResult.status === "rejected") {
     console.error("[leads] Sheets channel failed:", sheetsResult.reason);
-  }
-  if (cmsResult.status === "rejected") {
-    console.error("[leads] CMS channel failed:", cmsResult.reason);
   }
   // DealerTide is the CRM of record, so say what happened either way — a
   // silent success is indistinguishable from a silent drop in the logs.
@@ -171,88 +167,7 @@ export async function POST(request: Request) {
   return NextResponse.json({ success: true, message: "Lead received" });
 }
 
-// ─── Channel 3: Factory Direct admin CMS (leads appear in the admin panel) ──
-// Posts to the existing public enquiry endpoint so submissions land in the same
-// place Kyle already manages leads.
-//
-// The CMS enquiry model REQUIRES numeric option IDs (deliveryState, homeType,
-// bedrooms, purchaseOptions, landOptions, communicationOptions, state) as
-// foreign keys — omitting them makes the insert fail with HTTP 400 and the lead
-// is silently lost. We map the fields the contact form collects to those IDs
-// and default the rest to sensible values (Indiana base market), preserving the
-// full free-text detail in the `address` note field so nothing is lost.
-//
-// Option IDs from GET /api/enquiry/get-enquiry-options (stable):
-//   delivery: 2=Indiana 4=Ohio 5=Michigan 8=Illinois 9=Kentucky
-//   homeType: 1=Single Wide 2=Double/Sectional 3=Modular
-//   bedrooms: 1..5   purchase: 1=Cash 2=Finance
-//   land: 1=Have land/place 2=Community   communication: 1=phone 2=text 3=email
-//   states: 15=Indiana 23=Michigan 36=Ohio
 
-function pickId(map: Record<string, number>, value: string, fallback: number): number {
-  const v = String(value || "").toLowerCase();
-  for (const key of Object.keys(map)) if (v.includes(key)) return map[key];
-  return fallback;
-}
-
-const HOME_TYPE: Record<string, number> = {
-  single: 1, "single wide": 1, double: 2, "double wide": 2, sectional: 2, modular: 3,
-};
-const PURCHASE: Record<string, number> = { cash: 1, finance: 2, financ: 2, loan: 2, mortgage: 2 };
-const LAND: Record<string, number> = { own: 1, "have land": 1, land: 1, community: 2, park: 2, lot: 2, need: 2 };
-const DELIVERY: Record<string, number> = { indiana: 2, ohio: 4, michigan: 5, illinois: 8, kentucky: 9 };
-// The CMS `state` FK only has Indiana/Michigan/Ohio; map from the delivery state.
-const STATE: Record<string, number> = { indiana: 15, michigan: 23, ohio: 36 };
-
-async function postToCms(lead: Record<string, string>) {
-  // The legacy CMS enquiry API has answered 5xx since 2026-08-29 and the new
-  // /admin reads leads from Supabase instead, so this channel is off unless
-  // explicitly re-enabled. Every lead used to pay for a failing HTTP request
-  // and a misleading error line here.
-  if (process.env.LEGACY_CMS_LEADS !== "1") {
-    console.log("[leads] Legacy CMS channel disabled (LEGACY_CMS_LEADS unset)");
-    return;
-  }
-  const CMS_API = (
-    process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com"
-  ).replace(/\/$/, "");
-
-  const detail = [
-    lead.interest && `Interest: ${lead.interest}`,
-    lead.timeframe && `Timeframe: ${lead.timeframe}`,
-    lead.landStatus && `Land: ${lead.landStatus}`,
-    lead.financingStatus && `Financing: ${lead.financingStatus}`,
-    lead.message && `Message: ${lead.message}`,
-    lead.pageUrl && `Page: ${lead.pageUrl}`,
-  ]
-    .filter(Boolean)
-    .join(" | ");
-
-  const res = await fetch(`${CMS_API}/api/enquiry/rash-enquiry`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      firstName: lead.firstName,
-      lastName: lead.lastName,
-      email: lead.email,
-      phoneNo: lead.phone || "",
-      // Required option IDs — mapped from the form fields, else sensible default.
-      deliveryState: pickId(DELIVERY, lead.deliveryState, 2),
-      homeType: pickId(HOME_TYPE, lead.interest, 2),
-      bedrooms: Number(lead.bedrooms) || 3,
-      purchaseOptions: pickId(PURCHASE, lead.financingStatus, 2),
-      landOptions: pickId(LAND, lead.landStatus, 1),
-      communicationOptions: lead.email ? 3 : 1, // 3=email, 1=phone
-      state: pickId(STATE, lead.deliveryState, 15),
-      floorTitle: lead.source || "Website Contact Form",
-      leadSource: lead.source || "Website",
-      address: detail || "Website contact form submission",
-    }),
-  });
-
-  if (!res.ok) throw new Error(`CMS enquiry API error ${res.status}`);
-  console.log("[leads] pushed to CMS enquiry (admin panel)");
-}
 
 // ─── Channel 1: Resend email ───────────────────────────────────────────────
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAdminToken, fetchLeads } from "@/lib/admin-auth";
+import { fetchLeads } from "@/lib/admin-data";
 import { LeadsTable, type LeadRow } from "../LeadsTable";
 
 export const dynamic = "force-dynamic";
@@ -13,10 +13,8 @@ export default async function AdminLeadsPage({
 }) {
   const { page: pageParam } = await searchParams;
   const page = Math.max(1, Number(pageParam) || 1);
-  const token = (await getAdminToken())!; // layout guarantees a valid token
-
-  const res = await fetchLeads(token, { limit: PER_PAGE, page });
-  const leads: LeadRow[] = res.rows as LeadRow[];
+  const res = await fetchLeads({ limit: PER_PAGE, page });
+  const leads: LeadRow[] = res.rows;
   const totalCount: number = res.total;
   const totalPages: number = Math.max(1, Math.ceil(totalCount / PER_PAGE));
 

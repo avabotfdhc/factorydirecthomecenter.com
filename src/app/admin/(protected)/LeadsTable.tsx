@@ -2,7 +2,7 @@
 // Renders rows from the CMS enquiry-form API.
 
 export interface LeadRow {
-  id: number;
+  id: string | number;
   firstName?: string;
   lastName?: string;
   email?: string;
