@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { guides } from "@/lib/guides";
+import { encodeImageUrl } from "@/lib/encode-url";
 
 // GET /api/search?q=... — site-wide search.
 //
@@ -26,7 +27,7 @@ export interface SearchResult {
 }
 
 function storageUrl(path: string): string {
-  return encodeURI(`${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${path.replace(/^\//, "")}`);
+  return encodeImageUrl(`${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${path.replace(/^\//, "")}`);
 }
 
 async function searchSupabase(q: string): Promise<SearchResult[] | null> {
