@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { pushLeadToDealertide } from "@/lib/dealertide";
+import { NO_EMAIL_PLACEHOLDER, pushLeadToDealertide } from "@/lib/dealertide";
+import { leadsStoreConfigured, storeLead } from "@/lib/leads-store";
+
+// DealerTide is tried twice with a 6s timeout each (see lib/dealertide.ts) and
+// the other channels run alongside it. Give the function room so a slow CRM
+// can never get the whole lead killed mid-flight by the platform default.
+export const maxDuration = 30;
 
 // ============================================
 // LEAD CAPTURE API — factorydirecthomescenter.com
@@ -25,8 +31,10 @@ const LEAD_EMAIL_TO = process.env.LEAD_EMAIL_TO ?? "leads@factorydirecthomescent
 const GOOGLE_SHEETS_ID = process.env.GOOGLE_SHEETS_ID;
 const GOOGLE_SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
 
+const str = (v: unknown): string => (typeof v === "string" ? v.trim() : v == null ? "" : String(v));
+
 export async function POST(request: Request) {
-  let body: Record<string, string>;
+  let body: Record<string, unknown>;
 
   try {
     body = await request.json();
@@ -34,35 +42,69 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  // Basic validation
-  if (!body.firstName || !body.lastName || !body.email) {
+  // A lead needs a name and one way to reach the person. Requiring an email
+  // used to force the instant-quote path to invent one, which DealerTide then
+  // deduped every phone-only lead against. Phone alone is fine.
+  const email = str(body.email).toLowerCase() === NO_EMAIL_PLACEHOLDER ? "" : str(body.email);
+  const phone = str(body.phone);
+  if (!str(body.firstName) || !str(body.lastName) || (!email && !phone)) {
     return NextResponse.json(
-      { error: "Missing required fields: firstName, lastName, email" },
+      { error: "Missing required fields: firstName, lastName, and an email or phone" },
       { status: 400 }
     );
   }
 
   const lead = {
-    firstName: body.firstName ?? "",
-    lastName: body.lastName ?? "",
-    email: body.email ?? "",
-    phone: body.phone ?? "",
-    interest: body.interest ?? "",
-    deliveryState: body.deliveryState ?? "",
-    bedrooms: body.bedrooms ?? "",
-    landStatus: body.landStatus ?? "",
-    timeframe: body.timeframe ?? "",
-    financingStatus: body.financingStatus ?? "",
-    message: body.message ?? "",
-    source: body.source ?? "Contact Form",
-    pageUrl: body.pageUrl ?? "",
+    firstName: str(body.firstName),
+    lastName: str(body.lastName),
+    email,
+    phone,
+    interest: str(body.interest),
+    deliveryState: str(body.deliveryState),
+    bedrooms: str(body.bedrooms),
+    landStatus: str(body.landStatus),
+    timeframe: str(body.timeframe),
+    financingStatus: str(body.financingStatus),
+    message: str(body.message),
+    source: str(body.source) || "Contact Form",
+    pageUrl: str(body.pageUrl),
     submittedAt: new Date().toISOString(),
   };
+  // The instant-quote server action stores its own copy before calling us.
+  const skipStore = body.skipStore === true || body.skipStore === "true";
 
   console.log("[leads] New submission:", lead.email, lead.firstName, lead.lastName);
 
+  // Everything the salesperson needs to act, in the one free-text field
+  // DealerTide is known to accept. The top-level payload stays as it was —
+  // their /leads schema was only ever confirmed by probing, so no new fields
+  // are guessed at here.
+  const dtMessage = [
+    `Form: ${lead.source}`,
+    lead.interest && `Interest: ${lead.interest}`,
+    lead.deliveryState && `Delivery: ${lead.deliveryState}`,
+    lead.timeframe && `Timeframe: ${lead.timeframe}`,
+    lead.financingStatus && `Financing: ${lead.financingStatus}`,
+    lead.landStatus && `Land: ${lead.landStatus}`,
+    lead.bedrooms && `Bedrooms: ${lead.bedrooms}`,
+    lead.message && `Message: ${lead.message}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
   // Run all channels concurrently; no single failure blocks the response
-  const [emailResult, sheetsResult, cmsResult, dtResult] = await Promise.allSettled([
+  const [storeResult, emailResult, sheetsResult, cmsResult, dtResult] = await Promise.allSettled([
+    // Durable copy first, so nothing downstream can lose the lead.
+    skipStore
+      ? Promise.resolve<string | null>(null)
+      : storeLead({
+          fullName: `${lead.firstName} ${lead.lastName}`,
+          contactInfo: [lead.phone, lead.email].filter(Boolean).join(" · "),
+          targetCounty: lead.deliveryState,
+          timeline: lead.timeframe,
+          modelInterest: lead.interest,
+          sourcePage: lead.pageUrl,
+        }),
     sendEmail(lead),
     appendToSheet(lead),
     postToCms(lead),
@@ -74,11 +116,16 @@ export async function POST(request: Request) {
       email: lead.email,
       phone: lead.phone,
       source: "Website",
-      message: lead.message,
+      message: dtMessage,
       page_url: lead.pageUrl,
     }),
   ]);
 
+  if (storeResult.status === "rejected") {
+    console.error("[leads] Supabase store failed:", storeResult.reason);
+  } else if (!skipStore && storeResult.value === null && !leadsStoreConfigured()) {
+    console.log("[leads] Supabase store skipped — Supabase env vars not set");
+  }
   if (emailResult.status === "rejected") {
     console.error("[leads] Email channel failed:", emailResult.reason);
   }
@@ -88,8 +135,14 @@ export async function POST(request: Request) {
   if (cmsResult.status === "rejected") {
     console.error("[leads] CMS channel failed:", cmsResult.reason);
   }
-  if (dtResult.status === "rejected" || (dtResult.status === "fulfilled" && dtResult.value === false)) {
-    console.error("[leads] DealerTide channel failed or not configured");
+  // DealerTide is the CRM of record, so say what happened either way — a
+  // silent success is indistinguishable from a silent drop in the logs.
+  if (dtResult.status === "rejected") {
+    console.error("[leads] DealerTide channel threw:", dtResult.reason);
+  } else if (dtResult.value.ok) {
+    console.log(`[leads] DealerTide accepted (${dtResult.value.status} ${dtResult.value.detail}, attempt ${dtResult.value.attempts})`);
+  } else {
+    console.error(`[leads] DealerTide channel failed after ${dtResult.value.attempts} attempt(s): ${dtResult.value.detail}`);
   }
 
   return NextResponse.json({ success: true, message: "Lead received" });
@@ -158,7 +211,7 @@ async function postToCms(lead: Record<string, string>) {
       bedrooms: Number(lead.bedrooms) || 3,
       purchaseOptions: pickId(PURCHASE, lead.financingStatus, 2),
       landOptions: pickId(LAND, lead.landStatus, 1),
-      communicationOptions: 3, // email (we always capture an email address)
+      communicationOptions: lead.email ? 3 : 1, // 3=email, 1=phone
       state: pickId(STATE, lead.deliveryState, 15),
       floorTitle: lead.source || "Website Contact Form",
       leadSource: lead.source || "Website",

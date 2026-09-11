@@ -1,6 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
+import { storeLead } from "@/lib/leads-store";
 
 // Lead intake for the instant-quote modal (PriceQuoteModal) and the mobile
 // action bar.
@@ -36,42 +37,26 @@ export interface LeadResult {
   error?: string;
 }
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
-const SUPABASE_WRITE_KEY =
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-
 const clean = (v: unknown, max = 200) => String(v ?? "").trim().slice(0, max);
 
-async function insertSupabaseLead(lead: LeadSubmission): Promise<string | null> {
-  if (!SUPABASE_URL || !SUPABASE_WRITE_KEY) return null;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
-    method: "POST",
-    headers: {
-      apikey: SUPABASE_WRITE_KEY,
-      Authorization: `Bearer ${SUPABASE_WRITE_KEY}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    cache: "no-store",
-    body: JSON.stringify({
-      full_name: clean(lead.name, 120),
-      contact_info: [clean(lead.contact, 60), clean(lead.email, 120)].filter(Boolean).join(" · "),
-      target_county: clean(lead.county, 120),
-      timeline: clean(lead.timeframe, 60),
-      model_interest: clean(lead.modelName, 160),
-      series_interest: clean(lead.series, 60) || "Champion",
-      source_page: clean(lead.sourcePage, 300) || "/",
-    }),
+// One insert implementation for every form on the site (lib/leads-store.ts),
+// so the instant-quote modal and /api/leads write identical rows.
+function insertSupabaseLead(lead: LeadSubmission): Promise<string | null> {
+  return storeLead({
+    fullName: lead.name,
+    contactInfo: [clean(lead.contact, 60), clean(lead.email, 120)].filter(Boolean).join(" · "),
+    targetCounty: lead.county,
+    timeline: lead.timeframe,
+    modelInterest: lead.modelName,
+    seriesInterest: lead.series,
+    sourcePage: lead.sourcePage || "/",
   });
-  if (!res.ok) throw new Error(`supabase leads insert HTTP ${res.status}`);
-  const rows = (await res.json().catch(() => [])) as { id?: string }[];
-  return rows?.[0]?.id ?? null;
 }
 
-// The /api/leads route expects first/last name + email; the quote modal asks
-// for one "phone or email" field, so split what we can and note the rest.
+// The quote modal asks for a phone number and an optional email, so pass
+// exactly what the visitor gave. /api/leads accepts phone-only; it used to
+// require an email, which forced a placeholder that DealerTide then deduped
+// every phone-only lead against.
 async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
   const h = await headers();
   const host = h.get("x-forwarded-host") || h.get("host");
@@ -87,8 +72,11 @@ async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
     body: JSON.stringify({
       firstName: firstName || "Website",
       lastName: rest.join(" ") || "—",
-      email: email || "no-email@factorydirecthomescenter.com",
+      ...(email ? { email } : {}),
       phone,
+      // This action already stored the lead in Supabase (insertSupabaseLead);
+      // tell the route not to write a second row.
+      skipStore: true,
       interest: clean(lead.modelName, 160),
       deliveryState: clean(lead.county, 120),
       timeframe: clean(lead.timeframe, 60),
