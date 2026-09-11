@@ -17,6 +17,7 @@
 // the admin with the service-role key and never touch this module.
 
 import { pickDrawing, type ApiFloorPlan, type ApiFloorPlanDetail } from "./api-content";
+import { encodeImageUrl } from "./encode-url";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
 const SUPABASE_KEY =
@@ -36,13 +37,17 @@ export function supabaseConfigured(): boolean {
  *  through (encoded); site-relative paths ("/images/...", files shipped in
  *  public/) are served by the site itself; bare storage keys resolve against
  *  the public storage bucket. Most catalogue rows carry "/images/..." paths,
- *  so treating them as storage keys pointed 400+ images at an empty bucket. */
+ *  so treating them as storage keys pointed 400+ images at an empty bucket.
+ *
+ *  The S3 banners imported from the legacy CMS are stored already encoded
+ *  ("…/Dutch%20Aspire%201440H11065.png"); encodeImageUrl leaves those escapes
+ *  alone instead of turning them into "%2520" (see encode-url.ts). */
 function imgUrl(ref?: string | null): string {
   const s = String(ref || "").trim();
   if (!s) return "";
-  if (/^https?:\/\//.test(s)) return encodeURI(s);
-  if (s.startsWith("/")) return encodeURI(s);
-  return encodeURI(`${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${s}`);
+  if (/^https?:\/\//.test(s)) return encodeImageUrl(s);
+  if (s.startsWith("/")) return encodeImageUrl(s);
+  return encodeImageUrl(`${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${s}`);
 }
 
 function formatPrice(raw: unknown): string {

@@ -18,6 +18,7 @@
 //   availability  "in stock" | "out of stock"  ("out of stock" = build-to-order)
 
 import type { ApiFloorPlan, ApiFloorPlanDetail } from "./api-content";
+import { encodeImageUrl } from "./encode-url";
 import { deriveSeries } from "./series";
 
 const FEED_URL = process.env.DEALERTIDE_FEED_URL?.trim();
@@ -55,7 +56,7 @@ function inStock(u: FeedUnit): boolean {
 function encodeImg(url?: string): string {
   if (!url) return "";
   try {
-    return /^https?:\/\//.test(url) ? encodeURI(url) : "";
+    return /^https?:\/\//.test(url) ? encodeImageUrl(url) : "";
   } catch {
     return "";
   }

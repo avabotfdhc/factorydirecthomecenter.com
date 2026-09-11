@@ -11,6 +11,7 @@ import { galleryOverlays, sheetExtras } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
 import { sqftOverrides, bedOptions } from "./spec-overrides";
 import { anchorPriceFor } from "./price-sheet";
+import { encodeImageUrl } from "./encode-url";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.factorydirecthomescenter.com").replace(/\/$/, "");
 const S3_BASE = (process.env.NEXT_PUBLIC_S3_URL || "https://factory-direct-homescenter.s3.us-east-1.amazonaws.com/").replace(/\/$/, "");
@@ -143,9 +144,10 @@ function s3Url(path?: string): string {
   if (!path) return "";
   // Many CMS image keys contain spaces/parentheses — encode so the URL is valid
   // everywhere (social-preview scrapers and strict crawlers won't auto-encode).
-  // encodeURI preserves the URL structure and already-encoded %XX sequences.
+  // encodeImageUrl keeps already-encoded %XX sequences as they are (plain
+  // encodeURI would double them to %25XX and break the link).
   const raw = /^https?:\/\//.test(path) ? path : `${S3_BASE}/${String(path).replace(/^\//, "")}`;
-  return encodeURI(raw);
+  return encodeImageUrl(raw);
 }
 
 // A CMS API failure must NOT be swallowed into an empty result: ISR would then
