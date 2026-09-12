@@ -19,9 +19,9 @@ const SITE = "https://factorydirecthomescenter.com";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  // A cold page hit during a transient CMS failure would otherwise throw and
-  // 500; degrade to a graceful "not found" instead.
-  const plan = await getApiFloorPlanBySlug(slug).catch(() => null);
+  // A CMS failure is deliberately NOT swallowed here (see the render below):
+  // only a resolved `null` means the home does not exist.
+  const plan = await getApiFloorPlanBySlug(slug);
   if (!plan) return { title: "Home Not Found" };
   const desc = (
     plan.description ||
@@ -65,9 +65,16 @@ const Spec = ({ label, value }: { label: string; value: string }) => (
 
 export default async function FloorPlanDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  // Don't 500 a public page when the CMS is transiently unavailable — a cold
-  // render that throws degrades to notFound() (404) instead of a server error.
-  const plan = await getApiFloorPlanBySlug(slug).catch(() => null);
+  // A transient CMS failure must NOT become a 404. This used to catch every
+  // error and call notFound(), which told visitors (and Google) that a real
+  // home did not exist, and Next then cached that 404 for the revalidate
+  // window. getApiFloorPlanBySlug already distinguishes the two: it returns
+  // null only when the slug genuinely is not in the catalogue, and throws when
+  // it could not find out. The read itself now retries and falls back to the
+  // last good response (src/lib/resilient-fetch.ts), so reaching this throw
+  // means Supabase was unreachable for several seconds with nothing cached —
+  // an error page that heals on refresh, not a wrong 404.
+  const plan = await getApiFloorPlanBySlug(slug);
   if (!plan) notFound();
 
   // The rest of the catalogue, for the HUD/modular twin, the same box in

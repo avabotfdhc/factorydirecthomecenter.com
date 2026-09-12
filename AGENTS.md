@@ -70,3 +70,12 @@ As of 2026-09-11 nothing on the site depends on AWS. The Express/MySQL CMS on EC
 - `<title>` on plan pages is `{name} — {beds} Bed {baths} Bath Champion {Single Wide|Double Wide|Multi-Section|Modular} Home, Auburn IN`.
 - `sitemap.xml` only sends `lastmod` when the date is real: a guide's `updated`, a post's date, or the CMS row's `updated_at` (`ApiFloorPlan.updatedAt`). Do not put `new Date()` back.
 - Known catalogue shape: 240 of the 400 active plans have a HUD/modular twin (same box, `H`/`M` model letter) and 328 share a model number with another series (Aspire ⇄ Paramount), so up to four pages describe one physical plan. The narrative cross-links them; consolidating or canonicalising variants is a product decision, not a code one.
+
+# Supabase reads retry, and never fake a 404
+
+Vercel's functions intermittently fail to reach Supabase — production logs for 2026-09-10/11 show `ETIMEDOUT`, `ECONNRESET` and `UND_ERR_SOCKET` against the catalogue host every 20–60 minutes while Supabase's own edge logs show only 200s. Untreated, each failure was visible to buyers: the nine Prime plans that exist only in the CMS dropped out of the catalogue and 404'd, the other 33 fell back to the thinner repo copy (galleries down to one rendering), and the degraded render was then cached for the route's five-minute window. Kyle reported it as "Prime unit floor plans and photos just disappeared" (2026-09-11).
+
+- `src/lib/resilient-fetch.ts` holds the policy: `withRetry` retries only transient network failures and 408/425/429/5xx (a 4xx is the database answering — never retried), and `rememberGood`/`recallGood` keep the last successful response per query in module memory (6 h max age, 500 entries, per function instance).
+- `rest()` in `src/lib/supabase-content.ts` is the only caller: it retries at 200 ms and 600 ms, remembers each success, and on total failure serves the remembered response rather than letting the caller degrade. Both fallbacks log (`[supabase] retry N…`, `[supabase] SERVING LAST GOOD…`).
+- `/floor-plans/[slug]` no longer catches every error into `notFound()`. `getApiFloorPlanBySlug` returns null only when the slug genuinely is not in the catalogue and throws when it could not find out; the page 404s on the first and lets the second surface. A transient failure must never be cached as "this home does not exist".
+- `tests/resilient-fetch.test.ts` covers the real socket error codes, the retry bounds, the 404-is-not-retried rule, and the stale-copy age-out.
