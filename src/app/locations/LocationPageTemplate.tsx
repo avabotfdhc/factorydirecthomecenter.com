@@ -4,6 +4,7 @@ import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { useEffect } from "react";
 import { trackLocationView, trackCTAClick } from "@/lib/analytics";
+import { businessJsonLd } from "@/lib/business";
 
 interface LocationFAQ {
   question: string;
@@ -37,22 +38,15 @@ export function LocationPageTemplate({ city, state, stateAbbr, distance, deliver
     trackLocationView(city, state);
   }, [city, state]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { "@context": _ctx, ...businessNode } = businessJsonLd();
   const ldGraph: Record<string, unknown>[] = [
     {
-      "@type": "HomeAndConstructionBusiness",
-      "@id": `https://factorydirecthomescenter.com/locations/${city.toLowerCase().replace(/\s+/g, "-")}#business`,
-      name: "Factory Direct Homes Center",
+      // The same `#business` node every page emits (src/lib/business.ts),
+      // narrowed to this city's service area — not a separate business per
+      // location page.
+      ...businessNode,
       description: `Authorized Champion Homes dealer serving ${city}, ${state} and the surrounding ${counties.map((c) => `${c} County`).join(", ")} area with factory-direct manufactured and modular homes.`,
-      url: `https://factorydirecthomescenter.com/locations/${city.toLowerCase().replace(/\s+/g, "-")}`,
-      telephone: "+1-260-308-1457",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "1211 State Road 8",
-        addressLocality: "Auburn",
-        addressRegion: "IN",
-        postalCode: "46706",
-        addressCountry: "US",
-      },
       areaServed: [
         { "@type": "City", name: `${city}, ${state}` },
         ...counties.map((c) => ({ "@type": "AdministrativeArea" as const, name: `${c} County, ${state}` })),

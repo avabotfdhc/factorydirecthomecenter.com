@@ -28,6 +28,7 @@ export interface ApiFloorPlan {
   bedsMax?: number;    // set when the plan can be optioned with more bedrooms
   flexNote?: string;   // human-readable explanation of the factory option
   floorPlanImage?: string; // dimensioned floor-plan drawing (image), for the card's Photo/Plan toggle
+  updatedAt?: string;  // ISO timestamp of the last CMS edit, when the source records one (sitemap lastmod)
 }
 
 // Pick the floor-plan drawing out of a set of image URLs. Champion's drawings
@@ -251,7 +252,9 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
         brand: "Champion Home Builders",
         homeType: p.homeType || PRIME_HOME_TYPE,
         description: planDescription(p),
-        floorPlanHtml: `<p>${planDescription(p)}</p>${paramountExtraHtml(p)}`,
+        // The detail page generates the plan's narrative (src/lib/plan-content.ts);
+        // the body only carries Champion's spec-sheet extras for Paramount.
+        floorPlanHtml: paramountExtraHtml(p),
         modelNumber: p.modelNumber,
         length: p.length,
         width: p.width,

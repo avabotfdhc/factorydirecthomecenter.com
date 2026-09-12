@@ -200,7 +200,6 @@ export default function FortWaynePage() {
             name: "Indiana"
           }
         },
-        hasMap: "https://maps.google.com/?q=Fort+Wayne+IN",
         serviceArea: {
           "@type": "GeoCircle",
           geoMidpoint: {

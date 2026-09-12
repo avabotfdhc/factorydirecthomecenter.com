@@ -2,11 +2,12 @@ import Link from "next/link";
 import { ZoomableImage, LightboxGallery } from "@/components/ImageLightbox";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getApiFloorPlanBySlug } from "@/lib/api-content";
+import { getApiFloorPlanBySlug, getApiFloorPlans } from "@/lib/api-content";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { SingleFamilyResidenceSchema } from "@/components/JsonLd";
 import { FAQSection } from "@/components/FAQSection";
-import { commonFAQs } from "@/lib/faqs";
+import { PlanNarrative } from "@/components/PlanNarrative";
+import { buildPlanNarrative, planTypeLabel } from "@/lib/plan-content";
 import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanQuoteCTA } from "@/components/QuoteModal";
@@ -18,9 +19,9 @@ const SITE = "https://factorydirecthomescenter.com";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  // A cold page hit during a transient CMS failure would otherwise throw and
-  // 500; degrade to a graceful "not found" instead.
-  const plan = await getApiFloorPlanBySlug(slug).catch(() => null);
+  // A CMS failure is deliberately NOT swallowed here (see the render below):
+  // only a resolved `null` means the home does not exist.
+  const plan = await getApiFloorPlanBySlug(slug);
   if (!plan) return { title: "Home Not Found" };
   const desc = (
     plan.description ||
@@ -29,7 +30,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const url = `${SITE}/floor-plans/${plan.slug}`;
   const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
   return {
-    title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath ${plan.homeType || "Home"}`,
+    // "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN": the
+    // brand, the home type as people search for it, and the place, ahead of
+    // the layout's "| Factory Direct Homes" suffix.
+    title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath Champion ${planTypeLabel(plan)}, Auburn IN`,
     description: desc,
     alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {
@@ -61,10 +65,23 @@ const Spec = ({ label, value }: { label: string; value: string }) => (
 
 export default async function FloorPlanDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  // Don't 500 a public page when the CMS is transiently unavailable — a cold
-  // render that throws degrades to notFound() (404) instead of a server error.
-  const plan = await getApiFloorPlanBySlug(slug).catch(() => null);
+  // A transient CMS failure must NOT become a 404. This used to catch every
+  // error and call notFound(), which told visitors (and Google) that a real
+  // home did not exist, and Next then cached that 404 for the revalidate
+  // window. getApiFloorPlanBySlug already distinguishes the two: it returns
+  // null only when the slug genuinely is not in the catalogue, and throws when
+  // it could not find out. The read itself now retries and falls back to the
+  // last good response (src/lib/resilient-fetch.ts), so reaching this throw
+  // means Supabase was unreachable for several seconds with nothing cached —
+  // an error page that heals on refresh, not a wrong 404.
+  const plan = await getApiFloorPlanBySlug(slug);
   if (!plan) notFound();
+
+  // The rest of the catalogue, for the HUD/modular twin, the same box in
+  // another series, and comparable homes (same 5-minute cache as the page).
+  const allPlans = await getApiFloorPlans().catch(() => []);
+  const narrative = buildPlanNarrative(plan, allPlans);
+  const seriesCrumb = narrative.hub ? [{ name: `${narrative.hub.name} Series`, url: `/series/${narrative.hub.slug}` }] : [];
 
   const cleanDesc = (plan.description || plan.floorPlanHtml || "")
     .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 300) ||
@@ -126,6 +143,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         data={structuredData.breadcrumb([
           { name: "Home", url: "/" },
           { name: "Floor Plans", url: "/floor-plans" },
+          ...seriesCrumb,
           { name: plan.name, url: `/floor-plans/${plan.slug}` },
         ])}
       />
@@ -134,6 +152,12 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
       <div className="border-b border-[var(--color-charcoal)]/5 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 text-sm text-[var(--color-gray)]">
           <Link href="/floor-plans" className="hover:text-[var(--color-teal)]">Floor Plans</Link>
+          {seriesCrumb.map((c) => (
+            <span key={c.url}>
+              <span className="mx-2 text-[var(--color-gray-light)]">/</span>
+              <Link href={c.url} className="hover:text-[var(--color-teal)]">{c.name}</Link>
+            </span>
+          ))}
           <span className="mx-2 text-[var(--color-gray-light)]">/</span>
           <span className="text-[var(--color-charcoal)] font-medium">{plan.name}</span>
         </div>
@@ -310,7 +334,9 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
           </div>
         )}
 
-        {/* Description */}
+        {/* Hand-written description from /admin (floor_plans.floor_plan_html)
+            or, for repo-published Paramount plans, Champion's spec-sheet
+            extras. Renders above the generated narrative so real copy wins. */}
         {plan.floorPlanHtml && (
           <div className="mt-14 max-w-3xl">
             <h2 className="font-serif text-2xl font-light mb-5">About this home</h2>
@@ -320,13 +346,18 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             />
           </div>
         )}
+
+        {/* Plan-specific narrative, twin/series callouts, comparable homes,
+            guides and delivery areas (src/lib/plan-content.ts). */}
+        <PlanNarrative narrative={narrative} planName={plan.name} planSlug={plan.slug} />
       </section>
 
-      {/* FAQ (adds FAQPage schema) */}
+      {/* FAQ (adds FAQPage schema) — questions and answers are about THIS plan,
+          not the six homepage questions every other page used to repeat. */}
       <FAQSection
-        title="Common Questions"
-        subtitle="Financing, delivery, and placement for your new home"
-        faqs={commonFAQs.homepage.slice(0, 6)}
+        title={`${plan.name}: Common Questions`}
+        subtitle="Size, construction, delivery, placement and pricing for this home"
+        faqs={narrative.faqs}
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">

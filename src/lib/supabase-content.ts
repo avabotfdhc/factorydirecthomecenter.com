@@ -18,6 +18,13 @@
 
 import { pickDrawing, type ApiFloorPlan, type ApiFloorPlanDetail } from "./api-content";
 import { encodeImageUrl } from "./encode-url";
+import {
+  isRetryableStatus,
+  recallGood,
+  rememberGood,
+  RetryableHttpError,
+  withRetry,
+} from "./resilient-fetch";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
 const SUPABASE_KEY =
@@ -75,21 +82,56 @@ interface FloorPlanRow {
   banner_image?: string | null;
   brochure_url?: string | null;
   virtual_tour?: string | null;
+  updated_at?: string | null;
   floor_plan_images?: { path: string; kind?: string | null; sort_order?: number | null }[];
   floor_plan_documents?: { path: string; title?: string | null; kind?: string | null; sort_order?: number | null }[];
 }
 
+// One REST read, hardened against the intermittent Vercel→Supabase network
+// failures that periodically emptied the catalogue (see resilient-fetch.ts):
+// transient errors and 5xx/429 are retried with a short backoff, and when
+// every attempt fails we serve the last response this instance got for the
+// same query rather than letting the caller fall back to thin repo data or a
+// 404. A 4xx answer is the database talking — never retried, never faked.
 async function rest(path: string): Promise<unknown> {
   if (!supabaseConfigured()) throw new Error("[supabase] not configured");
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: {
-      apikey: SUPABASE_KEY as string,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-    },
-    next: { revalidate: 300 },
-  });
-  if (!res.ok) throw new Error(`[supabase] HTTP ${res.status} ${res.statusText}`);
-  return res.json();
+  try {
+    const body = await withRetry(
+      async () => {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+          headers: {
+            apikey: SUPABASE_KEY as string,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+          },
+          next: { revalidate: 300 },
+        });
+        if (!res.ok) {
+          const message = `[supabase] HTTP ${res.status} ${res.statusText}`;
+          if (isRetryableStatus(res.status)) throw new RetryableHttpError(res.status, message);
+          throw new Error(message);
+        }
+        return res.json();
+      },
+      {
+        onRetry: (attempt, err) =>
+          console.warn(
+            `[supabase] retry ${attempt} for ${path}: ${err instanceof Error ? err.message : err}`,
+          ),
+      },
+    );
+    rememberGood(path, body);
+    return body;
+  } catch (err) {
+    const stale = recallGood(path);
+    if (stale) {
+      console.warn(
+        `[supabase] SERVING LAST GOOD (${Math.round(stale.ageMs / 1000)}s old) for ${path}: ` +
+          `${err instanceof Error ? err.message : err}`,
+      );
+      return stale.value;
+    }
+    throw err;
+  }
 }
 
 function widthFtFrom(width?: string | null, context = ""): number | undefined {
@@ -114,6 +156,7 @@ function toFloorPlan(r: FloorPlanRow): ApiFloorPlan {
     series: String(r.series || ""),
     widthFt: widthFtFrom(r.width, `${r.slug} ${r.title || ""} ${r.model_number || ""}`),
     floorPlanImage: drawingFrom(r.floor_plan_images),
+    ...(r.updated_at ? { updatedAt: String(r.updated_at) } : {}),
   };
 }
 
@@ -128,7 +171,7 @@ function drawingFrom(images: FloorPlanRow["floor_plan_images"]): string {
 export async function getSupabaseFloorPlans(): Promise<ApiFloorPlan[]> {
   const select = [
     "slug", "name", "title", "price", "sqft", "beds", "baths",
-    "home_type", "series", "brand", "model_number", "width", "banner_image",
+    "home_type", "series", "brand", "model_number", "width", "banner_image", "updated_at",
     "floor_plan_images(path,kind,sort_order)",
   ].join(",");
   let rows: FloorPlanRow[];
