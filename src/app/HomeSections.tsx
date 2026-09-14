@@ -14,6 +14,7 @@ import { useState } from "react";
 import { trackPhoneClick } from "@/lib/analytics";
 import { H2, H3 } from "@/components/Heading";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
+import { REVIEWS as reviews, GOOGLE_REVIEWS_URL } from "@/lib/reviews";
 
 const homeTypes = [
   {
@@ -51,10 +52,28 @@ const homeTypes = [
   },
 ];
 
-const testimonials = [
-  { quote: "Buying our home was the best decision we ever made. The team walked us through every step and we saved thousands compared to site-built.", name: "David B.", location: "Fort Wayne, IN" },
-  { quote: "We were priced out of the traditional market. Our double wide gives us everything we wanted at half the price.", name: "Sarah M.", location: "Indianapolis, IN" },
-  { quote: "The factory-direct pricing was exactly as promised — no hidden fees, no surprises. We got more home for our budget than anywhere else we looked.", name: "James T.", location: "South Bend, IN" },
+// Reviews come from src/lib/reviews.ts and nowhere else. Until a real customer
+// has written one we show what a buyer can verify instead of quotes they
+// cannot — see the note at the top of that file.
+const checkable = [
+  {
+    title: "An authorized Champion dealer",
+    body: "Every home we sell is built by Champion Homes. Ask us for the dealer agreement, or look us up on Champion\u2019s own dealer locator.",
+    href: "/champion-homes",
+    cta: "About Champion",
+  },
+  {
+    title: "Line-item pricing, in writing",
+    body: "You get the home, the options, delivery and set-up broken out separately \u2014 not one bundled number \u2014 so you can take it to another dealer and compare.",
+    href: "/guides/pricing",
+    cta: "How pricing works",
+  },
+  {
+    title: "A showroom you can walk into",
+    body: "We are at 1211 State Road 8 in Auburn, six days a week. Walk the homes, open the cabinets, and meet the person who will handle your order.",
+    href: "/contact-us",
+    cta: "Plan a visit",
+  },
 ];
 
 // Client islands for the homepage: only the sections that animate or track
@@ -204,53 +223,80 @@ export function AnimatedHomeSections() {
         </div>
       </section>
 
-      {/* Testimonials with Fade In */}
+      {/* What a buyer can verify. Real reviews replace this block the moment
+          src/lib/reviews.ts has any — see REVIEWS there. */}
       <section className="py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-14">
               <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
-                What Our Homeowners Say
+                {reviews.length > 0 ? "What Our Homeowners Say" : "Don\u2019t Take Our Word For It"}
               </H2>
               <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
+              {reviews.length === 0 && (
+                <p className="text-sm text-[var(--color-gray)] max-w-2xl mx-auto mt-5 leading-relaxed">
+                  We opened in November 2024, so our review history is still short. Rather than
+                  fill this space with quotes you cannot check, here is what you can verify
+                  yourself before you ever put money down.
+                </p>
+              )}
             </div>
           </FadeIn>
 
-          <StaggerContainer staggerDelay={200} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, idx) => (
-              <FadeIn key={t.name} direction="up" delay={idx * 200}>
-                <div className="relative bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="mb-3">
-                  <Image src="/images/homepage/quote.svg" alt="" width={24} height={24} className="opacity-20" />
-                </div>
-                <div className="flex gap-1 mb-4">
-                  {[1,2,3,4,5].map((star) => (
-                    <svg key={star} className="w-4 h-4 text-[var(--color-orange)]" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-                <blockquote>
-                  <p className="text-sm leading-relaxed text-[var(--color-charcoal)]/70 mb-5">&ldquo;{t.quote}&rdquo;</p>
-                  <footer className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[var(--color-teal)]/10 flex items-center justify-center text-[var(--color-teal)] font-bold text-sm">
-                      {t.name[0]}
+          {reviews.length > 0 ? (
+            <StaggerContainer staggerDelay={200} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {reviews.map((t, idx) => (
+                <FadeIn key={`${t.name}-${t.date}`} direction="up" delay={idx * 200}>
+                  <div className="relative bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <div className="mb-3">
+                      <Image src="/images/homepage/quote.svg" alt="" width={24} height={24} className="opacity-20" />
                     </div>
-                    <div>
-                      <div className="font-semibold text-sm">{t.name}</div>
-                      <div className="text-xs text-[var(--color-gray)]">{t.location}</div>
+                    <div className="flex gap-1 mb-4" aria-label={`${t.rating} out of 5 stars`}>
+                      {Array.from({ length: t.rating }, (_, i) => (
+                        <svg key={i} className="w-4 h-4 text-[var(--color-orange)]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                      ))}
                     </div>
-                  </footer>
-                </blockquote>
-                </div>
-              </FadeIn>
-            ))}
-          </StaggerContainer>
+                    <blockquote>
+                      <p className="text-sm leading-relaxed text-[var(--color-charcoal)]/70 mb-5">&ldquo;{t.quote}&rdquo;</p>
+                      <footer className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-[var(--color-teal)]/10 flex items-center justify-center text-[var(--color-teal)] font-bold text-sm">
+                          {t.name[0]}
+                        </div>
+                        <div>
+                          <div className="font-semibold text-sm">{t.name}</div>
+                          <div className="text-xs text-[var(--color-gray)]">
+                            {t.location ? `${t.location} · ` : ""}
+                            {new Date(t.date).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+                          </div>
+                        </div>
+                      </footer>
+                    </blockquote>
+                  </div>
+                </FadeIn>
+              ))}
+            </StaggerContainer>
+          ) : (
+            <StaggerContainer staggerDelay={200} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {checkable.map((c, idx) => (
+                <FadeIn key={c.title} direction="up" delay={idx * 200}>
+                  <div className="h-full bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-8 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <H3 className="font-serif text-xl font-semibold mb-3">{c.title}</H3>
+                    <p className="text-sm leading-relaxed text-[var(--color-charcoal)]/70 mb-5">{c.body}</p>
+                    <Link href={c.href} className="text-sm font-semibold text-[var(--color-teal)] hover:underline underline-offset-4">
+                      {c.cta} &rarr;
+                    </Link>
+                  </div>
+                </FadeIn>
+              ))}
+            </StaggerContainer>
+          )}
 
           <FadeIn direction="up">
             <p className="text-center mt-10">
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN"
+                href={GOOGLE_REVIEWS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-teal)] hover:underline underline-offset-4"
@@ -258,7 +304,9 @@ export function AnimatedHomeSections() {
                 <svg className="w-4 h-4 text-[var(--color-orange)]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                Read our verified reviews on Google →
+                {reviews.length > 0
+                  ? "Read every review on Google \u2192"
+                  : "Read our Google listing \u2014 and leave a review if we have worked together \u2192"}
               </a>
             </p>
           </FadeIn>
@@ -372,8 +420,8 @@ export function TrustAndProcess() {
             </FadeIn>
             <FadeIn direction="up" delay={100}>
               <div className="text-center">
-                <div className="text-3xl mb-2">⭐</div>
-                <div className="font-semibold text-sm">4.8 Star Rating</div>
+                <div className="text-3xl mb-2">📍</div>
+                <div className="font-semibold text-sm">Auburn Showroom</div>
               </div>
             </FadeIn>
             <FadeIn direction="up" delay={200}>

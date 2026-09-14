@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { businessJsonLd } from "./business";
+import { businessJsonLd, BUSINESS_ID, ownerJsonLd } from "./business";
 
 interface SEOConfig {
   title: string;
@@ -325,6 +325,10 @@ export const structuredData = {
     datePublished: string;
     dateModified?: string;
     author?: string;
+    /** True when Kyle wrote it: publishes the owner Person node (one @id
+     *  shared with the business `founder`) instead of an anonymous
+     *  Organization byline. */
+    authorIsOwner?: boolean;
     url: string;
   }) => ({
     "@context": "https://schema.org",
@@ -334,12 +338,15 @@ export const structuredData = {
     image: absUrl(article.image),
     datePublished: article.datePublished,
     dateModified: article.dateModified || article.datePublished,
-    author: {
-      "@type": "Organization",
-      name: article.author || "Factory Direct Homes Center",
-    },
+    author: article.authorIsOwner
+      ? ownerJsonLd()
+      : {
+          "@type": "Organization",
+          name: article.author || "Factory Direct Homes Center",
+        },
     publisher: {
       "@type": "Organization",
+      "@id": BUSINESS_ID,
       name: "Factory Direct Homes Center",
       logo: {
         "@type": "ImageObject",

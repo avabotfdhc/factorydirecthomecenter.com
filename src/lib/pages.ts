@@ -528,20 +528,36 @@ export const sitePages: SitePage[] = [
   },
 ];
 
-// Register blog posts into the page registry dynamically
+// Register blog posts into the page registry dynamically.
+//
+// Only posts that actually render may enter the registry. `blog.ts` is the
+// older editorial calendar and still marks twelve posts "published" that no
+// route serves — the blog route reads `local-posts.ts` alone. Before this
+// filter, every one of those twelve was advertised twice over: as a "Related
+// Resources" card on pages across the site, and as a URL in sitemap.xml
+// (getAllPages feeds it). All twelve answered 404 in production, so we were
+// asking Google to crawl twelve dead pages and sending buyers to them.
+// Publishing the missing articles is the other way to fix this; until the
+// copy exists, the registry must not claim they do.
 import { getPublishedPosts } from "./blog";
+import { localBlogPosts } from "./local-posts";
+
+/** Slugs the /blog/[slug] route can actually resolve. */
+const liveBlogSlugs = new Set(localBlogPosts.map((p) => p.slug));
 
 function buildAllPages(): SitePage[] {
-  const blogPages: SitePage[] = getPublishedPosts().map((post) => ({
-    url: `/blog/${post.slug}`,
-    title: post.title,
-    description: post.description,
-    topics: post.topics,
-    cluster: "blog" as const,
-    pillar: "/blog",
-    priority: 0.7,
-    changeFrequency: "monthly" as const,
-  }));
+  const blogPages: SitePage[] = getPublishedPosts()
+    .filter((post) => liveBlogSlugs.has(post.slug))
+    .map((post) => ({
+      url: `/blog/${post.slug}`,
+      title: post.title,
+      description: post.description,
+      topics: post.topics,
+      cluster: "blog" as const,
+      pillar: "/blog",
+      priority: 0.7,
+      changeFrequency: "monthly" as const,
+    }));
   return [...sitePages, ...blogPages];
 }
 

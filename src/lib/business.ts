@@ -13,6 +13,9 @@
 
 export const SITE_URL = "https://factorydirecthomescenter.com";
 export const BUSINESS_ID = `${SITE_URL}/#business`;
+/** The owner as a schema.org Person. Guides and posts cite this same @id as
+ *  their author, so Google reads one named human behind the site. */
+export const OWNER_ID = `${SITE_URL}/about#kyle-dudgeon`;
 
 export const BUSINESS = {
   legalName: "Factory Direct Homes Center LLC",
@@ -38,6 +41,16 @@ export const BUSINESS = {
     { days: ["Saturday"], opens: "10:00", closes: "16:00" },
   ],
   states: ["Indiana", "Ohio", "Michigan"],
+  /** Month the dealership opened. Used for foundingDate and anywhere the site
+   *  says how long we have been trading \u2014 so it stays one answer. */
+  foundingDate: "2024-11",
+  owner: {
+    name: "Kyle Dudgeon",
+    jobTitle: "Owner",
+    /** Swap in a real photograph of Kyle when there is one; the section and the
+     *  schema both drop the image cleanly while this is empty. */
+    image: "",
+  },
 } as const;
 
 /** The shared LocalBusiness node. Callers may spread and add page-specific
@@ -78,5 +91,21 @@ export function businessJsonLd(): Record<string, unknown> {
       "@type": "Offer",
       itemOffered: { "@type": "Product", name: "Champion manufactured and modular homes" },
     },
+    foundingDate: BUSINESS.foundingDate,
+    founder: ownerJsonLd(),
+  };
+}
+
+/** The owner as a Person node. Referenced by @id from author bylines, so the
+ *  full description is published once (on /about) and cited everywhere else. */
+export function ownerJsonLd(): Record<string, unknown> {
+  return {
+    "@type": "Person",
+    "@id": OWNER_ID,
+    name: BUSINESS.owner.name,
+    jobTitle: BUSINESS.owner.jobTitle,
+    url: `${SITE_URL}/about`,
+    ...(BUSINESS.owner.image ? { image: `${SITE_URL}${BUSINESS.owner.image}` } : {}),
+    worksFor: { "@id": BUSINESS_ID },
   };
 }
