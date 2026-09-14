@@ -230,7 +230,9 @@ export default function DesignSystemPage() {
               <p className="text-sm text-[var(--color-gray)]">Centered layout for benefits and features sections.</p>
             </div>
 
-            {/* Testimonial card */}
+            {/* Testimonial card. The quote below is a layout specimen, not a
+                customer. Real reviews live in src/lib/reviews.ts — never copy
+                this placeholder onto a public page. */}
             <div className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 p-6">
               <div className="flex gap-1 mb-3">
                 {[1,2,3,4,5].map((s) => (
@@ -241,8 +243,8 @@ export default function DesignSystemPage() {
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-[var(--color-teal)]/10 flex items-center justify-center text-[var(--color-teal)] font-bold text-sm">J</div>
                 <div>
-                  <div className="font-semibold text-sm">Jane D.</div>
-                  <div className="text-xs text-[var(--color-gray)]">Auburn, IN</div>
+                  <div className="font-semibold text-sm">Sample reviewer</div>
+                  <div className="text-xs text-[var(--color-gray)]">Placeholder — not a real customer</div>
                 </div>
               </div>
             </div>
@@ -360,7 +362,7 @@ export default function DesignSystemPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
               {[
                 { value: "70+", label: "Floor Plans" },
-                { value: "4.8\u2605", label: "Customer Rating" },
+                { value: "400+", label: "Floor Plans" },
                 { value: "3", label: "States Served" },
                 { value: "$50K", label: "Starting Price" },
               ].map((s) => (

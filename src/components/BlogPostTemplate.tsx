@@ -5,6 +5,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { CTABlock } from "@/components/CTABlock";
 import { H2 } from "@/components/Heading";
 import type { BlogPost } from "@/lib/blog";
+import { BUSINESS } from "@/lib/business";
 
 interface BlogPostTemplateProps {
   post: BlogPost;
@@ -23,6 +24,11 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
           datePublished: post.publishedDate,
           dateModified: post.modifiedDate || post.publishedDate,
           author: post.author,
+          // Set a post's `author` to Kyle's name and both the visible byline
+          // and the schema become the owner Person node; anything else stays
+          // an Organization byline. Never attribute a post to a person who
+          // did not write it.
+          authorIsOwner: post.author === BUSINESS.owner.name,
           url: `/blog/${post.slug}`,
         })}
       />
@@ -131,8 +137,8 @@ export function BlogPostTemplate({ post, children }: BlogPostTemplateProps) {
               <p className="text-xs text-[var(--color-gray)]">Floor plans across Indiana, Ohio & Michigan</p>
             </div>
             <div>
-              <div className="text-2xl mb-2">4.8</div>
-              <p className="text-xs text-[var(--color-gray)]">Star rating from verified customers</p>
+              <div className="text-2xl mb-2">Champion</div>
+              <p className="text-xs text-[var(--color-gray)]">Authorized dealer for the full Champion lineup</p>
             </div>
             <div>
               <div className="text-2xl mb-2">30 mi</div>

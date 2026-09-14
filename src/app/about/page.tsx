@@ -9,6 +9,8 @@ import {
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
+import { OwnerIntro } from "@/components/OwnerIntro";
+import { BUSINESS, ownerJsonLd } from "@/lib/business";
 
 // ============================================
 // ABOUT PAGE - MAXIMUM SEO/AEO COMPLIANCE
@@ -181,11 +183,14 @@ export default function AboutPage() {
         headline: "About Factory Direct Homes Center | Champion Homes Dealer",
         description: "Family-owned Champion Homes dealer in Auburn, Indiana serving Indiana, Ohio, and Michigan with factory-direct pricing.",
         image: "/images/hero-home.jpg",
-        datePublished: "2024-01-01",
+        datePublished: `${BUSINESS.foundingDate}-01`,
         dateModified: new Date().toISOString(),
-        author: "Factory Direct Homes Center",
+        authorIsOwner: true,
         url: "/about"
       })} />
+
+      {/* The owner, published once here. Bylines elsewhere cite this @id. */}
+      <StructuredData data={{ "@context": "https://schema.org", ...ownerJsonLd() }} />
       
       {/* 5. FAQPage */}
       <StructuredData data={structuredData.faqPage(aboutFAQs)} />
@@ -271,6 +276,10 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* The owner, in his own words. Same Person node as the founder in the
+          business schema above. */}
+      <OwnerIntro />
+
       {/* ============================================
           AEO CONTENT SECTIONS
           40-60 word answers with question headers
@@ -331,8 +340,8 @@ export default function AboutPage() {
                       <div className="text-sm text-white/70 mt-1">Miles From Factory</div>
                     </div>
                     <div className="text-center">
-                      <div className="font-serif text-4xl font-bold">4.8★</div>
-                      <div className="text-sm text-white/70 mt-1">Customer Rating</div>
+                      <div className="font-serif text-4xl font-bold">400+</div>
+                      <div className="text-sm text-white/70 mt-1">Floor Plans</div>
                     </div>
                   </StaggerContainer>
                 </div>
@@ -471,7 +480,7 @@ export default function AboutPage() {
             {[
               { icon: "🏆", title: "Selection", desc: "70+ floor plans" },
               { icon: "🎓", title: "Expertise", desc: "Champion authorized" },
-              { icon: "⭐", title: "Authority", desc: "4.8★ rated" },
+              { icon: "📍", title: "Local", desc: "Auburn, Indiana" },
               { icon: "🛡️", title: "Trust", desc: "Line-item pricing" },
             ].map((item, idx) => (
               <FadeIn key={item.title} direction="up" delay={idx * 150}>

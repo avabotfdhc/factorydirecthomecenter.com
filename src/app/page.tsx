@@ -9,6 +9,7 @@ import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
 import { FaqJsonLd, type FaqItem } from "@/components/JsonLd";
 import { HeroCopy } from "@/components/HeroCopy";
 import { HomeVideo } from "@/components/HomeVideo";
+import { OwnerIntro } from "@/components/OwnerIntro";
 import type { Metadata } from "next";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
@@ -183,6 +184,8 @@ export default async function Home() {
           })
         }}
       />
+
+      <OwnerIntro />
 
       <TrustAndProcess />
     </>
