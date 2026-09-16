@@ -25,7 +25,7 @@ import { BUSINESS, ownerJsonLd } from "@/lib/business";
 
 export const metadata = genMeta({
   title: "About Us | Champion Homes Dealer Auburn IN",
-  description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving Indiana, Ohio, and Michigan with factory-direct pricing, just 20 miles from the Champion factory. Learn about our story, values, and commitment to transparent pricing.",
+  description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving Indiana, Ohio, and Michigan with factory-direct pricing, just 30 miles from the Champion factory. Learn about our story, values, and commitment to transparent pricing.",
   keywords: [
     "factory direct homes center",
     "champion homes dealer",
@@ -45,7 +45,7 @@ const aeoContent = [
     directAnswer: "Factory Direct Homes Center is a family-owned, exclusive Champion Homes dealer based in Auburn, Indiana.",
     supportingDetails: [
       "We serve families across Indiana, Ohio, and Michigan with new manufactured and modular homes.",
-      "Our dealership operates on State Road 8 in Auburn, just 20 miles from Champion's largest manufacturing facility in Topeka, Indiana."
+      "Our dealership operates on State Road 8 in Auburn, just 30 miles from Champion's largest manufacturing facility in Topeka, Indiana."
     ],
     wordCount: 48
   },
@@ -63,7 +63,7 @@ const aeoContent = [
     directAnswer: "Champion Homes is America's second-largest manufactured home builder, producing over 20% of all factory-built homes nationwide.",
     supportingDetails: [
       "We chose Champion for their build quality, materials, and comprehensive warranty coverage.",
-      "Their Topeka, Indiana facility is the largest Champion factory in the country, located just 20 miles from our showroom."
+      "Their Topeka, Indiana facility is the largest Champion factory in the country, located just 30 miles from our showroom."
     ],
     wordCount: 49
   },
@@ -71,7 +71,7 @@ const aeoContent = [
     question: "Is Factory Direct Homes Center an authorized Champion dealer?",
     directAnswer: "Yes. We are a family-owned, authorized Champion Homes dealer offering the full Champion lineup at factory-direct pricing.",
     supportingDetails: [
-      "Our showroom sits just 20 miles from Champion's largest factory in Topeka, Indiana, keeping delivery costs and lead times low.",
+      "Our showroom sits just 30 miles from Champion's largest factory in Topeka, Indiana, keeping delivery costs and lead times low.",
       "Every home is backed by Champion's manufacturer warranty and our line-item, transparent pricing."
     ],
     wordCount: 47
@@ -81,7 +81,7 @@ const aeoContent = [
     directAnswer: "We deliver homes throughout Indiana, Ohio, and Michigan.",
     supportingDetails: [
       "Our central location in Auburn, Indiana allows us to serve the entire region with competitive delivery costs.",
-      "Being just 20 miles from the factory gives us shorter delivery times than dealers located farther away."
+      "Being just 30 miles from the factory gives us shorter delivery times than dealers located farther away."
     ],
     wordCount: 48
   }
@@ -268,7 +268,7 @@ export default function AboutPage() {
               
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">
                 Family-owned Champion Homes dealer in Auburn, Indiana.
-                Serving Indiana, Ohio, and Michigan from just 20 miles away from the factory, with factory-direct
+                Serving Indiana, Ohio, and Michigan from just 30 miles away from the factory, with factory-direct
                 pricing and line-item transparency.
               </p>
             </div>
@@ -352,7 +352,7 @@ export default function AboutPage() {
                 <div className="space-y-8 border-l-2 border-[var(--color-teal)]/20 pl-8">
                   {[
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
-                    { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Paramount, Redman, and Dutch series homes built just 20 miles away." },
+                    { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Paramount, Redman, and Dutch series homes built just 30 miles away." },
                     { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through referrals and repeat customers." },
                   ].map((item, idx) => (
                     <div key={item.label} className="relative">
@@ -434,7 +434,7 @@ export default function AboutPage() {
               <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
                 Champion is the #2 manufactured home builder in America. Their Topeka, 
                 Indiana facility — the largest Champion factory in the country — is 
-                just 20 miles from our showroom. This plant produces the Aspire Series, 
+                just 30 miles from our showroom. This plant produces the Aspire Series, 
                 Paramount, Redman, and Dutch series homes. Shorter delivery distances 
                 mean lower costs and faster delivery for you.
               </p>

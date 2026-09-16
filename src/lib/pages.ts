@@ -63,7 +63,7 @@ export const sitePages: SitePage[] = [
   {
     url: "/about",
     title: "About Factory Direct Homes Center",
-    description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving Indiana, Ohio & Michigan, just 20 miles from the Champion factory.",
+    description: "Family-owned Champion Homes dealer in Auburn, Indiana. Serving Indiana, Ohio & Michigan, just 30 miles from the Champion factory.",
     topics: ["about", "champion-homes", "factory-direct"],
     cluster: "core",
     priority: 0.8,
@@ -188,7 +188,7 @@ export const sitePages: SitePage[] = [
   {
     url: "/locations/auburn",
     title: "Manufactured & Modular Homes in Auburn, IN",
-    description: "Our Auburn, DeKalb County showroom at 1211 State Road 8. Factory-direct Champion homes, 20 miles from the factory.",
+    description: "Our Auburn, DeKalb County showroom at 1211 State Road 8. Factory-direct Champion homes, 30 miles from the factory.",
     topics: ["locations", "auburn", "dekalb-county", "indiana", "showroom"],
     cluster: "locations",
     pillar: "/locations",

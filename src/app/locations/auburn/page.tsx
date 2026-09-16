@@ -39,7 +39,7 @@ const locationFAQs = [
   {
     question: "Where is Factory Direct Homes Center located in Auburn?",
     answer:
-      "Our showroom is at 1211 State Road 8, Auburn, IN 46706, in DeKalb County — about 25 minutes north of Fort Wayne and just 20 miles from the Champion factory in Topeka. Stop by to walk through model homes or call (260) 308-1457.",
+      "Our showroom is at 1211 State Road 8, Auburn, IN 46706, in DeKalb County — about 25 minutes north of Fort Wayne and just 30 miles from the Champion factory in Topeka. Stop by to walk through model homes or call (260) 308-1457.",
   },
   {
     question: "Can I visit a showroom to see manufactured homes in Auburn?",
@@ -64,7 +64,7 @@ const locationFAQs = [
   {
     question: "How far is your showroom from the Champion factory?",
     answer:
-      "About 20 miles. The Champion plant in Topeka, Indiana is the largest Champion factory in the country, and being this close means shorter delivery times and lower freight costs passed directly to you.",
+      "About 30 miles. The Champion plant in Topeka, Indiana is the largest Champion factory in the country, and being this close means shorter delivery times and lower freight costs passed directly to you.",
   },
 ];
 
@@ -216,7 +216,7 @@ export default function AuburnLocationPage() {
               zoning, permitting, and site work.
             </p>
             <p className="text-[var(--color-gray)] leading-relaxed mb-4">
-              Because we&rsquo;re only 20 miles from the Champion factory in Topeka — the largest Champion
+              Because we&rsquo;re only 30 miles from the Champion factory in Topeka — the largest Champion
               plant in the country — Auburn-area buyers get some of the shortest delivery times and
               lowest freight costs anywhere in our region. That&rsquo;s the factory-direct advantage:
               fewer middlemen, transparent line-item pricing, and homes delivered fast.

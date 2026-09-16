@@ -34,8 +34,26 @@ export const BUSINESS = {
   image: `${SITE_URL}/images/hero-home.jpg`,
   logo: `${SITE_URL}/images/logo.png`,
   hasMap: "https://www.google.com/maps/dir/?api=1&destination=1211+State+Road+8+Auburn+IN+46706",
-  /** Public profiles that identify the same business. Only verified URLs belong here. */
-  sameAs: ["https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN"],
+  /**
+   * Public profiles that identify the same business, for the `sameAs` graph.
+   *
+   * The Facebook and Instagram URLs were recovered from the previous site's
+   * own structured data (`utils/seo.js` in kmdudgeon/fdhc-next-frontend) at
+   * Kyle's request on 2026-09-16 — they are the handles that site published,
+   * not guesses. They could not be fetched from the agent sandbox (its
+   * network policy blocks outbound hosts), so Kyle should open each once and
+   * confirm it resolves; a dead `sameAs` entry is worse than a missing one.
+   *
+   * The old site also rendered YouTube and LinkedIn icons, but those URLs
+   * lived in the retired CMS database (`social` table on the terminated EC2
+   * instance), not in any repo, so they are unrecoverable. Add them here if
+   * the profiles exist.
+   */
+  sameAs: [
+    "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN",
+    "https://www.facebook.com/factorydirecthomescenter",
+    "https://www.instagram.com/factorydirecthomescenter",
+  ],
   hours: [
     { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "17:00" },
     { days: ["Saturday"], opens: "10:00", closes: "16:00" },

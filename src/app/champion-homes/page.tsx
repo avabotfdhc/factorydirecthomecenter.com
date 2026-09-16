@@ -7,7 +7,7 @@ import { GuideMeta } from "@/components/GuideMeta";
 export const metadata = genMeta({
   title: "Champion Homes & Our Series — Aspire, Prime & Paramount",
   description:
-    "Meet Champion Homes and the series we sell at Factory Direct Homes Center: Aspire, Prime, and Paramount. How factory-built homes are made, HUD vs. IRC code, quality, warranty, and which Champion series fits you — built 20 miles from our Auburn, IN showroom.",
+    "Meet Champion Homes and the series we sell at Factory Direct Homes Center: Aspire, Prime, and Paramount. How factory-built homes are made, HUD vs. IRC code, quality, warranty, and which Champion series fits you — built 30 miles from our Auburn, IN showroom.",
   keywords: [
     "Champion Homes",
     "Champion Aspire series",
@@ -25,7 +25,7 @@ const series = [
     name: "Aspire",
     plant: "Topeka, Indiana",
     tag: "The value leader — our most popular line",
-    body: "Aspire is the heart of our lineup and the broadest selection we carry — single wides for first-time buyers and downsizers, and multi-section homes with full family layouts. Built to the federal HUD code at Champion's Topeka, Indiana plant just 20 miles from our showroom, Aspire pairs smart, livable floor plans with genuine factory-direct value. Many plans offer factory layout options — 2-bedroom conversions, added studies, optional kitchens and islands.",
+    body: "Aspire is the heart of our lineup and the broadest selection we carry — single wides for first-time buyers and downsizers, and multi-section homes with full family layouts. Built to the federal HUD code at Champion's Topeka, Indiana plant just 30 miles from our showroom, Aspire pairs smart, livable floor plans with genuine factory-direct value. Many plans offer factory layout options — 2-bedroom conversions, added studies, optional kitchens and islands.",
   },
   {
     name: "Paramount",
@@ -45,7 +45,7 @@ const championFAQs = [
   {
     question: "Who makes Champion Homes?",
     answer:
-      "Champion Homes (Champion Home Builders) is one of the largest producers of factory-built housing in North America, with plants across the country. The homes we sell are built at Champion's Indiana facilities — Aspire and Paramount in Topeka, about 20 miles from our Auburn showroom, and Prime in Decatur. Building close to us keeps freight costs and delivery times low.",
+      "Champion Homes (Champion Home Builders) is one of the largest producers of factory-built housing in North America, with plants across the country. The homes we sell are built at Champion's Indiana facilities — Aspire and Paramount in Topeka, about 30 miles from our Auburn showroom, and Prime in Decatur. Building close to us keeps freight costs and delivery times low.",
   },
   {
     question: "What's the difference between the Aspire, Prime, and Paramount series?",
@@ -82,7 +82,7 @@ export default function ChampionHomesPage() {
             <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">The Homes We Sell</span>
           </div>
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mb-5">
-            Champion Homes, built <span className="italic text-[var(--color-teal-light)]">20 miles away</span>
+            Champion Homes, built <span className="italic text-[var(--color-teal-light)]">30 miles away</span>
           </h1>
           <GuideMeta href="/champion-homes" />
           <p className="text-lg text-white/60 leading-relaxed max-w-2xl">
@@ -102,7 +102,7 @@ export default function ChampionHomesPage() {
             Champion Homes — long known as Champion Home Builders — is one of the largest producers of
             factory-built housing in North America, with a network of plants that have been building homes
             for decades. When you buy from us, your home is built at one of Champion&rsquo;s Indiana
-            facilities: the <strong>Topeka, Indiana</strong> plant (about 20 miles from our Auburn
+            facilities: the <strong>Topeka, Indiana</strong> plant (about 30 miles from our Auburn
             showroom) or the <strong>Decatur, Indiana</strong> plant. That proximity is a real advantage —
             shorter freight distance means lower delivery cost and faster time to your site.
           </p>
