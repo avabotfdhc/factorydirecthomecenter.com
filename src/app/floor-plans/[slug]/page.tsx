@@ -14,6 +14,7 @@ import { FloorPlanQuoteCTA } from "@/components/QuoteModal";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
+import { businessRef } from "@/lib/business";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -118,7 +119,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             priceCurrency: "USD",
             availability: "https://schema.org/InStock",
             url: `${SITE}/floor-plans/${plan.slug}`,
-            seller: { "@type": "LocalBusiness", name: "Factory Direct Homes Center" },
+            seller: businessRef(),
           },
         }
       : {}),

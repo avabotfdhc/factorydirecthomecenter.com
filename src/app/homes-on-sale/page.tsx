@@ -33,8 +33,12 @@ export const revalidate = 300;
 export function generateMetadata() {
   const sale = getSaleStatus();
   return genMeta({
+    // Keep this short: the root layout appends " | Factory Direct Homes"
+    // (23 chars), and the previous title ran to 91 with the suffix, so Google
+    // truncated it mid-phrase. "Fall into Savings Sales Event" is the longest
+    // sale name we run, and this lands at 57.
     title: sale.active
-      ? `${sale.name} — Up to ${sale.discountPercent}% Off Select Champion Floor Plans`
+      ? `${sale.name}: Up to ${sale.discountPercent}% Off`
       : "Champion Floor Plans on Sale",
     description: sale.active
       ? `${sale.name}: save up to ${sale.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${sale.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`
