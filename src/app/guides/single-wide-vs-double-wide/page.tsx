@@ -5,7 +5,8 @@ import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
-  title: "Single Wide vs. Double Wide: Which Manufactured Home Is Right for You?",
+  // 93 chars with the layout's " | Factory Direct Homes" suffix; now 56.
+  title: "Single Wide vs. Double Wide Homes",
   description:
     "Single wide vs. double wide manufactured homes compared — size, layout, price, land needs, and best uses. Learn which Champion home fits your budget and property in Indiana.",
   keywords: [

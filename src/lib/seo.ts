@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { businessJsonLd, BUSINESS_ID, ownerJsonLd } from "./business";
+import { businessJsonLd, businessRef, BUSINESS_ID, ownerJsonLd } from "./business";
 
 interface SEOConfig {
   title: string;
@@ -179,10 +179,7 @@ export const structuredData = {
           price: product.price.replace(/[^0-9.]/g, ""),
           priceCurrency: product.priceCurrency || "USD",
           availability: product.availability || "https://schema.org/InStock",
-          seller: {
-            "@type": "LocalBusiness",
-            name: "Factory Direct Homes Center",
-          },
+          seller: businessRef(),
         }
       : undefined,
   }),
@@ -259,10 +256,7 @@ export const structuredData = {
     "@type": "Service",
     name: service.name,
     description: service.description,
-    provider: {
-      "@type": "LocalBusiness",
-      name: service.provider || "Factory Direct Homes Center",
-    },
+    provider: businessRef(),
     areaServed: {
       "@type": "State",
       name: service.areaServed || "Indiana",
@@ -309,12 +303,7 @@ export const structuredData = {
     ratingValue: rating.ratingValue,
     reviewCount: rating.reviewCount,
     bestRating: 5,
-    itemReviewed: rating.itemReviewed
-      ? {
-          "@type": "LocalBusiness",
-          name: rating.itemReviewed,
-        }
-      : undefined,
+    itemReviewed: rating.itemReviewed ? businessRef() : undefined,
   }),
 
   // Article Schema

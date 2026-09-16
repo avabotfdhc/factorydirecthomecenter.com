@@ -42,7 +42,7 @@ export const BUSINESS = {
   ],
   states: ["Indiana", "Ohio", "Michigan"],
   /** Month the dealership opened. Used for foundingDate and anywhere the site
-   *  says how long we have been trading \u2014 so it stays one answer. */
+   *  says how long we have been trading — so it stays one answer. */
   foundingDate: "2024-11",
   owner: {
     name: "Kyle Dudgeon",
@@ -52,6 +52,42 @@ export const BUSINESS = {
     image: "",
   },
 } as const;
+
+/** The postal address, built once so every node that needs one agrees. */
+export function businessAddressJsonLd(): Record<string, unknown> {
+  return {
+    "@type": "PostalAddress",
+    streetAddress: BUSINESS.streetAddress,
+    addressLocality: BUSINESS.city,
+    addressRegion: BUSINESS.region,
+    postalCode: BUSINESS.postalCode,
+    addressCountry: "US",
+  };
+}
+
+/**
+ * The dealership as a NESTED node — a `provider`, `seller`, `offeredBy` or
+ * `itemReviewed` inside some other schema.
+ *
+ * Use this and never hand-write `{ "@type": "LocalBusiness", name: "..." }`.
+ * Those bare stubs were the site's most widespread markup error (15 pages on
+ * Semrush's 2026-09-16 crawl): schema.org requires `address` on a
+ * LocalBusiness, and a stub with no `@id` also reads as a *second* business
+ * with the same name as the real one — the duplicate-entity problem
+ * `businessJsonLd` exists to prevent. Carrying the same `@id` and `@type` as
+ * the canonical node means Google merges the two instead of competing, and
+ * the nested node still validates standalone.
+ */
+export function businessRef(): Record<string, unknown> {
+  return {
+    "@type": ["RealEstateAgent", "HomeAndConstructionBusiness"],
+    "@id": BUSINESS_ID,
+    name: BUSINESS.legalName,
+    url: SITE_URL,
+    telephone: BUSINESS.telephone,
+    address: businessAddressJsonLd(),
+  };
+}
 
 /** The shared LocalBusiness node. Callers may spread and add page-specific
  *  `areaServed` / `serviceArea`; they must not override identity fields. */
@@ -69,14 +105,7 @@ export function businessJsonLd(): Record<string, unknown> {
     image: BUSINESS.image,
     logo: BUSINESS.logo,
     priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BUSINESS.streetAddress,
-      addressLocality: BUSINESS.city,
-      addressRegion: BUSINESS.region,
-      postalCode: BUSINESS.postalCode,
-      addressCountry: "US",
-    },
+    address: businessAddressJsonLd(),
     geo: { "@type": "GeoCoordinates", latitude: BUSINESS.latitude, longitude: BUSINESS.longitude },
     hasMap: BUSINESS.hasMap,
     sameAs: [...BUSINESS.sameAs],
