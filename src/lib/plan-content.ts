@@ -99,7 +99,7 @@ function hubFor(plan: ApiFloorPlan): SeriesHub | undefined {
 function plantFor(series: string): { town: string; distance: string } {
   return /prime/i.test(series)
     ? { town: "Decatur, Indiana", distance: "south of Fort Wayne, under an hour from our Auburn showroom" }
-    : { town: "Topeka, Indiana", distance: "about 20 miles up the road from our Auburn showroom" };
+    : { town: "Topeka, Indiana", distance: "about 30 miles up the road from our Auburn showroom" };
 }
 
 function sizeSentence(name: string, sqft: number, kind: PlanKind): string {

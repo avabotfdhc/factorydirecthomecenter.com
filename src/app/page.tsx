@@ -57,7 +57,7 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "How long does it take to get a manufactured home delivered?",
-                a: "From order to move-in usually takes 8 to 12 weeks. The home is built in 6 to 8 weeks at the Champion factory in Topeka, IN, just 20 miles away. Site preparation and permits add 2 to 4 weeks. Because we are close to the factory, our delivery times beat dealers located farther away."
+                a: "From order to move-in usually takes 8 to 12 weeks. The home is built in 6 to 8 weeks at the Champion factory in Topeka, IN, just 30 miles away. Site preparation and permits add 2 to 4 weeks. Because we are close to the factory, our delivery times beat dealers located farther away."
               },
               {
                 q: "Can I put a manufactured home on my own land?",
@@ -65,7 +65,7 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "What areas do you serve?",
-                a: "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana lot is 20 miles from the Champion factory. That central location lets us serve the whole region with lower delivery costs."
+                a: "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana lot is 30 miles from the Champion factory. That central location lets us serve the whole region with lower delivery costs."
               },
               {
                 q: "Do manufactured homes hold their value?",

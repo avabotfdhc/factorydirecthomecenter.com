@@ -77,7 +77,7 @@ const aeoContent = [
     question: "How long does it take to get a manufactured home delivered to Fort Wayne?",
     directAnswer: "From order to move-in typically takes 8-12 weeks for Fort Wayne deliveries.",
     supportingDetails: [
-      "Manufacturing takes 6-8 weeks at the Topeka factory, just 20 miles from our showroom.",
+      "Manufacturing takes 6-8 weeks at the Topeka factory, just 30 miles from our showroom.",
       "Our proximity means fast delivery — the home travels a short distance to your site."
     ],
     wordCount: 45

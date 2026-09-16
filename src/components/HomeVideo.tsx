@@ -38,7 +38,7 @@ export function HomeVideo({ video = HOME_VIDEO }: { video?: HomeVideoConfig }) {
           </H2>
           <div className="w-16 h-1 bg-[var(--color-lime-light)] mx-auto mb-4" />
           <p className="text-base text-slate-200 max-w-2xl mx-auto">
-            Take a video tour of a new manufactured home built 20 miles from our lot. Then visit Auburn to walk
+            Take a video tour of a new manufactured home built 30 miles from our lot. Then visit Auburn to walk
             through one in person.
           </p>
         </div>
