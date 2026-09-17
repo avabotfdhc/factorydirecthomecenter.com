@@ -49,6 +49,17 @@ export const SALE_PHASES: SalePhase[] = [
     name: "Fall into Savings Sales Event",
     discountPercent: 20,
     startDate: "2026-09-16",
+    endDate: "2026-09-16",
+    productionMonth: "September 2026",
+  },
+  // Kyle raised the Fall event to 25% off for the rest of September
+  // (2026-09-17). The 20% rows above are left as they ran — repricing them
+  // would rewrite terms already quoted — so the increase starts today and
+  // carries to the end of the month.
+  {
+    name: "Fall into Savings Sales Event",
+    discountPercent: 25,
+    startDate: "2026-09-17",
     endDate: "2026-09-30",
     productionMonth: "September 2026",
   },
