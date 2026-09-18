@@ -10,7 +10,8 @@
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts",
     "sheet-previews": "node scripts/render-sheet-previews.mjs",
-    "legacy-media": "node scripts/migrate-legacy-media.mjs"
+    "legacy-media": "node scripts/migrate-legacy-media.mjs",
+    "lender-sheet": "tsx scripts/build-lender-sheet.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.9",

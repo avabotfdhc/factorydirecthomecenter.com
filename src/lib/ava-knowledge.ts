@@ -23,6 +23,8 @@ import { getSaleStatus, type SaleStatus } from "./sale";
 import { FEATURED, saleHomes } from "./sale-homes";
 import { singlesStandardFeatures, summitKitchenModels } from "./paramount-content";
 
+import { LENDERS, LENDER_DISCLAIMER } from "./lenders";
+
 export const SHOWROOM_TIME_ZONE = "America/New_York";
 export const SHOWROOM_PHONE = "(260) 308-1457";
 export const SHOWROOM_ADDRESS = "1211 State Road 8, Auburn, IN 46706";
@@ -64,6 +66,27 @@ FINANCING (from /financing and /guides/financing)
 - First-time buyers: lenders offer flexible chattel programs; some states have first-time buyer assistance. Veterans: VA land-home financing on eligible purchases.
 - Cash and land-equity buyers get preferred pricing on select plans. Monthly payments on a financed factory-built home are often comparable to rent; the /financing page has a payment calculator (never compute a payment yourself).
 `;
+
+function lendersSection(): string {
+  // Phone + city only. The loan-officer emails on the sheet are deliberately
+  // not in Ava's context — see the note in lenders.ts. Ava has no web tool and
+  // the guardrail strips off-site links from her replies, so she gives the
+  // number and sends the visitor to /financing#lenders for the full table.
+  const rows = LENDERS.map((l) => {
+    const { city, state } = l.address;
+    return `- ${l.name} — ${l.phone} (${city}, ${state})`;
+  }).join("\n");
+  return `
+LENDERS WE HAND OUT (the printed lender sheet, also on /financing#lenders)
+${LENDER_DISCLAIMER}
+${rows}
+- Naming these is fine. Ranking them is not: never say one is "our lender", "the best", "who most people use" or "who I'd go with", and never pick for the visitor. If asked to choose, say the buyer chooses and we send the application wherever they point us.
+- The buyer selects the lenders on the sheet and signs an authorization saying the selection was not referred or suggested. Keep that true.
+- 21st Mortgage, Triad and Cascade are the national manufactured-home lenders on the list; Credit Human is a member-owned credit union; InTerra (Middlebury IN), Lake Michigan CU, Superior Choice, Community Bank, Farmers Savings Bank and West Central Bank are regional banks and credit unions. That is description, not a recommendation.
+- Some rows have a direct loan officer. Do not read out an email address — say the sheet includes a direct contact and that ${SHOWROOM_PHONE} or a showroom visit gets it to them.
+- Never quote a rate, payment, term or approval odds for a named lender. Send rate questions to the lender's own number above, or offer to have our team call.
+`;
+}
 
 const CHAMPION = `
 CHAMPION HOME BUILDERS (CHAMPION HOMES)
@@ -499,6 +522,7 @@ async function staticKnowledge(): Promise<string> {
     OPTIONS.trim(),
     PROCESS.trim(),
     FINANCING.trim(),
+    lendersSection().trim(),
     CHAMPION.trim(),
     INDUSTRY.trim(),
     LOCATIONS.trim(),

@@ -10,6 +10,13 @@ import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { FinancingCalculator } from "@/components/FinancingCalculator";
 import { LeadCaptureForm } from "@/components/LeadCaptureForm";
+import {
+  LENDERS,
+  LENDER_DISCLAIMER,
+  lenderAddress,
+  lenderTelHref,
+  lenderWebsiteLabel,
+} from "@/lib/lenders";
 
 // ============================================
 // FINANCING PAGE - MAXIMUM SEO/AEO
@@ -458,6 +465,80 @@ export default function FinancingPage() {
               </FadeIn>
             ))}
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* ============================================
+          LENDER DIRECTORY
+          ============================================ */}
+      <section id="lenders" className="py-24 lg:py-32 scroll-mt-24">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+          <FadeIn direction="up">
+            <div className="text-center mb-10">
+              <div className="decorative-line mx-auto mb-6" />
+              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
+                Lender <span className="italic text-[var(--color-teal)]">Directory</span>
+              </H2>
+              <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
+                {LENDER_DISCLAIMER}
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <caption className="sr-only">
+                Lenders that finance manufactured homes, with telephone number, address and website
+              </caption>
+              <thead>
+                <tr className="border-b-2 border-[var(--color-charcoal)] text-left">
+                  <th scope="col" className="py-4 pr-4 font-semibold">Lender</th>
+                  <th scope="col" className="py-4 pr-4 font-semibold">Telephone</th>
+                  <th scope="col" className="py-4 pr-4 font-semibold">Address</th>
+                  <th scope="col" className="py-4 font-semibold">Website</th>
+                </tr>
+              </thead>
+              <tbody>
+                {LENDERS.map((lender) => (
+                  <tr key={lender.name} className="border-b border-[var(--color-charcoal)]/10 align-top">
+                    <th scope="row" className="py-4 pr-4 font-semibold text-left">{lender.name}</th>
+                    <td className="py-4 pr-4 whitespace-nowrap">
+                      <a href={lenderTelHref(lender)} className="text-[var(--color-teal)] hover:underline">
+                        {lender.phone}
+                      </a>
+                    </td>
+                    <td className="py-4 pr-4 text-[var(--color-gray)]">{lenderAddress(lender)}</td>
+                    <td className="py-4">
+                      {lender.website ? (
+                        <a
+                          href={lender.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--color-teal)] hover:underline break-all"
+                        >
+                          {lenderWebsiteLabel(lender)}
+                        </a>
+                      ) : (
+                        <span className="text-[var(--color-gray)]">Call for an application</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mt-8 text-sm text-[var(--color-gray)] leading-relaxed">
+            You choose which of these lenders receives your credit application, and you may
+            apply to as many as you like. We are happy to send the application to the ones you
+            pick &mdash; call us at{" "}
+            <a href="tel:2603081457" className="text-[var(--color-teal)] hover:underline font-medium">
+              (260) 308-1457
+            </a>{" "}
+            or ask for the lender sheet when you visit the showroom. Some of these lenders also
+            gave us a direct loan officer to work with; we pass that contact along with the
+            sheet rather than publishing it here.
+          </p>
         </div>
       </section>
 
