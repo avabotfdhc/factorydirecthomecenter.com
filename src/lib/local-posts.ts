@@ -506,4 +506,348 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>If line-item transparency and factory-direct pricing matter to you, yes — bring your land details and leave with real numbers to compare against any metro dealer.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-corunna-indiana",
+    title: "Manufactured Homes in Corunna, Indiana: The Closest Town to Our Lot",
+    excerpt:
+      "Corunna sits minutes from our Auburn showroom. What a HUD-code manufactured home looks like on a small in-town lot, and how DeKalb County handles placement.",
+    image: "/images/homepage/single-wides.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Corunna is about as close to our lot as a town gets. You can leave a job site here, walk three Champion homes in Auburn over a lunch break, and be back before the afternoon. That proximity is not just convenient &mdash; it changes what a home costs to deliver, because freight is quoted by the mile and this is the shortest run we make.</p>
+
+<h2>Small lots, single-section homes</h2>
+<p>Most in-town parcels in a place like Corunna were platted long before anyone was parking a 28-foot-wide home on them. That is not a problem, it is a design constraint, and it is the reason Champion still builds a deep single-section lineup. A <a href="/series/prime">Prime</a> or single-section <a href="/series/aspire">Aspire</a> home runs 14 to 18 feet wide and up to 80 feet long &mdash; two or three bedrooms, a full kitchen, a real laundry room &mdash; on a footprint that fits an older village lot with setbacks left over.</p>
+<p>These are <strong>manufactured homes</strong>, built to the federal HUD code in a controlled plant rather than in the weather. One transport, one set, no framing crew waiting out a rainy April. If your lot is wider than it looks, a multi-section home opens up; bring your parcel dimensions and we will tell you honestly which lineup fits.</p>
+
+<h2>Placement is a DeKalb County question</h2>
+<p>Corunna sits in DeKalb County, our home county, and county rules are parcel-specific &mdash; zoning district, minimum square footage, foundation and skirting requirements, setbacks. You or your contractor confirm those and pull the permits; we do not perform site work or setup, which is exactly why your quote is not padded with it. Our <a href="/guides/zoning">zoning guide</a> walks through what to ask and who to ask.</p>
+
+<h2>What the visit is for</h2>
+<p>Photographs do not tell you how a kitchen feels or whether a hallway is wide enough for your mother-in-law&rsquo;s walker. Browse the <a href="/floor-plans">full Champion lineup</a> first, then come walk two or three. The showroom is open Monday to Friday 9&ndash;5 and Saturday 10&ndash;4, and every home is quoted line by line &mdash; home, options, delivery, each on its own line, so you can carry the sheet to another dealer and compare it honestly.</p>
+
+<h2>Common questions</h2>
+<h3>Is a manufactured home allowed on my Corunna lot?</h3>
+<p>Usually the question is not whether but under what conditions &mdash; foundation type, minimum width, skirting. That is a DeKalb County determination on your specific parcel. Ask before you fall in love with a floor plan.</p>
+<h3>How long does the whole thing take?</h3>
+<p>Typically 8 to 12 weeks from order to move-in. The factory build is 6 to 8 weeks; your contractor&rsquo;s site prep runs in parallel, not after.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/dekalb-county">our DeKalb County page</a>, or <a href="/contact-us">ask us for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-st-joe-indiana",
+    title: "Manufactured Homes in St. Joe, Indiana: Building on Rural DeKalb County Land",
+    excerpt:
+      "Buying acreage near St. Joe? Here is how well, septic and site prep sequence against a Champion manufactured home build, and what to settle before you order.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "September 18, 2026",
+    html: `
+<p>St. Joe sits in the eastern half of DeKalb County, in the farm country along the river that gives the town its name. Buyers here are almost never shopping for a lot in a subdivision &mdash; they have inherited ground, bought a few acres off a family farm, or are splitting a parcel. That changes the order of operations in a way nobody explains until you are already three weeks behind.</p>
+
+<h2>The sequence that saves you a month</h2>
+<p>On rural DeKalb ground you are usually on a private well and a septic system. Those are not afterthoughts &mdash; the septic permit depends on a soil evaluation, and soil work depends on weather and on the county health department&rsquo;s schedule. The mistake we watch people make is ordering the home first and starting the soil test later, then waiting on a permit while a finished home sits at the plant.</p>
+<p>Do it the other way. Get the soil evaluation moving, get your septic design in front of the county, and let the factory build run in parallel. A Champion <strong>manufactured home</strong> takes 6 to 8 weeks to build; that is 6 to 8 weeks your excavator and well driller can be working. Handled in the right order, the whole project is 8 to 12 weeks. Handled backwards, it is five months.</p>
+
+<h2>What fits on acreage</h2>
+<p>With land you are not squeezed by setbacks, so the multi-section lineup opens up &mdash; <a href="/series/paramount">Paramount</a> and multi-section <a href="/series/aspire">Aspire</a> homes run to five bedrooms with kitchen islands and full primary suites. All HUD-code manufactured homes, built indoors and delivered finished. Browse the <a href="/floor-plans">floor plans</a> and note two or three before you visit.</p>
+
+<h2>You hire your own crews</h2>
+<p>We sell the home and arrange delivery. Site work, foundation, well, septic, utility hookups and setup are yours to contract &mdash; which is how most buyers here save real money, because you are hiring the same local excavator you would hire anyway rather than paying a dealer&rsquo;s markup on him. We keep a referral list of licensed and insured crews previous customers have used. Delivery, set-up and site-work ranges are published in the <a href="/guides/pricing">pricing guide</a> so you can budget before you commit.</p>
+
+<h2>Common questions</h2>
+<h3>Can I put a manufactured home on my own land here?</h3>
+<p>On most rural DeKalb County parcels, yes, subject to the zoning district and foundation requirements on your specific ground. Confirm with the county before ordering &mdash; our <a href="/guides/zoning">zoning guide</a> covers the questions to ask.</p>
+<h3>Does delivery cost more out here?</h3>
+<p>Barely. St. Joe is a short run from Auburn, and Champion&rsquo;s Topeka plant is about 30 miles from our lot. Freight is quoted as its own line on your sheet, never buried in the home price.</p>
+<h3>Next step?</h3>
+<p>Read the <a href="/guides/site-work">site work guide</a>, then <a href="/contact-us">send us your parcel details</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-spencerville-indiana",
+    title: "Manufactured Homes in Spencerville, Indiana: Delivery and Access on Country Roads",
+    excerpt:
+      "Spencerville buyers place homes on farm parcels and long lanes. What a multi-section delivery actually needs to reach your site, and how to check before you order.",
+    image: "/images/homepage/double-wides.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Spencerville is a crossroads community in northeast DeKalb County &mdash; covered bridge, river, farm ground in every direction. Almost every home we deliver around here goes onto private land at the end of a lane, and that raises a question nobody thinks about until the transport is scheduled: <em>can the home physically get to the spot you picked?</em></p>
+
+<h2>What a delivery actually needs</h2>
+<p>A single-section manufactured home travels as one box. A multi-section travels as two or three, each on its own transport, and each one needs room to swing. The things that stop a delivery are rarely dramatic: a lane too narrow between mature trees, a soft spot that will not carry a loaded transport after a wet week, a turn radius at the road, a low line crossing the drive, or a seasonal load posting on the bridge you assumed everyone uses.</p>
+<p>None of that is a reason to give up on the site you want. It is a reason to walk the route before you order rather than after. Your site contractor can widen a lane, build up a soft approach, or schedule around a posting &mdash; all cheap in advance, all expensive on the morning a transport is idling at your mailbox.</p>
+
+<h2>Timing around the farm calendar</h2>
+<p>Around Spencerville the roads get busy with equipment at planting and harvest, and spring thaw is when soft ground is softest. If your schedule is flexible, late summer and early fall tend to be the easiest windows for both delivery and site work. If it is not flexible, say so early and we will plan the route and the date around it.</p>
+
+<h2>The home itself</h2>
+<p>Champion builds our <strong>manufactured homes</strong> to the federal HUD code, indoors, on a schedule that does not care about Indiana weather &mdash; 6 to 8 weeks from order. Single-section homes for a simple footprint, multi-section for full family layouts. See the <a href="/floor-plans">full lineup</a>, and read the <a href="/guides/delivery-and-setup">delivery and set-up guide</a> for how the day itself runs.</p>
+
+<h2>Common questions</h2>
+<h3>Who checks whether my lane will work?</h3>
+<p>Walk it with your site contractor early, and tell us what you find. We arrange transport; your contractor handles the site, the approach and the setup.</p>
+<h3>Is a multi-section home realistic on a rural parcel?</h3>
+<p>Very often yes &mdash; most rural DeKalb County sites have the room. Access, not acreage, is the usual constraint.</p>
+<h3>More local detail?</h3>
+<p>See <a href="/locations/dekalb-county">our DeKalb County page</a> or <a href="/contact-us">request a quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-ashley-indiana",
+    title: "Manufactured Homes in Ashley, Indiana: Which County’s Rules Apply to Your Lot",
+    excerpt:
+      "Ashley straddles the DeKalb and Steuben county line, and the rules for placing a manufactured home are not identical on both sides. How to find out which set governs your parcel.",
+    image: "/images/homepage/about-2.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Ashley is a small town with an unusual complication for anyone placing a home: the town sits on the DeKalb&ndash;Steuben county line. Neighbors a few hundred feet apart can fall under different county plan commissions, different zoning ordinances, and different permit desks. If you are buying a lot here, the first question is not which floor plan &mdash; it is which county you are actually in.</p>
+
+<h2>Why it matters more than it sounds</h2>
+<p>County ordinances differ on the details that decide whether a <strong>manufactured home</strong> works on your parcel: the zoning districts that permit one, minimum width or square footage, whether a permanent perimeter foundation is required, skirting standards, and setbacks. Two adjacent lots can have genuinely different answers. Guessing, or assuming the rule your cousin followed in another township applies to you, is how people end up with a home they cannot place as planned.</p>
+
+<h2>How to settle it in one afternoon</h2>
+<p>Pull your parcel number from the property tax record &mdash; it tells you the county and township outright. Then call that county&rsquo;s plan commission with the parcel number in hand and ask three questions: is a HUD-code manufactured home permitted in this zoning district, what foundation and skirting are required, and what permits do I need before delivery. Write the answers down with the name of the person who gave them. Our <a href="/guides/zoning">zoning guide</a> lays this out in more detail.</p>
+
+<h2>Then the easy part</h2>
+<p>Ashley is a short drive from our Auburn showroom &mdash; close enough to come twice. Champion&rsquo;s HUD-code lineup runs from single-section <a href="/series/prime">Prime</a> homes through multi-section <a href="/series/paramount">Paramount</a> layouts, all built indoors in 6 to 8 weeks and quoted line by line. Browse <a href="/floor-plans">floor plans</a> before you come so the visit is about deciding, not browsing.</p>
+
+<h2>Common questions</h2>
+<h3>Which county is Ashley in?</h3>
+<p>Both, depending on the parcel &mdash; the town straddles the line. Your parcel number settles it; do not assume from the mailing address.</p>
+<h3>Does the county line change what I pay?</h3>
+<p>Not the home. It can change permit fees and what your contractor has to build, which is one more reason every quote we write breaks the home, options and delivery onto separate lines.</p>
+<h3>Who can help me read this?</h3>
+<p>Bring us the parcel number and what the county told you &mdash; <a href="/contact-us">get in touch</a> and we will talk through which homes fit. See also <a href="/locations/steuben-county">Steuben County</a> and <a href="/locations/dekalb-county">DeKalb County</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-avilla-indiana",
+    title: "Manufactured Homes in Avilla, Indiana: The Shortest Freight Run We Make",
+    excerpt:
+      "Avilla sits between our Auburn showroom and Champion’s Topeka plant. Why that geography puts Noble County buyers on the cheapest delivery route we quote.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Avilla has a geographic advantage most buyers never think to look for. Our showroom is in Auburn, east of town. Champion&rsquo;s Topeka plant &mdash; where your <strong>manufactured home</strong> is actually built &mdash; is about 30 miles west of us. Avilla sits between them. Your home is not making a long haul to reach you; it is essentially stopping on the way.</p>
+
+<h2>Why freight is worth caring about</h2>
+<p>Delivery is one of the biggest costs buyers never see coming, because most dealers bundle it into a single price and you never learn what it was. We quote it as its own line. On a short northeast Indiana run like Avilla, that line sits at the low end of the published range in our <a href="/guides/pricing">pricing guide</a> &mdash; and because it is itemized, you can carry our sheet to any other dealer and see whether their bundled number is really competitive or just opaque.</p>
+
+<h2>Noble County placement</h2>
+<p>Noble County is generally workable ground for manufactured homes on rural parcels, and Avilla itself has in-town lots where a single-section home fits comfortably. As everywhere, it is parcel-specific: the zoning district, foundation requirements and setbacks decide what you can place. You or your contractor confirm with the county and pull permits &mdash; start with our <a href="/guides/zoning">zoning guide</a>. We do not perform site work or setup, so none of that is marked up in your quote.</p>
+
+<h2>What you are actually buying</h2>
+<p>A HUD-code home built indoors on a controlled line, inspected through the build, delivered finished. Champion&rsquo;s <a href="/series/aspire">Aspire</a> series is the broadest lineup we carry &mdash; single-section homes for first-time buyers and downsizers, multi-section homes with full family layouts. <a href="/series/paramount">Paramount</a> goes larger, with islands and big primary suites. See the <a href="/floor-plans">full catalogue</a>, then come walk a few in Auburn; it is a short drive east.</p>
+
+<h2>Common questions</h2>
+<h3>How close is the factory really?</h3>
+<p>Champion&rsquo;s Topeka plant is about 30 miles from our Auburn lot, and Avilla sits between the two. Short freight, and short trips for anyone who needs to get back out to your site.</p>
+<h3>How long from order to keys?</h3>
+<p>Typically 8 to 12 weeks &mdash; 6 to 8 weeks of factory build with your contractor&rsquo;s site prep running alongside it.</p>
+<h3>More on the area?</h3>
+<p>See <a href="/locations/noble-county">our Noble County page</a>, the nearby <a href="/locations/kendallville">Kendallville</a> and <a href="/locations/albion">Albion</a> pages, or <a href="/contact-us">request a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-rome-city-indiana",
+    title: "Manufactured Homes at Rome City and Sylvan Lake: Replacing an Aging Lake Cottage",
+    excerpt:
+      "Lake lots come with tight setbacks, older septic systems and seasonal cottages that were never built for winter. How a new HUD-code home fits a Rome City parcel.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "September 18, 2026",
+    html: `
+<p>A lot of Sylvan Lake property around Rome City carries a cottage that was built for July. Uninsulated or barely insulated, a furnace added later, a septic system that predates the rules it would be held to today. Families inherit these places, love the location, and discover that making one genuinely livable year-round costs more than the structure is worth. Replacing it with a new <strong>manufactured home</strong> is often the cheaper and warmer answer.</p>
+
+<h2>What a lake lot demands</h2>
+<p>Lake parcels are the tightest sites we deal with, and the constraints are real: shoreline setbacks, small platted lots, narrow access, neighbors close on both sides, and septic that may need to be replaced or relocated as part of the project. Some lots take a multi-section home comfortably; others only work with a single-section. This is decided by the parcel and by Noble County, not by a brochure &mdash; get the county&rsquo;s answer on setbacks, foundation and septic before you choose a floor plan. Our <a href="/guides/zoning">zoning guide</a> and <a href="/guides/site-work">site work guide</a> cover the ground.</p>
+
+<h2>Built for February, not just July</h2>
+<p>This is where a modern HUD-code home separates itself from the cottage it replaces. Today&rsquo;s manufactured homes are built to a federal construction and safety standard covering insulation, heating, structure and wind resistance, and Champion builds to the northern thermal zone for homes staying in Indiana. Insulation packages, better windows and a properly sized furnace are ordered as options up front &mdash; see <a href="/options">factory options</a>. A place you used to close up in September becomes a house you can live in.</p>
+
+<h2>Access on delivery day</h2>
+<p>Lake roads are narrow and often crowded in season. Walk the route with your site contractor before ordering, and plan delivery for the shoulder season if you can &mdash; late fall through early spring is usually far easier around the lakes. The <a href="/guides/delivery-and-setup">delivery and set-up guide</a> explains what the transport needs.</p>
+
+<h2>Common questions</h2>
+<h3>Can I replace an old cottage with a manufactured home on the same lot?</h3>
+<p>Often yes, but the new home is held to current setbacks and septic rules even though the old one was not. Confirm with Noble County before you commit.</p>
+<h3>Will a lake lot take a multi-section home?</h3>
+<p>Some will, many will not. Bring us your lot dimensions and the county&rsquo;s setback answer and we will tell you straight which lineup fits.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/noble-county">Noble County</a>, browse <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-hamilton-indiana",
+    title: "Manufactured Homes in Hamilton, Indiana: Replacing an Old Trailer With a HUD-Code Home",
+    excerpt:
+      "If the home on your Steuben County lot predates 1976, it is not the same category of building as what we sell. What actually changed, and what replacement involves.",
+    image: "/images/homepage/single-wides.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Around Hamilton and Hamilton Lake, as across rural Steuben County, there are still older homes on private lots that people call trailers &mdash; and in the technical sense they are right. Anything built before 15 June 1976 was made under no federal construction standard at all. What we sell is a different category of building that happens to share a delivery method.</p>
+
+<h2>What changed in 1976, and what it means for you</h2>
+<p>On that date the federal <strong>HUD code</strong> took effect: an enforceable national construction and safety standard covering structural design, insulation and energy, heating and electrical systems, fire safety and wind resistance, inspected at the plant through the build. Every home built to it carries a red certification label. A pre-1976 trailer has none of that behind it, which is why lenders, insurers and county ordinances all treat the two differently.</p>
+<p>The practical consequences are large. Pre-HUD units are difficult to finance, expensive or impossible to insure well, and many counties will not permit one to be moved onto a new parcel. A new HUD-code <strong>manufactured home</strong> is financeable through ordinary chattel or land-home lending, insurable as a normal home, and permitted wherever the zoning district allows the category.</p>
+
+<h2>What replacement actually involves</h2>
+<p>Replacing an old unit on ground you already own is usually the most affordable route to a genuinely new home in Steuben County &mdash; you own the land, the utilities are there, and the access already carried a home in once. The parts to plan for: demolition and disposal of the old unit, an honest look at whether the existing septic still meets county requirements, whether the existing pad or piers suit the new home, and any setback rules the old placement was grandfathered against but the new one will not be. You or your contractor handle all of that and pull the permits; we sell the home and arrange delivery. See the <a href="/guides/site-work">site work guide</a> and our <a href="/guides/zoning">zoning guide</a>.</p>
+
+<h2>Built for northern Indiana winters</h2>
+<p>Champion builds to the northern thermal zone for homes staying here. Insulation levels, window packages and furnace sizing are ordered up front as <a href="/options">factory options</a> &mdash; worth spending on when the lot is exposed and the wind comes off the lake. Browse the <a href="/floor-plans">Champion lineup</a>, from single-section <a href="/series/prime">Prime</a> homes to multi-section <a href="/series/paramount">Paramount</a> layouts.</p>
+
+<h2>Common questions</h2>
+<h3>Is a manufactured home the same as a mobile home?</h3>
+<p>Not legally. Mobile home refers to pre-1976 units built to no federal standard. Everything built since is a manufactured home built to the HUD code. The words get used interchangeably in conversation; lenders, insurers and zoning offices do not use them interchangeably.</p>
+<h3>Can I finance a new home on land I already own?</h3>
+<p>Usually, and owning the land outright often improves your terms. See <a href="/financing">financing options</a>.</p>
+<h3>What about the old unit?</h3>
+<p>Demolition and disposal are contracted by you. Get that quote before you order so the full picture is on one page. <a href="/contact-us">Talk it through with us</a>, or see <a href="/locations/steuben-county">our Steuben County page</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-fremont-indiana",
+    title: "Manufactured Homes in Fremont, Indiana: Year-Round Living in Steuben County Lake Country",
+    excerpt:
+      "Fremont sits in the northern lakes, minutes from the Michigan line. What to order on a Champion manufactured home so a lake-country property works in January.",
+    image: "/images/homepage/feature-financing.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Fremont sits at the top of Steuben County, close to the Michigan line and surrounded by the lakes that bring the county its summer population. Plenty of property up here was developed for seasonal use and is slowly converting to year-round living &mdash; which is a different engineering problem than most buyers expect.</p>
+
+<h2>The options that matter in a northern winter</h2>
+<p>A Champion <strong>manufactured home</strong> is built to the HUD code, and that code sets thermal requirements by zone &mdash; a home staying in northern Indiana is built to a different specification than one headed to Alabama. Beyond the baseline, the choices worth making at order time are the ones you cannot retrofit cheaply: upgraded insulation in floor, walls and ceiling, better window packages, and a furnace sized for the house you actually ordered rather than the smallest one that qualifies.</p>
+<p>These go on the order sheet as <a href="/options">factory options</a>, get built into the home on the line, and show up as their own lines on your quote. Spending here is the difference between a home that is comfortable in February and one that is merely legal in February.</p>
+
+<h2>Skirting, water lines and the freeze question</h2>
+<p>The other half of winter performance is under the home, and that part belongs to your site contractor, not to us. Properly insulated skirting, protected and heat-taped water lines where required, and drainage that moves water away from the perimeter rather than into it. It is unglamorous work that decides whether you spend a January weekend under the house with a heat gun. Our <a href="/guides/site-work">site work guide</a> covers what to specify; we keep a referral list of licensed and insured crews previous buyers have used.</p>
+
+<h2>Distance and delivery</h2>
+<p>Fremont is a straight run up I-69 from our Auburn showroom, and Champion&rsquo;s Topeka plant is about 30 miles west of us &mdash; an easy northeast Indiana freight route, quoted as its own line at the rates published in our <a href="/guides/pricing">pricing guide</a>. Come walk homes on a weekday or Saturday morning; browse <a href="/floor-plans">floor plans</a> first so the trip is productive.</p>
+
+<h2>Common questions</h2>
+<h3>Can a manufactured home really be a year-round home up here?</h3>
+<p>Yes &mdash; thousands are, across northern Indiana and Michigan. The variables are the insulation and heating package you order and the quality of the skirting and utility work underneath.</p>
+<h3>Are lake lots harder to build on?</h3>
+<p>Often, because of setbacks, lot size, septic and access. Get Steuben County&rsquo;s answers on your parcel before choosing a floor plan.</p>
+<h3>More detail?</h3>
+<p>See <a href="/locations/steuben-county">Steuben County</a>, nearby <a href="/locations/angola">Angola</a>, or <a href="/contact-us">request a quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-leo-cedarville-indiana",
+    title: "Manufactured Homes in Leo-Cedarville: Getting Onto Allen County Acreage",
+    excerpt:
+      "Land in northeast Allen County is not cheap. Splitting your budget between the parcel and a Champion manufactured home is how buyers still get there.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Leo-Cedarville is one of the more sought-after corners of Allen County, and the price of ground reflects it. Buyers who want to live here run into the same wall repeatedly: between the land and a site-built house, the total lands somewhere they cannot reach. The way people actually get onto acreage in this area is by changing which half of that equation absorbs the budget.</p>
+
+<h2>The structural math</h2>
+<p>A new-construction project has two costs: the land and the house. You cannot negotiate the land down &mdash; the market sets it. You can change what the house costs per finished square foot, and that is where a factory-built home does its work. Champion&rsquo;s <strong>manufactured homes</strong> are built indoors on a production line, with materials bought at volume and no weather delays, and we sell them factory-direct with the home, options and delivery each on their own line. The saving is not a discount on a lesser house; it is a different cost structure for a comparable one.</p>
+<p>Multi-section <a href="/series/paramount">Paramount</a> and <a href="/series/aspire">Aspire</a> homes reach five bedrooms with kitchen islands, walk-in closets and full primary suites. Walk one before you assume what the category looks like &mdash; most people&rsquo;s mental image is thirty years out of date. Start with the <a href="/floor-plans">full lineup</a>.</p>
+
+<h2>Allen County placement, honestly</h2>
+<p>Allen County is large and its rules are not uniform across it. Whether a HUD-code manufactured home is permitted on a given parcel depends on the zoning district, and some districts and subdivisions have covenants of their own that zoning will not tell you about. Check both &mdash; the county for zoning and permits, the deed and plat for private restrictions &mdash; before you buy the land, not after. Our <a href="/guides/zoning">zoning guide</a> explains how to run both checks.</p>
+
+<h2>Close enough to shop properly</h2>
+<p>Our Auburn showroom is a short drive north, and the Topeka plant that builds these homes is about 30 miles from our lot. Come twice if you can: once to see the homes, once with whoever has to live in it. Financing works the same here as anywhere in the region &mdash; see <a href="/financing">our lending partners</a>.</p>
+
+<h2>Common questions</h2>
+<h3>Will a manufactured home fit the neighborhood?</h3>
+<p>On acreage, a multi-section home with the right roof pitch, siding and porch reads much like a site-built ranch from the road. Come look rather than guessing.</p>
+<h3>What stops a placement most often here?</h3>
+<p>Private covenants, more often than county zoning. Read the deed restrictions on the parcel before you buy it.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/fort-wayne">our Fort Wayne and Allen County page</a>, or <a href="/contact-us">bring us a parcel to look at</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-grabill-indiana",
+    title: "Manufactured Homes near Grabill, Indiana: Buying on Rural Allen County Ground",
+    excerpt:
+      "Grabill sits in the farm country of northeast Allen County. What placing a Champion manufactured home on acreage here involves, from utilities to outbuildings.",
+    image: "/images/homepage/double-wides.webp",
+    date: "September 18, 2026",
+    html: `
+<p>The country around Grabill is working farm ground &mdash; open fields, long lanes, a strong building culture, and parcels that are usually measured in acres rather than feet. Buyers here tend to arrive with a clear picture of what they want and a practical question: what does it take to put a new home on this ground and be done before winter.</p>
+
+<h2>Utilities set the timeline, not the house</h2>
+<p>On rural Allen County parcels you are typically on a private well and septic, and possibly running a new electric service to the site. Those are the long poles. The soil evaluation that drives the septic design depends on weather and on the health department&rsquo;s calendar; a well driller has a schedule of his own. The <strong>manufactured home</strong> itself is the predictable part &mdash; 6 to 8 weeks on the factory line, built indoors regardless of what the weather does.</p>
+<p>So run them in parallel. Get the soil work and the well moving while the home is being built, and the whole project lands at 8 to 12 weeks. Run them in sequence and you will add months for no reason. Our <a href="/guides/site-work">site work guide</a> lays out the order.</p>
+
+<h2>Planning for the buildings that come after</h2>
+<p>Most people out here are not only placing a house. There is a pole barn, a shop, a garage, or livestock housing either already standing or planned. Site the home with that in mind from the start: leave the equipment access you will need, keep the septic field clear of where you intend to build or drive, and think about the driveway serving both. Moving a house later is possible and expensive; moving a septic field is worse.</p>
+
+<h2>What we do and what you contract</h2>
+<p>We sell the home and arrange its delivery from Champion&rsquo;s Topeka plant, about 30 miles from our Auburn lot. Foundation, utilities, setup and site work are hired by you &mdash; the same local crews you would hire anyway, without a dealer&rsquo;s markup layered on. Delivery, set-up and site-work ranges are published in our <a href="/guides/pricing">pricing guide</a>, and every home is quoted line by line. Browse the <a href="/floor-plans">Champion lineup</a> before you visit.</p>
+
+<h2>Common questions</h2>
+<h3>Can I put a manufactured home on my farm ground?</h3>
+<p>Commonly yes on rural Allen County parcels, subject to the zoning district and foundation requirements on your specific ground. Confirm with the county first.</p>
+<h3>How much land do I need?</h3>
+<p>Less than most people assume &mdash; access and setbacks usually decide the question rather than total acreage.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/fort-wayne">our Allen County page</a>, read the <a href="/guides/zoning">zoning guide</a>, then <a href="/contact-us">send us your parcel details</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-harlan-indiana",
+    title: "Manufactured Homes in Harlan, Indiana: What a Multi-Section Delivery Needs",
+    excerpt:
+      "Harlan sits in far northeast Allen County, where most homes go in at the end of a driveway. A practical checklist for making sure the transport can reach your site.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Harlan is about as far northeast as Allen County goes before it runs into Ohio, and nearly every home we place around here goes onto private land reached by a driveway rather than a street. That makes access the single most common thing that complicates an otherwise simple project &mdash; and the easiest thing to solve, if you look at it early.</p>
+
+<h2>Walk the route before you order</h2>
+<p>A multi-section <strong>manufactured home</strong> arrives as two or three separate boxes, each on its own transport, each needing room to turn in and room to maneuver once it is on your ground. Before you sign anything, walk the whole route with your site contractor and look for five things: the turn from the road onto your drive, the width between anything permanent &mdash; trees, posts, a well head &mdash; the load-bearing quality of the drive after a wet week, overhead lines crossing it, and any seasonal weight postings on the bridges or roads the route depends on.</p>
+<p>Every one of those is cheap to address in advance. A drive can be widened, an approach built up with stone, a low line temporarily lifted, a delivery date moved off a posting. What you want to avoid is discovering the problem on the morning the transport arrives, which is when it becomes expensive.</p>
+
+<h2>Where the home will actually sit</h2>
+<p>Once it is on the property, the set location needs working room around the whole perimeter for the crew and equipment. Think about where the septic field goes, where you want the drive to finish, and which way the house should face for winter wind and summer sun &mdash; decisions that cost nothing now and cannot be revisited later. Our <a href="/guides/delivery-and-setup">delivery and set-up guide</a> walks through the day itself.</p>
+
+<h2>The straightforward part</h2>
+<p>The home is built indoors at Champion&rsquo;s Topeka plant, about 30 miles from our Auburn showroom, in 6 to 8 weeks &mdash; no weather delays, no framing crew to chase. Single-section homes for a simple footprint, multi-section for full family layouts; see the <a href="/floor-plans">full lineup</a>. We handle the home and the transport. Site work, foundation, utilities and setup are contracted by you.</p>
+
+<h2>Common questions</h2>
+<h3>What if my driveway will not work?</h3>
+<p>Usually it will, with a modest amount of preparation. Find out early and your contractor can fix it for very little; find out late and it stops the delivery.</p>
+<h3>Can you deliver into the Ohio side?</h3>
+<p>Yes &mdash; we deliver throughout Indiana, Ohio and Michigan, with freight quoted per route.</p>
+<h3>More local information?</h3>
+<p>See <a href="/locations/fort-wayne">our Allen County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-wolcottville-indiana",
+    title: "Manufactured Homes in Wolcottville, Indiana: Buying Across the Noble–LaGrange Line",
+    excerpt:
+      "Wolcottville sits on a county line in the middle of the northern lakes. Which plan commission governs your parcel, and what that changes about placing a home.",
+    image: "/images/homepage/about-2.webp",
+    date: "September 18, 2026",
+    html: `
+<p>Wolcottville sits where Noble County meets LaGrange County, in the middle of the northern lakes region. Like Ashley on the other side of our service area, that county line is not a trivia detail &mdash; it determines whose zoning ordinance your parcel answers to, whose plan commission you call, and whose permit desk you stand at.</p>
+
+<h2>Settle the county first</h2>
+<p>Find your parcel number on the property tax record; it names the county and township. Then call that county with the number in hand and ask whether a HUD-code <strong>manufactured home</strong> is permitted in your zoning district, what foundation and skirting are required, what the setbacks are, and which permits must be in place before delivery. Get the name of whoever answers. Ordinances differ between counties on exactly these points, and a neighbor&rsquo;s experience across the line may not transfer to your lot. Our <a href="/guides/zoning">zoning guide</a> covers the process.</p>
+
+<h2>Lakes, septic and older systems</h2>
+<p>Much of the ground around Wolcottville is lake and near-lake property, and septic is usually the deciding factor. If you are buying a parcel with an existing system, have it evaluated before closing rather than after &mdash; an older system may not meet what the county would require for a new home, and replacing one is a real budget line. If you are starting fresh, the soil evaluation drives the design and the design drives the permit, so start it early and let the factory build run alongside. The <a href="/guides/site-work">site work guide</a> explains the sequence.</p>
+
+<h2>A short run from the plant</h2>
+<p>Champion&rsquo;s Topeka plant is in LaGrange County, close to this area, and our Auburn showroom is about 30 miles east of it. Wolcottville sits between the two &mdash; a short freight route, quoted as its own line rather than folded into the home price. Browse the <a href="/floor-plans">Champion lineup</a> and come walk a few; single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes for tighter lots, multi-section <a href="/series/paramount">Paramount</a> layouts where the parcel allows.</p>
+
+<h2>Common questions</h2>
+<h3>Which county am I in?</h3>
+<p>Your parcel number answers it. Do not rely on the mailing address &mdash; the town sits on the line.</p>
+<h3>Does an existing septic system carry over to a new home?</h3>
+<p>Sometimes, sometimes not. The county decides, and it is worth knowing before you buy the parcel.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/noble-county">Noble County</a>, <a href="/locations/lagrange-county">LaGrange County</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
+`,
+  },
 ];
