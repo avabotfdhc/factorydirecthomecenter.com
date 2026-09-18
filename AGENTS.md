@@ -105,6 +105,18 @@ Semrush export dates are export dates, not crawl dates — check the compare-aud
 - **Distance:** Champion's Topeka plant is **30 miles** from the Auburn showroom (Kyle, 2026-09-16). The site had said 20 in 48 places and 30 in others; every Auburn-showroom-to-Topeka claim now says 30. City-to-city distances are a different measurement and were deliberately left alone — Auburn→Kendallville (20 miles), Auburn→Huntertown (20), Garrett→Topeka (20, on `/locations/garrett`) and the Indianapolis distance table. If the factory figure ever changes again, grep for `30[ -]?mile` and check each hit's subject before editing; the Kendallville copy was a false positive on the first pass precisely because it reads "…from our Auburn showroom".
 - **Social profiles:** `BUSINESS.sameAs` now carries Facebook and Instagram (`/factorydirecthomescenter` on both), recovered from the previous site's own structured data — `utils/seo.js` in `kmdudgeon/fdhc-next-frontend`. They are the handles that site published, not guesses, but they could not be fetched from the agent sandbox (its network policy answers 403 for every outbound host), so Kyle needs to confirm each resolves. The old site also rendered YouTube and LinkedIn icons, but those URLs were served from the retired CMS's `social` table on the terminated EC2 instance and exist in no repo — they are unrecoverable and must be supplied by hand.
 
+# City blog posts: cover a town once, and make each post genuinely different
+
+The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). 25 of the closest cities are now covered: 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan).
+
+Rules for adding another:
+
+- **One post per town.** A town with a post and a `/locations/*` page already has two assets competing for the same query; a third is cannibalisation, not coverage. Check `local-posts.ts` before writing.
+- **Each post must teach something the others do not.** Mass-produced pages that differ only by place name are the doorway-page pattern in Google's spam policies, and the risk is a manual action, not just weak ranking. Every post in this set is built around a different subject — county-line jurisdiction (Ashley, Wolcottville), well and septic sequencing (St. Joe, Grabill), delivery access on rural lanes (Spencerville, Harlan), lake-lot constraints (Rome City), pre-1976 trailer vs HUD-code replacement (Hamilton), northern-winter insulation options (Fremont), land-versus-house budget structure (Leo-Cedarville), freight distance (Avilla), single-section fit on small platted lots (Corunna).
+- `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
+- Distances: county-level figures come from the vetted table in `src/app/locations/page.tsx`. Do not invent a town-to-town mileage that is not already published somewhere in the repo — say "a short drive" instead.
+- The usual claim rules apply: no home dollar figures, contractor ranges only from `/guides/pricing`, and never say FDHC performs site work or setup.
+
 # The lender list lives in one file, and the loan officers stay off the public site
 
 `src/lib/lenders.ts` holds the ten lenders from the sheet Kyle hands buyers with a credit
