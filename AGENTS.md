@@ -104,3 +104,28 @@ Semrush export dates are export dates, not crawl dates — check the compare-aud
 
 - **Distance:** Champion's Topeka plant is **30 miles** from the Auburn showroom (Kyle, 2026-09-16). The site had said 20 in 48 places and 30 in others; every Auburn-showroom-to-Topeka claim now says 30. City-to-city distances are a different measurement and were deliberately left alone — Auburn→Kendallville (20 miles), Auburn→Huntertown (20), Garrett→Topeka (20, on `/locations/garrett`) and the Indianapolis distance table. If the factory figure ever changes again, grep for `30[ -]?mile` and check each hit's subject before editing; the Kendallville copy was a false positive on the first pass precisely because it reads "…from our Auburn showroom".
 - **Social profiles:** `BUSINESS.sameAs` now carries Facebook and Instagram (`/factorydirecthomescenter` on both), recovered from the previous site's own structured data — `utils/seo.js` in `kmdudgeon/fdhc-next-frontend`. They are the handles that site published, not guesses, but they could not be fetched from the agent sandbox (its network policy answers 403 for every outbound host), so Kyle needs to confirm each resolves. The old site also rendered YouTube and LinkedIn icons, but those URLs were served from the retired CMS's `social` table on the terminated EC2 instance and exist in no repo — they are unrecoverable and must be supplied by hand.
+
+# The lender list lives in one file, and the loan officers stay off the public site
+
+`src/lib/lenders.ts` holds the ten lenders from the sheet Kyle hands buyers with a credit
+application (transcribed from his Acrobat doc on 2026-09-18). It is the single source for three
+outputs that must never disagree: the `/financing#lenders` table, Ava's roster
+(`lendersSection()` in `src/lib/ava-knowledge.ts`), and the printed sheet that goes into
+DealerTide as the financing attachment (`npm run lender-sheet` →
+`docs/lender-list/Factory-Direct-Homes-Center-Lender-List.pdf`, built by
+`scripts/build-lender-sheet.ts` via LibreOffice; not a build step, not in `public/`).
+
+- **Two contact lanes.** `phone`/`website` are the lender's public front door and are published.
+  `directContact` is a named loan officer's email — printed sheet and CRM only. Those people did
+  not agree to appear on a public page and a published address is scraped within days. Never
+  render `directContact` in a page, a feed, a sitemap or an Ava reply.
+- **Never rank them.** The sheet's own disclaimer ("does not recommend any specific lender") and
+  the authorization the buyer signs ("this selection was not referred or suggested") are what keep
+  the referral question clean. No "our lender", no default, no sort by preference. Ava's block
+  spells this out; keep it intact.
+- **No lender rates or payments anywhere** — same no-dollar-figure rule as the rest of Ava and
+  `plan-content.ts`.
+- The DealerTide side (attachment upload + lender records) is UI configuration Kyle runs himself:
+  the partner API has no lender or attachment endpoint, there is no DealerTide app on Zapier, and
+  the agent sandbox cannot reach `renterinsight-api-prod.onrender.com` at all. Steps and the
+  paste-ready table are in `docs/dealertide-lender-setup.md`.
