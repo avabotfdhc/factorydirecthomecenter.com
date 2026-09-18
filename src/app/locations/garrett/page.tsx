@@ -21,9 +21,9 @@ const locationData = {
       ],
     },
     {
-      heading: "Champion homes built 20 miles away",
+      heading: "Champion homes built 30 miles away",
       paragraphs: [
-        "Every home we sell is built at Champion's Indiana plants — the Aspire and Paramount series in Topeka, about 20 miles from Garrett, and the Prime series in Decatur. Building close means lower delivery costs, fewer weather delays, and a faster path from order to move-in, typically 8–12 weeks. Browse the full Champion lineup online, then visit our Auburn showroom to walk through real models before you decide.",
+        "Every home we sell is built at Champion's Indiana plants — the Aspire and Paramount series in Topeka, about 30 miles from Garrett, and the Prime series in Decatur. Building close means lower delivery costs, fewer weather delays, and a faster path from order to move-in, typically 8–12 weeks. Browse the full Champion lineup online, then visit our Auburn showroom to walk through real models before you decide.",
       ],
     },
   ],
