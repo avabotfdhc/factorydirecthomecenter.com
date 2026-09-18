@@ -116,3 +116,28 @@ Rules for adding another:
 - `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
 - Distances: county-level figures come from the vetted table in `src/app/locations/page.tsx`. Do not invent a town-to-town mileage that is not already published somewhere in the repo — say "a short drive" instead.
 - The usual claim rules apply: no home dollar figures, contractor ranges only from `/guides/pricing`, and never say FDHC performs site work or setup.
+
+# The lender list lives in one file, and the loan officers stay off the public site
+
+`src/lib/lenders.ts` holds the ten lenders from the sheet Kyle hands buyers with a credit
+application (transcribed from his Acrobat doc on 2026-09-18). It is the single source for three
+outputs that must never disagree: the `/financing#lenders` table, Ava's roster
+(`lendersSection()` in `src/lib/ava-knowledge.ts`), and the printed sheet that goes into
+DealerTide as the financing attachment (`npm run lender-sheet` →
+`docs/lender-list/Factory-Direct-Homes-Center-Lender-List.pdf`, built by
+`scripts/build-lender-sheet.ts` via LibreOffice; not a build step, not in `public/`).
+
+- **Two contact lanes.** `phone`/`website` are the lender's public front door and are published.
+  `directContact` is a named loan officer's email — printed sheet and CRM only. Those people did
+  not agree to appear on a public page and a published address is scraped within days. Never
+  render `directContact` in a page, a feed, a sitemap or an Ava reply.
+- **Never rank them.** The sheet's own disclaimer ("does not recommend any specific lender") and
+  the authorization the buyer signs ("this selection was not referred or suggested") are what keep
+  the referral question clean. No "our lender", no default, no sort by preference. Ava's block
+  spells this out; keep it intact.
+- **No lender rates or payments anywhere** — same no-dollar-figure rule as the rest of Ava and
+  `plan-content.ts`.
+- The DealerTide side (attachment upload + lender records) is UI configuration Kyle runs himself:
+  the partner API has no lender or attachment endpoint, there is no DealerTide app on Zapier, and
+  the agent sandbox cannot reach `renterinsight-api-prod.onrender.com` at all. Steps and the
+  paste-ready table are in `docs/dealertide-lender-setup.md`.
