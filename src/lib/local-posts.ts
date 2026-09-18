@@ -824,16 +824,16 @@ export const localBlogPosts: ApiBlogDetail[] = [
   },
   {
     slug: "manufactured-homes-wolcottville-indiana",
-    title: "Manufactured Homes in Wolcottville, Indiana: Buying Across the Noble–LaGrange Line",
+    title: "Manufactured Homes in Wolcottville, Indiana: Lake Parcels and Older Septic Systems",
     excerpt:
-      "Wolcottville sits on a county line in the middle of the northern lakes. Which plan commission governs your parcel, and what that changes about placing a home.",
+      "Wolcottville sits in the northern lakes of Noble County, where septic is usually what decides a project. What to check on a lake parcel before you order a home.",
     image: "/images/homepage/about-2.webp",
     date: "September 18, 2026",
     html: `
-<p>Wolcottville sits where Noble County meets LaGrange County, in the middle of the northern lakes region. Like Ashley on the other side of our service area, that county line is not a trivia detail &mdash; it determines whose zoning ordinance your parcel answers to, whose plan commission you call, and whose permit desk you stand at.</p>
+<p>Wolcottville sits up in the northern lakes of Noble County, close enough to the LaGrange County line that plenty of buyers here are looking at parcels in both directions. It is lake and near-lake country, and on this kind of ground one thing decides more projects than zoning, budget or floor plan: the septic system.</p>
 
-<h2>Settle the county first</h2>
-<p>Find your parcel number on the property tax record; it names the county and township. Then call that county with the number in hand and ask whether a HUD-code <strong>manufactured home</strong> is permitted in your zoning district, what foundation and skirting are required, what the setbacks are, and which permits must be in place before delivery. Get the name of whoever answers. Ordinances differ between counties on exactly these points, and a neighbor&rsquo;s experience across the line may not transfer to your lot. Our <a href="/guides/zoning">zoning guide</a> covers the process.</p>
+<h2>Confirm which county your parcel is in</h2>
+<p>Before anything else, pull your parcel number off the property tax record. It names the county and township outright, and up here that is worth checking rather than assuming from a mailing address. Then call that county&rsquo;s plan commission with the number in hand and ask whether a HUD-code <strong>manufactured home</strong> is permitted in your zoning district, what foundation and skirting are required, what the setbacks are, and which permits must be in place before delivery. Write down the name of whoever answers. Ordinances differ from county to county on exactly these points, so a neighbour&rsquo;s experience is not a substitute for your own parcel&rsquo;s answer. Our <a href="/guides/zoning">zoning guide</a> covers the process.</p>
 
 <h2>Lakes, septic and older systems</h2>
 <p>Much of the ground around Wolcottville is lake and near-lake property, and septic is usually the deciding factor. If you are buying a parcel with an existing system, have it evaluated before closing rather than after &mdash; an older system may not meet what the county would require for a new home, and replacing one is a real budget line. If you are starting fresh, the soil evaluation drives the design and the design drives the permit, so start it early and let the factory build run alongside. The <a href="/guides/site-work">site work guide</a> explains the sequence.</p>
@@ -843,7 +843,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 
 <h2>Common questions</h2>
 <h3>Which county am I in?</h3>
-<p>Your parcel number answers it. Do not rely on the mailing address &mdash; the town sits on the line.</p>
+<p>Your parcel number answers it, and it is worth confirming rather than assuming from the mailing address before you count on any particular ordinance.</p>
 <h3>Does an existing septic system carry over to a new home?</h3>
 <p>Sometimes, sometimes not. The county decides, and it is worth knowing before you buy the parcel.</p>
 <h3>Where to next?</h3>
