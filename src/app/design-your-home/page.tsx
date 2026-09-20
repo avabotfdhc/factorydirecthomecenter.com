@@ -58,8 +58,7 @@ export default async function DesignYourHomePage({
   const designerPlans = await getDesignerPlans();
 
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
+    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-5">
             <div className="decorative-line" />

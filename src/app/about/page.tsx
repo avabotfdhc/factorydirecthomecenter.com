@@ -174,11 +174,9 @@ export default function AboutPage() {
           MAXIMUM STRUCTURED DATA
           ============================================ */}
       
-      {/* LocalBusiness + WebSite schema come from the root layout */}
-      {/* 3. BreadcrumbList */}
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
-      
-      {/* 4. Article */}
+      {/* LocalBusiness + WebSite schema come from the root layout; the
+          BreadcrumbList comes from PageFooter (one per page — see AGENTS.md). */}
+      {/* Article */}
       <StructuredData data={structuredData.article({
         headline: "About Factory Direct Homes Center | Champion Homes Dealer",
         description: "Family-owned Champion Homes dealer in Auburn, Indiana serving Indiana, Ohio, and Michigan with factory-direct pricing.",

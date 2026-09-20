@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { countyPages, getCountyPage } from "@/lib/county-pages";
 
 // Programmatic county landing pages. Data lives in src/lib/county-pages.ts.
@@ -38,6 +38,25 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
 
   return (
     <>
+      {/* These programmatic county pages shipped with no structured data of
+          any kind — no business node, no breadcrumb — while the hand-built
+          city pages next to them carried five blocks each. */}
+      <StructuredData
+        data={{
+          ...structuredData.localBusiness(),
+          areaServed: {
+            "@type": "AdministrativeArea",
+            name: `${c.county}, ${c.state}`,
+            containedInPlace: { "@type": "State", name: c.state },
+          },
+        }}
+      />      <StructuredData
+        data={structuredData.service({
+          name: `Manufactured & Modular Home Delivery — ${c.county}, IN`,
+          description: `Champion manufactured and modular homes delivered and set in ${c.county}, Indiana, ${c.milesFromTopeka} from the Topeka plant.`,
+          areaServed: c.state,
+        })}
+      />
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">

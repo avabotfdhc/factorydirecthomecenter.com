@@ -57,7 +57,6 @@ const faqs = [
 export default function SingleVsDoubleWidePage() {
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(faqs)} />
 
       {/* Breadcrumb */}

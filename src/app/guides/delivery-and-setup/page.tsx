@@ -96,7 +96,6 @@ const faqs = [
 export default function DeliveryAndSetupPage() {
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(faqs)} />
       <StructuredData
         data={{

@@ -17,8 +17,15 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { structuredData } from "../src/lib/seo";
 import { businessRef, businessJsonLd, BUSINESS_ID } from "../src/lib/business";
+import { readdirSync, readFileSync } from "node:fs";
+import { join, relative, resolve, sep } from "node:path";
 
-const BUSINESS_TYPES = new Set(["LocalBusiness", "RealEstateAgent", "HomeAndConstructionBusiness"]);
+const BUSINESS_TYPES = new Set([
+  "LocalBusiness",
+  "MobileHomeDealer",
+  "RealEstateAgent",
+  "HomeAndConstructionBusiness",
+]);
 
 interface Node {
   "@type"?: unknown;
@@ -106,4 +113,123 @@ test("the guard would catch the stub it was written for", () => {
   assert.ok(node, "the walker must find a nested business node");
   assert.equal(node.address, undefined, "…and see that it has no address");
   assert.equal(node["@id"], undefined, "…and no @id");
+});
+
+// ── The same rule, for Organization ─────────────────────────────────────────
+// businessRef() closed the LocalBusiness hole. The identical defect survived
+// under a different @type: `author` and `publisher` nodes typed Organization
+// and named "Factory Direct Homes Center", with no @id, which read as a
+// second organisation sharing our name. The blog detail page published one on
+// every post. Any node carrying our name must carry our @id.
+
+function namedNodes(value: unknown, found: Record<string, unknown>[] = []): Record<string, unknown>[] {
+  if (Array.isArray(value)) {
+    for (const v of value) namedNodes(v, found);
+    return found;
+  }
+  if (value && typeof value === "object") {
+    const node = value as Record<string, unknown>;
+    const name = node.name;
+    if (typeof name === "string" && /Factory Direct Homes Center/i.test(name)) found.push(node);
+    for (const v of Object.values(node)) namedNodes(v, found);
+  }
+  return found;
+}
+
+test("every node calling itself Factory Direct Homes Center carries the one business @id", () => {
+  const docs: Record<string, unknown> = {
+    ...samples,
+    article: structuredData.article({
+      headline: "A post",
+      description: "About a post",
+      image: "/images/hero-home.jpg",
+      datePublished: "2026-09-18",
+      url: "/blog/a-post",
+    }),
+    imageObject: structuredData.imageObject({
+      url: "/images/hero-home.jpg",
+      name: "A home",
+      description: "A home",
+      width: 1920,
+      height: 1071,
+    }),
+    videoObject: structuredData.videoObject({
+      name: "A walkthrough",
+      description: "A walkthrough",
+      thumbnailUrl: "/images/hero-home.jpg",
+      contentUrl: "https://example.com/video.mp4",
+      uploadDate: "2026-09-18",
+    }),
+  };
+
+  for (const [label, doc] of Object.entries(docs)) {
+    for (const node of namedNodes(doc)) {
+      // The top-level node of a generator is allowed to be the canonical one;
+      // what must never happen is a *nested* namesake with no @id.
+      assert.equal(
+        node["@id"],
+        BUSINESS_ID,
+        `${label}: a node named "${String(node.name)}" (@type ${JSON.stringify(node["@type"])}) has no canonical @id — it publishes a second business with our name`,
+      );
+    }
+  }
+});
+
+test("a post attributed to someone else is NOT given the business @id", () => {
+  // The rule is "our name means our @id", not "every author is us". A guest
+  // byline must stay a distinct person/organisation.
+  const guest = structuredData.article({
+    headline: "A guest post",
+    description: "By someone else",
+    image: "/images/hero-home.jpg",
+    datePublished: "2026-09-18",
+    author: "Champion Home Builders",
+    url: "/blog/guest",
+  });
+  const author = (guest as { author?: Record<string, unknown> }).author;
+  assert.equal(author?.name, "Champion Home Builders");
+  assert.equal(author?.["@id"], undefined);
+});
+
+// ── Exactly one BreadcrumbList per page ────────────────────────────────────
+
+test("only PageFooter and the floor-plan detail page emit a BreadcrumbList", () => {
+  // Twenty-three pages used to emit their own on top of the sitewide one in
+  // PageFooter, so each shipped two BreadcrumbList nodes disagreeing about the
+  // labels for the same URL. A source-level guard is the only kind that
+  // catches this: both nodes are individually valid, so no schema validator
+  // complains — you only see it by counting them in the rendered HTML.
+  const allowed = new Set([
+    "src/components/PageFooter.tsx",
+    // Home › Floor Plans › <Series> Series › <Home> — the series crumb is not
+    // derivable from the URL, so this page builds its own and PageFooter
+    // stands down for /floor-plans/*.
+    "src/app/floor-plans/[slug]/page.tsx",
+    // The generator itself.
+    "src/lib/seo.ts",
+  ]);
+
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (entry.name.endsWith(".tsx") || entry.name.endsWith(".ts")) {
+        const rel = relative(process.cwd(), full).split(sep).join("/");
+        if (allowed.has(rel)) continue;
+        const source = readFileSync(full, "utf8");
+        if (/structuredData\.breadcrumb\(|"@type":\s*"BreadcrumbList"|"BreadcrumbList"/.test(source)) {
+          offenders.push(rel);
+        }
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(
+    offenders,
+    [],
+    "these files emit a second BreadcrumbList; PageFooter already publishes one on every non-home page",
+  );
 });

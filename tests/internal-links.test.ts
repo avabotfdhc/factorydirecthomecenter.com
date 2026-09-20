@@ -14,6 +14,9 @@ import assert from "node:assert/strict";
 import { getAllPages, sitePages } from "../src/lib/pages";
 import { localBlogPosts } from "../src/lib/local-posts";
 import { getPublishedPosts } from "../src/lib/blog";
+import { structuredData } from "../src/lib/seo";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 
 const liveSlugs = new Set(localBlogPosts.map((p) => p.slug));
 
@@ -51,4 +54,25 @@ test("no registry page points at an empty or off-site URL", () => {
     assert.ok(!page.url.includes("undefined"), `${page.title}: URL contains "undefined"`);
     assert.ok(!page.url.includes("null"), `${page.title}: URL contains "null"`);
   }
+});
+
+test("the sitelinks searchbox target is a route that exists", () => {
+  // structuredData.website() has always published a SearchAction pointing at
+  // /search?q={search_term_string}. Until 2026-09-20 no /search route existed
+  // and that URL answered 404 — the site was telling Google it had a search
+  // endpoint it did not have. Google's sitelinks-searchbox documentation
+  // requires the target to resolve, and a schema claim the site cannot honour
+  // undermines the rest of the graph.
+  const action = (structuredData.website() as {
+    potentialAction?: { target?: { urlTemplate?: string } };
+  }).potentialAction;
+  const template = action?.target?.urlTemplate;
+  assert.ok(template, "WebSite schema must declare a SearchAction target");
+
+  const path = new URL(template!).pathname.replace(/^\/|\/$/g, "");
+  const route = resolve(process.cwd(), "src/app", path, "page.tsx");
+  assert.ok(
+    existsSync(route),
+    `SearchAction points at /${path} but ${route} does not exist — either build the page or drop the SearchAction`,
+  );
 });

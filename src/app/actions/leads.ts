@@ -1,7 +1,8 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { storeLead } from "@/lib/leads-store";
+import { ATTRIBUTION_COOKIE, type Attribution, decodeAttribution } from "@/lib/attribution";
 
 // Lead intake for the instant-quote modal (PriceQuoteModal) and the mobile
 // action bar.
@@ -41,8 +42,9 @@ const clean = (v: unknown, max = 200) => String(v ?? "").trim().slice(0, max);
 
 // One insert implementation for every form on the site (lib/leads-store.ts),
 // so the instant-quote modal and /api/leads write identical rows.
-function insertSupabaseLead(lead: LeadSubmission): Promise<string | null> {
+function insertSupabaseLead(lead: LeadSubmission, attribution: Attribution | null): Promise<string | null> {
   return storeLead({
+    attribution,
     fullName: lead.name,
     contactInfo: [clean(lead.contact, 60), clean(lead.email, 120)].filter(Boolean).join(" · "),
     targetCounty: lead.county,
@@ -57,7 +59,7 @@ function insertSupabaseLead(lead: LeadSubmission): Promise<string | null> {
 // exactly what the visitor gave. /api/leads accepts phone-only; it used to
 // require an email, which forced a placeholder that DealerTide then deduped
 // every phone-only lead against.
-async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
+async function fanOutToLeadsApi(lead: LeadSubmission, attributionCookie: string | null): Promise<void> {
   const h = await headers();
   const host = h.get("x-forwarded-host") || h.get("host");
   if (!host) return;
@@ -67,7 +69,14 @@ async function fanOutToLeadsApi(lead: LeadSubmission): Promise<void> {
   const email = clean(lead.email, 120);
   const res = await fetch(`${proto}://${host}/api/leads`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      // Forward ONLY the attribution cookie, so the lead email and the
+      // DealerTide note name the campaign too. Forwarding the visitor's whole
+      // Cookie header would hand an admin session to an internal fetch for no
+      // reason.
+      ...(attributionCookie ? { cookie: `${ATTRIBUTION_COOKIE}=${attributionCookie}` } : {}),
+    },
     cache: "no-store",
     body: JSON.stringify({
       firstName: firstName || "Website",
@@ -107,7 +116,15 @@ export async function submitLead(payload: LeadSubmission): Promise<LeadResult> {
     return { success: false, error: "Name, a phone number and county are required" };
   }
 
-  const [db, api] = await Promise.allSettled([insertSupabaseLead(lead), fanOutToLeadsApi(lead)]);
+  // Where the visitor came from, from the first-party cookie
+  // (src/lib/attribution.ts). Absent when they opted out of tracking.
+  const attributionCookie = (await cookies()).get(ATTRIBUTION_COOKIE)?.value ?? null;
+  const attribution = decodeAttribution(attributionCookie);
+
+  const [db, api] = await Promise.allSettled([
+    insertSupabaseLead(lead, attribution),
+    fanOutToLeadsApi(lead, attributionCookie),
+  ]);
   if (db.status === "rejected") console.error("[leads] Supabase insert failed:", db.reason);
   if (api.status === "rejected") console.error("[leads] /api/leads fan-out failed:", api.reason);
 

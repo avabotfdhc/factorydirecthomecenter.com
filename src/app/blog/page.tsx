@@ -36,8 +36,7 @@ export default async function BlogPage() {
   const posts = await getApiBlogPosts();
 
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
+    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
             Guides &amp; Insights

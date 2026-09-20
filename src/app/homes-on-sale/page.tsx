@@ -60,8 +60,7 @@ export default function HomesOnSalePage() {
   const sale = getSaleStatus();
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero */}
+    <main className="min-h-screen bg-white">      {/* Hero */}
       <section className="relative w-full min-h-[400px] md:min-h-[450px] flex items-center">
         <div className="absolute inset-0">
           <Image

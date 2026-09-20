@@ -233,8 +233,6 @@ export default function FinancingPage() {
           ============================================ */}
       
       {/* LocalBusiness + WebSite schema come from the root layout */}
-      {/* 3. BreadcrumbList */}
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       
       {/* 4. Service */}
       <StructuredData data={structuredData.service({

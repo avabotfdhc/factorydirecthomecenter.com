@@ -99,8 +99,7 @@ const commonQuestions = [
 
 export default function ZoningPage() {
   return (
-    <>
-      <StructuredData data={structuredData.faqPage(commonQuestions)} />
+    <>      <StructuredData data={structuredData.faqPage(commonQuestions)} />
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">

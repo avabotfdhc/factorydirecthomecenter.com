@@ -6,8 +6,6 @@ import {
   FadeIn,
   StaggerContainer,
   AnimatedCounter,
-  useScrollTracking,
-  useTimeOnPageTracking,
   MagneticButton,
 } from "@/components/VisualEffects";
 import { useState } from "react";
@@ -79,8 +77,6 @@ const checkable = [
 // Client islands for the homepage: only the sections that animate or track
 // interactions hydrate. Everything else is server-rendered in app/page.tsx.
 export function AnimatedHomeSections() {
-  useScrollTracking();
-  useTimeOnPageTracking();
   // Which home type's pricing modal is open ("" = none).
   const [quoteFor, setQuoteFor] = useState("");
 

@@ -492,22 +492,45 @@ export function useScrollTracking() {
 
     const depths = [25, 50, 75, 90];
     const tracked = new Set<number>();
+    let frame = 0;
 
-    const handleScroll = () => {
+    // `document.documentElement.scrollHeight` is a layout-forcing read. Doing
+    // it straight inside a scroll handler makes the browser flush pending
+    // style and layout work on every scroll event — dozens of forced
+    // synchronous layouts a second on a long floor-plan page, which is exactly
+    // what shows up as poor INP on a mid-range Android. Coalescing into one
+    // animation frame means at most one such read per painted frame.
+    const measure = () => {
+      frame = 0;
       const scrollPercent = Math.round(
-        ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100
+        ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100,
       );
-
-      depths.forEach((depth) => {
+      for (const depth of depths) {
         if (scrollPercent >= depth && !tracked.has(depth)) {
           tracked.add(depth);
           trackScrollDepth(depth);
         }
-      });
+      }
+      // Every milestone is a once-per-page event, so once the deepest has
+      // fired there is nothing left to measure — stop listening entirely
+      // rather than run a handler for the rest of the visit.
+      if (tracked.size === depths.length) window.removeEventListener("scroll", onScroll);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(measure);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Measure once on mount: a visitor who lands deep-linked mid-page, or
+    // restores a scroll position, would otherwise never register a depth.
+    measure();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 }
 

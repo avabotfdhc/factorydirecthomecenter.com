@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { NO_EMAIL_PLACEHOLDER, pushLeadToDealertide } from "@/lib/dealertide";
 import { leadsStoreConfigured, storeLead } from "@/lib/leads-store";
 import { spamVerdict } from "@/lib/anti-spam";
+import { attributionSummaryLines, readAttributionCookie } from "@/lib/attribution";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 // DealerTide is tried twice with a 6s timeout each (see lib/dealertide.ts) and
 // the other channels run alongside it. Give the function room so a slow CRM
@@ -50,6 +52,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, message: "Lead received" }, { status: 200 });
   }
 
+  // Cloudflare Turnstile. Inert until TURNSTILE_SECRET_KEY is set; see
+  // src/lib/turnstile.ts. Only enforced for submissions that came from a real
+  // browser form — the presence of the `hp` honeypot field is what says so.
+  // The server-side lead paths (Ava's chat tools, the instant-quote server
+  // action) post without it and are guarded separately, the same exemption
+  // the honeypot and fill-time checks already make for them.
+  if (typeof body.hp === "string") {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null;
+    const turnstile = await verifyTurnstile(body.turnstileToken, ip);
+    if (!turnstile.ok) {
+      console.log(`[leads] Dropped by Turnstile (${turnstile.reason})`);
+      return NextResponse.json({ success: true, message: "Lead received" }, { status: 200 });
+    }
+    if (turnstile.reason !== "not-configured" && turnstile.reason !== "verified") {
+      console.warn(`[leads] Turnstile failed open: ${turnstile.reason}`);
+    }
+  }
+
   // A lead needs a name and one way to reach the person. Requiring an email
   // used to force the instant-quote path to invent one, which DealerTide then
   // deduped every phone-only lead against. Phone alone is fine.
@@ -81,6 +101,15 @@ export async function POST(request: Request) {
   // The instant-quote server action stores its own copy before calling us.
   const skipStore = body.skipStore === true || body.skipStore === "true";
 
+  // Where this visitor came from. Read from the first-party cookie the browser
+  // sends with the POST (src/lib/attribution.ts), NOT from the form body: that
+  // way all nine lead entry points — and any tenth one added later — carry
+  // campaign attribution without each having to remember to send it, and a
+  // scripted POST cannot forge a campaign into the CRM.
+  const attribution = readAttributionCookie(request.headers.get("cookie"));
+  const attributionLines = attributionSummaryLines(attribution);
+  const attributionText = attributionLines.join(" | ");
+
   console.log("[leads] New submission:", lead.email, lead.firstName, lead.lastName);
 
   // Everything the salesperson needs to act, in the one free-text field
@@ -96,6 +125,9 @@ export async function POST(request: Request) {
     lead.landStatus && `Land: ${lead.landStatus}`,
     lead.bedrooms && `Bedrooms: ${lead.bedrooms}`,
     lead.message && `Message: ${lead.message}`,
+    // The salesperson opening the lead in DealerTide sees the campaign that
+    // paid for it, without leaving the record.
+    ...attributionLines.map((line) => `— ${line}`),
   ]
     .filter(Boolean)
     .join("\n");
@@ -112,9 +144,10 @@ export async function POST(request: Request) {
           timeline: lead.timeframe,
           modelInterest: lead.interest,
           sourcePage: lead.pageUrl,
+          attribution,
         }),
-    sendEmail(lead),
-    appendToSheet(lead),
+    sendEmail({ ...lead, attribution: attributionText }),
+    appendToSheet({ ...lead, attribution: attributionText }),
     // DealerTide CRM — key's inbound-lead automation handles source defaulting,
     // Auburn location assignment, and email/phone dedupe on their side.
     pushLeadToDealertide({
@@ -264,6 +297,7 @@ async function sendEmail(rawLead: Record<string, string>) {
       <tr><td><strong>Message</strong></td><td>${lead.message || "—"}</td></tr>
       <tr><td><strong>Source</strong></td><td>${lead.source}</td></tr>
       <tr><td><strong>Page</strong></td><td>${lead.pageUrl}</td></tr>
+      <tr><td><strong>Campaign</strong></td><td>${lead.attribution || "—"}</td></tr>
       <tr><td><strong>Submitted</strong></td><td>${lead.submittedAt}</td></tr>
     </table>
   `;
@@ -319,6 +353,7 @@ async function appendToSheet(lead: Record<string, string>) {
     lead.message,
     lead.source,
     lead.pageUrl,
+    lead.attribution ?? "",
   ];
 
   const res = await fetch(

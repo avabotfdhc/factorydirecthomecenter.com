@@ -200,10 +200,12 @@ export const structuredData = {
     description: image.description,
     width: image.width,
     height: image.height,
-    author: {
-      "@type": "Organization",
-      name: image.author || "Factory Direct Homes Center",
-    },
+    // Carries the canonical @id so it merges with the one business node
+    // instead of publishing another organisation with our name (the same
+    // defect businessRef() exists to prevent, see src/lib/business.ts).
+    author: image.author
+      ? { "@type": "Organization", name: image.author }
+      : { "@type": "Organization", "@id": BUSINESS_ID, name: "Factory Direct Homes Center" },
   }),
 
   // Video Object Schema
@@ -225,6 +227,7 @@ export const structuredData = {
     duration: video.duration,
     publisher: {
       "@type": "Organization",
+      "@id": BUSINESS_ID,
       name: "Factory Direct Homes Center",
       logo: {
         "@type": "ImageObject",
@@ -331,6 +334,12 @@ export const structuredData = {
       ? ownerJsonLd()
       : {
           "@type": "Organization",
+          // The house byline is the business itself, so it carries the
+          // canonical @id. Only a genuinely different named author gets an
+          // unlinked node.
+          ...(article.author && article.author !== "Factory Direct Homes Center"
+            ? {}
+            : { "@id": BUSINESS_ID }),
           name: article.author || "Factory Direct Homes Center",
         },
     publisher: {
