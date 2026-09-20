@@ -1,36 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { useMemo, useState, useSyncExternalStore } from "react";
+import { saleDeadlineLabel, saleStatusForDay, todayInSaleZone } from "@/lib/sale";
 
 // The banner hides itself once the promo ends so it can never display an
 // expired offer. Both the cut-off and the visible copy come from
 // src/lib/sale.ts — they used to be two hand-maintained constants that could
 // (and did) disagree with the sale page.
 
+/** Never changes without a page load, so there is nothing to subscribe to. */
+const subscribeToNothing = () => () => {};
+
 export function AnnouncementBar() {
   const [isDismissed, setIsDismissed] = useState(false);
-  // Start visible so server and first client render match (no hydration
-  // mismatch); hide after mount if the promo has already ended.
-  const [expired, setExpired] = useState(false);
-  // Read on the client so a phase change is picked up on the next page view
-  // without waiting for a rebuild of the cached shell.
-  const [sale, setSale] = useState(() => getSaleStatus());
-  useEffect(() => {
-    const current = getSaleStatus();
-    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Deliberately re-reads
-    // the sale clock on the client so a phase change is picked up without
-    // rebuilding the cached shell; the lazy initialiser above ran on the
-    // server. getSaleStatus() returns a fresh object each call, so this always
-    // re-renders even when nothing changed.
-    // Fix: compare the phase and only set when it actually differs.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSale(current);
-    if (!current.active) setExpired(true);
-  }, []);
 
-  if (isDismissed || expired) return null;
+  // The sale clock, snapshotted as the calendar day in the dealership's time
+  // zone — a plain sortable string, which is what useSyncExternalStore needs
+  // (it compares snapshots with Object.is, and the status is a fresh object
+  // every call). `saleStatusForDay` exists so the day really is the input.
+  //
+  // The server's day is whenever the cached shell was built; the browser's is
+  // today. React renders the server value, hydrates against it, then swaps to
+  // the client value and re-renders — no mismatch, and no effect. This used to
+  // be a mount effect that re-set the sale on EVERY visit, expired or not,
+  // because a new object is never equal to the old one.
+  const day = useSyncExternalStore(subscribeToNothing, todayInSaleZone, todayInSaleZone);
+  const sale = useMemo(() => saleStatusForDay(day), [day]);
+
+  // An ended promo now renders nothing from the first paint rather than
+  // flashing an expired offer and retracting it.
+  if (isDismissed || !sale.active) return null;
 
   return (
     <div className="bg-gradient-to-r from-[#1a365d] via-[#2c7a7b] to-[#1a365d] text-white relative overflow-hidden">

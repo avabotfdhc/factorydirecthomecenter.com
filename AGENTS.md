@@ -246,15 +246,13 @@ agree and a *warning* fails too. Three consequences worth knowing:
 
 - **A new violation of any rule fails the build.** Verified by injecting one of each and
   watching CI's own command reject it.
-- **`react-hooks/set-state-in-effect` stays at error level.** Six known sites are suppressed
-  individually with `// eslint-disable-next-line` plus a `KNOWN LINT DEBT` comment naming the
-  intended fix: `admin/campaigns`, `contact-us/ContactForm`, `floor-plans/FloorPlansGrid`,
-  `AnnouncementBar`, and `PaymentCalculator` (×2). Suppressing them one by one rather than
-  downgrading the rule means a *seventh* violation anywhere still fails. Grep
-  `KNOWN LINT DEBT` for the list.
+- **`react-hooks/set-state-in-effect` is at error level with no suppressions left.** Six sites
+  were quarantined when lint first went into CI; all six were fixed on 2026-09-20 (see "Browser
+  values are snapshotted, never written in from an effect" below). Nothing in the tree suppresses
+  this rule any more — keep it that way.
 - **Stale suppressions fail too.** An unused `eslint-disable` directive is reported as a
-  warning, and warnings fail — so fixing one of those six forces its now-pointless comment to
-  be deleted in the same change instead of rotting there.
+  warning, and warnings fail, so a suppression cannot outlive the problem it was hiding. That is
+  how the six above got cleaned up: fixing each one made its own comment fail the build.
 
 Four `<img>` elements are suppressed on purpose: the Meta Pixel `<noscript>` beacon (next/image
 renders nothing without JavaScript, which is the only case that element exists for) and two
@@ -265,3 +263,44 @@ storage paths through the optimiser bills a transform per thumbnail for nothing)
 
 Do not add a blanket rule downgrade or a file-level `/* eslint-disable */` to get a change
 through. Suppress the one line, say why, and say what the real fix is.
+
+
+# Browser values are snapshotted, never written in from an effect
+
+Six components used to render the server's value and then overwrite it from a mount effect —
+the query string, `localStorage`, the sale clock, and the financing calculator's own totals.
+Every visitor paid two renders, and `react-hooks/set-state-in-effect` flags the pattern because
+React has a primitive for it. All six were fixed on 2026-09-20.
+
+`src/lib/use-browser-value.ts` holds the primitive: `useLocationSearch()`,
+`useLocalStorageValue(key)` and `useIsHydrated()`, each a `useSyncExternalStore` with a server
+snapshot and a client snapshot. React renders the server value, hydrates against it, then swaps
+— **without** reporting a mismatch, which is the whole reason the effects existed.
+
+Two rules when reaching for it:
+
+- **Snapshots must be primitives.** React compares them with `Object.is`, so returning a fresh
+  object or a `URLSearchParams` is an infinite render loop. Return the raw string and parse it in
+  a `useMemo` at the call site.
+- **Do not use `useSearchParams` here.** In a prerendered route it pushes the client tree up to
+  the nearest Suspense boundary out of the initial HTML. On `/floor-plans` that would have taken
+  all 193 floor-plan card links and the `ItemList` schema out of the page — the file's own header
+  said so before any of this, and the build output was checked after.
+
+Derived values are computed during render, not stored:
+
+- `PaymentCalculator` no longer keeps `interestRate` or the three totals in state. The rate comes
+  from `rateFor()` and the totals from `amortise()`, both in `src/lib/payment-math.ts`, whose
+  outputs are pinned by `tests/payment-math.test.ts` against figures captured from the old
+  implementation. **That table is the contract — if a change moves those numbers it has changed
+  what a buyer is told.** Verified in a real browser too: $738 / $639 / $1,064 for good /
+  excellent / poor at the default price and term.
+- `getSaleStatus()` now delegates to `saleStatusForDay(today)`, so the sale is a pure function of
+  a sortable day string and `AnnouncementBar` can snapshot that day. An ended promo renders
+  nothing from the first paint instead of flashing and retracting.
+- `loadCampaigns(raw?)` takes the already-snapshotted storage entry, so the admin editor's memo
+  depends on something real rather than reading `localStorage` behind React's back.
+
+Editable state seeded from a URL (`FloorPlansGrid`) uses React's adjust-during-render pattern
+against the query string it came from — never an effect. Only a parameter that is actually
+present overrides the current value, so a filter the shopper has cleared is not re-applied.

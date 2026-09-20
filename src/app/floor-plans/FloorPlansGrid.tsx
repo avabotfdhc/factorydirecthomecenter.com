@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useLocationSearch } from "@/lib/use-browser-value";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import { CompareTray, MAX_COMPARE } from "./CompareTray";
 import { FloorPlanCard } from "@/components/FloorPlanCard";
@@ -83,19 +84,44 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   const [compare, setCompare] = useState<string[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
 
-  // Seed filters from the homepage search deep link after hydration.
-  useEffect(() => {
-    const q = new URLSearchParams(window.location.search);
-    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Same shape as
-    // ContactForm: five filters seeded from the homepage deep link after
-    // hydration. Fix: useSearchParams() in a Suspense boundary.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (q.get("type")) setType((q.get("type") || "").replace("double", "multi"));
-    if (q.get("width")) setWidth(Number(q.get("width")) || 0);
-    if (q.get("sqft")) setMinSqft(Number(q.get("sqft")) || 0);
-    if (q.get("beds")) setMinBeds(Number(q.get("beds")) || 0);
-    if (q.get("baths")) setMinBaths(Number(q.get("baths")) || 0);
-  }, []);
+  // Seed filters from the homepage search deep link.
+  //
+  // These five are editable — the shopper changes them with the controls — so
+  // they stay as state and the deep link only supplies the opening value. The
+  // seed is applied DURING RENDER against the query string it came from, which
+  // is React's documented way to reset state when an input changes. It used to
+  // be a mount effect, which rendered the unfiltered grid first and the
+  // filtered grid immediately after: a visible flash of the wrong homes for
+  // anyone arriving from the homepage search.
+  //
+  // `useLocationSearch` is a useSyncExternalStore snapshot (empty on the
+  // server, real in the browser), so this keeps the grid server-rendered —
+  // see the note at the top of this file about why useSearchParams is wrong
+  // here.
+  const search = useLocationSearch();
+  const seed = useMemo(() => {
+    const q = new URLSearchParams(search);
+    const num = (key: string) => (q.get(key) ? Number(q.get(key)) || 0 : null);
+    return {
+      type: q.get("type") ? (q.get("type") || "").replace("double", "multi") : null,
+      width: num("width"),
+      sqft: num("sqft"),
+      beds: num("beds"),
+      baths: num("baths"),
+    };
+  }, [search]);
+
+  const [seededFrom, setSeededFrom] = useState("");
+  if (seededFrom !== search) {
+    setSeededFrom(search);
+    // Only a param that is actually present overrides the current value, so a
+    // filter the shopper has since cleared is not silently re-applied.
+    if (seed.type !== null) setType(seed.type);
+    if (seed.width !== null) setWidth(seed.width);
+    if (seed.sqft !== null) setMinSqft(seed.sqft);
+    if (seed.beds !== null) setMinBeds(seed.beds);
+    if (seed.baths !== null) setMinBaths(seed.baths);
+  }
 
   const seriesOptions = useMemo(() => {
     const counts = new Map<string, number>();

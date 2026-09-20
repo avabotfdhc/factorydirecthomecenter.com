@@ -1,7 +1,8 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useLocationSearch } from "@/lib/use-browser-value";
 import { useAntiSpam } from "@/lib/use-anti-spam";
 import { H2, H3 } from "@/components/Heading";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
@@ -28,20 +29,20 @@ export default function ContactForm() {
   const [formStarted, setFormStarted] = useState(false);
   // Deep-link prefill: detail pages link here with ?home=<name> (Get a Quote)
   // and &visit=1 (Schedule a Lot Visit), so the message arrives pre-written.
-  const [prefill, setPrefill] = useState<{ home: string; visit: boolean }>({ home: "", visit: false });
-
-  useEffect(() => {
-    const q = new URLSearchParams(window.location.search);
-    const home = q.get("home") || "";
-    const visit = q.get("visit") === "1" || q.get("tour") === "1";
-    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Seeds the message
-    // from ?home= / &visit= after hydration; reading window.location during
-    // render would mismatch the server HTML.
-    // Fix: useSearchParams() in a Suspense boundary, which Next resolves on
-    // the server so the first paint is already correct.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (home || visit) setPrefill({ home, visit });
-  }, []);
+  //
+  // Derived, not stored. This used to be state written by a mount effect,
+  // which cost every visitor an extra render whether or not they arrived via a
+  // deep link. The textarea's `key` below still remounts it when the snapshot
+  // swaps from the server's empty string to the real query string, so the
+  // defaultValue applies exactly as before.
+  const search = useLocationSearch();
+  const prefill = useMemo(() => {
+    const q = new URLSearchParams(search);
+    return {
+      home: q.get("home") || "",
+      visit: q.get("visit") === "1" || q.get("tour") === "1",
+    };
+  }, [search]);
 
   // Track when user starts interacting with form
   useEffect(() => {
