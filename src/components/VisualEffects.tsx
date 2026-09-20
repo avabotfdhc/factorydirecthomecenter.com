@@ -46,10 +46,10 @@ export function AnimatedCounter({ end, duration = 2000, suffix = "", prefix = ""
 
   useEffect(() => {
     if (!isVisible) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setCount(end);
-      return;
-    }
+    // Reduced motion: leave the counter at its initial value, which is already
+    // `end` (see useState above). It used to call setCount(end) here, which
+    // React bails out of anyway — a no-op that read as a render cascade.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let startTime: number;
     const animate = (currentTime: number) => {

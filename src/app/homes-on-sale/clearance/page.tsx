@@ -30,7 +30,7 @@ export default function ClearancePage() {
               Clearance Inventory
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Last chance pricing on select homes. Once they're gone, they're gone!
+              Last chance pricing on select homes. Once they’re gone, they’re gone!
             </p>
           </FadeIn>
         </div>

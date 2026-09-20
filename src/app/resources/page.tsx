@@ -118,8 +118,6 @@ const resources: ResourceCard[] = [
   },
 ];
 
-const categories = ["Floor Plans", "Brochures", "Guides", "Technical"] as const;
-
 const categoryColors: Record<string, string> = {
   "Floor Plans": "bg-[var(--color-teal)]/10 text-[var(--color-teal)]",
   "Brochures": "bg-[var(--color-lime)]/10 text-[var(--color-charcoal)]",

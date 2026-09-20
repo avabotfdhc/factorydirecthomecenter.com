@@ -26,7 +26,7 @@ export default function DeKalbCountyPage() {
               <span className="italic text-[var(--color-teal-light)]">in DeKalb County</span>
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-              We're right here in Auburn — your local DeKalb County dealer. From our 
+              We’re right here in Auburn — your local DeKalb County dealer. From our 
               showroom to your property in 20 minutes. Factory-direct Champion homes 
               with the shortest delivery distances and best pricing.
             </p>
@@ -46,7 +46,7 @@ export default function DeKalbCountyPage() {
               </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
-                  We're your neighbors in Auburn, right here in DeKalb County. Being
+                  We’re your neighbors in Auburn, right here in DeKalb County. Being
                   local means:
                 </p>
                 <ul className="space-y-3">
@@ -64,7 +64,7 @@ export default function DeKalbCountyPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-[var(--color-lime)] mt-1">✓</span>
-                    <span>Visit our showroom anytime — we're 10 minutes away</span>
+                    <span>Visit our showroom anytime — we’re 10 minutes away</span>
                   </li>
                 </ul>
               </div>
@@ -92,7 +92,7 @@ export default function DeKalbCountyPage() {
               </div>
               <div className="mt-6 pt-6 border-t border-[var(--color-charcoal)]/10">
                 <p className="text-sm text-[var(--color-teal)] font-medium">
-                  Lowest delivery costs in our service area — because we're local
+                  Lowest delivery costs in our service area — because we’re local
                 </p>
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function DeKalbCountyPage() {
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
               <H3 className="font-serif text-xl font-semibold mb-4">Rural Acreage</H3>
               <p className="text-[var(--color-gray)]">
-                DeKalb County's agricultural zoning is manufactured-home friendly. Whether 
+                DeKalb County’s agricultural zoning is manufactured-home friendly. Whether 
                 you have 5 acres or 50, we can make it work.
               </p>
             </div>
@@ -165,7 +165,7 @@ export default function DeKalbCountyPage() {
             <div className="bg-white rounded-lg p-8 border border-[var(--color-charcoal)]/5">
               <H3 className="font-serif text-xl font-semibold mb-4">Local Dealer</H3>
               <p className="text-[var(--color-gray)]">
-                We're right here in Auburn — no long-distance dealer to chase down. And our
+                We’re right here in Auburn — no long-distance dealer to chase down. And our
                 referral list features local licensed and insured contractors, not out-of-town
                 crews. Local support from start to finish.
               </p>

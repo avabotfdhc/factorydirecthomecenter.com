@@ -46,9 +46,9 @@ export default function NobleCountyPage() {
               </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
-                  Noble County's rural character and progressive zoning make it ideal for 
-                  manufactured homes. Whether you're looking for acreage in the countryside 
-                  or a lot in Kendallville or Ligonier, you'll find welcoming regulations 
+                  Noble County’s rural character and progressive zoning make it ideal for 
+                  manufactured homes. Whether you’re looking for acreage in the countryside 
+                  or a lot in Kendallville or Ligonier, you’ll find welcoming regulations 
                   and affordable land.
                 </p>
                 <ul className="space-y-3">
@@ -140,7 +140,7 @@ export default function NobleCountyPage() {
               </H2>
               <div className="space-y-6 text-[var(--color-gray)]">
                 <p>
-                  Noble County's zoning ordinance permits manufactured homes in most residential 
+                  Noble County’s zoning ordinance permits manufactured homes in most residential 
                   and agricultural districts. Key requirements include:
                 </p>
                 <ul className="space-y-3">
@@ -167,7 +167,7 @@ export default function NobleCountyPage() {
             <div className="bg-[var(--color-charcoal)] text-white rounded-lg p-8 lg:p-12">
               <H3 className="font-serif text-2xl font-semibold mb-6">The Permit Checklist</H3>
               <p className="text-white/60 mb-8">
-                Don't navigate Noble County permits blind. Here's what you and your contractor
+                Don’t navigate Noble County permits blind. Here’s what you and your contractor
                 will take care of — and we can point you to the right county offices:
               </p>
               <ul className="space-y-4">
@@ -201,7 +201,7 @@ export default function NobleCountyPage() {
           </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
             Browse our floor plans, visit our Auburn showroom (just 35 miles away), or give us a call. 
-            We'll create a custom quote for delivery to your Noble County property.
+            We’ll create a custom quote for delivery to your Noble County property.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

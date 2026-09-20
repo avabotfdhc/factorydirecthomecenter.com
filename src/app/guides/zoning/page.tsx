@@ -264,7 +264,7 @@ export default function ZoningPage() {
               <H3 className="font-serif text-2xl font-semibold mb-6">We Can Help</H3>
               <p className="text-white/60 mb-8">
                 Not sure if your land is suitable? We offer free zoning checks for customers 
-                in our service area. We'll contact the local zoning office and verify:
+                in our service area. We’ll contact the local zoning office and verify:
               </p>
               <ul className="space-y-3 text-white/60">
                 <li className="flex items-center gap-2">

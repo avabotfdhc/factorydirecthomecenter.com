@@ -387,7 +387,7 @@ export default function FortWaynePage() {
                 </H2>
                 
                 <p className="text-[var(--color-gray)] leading-relaxed mb-8">
-                  Fort Wayne is Indiana's second-largest city with over 270,000 residents 
+                  Fort Wayne is Indiana’s second-largest city with over 270,000 residents 
                   in the city and 400,000+ in the metro area. From the vibrant downtown 
                   near Parkview Field to the growing suburbs of Aboite and Southwest Allen, 
                   we deliver Champion homes throughout the region.

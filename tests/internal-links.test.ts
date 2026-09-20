@@ -11,7 +11,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { getAllPages, sitePages } from "../src/lib/pages";
+import { getAllPages, getBreadcrumbs, getRelatedPages, sitePages } from "../src/lib/pages";
 import { localBlogPosts } from "../src/lib/local-posts";
 import { getPublishedPosts } from "../src/lib/blog";
 import { structuredData } from "../src/lib/seo";
@@ -45,6 +45,48 @@ test("the guard is actually doing something", () => {
   );
   for (const p of unpublishable) {
     assert.equal(advertisedSlugs.has(p.slug), false, `${p.slug} must not be advertised`);
+  }
+});
+
+test("every post the blog route serves is in the page registry", () => {
+  // The inverse of the guard above, and the defect it missed. Filtering the
+  // registry to the INTERSECTION of blog.ts and local-posts.ts looked correct
+  // and silently registered nothing at all, because the two lists are
+  // disjoint. For six days every one of the thirty live posts was absent from
+  // the registry: getRelatedPages returns [] for a URL it cannot find, so no
+  // post rendered a "Related Resources" section and no page anywhere could
+  // link to one, and their breadcrumbs title-cased the slug.
+  const advertised = new Set(
+    getAllPages()
+      .filter((p) => p.url.startsWith("/blog/"))
+      .map((p) => p.url.replace("/blog/", "")),
+  );
+  const missing = localBlogPosts.map((p) => p.slug).filter((slug) => !advertised.has(slug));
+  assert.deepEqual(missing, [], "these posts render but nothing links to them");
+  assert.ok(advertised.size > 0, "the registry advertises no blog posts at all");
+});
+
+test("a blog post's breadcrumb names the post, not its slug", () => {
+  for (const post of localBlogPosts) {
+    const crumbs = getBreadcrumbs(`/blog/${post.slug}`);
+    const last = crumbs[crumbs.length - 1];
+    assert.equal(last.url, `/blog/${post.slug}`);
+    // Derived from the real title, so it carries the post's own casing and
+    // punctuation ("vs." not "Vs").
+    assert.ok(
+      post.title.startsWith(last.name),
+      `${post.slug}: crumb "${last.name}" is not the start of "${post.title}"`,
+    );
+    // Short enough to survive as a crumb rather than being truncated.
+    assert.ok(last.name.length <= 70, `${post.slug}: crumb is ${last.name.length} chars — too long`);
+  }
+});
+
+test("every blog post can surface related pages", () => {
+  // A post with no related pages is an internal-linking dead end.
+  for (const post of localBlogPosts) {
+    const related = getRelatedPages(`/blog/${post.slug}`);
+    assert.ok(related.length > 0, `${post.slug} has no related pages`);
   }
 });
 

@@ -254,7 +254,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <H3 className="font-serif text-xl font-semibold mb-4">If You Don't Own Land...</H3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You Don’t Own Land...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 Chattel loans work for home-only purchases. Buy the home now,
                 add land later, then refinance.
@@ -287,7 +287,7 @@ export default function FinancingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <H3 className="font-serif text-xl font-semibold mb-4">If You're Buying Modular...</H3>
+              <H3 className="font-serif text-xl font-semibold mb-4">If You’re Buying Modular...</H3>
               <p className="text-[var(--color-gray)] mb-4">
                 Conventional mortgages treat modular homes like site-built. Best rates, 
                 no government fees, and standard mortgage terms.
@@ -307,7 +307,7 @@ export default function FinancingPage() {
             Get <span className="italic text-[var(--color-teal)]">Pre-Qualified</span>
           </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
-            Pre-qualification shows sellers you're serious, helps you understand your budget, 
+            Pre-qualification shows sellers you’re serious, helps you understand your budget, 
             and speeds up the buying process. We work with multiple lenders to find your best option.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

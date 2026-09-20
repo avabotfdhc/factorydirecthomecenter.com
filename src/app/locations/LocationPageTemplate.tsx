@@ -33,7 +33,7 @@ interface LocationPageProps {
   nearbyTowns?: string[];
 }
 
-export function LocationPageTemplate({ city, state, stateAbbr, distance, deliveryCost, description, counties, localSections, faqs, nearbyTowns }: LocationPageProps) {
+export function LocationPageTemplate({ city, state, distance, deliveryCost, description, counties, localSections, faqs, nearbyTowns }: LocationPageProps) {
   useEffect(() => {
     trackLocationView(city, state);
   }, [city, state]);

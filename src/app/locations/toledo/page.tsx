@@ -107,7 +107,7 @@ export default function ToledoPage() {
               <div>
                 <div className="decorative-line mb-6" />
                 <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">Serving <span className="italic text-[var(--color-teal)]">Toledo</span> & NW Ohio</H2>
-                <p className="text-[var(--color-gray)] leading-relaxed mb-8">Toledo is Ohio's fourth-largest city with 270,000+ residents. From downtown along the Maumee River to suburbs like Perrysburg and Sylvania, we deliver throughout the region.</p>
+                <p className="text-[var(--color-gray)] leading-relaxed mb-8">Toledo is Ohio’s fourth-largest city with 270,000+ residents. From downtown along the Maumee River to suburbs like Perrysburg and Sylvania, we deliver throughout the region.</p>
                 <div className="mb-8">
                   <H3 className="font-semibold mb-4">Ohio Counties Served:</H3>
                   <div className="flex flex-wrap gap-2">

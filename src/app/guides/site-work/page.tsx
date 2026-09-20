@@ -120,7 +120,7 @@ export default function SiteWorkPage() {
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
                   Site work is everything that happens on your property before your manufactured 
-                  home arrives. It's the foundation your home sits on, the driveway you park on, 
+                  home arrives. It’s the foundation your home sits on, the driveway you park on, 
                   the water you drink, and the permits that make it legal.
                 </p>
                 <p>
@@ -206,7 +206,7 @@ export default function SiteWorkPage() {
               Foundation <span className="italic text-[var(--color-teal)]">Options</span>
             </H2>
             <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-              The foundation affects your home's stability, financing options, and resale value. 
+              The foundation affects your home’s stability, financing options, and resale value. 
               Choose based on your budget, soil, climate, and long-term plans.
             </p>
           </div>

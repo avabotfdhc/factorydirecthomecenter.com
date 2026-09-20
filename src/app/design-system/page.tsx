@@ -24,7 +24,6 @@ const colors = [
 export default function DesignSystemPage() {
   const [accordionOpen, setAccordionOpen] = useState<number | null>(0);
   const [activeTab, setActiveTab] = useState(0);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [alertVisible, setAlertVisible] = useState(true);
 

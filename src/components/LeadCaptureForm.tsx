@@ -122,7 +122,7 @@ const steps: Step[] = [
   },
 ];
 
-export function LeadCaptureForm({ variant = "inline", source = "website", offer }: LeadCaptureFormProps) {
+export function LeadCaptureForm({ source = "website", offer }: LeadCaptureFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -215,7 +215,7 @@ export function LeadCaptureForm({ variant = "inline", source = "website", offer 
           </div>
           <H3 className="font-serif text-2xl font-semibold mb-2">Thank You!</H3>
           <p className="text-[var(--color-gray)] mb-4">
-            We've received your information. A home specialist will contact you within 24 hours with personalized recommendations.
+            We’ve received your information. A home specialist will contact you within 24 hours with personalized recommendations.
           </p>
           <p className="text-sm text-[var(--color-gray)]">
             Questions? Call us at{" "}

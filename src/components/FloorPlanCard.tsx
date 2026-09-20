@@ -7,13 +7,6 @@ import { useTranslations } from "next-intl";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
 
-// Category badge key from whatever the source calls the home type.
-function typeKey(homeType: string): "singleWide" | "multiSection" | "modular" {
-  if (/modular/i.test(homeType)) return "modular";
-  if (/multi|double|section/i.test(homeType)) return "multiSection";
-  return "singleWide";
-}
-
 // One home in the /floor-plans grid.
 //
 // - Photo/Plan toggle: when the catalogue holds a dimensioned drawing for the

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
-import { H3, H4 } from "./Heading";
+import { H3 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 
 interface CalculatorState {

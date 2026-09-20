@@ -324,7 +324,7 @@ export default function IndianapolisPage() {
                 </H2>
                 
                 <p className="text-[var(--color-gray)] leading-relaxed mb-8">
-                  Indianapolis is Indiana's capital and largest city with over 880,000 residents 
+                  Indianapolis is Indiana’s capital and largest city with over 880,000 residents 
                   in the city and 2 million+ in the metro area. From downtown near Monument Circle 
                   to the suburbs of Carmel and Fishers, we deliver Champion homes throughout the region.
                 </p>
@@ -374,7 +374,7 @@ export default function IndianapolisPage() {
                 <div className="mt-8 p-4 bg-[var(--color-cream-dark)] rounded-lg">
                   <p className="text-sm text-[var(--color-gray)]">
                     <strong>Why Indianapolis buyers choose us:</strong> Factory-direct 
-                    pricing from Champion's largest facility often offsets delivery costs, 
+                    pricing from Champion’s largest facility often offsets delivery costs, 
                     plus you get our transparent, no-pressure approach.
                   </p>
                 </div>
