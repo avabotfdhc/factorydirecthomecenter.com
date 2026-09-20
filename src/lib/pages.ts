@@ -4,6 +4,10 @@
 export interface SitePage {
   url: string;
   title: string;
+  /** Short label for the breadcrumb trail, when the full title is too long to
+   *  read as a crumb. Google truncates breadcrumb labels and the visible trail
+   *  wraps, so a blog post's 90-character headline makes a poor crumb. */
+  shortTitle?: string;
   description: string;
   topics: string[];
   cluster: "core" | "locations" | "guides" | "products" | "blog";
@@ -530,34 +534,80 @@ export const sitePages: SitePage[] = [
 
 // Register blog posts into the page registry dynamically.
 //
-// Only posts that actually render may enter the registry. `blog.ts` is the
-// older editorial calendar and still marks twelve posts "published" that no
-// route serves — the blog route reads `local-posts.ts` alone. Before this
-// filter, every one of those twelve was advertised twice over: as a "Related
-// Resources" card on pages across the site, and as a URL in sitemap.xml
-// (getAllPages feeds it). All twelve answered 404 in production, so we were
-// asking Google to crawl twelve dead pages and sending buyers to them.
-// Publishing the missing articles is the other way to fix this; until the
-// copy exists, the registry must not claim they do.
+// THE REGISTRY IS BUILT FROM `local-posts.ts`, because that is the only thing
+// `/blog/[slug]` can actually serve. Sourcing it from anywhere else has now
+// gone wrong in both directions:
+//
+//   • Before 2026-09-14 it was built from `blog.ts`, the older editorial
+//     calendar, which marks twelve posts "published" that no route serves.
+//     All twelve were advertised as "Related Resources" cards across the site
+//     and listed in sitemap.xml while answering 404 in production.
+//   • The fix for that intersected the two lists — and the intersection is
+//     EMPTY. `blog.ts` and `local-posts.ts` describe two disjoint sets of
+//     posts, so from that day until 2026-09-20 not one of the thirty live
+//     posts was in the registry. Nothing linked to them through PageFooter
+//     (getRelatedPages returns [] for a URL it cannot find, so blog posts
+//     showed no Related Resources section at all and no other page could ever
+//     surface one), and their breadcrumbs fell back to title-casing the slug
+//     — "Champion Vs Clayton Homes" instead of "Champion vs. Clayton Homes".
+//     The sitemap was unaffected; it reads getApiBlogPosts() directly.
+//
+// Deriving the registry from the route's own source makes "advertised" and
+// "renders" the same set by construction, which is what the guard in
+// tests/internal-links.test.ts was really asking for. `blog.ts` is still read,
+// but only to borrow its curated `topics` for the posts it happens to know.
 import { getPublishedPosts } from "./blog";
 import { localBlogPosts } from "./local-posts";
 
-/** Slugs the /blog/[slug] route can actually resolve. */
-const liveBlogSlugs = new Set(localBlogPosts.map((p) => p.slug));
+/** Curated topic tags from the editorial calendar, by slug. */
+const curatedTopics = new Map(getPublishedPosts().map((post) => [post.slug, post.topics]));
+
+/**
+ * Topic tags for a post, used only to rank "Related Resources".
+ *
+ * A curated list from `blog.ts` wins. Otherwise the tags are derived from the
+ * slug against the same controlled vocabulary the rest of the registry uses.
+ * This is a ranking heuristic, not metadata anyone publishes — a post that
+ * deserves better tags should get a curated entry rather than a cleverer
+ * regex here.
+ */
+function topicsForPost(slug: string): string[] {
+  const curated = curatedTopics.get(slug);
+  if (curated?.length) return curated;
+
+  const topics = new Set<string>(["manufactured-homes"]);
+  // "manufactured-homes-<town>-indiana" and the "-guide" posts are the town
+  // series; relating them to the /locations pages is the whole point.
+  if (/^manufactured-homes-.+-(indiana|guide)$/.test(slug) || slug.endsWith("-buyers-guide")) {
+    topics.add("locations");
+    topics.add("service-area");
+    topics.add("delivery");
+  }
+  if (/financ|loan|credit|mortgage/.test(slug)) topics.add("financing");
+  if (/cost|pricing|price|quote/.test(slug)) topics.add("pricing");
+  if (/modular/.test(slug)) topics.add("modular");
+  if (/champion|clayton/.test(slug)) topics.add("champion-homes");
+  if (/zoning|permit/.test(slug)) topics.add("zoning");
+  if (/site-work|septic|well|foundation/.test(slug)) topics.add("site-work");
+  if (/buyer|first-time|how-to|guide/.test(slug)) topics.add("first-time-buyers");
+  return [...topics];
+}
 
 function buildAllPages(): SitePage[] {
-  const blogPages: SitePage[] = getPublishedPosts()
-    .filter((post) => liveBlogSlugs.has(post.slug))
-    .map((post) => ({
-      url: `/blog/${post.slug}`,
-      title: post.title,
-      description: post.description,
-      topics: post.topics,
-      cluster: "blog" as const,
-      pillar: "/blog",
-      priority: 0.7,
-      changeFrequency: "monthly" as const,
-    }));
+  const blogPages: SitePage[] = localBlogPosts.map((post) => ({
+    url: `/blog/${post.slug}`,
+    title: post.title,
+    // Post headlines are written as "Subject: promise" — the subject alone is
+    // the crumb. "Champion vs. Clayton Homes: How to Choose in 2026" becomes
+    // "Champion vs. Clayton Homes".
+    shortTitle: post.title.split(/\s[:—–]\s|:\s/)[0].trim() || post.title,
+    description: post.excerpt,
+    topics: topicsForPost(post.slug),
+    cluster: "blog" as const,
+    pillar: "/blog",
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
   return [...sitePages, ...blogPages];
 }
 
@@ -599,7 +649,13 @@ export function getBreadcrumbs(currentUrl: string): Array<{ name: string; url: s
     path += `/${segment}`;
     const page = allPages.find((p) => p.url === path);
     crumbs.push({
-      name: page?.title || segment.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+      // A registered page names itself; only an unregistered segment falls
+      // back to title-casing the slug (which produced "Champion Vs Clayton
+      // Homes" for every blog post while none of them were registered).
+      name:
+        page?.shortTitle ||
+        page?.title ||
+        segment.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
       url: path,
     });
   }

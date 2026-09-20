@@ -111,7 +111,7 @@ export default function PricingPage() {
             <GuideMeta href="/guides/pricing" />
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
               Most dealers give you one mysterious number. We itemize every cost 
-              so you know exactly what you're paying for — and where you can save.
+              so you know exactly what you’re paying for — and where you can save.
             </p>
           </div>
         </div>
@@ -130,12 +130,12 @@ export default function PricingPage() {
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>
                   Traditional dealers bundle everything into one price: home, delivery, setup, site work. 
-                  Sounds simple, right? But here's what they don't tell you:
+                  Sounds simple, right? But here’s what they don’t tell you:
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
                     <span className="text-[var(--color-orange)] mt-1">•</span>
-                    <span>You can't see where your money goes</span>
+                    <span>You can’t see where your money goes</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-[var(--color-orange)] mt-1">•</span>
@@ -163,11 +163,11 @@ export default function PricingPage() {
                   </span>
                 </div>
                 <div className="text-sm text-[var(--color-gray)] italic">
-                  "Includes everything!" (But what does that mean?)
+                  “Includes everything!” (But what does that mean?)
                 </div>
                 <div className="bg-[var(--color-orange)]/10 rounded-lg p-4 mt-6">
                   <p className="text-sm text-[var(--color-orange)]">
-                    <strong>Reality:</strong> You're paying for hidden markups on delivery, 
+                    <strong>Reality:</strong> You’re paying for hidden markups on delivery, 
                     setup, and site work. And you have no choice in contractors.
                   </p>
                 </div>
@@ -186,7 +186,7 @@ export default function PricingPage() {
               Our <span className="italic text-[var(--color-teal)]">Line-Item</span> Approach
             </H2>
             <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-              Every cost is separate. Every choice is yours. See exactly what you're paying for.
+              Every cost is separate. Every choice is yours. See exactly what you’re paying for.
             </p>
           </div>
 
@@ -330,7 +330,7 @@ export default function PricingPage() {
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option C: Mix & Match</H3>
               <p className="text-white/60 text-sm mb-6">
-                We arrange delivery — that's our part. You pick your setup crew and site-work
+                We arrange delivery — that’s our part. You pick your setup crew and site-work
                 contractors from our referral list, your own contacts, or both.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Custom needs</span>
@@ -353,7 +353,7 @@ export default function PricingPage() {
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-3">Can I really use my own contractors?</H3>
               <p className="text-[var(--color-gray)]">
-                Absolutely — in fact, that's how it works here. You hire your own excavator,
+                Absolutely — in fact, that’s how it works here. You hire your own excavator,
                 concrete crew, and electrician, and many of our customers save real money
                 doing it. If you need a starting point, ask for our referral list of licensed
                 and insured contractors past customers have used.
@@ -361,10 +361,10 @@ export default function PricingPage() {
             </div>
 
             <div className="bg-white rounded-lg p-8">
-              <H3 className="font-serif text-xl font-semibold mb-3">What if I don't know any contractors?</H3>
+              <H3 className="font-serif text-xl font-semibold mb-3">What if I don’t know any contractors?</H3>
               <p className="text-[var(--color-gray)]">
                 No problem. Ask us for our referral list of licensed and insured contractors
-                that past customers have used. You hire and pay them directly — and you'll
+                that past customers have used. You hire and pay them directly — and you’ll
                 still see every line item.
               </p>
             </div>
@@ -373,7 +373,7 @@ export default function PricingPage() {
               <H3 className="font-serif text-xl font-semibold mb-3">Is the home price really factory-direct plus a fair margin?</H3>
               <p className="text-[var(--color-gray)]">
                 Yes. Our pricing is factory-direct with a transparent dealer margin
-                (typically 10-15%, not the 20-40% you'll find elsewhere). No games, no hidden fees.
+                (typically 10-15%, not the 20-40% you’ll find elsewhere). No games, no hidden fees.
               </p>
             </div>
 
@@ -382,7 +382,7 @@ export default function PricingPage() {
               <p className="text-[var(--color-gray)]">
                 The home price is fixed once you choose your model and options. Delivery is 
                 fixed based on your distance. Setup and site work vary based on your property 
-                and choices — that's where you have the most control over total cost.
+                and choices — that’s where you have the most control over total cost.
               </p>
             </div>
           </div>
@@ -396,7 +396,7 @@ export default function PricingPage() {
             See It For <span className="italic text-[var(--color-teal)]">Yourself</span>
           </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
-            Browse our floor plans and request a custom quote. You'll see line-item pricing 
+            Browse our floor plans and request a custom quote. You’ll see line-item pricing 
             for your specific home, location, and preferences — no obligation, no pressure.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -1,41 +1,16 @@
-import React from "react";
-import Image from "next/image";
+// Alt text for catalogue and page imagery.
+//
+// Everything else this file used to export — `imageSizes`, `ImageSizeType`,
+// `getImageProps`, `getImageDimensions`, `shouldBePriority`, `generateSrcSet`,
+// `responsiveWidths`, `generateBlurDataURL`, `imageLoading`, `aspectRatios`,
+// `imagePaths`, `isValidImageUrl`, `getPlaceholderImage` — had no caller
+// anywhere in the app. next/image does the sizing, srcset and placeholder work
+// directly at each call site, so the helpers were superseded before anything
+// used them. `getImageProps` was the one worth deleting rather than leaving:
+// it accepted a `customAlt` argument and then never put it in the props it
+// returned, so the first caller to rely on it would have silently shipped
+// images with no alt text.
 
-// Image size configurations for different use cases
-export const imageSizes = {
-  hero: { width: 1920, height: 1080, sizes: "100vw", priority: true },
-  card: { width: 800, height: 600, sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw", priority: false },
-  gallery: { width: 1200, height: 800, sizes: "(max-width: 768px) 100vw, 80vw", priority: false },
-  thumbnail: { width: 400, height: 300, sizes: "150px", priority: false },
-  logo: { width: 200, height: 100, sizes: "200px", priority: true },
-  icon: { width: 64, height: 64, sizes: "64px", priority: true },
-};
-
-export type ImageSizeType = keyof typeof imageSizes;
-
-// Generate optimized image props
-export function getImageProps(type: ImageSizeType, customAlt?: string) {
-  const config = imageSizes[type];
-  return {
-    ...config,
-    quality: 90,
-    className: "object-cover",
-  };
-}
-
-// Generate srcset for responsive images
-export function generateSrcSet(basePath: string, widths: number[]): string {
-  return widths.map((width) => `${basePath}?w=${width} ${width}w`).join(", ");
-}
-
-// Predefined widths for srcset generation
-export const responsiveWidths = {
-  hero: [640, 750, 828, 1080, 1200, 1920],
-  card: [400, 600, 800],
-  gallery: [600, 900, 1200],
-};
-
-// Generate alt text helper
 export function generateAltText(context: string, details?: Record<string, string>): string {
   const baseAlts: Record<string, string> = {
     hero: "Beautiful manufactured home with modern exterior design and spacious layout",
@@ -53,57 +28,4 @@ export function generateAltText(context: string, details?: Record<string, string
     location: `Manufactured homes available in ${details?.location || "northeast Indiana"}`,
   };
   return baseAlts[context] || "Quality manufactured home from Factory Direct Homes Center";
-}
-
-// Get image dimensions for preventing layout shift
-export function getImageDimensions(type: ImageSizeType): { width: number; height: number } {
-  const config = imageSizes[type];
-  return { width: config.width, height: config.height };
-}
-
-// Check if image should be priority
-export function shouldBePriority(type: ImageSizeType): boolean {
-  return imageSizes[type].priority;
-}
-
-// Generate blur data URL for placeholder
-export function generateBlurDataURL(width: number = 10, height: number = 10): string {
-  return `data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><rect fill="#f8f7f4" width="${width}" height="${height}"/></svg>`).toString("base64")}`;
-}
-
-// Image loading strategy
-export const imageLoading = {
-  eager: { loading: "eager" as const, priority: true },
-  lazy: { loading: "lazy" as const, priority: false },
-};
-
-// Aspect ratio helpers
-export const aspectRatios = {
-  landscape: "aspect-video",
-  square: "aspect-square",
-  portrait: "aspect-[3/4]",
-  wide: "aspect-[21/9]",
-  ultrawide: "aspect-[32/9]",
-};
-
-// Common image paths
-export const imagePaths = {
-  hero: "/images/hero-home.jpg",
-  logo: "/images/logo.svg",
-  doubleWide: "/images/doublewide-exterior.webp",
-};
-
-// Validate image URL
-export function isValidImageUrl(url: string): boolean {
-  return url.startsWith("/") || url.startsWith("http://") || url.startsWith("https://");
-}
-
-// Get placeholder image
-export function getPlaceholderImage(type: "home" | "interior" | "exterior" = "home"): string {
-  const placeholders = {
-    home: "/images/hero-home.jpg",
-    interior: "/images/hero-home.jpg",
-    exterior: "/images/doublewide-exterior.webp",
-  };
-  return placeholders[type];
 }

@@ -41,13 +41,25 @@ function Overlay({
     [index, images.length, onNavigate],
   );
 
-  useEffect(() => {
+  // Reset zoom when the viewer moves to another image. Adjusted during render
+  // against the previous index — React's documented pattern for derived state
+  // — rather than in an effect, which renders the new image at the old zoom
+  // level first and then immediately re-renders it unzoomed.
+  const [zoomedFor, setZoomedFor] = useState(index);
+  if (zoomedFor !== index) {
+    setZoomedFor(index);
     setZoomed(false);
-  }, [index]);
+  }
 
   // Back button closes the lightbox instead of navigating away from the page.
+  // Held in a ref so the history entry is pushed once on open, not re-pushed
+  // every time the parent re-renders with a new onClose closure. Assigned in
+  // an effect rather than during render — a render-phase ref write is not safe
+  // under concurrent rendering.
   const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
   useEffect(() => {
     const onPop = () => onCloseRef.current();
     window.history.pushState({ lightbox: true }, "");

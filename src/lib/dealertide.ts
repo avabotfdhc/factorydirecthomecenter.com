@@ -25,7 +25,12 @@ export function dealertideConfigured(): boolean {
   return Boolean(authHeader());
 }
 
-async function dtFetch(path: string, revalidate = 300): Promise<any | null> {
+/** One JSON object from the partner API, whose field names we have not
+ *  committed to (see getDealertideVehiclesRaw). `unknown` values force a
+ *  deliberate narrowing at each use rather than silently typing as anything. */
+export type DealertideJson = Record<string, unknown>;
+
+async function dtFetch(path: string, revalidate = 300): Promise<unknown> {
   const auth = authHeader();
   if (!auth) return null;
   try {
@@ -45,19 +50,26 @@ async function dtFetch(path: string, revalidate = 300): Promise<any | null> {
  * confirmed via /api/admin/dealertide-preview (admin-gated) before we commit to
  * a field mapping — this defensively unwraps the common envelope patterns.
  */
-export async function getDealertideVehiclesRaw(): Promise<any[] | null> {
+export async function getDealertideVehiclesRaw(): Promise<DealertideJson[] | null> {
   const json = await dtFetch(`/vehicles`);
   if (!json) return null;
-  if (Array.isArray(json)) return json;
+  if (Array.isArray(json)) return json as DealertideJson[];
+  if (typeof json !== "object") return null;
+  const envelope = json as DealertideJson;
   for (const k of ["data", "vehicles", "results", "items", "rows"]) {
-    if (Array.isArray(json?.[k])) return json[k];
+    const value = envelope[k];
+    if (Array.isArray(value)) return value as DealertideJson[];
   }
   return null;
 }
 
-export async function getDealertideVehicleRaw(id: string): Promise<any | null> {
+export async function getDealertideVehicleRaw(id: string): Promise<DealertideJson | null> {
   const json = await dtFetch(`/vehicles/${encodeURIComponent(id)}`);
-  return json?.data ?? json ?? null;
+  if (!json || typeof json !== "object") return null;
+  const envelope = json as DealertideJson;
+  const data = envelope.data;
+  if (data && typeof data === "object") return data as DealertideJson;
+  return envelope;
 }
 
 /** Payload fields per the key's inbound-lead instructions in DealerTide. */

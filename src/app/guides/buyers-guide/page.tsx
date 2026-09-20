@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
-import { FadeIn, StaggerContainer } from "@/components/VisualEffects";
+import { FadeIn } from "@/components/VisualEffects";
 import { PaymentCalculator } from "@/components/PaymentCalculator";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
@@ -54,7 +54,7 @@ export default function BuyersGuidePage() {
                 <div className="decorative-line" />
                 <span className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-teal-light)]">Free Guide</span>
               </div>
-              <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">Complete Buyer's <span className="italic text-[var(--color-teal-light)]">Guide</span></h1>
+              <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">Complete Buyer’s <span className="italic text-[var(--color-teal-light)]">Guide</span></h1>
               <GuideMeta href="/guides/buyers-guide" />
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">Everything you need to know about buying a manufactured home. From types and financing to costs and timeline.</p>
             </div>
@@ -67,7 +67,7 @@ export default function BuyersGuidePage() {
           <FadeIn direction="up">
             <div className="prose prose-lg max-w-none">
               <H2 className="font-serif text-3xl font-light mb-6">Introduction</H2>
-              <p className="text-[var(--color-gray)] leading-relaxed mb-6">Buying a manufactured home is one of the most significant decisions you'll make. This guide walks you through everything you need to know—from understanding home types to financing options to the complete buying process.</p>
+              <p className="text-[var(--color-gray)] leading-relaxed mb-6">Buying a manufactured home is one of the most significant decisions you’ll make. This guide walks you through everything you need to know—from understanding home types to financing options to the complete buying process.</p>
               
               <H2 className="font-serif text-3xl font-light mb-6 mt-12">Types of Factory-Built Homes</H2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">

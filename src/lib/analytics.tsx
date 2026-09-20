@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getServerConsentSnapshot, getTrackingAllowedSnapshot, subscribeConsent } from "./consent";
@@ -26,9 +26,30 @@ export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || 
 // ============================================
 // TYPE DEFINITIONS
 // ============================================
+
+/**
+ * The tag globals the loaded scripts install on `window`.
+ *
+ * Declared once here so the call sites below can be `window.gtag?.(…)` rather
+ * than `(window as any).gtag`. Every one is optional: the scripts load lazily
+ * and behind consent (see src/lib/consent.ts), so on most first renders none
+ * of them exists yet and the optional call is the correct no-op.
+ */
+declare global {
+  interface Window {
+    gtag?: (command: string, ...args: unknown[]) => void;
+    fbq?: (command: string, ...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  }
+}
+
+/** A tag event payload. Values are whatever the platform accepts, so this is
+ *  `unknown` rather than `any` — callers build the object, nothing reads back
+ *  out of it. */
+export type TagParams = Record<string, unknown>;
 export interface TrackingEvent {
   eventName: string;
-  params?: Record<string, any>;
+  params?: TagParams;
 }
 
 export interface EcommerceItem {
@@ -235,9 +256,9 @@ export function usePageTracking() {
 // GA4 TRACKING FUNCTIONS
 // ============================================
 
-export function trackGA4Event(eventName: string, eventParams?: Record<string, any>) {
-  if (typeof window !== "undefined" && (window as any).gtag) {
-    (window as any).gtag("event", eventName, {
+export function trackGA4Event(eventName: string, eventParams?: TagParams) {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", eventName, {
       ...eventParams,
       send_to: GA_MEASUREMENT_ID,
       event_timestamp: new Date().toISOString(),
@@ -245,9 +266,9 @@ export function trackGA4Event(eventName: string, eventParams?: Record<string, an
   }
 }
 
-export function trackGA4PageView(url: string, additionalParams?: Record<string, any>) {
-  if (typeof window !== "undefined" && (window as any).gtag) {
-    (window as any).gtag("config", GA_MEASUREMENT_ID, {
+export function trackGA4PageView(url: string, additionalParams?: TagParams) {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("config", GA_MEASUREMENT_ID, {
       page_path: url,
       page_location: window.location.href,
       page_title: document.title,
@@ -305,7 +326,7 @@ export function trackGenerateLead(leadData: LeadData) {
 }
 
 // Form Submission Tracking
-export function trackFormSubmit(formName: string, formData?: Record<string, any>) {
+export function trackFormSubmit(formName: string, formData?: TagParams) {
   trackGA4Event("form_submit", {
     form_name: formName,
     form_id: formData?.id,
@@ -318,15 +339,15 @@ export function trackFormSubmit(formName: string, formData?: Record<string, any>
 // FACEBOOK PIXEL TRACKING FUNCTIONS
 // ============================================
 
-export function trackFBEvent(eventName: string, params?: Record<string, any>) {
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("track", eventName, params);
+export function trackFBEvent(eventName: string, params?: TagParams) {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", eventName, params);
   }
 }
 
-export function trackFBCustomEvent(eventName: string, params?: Record<string, any>) {
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("trackCustom", eventName, params);
+export function trackFBCustomEvent(eventName: string, params?: TagParams) {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("trackCustom", eventName, params);
   }
 }
 
@@ -438,7 +459,7 @@ export const FacebookEvents = {
 // ============================================
 
 // Track events to both GA4 and Facebook
-export function trackEvent(eventName: string, params?: Record<string, any>) {
+export function trackEvent(eventName: string, params?: TagParams) {
   trackGA4Event(eventName, params);
   
   // Map common events to Facebook equivalents

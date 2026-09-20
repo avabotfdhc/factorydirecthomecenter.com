@@ -88,9 +88,16 @@ Vercel's functions intermittently fail to reach Supabase — production logs for
 - The owner lives in `BUSINESS.owner` (`src/lib/business.ts`) and is published as a `Person` node by `ownerJsonLd()` — cited as the business `founder`, rendered by `src/components/OwnerIntro.tsx` on `/` and `/about`, and defined once on `/about` under the `OWNER_ID` `@id`. `BUSINESS.foundingDate` ("2024-11") is the one answer for how long the dealership has traded. Kyle's bio in `OwnerIntro.tsx` is a draft written from claims the site already made — he should rewrite it in his own words. Setting `BUSINESS.owner.image` to a real photograph makes both the section and the schema use it.
 - Post bylines: a post whose `author` equals `BUSINESS.owner.name` publishes the owner `Person` as its schema author; anything else stays an Organization byline (`structuredData.article({ authorIsOwner })`). Never attribute a post to a person who did not write it.
 
-# The page registry may only advertise pages that exist
+# The page registry is built FROM the blog route's own source
 
-`buildAllPages()` in `src/lib/pages.ts` feeds both the "Related Resources" cards in `PageFooter` and the static half of `sitemap.xml`. It used to inject every post `blog.ts` marks published, but the `/blog/[slug]` route reads `local-posts.ts` alone — so twelve posts that exist only in the old editorial calendar were linked sitewide and listed in the sitemap while answering 404 in production (verified 2026-09-14). `buildAllPages()` now filters to slugs `local-posts.ts` actually serves. `tests/internal-links.test.ts` fails if a registry URL 404s again, and also rejects a URL containing "null" or "undefined". To bring one of those twelve back, write the post in `local-posts.ts` — do not loosen the filter.
+`buildAllPages()` in `src/lib/pages.ts` feeds the "Related Resources" cards in `PageFooter`, the breadcrumb labels, and the static half of `sitemap.xml`. Getting its blog entries from the wrong place has now gone wrong twice, in opposite directions:
+
+- It used to inject every post `blog.ts` marks published, but `/blog/[slug]` reads `local-posts.ts` alone — so twelve posts that exist only in the old editorial calendar were linked sitewide and listed in the sitemap while answering 404 in production (2026-09-14).
+- The fix for that intersected the two lists, and **the intersection is empty** — `blog.ts` and `local-posts.ts` describe two disjoint sets. From 2026-09-14 to 2026-09-20 not one of the thirty live posts was registered. `getRelatedPages` returns `[]` for a URL it cannot find, so no post rendered a Related Resources section and no page anywhere could link to one; breadcrumbs fell back to title-casing the slug ("Champion Vs Clayton Homes"). The sitemap was unaffected — it reads `getApiBlogPosts()` directly.
+
+The registry is now derived from `localBlogPosts`, so "advertised" and "renders" are the same set by construction. `blog.ts` is still read, but only to borrow curated `topics`; a post it does not know gets topics derived from its slug (`topicsForPost`), which only ever affects Related Resources ranking. `SitePage.shortTitle` carries the breadcrumb label — a post headline is "Subject: promise" and only the subject belongs in a crumb.
+
+`tests/internal-links.test.ts` guards both directions now: no registry URL may 404, **and** every post the route serves must be registered, name itself in its breadcrumb, and be able to surface related pages.
 
 # Never hand-write a business node — use `businessRef()`
 

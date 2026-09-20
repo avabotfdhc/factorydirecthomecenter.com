@@ -352,7 +352,7 @@ export default function AboutPage() {
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
                     { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Paramount, Redman, and Dutch series homes built just 30 miles away." },
                     { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through referrals and repeat customers." },
-                  ].map((item, idx) => (
+                  ].map((item) => (
                     <div key={item.label} className="relative">
                       <div className="absolute -left-[41px] top-1 w-5 h-5 bg-[var(--color-teal)] border-4 border-[var(--color-cream)] rounded-full" />
                       <H4 className="font-serif text-lg font-semibold mb-2">{item.label}</H4>

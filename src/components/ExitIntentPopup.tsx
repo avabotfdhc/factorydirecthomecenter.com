@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 import { trackFormSubmit } from "@/lib/analytics";
@@ -21,23 +21,38 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
       ? `${sale.name}: save up to ${sale.discountPercent}% off select Champion floor plans!`
       : "Get a free, line-item factory-direct quote");
   const [isVisible, setIsVisible] = useState(false);
-  const [hasShown, setHasShown] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // "Already shown" is a ref, not state: nothing renders from it, only the
+  // mouseleave handler reads it. As state it forced a re-render nobody saw,
+  // and because it was a useCallback dependency, flipping it rebuilt the
+  // handler and re-bound the document listener. The mount effect also wrote it
+  // synchronously from localStorage, which is a render cascade on every page.
+  const hasShown = useRef(false);
+
   const handleMouseLeave = useCallback((e: MouseEvent) => {
-    if (e.clientY < 10 && !hasShown) {
+    if (e.clientY < 10 && !hasShown.current) {
+      hasShown.current = true;
       setIsVisible(true);
-      setHasShown(true);
-      localStorage.setItem("exitIntentShown", "true");
+      try {
+        localStorage.setItem("exitIntentShown", "true");
+      } catch {
+        /* storage blocked — the popup still behaves for this visit */
+      }
     }
-  }, [hasShown]);
+  }, []);
 
   useEffect(() => {
-    // Check if already shown
-    const alreadyShown = localStorage.getItem("exitIntentShown");
+    // Shown on an earlier visit? Then never arm the listener at all.
+    let alreadyShown: string | null = null;
+    try {
+      alreadyShown = localStorage.getItem("exitIntentShown");
+    } catch {
+      /* storage blocked — treat as not yet shown */
+    }
     if (alreadyShown) {
-      setHasShown(true);
+      hasShown.current = true;
       return;
     }
 
@@ -96,7 +111,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <H3 className="font-serif text-2xl font-light mb-2">Wait! Don't Miss Out</H3>
+            <H3 className="font-serif text-2xl font-light mb-2">Wait! Don’t Miss Out</H3>
             <p className="text-white/80 text-lg font-semibold">{headline}</p>
             {sale.active && (
               <p className="text-yellow-300 text-sm mt-1">{saleDeadlineLabel(sale)}</p>
@@ -112,7 +127,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <H4 className="font-serif text-xl font-semibold mb-2">You're In!</H4>
+                <H4 className="font-serif text-xl font-semibold mb-2">You’re In!</H4>
                 <p className="text-[var(--color-gray)]">
                   A home specialist will contact you within 24 hours with your savings details.
                 </p>

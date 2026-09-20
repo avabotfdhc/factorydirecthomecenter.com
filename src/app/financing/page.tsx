@@ -9,7 +9,6 @@ import {
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { FinancingCalculator } from "@/components/FinancingCalculator";
-import { LeadCaptureForm } from "@/components/LeadCaptureForm";
 import {
   LENDERS,
   LENDER_DISCLAIMER,
@@ -428,7 +427,7 @@ export default function FinancingPage() {
                 Our <span className="italic text-[var(--color-teal)]">Lending Partners</span>
               </H2>
               <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-                We work with the nation's top manufactured home lenders to find the best option for your situation.
+                We work with the nation’s top manufactured home lenders to find the best option for your situation.
               </p>
             </div>
           </FadeIn>
@@ -565,7 +564,7 @@ export default function FinancingPage() {
                 </tr>
               </thead>
               <tbody>
-                {loanTypes.map((loan, idx) => (
+                {loanTypes.map((loan) => (
                   <tr key={loan.name} className="border-b border-[var(--color-charcoal)]/10">
                     <td className="py-4">
                       <div className="font-semibold">{loan.name}</div>
