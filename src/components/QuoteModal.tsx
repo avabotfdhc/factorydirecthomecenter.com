@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef, useCallback, type FormEvent } from "react";
 import { useAntiSpam } from "@/lib/use-anti-spam";
 import { LeadConsent, LeadUrgency } from "./LeadConsent";
-import { trackLeadFormStart, trackLeadFormSubmit } from "@/lib/analytics";
+import Link from "next/link";
+import { trackCTAClick, trackLeadFormStart, trackLeadFormSubmit, trackPhoneClick } from "@/lib/analytics";
 
 type Mode = "quote" | "visit";
 
@@ -11,35 +12,137 @@ type Mode = "quote" | "visit";
 // buyer on the home they're looking at (instead of bouncing them to /contact-us)
 // and posts straight to /api/leads, which fans the lead out to the admin CMS,
 // DealerTide CRM, email, and Google Sheets.
-export function FloorPlanQuoteCTA({ homeName }: { homeName: string }) {
+export interface FloorPlanActionsProps {
+  homeName: string;
+  /** Slug, for the "design this home" deep link. */
+  slug: string;
+  virtualTour?: string;
+  floorPlanUrl?: string;
+  brochureUrl?: string;
+}
+
+/**
+ * The action block on a floor-plan page.
+ *
+ * It used to be seven buttons in one wrapped row, all roughly the same size:
+ * Design This Home, Get a Quote, Schedule a Lot Visit, Call, 3D Virtual Tour,
+ * Floor Plan (PDF) and Download brochure. Two of them were solid-filled in
+ * different brand colours, so nothing read as *the* next step — and three of
+ * the seven led away from the page entirely.
+ *
+ * Now there is one primary action, two secondary ones, and the assets are
+ * quiet links under a label:
+ *
+ *   • "Get My Price" is the thing a first-time visitor came for. Prices are
+ *     hidden site-wide, so this is the whole reason the page has a CTA at all.
+ *   • Booking a visit and designing a home are real conversion paths, but they
+ *     ask for more commitment than a price does, so they sit one rung down.
+ *   • The tour, the plan sheet and the brochure are reference material a
+ *     shopper opens mid-decision. They stay freely available and ungated —
+ *     gating spec sheets kills discovery-stage engagement — but they no longer
+ *     compete with the ask.
+ *   • The phone number is a line of text, not a button. On a phone the sticky
+ *     MobileActionBar already carries a tap-to-call; on a desktop nobody taps
+ *     a tel: link, they read the number.
+ *
+ * Every option reports `cta_click` to GA4 with its own name, so which one
+ * actually earns the click is a question the analytics can answer rather than
+ * a matter of opinion.
+ */
+export function FloorPlanActions({
+  homeName,
+  slug,
+  virtualTour,
+  floorPlanUrl,
+  brochureUrl,
+}: FloorPlanActionsProps) {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<Mode>("quote");
 
-  const openWith = (m: Mode) => {
+  const openWith = (m: Mode, ctaName: string) => {
+    trackCTAClick(ctaName, "floor_plan_detail", m === "quote" ? "quote_modal" : "visit_modal");
     setMode(m);
     setOpen(true);
   };
 
+  const assets = [
+    virtualTour ? { label: "3D virtual tour", href: virtualTour, name: "virtual_tour" } : null,
+    floorPlanUrl ? { label: "Floor plan (PDF)", href: floorPlanUrl, name: "floor_plan_pdf" } : null,
+    brochureUrl ? { label: "Brochure (PDF)", href: brochureUrl, name: "brochure_pdf" } : null,
+  ].filter((a): a is { label: string; href: string; name: string } => a !== null);
+
   return (
     <>
+      {/* Primary — one action, unmistakable, full width on a phone. The
+          plan page's right-hand column is a flex column, so `sm:self-start`
+          is what actually sizes the button to its text on a desktop;
+          `sm:w-auto` alone is overridden by align-items: stretch. */}
       <button
         type="button"
-        onClick={() => openWith("quote")}
-        className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/30 text-[var(--color-teal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
+        onClick={() => openWith("quote", "get_my_price")}
+        className="w-full sm:w-auto sm:self-start inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-9 py-4 text-base font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
       >
-        Get a Quote
+        Get My Price
       </button>
-      <button
-        type="button"
-        onClick={() => openWith("visit")}
-        className="inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"
-      >
-        Schedule a Lot Visit
-      </button>
+      <p className="text-xs text-[var(--color-gray)] mt-2">
+        Line-item quote for this home — no obligation, usually same day.
+      </p>
 
-      {open && (
-        <QuoteDialog homeName={homeName} mode={mode} onClose={() => setOpen(false)} />
+      {/* Secondary — equal weight to each other, clearly below the primary. */}
+      <div className="flex flex-col sm:flex-row gap-3 mt-5">
+        <button
+          type="button"
+          onClick={() => openWith("visit", "schedule_visit")}
+          className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/40 text-[var(--color-teal)] px-7 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
+        >
+          Schedule a Lot Visit
+        </button>
+        <Link
+          href={`/design-your-home?home=${encodeURIComponent(slug)}`}
+          onClick={() => trackCTAClick("design_this_home", "floor_plan_detail", "/design-your-home")}
+          className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 px-7 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors"
+        >
+          Design This Home
+        </Link>
+      </div>
+
+      {/* Tertiary — the number is information as much as an action. */}
+      <p className="text-sm text-[var(--color-gray)] mt-4">
+        Prefer to talk?{" "}
+        <a
+          href="tel:+12603081457"
+          onClick={() => trackPhoneClick("floor_plan_detail", "floor_plan")}
+          className="font-semibold text-[var(--color-teal)] underline underline-offset-4"
+        >
+          Call (260) 308-1457
+        </a>
+      </p>
+
+      {/* Reference material. Ungated on purpose — see the note above. */}
+      {assets.length > 0 && (
+        <div className="mt-6 pt-5 border-t border-[var(--color-charcoal)]/10">
+          <h2 className="text-xs font-bold tracking-widest uppercase text-[var(--color-gray)] mb-2">
+            Look closer
+          </h2>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            {assets.map((asset) => (
+              <li key={asset.name}>
+                <a
+                  href={asset.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackCTAClick(asset.name, "floor_plan_detail", asset.href)}
+                  className="text-[var(--color-teal)] underline underline-offset-4 hover:text-[var(--color-teal-dark)]"
+                >
+                  {asset.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
+
+      {open && <QuoteDialog homeName={homeName} mode={mode} onClose={() => setOpen(false)} />}
     </>
   );
 }
