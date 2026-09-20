@@ -10,7 +10,7 @@ import { PlanNarrative } from "@/components/PlanNarrative";
 import { buildPlanNarrative, planTypeLabel } from "@/lib/plan-content";
 import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
-import { FloorPlanQuoteCTA } from "@/components/QuoteModal";
+import { FloorPlanActions } from "@/components/QuoteModal";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
@@ -243,51 +243,13 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               </p>
             )}
 
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href={`/design-your-home?home=${encodeURIComponent(plan.slug)}`}
-                className="inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
-              >
-                Design This Home
-              </Link>
-              <FloorPlanQuoteCTA homeName={plan.name} />
-              <a
-                href="tel:+12603081457"
-                className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors"
-              >
-                Call (260) 308-1457
-              </a>
-              {plan.virtualTour && (
-                <a
-                  href={plan.virtualTour}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/30 text-[var(--color-teal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
-                >
-                  3D Virtual Tour
-                </a>
-              )}
-              {plan.floorPlanUrl && (
-                <a
-                  href={plan.floorPlanUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center border-2 border-[var(--color-teal)]/30 text-[var(--color-teal)] px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal)]/5 transition-colors"
-                >
-                  Floor Plan (PDF)
-                </a>
-              )}
-              {plan.brochureUrl && (
-                <a
-                  href={plan.brochureUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center text-sm font-medium text-[var(--color-teal)] underline underline-offset-4 px-2 py-3.5"
-                >
-                  Download brochure (PDF)
-                </a>
-              )}
-            </div>
+            <FloorPlanActions
+              homeName={plan.name}
+              slug={plan.slug}
+              virtualTour={plan.virtualTour}
+              floorPlanUrl={plan.floorPlanUrl}
+              brochureUrl={plan.brochureUrl}
+            />
 
             {plan.documents && plan.documents.length > 1 && (
               <div className="mt-6">
