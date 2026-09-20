@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { StructuredData, structuredData } from "@/lib/seo";
 import { LightboxGallery } from "@/components/ImageLightbox";
 import { languageAlternates } from "@/lib/seo";
 
@@ -105,15 +104,7 @@ const brochures: Array<{ name: string; desc: string; href: string; external?: bo
 
 export default function OptionsPage() {
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <StructuredData
-        data={structuredData.breadcrumb([
-          { name: "Home", url: "/" },
-          { name: "Factory Options & Selections", url: "/options" },
-        ])}
-      />
-
-      {/* Hero */}
+    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
       <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">

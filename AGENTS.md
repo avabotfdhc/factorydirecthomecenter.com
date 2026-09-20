@@ -141,3 +141,88 @@ DealerTide as the financing attachment (`npm run lender-sheet` →
   the partner API has no lender or attachment endpoint, there is no DealerTide app on Zapier, and
   the agent sandbox cannot reach `renterinsight-api-prod.onrender.com` at all. Steps and the
   paste-ready table are in `docs/dealertide-lender-setup.md`.
+
+# Every lead carries where it came from, and the cookie is the only source
+
+Until 2026-09-20 no lead recorded any acquisition data — no `utm_*`, no `gclid`, no
+referrer, no landing page — so a lead from a paid Google click and one from an organic blog
+post were indistinguishable in DealerTide and in Supabase.
+
+`src/lib/attribution.ts` is the whole model. Capture happens **once**, on the client,
+into the first-party cookie `fdhc_attr` (90 days, `SameSite=Lax`, written by
+`src/components/AttributionTracker.tsx` inside `TrackingProvider`). It is read on the
+**server** at submit time — never from the form body.
+
+- **One cookie, not nine form fields.** The browser sends it with every POST, so all nine
+  lead entry points, and any tenth added later, inherit attribution with no work. A
+  scripted POST also cannot forge a campaign into the CRM.
+- **First touch AND last touch.** `mergeAttribution()` never overwrites the first touch,
+  and only moves the last touch for an arrival that carries a real signal — so a visitor
+  who clicks an ad, leaves, and returns by typing the domain still has the ad credited.
+  Breaking that rule relabels every lead "direct" at the moment it converts. Tested.
+- **Consent-aware.** No cookie while tracking is denied or Global Privacy Control is set,
+  and an existing cookie is deleted the moment the visitor opts out.
+- Readers: `readAttributionCookie()` (Request header) in `/api/leads`; `cookies()` in
+  `src/app/actions/leads.ts`, which also forwards **only** this cookie on its internal
+  fan-out — never the visitor's whole `Cookie` header, which would hand an admin session
+  to an internal fetch.
+- Outputs: `attributionColumns()` → the `leads` table; `attributionSummaryLines()` → the
+  DealerTide note, the Resend email and the Sheets row; `/admin` → Leads shows a
+  "Came from" column; `public.lead_attribution_report` resolves the channel for reporting.
+- Referrals from ChatGPT, Perplexity, Claude, Gemini, Copilot, You.com and Phind are
+  classified `medium = 'ai'` and bucketed as `answer engine`. That is the only direct
+  measurement of AEO working; do not fold it back into `referral`.
+- `click_id` is kept so a closed sale can later be uploaded to Google Ads / Meta as an
+  offline conversion. Do not drop it.
+
+**The migration ships before the code.** `supabase/migrations/20260920_lead_attribution.sql`
+must be applied to the wired project (`mvetqzhjszlullttfkwa`) first — PostgREST rejects an
+insert naming an unknown column with a 400, which takes every website lead down.
+`tests/attribution.test.ts` asserts the column set matches the migration exactly.
+
+# Turnstile is wired but inert until the keys exist
+
+`src/lib/turnstile.ts` + `src/components/TurnstileField.tsx` add Cloudflare Turnstile on top
+of the honeypot and fill-timer in `anti-spam.ts`. The widget lives inside `useAntiSpam()`,
+so all seven form components got it without a line of change — put any future cross-cutting
+form concern there too.
+
+- Nothing loads and nothing is enforced until `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (widget) and
+  `TURNSTILE_SECRET_KEY` (verification) are both set on Vercel.
+- `appearance: "interaction-only"` — real visitors see no widget at all.
+- Enforced only when the body carries `hp`, i.e. a real browser form. Ava's chat tools and
+  the instant-quote server action post without it, the same exemption the honeypot makes.
+- **Fails open.** Cloudflare unreachable → the lead is accepted and the reason logged. A
+  few spam leads cost a minute each; a lost real lead costs a sale.
+
+# One BreadcrumbList per page, and it comes from PageFooter
+
+`PageFooter` emits a URL-derived `BreadcrumbList` on every non-home page. Until 2026-09-20
+twenty-three pages *also* emitted their own, so each shipped two nodes disagreeing about
+the labels for the same URL. Both validate individually — no schema checker catches it; you
+only see it by counting nodes in the rendered HTML.
+
+Do not add `structuredData.breadcrumb(...)` to a page. The single exception is
+`/floor-plans/[slug]`, whose trail includes the series and cannot be derived from the URL;
+`PageFooter` stands down for `/floor-plans/*`. `tests/structured-data.test.ts` scans the
+source and fails if a third emitter appears.
+
+The same test now also rejects any node **named** "Factory Direct Homes Center" that lacks
+the canonical `@id` — the blog detail page had been publishing a second `Organization` with
+our name on every post, which the earlier LocalBusiness-only guard did not see. A genuinely
+different author (a guest byline) is still allowed to be its own node.
+
+# /search exists because the schema says it does
+
+`structuredData.website()` publishes a `SearchAction` targeting
+`/search?q={search_term_string}`. That URL answered 404 until 2026-09-20 — the site was
+advertising a search endpoint it did not have.
+
+`src/app/search/page.tsx` renders results **on the server** from the query string, so it
+works with no JavaScript and can be read by a crawler or an answer engine. It is
+`noindex, follow` on purpose: an infinite space of `?q=` URLs in the index is the classic
+thin-content pattern and competes with the floor-plan pages that should rank.
+
+The query logic lives in `src/lib/site-search.ts`, shared by the page and `GET /api/search`.
+`tests/internal-links.test.ts` fails if the SearchAction ever points at a route that does
+not exist.

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
-import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
+import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 
@@ -32,7 +32,6 @@ const relatedPages = [{ title: "Floor Plans", url: "/floor-plans", description: 
 export default function ToledoPage() {
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Manufactured Homes Toledo OH", description: "Champion homes delivered to Toledo, Ohio", image: "/images/paramount/timberlake-exterior-2.webp", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/toledo" })} />
       <StructuredData data={structuredData.service({ name: "Manufactured Home Delivery Toledo", description: "Manufactured home delivery to Toledo and northwest Ohio", provider: "Factory Direct Homes Center", areaServed: "Toledo, Ohio" })} />
       <StructuredData data={structuredData.faqPage(locationFAQs)} />

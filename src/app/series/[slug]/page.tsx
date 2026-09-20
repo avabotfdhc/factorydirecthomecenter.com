@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
 import { FloorPlanCard } from "@/components/FloorPlanCard";
-import { generateMetadata as genMeta } from "@/lib/seo";
+import { generateMetadata as genMeta, StructuredData } from "@/lib/seo";
 import { getApiFloorPlans, type ApiFloorPlan } from "@/lib/api-content";
 import { seriesHubs, getSeriesHub } from "@/lib/series-hubs";
 
@@ -45,7 +45,26 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
   );
 
   return (
-    <>
+    <>      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: `${hub.fullName} — Champion Homes`,
+          description: hub.intro,
+          url: `https://factorydirecthomescenter.com/series/${hub.slug}`,
+          isPartOf: { "@id": "https://factorydirecthomescenter.com/#business" },
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: plans.length,
+            itemListElement: plans.slice(0, 50).map((p, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: p.name,
+              url: `https://factorydirecthomescenter.com/floor-plans/${p.slug}`,
+            })),
+          },
+        }}
+      />
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">

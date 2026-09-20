@@ -28,9 +28,25 @@ interface StoredLeadRow {
   series_interest: string | null;
   source_page: string | null;
   status: string | null;
+  // Attribution columns (supabase/migrations/20260920_lead_attribution.sql).
+  // Optional on the type as well as nullable in the table, so the dashboard
+  // keeps working against a database where the migration has not run yet.
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
+  landing_page?: string | null;
+  first_touch_source?: string | null;
+  first_touch_medium?: string | null;
+}
+
+/** "google / cpc" — the pair the sales team actually reads. */
+function channelLabel(source?: string | null, medium?: string | null): string {
+  return [source, medium].filter(Boolean).join(" / ");
 }
 
 function toLeadRow(r: StoredLeadRow): LeadRow {
+  const lastTouch = channelLabel(r.utm_source, r.utm_medium);
+  const firstTouch = channelLabel(r.first_touch_source, r.first_touch_medium);
   const parts = String(r.contact_info || "").split("·").map((s) => s.trim()).filter(Boolean);
   const email = parts.find((p) => p.includes("@"));
   const phone = parts.find((p) => !p.includes("@"));
@@ -46,6 +62,16 @@ function toLeadRow(r: StoredLeadRow): LeadRow {
     address: [r.timeline && `Timeframe: ${r.timeline}`, r.status && `Status: ${r.status}`].filter(Boolean).join(" · "),
     createdAt: r.created_at,
     deliveryStateDetails: r.target_county ? { name: r.target_county } : null,
+    ...(lastTouch
+      ? {
+          attribution: {
+            lastTouch,
+            ...(firstTouch && firstTouch !== lastTouch ? { firstTouch } : {}),
+            ...(r.utm_campaign ? { campaign: r.utm_campaign } : {}),
+            ...(r.landing_page ? { landingPage: r.landing_page } : {}),
+          },
+        }
+      : {}),
   };
 }
 

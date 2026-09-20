@@ -24,9 +24,19 @@ export function PageFooter() {
 
   return (
     <>
-      {/* Breadcrumb Structured Data. Floor-plan detail pages emit their own
-          (Home › Floor Plans › Series › Home); the URL-derived trail here
-          would be a second, conflicting BreadcrumbList on those pages. */}
+      {/* THE site's BreadcrumbList. This runs on every non-home page, so no
+          page should emit its own — until 2026-09-20 twenty-odd of them did,
+          and those pages shipped TWO BreadcrumbList nodes describing the same
+          URL with different labels ("Guides › Financing" from the page,
+          "Guides & Resources › Financing Options for Manufactured Homes" from
+          here). Google picks one arbitrarily, and contradicting itself about
+          its own site hierarchy is exactly the signal the structured-data
+          consolidation work exists to avoid.
+
+          The one exception is a floor-plan detail page, whose trail includes
+          the series (Home › Floor Plans › Aspire Series › Thornton) and so
+          cannot be derived from the URL. tests/structured-data.test.ts fails
+          if a third emitter appears. */}
       {breadcrumbs.length > 1 && !pathname.startsWith("/floor-plans/") && (
         <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       )}

@@ -6,7 +6,6 @@ import {
   FadeIn,
   StaggerContainer,
   AnimatedCounter,
-  useScrollTracking
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
@@ -173,7 +172,6 @@ export default function IndianapolisPage() {
   
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({
         headline: "Manufactured Homes Indianapolis IN | Champion Dealer",
         description: "Champion manufactured and modular homes delivered to Indianapolis, Indiana.",

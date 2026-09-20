@@ -56,7 +56,6 @@ const faqs = [
 export default function ManufacturedVsModularPage() {
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(faqs)} />
 
       {/* Breadcrumb */}

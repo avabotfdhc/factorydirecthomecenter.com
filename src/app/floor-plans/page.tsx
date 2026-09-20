@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getApiFloorPlans } from "@/lib/api-content";
-import { StructuredData, structuredData } from "@/lib/seo";
+import { StructuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
@@ -55,15 +55,7 @@ export default async function FloorPlansPage() {
 
   return (
     <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <StructuredData data={itemListLd} />
-      <StructuredData
-        data={structuredData.breadcrumb([
-          { name: "Home", url: "/" },
-          { name: "Floor Plans", url: "/floor-plans" },
-        ])}
-      />
-
-      {/* Hero */}
+      <StructuredData data={itemListLd} />      {/* Hero */}
       <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">

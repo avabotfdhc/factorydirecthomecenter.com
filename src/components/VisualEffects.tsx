@@ -1,58 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { trackEvent, events } from "@/lib/analytics";
+import { events } from "@/lib/analytics";
 
-// Hook for tracking scroll depth
-export function useScrollTracking() {
-  useEffect(() => {
-    let maxScroll = 0;
-    const milestones = [25, 50, 75, 90];
-    const tracked = new Set<number>();
-
-    const handleScroll = () => {
-      const scrollPercent = Math.round(
-        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
-      );
-
-      if (scrollPercent > maxScroll) {
-        maxScroll = scrollPercent;
-      }
-
-      milestones.forEach((milestone) => {
-        if (maxScroll >= milestone && !tracked.has(milestone)) {
-          tracked.add(milestone);
-          events.scrollDepth(milestone);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-}
-
-// Hook for tracking time on page
-export function useTimeOnPageTracking() {
-  useEffect(() => {
-    const startTime = Date.now();
-    const milestones = [1, 3, 5, 10]; // minutes
-    const tracked = new Set<number>();
-
-    const interval = setInterval(() => {
-      const minutes = Math.floor((Date.now() - startTime) / 60000);
-      
-      milestones.forEach((milestone) => {
-        if (minutes >= milestone && !tracked.has(milestone)) {
-          tracked.add(milestone);
-          events.timeOnPage(milestone);
-        }
-      });
-    }, 60000); // Check every minute
-
-    return () => clearInterval(interval);
-  }, []);
-}
+// Scroll-depth and time-on-page tracking used to be duplicated here as well
+// as in src/lib/analytics.tsx, and seven pages called this copy on top of the
+// global one that <TrackingProvider /> already runs site-wide. The result was
+// two scroll listeners per page firing GA4 `scroll_depth` twice per milestone
+// — from two different formulas, so the duplicates landed at different scroll
+// positions and neither number meant anything. The analytics module is the
+// single implementation now; nothing needs to call it per page.
 
 // Animated counter component
 interface AnimatedCounterProps {
@@ -220,29 +177,10 @@ export function StaggerContainer({ children, staggerDelay = 100, className = "" 
   );
 }
 
-// Parallax effect hook
-export function useParallax(speed: number = 0.5) {
-  const [offset, setOffset] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const scrolled = window.scrollY;
-      const elementTop = rect.top + scrolled;
-      const relativeScroll = scrolled - elementTop + window.innerHeight;
-      setOffset(relativeScroll * speed);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [speed]);
-
-  return { ref, offset };
-}
+// A `useParallax` hook lived here: it registered an unthrottled scroll
+// listener that called getBoundingClientRect() on every event — a forced
+// synchronous layout per scroll tick — and no component ever imported it.
+// Removed rather than fixed.
 
 // Magnetic button effect
 interface MagneticButtonProps {

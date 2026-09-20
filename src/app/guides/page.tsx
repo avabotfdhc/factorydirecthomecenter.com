@@ -11,8 +11,7 @@ export const metadata = genMeta({
 
 export default function GuidesPage() {
   return (
-    <>
-      {/* Hero */}
+    <>      {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">

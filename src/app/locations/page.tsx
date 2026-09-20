@@ -1,4 +1,4 @@
-import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
@@ -107,15 +107,7 @@ const STATES: Array<ServedCity["state"]> = ["Indiana", "Ohio", "Michigan"];
 
 export default function LocationsPage() {
   return (
-    <>
-      <StructuredData
-        data={structuredData.breadcrumb([
-          { name: "Home", url: "/" },
-          { name: "Locations", url: "/locations" },
-        ])}
-      />
-
-      {/* Hero */}
+    <>      {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">

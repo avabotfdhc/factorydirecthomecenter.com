@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
-import { FadeIn, StaggerContainer, useScrollTracking } from "@/components/VisualEffects";
+import { FadeIn, StaggerContainer } from "@/components/VisualEffects";
 import { PaymentCalculator } from "@/components/PaymentCalculator";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
@@ -30,7 +30,6 @@ const breadcrumbs = [{ name: "Home", url: "/" }, { name: "Guides", url: "/guides
 export default function BuyersGuidePage() {
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.faqPage(guideFAQs)} />
 
 

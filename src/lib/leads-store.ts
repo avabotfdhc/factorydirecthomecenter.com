@@ -11,6 +11,8 @@
 // Server-side only. Prefers the service-role key; falls back to the anon key,
 // which the table's "Allow anonymous lead inserts" policy permits.
 
+import { type Attribution, attributionColumns } from "./attribution";
+
 export interface StoredLead {
   fullName: string;
   /** "phone · email" — the column is NOT NULL, so never empty. */
@@ -20,6 +22,10 @@ export interface StoredLead {
   modelInterest: string;
   seriesInterest?: string;
   sourcePage?: string;
+  /** Where the visitor came from, read from the attribution cookie by the
+   *  caller. Null when the visitor opted out of tracking or arrived before
+   *  the cookie existed — the lead is still stored, just unattributed. */
+  attribution?: Attribution | null;
 }
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
@@ -60,6 +66,11 @@ export async function storeLead(lead: StoredLead): Promise<string | null> {
       model_interest: clean(lead.modelInterest, 160) || "Direct Inquiry",
       series_interest: clean(lead.seriesInterest, 60) || "Champion",
       source_page: clean(lead.sourcePage, 300) || null,
+      // Campaign columns. Added by
+      // supabase/migrations/20260920_lead_attribution.sql; PostgREST rejects
+      // the whole insert with a 400 if they are missing, which is why the
+      // migration has to be applied before this ships.
+      ...attributionColumns(lead.attribution ?? null),
     }),
   });
   if (!res.ok) {

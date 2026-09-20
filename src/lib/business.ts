@@ -17,6 +17,21 @@ export const BUSINESS_ID = `${SITE_URL}/#business`;
  *  their author, so Google reads one named human behind the site. */
 export const OWNER_ID = `${SITE_URL}/about#kyle-dudgeon`;
 
+/**
+ * The schema.org types the dealership publishes, in one place so the nested
+ * reference and the canonical node can never drift apart.
+ *
+ * `MobileHomeDealer` is the specific type schema.org defines for exactly this
+ * business ("A mobile-home dealer"), and it was missing. `AutoDealer` — which
+ * a manufactured-home dealer is sometimes tagged with because both sell
+ * titled, transported units — is wrong and actively harmful: it tells Google
+ * the business sells cars, and Vehicle/Car rich results are a different
+ * eligibility path entirely. `RealEstateAgent` and
+ * `HomeAndConstructionBusiness` stay because the dealership genuinely does
+ * both: it sells homes and it coordinates the site work.
+ */
+export const BUSINESS_TYPES = ["MobileHomeDealer", "RealEstateAgent", "HomeAndConstructionBusiness"] as const;
+
 export const BUSINESS = {
   legalName: "Factory Direct Homes Center LLC",
   name: "Factory Direct Homes Center",
@@ -98,7 +113,7 @@ export function businessAddressJsonLd(): Record<string, unknown> {
  */
 export function businessRef(): Record<string, unknown> {
   return {
-    "@type": ["RealEstateAgent", "HomeAndConstructionBusiness"],
+    "@type": [...BUSINESS_TYPES],
     "@id": BUSINESS_ID,
     name: BUSINESS.legalName,
     url: SITE_URL,
@@ -112,7 +127,7 @@ export function businessRef(): Record<string, unknown> {
 export function businessJsonLd(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
-    "@type": ["RealEstateAgent", "HomeAndConstructionBusiness"],
+    "@type": [...BUSINESS_TYPES],
     "@id": BUSINESS_ID,
     name: BUSINESS.legalName,
     alternateName: BUSINESS.name,

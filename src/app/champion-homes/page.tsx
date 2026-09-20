@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
+import { generateMetadata as genMeta } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
@@ -66,15 +66,7 @@ const championFAQs = [
 
 export default function ChampionHomesPage() {
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <StructuredData
-        data={structuredData.breadcrumb([
-          { name: "Home", url: "/" },
-          { name: "Champion Homes", url: "/champion-homes" },
-        ])}
-      />
-
-      {/* Hero */}
+    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
       <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-5">

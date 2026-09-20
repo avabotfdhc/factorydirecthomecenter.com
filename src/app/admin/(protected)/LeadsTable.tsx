@@ -12,6 +12,17 @@ export interface LeadRow {
   address?: string; // free-text note field (interest/timeframe/message summary)
   createdAt?: string;
   deliveryStateDetails?: { name?: string } | null;
+  /** Where the visitor came from (src/lib/attribution.ts). Undefined for
+   *  leads captured before attribution existed, or from a visitor who opted
+   *  out of tracking. */
+  attribution?: {
+    /** "google / cpc", "chatgpt / ai", "direct / none". */
+    lastTouch: string;
+    /** Only set when it differs from the last touch. */
+    firstTouch?: string;
+    campaign?: string;
+    landingPage?: string;
+  };
 }
 
 function fmtDate(iso?: string): string {
@@ -35,6 +46,7 @@ export function LeadsTable({ leads }: { leads: LeadRow[] }) {
             <th className="p-3">Interest</th>
             <th className="p-3">Delivery</th>
             <th className="p-3">Source</th>
+            <th className="p-3">Came from</th>
             <th className="p-3">Note</th>
             <th className="p-3">Date</th>
           </tr>
@@ -60,6 +72,26 @@ export function LeadsTable({ leads }: { leads: LeadRow[] }) {
               <td className="p-3 text-[var(--color-gray)]">{l.floorTitle || "—"}</td>
               <td className="p-3 text-[var(--color-gray)] whitespace-nowrap">{l.deliveryStateDetails?.name || "—"}</td>
               <td className="p-3 text-[var(--color-gray)] whitespace-nowrap">{l.leadSource || "—"}</td>
+              <td className="p-3 text-[var(--color-gray)] max-w-[16rem]">
+                {l.attribution ? (
+                  <>
+                    <span className="font-medium text-[var(--color-charcoal)]">{l.attribution.lastTouch}</span>
+                    {l.attribution.campaign && (
+                      <span className="block text-xs">{l.attribution.campaign}</span>
+                    )}
+                    {l.attribution.firstTouch && (
+                      <span className="block text-xs italic">first: {l.attribution.firstTouch}</span>
+                    )}
+                    {l.attribution.landingPage && (
+                      <span className="block text-xs truncate" title={l.attribution.landingPage}>
+                        {l.attribution.landingPage}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  "—"
+                )}
+              </td>
               <td className="p-3 text-[var(--color-gray)] max-w-[26rem]">
                 <span className="line-clamp-2">{l.address || "—"}</span>
               </td>

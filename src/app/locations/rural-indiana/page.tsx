@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
-import { FadeIn, StaggerContainer, AnimatedCounter, useScrollTracking } from "@/components/VisualEffects";
+import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 
@@ -46,7 +46,6 @@ const relatedPages = [{ title: "Noble County", url: "/locations/noble-county", d
 export default function RuralIndianaPage() {
   return (
     <>
-      <StructuredData data={structuredData.breadcrumb(breadcrumbs)} />
       <StructuredData data={structuredData.article({ headline: "Manufactured Homes Rural Indiana", description: "Champion homes for rural Indiana counties", image: "/images/doublewide-exterior.webp", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/rural-indiana" })} />
       <StructuredData data={structuredData.service({ name: "Rural Indiana Manufactured Home Delivery", description: "Manufactured home delivery to rural counties in northeast Indiana", provider: "Factory Direct Homes Center", areaServed: "Rural Indiana" })} />
       <StructuredData data={structuredData.faqPage(locationFAQs)} />

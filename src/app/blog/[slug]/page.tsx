@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
-import { StructuredData } from "@/lib/seo";
+import { StructuredData, structuredData } from "@/lib/seo";
 import { PostImage } from "@/components/PostImage";
 import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl } from "@/lib/image-alt";
@@ -44,26 +44,33 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
   const post = await getApiBlogBySlug(slug).catch(() => null);
   if (!post) notFound();
 
-  const articleLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
+  // Built by the shared generator rather than by hand. The hand-rolled node
+  // this replaces had two defects: it published NO `datePublished`, which
+  // Google requires on Article and without which the post is ineligible for
+  // an article rich result at all; and its `publisher` was a bare Organization
+  // with no `@id`, so every post announced a *second* organisation called
+  // "Factory Direct Homes Center" alongside the real `#business` node. That is
+  // the same duplicate-entity defect src/lib/business.ts was written to stop,
+  // just wearing Organization instead of LocalBusiness — which is why the
+  // existing guard in tests/structured-data.test.ts did not catch it.
+  //
+  // `post.date` is a display string ("September 18, 2026"), so it is parsed
+  // back to a date and only sent when it actually parses. A wrong date is
+  // worse than none.
+  const published = Number.isFinite(Date.parse(post.date))
+    ? new Date(Date.parse(post.date)).toISOString().slice(0, 10)
+    : undefined;
+  const articleLd = structuredData.article({
     headline: post.title,
     description: post.excerpt,
-    ...(post.image ? { image: post.image } : {}),
-    author: { "@type": "Organization", name: "Factory Direct Homes Center" },
-    publisher: {
-      "@type": "Organization",
-      name: "Factory Direct Homes Center",
-      logo: { "@type": "ImageObject", url: `${SITE}/images/logo.png` },
-    },
-    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE}/blog/${post.slug}` },
-  };
+    image: post.image || "/images/hero-home.jpg",
+    datePublished: published ?? "",
+    url: `/blog/${post.slug}`,
+  });
 
   return (
     <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <StructuredData data={articleLd} />
-
-      <div className="border-b border-[var(--color-charcoal)]/5 bg-white">
+      {published ? <StructuredData data={articleLd} /> : null}      <div className="border-b border-[var(--color-charcoal)]/5 bg-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 py-4 text-sm text-[var(--color-gray)]">
           <Link href="/blog" className="hover:text-[var(--color-teal)]">Blog</Link>
           <span className="mx-2 text-[var(--color-gray-light)]">/</span>
