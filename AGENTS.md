@@ -233,3 +233,35 @@ thin-content pattern and competes with the floor-plan pages that should rank.
 The query logic lives in `src/lib/site-search.ts`, shared by the page and `GET /api/search`.
 `tests/internal-links.test.ts` fails if the SearchAction ever points at a route that does
 not exist.
+
+# Lint runs in CI, and the count cannot grow again
+
+`.github/workflows/test.yml` ran `npm test` and `tsc --noEmit` but never ESLint. That is how
+the repo accumulated **73 errors and 28 warnings** by 2026-09-20 without anyone noticing —
+including a `getImageProps` helper that accepted a `customAlt` and never returned it, so the
+first caller would have shipped images with no alt text.
+
+`npm run lint` is now a CI step, and the script passes `--max-warnings 0` so local and CI
+agree and a *warning* fails too. Three consequences worth knowing:
+
+- **A new violation of any rule fails the build.** Verified by injecting one of each and
+  watching CI's own command reject it.
+- **`react-hooks/set-state-in-effect` stays at error level.** Six known sites are suppressed
+  individually with `// eslint-disable-next-line` plus a `KNOWN LINT DEBT` comment naming the
+  intended fix: `admin/campaigns`, `contact-us/ContactForm`, `floor-plans/FloorPlansGrid`,
+  `AnnouncementBar`, and `PaymentCalculator` (×2). Suppressing them one by one rather than
+  downgrading the rule means a *seventh* violation anywhere still fails. Grep
+  `KNOWN LINT DEBT` for the list.
+- **Stale suppressions fail too.** An unused `eslint-disable` directive is reported as a
+  warning, and warnings fail — so fixing one of those six forces its now-pointless comment to
+  be deleted in the same change instead of rotting there.
+
+Four `<img>` elements are suppressed on purpose: the Meta Pixel `<noscript>` beacon (next/image
+renders nothing without JavaScript, which is the only case that element exists for) and two
+admin thumbnails behind auth (never indexed, never an LCP element, and routing arbitrary
+storage paths through the optimiser bills a transform per thumbnail for nothing).
+
+`.claude/**` is in `globalIgnores` — agent scratch, not application code.
+
+Do not add a blanket rule downgrade or a file-level `/* eslint-disable */` to get a change
+through. Suppress the one line, say why, and say what the real fix is.

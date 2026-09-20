@@ -225,23 +225,10 @@ export function MagneticButton({ children, className = "", onClick }: MagneticBu
 }
 
 // Image zoom on hover
-interface ZoomImageProps {
-  src: string;
-  alt: string;
-  className?: string;
-}
-
-export function ZoomImage({ src, alt, className = "" }: ZoomImageProps) {
-  return (
-    <div className={`overflow-hidden ${className}`}>
-      <img
-        src={src}
-        alt={alt}
-        className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-110"
-      />
-    </div>
-  );
-}
+// A `ZoomImage` component lived here — a plain <img> with a hover-scale
+// wrapper — and nothing imported it. The lightbox (src/components/
+// ImageLightbox.tsx) is what the site actually uses for enlargeable imagery,
+// and it goes through next/image.
 
 // Text reveal animation
 interface TextRevealProps {

@@ -86,6 +86,10 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   // Seed filters from the homepage search deep link after hydration.
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
+    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Same shape as
+    // ContactForm: five filters seeded from the homepage deep link after
+    // hydration. Fix: useSearchParams() in a Suspense boundary.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (q.get("type")) setType((q.get("type") || "").replace("double", "multi"));
     if (q.get("width")) setWidth(Number(q.get("width")) || 0);
     if (q.get("sqft")) setMinSqft(Number(q.get("sqft")) || 0);

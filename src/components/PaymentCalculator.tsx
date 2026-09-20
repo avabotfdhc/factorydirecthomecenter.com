@@ -74,6 +74,13 @@ export function PaymentCalculator() {
 
   useEffect(() => {
     const rate = creditTierRates[state.loanType][state.creditTier];
+    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Derived state written
+    // back into state: changing the credit tier renders once with the old
+    // rate, then again with the new one.
+    // Fix: compute interestRate during render instead of storing it. Do it
+    // with a test over the amortisation maths — this component shows payment
+    // figures to buyers and a silent arithmetic regression is expensive.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setState((prev) => ({ ...prev, interestRate: rate }));
   }, [state.creditTier, state.loanType]);
 
@@ -83,6 +90,10 @@ export function PaymentCalculator() {
     const numberOfPayments = state.loanTerm * 12;
 
     if (principal <= 0) {
+      // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". The whole payment
+      // calculation is derived state; it belongs in a useMemo during render.
+      // Same caveat as above: change it behind a test.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMonthlyPayment(0);
       setTotalInterest(0);
       setTotalCost(state.downPayment);

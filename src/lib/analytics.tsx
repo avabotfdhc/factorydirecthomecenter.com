@@ -160,6 +160,9 @@ export function FacebookPixel() {
         `}
       </Script>
       <noscript>
+        {/* eslint-disable-next-line @next/next/no-img-element -- a tracking
+            beacon inside <noscript>: next/image renders nothing without
+            JavaScript, which is the only case this element exists for. */}
         <img
           height="1"
           width="1"
@@ -752,7 +755,7 @@ function useDeferUntilInteraction(timeoutMs = 6000): boolean {
     events.forEach((e) => window.addEventListener(e, trigger, opts));
     timer = window.setTimeout(trigger, timeoutMs);
     return cleanup;
-  }, [ready]);
+  }, [ready, timeoutMs]);
   return ready;
 }
 

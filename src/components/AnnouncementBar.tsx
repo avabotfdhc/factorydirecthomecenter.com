@@ -19,6 +19,13 @@ export function AnnouncementBar() {
   const [sale, setSale] = useState(() => getSaleStatus());
   useEffect(() => {
     const current = getSaleStatus();
+    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Deliberately re-reads
+    // the sale clock on the client so a phase change is picked up without
+    // rebuilding the cached shell; the lazy initialiser above ran on the
+    // server. getSaleStatus() returns a fresh object each call, so this always
+    // re-renders even when nothing changed.
+    // Fix: compare the phase and only set when it actually differs.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSale(current);
     if (!current.active) setExpired(true);
   }, []);

@@ -7,7 +7,7 @@
     "build": "next build",
     "postbuild": "node scripts/render-sheet-previews.mjs && node scripts/migrate-legacy-media.mjs",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint --max-warnings 0",
     "test": "tsx --test tests/*.test.ts",
     "sheet-previews": "node scripts/render-sheet-previews.mjs",
     "legacy-media": "node scripts/migrate-legacy-media.mjs",

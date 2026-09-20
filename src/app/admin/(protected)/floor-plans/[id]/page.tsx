@@ -110,6 +110,10 @@ export default async function EditFloorPlanPage({ params }: { params: Promise<{ 
           {/* Banner */}
           <MediaBlock title="Banner photo" hint="The main card/hero image.">
             {p.banner_image ? (
+              // Admin-only preview behind auth: never indexed, never an LCP
+              // element, and routing arbitrary storage paths through the image
+              // optimiser bills a transform per thumbnail for no benefit.
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={publicUrl(p.banner_image)} alt="" className="h-32 rounded-lg border border-black/10 object-cover" />
             ) : (
               <span className="text-sm text-black/40">No banner yet.</span>
@@ -123,6 +127,7 @@ export default async function EditFloorPlanPage({ params }: { params: Promise<{ 
             <div className="flex flex-wrap gap-3">
               {images.map((img) => (
                 <div key={img.path} className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- admin thumbnail, see the banner above */}
                   <img src={publicUrl(img.path)} alt="" className="h-24 w-24 rounded-lg border border-black/10 object-cover" />
                   <span className="absolute bottom-1 left-1 text-[10px] bg-black/60 text-white px-1 rounded">{img.kind}</span>
                   <form action={removeImage} className="absolute -top-2 -right-2">
