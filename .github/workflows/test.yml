@@ -17,3 +17,10 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npx tsc --noEmit
+      # Lint was never wired up, which is how 73 errors and 28 warnings
+      # accumulated unnoticed by 2026-09-20. `npm run lint` passes
+      # --max-warnings 0, so a new warning fails the build too — including the
+      # "unused eslint-disable directive" warning, which means fixing one of
+      # the suppressed set-state-in-effect sites forces its now-stale
+      # suppression comment to be deleted rather than left to rot.
+      - run: npm run lint

@@ -21,6 +21,10 @@ export default function CampaignsAdminPage() {
 
   useEffect(() => {
     const loaded = loadCampaigns();
+    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Reads browser storage
+    // on mount, so it cannot be a lazy initialiser without breaking SSR.
+    // Fix: useSyncExternalStore, or move the read to a server component.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCampaigns(loaded);
     setIsLoading(false);
   }, []);

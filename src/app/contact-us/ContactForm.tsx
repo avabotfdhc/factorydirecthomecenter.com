@@ -34,6 +34,12 @@ export default function ContactForm() {
     const q = new URLSearchParams(window.location.search);
     const home = q.get("home") || "";
     const visit = q.get("visit") === "1" || q.get("tour") === "1";
+    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Seeds the message
+    // from ?home= / &visit= after hydration; reading window.location during
+    // render would mismatch the server HTML.
+    // Fix: useSearchParams() in a Suspense boundary, which Next resolves on
+    // the server so the first paint is already correct.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (home || visit) setPrefill({ home, visit });
   }, []);
 

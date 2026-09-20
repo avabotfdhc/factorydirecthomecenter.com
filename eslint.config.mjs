@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Agent scratch, not application code — CommonJS one-off scripts that
+    // are never built, imported or shipped.
+    ".claude/**",
   ]),
 ]);
 
