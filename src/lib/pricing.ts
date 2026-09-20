@@ -145,15 +145,26 @@ export const factoryCosts: Record<string, FactoryCost> = {
 let activeCampaigns: SalesCampaign[] = [];
 
 // Load campaigns from localStorage (client-side) or env (server-side)
-export function loadCampaigns(): SalesCampaign[] {
-  if (typeof window !== 'undefined') {
-    const stored = localStorage.getItem('fdhc_sales_campaigns');
-    if (stored) {
-      try {
-        activeCampaigns = JSON.parse(stored);
-      } catch (e) {
-        console.error('Failed to parse campaigns:', e);
-      }
+/** localStorage entry the campaign editor persists to. */
+export const CAMPAIGNS_STORAGE_KEY = "fdhc_sales_campaigns";
+
+/**
+ * Campaigns from storage, falling back to whatever is already in memory.
+ *
+ * `raw` lets a caller that has ALREADY snapshotted the storage entry pass it
+ * in — the admin editor does, so the entry is what its memo depends on rather
+ * than an invisible read of `localStorage` behind React's back. Omitting it
+ * reads storage directly, as before. Either way the module-level cache is
+ * refreshed, which `addCampaign` and `getActiveCampaign` rely on.
+ */
+export function loadCampaigns(raw?: string | null): SalesCampaign[] {
+  const stored =
+    raw !== undefined ? raw : typeof window !== 'undefined' ? localStorage.getItem(CAMPAIGNS_STORAGE_KEY) : null;
+  if (stored) {
+    try {
+      activeCampaigns = JSON.parse(stored);
+    } catch (e) {
+      console.error('Failed to parse campaigns:', e);
     }
   }
   return activeCampaigns;
@@ -163,7 +174,7 @@ export function loadCampaigns(): SalesCampaign[] {
 export function saveCampaigns(campaigns: SalesCampaign[]): void {
   activeCampaigns = campaigns;
   if (typeof window !== 'undefined') {
-    localStorage.setItem('fdhc_sales_campaigns', JSON.stringify(campaigns));
+    localStorage.setItem(CAMPAIGNS_STORAGE_KEY, JSON.stringify(campaigns));
   }
 }
 
@@ -347,6 +358,6 @@ export const exampleCampaigns: SalesCampaign[] = [
 ];
 
 // Initialize with example campaigns (remove in production)
-if (typeof window !== 'undefined' && !localStorage.getItem('fdhc_sales_campaigns')) {
+if (typeof window !== 'undefined' && !localStorage.getItem(CAMPAIGNS_STORAGE_KEY)) {
   saveCampaigns(exampleCampaigns);
 }

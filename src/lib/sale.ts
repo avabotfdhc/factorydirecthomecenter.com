@@ -74,7 +74,7 @@ const SALE_TIME_ZONE = "America/New_York";
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 /** Today's calendar date in the dealership's time zone, as "YYYY-MM-DD". */
-function todayInSaleZone(now: Date): string {
+export function todayInSaleZone(now: Date = new Date()): string {
   // en-CA formats as YYYY-MM-DD, which is also lexicographically sortable —
   // so phase windows can be compared as plain strings, with no date math and
   // no chance of a UTC-vs-local off-by-one.
@@ -136,8 +136,19 @@ export interface SaleStatus {
  * a browser render agree regardless of where the visitor is.
  */
 export function getSaleStatus(now: Date = new Date()): SaleStatus {
-  const today = todayInSaleZone(now);
+  return saleStatusForDay(todayInSaleZone(now));
+}
 
+/**
+ * The sale status for one calendar day, as "YYYY-MM-DD" in the dealership's
+ * time zone.
+ *
+ * Split out from `getSaleStatus` because the status is a pure function of the
+ * day and nothing else: a client component can then snapshot the day — a
+ * stable, comparable string — and recompute only when it actually rolls over,
+ * instead of re-deriving a fresh object on every render. See AnnouncementBar.
+ */
+export function saleStatusForDay(today: string): SaleStatus {
   const phase = SALE_PHASES.find((p) => today >= p.startDate && today <= p.endDate) ?? null;
 
   // Outside any phase, fall back to whichever phase is nearest in time so the

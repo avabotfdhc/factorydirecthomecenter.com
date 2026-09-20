@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
+import { amortise, rateFor, type CreditTier, type LoanType } from "@/lib/payment-math";
 import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
 import { H3 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
@@ -9,32 +10,10 @@ interface CalculatorState {
   homePrice: number;
   downPayment: number;
   downPaymentPercent: number;
-  interestRate: number;
   loanTerm: number;
-  creditTier: "excellent" | "good" | "fair" | "poor";
-  loanType: "chattel" | "land-home" | "conventional";
+  creditTier: CreditTier;
+  loanType: LoanType;
 }
-
-const creditTierRates: Record<string, Record<string, number>> = {
-  chattel: {
-    excellent: 7.99,
-    good: 9.99,
-    fair: 12.99,
-    poor: 15.99,
-  },
-  "land-home": {
-    excellent: 6.5,
-    good: 7.0,
-    fair: 7.5,
-    poor: 8.5,
-  },
-  conventional: {
-    excellent: 6.75,
-    good: 7.25,
-    fair: 8.0,
-    poor: 9.5,
-  },
-};
 
 const loanTypeInfo = {
   chattel: {
@@ -62,55 +41,34 @@ export function PaymentCalculator() {
     homePrice: 85000,
     downPayment: 8500,
     downPaymentPercent: 10,
-    interestRate: 9.99,
     loanTerm: 20,
     creditTier: "good",
     loanType: "chattel",
   });
 
-  const [monthlyPayment, setMonthlyPayment] = useState(0);
-  const [totalInterest, setTotalInterest] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
-
-  useEffect(() => {
-    const rate = creditTierRates[state.loanType][state.creditTier];
-    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Derived state written
-    // back into state: changing the credit tier renders once with the old
-    // rate, then again with the new one.
-    // Fix: compute interestRate during render instead of storing it. Do it
-    // with a test over the amortisation maths — this component shows payment
-    // figures to buyers and a silent arithmetic regression is expensive.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setState((prev) => ({ ...prev, interestRate: rate }));
-  }, [state.creditTier, state.loanType]);
-
-  useEffect(() => {
-    const principal = state.homePrice - state.downPayment;
-    const monthlyRate = state.interestRate / 100 / 12;
-    const numberOfPayments = state.loanTerm * 12;
-
-    if (principal <= 0) {
-      // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". The whole payment
-      // calculation is derived state; it belongs in a useMemo during render.
-      // Same caveat as above: change it behind a test.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setMonthlyPayment(0);
-      setTotalInterest(0);
-      setTotalCost(state.downPayment);
-      return;
-    }
-
-    const monthlyPaymentCalc =
-      (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
-
-    const totalCostCalc = monthlyPaymentCalc * numberOfPayments + state.downPayment;
-    const totalInterestCalc = totalCostCalc - state.homePrice;
-
-    setMonthlyPayment(monthlyPaymentCalc);
-    setTotalInterest(totalInterestCalc);
-    setTotalCost(totalCostCalc);
-  }, [state]);
+  // Derived during render, not stored.
+  //
+  // Both of these used to be effects that set state: one wrote the rate back
+  // into `state` whenever the tier or product changed, the other wrote the
+  // three totals. Every input change therefore painted once with the previous
+  // figures and again with the new ones — a visible flicker of stale money on
+  // a page whose whole job is showing a number, and two extra renders per
+  // keystroke on the price slider.
+  //
+  // The arithmetic lives in src/lib/payment-math.ts and its outputs are pinned
+  // by tests/payment-math.test.ts against what this component produced before
+  // the change.
+  const interestRate = rateFor(state.loanType, state.creditTier);
+  const { monthlyPayment, totalInterest, totalCost } = useMemo(
+    () =>
+      amortise({
+        homePrice: state.homePrice,
+        downPayment: state.downPayment,
+        interestRate,
+        loanTerm: state.loanTerm,
+      }),
+    [state.homePrice, state.downPayment, interestRate, state.loanTerm],
+  );
 
   const handleHomePriceChange = (value: number) => {
     const downPayment = (value * state.downPaymentPercent) / 100;
@@ -292,7 +250,7 @@ export function PaymentCalculator() {
                   {formatCurrency(monthlyPayment)}
                 </div>
                 <p className="text-sm text-[var(--color-gray)] mt-2">
-                  at {state.interestRate}% APR
+                  at {interestRate}% APR
                 </p>
               </div>
 

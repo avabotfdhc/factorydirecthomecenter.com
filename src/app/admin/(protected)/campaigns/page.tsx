@@ -1,11 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { SalesCampaign, loadCampaigns, saveCampaigns, addCampaign } from "@/lib/pricing";
+import { useMemo, useState } from "react";
+import { CAMPAIGNS_STORAGE_KEY, SalesCampaign, loadCampaigns, saveCampaigns, addCampaign } from "@/lib/pricing";
+import { useIsHydrated, useLocalStorageValue } from "@/lib/use-browser-value";
 
 export default function CampaignsAdminPage() {
-  const [campaigns, setCampaigns] = useState<SalesCampaign[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Campaigns live in localStorage, which only exists in the browser. This
+  // used to be state filled in by a mount effect; it is now a snapshot of the
+  // stored entry, with the editor's own changes layered on top.
+  //
+  // `stored` recomputes when the raw entry changes; `edited` holds whatever
+  // the admin has done since, so the three handlers below still just call
+  // setCampaigns(...). `isLoading` is now honest: it means "the browser has
+  // not been read yet", which is exactly the server render and hydration, and
+  // is distinct from "read it, found nothing".
+  const hydrated = useIsHydrated();
+  const storedRaw = useLocalStorageValue(CAMPAIGNS_STORAGE_KEY);
+  const stored = useMemo(() => loadCampaigns(storedRaw), [storedRaw]);
+  const [edited, setCampaigns] = useState<SalesCampaign[] | null>(null);
+  const campaigns = edited ?? stored;
+  const isLoading = !hydrated;
   
   // Form state
   const [showForm, setShowForm] = useState(false);
@@ -18,16 +32,6 @@ export default function CampaignsAdminPage() {
     applicableModels: "all",
     isActive: true,
   });
-
-  useEffect(() => {
-    const loaded = loadCampaigns();
-    // KNOWN LINT DEBT — see AGENTS.md "Lint runs in CI". Reads browser storage
-    // on mount, so it cannot be a lazy initialiser without breaking SSR.
-    // Fix: useSyncExternalStore, or move the read to a server component.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setCampaigns(loaded);
-    setIsLoading(false);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
