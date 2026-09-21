@@ -304,3 +304,31 @@ Derived values are computed during render, not stored:
 Editable state seeded from a URL (`FloorPlansGrid`) uses React's adjust-during-render pattern
 against the query string it came from — never an effect. Only a parameter that is actually
 present overrides the current value, so a filter the shopper has cleared is not re-applied.
+
+# A page tells the layout which home it is about
+
+`MobileActionBar` is in the root layout, so it asks for a quote from every page
+on the site. Until 2026-09-21 that quote was always `modelName="Direct Inquiry"` —
+including on `/floor-plans/[slug]`, the one page where the buyer's interest is
+unambiguous. The floor-plan *cards* already passed `p.name`, so a quote taken
+from the grid reached DealerTide, Supabase and the alert email better attributed
+than a quote taken from the detail page.
+
+`src/lib/current-home.ts` is the handover. The plan page renders
+`<CurrentHome name={plan.name} series={plan.series} />` (renders nothing); the
+bar reads it with `useCurrentHome()`.
+
+- **Not React context** — context flows down, and the bar is a sibling of
+  `{children}`, not a descendant.
+- **Not a route lookup** — the pathname carries the slug, but turning a slug into
+  a display name in the browser means shipping the catalogue to it.
+- **The snapshot is an encoded string**, for the `Object.is` reason in
+  `use-browser-value.ts`. Returning a fresh `{ name, series }` per call is an
+  infinite render loop.
+- **Registration is an effect, and its cleanup only clears its own value.** React
+  does not promise an order between the departing page's cleanup and the arriving
+  page's effect; without that guard, a plan→plan navigation silently drops back to
+  "Direct Inquiry". Both orders are covered in `tests/current-home.test.ts`.
+
+Anything else in the layout that should know the current home reads the same hook.
+Do not add a second channel.

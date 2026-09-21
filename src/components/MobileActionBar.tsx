@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { trackPhoneClick, trackEvent } from "@/lib/analytics";
+import { trackPhoneClick, trackEvent, trackCTAClick } from "@/lib/analytics";
 import { useBottomBarHeight } from "@/lib/bottom-bars";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
+import { useCurrentHome } from "@/lib/current-home";
 
 // Sticky call / text / quote bar on phones (hidden at md and up).
 //
@@ -12,7 +13,11 @@ import PriceQuoteModal from "@/components/PriceQuoteModal";
 //   messaging app with our number (the old Text button showed a fake "message
 //   sent" form that went nowhere).
 // - Get Quote opens the instant-quote modal in place instead of bouncing the
-//   visitor to /contact-us.
+//   visitor to /contact-us. On a page that has declared which home it is about
+//   (see src/lib/current-home.ts) the quote carries that home; everywhere else
+//   it is a general enquiry. Before that, a quote taken from a floor-plan page
+//   — the page where the buyer's interest is least ambiguous — reached the CRM
+//   as "Direct Inquiry" with no home on it.
 // Publishes --mobile-bar-h so the compare bar and chat bubble stack above it.
 
 const SMS_HREF =
@@ -23,6 +28,7 @@ export function MobileActionBar() {
   const t = useTranslations("mobileBar");
   const [isVisible, setIsVisible] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
+  const home = useCurrentHome();
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -71,7 +77,10 @@ export function MobileActionBar() {
 
             <button
               type="button"
-              onClick={() => setQuoteOpen(true)}
+              onClick={() => {
+                trackCTAClick("mobile_bar_quote", "mobile_action_bar", home?.name ?? "general");
+                setQuoteOpen(true);
+              }}
               className="flex flex-col items-center gap-1 px-6 py-2 bg-[var(--color-teal)] text-white rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -83,7 +92,12 @@ export function MobileActionBar() {
         </nav>
       )}
 
-      <PriceQuoteModal isOpen={quoteOpen} onClose={() => setQuoteOpen(false)} modelName="Direct Inquiry" />
+      <PriceQuoteModal
+        isOpen={quoteOpen}
+        onClose={() => setQuoteOpen(false)}
+        modelName={home?.name ?? "Direct Inquiry"}
+        series={home?.series || "Champion"}
+      />
     </>
   );
 }
