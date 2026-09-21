@@ -11,6 +11,7 @@ import { buildPlanNarrative, planTypeLabel } from "@/lib/plan-content";
 import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanActions } from "@/components/QuoteModal";
+import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
@@ -242,6 +243,11 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 <span><strong>{plan.bedsMin !== undefined || plan.bedsMax !== undefined ? "Flexible bedrooms" : "Factory option"}:</strong> {plan.flexNote}</span>
               </p>
             )}
+
+            {/* Tells the layout's sticky mobile bar which home this page is
+                about, so its quote carries the plan instead of "Direct
+                Inquiry". */}
+            <CurrentHome name={plan.name} series={plan.series} />
 
             <FloorPlanActions
               homeName={plan.name}
