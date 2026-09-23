@@ -47,7 +47,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
   financing: [
     {
       question: "What credit score do I need to finance a manufactured home?",
-      answer: "Our lending partners work with a range of credit profiles. Generally, 575+ for chattel loans, but we have options for various situations. The best rates go to buyers with 650+ credit scores. We can help you understand your options regardless of your credit history.",
+      answer: "Lenders on our list work with a range of credit profiles — generally 575+ for chattel loans, with stronger rates above 650. Each one sets its own standards, so ask them directly. We are not a lender, we do not pull credit, and we do not recommend one lender over another.",
     },
     {
       question: "How much down payment is required for a manufactured home?",

@@ -227,7 +227,7 @@ async function visitorContext(path: string, captured: { lead: boolean; visit: bo
   else if (/^\/series\/([\w-]+)/.test(path)) lines.push(`The visitor is on the ${path.split("/")[2]} series hub (${path}).`);
   else if (/^\/homes-on-sale/.test(path)) lines.push(`The visitor is on the sale page (${path}) — lead with the running sale and the featured homes.`);
   else if (/^\/locations\/([\w-]+)/.test(path)) lines.push(`The visitor is on the location page for ${path.split("/")[2].replace(/-/g, " ")} (${path}) — assume that is their area unless told otherwise.`);
-  else if (/^\/financing/.test(path)) lines.push("The visitor is on the financing page — expect payment, credit and lender questions; offer pre-qualification.");
+  else if (/^\/financing/.test(path)) lines.push("The visitor is on the financing page — expect payment, credit and lender questions. We are not a lender, do not arrange financing and do not pull credit; offer the lender list without recommending one.");
   else if (/^\/options/.test(path)) lines.push("The visitor is on the factory options and selections page.");
   else if (/^\/design-your-home/.test(path)) lines.push("The visitor is using the Design Your Home tool — help them pick a plan and options, then request the quote.");
   else if (/^\/guides/.test(path)) lines.push(`The visitor is reading a buyer guide (${path}).`);

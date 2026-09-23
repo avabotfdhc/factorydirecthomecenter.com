@@ -308,7 +308,7 @@ export default function FinancingPage() {
           </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
             Pre-qualification shows sellers you’re serious, helps you understand your budget, 
-            and speeds up the buying process. We work with multiple lenders to find your best option.
+            and speeds up the buying process. You arrange it with a lender you choose — we are not a lender and do not recommend one.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

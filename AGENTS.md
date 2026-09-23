@@ -431,3 +431,54 @@ generic one. One file is Champion's own typo, `famiy-room`; not worth a pattern.
 locks the filename shapes. No image in the repo is missing meaningful alt text:
 five `alt=""` are genuinely decorative (a 20%-opacity quote mark, a 7%-opacity
 background, two admin thumbnails behind auth, the Meta Pixel noscript beacon).
+
+# We do not do financing. The buyer picks their own lender, and we rank nobody
+
+Kyle, 2026-09-23: *"we don't do financing at all. Clients choose their own
+financial lender we provide them a list our clients have done business with in
+the past but we make no recommendations and we do not pull credit."* That is
+the same shape of drift as the site-work one, and it carries more weight —
+offering to arrange credit, or steering a buyer to one lender, is what
+separates a dealer from a credit broker.
+
+Removed the same day, across sixteen places:
+
+- `/financing` carried **two** lender presentations. The lower one is the
+  neutral table from `lenders.ts` with `LENDER_DISCLAIMER`. The upper one was a
+  `lendingPartners` array of five promotional cards — "One of the nation's
+  largest manufactured home lenders", "Industry leader" — each with a
+  `bestFor:` field rendered under a **"Best for:"** label. A per-lender ranking
+  with no verb in it, a few hundred pixels above the table that says we
+  recommend nobody. The page contradicted itself; the array and its section are
+  gone and the directory now carries the neutrality sentence.
+- Its CTA said **"We'll connect you with the right lender for your situation"**,
+  the Contact card offered **"personalized financing guidance from our team"**,
+  an AEO answer opened **"Our primary lenders include…"**, and "Sources &
+  References" cited two of the ten lenders as **"Leading…"** and **"Industry
+  leader…"** (now CFPB and HUD, who rank nobody).
+- The one nothing could see: a **`Service` node named "Manufactured Home
+  Financing" with the dealership as its `provider`**. Invisible to a visitor
+  and to a copy guard, and it told Google we are in the lending business. The
+  remaining `structuredData.service` nodes are all sales and delivery.
+- The rest were sentences in `ava-knowledge.ts`, `faqs.ts`, `about`,
+  `HomeSections`, `local-posts`, two guides and three location pages.
+
+What we may say: we hand over a list of lenders our customers have used, we
+name no favourite, and a buyer may apply to as many as they like. What we may
+not say: that we offer, arrange, broker or help compare financing; that any
+lender is ours, primary, preferred or best for anything; or that we pull,
+run or check credit.
+
+`tests/disclaimers.test.ts` guards it three ways, because one scan missed each
+of the other two shapes:
+
+- **Sentences** — the "we…" claim patterns. Their clause guards stop at `;`,
+  and an HTML entity carries one, so `We&apos;ll connect you with the right
+  lender` walked straight through the first version. Entities are flattened
+  before matching now; four real phrasings were injected and confirmed caught.
+- **Data fields** — a recommendation label ("best for", "ideal for", "top
+  pick") within eight lines of a named lender. A loan *type* may still be
+  "best for buyers without land"; that is product education. Naming a company
+  next to it is what makes it a recommendation.
+- **Schema** — a `structuredData.service` whose name or description mentions
+  financing, a loan, credit, lending or a mortgage.

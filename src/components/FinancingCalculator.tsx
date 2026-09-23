@@ -5,7 +5,7 @@ import { trackPhoneClick } from "@/lib/analytics";
 
 // Chattel vs land-home payment estimator for /financing.
 //
-// Rates are illustrative market estimates for the loan types our lenders
+// Rates are illustrative market estimates for the loan types the lenders on
 // write (chattel ≈ 9.5% over 20 years, land-home ≈ 7.25% over 30 years); the
 // Regulation Z disclosure below the result is mandatory and must stay with it.
 

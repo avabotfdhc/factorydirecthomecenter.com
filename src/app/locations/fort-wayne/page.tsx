@@ -107,7 +107,7 @@ const locationFAQs = [
   },
   {
     question: "What financing options are available for Fort Wayne buyers?",
-    answer: "Fort Wayne buyers have access to all our financing options including chattel loans, land-home packages, and conventional financing for modular homes. We work with local credit unions like 3Rivers Federal Credit Union and national lenders like 21st Mortgage. Many Fort Wayne customers appreciate our line-item pricing that lets them use their own contractors for site work."
+    answer: "Fort Wayne buyers use the same routes as everyone else — chattel loans, land-home packages and conventional financing for modular homes. We are not a lender and do not arrange financing; you choose your own. Our list includes local credit unions and national lenders. Many Fort Wayne customers appreciate our line-item pricing that lets them use their own contractors for site work."
   },
   {
     question: "Do you offer site work and foundation services in Fort Wayne?",

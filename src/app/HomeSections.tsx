@@ -326,8 +326,8 @@ export function AnimatedHomeSections() {
           </H2>
           <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto mb-6" />
           <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8 max-w-2xl mx-auto">
-            Chattel loans and land-home financing available through our trusted lending partners.
-            We&rsquo;ll guide you through pre-qualification and help you find the right option.
+            Chattel loans and land-home financing are both common for manufactured homes.
+            We are not a lender and make no recommendation &mdash; you choose your own, from a list of lenders our customers have used.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <MagneticButton>
