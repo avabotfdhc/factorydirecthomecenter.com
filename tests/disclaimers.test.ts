@@ -153,3 +153,52 @@ test("no HTML entity is interpolated into JSX, where it would render literally",
     "these lines put an HTML entity inside a JSX expression; use the real character (’ — …) instead",
   );
 });
+
+// FDHC sells the home and arranges delivery. The buyer owns site work, setup,
+// foundations, utilities and the permits — that is the whole reason a quote
+// here is not padded with them (Kyle, 2026-09-23: "Clients are responsible for
+// all of their own site work, setup, and foundation work. Our model has not
+// changed."). Copy that says otherwise is both a claim we cannot stand behind
+// and a promise a buyer could rely on.
+//
+// /guides/zoning offered "free zoning checks" including "setback calculations",
+// and five other pages said some form of "we verify zoning for your property".
+// All removed 2026-09-23.
+test("no page claims FDHC performs site work, setup, foundations or zoning verification", () => {
+  const CLAIMS = [
+    // "we (will|can|help) verify/check/evaluate ... zoning"
+    /\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,45}\b(verify|verifies|check|checks|evaluate|evaluates)\b(?:(?!\byour\b)[^.\n;]){0,40}\bzoning\b/i,
+    // "we handle/perform/do ... site work | foundation | setup"
+    /\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,40}\b(perform|performs|handle|handles|install|installs|pour|pours|coordinate|coordinates|coordinating)\b(?:(?!\byour\b)[^.\n;]){0,40}\b(site work|site prep|foundation|footing|pier|setup|set-up|excavat|grading)\b/i,
+    /free zoning check/i,
+    /setback calculations/i,
+  ];
+  // "We recommend checking with the county" is advice, not a service, and
+  // "we do not perform site work" is the disclaimer itself. The clause guards
+  // above also stop a match running past a semicolon or a new subject, so
+  // "We arrange transport; your contractor handles the site" reads correctly.
+  const EXEMPT = /\b(we|our team)\b[^.\n]{0,20}\b(recommend|do not|don't|never|cannot|can't)\b/i;
+
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (entry.name.endsWith(".ts") || entry.name.endsWith(".tsx")) {
+        const rel = relative(process.cwd(), full).split(sep).join("/");
+        for (const [i, line] of readFileSync(full, "utf8").split("\n").entries()) {
+          if (EXEMPT.test(line)) continue;
+          if (CLAIMS.some((re) => re.test(line))) offenders.push(`${rel}:${i + 1}`);
+        }
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(
+    offenders,
+    [],
+    "these lines say FDHC does site work, setup, foundations or zoning verification — the buyer's contractors do",
+  );
+});

@@ -62,7 +62,7 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "Can I put a manufactured home on my own land?",
-                a: "Yes. Manufactured homes can go on private land in most areas of Indiana, Ohio, and Michigan. Rural counties like Noble, DeKalb, and Whitley have zoning-friendly rules. We can help you check the zoning for your property. You or your contractor pull the permits."
+                a: "Yes. Manufactured homes can go on private land in most areas of Indiana, Ohio, and Michigan. Rural counties like Noble, DeKalb, and Whitley have zoning-friendly rules. You or your contractor confirms the zoning for your parcel and pulls the permits; we can tell you which office to call."
               },
               {
                 q: "What areas do you serve?",

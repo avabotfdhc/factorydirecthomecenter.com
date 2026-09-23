@@ -373,3 +373,61 @@ One more trap found on the way: an HTML entity inside a JSX **expression** is a
 plain string, so React prints it verbatim — `/homes-on-sale` showed every
 visitor the heading "Don&rsquo;t Miss Out on These Savings". The same test scans
 for that now. Use the real character.
+
+# We sell and deliver the home. The buyer owns everything that touches the land
+
+Kyle, 2026-09-23: *"Clients are responsible for all of their own site work, setup,
+and foundation work. Our model has not changed."* The site had drifted from that
+in nine places, all removed the same day:
+
+- `/guides/zoning` offered **"free zoning checks"** — a panel promising we would
+  contact the local office and verify zoning compliance, permit requirements,
+  **setback calculations** and utility availability, with a "Request Zoning
+  Check" CTA. Setback calculations are engineering; we do not do them.
+- Five pages said some form of **"we verify zoning for your property"**
+  (`/`, `/locations/fort-wayne`, `/locations/indianapolis`,
+  `/locations/rural-indiana`, `/guides/buyers-guide`), plus Ava's objection
+  library and two `county-pages.ts` entries — one of which claimed **"we
+  coordinate the pier layout with your foundation contractor"**.
+
+What we may say: we sell factory-direct, we arrange delivery, we hand over the
+referral list of licensed and insured contractors, and we can tell a buyer which
+office answers for their county. What we may not say: that we verify, check or
+evaluate zoning for a parcel, or that we perform site work, foundations or setup.
+"We recommend checking with the county" is advice and is fine.
+
+`tests/disclaimers.test.ts` scans every source line for the claim shapes and
+fails on a new one. The clause guards in those patterns matter: without them
+"We arrange transport; your contractor handles the site" matched, which says
+exactly the right thing. Four real violations were injected and confirmed caught.
+
+Also removed that day, at Kyle's request: the **"Counties We Serve in {state}"**
+lists on `/guides/zoning` (14 Indiana, 12 Ohio, 12 Michigan counties). The
+`/locations/*` pages remain the place the service area is stated.
+
+# Catalogue alt text is generated, and 97% of it is specific
+
+945 photos in Champion's Box manifest are the bulk of the site's imagery, and
+their alt text comes from `describeImageFile()` in `src/lib/image-alt.ts`
+reading the room out of the filename. The quality of that one function is the
+alt quality across ~200 floor-plan pages.
+
+Coverage went 89.4% → **97.4%** on 2026-09-23 by fixing three things:
+
+- **A digit straight after a letter is not a word boundary.** Every `ROOMS`
+  pattern ends in `\b`, so `…-bedroom2`, `…-kitchen3` and `…-primary-bedroom2`
+  described nothing at all. `describeImageFile` now splits `([a-z])(\d)`.
+- `drone` / `aerial` → "aerial exterior view"; `utilities` (the pattern only had
+  singular `utility`); `details` → "detail view", ranked last so a named room
+  always wins.
+
+The 25 that still fall back are mostly Champion's `_LR` suffix
+(`1456H22P01_LR.jpg`). **Do not map it to "living room."** It is the only
+two-letter suffix in the whole manifest and 121 other files spell "living" out,
+which reads as a resolution marker, not a room code. A wrong alt is worse than a
+generic one. One file is Champion's own typo, `famiy-room`; not worth a pattern.
+
+`tests/image-alt.test.ts` pins the floor at 95% against the real manifest and
+locks the filename shapes. No image in the repo is missing meaningful alt text:
+five `alt=""` are genuinely decorative (a 20%-opacity quote mark, a 7%-opacity
+background, two admin thumbnails behind auth, the Meta Pixel noscript beacon).

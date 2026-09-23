@@ -59,7 +59,7 @@ const aeoContent = [
     directAnswer: "Manufactured homes are permitted in many areas of Allen County, though Fort Wayne city limits have specific zoning restrictions.",
     supportingDetails: [
       "Rural areas and townships like Aboite and Perry typically have more permissive zoning.",
-      "We help verify zoning compliance for your specific property before purchase."
+      "You or your contractor confirms zoning for the parcel before purchase; we can point you to the right office."
     ],
     wordCount: 47
   },
@@ -514,7 +514,7 @@ export default function FortWaynePage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-orange)] mt-1">•</span>
-                    <span>We verify zoning before purchase</span>
+                    <span>We point you to the right zoning office</span>
                   </li>
                 </ul>
               </div>

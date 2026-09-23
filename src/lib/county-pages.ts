@@ -39,7 +39,7 @@ export const countyPages: CountyPage[] = [
     frostDepth:
       "Allen County footings go below the local frost line, generally 36 inches. Piers and perimeter foundations for a HUD-code home, and the full foundation for a modular, are inspected to that depth, so plan the concrete before the home ships.",
     zoningNote:
-      "Allen County's Department of Planning Services handles zoning and building permits for unincorporated areas; Fort Wayne, New Haven and the towns have their own offices. Manufactured homes are allowed on many residential and agricultural lots outside city limits, often with foundation and skirting standards. We'll check your parcel's zoning before you commit to a home.",
+      "Allen County's Department of Planning Services handles zoning and building permits for unincorporated areas; Fort Wayne, New Haven and the towns have their own offices. Manufactured homes are allowed on many residential and agricultural lots outside city limits, often with foundation and skirting standards. Confirm your parcel's zoning with them before you commit to a home — we can tell you which office to call.",
   },
   {
     slug: "dekalb-county",
@@ -59,7 +59,7 @@ export const countyPages: CountyPage[] = [
     ],
     milesFromTopeka: "about 30 miles",
     frostDepth:
-      "DeKalb County uses a 36-inch frost depth for footings and piers. We coordinate the pier layout with your foundation contractor from Champion's set-up drawing so the home lands on cured concrete.",
+      "DeKalb County uses a 36-inch frost depth for footings and piers. Champion's set-up drawing specifies the pier layout; your foundation contractor works from it so the home lands on cured concrete.",
     zoningNote:
       "DeKalb County Planning & Building in Auburn issues permits for the unincorporated county; Auburn, Garrett and Butler permit within their city limits. Most residential and agricultural districts allow HUD-code manufactured homes on a permanent foundation. Bring us the parcel number and we'll confirm before you order.",
   },
