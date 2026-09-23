@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { ZoomableImage } from "@/components/ImageLightbox";
 import { notFound } from "next/navigation";
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -338,6 +339,8 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               <SaleClaimForm homeName={home.name} />
             </div>
           </FadeIn>
+
+          <SpecsDisclaimer className="mt-12 max-w-3xl mx-auto text-center" />
         </div>
       </section>
     </main>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import Image from "next/image";
 import { getFeaturedHomes, type ApiFloorPlan } from "@/lib/api-content";
 import { FeaturedHomes } from "@/components/FeaturedHomes";
@@ -230,6 +231,8 @@ function ParallaxHeroSection() {
           
           <HeroCopy />
         </div>
+
+        <SpecsDisclaimer className="mt-16 max-w-3xl mx-auto text-center" />
       </div>
     </section>
   );

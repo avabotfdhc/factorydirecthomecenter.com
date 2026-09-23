@@ -332,3 +332,44 @@ bar reads it with `useCurrentHome()`.
 
 Anything else in the layout that should know the current home reads the same hook.
 Do not add a second channel.
+
+# Disclaimer coverage is three layers, and legibility is part of the disclosure
+
+Three different notices, placed three different ways. Keep them straight.
+
+- **Sitewide, automatic:** the Regulation Z financing disclosure and the HUD notice
+  (`ComplianceDisclaimers`) plus the one-line specs summary in the copyright row.
+  `Footer` renders them and the root layout renders `Footer`, so every page has
+  them. That chain is the whole mechanism — break either link and the site
+  silently loses both disclosures everywhere.
+- **Per page, where the claims are:** the Champion specifications disclaimer
+  (`SpecsDisclaimer`) belongs on a page only when that page shows floor plans,
+  renderings or specs. It was on the two `/floor-plans` routes and nowhere else
+  until 2026-09-23, so the homepage, the five series pages, both sale routes and
+  the configurator all displayed renderings with no "may show optional features
+  not included in the base price".
+- **Per offer:** `SaleDisclaimer` and `PricingDisclaimer` qualify the promotion
+  and the prices, not the renderings. They do not substitute for the specs
+  disclaimer and the specs disclaimer does not substitute for them.
+
+`tests/disclaimers.test.ts` guards all of it: the layout → Footer →
+`ComplianceDisclaimers` chain, and a source scan that fails when a public page
+imports a plan-rendering component (`FeaturedHomes`, `FloorPlanCard`,
+`FloorPlansGrid`, `HomeDesigner`, `SaleHomesGrid`, `AllSaleHomesTable`,
+`PriceTriple`) without rendering `SpecsDisclaimer`. Add a new plan component to
+that list when you write one.
+
+**A notice nobody can read is not a notice.** These were the lowest-contrast
+text on the site: `SpecsDisclaimer` at **2.39:1** on cream, the Reg Z and HUD
+block at **3.07:1** in the footer, both well under the 4.5:1 AA threshold, and
+the compliance pair was set at 11px. Exactly backwards for the two blocks a
+regulator would look at. They are now 8.25:1 / 5.71:1 at 12px, measured in a
+browser with the alpha composited against the real background, and the test
+fails if `--color-gray-light`, `--color-gray` or `text-[11px]` comes back.
+`SpecsDisclaimer` takes `tone="dark"` for dark surfaces rather than a competing
+text-colour utility in `className`.
+
+One more trap found on the way: an HTML entity inside a JSX **expression** is a
+plain string, so React prints it verbatim — `/homes-on-sale` showed every
+visitor the heading "Don&rsquo;t Miss Out on These Savings". The same test scans
+for that now. Use the real character.

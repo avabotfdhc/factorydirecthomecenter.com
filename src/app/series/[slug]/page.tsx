@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
@@ -164,6 +165,8 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
               </Link>
             ))}
           </div>
+
+          <SpecsDisclaimer className="mt-16 max-w-3xl mx-auto text-center" />
         </div>
       </section>
     </>
