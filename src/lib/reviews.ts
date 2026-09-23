@@ -16,7 +16,7 @@
 // AggregateRating is published — schema is generated from these rows, never
 // from a hand-typed number.
 
-import { BUSINESS } from "./business";
+import { GOOGLE_LISTING_URL } from "./business";
 
 export interface CustomerReview {
   /** The review text exactly as the customer published it. Do not polish it. */
@@ -42,8 +42,8 @@ export interface CustomerReview {
  */
 export const REVIEWS: CustomerReview[] = [];
 
-/** Where visitors read and leave reviews. Same listing as the business `sameAs`. */
-export const GOOGLE_REVIEWS_URL = BUSINESS.sameAs[0];
+/** Where visitors read and leave reviews — the Google Business Profile. */
+export const GOOGLE_REVIEWS_URL = GOOGLE_LISTING_URL;
 
 /**
  * The rating to publish, computed from the reviews we actually hold — or null

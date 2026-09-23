@@ -16,7 +16,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { structuredData } from "../src/lib/seo";
-import { businessRef, businessJsonLd, BUSINESS_ID } from "../src/lib/business";
+import { businessRef, businessJsonLd, BUSINESS_ID, BUSINESS, GOOGLE_LISTING_URL } from "../src/lib/business";
+import { GOOGLE_REVIEWS_URL } from "../src/lib/reviews";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
@@ -232,4 +233,40 @@ test("only PageFooter and the floor-plan detail page emit a BreadcrumbList", () 
     [],
     "these files emit a second BreadcrumbList; PageFooter already publishes one on every non-home page",
   );
+});
+
+// `sameAs` tells Google which other profiles are this same business. An entry
+// that does not resolve, or that resolves to somebody else, asks Google to
+// merge a stranger into our knowledge-graph entity — so these came from the
+// Google Business Profile itself rather than from memory. The handle the
+// previous build published (`instagram.com/factorydirecthomescenter`) was not
+// the real one; these tests hold the shape, not the spelling.
+
+test("every sameAs profile is an absolute https URL", () => {
+  for (const url of BUSINESS.sameAs) {
+    assert.match(url, /^https:\/\/[^\s]+$/, `sameAs entry is not an absolute https URL: ${url}`);
+    assert.equal(url.trim(), url, `sameAs entry has stray whitespace: ${url}`);
+  }
+});
+
+test("no profile is listed twice", () => {
+  const seen = new Set(BUSINESS.sameAs.map((u) => u.toLowerCase()));
+  assert.equal(seen.size, BUSINESS.sameAs.length, "a sameAs profile is listed more than once");
+});
+
+test("the Google listing is the one we publish and the one we send reviewers to", () => {
+  assert.ok(
+    BUSINESS.sameAs.includes(GOOGLE_LISTING_URL),
+    "the Google Business Profile must be in sameAs",
+  );
+  assert.equal(
+    GOOGLE_REVIEWS_URL,
+    GOOGLE_LISTING_URL,
+    "the review link and the published listing must be the same URL",
+  );
+});
+
+test("the business node publishes every profile", () => {
+  const node = businessJsonLd() as { sameAs?: unknown };
+  assert.deepEqual(node.sameAs, [...BUSINESS.sameAs], "businessJsonLd must publish the full sameAs list");
 });

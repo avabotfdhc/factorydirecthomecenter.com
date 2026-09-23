@@ -16,6 +16,11 @@ export const BUSINESS_ID = `${SITE_URL}/#business`;
 /** The owner as a schema.org Person. Guides and posts cite this same @id as
  *  their author, so Google reads one named human behind the site. */
 export const OWNER_ID = `${SITE_URL}/about#kyle-dudgeon`;
+/** The Google Business Profile listing — where real reviews are read and
+ *  left. Named rather than indexed out of `sameAs` so reordering that list
+ *  cannot silently repoint the review links. */
+export const GOOGLE_LISTING_URL =
+  "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN";
 
 /**
  * The schema.org types the dealership publishes, in one place so the nested
@@ -52,22 +57,23 @@ export const BUSINESS = {
   /**
    * Public profiles that identify the same business, for the `sameAs` graph.
    *
-   * The Facebook and Instagram URLs were recovered from the previous site's
-   * own structured data (`utils/seo.js` in kmdudgeon/fdhc-next-frontend) at
-   * Kyle's request on 2026-09-16 — they are the handles that site published,
-   * not guesses. They could not be fetched from the agent sandbox (its
-   * network policy blocks outbound hosts), so Kyle should open each once and
-   * confirm it resolves; a dead `sameAs` entry is worse than a missing one.
+   * These are the five links Kyle publishes on the Google Business Profile
+   * itself (supplied from the listing on 2026-09-23), so they are the
+   * business's own answer to "where else are you" rather than anything
+   * recovered or guessed. The two that the previous build's `utils/seo.js`
+   * had supplied were close but not right — the Instagram handle in
+   * particular was `factorydirecthomescenter`, where the real one carries
+   * underscores — and a `sameAs` pointing at a profile that is not ours is
+   * worse than no entry, because it asks Google to merge us with a stranger.
    *
-   * The old site also rendered YouTube and LinkedIn icons, but those URLs
-   * lived in the retired CMS database (`social` table on the terminated EC2
-   * instance), not in any repo, so they are unrecoverable. Add them here if
-   * the profiles exist.
+   * The listing shows no LinkedIn page. Add one here only if Kyle creates it.
    */
   sameAs: [
-    "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN",
-    "https://www.facebook.com/factorydirecthomescenter",
-    "https://www.instagram.com/factorydirecthomescenter",
+    GOOGLE_LISTING_URL,
+    "https://www.facebook.com/FactoryDirectHomesCenter",
+    "https://www.instagram.com/factory_direct_homes_center/",
+    "https://x.com/fd_homes_center",
+    "https://youtube.com/@factorydirecthomescenter",
   ],
   hours: [
     { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "17:00" },
