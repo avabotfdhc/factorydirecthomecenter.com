@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { REFERRAL_NO_RECOMMENDATION } from "@/lib/referrals";
 
 // Regulation Z (Truth in Lending) and HUD-code disclosures.
 //
@@ -41,11 +42,20 @@ export function HudDisclaimer({ className = "" }: { className?: string }) {
   );
 }
 
+export function ReferralDisclaimer({ className = "" }: { className?: string }) {
+  return (
+    <p className={`text-xs leading-relaxed text-[var(--color-charcoal)]/70 ${className}`}>
+      <strong>Lender and contractor referrals.</strong> {REFERRAL_NO_RECOMMENDATION}
+    </p>
+  );
+}
+
 export function ComplianceDisclaimers({ className = "" }: { className?: string }) {
   return (
     <div className={`space-y-3 ${className}`}>
       <RegZDisclaimer />
       <HudDisclaimer />
+      <ReferralDisclaimer />
     </div>
   );
 }

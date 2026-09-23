@@ -36,7 +36,7 @@ const locationData = {
     {
       question: "Can I put a manufactured home on land near Garrett?",
       answer:
-        "In most rural parts of DeKalb County outside Garrett's city limits, manufactured and modular homes are permitted on private land, though zoning and setbacks vary by parcel. You or your contractor verify the rules and pull permits with DeKalb County. Inside city limits, modular homes on permanent foundations or placement in a community are usually the path — we can help you check your parcel.",
+        "In most rural parts of DeKalb County outside Garrett's city limits, manufactured and modular homes are permitted on private land, though zoning and setbacks vary by parcel. You or your contractor verify the rules and pull permits with DeKalb County. Inside city limits, modular homes on permanent foundations or placement in a community are usually the path — we can tell you which DeKalb County office to call.",
     },
     {
       question: "What makes Factory Direct Homes Center different from other Garrett-area dealers?",

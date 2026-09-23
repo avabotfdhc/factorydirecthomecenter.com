@@ -2,6 +2,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3, H4 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 export const metadata = genMeta({
   title: "Site Work & Preparation Guide",
@@ -337,6 +338,13 @@ export default function SiteWorkPage() {
               More Guides
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

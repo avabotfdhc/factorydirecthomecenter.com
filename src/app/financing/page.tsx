@@ -6,6 +6,7 @@ import { FadeIn } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { FinancingCalculator } from "@/components/FinancingCalculator";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import {
   LENDERS,
   LENDER_DISCLAIMER,
@@ -379,11 +380,7 @@ export default function FinancingPage() {
               <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
                 {LENDER_DISCLAIMER}
               </p>
-              <p className="text-[var(--color-gray)] mt-3 max-w-2xl mx-auto">
-                These are lenders our customers have used before. We are not affiliated with any of them, we
-                receive nothing for naming them, and the order they appear in means nothing. Apply to as many
-                as you like — the choice is entirely yours.
-              </p>
+              <NoRecommendationNotice subject="lenders" className="mt-4 max-w-2xl mx-auto text-left" />
             </div>
           </FadeIn>
 

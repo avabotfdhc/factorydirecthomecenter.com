@@ -340,3 +340,79 @@ test("no Service schema names us as the provider of financing", () => {
 
   assert.deepEqual(offenders, [], "these Service nodes advertise a financial service in our name");
 });
+
+// Kyle, 2026-09-23: "We do not make decisions for anything not a lender or
+// contractor — we provide information so the client can choose. No
+// recommendations disclaimers are important and should be present every place
+// that matters."
+//
+// The lender list had a disclaimer and the contractor referral list had none,
+// on any of the fifteen pages that offered it. Same exposure, opposite
+// treatment: an unqualified "our referral list of licensed and insured
+// contractors" reads as a vouch for crews we do not hire, supervise or
+// warrant. `NoRecommendationNotice` now sits on every page that names either
+// list, and `ComplianceDisclaimers` carries the one-line version sitewide.
+test("every page that offers the lender or contractor list says it is not a recommendation", () => {
+  // Naming a list is the trigger. A page that merely says the buyer hires
+  // their own contractors is stating the model, not offering a referral.
+  const OFFERS_A_LIST = /referral list|referrals to licensed|lender list|\bLENDERS\b/;
+  const RENDERS_NOTICE = /<NoRecommendationNotice/;
+
+  const sources: [string, string][] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (rel === "src/components/NoRecommendationNotice.tsx") continue;
+      sources.push([rel, readFileSync(full, "utf8")]);
+    }
+  };
+  walk(resolve(process.cwd(), "src/app"));
+  walk(resolve(process.cwd(), "src/components"));
+
+  // Eight city pages are three lines long: they hand their data to
+  // CityLocationTemplate and render nothing else. The notice is in the
+  // template, so credit a page that renders a component which carries it —
+  // one level, which is all the delegation this tree actually uses.
+  const carriers = sources
+    .filter(([, src]) => RENDERS_NOTICE.test(src))
+    .map(([rel]) => rel.split("/").pop()!.replace(/\.tsx$/, ""))
+    .filter((name) => name !== "page");
+
+  const missing = sources
+    .filter(([, src]) => OFFERS_A_LIST.test(src))
+    .filter(([, src]) =>
+      !RENDERS_NOTICE.test(src) &&
+      !carriers.some((c) => new RegExp(`<${c}[\\s/>]`).test(src)))
+    .map(([rel]) => rel);
+
+  assert.deepEqual(missing, [], "these pages offer a referral or lender list with no no-recommendation notice");
+});
+
+// The sitewide half of the same promise. Footer -> ComplianceDisclaimers is
+// the chain the first test in this file guards; this one keeps the referral
+// line inside it, so a page nobody remembered to annotate still carries it.
+test("the no-recommendation line reaches every page through the footer", () => {
+  const compliance = read("src/components/ComplianceDisclaimer.tsx");
+  assert.match(
+    compliance,
+    /<ReferralDisclaimer\s*\/>/,
+    "ComplianceDisclaimers must render <ReferralDisclaimer /> — it is what puts the no-recommendation line on every page",
+  );
+  assert.match(
+    compliance,
+    /REFERRAL_NO_RECOMMENDATION/,
+    "the wording must come from src/lib/referrals.ts, not be retyped here",
+  );
+
+  const referrals = read("src/lib/referrals.ts");
+  for (const line of ["LENDER_NO_RECOMMENDATION", "CONTRACTOR_NO_RECOMMENDATION", "REFERRAL_NO_RECOMMENDATION"]) {
+    assert.match(referrals, new RegExp(`export const ${line}\\b`), `${line} must stay the single source`);
+  }
+  // Whatever the wording becomes, it has to actually deny a recommendation.
+  for (const [name, text] of Object.entries({ referrals })) {
+    assert.match(text, /not a recommendation|recommends no lender/i, `${name} must state that the list is not a recommendation`);
+  }
+});

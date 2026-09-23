@@ -134,7 +134,7 @@ export const blogPosts: BlogPost[] = [
     topics: ["financing", "chattel-loans", "first-time-buyers", "manufactured-homes"],
     pillarSlug: "first-time-buyer-checklist",
     cta: {
-      text: "Have financing questions? Our team can walk you through your best options.",
+      text: "Financing questions? Ask the lenders on our list — we are not a lender and we make no recommendation among them.",
       href: "/contact-us",
       label: "Talk to a financing expert",
     },

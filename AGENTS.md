@@ -482,3 +482,50 @@ of the other two shapes:
   next to it is what makes it a recommendation.
 - **Schema** — a `structuredData.service` whose name or description mentions
   financing, a loan, credit, lending or a mortgage.
+
+# Two lists leave this dealership, and neither one is a recommendation
+
+Kyle, 2026-09-23: *"We do not make decisions for anything not a lender or
+contractor — we provide information so the client can choose. No
+recommendations disclaimers are important and should be present every place
+that matters."* (Same message: *"We do have lending partners but we don't
+personally offer in house financing."*)
+
+The lender sheet had a disclaimer. The contractor referral list had none, on
+any of the fifteen pages that offered it — same exposure, opposite treatment.
+An unqualified "our referral list of licensed and insured contractors" reads as
+a vouch for crews we do not hire, supervise, schedule or warrant.
+
+`src/lib/referrals.ts` is the single source for all three wordings —
+`LENDER_NO_RECOMMENDATION`, `CONTRACTOR_NO_RECOMMENDATION` and the one-line
+`REFERRAL_NO_RECOMMENDATION`. Nothing retypes them.
+
+- **Sitewide:** `ReferralDisclaimer` is inside `ComplianceDisclaimers`, so the
+  one-line version rides the layout → `Footer` chain onto every page, next to
+  Reg Z and HUD.
+- **Where the claim is:** `NoRecommendationNotice` (`subject="lenders" |
+  "contractors" | "both"`) renders on every page that names either list —
+  `/financing`, five guides, the homepage sections, both location templates and
+  the six standalone location pages. Eight city pages inherit it from
+  `CityLocationTemplate`, and the guard follows that one level of delegation.
+- Contrast is the same 8.25:1 at 12px as `SpecsDisclaimer`, measured in a
+  browser with the alpha composited. `tone="dark"` exists for dark surfaces.
+
+**On the phrase "lending partners":** Kyle is right that these are lenders he
+works with, but the phrase stays off public pages, because the buyer's own
+signed authorization says *"this selection was not referred or suggested"* and
+the page's disclaimer says we recommend nobody — "partner" contradicts both in
+the one place a regulator would read them together. The guard enforces that.
+It is a wording call, not a fact about the relationships, and Kyle can overrule
+it; if he does, the disclaimer has to change with it.
+
+Fixed in the same pass, all three of which had survived the earlier sweeps:
+Ava's "help check zoning" (we never verify a parcel), her four-lender shortlist
+("name them all or none"), `blog.ts`'s "Our team can walk you through your best
+options", and two surviving "we can help you check your parcel" claims in
+`plan-content.ts` and the Garrett page.
+
+`tests/disclaimers.test.ts` guards both halves: a page that names either list
+must render the notice (injection-tested in both directions, including the
+template case), and `ComplianceDisclaimers` must keep `ReferralDisclaimer` with
+its wording coming from `referrals.ts`.

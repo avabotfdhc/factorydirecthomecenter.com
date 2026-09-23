@@ -3,6 +3,7 @@ import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
 import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 export const metadata = genMeta({
   title: "How Our Pricing Works",
@@ -413,6 +414,13 @@ export default function PricingPage() {
               Request a Quote
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

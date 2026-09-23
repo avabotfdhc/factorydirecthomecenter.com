@@ -5,6 +5,7 @@ import { FadeIn } from "@/components/VisualEffects";
 import { PaymentCalculator } from "@/components/PaymentCalculator";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 export const metadata = genMeta({
   title: "Complete Manufactured Home Buyer's Guide",
@@ -186,6 +187,13 @@ export default function BuyersGuidePage() {
             <Link href="/floor-plans" className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors rounded-lg">Browse Floor Plans</Link>
             <Link href="/financing" className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)] text-[var(--color-charcoal)] px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-charcoal)]/5 transition-colors rounded-lg">Explore Financing</Link>
           </div>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

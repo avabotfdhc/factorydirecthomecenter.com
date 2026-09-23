@@ -13,6 +13,7 @@ import { trackPhoneClick } from "@/lib/analytics";
 import { H2, H3 } from "@/components/Heading";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
 import { REVIEWS as reviews, GOOGLE_REVIEWS_URL } from "@/lib/reviews";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 const homeTypes = [
   {
@@ -475,6 +476,13 @@ export function TrustAndProcess() {
         </div>
       </section>
 
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
+        </div>
+      </section>
     </>
   );
 }

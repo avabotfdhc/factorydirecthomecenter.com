@@ -4,6 +4,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
 import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 export const metadata = genMeta({
   title: "Manufactured Home Delivery & Setup: What to Expect",
@@ -188,6 +189,13 @@ export default function DeliveryAndSetupPage() {
               Get Started
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>
