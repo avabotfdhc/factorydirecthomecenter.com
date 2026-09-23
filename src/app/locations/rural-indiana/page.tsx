@@ -5,6 +5,7 @@ import { StructuredData, structuredData, generateMetadata as genMeta } from "@/l
 import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 export const metadata = genMeta({
   title: "Manufactured Homes in Rural Indiana",
@@ -26,7 +27,7 @@ const locationFAQs = [
   { question: "Which rural Indiana counties are most zoning-friendly for manufactured homes?", answer: "Noble, DeKalb, Whitley, Steuben, and LaGrange counties are particularly welcoming to manufactured homes. Agricultural zones in these counties typically allow manufactured homes with minimal restrictions. Rural townships generally have simpler permitting processes than cities, making it easier to place your home on acreage." },
   { question: "How much acreage do I need for a manufactured home in rural Indiana?", answer: "Most rural Indiana properties for manufactured homes range from 1 to 10 acres. While you can place a home on as little as 1 acre, many buyers prefer 2-5 acres for privacy and space. There's typically no maximum acreage requirement, and agricultural zones often have generous allowances for residential structures." },
   { question: "What utilities are available in rural Indiana for manufactured homes?", answer: "Rural properties may use well water, septic systems, and propane or electric heating. Your own contractors handle well drilling, septic installation, and electric service — ask us for our referral list of licensed and insured contractors past customers have used. Many rural Indiana properties already have utility access, or we can help you understand the costs of bringing utilities to undeveloped land." },
-  { question: "Are there financing options for rural Indiana manufactured home buyers?", answer: "Yes, rural buyers have access to all our financing options. Chattel loans work well for homes on leased or family land. Land-home packages and conventional financing are available when you own or are buying the land, and we work with local credit unions familiar with rural Indiana lending." },
+  { question: "Are there financing options for rural Indiana manufactured home buyers?", answer: "Rural buyers use the same routes as everyone else. Chattel loans suit homes on leased or family land; land-home packages and conventional financing apply when you own or are buying the land. We are not a lender and do not arrange financing — you choose your own, and our list includes credit unions familiar with rural Indiana." },
   { question: "How does Factory Direct serve rural Indiana buyers differently?", answer: "We understand rural needs: longer driveways, wells and septic systems, and flexible site work timing. Our line-item pricing lets you use local rural contractors you trust for site preparation. Being just 30 miles from the factory means lower delivery costs even to remote rural properties. We regularly deliver to farms and rural acreage throughout northeast Indiana." }
 ];
 
@@ -197,6 +198,13 @@ export default function RuralIndianaPage() {
               <Link href="/floor-plans" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300 rounded-lg">Browse Floor Plans</Link>
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

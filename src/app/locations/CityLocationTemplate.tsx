@@ -4,6 +4,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { H2, H3 } from "@/components/Heading";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 // Reusable, SSR (server component) local-SEO city page. Renders full schema
 // (LocalBusiness + geo, Website, Breadcrumb, Article, Service, FAQPage) plus
@@ -235,6 +236,13 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
               Call (260) 308-1457
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

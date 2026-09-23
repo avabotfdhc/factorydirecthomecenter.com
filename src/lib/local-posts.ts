@@ -498,7 +498,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Where Indy-area buyers place homes</h2>
 <p>Manufactured homes are commonly placed on rural parcels in the counties surrounding Indianapolis, and in established land-lease communities throughout the metro. Modular homes on permanent foundations — IRC-code construction — fit suburban lots where site-built homes go. Zoning is parcel-specific everywhere: you or your contractor verify the rules and pull permits. Start with our <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>How buying from a distance works</h2>
-<p>Buyers make the trip up I-69 once — about two and a half hours — to tour model homes and lock in choices; everything else happens by phone and email. Browse <a href="/floor-plans">floor plans</a> first so your visit counts, then coordinate delivery timing with your contractor's site schedule. Financing works the same statewide, through <a href="/financing">our lending partners</a>.</p>
+<p>Buyers make the trip up I-69 once — about two and a half hours — to tour model homes and lock in choices; everything else happens by phone and email. Browse <a href="/floor-plans">floor plans</a> first so your visit counts, then coordinate delivery timing with your contractor's site schedule. Financing works the same statewide; you choose your own lender, and <a href="/financing">our list</a> is a starting point.</p>
 <h2>FAQ</h2>
 <h3>Do you really deliver to the Indianapolis area?</h3>
 <p>Yes — we serve all of Indiana, with custom delivery quotes for central Indiana sites. See <a href="/locations/indianapolis">our Indianapolis page</a>.</p>
@@ -753,7 +753,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Allen County is large and its rules are not uniform across it. Whether a HUD-code manufactured home is permitted on a given parcel depends on the zoning district, and some districts and subdivisions have covenants of their own that zoning will not tell you about. Check both &mdash; the county for zoning and permits, the deed and plat for private restrictions &mdash; before you buy the land, not after. Our <a href="/guides/zoning">zoning guide</a> explains how to run both checks.</p>
 
 <h2>Close enough to shop properly</h2>
-<p>Our Auburn showroom is a short drive north, and the Topeka plant that builds these homes is about 30 miles from our lot. Come twice if you can: once to see the homes, once with whoever has to live in it. Financing works the same here as anywhere in the region &mdash; see <a href="/financing">our lending partners</a>.</p>
+<p>Our Auburn showroom is a short drive north, and the Topeka plant that builds these homes is about 30 miles from our lot. Come twice if you can: once to see the homes, once with whoever has to live in it. Financing works the same here as anywhere in the region; you choose your own lender, and <a href="/financing">our list</a> is a starting point.</p>
 
 <h2>Common questions</h2>
 <h3>Will a manufactured home fit the neighborhood?</h3>

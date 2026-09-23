@@ -2,13 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
-import {
-  FadeIn,
-  StaggerContainer
-} from "@/components/VisualEffects";
+import { FadeIn } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { FinancingCalculator } from "@/components/FinancingCalculator";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import {
   LENDERS,
   LENDER_DISCLAIMER,
@@ -20,7 +18,6 @@ import {
 // ============================================
 // FINANCING PAGE - MAXIMUM SEO/AEO
 // ============================================
-// Service schema for financing
 // AEO content with 40-60 word answers
 // FAQ schema
 // HowTo schema for process
@@ -28,7 +25,7 @@ import {
 
 export const metadata = genMeta({
   title: "Manufactured Home Financing & Chattel Loans",
-  description: "Financing options for manufactured homes in Indiana, Ohio, Michigan. Chattel loans, land-home packages, and conventional financing through partners like 21st Mortgage, Triad, and Credit Human. Pre-qualify today.",
+  description: "How manufactured home financing works in Indiana, Ohio and Michigan: chattel loans, land-home packages and conventional mortgages. Factory Direct Homes Center is not a lender — you choose your own, from a list of lenders our customers have used.",
   keywords: [
     "manufactured home financing",
     "chattel loans",
@@ -45,9 +42,9 @@ export const metadata = genMeta({
 const aeoContent = [
   {
     question: "What financing options are available for manufactured homes?",
-    directAnswer: "We offer chattel (home-only) loans, land-home packages, and conventional financing through our lending partners.",
+    directAnswer: "Chattel (home-only) loans, land-home packages and conventional financing are the common routes. We are not a lender and do not arrange financing; you choose your own lender.",
     supportingDetails: [
-      "Our primary lenders include 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union.",
+      "The lender list we hand buyers names ten lenders that finance manufactured homes; it is a list, not a ranking, and we get nothing for it.",
       "Each option has different requirements, rates, and terms depending on your situation."
     ],
     wordCount: 48
@@ -63,7 +60,7 @@ const aeoContent = [
   },
   {
     question: "What credit score is needed to finance a manufactured home?",
-    directAnswer: "Our lenders work with credit scores as low as 575 for chattel loans, though 620+ gets better rates.",
+    directAnswer: "Lenders on our list work with credit scores as low as 575 for chattel loans, though 620+ generally earns better rates. Each lender sets its own standards — ask them.",
     supportingDetails: [
       "We have options for a range of credit situations and can help you understand your best path forward.",
       "Pre-qualification is free and helps you see what you can afford before choosing a home."
@@ -97,62 +94,23 @@ const financingFAQs = [
   },
   {
     question: "What documents do I need to apply for manufactured home financing?",
-    answer: "You'll typically need proof of income (pay stubs, tax returns), bank statements, identification, and information about the home you want to purchase. For land-home packages, you'll also need property information. Our lenders guide you through the specific requirements for your loan type."
+    answer: "You'll typically need proof of income (pay stubs, tax returns), bank statements, identification, and information about the home you want to purchase. For land-home packages, you'll also need property information. The lender you choose guides you through the specific requirements for your loan type."
   },
   {
-    question: "Does Factory Direct Homes Center offer in-house financing?",
-    answer: "We don't provide in-house financing, but we partner with the nation's top manufactured home lenders. This gives you access to competitive rates and terms from 21st Mortgage, Triad Financial, Credit Human, and local credit unions. We help you compare options and choose the best fit."
+    question: "Does Factory Direct Homes Center offer financing?",
+    answer: "No. We are not a lender, we do not arrange or broker financing, and we do not pull credit. You choose your own lender. What we hand you is a list of the lenders our customers have used before — we make no recommendation among them, and you may apply to as many as you like."
   },
   {
     question: "What interest rates can I expect for a manufactured home loan?",
-    answer: "Interest rates vary by loan type and credit profile. Chattel (home-only) loans typically range from 7-12%, while land-home mortgages are usually lower. Your specific rate depends on credit score, down payment, loan term, and current market conditions. We help you compare offers from our lending partners to find the best available rate."
+    answer: "Interest rates vary by loan type and credit profile. Chattel (home-only) loans typically range from 7-12%, while land-home mortgages are usually lower. Your specific rate depends on credit score, down payment, loan term, and current market conditions. Ask each lender you apply to for their rate — we do not quote rates and do not compare them for you."
   },
   {
     question: "Can I get pre-qualified before choosing a home?",
-    answer: "Absolutely, and we recommend it. Pre-qualification shows you exactly how much home you can afford, strengthens your negotiating position, and speeds up the purchase process once you find your perfect floor plan. Most of our lenders offer free pre-qualification with no obligation."
+    answer: "Yes, and it is worth doing. Pre-qualification shows you how much home you can afford and speeds things up once you pick a floor plan. You arrange it directly with a lender you choose — we are not involved in it and we do not pull credit."
   },
   {
     question: "Are there special programs for first-time manufactured home buyers?",
-    answer: "Yes. Our lending partners offer chattel loans with flexible credit standards that work well for first-time buyers, and some states offer first-time buyer assistance programs. We help you explore all available options to make homeownership affordable and accessible."
-  }
-];
-
-// Lending partners
-const lendingPartners = [
-  {
-    name: "21st Mortgage",
-    type: "Chattel & Land-Home",
-    description: "One of the nation's largest manufactured home lenders specializing in chattel loans and land-home packages with competitive rates.",
-    features: ["Chattel loans available", "Land-home packages", "Flexible credit requirements", "Fast approval process"],
-    bestFor: "Home-only purchases, buyers without land"
-  },
-  {
-    name: "Triad Financial Services",
-    type: "Chattel Loans",
-    description: "Industry leader in manufactured home financing with decades of experience in chattel lending.",
-    features: ["Specialized in chattel lending", "Competitive rates", "Various term options", "Streamlined process"],
-    bestFor: "Home-only financing, quick closings"
-  },
-  {
-    name: "Credit Human",
-    type: "Chattel & Mortgages",
-    description: "Member-owned financial cooperative with manufactured home expertise and personalized service.",
-    features: ["Member-owned cooperative", "Competitive chattel rates", "Personalized service", "Financial education resources"],
-    bestFor: "Credit union members, competitive rates"
-  },
-  {
-    name: "Lake Michigan Credit Union",
-    type: "Land-Home Mortgages",
-    description: "Regional credit union serving Indiana and Michigan with land-home package mortgages.",
-    features: ["Regional expertise", "Land-home mortgages", "Competitive rates", "Local decision-making"],
-    bestFor: "Land-home packages, Michigan buyers"
-  },
-  {
-    name: "Local Lenders & Credit Unions",
-    type: "Various",
-    description: "We maintain relationships with community banks and credit unions throughout our service area.",
-    features: ["Personalized service", "Local decision-making", "Community focus", "Flexible terms"],
-    bestFor: "Local buyers, established relationships"
+    answer: "Chattel loans often have more flexible credit standards than a conventional mortgage, and some states run first-time buyer assistance programs. Ask the lenders on our list what they require; we do not screen, pre-qualify or recommend."
   }
 ];
 
@@ -205,21 +163,21 @@ const relatedPages = [
   {
     title: "Contact",
     url: "/contact-us",
-    description: "Get personalized financing guidance from our team"
+    description: "Questions about a home, a delivery date or the lender list"
   }
 ];
 
 // External citations
 const citations = [
   {
-    source: "21st Mortgage Corporation",
-    url: "https://www.21stmortgage.com",
-    description: "Leading manufactured home lender specializing in chattel loans"
+    source: "Consumer Financial Protection Bureau (CFPB)",
+    url: "https://www.consumerfinance.gov/housing/manufactured-housing/",
+    description: "Consumer guide to manufactured home financing, chattel loans and buyer protections"
   },
   {
-    source: "Triad Financial Services",
-    url: "https://www.triadfs.com",
-    description: "Industry leader in manufactured home chattel financing"
+    source: "U.S. Department of Housing and Urban Development (HUD)",
+    url: "https://www.hud.gov/hud-partners/manufactured-home",
+    description: "Manufactured housing regulations and consumer protections"
   }
 ];
 
@@ -232,14 +190,6 @@ export default function FinancingPage() {
           ============================================ */}
       
       {/* LocalBusiness + WebSite schema come from the root layout */}
-      
-      {/* 4. Service */}
-      <StructuredData data={structuredData.service({
-        name: "Manufactured Home Financing",
-        description: "Multiple financing options for manufactured and modular homes including chattel loans, land-home packages, and conventional financing.",
-        provider: "Factory Direct Homes Center",
-        areaServed: "Indiana, Ohio, Michigan"
-      })} />
       
       {/* 5. FAQPage */}
       <StructuredData data={structuredData.faqPage(financingFAQs)} />
@@ -256,7 +206,7 @@ export default function FinancingPage() {
             "@type": "HowToStep",
             position: 1,
             name: "Get Pre-Qualified",
-            text: "Apply for pre-qualification with our lending partners to understand your budget and financing options.",
+            text: "Get pre-qualified directly with a lender you choose, so you know your budget before you pick a home.",
             url: "https://factorydirecthomescenter.com/financing"
           },
           {
@@ -354,9 +304,10 @@ export default function FinancingPage() {
               </h1>
               
               <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-                Multiple financing options for every situation. Chattel (home-only) loans,
-                land-home packages, and conventional financing. We work with the nation&rsquo;s
-                top manufactured-home lenders to find your best rate.
+                Chattel (home-only) loans, land-home packages and conventional financing all exist for
+                manufactured homes. We are not a lender and we do not arrange, broker or recommend
+                financing &mdash; you choose your own. Below is the list of lenders our customers
+                have used.
               </p>
             </div>
           </FadeIn>
@@ -375,7 +326,7 @@ export default function FinancingPage() {
                 Calculate Your <span className="italic text-[var(--color-teal)]">Monthly Payment</span>
               </H2>
               <p className="text-[var(--color-gray)] max-w-2xl mx-auto">
-                Estimate principal &amp; interest for a chattel (home-only) or land-home loan. Slide the price and down payment, pick the loan type, and call us to get pre-qualified.
+                Estimate principal &amp; interest for a chattel (home-only) or land-home loan. Slide the price and down payment and pick the loan type. Figures are an illustration only — your lender sets the real terms.
               </p>
             </div>
           </FadeIn>
@@ -416,56 +367,6 @@ export default function FinancingPage() {
       </section>
 
       {/* ============================================
-          LENDING PARTNERS
-          ============================================ */}
-      <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <FadeIn direction="up">
-            <div className="text-center mb-16">
-              <div className="decorative-line mx-auto mb-6" />
-              <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
-                Our <span className="italic text-[var(--color-teal)]">Lending Partners</span>
-              </H2>
-              <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-                We work with the nation’s top manufactured home lenders to find the best option for your situation.
-              </p>
-            </div>
-          </FadeIn>
-
-          <StaggerContainer staggerDelay={150} className="space-y-6">
-            {lendingPartners.map((partner, idx) => (
-              <FadeIn key={partner.name} direction="up" delay={idx * 150}>
-                <div className="bg-white rounded-xl p-8 border border-[var(--color-charcoal)]/5 hover:shadow-lg transition-shadow">
-                  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-                    <div className="lg:col-span-1">
-                      <H3 className="font-serif text-xl font-semibold mb-1">{partner.name}</H3>
-                      <span className="inline-block bg-[var(--color-teal)]/10 text-[var(--color-teal)] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded">
-                        {partner.type}
-                      </span>
-                    </div>
-                    <div className="lg:col-span-2">
-                      <p className="text-[var(--color-gray)] mb-4">{partner.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {partner.features.map((feature) => (
-                          <span key={feature} className="text-xs bg-[var(--color-cream-dark)] px-3 py-1 rounded-full">
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="lg:col-span-1 lg:text-right">
-                      <p className="text-sm text-[var(--color-gray)] mb-2">Best for:</p>
-                      <p className="text-sm font-medium">{partner.bestFor}</p>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* ============================================
           LENDER DIRECTORY
           ============================================ */}
       <section id="lenders" className="py-24 lg:py-32 scroll-mt-24">
@@ -479,6 +380,7 @@ export default function FinancingPage() {
               <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
                 {LENDER_DISCLAIMER}
               </p>
+              <NoRecommendationNotice subject="lenders" className="mt-4 max-w-2xl mx-auto text-left" />
             </div>
           </FadeIn>
 
@@ -581,7 +483,7 @@ export default function FinancingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <FadeIn direction="up" delay={0}>
               <div className="bg-[var(--color-lime)]/10 rounded-xl p-8">
-                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Pros of Our Financing</H3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-dark)]">Pros of this route</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-lime)] mt-1">✓</span>
@@ -707,8 +609,8 @@ export default function FinancingPage() {
               </span>
             </H2>
             <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
-              We&apos;ll connect you with the right lender for your situation. 
-              No obligation, no pressure — just honest information about your options.
+              Pre-qualification is arranged between you and a lender you choose — we take no part in it.
+              What we can do is answer questions about the home itself, and hand you the lender list.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

@@ -11,6 +11,7 @@ import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { OwnerIntro } from "@/components/OwnerIntro";
 import { BUSINESS, ownerJsonLd } from "@/lib/business";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 // ============================================
 // ABOUT PAGE - MAXIMUM SEO/AEO COMPLIANCE
@@ -103,7 +104,7 @@ const aboutFAQs = [
   },
   {
     question: "Does Factory Direct Homes Center offer financing?",
-    answer: "Yes, we work with multiple lenders including 21st Mortgage, Triad Financial, Credit Human, and Lake Michigan Credit Union. We specialize in chattel loans for home-only purchases and can arrange land-home packages and conventional financing for modular homes. Our team helps you find the best financing option for your situation."
+    answer: "No. We are not a lender, we do not arrange or broker financing, and we do not pull credit. You choose your own lender. What we hand you is a list of lenders our customers have used before — 21st Mortgage, Triad Financial, Credit Human and Lake Michigan Credit Union among them — with no recommendation attached. Chattel loans, land-home packages and conventional mortgages for modular homes are all routes buyers take."
   },
   {
     question: "Can I visit the Factory Direct Homes Center showroom?",
@@ -582,6 +583,13 @@ export default function AboutPage() {
               </Link>
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

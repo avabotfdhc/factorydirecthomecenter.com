@@ -9,6 +9,7 @@ import {
 } from "@/components/VisualEffects";
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 // ============================================
 // INDIANAPOLIS LOCATION PAGE - MAXIMUM SEO/AEO
@@ -99,7 +100,7 @@ const locationFAQs = [
   },
   {
     question: "Can I get financing for a manufactured home in Indianapolis?",
-    answer: "Yes, Indianapolis buyers have access to all our financing options including chattel loans, land-home packages, and conventional financing for modular homes. We work with national lenders who serve Indiana buyers. Many Indianapolis customers appreciate our line-item pricing that lets them use local contractors for site work."
+    answer: "Indianapolis buyers use the same routes as everyone else — chattel loans, land-home packages and conventional financing for modular homes. We are not a lender and do not arrange financing; you choose your own, and our list includes national lenders that serve Indiana. Many Indianapolis customers appreciate our line-item pricing that lets them use local contractors for site work."
   },
   {
     question: "How long does delivery take to Indianapolis?",
@@ -509,6 +510,13 @@ export default function IndianapolisPage() {
               </Link>
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

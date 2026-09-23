@@ -269,7 +269,7 @@ export function buildPlanNarrative(plan: ApiFloorPlanDetail, all: ApiFloorPlan[]
       answer:
         kind === "modular"
           ? `Yes. As an IRC modular home the ${name} is permitted almost anywhere a site-built house is, including subdivisions that exclude HUD-code homes. It requires a permanent foundation, which your own licensed contractor builds after you confirm setbacks and pull permits with the county.`
-          : `Yes. Manufactured homes are permitted on private land in most rural areas of Indiana, Ohio and Michigan; some cities and subdivisions restrict them or require a permanent foundation. You or your contractor confirm zoning and pull the permits, and we can help you check your parcel before you order.`,
+          : `Yes. Manufactured homes are permitted on private land in most rural areas of Indiana, Ohio and Michigan; some cities and subdivisions restrict them or require a permanent foundation. You or your contractor confirm zoning and pull the permits before you order, and we can tell you which county office to ask.`,
     },
     {
       question: `Can I customize the ${name}?`,

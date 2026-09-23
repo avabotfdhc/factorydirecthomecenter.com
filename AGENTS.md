@@ -431,3 +431,101 @@ generic one. One file is Champion's own typo, `famiy-room`; not worth a pattern.
 locks the filename shapes. No image in the repo is missing meaningful alt text:
 five `alt=""` are genuinely decorative (a 20%-opacity quote mark, a 7%-opacity
 background, two admin thumbnails behind auth, the Meta Pixel noscript beacon).
+
+# We do not do financing. The buyer picks their own lender, and we rank nobody
+
+Kyle, 2026-09-23: *"we don't do financing at all. Clients choose their own
+financial lender we provide them a list our clients have done business with in
+the past but we make no recommendations and we do not pull credit."* That is
+the same shape of drift as the site-work one, and it carries more weight —
+offering to arrange credit, or steering a buyer to one lender, is what
+separates a dealer from a credit broker.
+
+Removed the same day, across sixteen places:
+
+- `/financing` carried **two** lender presentations. The lower one is the
+  neutral table from `lenders.ts` with `LENDER_DISCLAIMER`. The upper one was a
+  `lendingPartners` array of five promotional cards — "One of the nation's
+  largest manufactured home lenders", "Industry leader" — each with a
+  `bestFor:` field rendered under a **"Best for:"** label. A per-lender ranking
+  with no verb in it, a few hundred pixels above the table that says we
+  recommend nobody. The page contradicted itself; the array and its section are
+  gone and the directory now carries the neutrality sentence.
+- Its CTA said **"We'll connect you with the right lender for your situation"**,
+  the Contact card offered **"personalized financing guidance from our team"**,
+  an AEO answer opened **"Our primary lenders include…"**, and "Sources &
+  References" cited two of the ten lenders as **"Leading…"** and **"Industry
+  leader…"** (now CFPB and HUD, who rank nobody).
+- The one nothing could see: a **`Service` node named "Manufactured Home
+  Financing" with the dealership as its `provider`**. Invisible to a visitor
+  and to a copy guard, and it told Google we are in the lending business. The
+  remaining `structuredData.service` nodes are all sales and delivery.
+- The rest were sentences in `ava-knowledge.ts`, `faqs.ts`, `about`,
+  `HomeSections`, `local-posts`, two guides and three location pages.
+
+What we may say: we hand over a list of lenders our customers have used, we
+name no favourite, and a buyer may apply to as many as they like. What we may
+not say: that we offer, arrange, broker or help compare financing; that any
+lender is ours, primary, preferred or best for anything; or that we pull,
+run or check credit.
+
+`tests/disclaimers.test.ts` guards it three ways, because one scan missed each
+of the other two shapes:
+
+- **Sentences** — the "we…" claim patterns. Their clause guards stop at `;`,
+  and an HTML entity carries one, so `We&apos;ll connect you with the right
+  lender` walked straight through the first version. Entities are flattened
+  before matching now; four real phrasings were injected and confirmed caught.
+- **Data fields** — a recommendation label ("best for", "ideal for", "top
+  pick") within eight lines of a named lender. A loan *type* may still be
+  "best for buyers without land"; that is product education. Naming a company
+  next to it is what makes it a recommendation.
+- **Schema** — a `structuredData.service` whose name or description mentions
+  financing, a loan, credit, lending or a mortgage.
+
+# Two lists leave this dealership, and neither one is a recommendation
+
+Kyle, 2026-09-23: *"We do not make decisions for anything not a lender or
+contractor — we provide information so the client can choose. No
+recommendations disclaimers are important and should be present every place
+that matters."* (Same message: *"We do have lending partners but we don't
+personally offer in house financing."*)
+
+The lender sheet had a disclaimer. The contractor referral list had none, on
+any of the fifteen pages that offered it — same exposure, opposite treatment.
+An unqualified "our referral list of licensed and insured contractors" reads as
+a vouch for crews we do not hire, supervise, schedule or warrant.
+
+`src/lib/referrals.ts` is the single source for all three wordings —
+`LENDER_NO_RECOMMENDATION`, `CONTRACTOR_NO_RECOMMENDATION` and the one-line
+`REFERRAL_NO_RECOMMENDATION`. Nothing retypes them.
+
+- **Sitewide:** `ReferralDisclaimer` is inside `ComplianceDisclaimers`, so the
+  one-line version rides the layout → `Footer` chain onto every page, next to
+  Reg Z and HUD.
+- **Where the claim is:** `NoRecommendationNotice` (`subject="lenders" |
+  "contractors" | "both"`) renders on every page that names either list —
+  `/financing`, five guides, the homepage sections, both location templates and
+  the six standalone location pages. Eight city pages inherit it from
+  `CityLocationTemplate`, and the guard follows that one level of delegation.
+- Contrast is the same 8.25:1 at 12px as `SpecsDisclaimer`, measured in a
+  browser with the alpha composited. `tone="dark"` exists for dark surfaces.
+
+**On the phrase "lending partners":** Kyle is right that these are lenders he
+works with, but the phrase stays off public pages, because the buyer's own
+signed authorization says *"this selection was not referred or suggested"* and
+the page's disclaimer says we recommend nobody — "partner" contradicts both in
+the one place a regulator would read them together. The guard enforces that.
+It is a wording call, not a fact about the relationships, and Kyle can overrule
+it; if he does, the disclaimer has to change with it.
+
+Fixed in the same pass, all three of which had survived the earlier sweeps:
+Ava's "help check zoning" (we never verify a parcel), her four-lender shortlist
+("name them all or none"), `blog.ts`'s "Our team can walk you through your best
+options", and two surviving "we can help you check your parcel" claims in
+`plan-content.ts` and the Garrett page.
+
+`tests/disclaimers.test.ts` guards both halves: a page that names either list
+must render the notice (injection-tested in both directions, including the
+template case), and `ComplianceDisclaimers` must keep `ReferralDisclaimer` with
+its wording coming from `referrals.ts`.

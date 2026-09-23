@@ -5,6 +5,7 @@ import { H2, H3 } from "@/components/Heading";
 import { useEffect } from "react";
 import { trackLocationView, trackCTAClick } from "@/lib/analytics";
 import { businessJsonLd } from "@/lib/business";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 interface LocationFAQ {
   question: string;
@@ -255,6 +256,13 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
               Call (260) 308-1457
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      <section className="pb-16 px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
     </>

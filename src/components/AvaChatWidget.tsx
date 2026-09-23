@@ -210,7 +210,7 @@ export function AvaChatWidget() {
     } else if (lowerText.includes("stock") || lowerText.includes("inventory") || lowerText.includes("available")) {
       responseText = "We have homes in stock for immediate delivery, homes in production, and can order any Champion floor plan. What's your timeline?";
     } else if (lowerText.includes("financ") || lowerText.includes("loan") || lowerText.includes("payment")) {
-      responseText = "We work with lenders offering chattel loans, land-home packages, and conventional financing. Your best option depends on your credit score and whether you own land. Want to get pre-qualified?";
+      responseText = "Chattel loans, land-home packages and conventional financing are the common routes for a manufactured home. We are not a lender and we do not recommend one — we hand you the list of lenders our customers have used and you choose. Want the list?";
     } else if (lowerText.includes("see")) {
       responseText = `Our showroom in Auburn, IN is open Mon–Fri 9–5, Sat 10–4, with model homes you can walk through. Want to pick a day? Leave your name and phone number, or call/text ${PHONE_DISPLAY}.`;
     } else if (lowerText.includes("land") || lowerText.includes("lot") || lowerText.includes("property")) {

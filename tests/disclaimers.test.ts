@@ -202,3 +202,217 @@ test("no page claims FDHC performs site work, setup, foundations or zoning verif
     "these lines say FDHC does site work, setup, foundations or zoning verification — the buyer's contractors do",
   );
 });
+
+// FDHC does not do financing (Kyle, 2026-09-23: "we don't do financing at all.
+// Clients choose their own financial lender we provide them a list our clients
+// have done business with in the past but we make no recommendations and we do
+// not pull credit").
+//
+// This is the same family of claim as the site-work one, and it carries more
+// legal weight: calling a lender a "partner", ranking one, or offering to
+// arrange credit is what separates a dealer from a credit broker. The
+// /financing page had "Our Lending Partners", "the nation's top manufactured
+// home lenders" and "we help you compare options and choose the best fit" —
+// while the lender table lower down on the SAME page carried the disclaimer
+// saying we recommend nobody. The page contradicted itself. Fixed 2026-09-23.
+test("no page offers financing, ranks a lender, or calls one a partner", () => {
+  const CLAIMS: [RegExp, string][] = [
+    [/\b(our|we[a-z']*)\s+lending partners?\b/i, "lenders are not our partners"],
+    [/\bour lenders?\b/i, "they are not our lenders — the buyer chooses"],
+    [/\bour\s+(?:primary|preferred|top|main|partner|recommended|best|go-to|chosen)\s+lenders?\b/i, "no lender is ours, primary or otherwise"],
+    [/\bnation'?s top\b[^.\n]{0,30}\blender/i, "never rank lenders"],
+    [/\bpreferred lender\b/i, "no preferred lender"],
+    [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,40}\b(offer|offers|provide|provides|arrange|arranges|broker|brokers)\b(?:(?!\byour\b)[^.\n;]){0,25}\bfinanc/i, "we do not offer or arrange financing"],
+    [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,40}\b(pull|pulls|run|runs|check|checks)\b[^.\n;]{0,15}\bcredit\b/i, "we never pull credit"],
+    [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,50}\b(best|right)\b(?:(?!\byour\b)[^.\n;]){0,20}\b(lender|loan|financing|rate)\b/i, "we make no recommendation"],
+  ];
+  // Denials are the point of the copy — and Ava's playbook states the rule by
+  // quoting the banned phrase ('never say one is "our lender"'), so a line that
+  // forbids something is not a line that claims it.
+  const EXEMPT = /\b(we|our team)\b[^.\n]{0,28}\b(do not|don't|never|are not|aren't|is not|no part|take no)\b|\bnever say\b|\bRanking them is not\b/i;
+
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      // The design system is a labelled specimen sheet, not a public claim.
+      if (rel === "src/app/design-system/page.tsx") continue;
+      for (const [i, raw] of readFileSync(full, "utf8").split("\n").entries()) {
+        // An HTML entity carries a semicolon, and the clause guards stop at
+        // one — so "We&apos;ll connect you with the right lender" slipped
+        // straight through the first version of this test. Flatten every
+        // entity to a letter before matching; the guards care about clause
+        // boundaries, not about apostrophes.
+        const line = raw.replace(/&(?:[a-zA-Z]+|#\d+);/g, "'");
+        if (EXEMPT.test(line)) continue;
+        for (const [re, why] of CLAIMS) {
+          if (re.test(line)) { offenders.push(`${rel}:${i + 1} — ${why}`); break; }
+        }
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(offenders, [], "these lines claim we do financing or recommend a lender");
+});
+
+// The "we…" sentence patterns above miss the shape that actually shipped: a
+// lender card whose recommendation lives in a DATA FIELD rather than a
+// sentence. /financing carried a `lendingPartners` array of five cards, each
+// with `bestFor: "Home-only purchases, buyers without land"` rendered under a
+// "Best for:" label — a per-lender ranking with no verb in it, sitting a few
+// hundred pixels above the neutral table that says we recommend nobody.
+// Removed 2026-09-23. A label is a recommendation whoever writes it, so the
+// guard is proximity: a named lender and a "best for" label in the same block.
+test("no lender is labelled best for anything", () => {
+  // Proper names, not the generic word "lender" — "best for buyers without
+  // land" describing a LOAN TYPE is buyer education and stays allowed. It is
+  // naming a company next to it that turns it into a recommendation.
+  const LENDER_NAMES = [
+    /\b21st Mortgage\b/i, /\bInTerra Credit Union\b/i, /\bCascade Loans\b/i,
+    /\bCredit Human\b/i, /\bFarmers Savings Bank\b/i, /\bLake Michigan Credit Union\b/i,
+    /\bSuperior Choice\b/i, /\bWest Central Bank\b/i, /\bTriad Financial\b/i,
+    /\bLocal Lenders\b/i,
+  ];
+  const RECOMMENDATION = /\bbest ?For\b|\bbest for\b|\brecommended for\b|\bideal for\b|\bperfect for\b|\btop pick\b|\bour (?:top|first) choice\b/i;
+  const WINDOW = 8;
+
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      const lines = readFileSync(full, "utf8").split("\n");
+      for (const [i, line] of lines.entries()) {
+        if (!LENDER_NAMES.some((re) => re.test(line))) continue;
+        const from = Math.max(0, i - WINDOW);
+        const to = Math.min(lines.length, i + WINDOW + 1);
+        for (let j = from; j < to; j++) {
+          // The rule itself names the thing it forbids; that is not a claim.
+          if (/\bnever\b|\bdo not\b|\bdon't\b|\bnot ranked\b/i.test(lines[j])) continue;
+          if (RECOMMENDATION.test(lines[j])) {
+            offenders.push(`${rel}:${j + 1} — "best for" next to ${lines[i].trim().slice(0, 40)}`);
+            break;
+          }
+        }
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(offenders, [], "a named lender must never carry a recommendation label");
+});
+
+// The claim that cost the most and showed the least: /financing published a
+// `Service` node naming "Manufactured Home Financing" with the dealership as
+// its `provider`. No visitor could see it and no copy guard could catch it —
+// it told Google, and every answer engine reading the markup, that we are in
+// the lending business. Removed 2026-09-23. The remaining Service nodes are
+// all sales and delivery, which is what we actually do.
+test("no Service schema names us as the provider of financing", () => {
+  const MONEY = /\bfinanc|\bloan|\bcredit|\blend|\bmortgage/i;
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      const lines = readFileSync(full, "utf8").split("\n");
+      for (const [i, line] of lines.entries()) {
+        if (!/structuredData\.service\(/.test(line)) continue;
+        // The call's own argument object — name, description, provider.
+        for (let j = i; j < Math.min(lines.length, i + 8); j++) {
+          if (/^\s*(name|description):/.test(lines[j]) && MONEY.test(lines[j])) {
+            offenders.push(`${rel}:${j + 1} — a Service we provide may not be a financial one`);
+          }
+          if (/\}\)/.test(lines[j]) && j > i) break;
+        }
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(offenders, [], "these Service nodes advertise a financial service in our name");
+});
+
+// Kyle, 2026-09-23: "We do not make decisions for anything not a lender or
+// contractor — we provide information so the client can choose. No
+// recommendations disclaimers are important and should be present every place
+// that matters."
+//
+// The lender list had a disclaimer and the contractor referral list had none,
+// on any of the fifteen pages that offered it. Same exposure, opposite
+// treatment: an unqualified "our referral list of licensed and insured
+// contractors" reads as a vouch for crews we do not hire, supervise or
+// warrant. `NoRecommendationNotice` now sits on every page that names either
+// list, and `ComplianceDisclaimers` carries the one-line version sitewide.
+test("every page that offers the lender or contractor list says it is not a recommendation", () => {
+  // Naming a list is the trigger. A page that merely says the buyer hires
+  // their own contractors is stating the model, not offering a referral.
+  const OFFERS_A_LIST = /referral list|referrals to licensed|lender list|\bLENDERS\b/;
+  const RENDERS_NOTICE = /<NoRecommendationNotice/;
+
+  const sources: [string, string][] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (rel === "src/components/NoRecommendationNotice.tsx") continue;
+      sources.push([rel, readFileSync(full, "utf8")]);
+    }
+  };
+  walk(resolve(process.cwd(), "src/app"));
+  walk(resolve(process.cwd(), "src/components"));
+
+  // Eight city pages are three lines long: they hand their data to
+  // CityLocationTemplate and render nothing else. The notice is in the
+  // template, so credit a page that renders a component which carries it —
+  // one level, which is all the delegation this tree actually uses.
+  const carriers = sources
+    .filter(([, src]) => RENDERS_NOTICE.test(src))
+    .map(([rel]) => rel.split("/").pop()!.replace(/\.tsx$/, ""))
+    .filter((name) => name !== "page");
+
+  const missing = sources
+    .filter(([, src]) => OFFERS_A_LIST.test(src))
+    .filter(([, src]) =>
+      !RENDERS_NOTICE.test(src) &&
+      !carriers.some((c) => new RegExp(`<${c}[\\s/>]`).test(src)))
+    .map(([rel]) => rel);
+
+  assert.deepEqual(missing, [], "these pages offer a referral or lender list with no no-recommendation notice");
+});
+
+// The sitewide half of the same promise. Footer -> ComplianceDisclaimers is
+// the chain the first test in this file guards; this one keeps the referral
+// line inside it, so a page nobody remembered to annotate still carries it.
+test("the no-recommendation line reaches every page through the footer", () => {
+  const compliance = read("src/components/ComplianceDisclaimer.tsx");
+  assert.match(
+    compliance,
+    /<ReferralDisclaimer\s*\/>/,
+    "ComplianceDisclaimers must render <ReferralDisclaimer /> — it is what puts the no-recommendation line on every page",
+  );
+  assert.match(
+    compliance,
+    /REFERRAL_NO_RECOMMENDATION/,
+    "the wording must come from src/lib/referrals.ts, not be retyped here",
+  );
+
+  const referrals = read("src/lib/referrals.ts");
+  for (const line of ["LENDER_NO_RECOMMENDATION", "CONTRACTOR_NO_RECOMMENDATION", "REFERRAL_NO_RECOMMENDATION"]) {
+    assert.match(referrals, new RegExp(`export const ${line}\\b`), `${line} must stay the single source`);
+  }
+  // Whatever the wording becomes, it has to actually deny a recommendation.
+  for (const [name, text] of Object.entries({ referrals })) {
+    assert.match(text, /not a recommendation|recommends no lender/i, `${name} must state that the list is not a recommendation`);
+  }
+});
