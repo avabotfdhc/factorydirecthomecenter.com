@@ -332,3 +332,102 @@ bar reads it with `useCurrentHome()`.
 
 Anything else in the layout that should know the current home reads the same hook.
 Do not add a second channel.
+
+# Disclaimer coverage is three layers, and legibility is part of the disclosure
+
+Three different notices, placed three different ways. Keep them straight.
+
+- **Sitewide, automatic:** the Regulation Z financing disclosure and the HUD notice
+  (`ComplianceDisclaimers`) plus the one-line specs summary in the copyright row.
+  `Footer` renders them and the root layout renders `Footer`, so every page has
+  them. That chain is the whole mechanism — break either link and the site
+  silently loses both disclosures everywhere.
+- **Per page, where the claims are:** the Champion specifications disclaimer
+  (`SpecsDisclaimer`) belongs on a page only when that page shows floor plans,
+  renderings or specs. It was on the two `/floor-plans` routes and nowhere else
+  until 2026-09-23, so the homepage, the five series pages, both sale routes and
+  the configurator all displayed renderings with no "may show optional features
+  not included in the base price".
+- **Per offer:** `SaleDisclaimer` and `PricingDisclaimer` qualify the promotion
+  and the prices, not the renderings. They do not substitute for the specs
+  disclaimer and the specs disclaimer does not substitute for them.
+
+`tests/disclaimers.test.ts` guards all of it: the layout → Footer →
+`ComplianceDisclaimers` chain, and a source scan that fails when a public page
+imports a plan-rendering component (`FeaturedHomes`, `FloorPlanCard`,
+`FloorPlansGrid`, `HomeDesigner`, `SaleHomesGrid`, `AllSaleHomesTable`,
+`PriceTriple`) without rendering `SpecsDisclaimer`. Add a new plan component to
+that list when you write one.
+
+**A notice nobody can read is not a notice.** These were the lowest-contrast
+text on the site: `SpecsDisclaimer` at **2.39:1** on cream, the Reg Z and HUD
+block at **3.07:1** in the footer, both well under the 4.5:1 AA threshold, and
+the compliance pair was set at 11px. Exactly backwards for the two blocks a
+regulator would look at. They are now 8.25:1 / 5.71:1 at 12px, measured in a
+browser with the alpha composited against the real background, and the test
+fails if `--color-gray-light`, `--color-gray` or `text-[11px]` comes back.
+`SpecsDisclaimer` takes `tone="dark"` for dark surfaces rather than a competing
+text-colour utility in `className`.
+
+One more trap found on the way: an HTML entity inside a JSX **expression** is a
+plain string, so React prints it verbatim — `/homes-on-sale` showed every
+visitor the heading "Don&rsquo;t Miss Out on These Savings". The same test scans
+for that now. Use the real character.
+
+# We sell and deliver the home. The buyer owns everything that touches the land
+
+Kyle, 2026-09-23: *"Clients are responsible for all of their own site work, setup,
+and foundation work. Our model has not changed."* The site had drifted from that
+in nine places, all removed the same day:
+
+- `/guides/zoning` offered **"free zoning checks"** — a panel promising we would
+  contact the local office and verify zoning compliance, permit requirements,
+  **setback calculations** and utility availability, with a "Request Zoning
+  Check" CTA. Setback calculations are engineering; we do not do them.
+- Five pages said some form of **"we verify zoning for your property"**
+  (`/`, `/locations/fort-wayne`, `/locations/indianapolis`,
+  `/locations/rural-indiana`, `/guides/buyers-guide`), plus Ava's objection
+  library and two `county-pages.ts` entries — one of which claimed **"we
+  coordinate the pier layout with your foundation contractor"**.
+
+What we may say: we sell factory-direct, we arrange delivery, we hand over the
+referral list of licensed and insured contractors, and we can tell a buyer which
+office answers for their county. What we may not say: that we verify, check or
+evaluate zoning for a parcel, or that we perform site work, foundations or setup.
+"We recommend checking with the county" is advice and is fine.
+
+`tests/disclaimers.test.ts` scans every source line for the claim shapes and
+fails on a new one. The clause guards in those patterns matter: without them
+"We arrange transport; your contractor handles the site" matched, which says
+exactly the right thing. Four real violations were injected and confirmed caught.
+
+Also removed that day, at Kyle's request: the **"Counties We Serve in {state}"**
+lists on `/guides/zoning` (14 Indiana, 12 Ohio, 12 Michigan counties). The
+`/locations/*` pages remain the place the service area is stated.
+
+# Catalogue alt text is generated, and 97% of it is specific
+
+945 photos in Champion's Box manifest are the bulk of the site's imagery, and
+their alt text comes from `describeImageFile()` in `src/lib/image-alt.ts`
+reading the room out of the filename. The quality of that one function is the
+alt quality across ~200 floor-plan pages.
+
+Coverage went 89.4% → **97.4%** on 2026-09-23 by fixing three things:
+
+- **A digit straight after a letter is not a word boundary.** Every `ROOMS`
+  pattern ends in `\b`, so `…-bedroom2`, `…-kitchen3` and `…-primary-bedroom2`
+  described nothing at all. `describeImageFile` now splits `([a-z])(\d)`.
+- `drone` / `aerial` → "aerial exterior view"; `utilities` (the pattern only had
+  singular `utility`); `details` → "detail view", ranked last so a named room
+  always wins.
+
+The 25 that still fall back are mostly Champion's `_LR` suffix
+(`1456H22P01_LR.jpg`). **Do not map it to "living room."** It is the only
+two-letter suffix in the whole manifest and 121 other files spell "living" out,
+which reads as a resolution marker, not a room code. A wrong alt is worse than a
+generic one. One file is Champion's own typo, `famiy-room`; not worth a pattern.
+
+`tests/image-alt.test.ts` pins the floor at 95% against the real manifest and
+locks the filename shapes. No image in the repo is missing meaningful alt text:
+five `alt=""` are genuinely decorative (a 20%-opacity quote mark, a 7%-opacity
+background, two admin thumbnails behind auth, the Meta Pixel noscript beacon).

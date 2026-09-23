@@ -55,7 +55,6 @@ const states = [
       "Front, side and rear setbacks",
       "Foundation, skirting and attached-structure requirements",
     ],
-    counties: ["Allen", "Whitley", "Noble", "DeKalb", "Steuben", "LaGrange", "Huntington", "Wells", "Adams", "Marion", "Hamilton", "St. Joseph", "Elkhart", "Kosciusko"],
   },
   {
     name: "Ohio",
@@ -80,7 +79,6 @@ const states = [
       "Setbacks and maximum lot coverage",
       "Permanent-foundation and skirting requirements",
     ],
-    counties: ["Lucas", "Wood", "Fulton", "Williams", "Henry", "Defiance", "Paulding", "Putnam", "Hancock", "Seneca", "Wyandot", "Crawford"],
   },
   {
     name: "Michigan",
@@ -105,7 +103,6 @@ const states = [
       "Setbacks and roof-pitch or exterior-material standards",
       "Foundation and skirting requirements",
     ],
-    counties: ["Kalamazoo", "Calhoun", "Branch", "St. Joseph", "Cass", "Van Buren", "Allegan", "Barry", "Eaton", "Jackson", "Hillsdale", "Lenawee"],
   },
 ];
 
@@ -248,21 +245,6 @@ export default function ZoningPage() {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-8 border-t border-[var(--color-charcoal)]/5">
-                    <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-gray)] mb-4">
-                      Counties We Serve in {state.name}
-                    </H4>
-                    <div className="flex flex-wrap gap-2">
-                      {state.counties.map((county) => (
-                        <span
-                          key={county}
-                          className="bg-[var(--color-cream-dark)] rounded-full px-4 py-2 text-sm"
-                        >
-                          {county}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </div>
             ))}
@@ -331,29 +313,30 @@ export default function ZoningPage() {
             </div>
 
             <div className="bg-[var(--color-charcoal)] text-white rounded-lg p-8 lg:p-12">
-              <H3 className="font-serif text-2xl font-semibold mb-6">We Can Help</H3>
-              <p className="text-white/60 mb-8">
-                Not sure if your land is suitable? We offer free zoning checks for customers 
-                in our service area. We’ll contact the local zoning office and verify:
+              <H3 className="font-serif text-2xl font-semibold mb-6">Where we fit</H3>
+              <p className="text-white/70 mb-8">
+                We sell the home factory-direct and arrange delivery to your site. Everything
+                that happens to the land is yours:
               </p>
-              <ul className="space-y-3 text-white/60">
-                <li className="flex items-center gap-2">
-                  <span className="text-[var(--color-lime)]">✓</span>
-                  Zoning compliance
+              <ul className="space-y-3 text-white/70">
+                <li className="flex items-start gap-2">
+                  <span className="text-[var(--color-lime-light)] mt-0.5">•</span>
+                  You or your contractor confirms zoning and pulls the permits
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-[var(--color-lime)]">✓</span>
-                  Permit requirements
+                <li className="flex items-start gap-2">
+                  <span className="text-[var(--color-lime-light)] mt-0.5">•</span>
+                  Your licensed contractors do the site work, foundation and setup
                 </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-[var(--color-lime)]">✓</span>
-                  Setback calculations
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-[var(--color-lime)]">✓</span>
-                  Utility availability
+                <li className="flex items-start gap-2">
+                  <span className="text-[var(--color-lime-light)] mt-0.5">•</span>
+                  Utilities, septic and well are arranged by you
                 </li>
               </ul>
+              <p className="text-white/70 mt-8">
+                That is why your quote is not padded with any of it. Ask us for the referral list
+                of licensed and insured contractors past customers have used, and we will point
+                you to the right office for your county.
+              </p>
             </div>
           </div>
         </div>
@@ -366,15 +349,16 @@ export default function ZoningPage() {
             Questions About <span className="italic text-[var(--color-teal-light)]">Your Property?</span>
           </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
-            We can check zoning for your specific property, explain local requirements, 
-            and help you navigate the permitting process. Free for customers in our service area.
+            Tell us the county and we will point you to the office that answers for your parcel,
+            and send the referral list of licensed and insured contractors past customers have used
+            for site work, foundations and setup.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact-us"
               className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
             >
-              Request Zoning Check
+              Ask Us a Question
             </Link>
             <a
               href="tel:+12603081457"

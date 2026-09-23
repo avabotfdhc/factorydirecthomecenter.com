@@ -22,7 +22,7 @@ const ROOMS: [RegExp, string][] = [
   [/\bfamily\b/, "family room"],
   [/\bgreat[-_ ]?room\b/, "great room"],
   [/\bden\b|\boffice\b|\bstudy\b/, "den"],
-  [/\butility\b|\blaundry\b|\bmud(room)?\b/, "utility room"],
+  [/\butilit(y|ies)\b|\blaundry\b|\bmud(room)?\b/, "utility room"],
   [/\bcloset\b|\bwic\b/, "walk-in closet"],
   [/\bentry\b|\bfoyer\b/, "entry"],
   [/\bporch\b|\bdeck\b|\bpatio\b/, "porch"],
@@ -31,7 +31,9 @@ const ROOMS: [RegExp, string][] = [
   [/\binterior\b/, "interior"],
   [/\bfireplace\b/, "fireplace"],
   [/\bcutaway\b/, "construction cutaway"],
+  [/\bdrone\b|\baerial\b/, "aerial exterior view"],
   [/\b(floor[-_ ]?plan|floorplan|plan|sales|apb|apf|lit|l-?10[12]|drawing|sheet|opt\d*)\b/, "floor plan sheet"],
+  [/\bdetails?\b/, "detail view"],
 ];
 
 /** Human words for what a catalogue photo shows, read from its filename. */
@@ -41,7 +43,11 @@ export function describeImageFile(src: string): string {
     .toLowerCase()
     .replace(/\b\d{4}[hm]\d{2}[a-z0-9]*\b/g, " ") // model numbers
     .replace(/\b(aspire|paramount|prime|dutch|redman|champion|web|jpgs?|img|dsc|photo|image|banner)\b/g, " ")
-    .replace(/[-_]+/g, " ");
+    .replace(/[-_]+/g, " ")
+    // Champion numbers repeat rooms: "…-bedroom2", "…-kitchen3". Every ROOMS
+    // pattern ends in \b, and a digit straight after a letter is not a word
+    // boundary, so those fell through to the generic alt. Split them.
+    .replace(/([a-z])(\d)/g, "$1 $2");
   for (const [re, label] of ROOMS) if (re.test(file)) return label;
   return "";
 }

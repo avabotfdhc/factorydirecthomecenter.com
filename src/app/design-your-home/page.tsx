@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { getApiFloorPlans } from "@/lib/api-content";
 import { HomeDesigner, type DesignerPlan } from "@/components/HomeDesigner";
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -77,6 +78,8 @@ export default async function DesignYourHomePage({
 
       <section className="max-w-4xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
         <HomeDesigner plans={designerPlans} initialHome={home} />
+
+        <SpecsDisclaimer className="mt-12" />
       </section>
     </main>
   );

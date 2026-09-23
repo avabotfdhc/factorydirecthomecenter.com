@@ -61,7 +61,7 @@ const aeoContent = [
     directAnswer: "Manufactured homes face restrictions within Indianapolis city limits but are permitted in many surrounding townships and counties.",
     supportingDetails: [
       "Hamilton County, Johnson County, and rural Marion County typically have more permissive zoning.",
-      "We help verify zoning compliance for your specific property before purchase."
+      "You or your contractor confirms zoning for the parcel before purchase; we can point you to the right office."
     ],
     wordCount: 46
   },
@@ -91,7 +91,7 @@ const locationFAQs = [
   },
   {
     question: "What is the best location for a manufactured home near Indianapolis?",
-    answer: "Rural areas and townships surrounding Indianapolis often offer the best opportunities for manufactured homes. Hamilton County, Johnson County, and rural Marion County typically have more permissive zoning. Areas outside the I-465 loop generally have fewer restrictions than downtown Indianapolis. We can help you evaluate specific properties for zoning compliance."
+    answer: "Rural areas and townships surrounding Indianapolis often offer the best opportunities for manufactured homes. Hamilton County, Johnson County, and rural Marion County typically have more permissive zoning. Areas outside the I-465 loop generally have fewer restrictions than downtown Indianapolis. Confirm any specific property with that county's zoning office before you commit."
   },
   {
     question: "How does Indianapolis weather affect manufactured homes?",
@@ -445,7 +445,7 @@ export default function IndianapolisPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-[var(--color-orange)] mt-1">•</span>
-                    <span>We verify zoning before purchase</span>
+                    <span>We point you to the right zoning office</span>
                   </li>
                 </ul>
               </div>

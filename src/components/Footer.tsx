@@ -142,23 +142,23 @@ export function Footer() {
 
         {/* Regulation Z + HUD disclosures */}
         <div className="mt-10 pt-8 border-t border-white/10">
-          <ComplianceDisclaimers className="max-w-4xl [&_p]:text-[var(--color-gray)]" />
+          <ComplianceDisclaimers className="max-w-4xl [&_p]:text-[var(--color-gray-light)]" />
         </div>
 
         {/* Bottom bar */}
         <div className="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[var(--color-gray)]">
+          <p className="text-xs text-[var(--color-gray-light)]">
             &copy; {new Date().getFullYear()} Factory Direct Homes Center LLC. All rights reserved. Floor plans,
             renderings, specifications, and pricing are approximate and subject to change without notice.
           </p>
           <div className="flex gap-6">
-            <Link href="/privacy" className="text-xs text-[var(--color-gray)] hover:text-[var(--color-gray-light)] transition-colors">
+            <Link href="/privacy" className="text-xs text-[var(--color-gray-light)] hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-xs text-[var(--color-gray)] hover:text-[var(--color-gray-light)] transition-colors">
+            <Link href="/terms" className="text-xs text-[var(--color-gray-light)] hover:text-white transition-colors">
               Terms
             </Link>
-            <CookiePreferencesLink className="text-xs text-[var(--color-gray)] hover:text-[var(--color-gray-light)] transition-colors" />
+            <CookiePreferencesLink className="text-xs text-[var(--color-gray-light)] hover:text-white transition-colors" />
           </div>
         </div>
       </div>

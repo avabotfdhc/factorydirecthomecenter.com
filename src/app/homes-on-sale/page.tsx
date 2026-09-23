@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import Image from "next/image";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
@@ -229,6 +230,8 @@ export default function HomesOnSalePage() {
             discountPercent={sale.discountPercent}
             saleActive={sale.active}
           />
+
+          <SpecsDisclaimer className="mt-10" />
         </div>
       </section>
 
@@ -249,7 +252,7 @@ export default function HomesOnSalePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="text-3xl font-bold text-white mb-4">
-              {sale.active ? "Don&rsquo;t Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
+              {sale.active ? "Don’t Miss Out on These Savings" : "Be First to Hear About the Next Sale"}
             </h2>
             <p className="text-white/80 mb-8 max-w-2xl mx-auto">
               Sign up for our Sales Alert and we&rsquo;ll email you when new promotions, clearance

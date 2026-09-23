@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export function RegZDisclaimer({ className = "" }: { className?: string }) {
   return (
-    <p className={`text-[11px] leading-relaxed text-[var(--color-gray)] ${className}`}>
+    <p className={`text-xs leading-relaxed text-[var(--color-charcoal)]/70 ${className}`}>
       <strong>Financing disclosure.</strong> Payment figures are estimates for illustration only, based on
       the price, down payment, annual percentage rate (APR) and term you entered, and assume a fixed-rate,
       fully amortizing loan with equal monthly payments. They exclude taxes, insurance, site work, delivery,
@@ -25,7 +25,7 @@ export function RegZDisclaimer({ className = "" }: { className?: string }) {
 
 export function HudDisclaimer({ className = "" }: { className?: string }) {
   return (
-    <p className={`text-[11px] leading-relaxed text-[var(--color-gray)] ${className}`}>
+    <p className={`text-xs leading-relaxed text-[var(--color-charcoal)]/70 ${className}`}>
       <strong>HUD notice.</strong> Manufactured homes are built to the U.S. Department of Housing and Urban
       Development (HUD) Manufactured Home Construction and Safety Standards (24 CFR 3280) and carry a HUD
       certification label; modular homes are built to the state-adopted residential building code (IRC).
