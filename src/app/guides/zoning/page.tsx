@@ -5,65 +5,104 @@ import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
   title: "Manufactured Home Zoning Laws",
-  description: "Manufactured home zoning regulations explained for Indiana, Ohio, and Michigan. What you need to know about placement, permits, and local restrictions.",
+  description: "How manufactured home placement is decided in Indiana, Ohio and Michigan: what the state controls, what your township or county controls, and the five questions to ask the zoning office before you buy land.",
   url: "/guides/zoning",
   type: "article",
 });
 
+// WHAT THIS PAGE MAY AND MAY NOT SAY
+//
+// Until 2026-09-22 this page asserted specifics no one can source: permit
+// turnarounds per state ("Indiana typically 2-6 weeks, Ohio 3-8, Michigan
+// 4-10"), setbacks "typically 25-50 feet", rural minimum lot sizes of "1+
+// acres", and — the dangerous one — "Can a municipality ban manufactured
+// homes completely? Generally no." A buyer who reads that, buys a parcel and
+// then discovers their township allows HUD-code homes only inside a licensed
+// community has lost real money on our say-so.
+//
+// No state authority publishes permit turnarounds, and setbacks and lot
+// minimums are written per district by the county, township or city — there
+// is no state-level number to quote. So this page no longer quotes any.
+//
+// The rule from here: describe the STRUCTURE of the process (who sets
+// construction standards, who decides placement, which permits exist) and
+// tell the buyer exactly what to ask and whom. Do not characterize what any
+// statute grants or forbids, and do not add a number that is not published by
+// the authority that enforces it. Where a fact is genuinely per-parcel, the
+// honest answer is "your zoning office, in writing, before you buy".
+
 const states = [
   {
     name: "Indiana",
-    overview: "Indiana has progressive manufactured housing laws. State law prohibits local governments from banning manufactured homes outright, but zoning restrictions vary by county and municipality.",
+    overview:
+      "The state sets construction and installation standards. WHERE a home may go is decided locally — by the county, township or city that writes the zoning ordinance for your parcel.",
     keyPoints: [
-      "State law protects manufactured home placement rights",
-      "Local zoning can restrict by district, not ban completely",
-      "Modular homes treated same as site-built in most areas",
-      "HUD-code homes allowed in most residential zones",
+      "State standards govern how the home is built and installed",
+      "Your zoning district decides whether a home may be placed at all",
+      "Modular homes are usually treated like site-built housing",
+      "HUD-code homes are more often restricted by district",
     ],
-    permits: "Building permit required. Septic/well permits if applicable. Zoning compliance letter recommended.",
-    timeline: "2-6 weeks depending on county",
+    permits:
+      "Local building permit. Septic or well permits where there is no public utility. A written zoning verification for the parcel, before you buy it.",
+    authority: {
+      label: "Indiana Department of Homeland Security — modular and mobile structures",
+      url: "https://www.in.gov/dhs/fire-and-building-safety/code-enforcement/industrialized-building-systems-modularmobile-structures/",
+    },
+    askLocally: "County or city plan commission / building department",
     restrictions: [
-      "Minimum lot sizes vary by county (typically 1+ acres in rural, smaller in developments)",
-      "Setback requirements: typically 25-50 feet from property lines",
-      "Foundation requirements vary by financing type",
-      "Some historic districts have additional restrictions",
+      "Which districts admit a HUD-code home, and on what terms",
+      "Minimum lot size and width for that district",
+      "Front, side and rear setbacks",
+      "Foundation, skirting and attached-structure requirements",
     ],
     counties: ["Allen", "Whitley", "Noble", "DeKalb", "Steuben", "LaGrange", "Huntington", "Wells", "Adams", "Marion", "Hamilton", "St. Joseph", "Elkhart", "Kosciusko"],
   },
   {
     name: "Ohio",
-    overview: "Ohio has a manufactured home installation program administered by the Ohio Department of Commerce. Local zoning varies significantly between rural and urban areas.",
+    overview:
+      "Installation standards come from the Ohio Department of Commerce. Placement is a local question, and it varies sharply between townships, villages and cities.",
     keyPoints: [
-      "State installation standards required",
-      "Local zoning varies significantly by municipality",
-      "Some cities restrict manufactured homes to specific zones",
-      "Rural areas generally more permissive",
+      "State standards govern installation",
+      "Townships, villages and cities write their own placement rules",
+      "Some jurisdictions admit HUD-code homes only in named districts",
+      "Agricultural and rural districts are often the most permissive",
     ],
-    permits: "Installation permit from Ohio Division of Industrial Compliance. Local building permit. Septic/well permits.",
-    timeline: "3-8 weeks for permits",
+    permits:
+      "Installation permit under the state program. Local building permit. Septic or well permits where applicable. Written zoning verification for the parcel.",
+    authority: {
+      label: "Ohio Department of Commerce — Manufactured Homes Program",
+      url: "https://com.ohio.gov/divisions-and-programs/manufactured-homes-program",
+    },
+    askLocally: "Township trustees or municipal zoning inspector, plus the county building department",
     restrictions: [
-      "Installation must comply with Ohio Administrative Code",
-      "Some municipalities restrict manufactured homes to certain districts",
-      "Foundation requirements for permanent placement",
-      "Agricultural districts typically most permissive",
+      "Whether the district admits a HUD-code home, a modular home, or both",
+      "Minimum lot size and width",
+      "Setbacks and maximum lot coverage",
+      "Permanent-foundation and skirting requirements",
     ],
     counties: ["Lucas", "Wood", "Fulton", "Williams", "Henry", "Defiance", "Paulding", "Putnam", "Hancock", "Seneca", "Wyandot", "Crawford"],
   },
   {
     name: "Michigan",
-    overview: "Michigan regulates manufactured homes through the Michigan Department of Licensing and Regulatory Affairs. Local zoning can be restrictive in some areas.",
+    overview:
+      "Licensing and installation standards come from LARA. Placement is decided by the township, city or village — Michigan townships differ from one another more than most buyers expect.",
     keyPoints: [
-      "State installation code required",
-      "Local zoning varies widely",
-      "Some townships have restrictive ordinances",
-      "Manufactured home communities common alternative",
+      "State standards govern licensing and installation",
+      "Townships and municipalities write the placement rules",
+      "Some admit HUD-code homes only inside licensed communities",
+      "Confirm your township's ordinance before committing to a parcel",
     ],
-    permits: "State installation permit. Local building permit. Zoning compliance. Septic/well permits.",
-    timeline: "4-10 weeks depending on township",
+    permits:
+      "State installation requirements. Local building permit. Septic or well permits where applicable. Written zoning verification for the parcel.",
+    authority: {
+      label: "Michigan LARA — Bureau of Construction Codes",
+      url: "https://www.michigan.gov/lara/bureau-list/bcc",
+    },
+    askLocally: "Township or city zoning administrator, plus the county building department",
     restrictions: [
-      "Installation must meet Michigan Construction Code",
-      "Some townships restrict by minimum square footage",
-      "Age restrictions in some communities (new homes only)",
+      "Whether the district admits a HUD-code home outside a licensed community",
+      "Minimum floor area, lot size and width",
+      "Setbacks and roof-pitch or exterior-material standards",
       "Foundation and skirting requirements",
     ],
     counties: ["Kalamazoo", "Calhoun", "Branch", "St. Joseph", "Cass", "Van Buren", "Allegan", "Barry", "Eaton", "Jackson", "Hillsdale", "Lenawee"],
@@ -73,27 +112,38 @@ const states = [
 const commonQuestions = [
   {
     question: "Can I put a manufactured home on any property?",
-    answer: "Not necessarily. While state laws protect your right to place manufactured homes, local zoning can restrict by district, lot size, and other factors. Always check with your local zoning office before purchasing land.",
+    answer:
+      "No — and this is the question to settle before you buy land, not after. Whether a home may be placed on a given parcel is decided by the zoning district that parcel sits in, and districts differ street by street. Ask the county, township or city office that writes the ordinance, and ask about your exact parcel number.",
+  },
+  {
+    question: "Can a township or city refuse to allow a manufactured home?",
+    answer:
+      "Local zoning decides where a HUD-code home may go, and the answer genuinely varies — some districts admit them on any conforming lot, some admit them only in named districts, and some admit them only inside a licensed manufactured home community. Never assume a parcel qualifies because a neighboring one does. Get the answer in writing from the zoning office, for that parcel, before money changes hands.",
+  },
+  {
+    question: "What should I ask the zoning office?",
+    answer:
+      "Give them the parcel number and ask five things: which zoning district it is in; whether that district permits a HUD-code manufactured home, a modular home, or both; the minimum lot size, width and setbacks; what foundation, skirting or exterior standards apply; and which permits you will need and who pulls them. Ask for the answer in writing or by email — a phone call is not something you can rely on later.",
   },
   {
     question: "Do I need a permit for a manufactured home?",
-    answer: "Yes. All three states require permits. Indiana and Ohio have state-level installation programs, while Michigan requires state and local permits. You'll also need local building permits and possibly septic/well permits.",
+    answer:
+      "Yes. Expect a local building permit, the state installation requirements for your state, and septic or well permits where there is no public utility. You or your contractor pull them — we are not the permit holder. We can point you to the right office for your county.",
   },
   {
     question: "What's the difference between manufactured and modular for zoning?",
-    answer: "Modular homes are typically treated the same as site-built homes in zoning codes. Manufactured (HUD-code) homes may have additional restrictions in some areas, though state laws generally protect placement rights.",
+    answer:
+      "A modular home is built to the same state residential code as a site-built house and is usually treated like one in a zoning ordinance. A manufactured home is built to the federal HUD code and is more often restricted by district. Where a district admits one but not the other, that difference decides which of our homes fits your land — so confirm which your district permits before choosing a floor plan.",
   },
   {
     question: "How long does the permitting process take?",
-    answer: "Varies by location: Indiana typically 2-6 weeks, Ohio 3-8 weeks, Michigan 4-10 weeks. Rural areas are usually faster than municipalities. You or your contractor pull the permits — we can point you to the right local offices.",
-  },
-  {
-    question: "Can a municipality ban manufactured homes completely?",
-    answer: "Generally no. State laws in Indiana, Ohio, and Michigan protect the right to place manufactured homes. However, local zoning can restrict by district, minimum lot size, setbacks, and aesthetic requirements.",
+    answer:
+      "It depends entirely on the office, and no state publishes a figure we could honestly quote. A rural county building department may issue in days; a municipality with a plan commission review can take considerably longer. Ask the office for their current turnaround when you ask the zoning questions above, and build your schedule from what they tell you.",
   },
   {
     question: "What about homeowners associations (HOAs)?",
-    answer: "HOAs can restrict manufactured homes through covenants, even where zoning allows them. Always review HOA documents before purchasing in a subdivision. We can help you find HOA-friendly communities.",
+    answer:
+      "An HOA can restrict manufactured homes through its covenants even where zoning allows them, and covenants are a private contract the zoning office knows nothing about. Read the recorded covenants before purchasing in a subdivision.",
   },
 ];
 
@@ -134,6 +184,18 @@ export default function ZoningPage() {
             </H2>
           </div>
 
+          {/* The one thing a buyer must take away. Placement is local, always,
+              and nothing on this page substitutes for the parcel's own answer. */}
+          <div className="max-w-3xl mx-auto -mt-8 mb-16 rounded-lg border border-[var(--color-orange)]/30 bg-[var(--color-orange)]/5 px-6 py-5">
+            <p className="text-sm text-[var(--color-charcoal)]/80 leading-relaxed">
+              <strong>Orientation, not an answer for your land.</strong> Each state sets how a
+              home is built and installed. Whether one may be placed on a given parcel is decided
+              locally, and it changes from one township to the next. Before you buy land, get the
+              answer for that parcel in writing from the office named below — and treat anything
+              on this page that disagrees with them as wrong.
+            </p>
+          </div>
+
           <div className="space-y-16">
             {states.map((state, idx) => (
               <div key={idx} className="bg-white rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
@@ -160,13 +222,21 @@ export default function ZoningPage() {
                       <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Permits Required</H4>
                       <p className="text-sm text-[var(--color-gray)] mb-4">{state.permits}</p>
                       <div className="bg-[var(--color-cream-dark)] rounded-lg p-4">
-                        <span className="text-xs uppercase tracking-wider text-[var(--color-gray)]">Timeline</span>
-                        <div className="font-semibold">{state.timeline}</div>
+                        <span className="text-xs uppercase tracking-wider text-[var(--color-gray)]">Who answers for your parcel</span>
+                        <div className="font-semibold">{state.askLocally}</div>
+                        <a
+                          href={state.authority.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-block text-xs text-[var(--color-teal)] underline underline-offset-4"
+                        >
+                          {state.authority.label}
+                        </a>
                       </div>
                     </div>
 
                     <div>
-                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">Common Restrictions</H4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-teal)] mb-4">What local code controls</H4>
                       <ul className="space-y-2">
                         {state.restrictions.map((restriction, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">

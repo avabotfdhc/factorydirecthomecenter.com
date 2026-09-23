@@ -97,7 +97,7 @@ const citationsBank: Citation[] = [
 
   // Ohio & Michigan Specific
   {
-    source: "Ohio Manufactured Homes Commission",
+    source: "Ohio Department of Commerce — Manufactured Homes Program",
     url: "https://com.ohio.gov/divisions-and-programs/manufactured-homes-program",
     description: "Ohio state regulations for manufactured home installation and standards",
     topics: ["ohio", "toledo", "lucas-county", "zoning", "permits"],
