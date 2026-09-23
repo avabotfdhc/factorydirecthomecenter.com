@@ -6,12 +6,16 @@ import { trackPhoneClick, trackEvent, trackCTAClick } from "@/lib/analytics";
 import { useBottomBarHeight } from "@/lib/bottom-bars";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
 import { useCurrentHome } from "@/lib/current-home";
+import { BUSINESS, dialable } from "@/lib/business";
 
 // Sticky call / text / quote bar on phones (hidden at md and up).
 //
 // - Call and Text are real tel: and sms: links: one tap opens the phone or
 //   messaging app with our number (the old Text button showed a fake "message
-//   sent" form that went nowhere).
+//   sent" form that went nowhere). They are two DIFFERENT numbers — texts go
+//   to BUSINESS.smsNumber, calls to BUSINESS.telephone — because the voice
+//   line does not receive SMS. Both come from src/lib/business.ts; a literal
+//   number in either href is what tests/contact-details.test.ts rejects.
 // - Get Quote opens the instant-quote modal in place instead of bouncing the
 //   visitor to /contact-us. On a page that has declared which home it is about
 //   (see src/lib/current-home.ts) the quote carries that home; everywhere else
@@ -21,8 +25,10 @@ import { useCurrentHome } from "@/lib/current-home";
 // Publishes --mobile-bar-h so the compare bar and chat bubble stack above it.
 
 const SMS_HREF =
-  "sms:+12603081457?body=" +
+  `sms:${dialable(BUSINESS.smsNumber)}?body=` +
   encodeURIComponent("Hi Factory Direct, I'm interested in pricing and info on a Champion home.");
+
+const TEL_HREF = `tel:${dialable(BUSINESS.telephone)}`;
 
 export function MobileActionBar() {
   const t = useTranslations("mobileBar");
@@ -54,7 +60,7 @@ export function MobileActionBar() {
         >
           <div className="flex items-center justify-around p-2">
             <a
-              href="tel:2603081457"
+              href={TEL_HREF}
               onClick={() => trackPhoneClick("mobile_action_bar", "call")}
               className="flex flex-col items-center gap-1 px-4 py-2 text-[var(--color-charcoal)] hover:text-[var(--color-teal)] transition-colors"
             >

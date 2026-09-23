@@ -19,6 +19,11 @@ export const OWNER_ID = `${SITE_URL}/about#kyle-dudgeon`;
 /** The Google Business Profile listing — where real reviews are read and
  *  left. Named rather than indexed out of `sameAs` so reordering that list
  *  cannot silently repoint the review links. */
+/** `+1-260-308-1457` → `+12603081457`, the form a `tel:` or `sms:` href wants. */
+export function dialable(number: string): string {
+  return number.replace(/[^\d+]/g, "");
+}
+
 export const GOOGLE_LISTING_URL =
   "https://www.google.com/maps/search/?api=1&query=Factory+Direct+Homes+Center+Auburn+IN";
 
@@ -44,6 +49,19 @@ export const BUSINESS = {
     "Champion manufactured and modular homes with factory-direct, line-item pricing. Auburn, Indiana showroom serving Indiana, Ohio and Michigan.",
   telephone: "+1-260-308-1457",
   phoneDisplay: "(260) 308-1457",
+  /**
+   * The line that receives text messages — a different number from the voice
+   * line, and the one the Google Business Profile advertises for texting
+   * (Kyle, 2026-09-23). Until then the site's mobile "Text" button composed a
+   * message to `telephone`, so every text a buyer sent from their phone went
+   * to a line that does not answer them.
+   *
+   * Anything that opens a messaging app reads this; anything that dials reads
+   * `telephone`. Never hard-code either into an `sms:` or `tel:` href —
+   * `tests/contact-details.test.ts` fails on a literal number in an sms link.
+   */
+  smsNumber: "+1-260-750-1828",
+  smsDisplay: "(260) 750-1828",
   email: "sales@factorydirecthomescenter.com",
   streetAddress: "1211 State Road 8",
   city: "Auburn",
