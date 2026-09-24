@@ -112,6 +112,36 @@ Semrush export dates are export dates, not crawl dates — check the compare-aud
 - **Distance:** Champion's Topeka plant is **30 miles** from the Auburn showroom (Kyle, 2026-09-16). The site had said 20 in 48 places and 30 in others; every Auburn-showroom-to-Topeka claim now says 30. City-to-city distances are a different measurement and were deliberately left alone — Auburn→Kendallville (20 miles), Auburn→Huntertown (20) and the Indianapolis distance table. Garrett→Topeka is 30 (Kyle, 2026-09-18) — note Garrett is only 5 miles from Auburn, so if that ever needs revisiting it should differ from the Auburn figure by roughly that much. If the factory figure ever changes again, grep for `30[ -]?mile` and check each hit's subject before editing; the Kendallville copy was a false positive on the first pass precisely because it reads "…from our Auburn showroom".
 - **Social profiles:** `BUSINESS.sameAs` carries the five links Kyle publishes on the Google Business Profile itself, supplied from the listing on 2026-09-23: the Google listing, Facebook (`/FactoryDirectHomesCenter`), Instagram (`/factory_direct_homes_center/` — note the underscores), X (`/fd_homes_center`) and YouTube (`/@factorydirecthomescenter`). These replace the two recovered from the previous build's `utils/seo.js`, which had the Instagram handle wrong; a `sameAs` pointing at somebody else's profile asks Google to merge a stranger into our entity, so take these from the listing and nowhere else. There is no LinkedIn page. The Google listing has its own named export, `GOOGLE_LISTING_URL` — `reviews.ts` reads that rather than `sameAs[0]`, so the list can be reordered safely. `tests/structured-data.test.ts` holds the shape (absolute https, no duplicates, the listing present and equal to the review link).
 
+# Calls and texts go to two different lines
+
+The Google Business Profile advertises a **texting number that is not the voice
+line** (Kyle, 2026-09-23, when he also made the voice number public on the
+listing). The site's mobile "Text" button had always composed its message to the
+voice line, so every text a buyer sent from their phone landed somewhere that
+does not answer them — a lead lost silently, with the buyer believing they had
+made contact.
+
+- `BUSINESS.telephone` / `phoneDisplay` — the line that is **dialled**. This is
+  the number on the listing, and the site publishes it in ~120 places.
+- `BUSINESS.smsNumber` / `smsDisplay` — the line that receives **texts**. Only
+  `MobileActionBar`'s Text button uses it today; anything else that opens a
+  messaging app must read it too.
+- `dialable()` turns either display form into the `+1…` digits an href wants.
+  Never hand-write a number into an `sms:` href —
+  `tests/contact-details.test.ts` scans `src/` and fails on `sms:` followed by a
+  digit (an `sms:?&body=…` with no recipient, as in `ShareListing`'s
+  share-with-a-friend link, is the one legitimate shape).
+
+**Opening date:** the dealership opened **November 2024**, which is what
+`BUSINESS.foundingDate` says and what `/`, `/about` and Ava tell visitors.
+The Google listing said 21 September 2024; Kyle confirmed November is correct
+and is fixing the listing (2026-09-23). Do not "correct" the site to match a
+listing.
+
+**The listing's own description is not a source.** It still says the Topeka
+plant is "about 20 miles" away, which the site corrected to 30 a week earlier.
+Facts flow from Kyle to this repo, not from the listing copy.
+
 # City blog posts: cover a town once, and make each post genuinely different
 
 The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). 25 of the closest cities are now covered: 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan).
