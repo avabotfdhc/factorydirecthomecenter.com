@@ -30,18 +30,6 @@ const citationsBank: Citation[] = [
     description: "Consumer guide to manufactured home financing and buyer protections",
     topics: ["financing", "chattel-loans", "first-time-buyers", "buying-process"],
   },
-  {
-    source: "21st Mortgage Corporation",
-    url: "https://www.21stmortgage.com/",
-    description: "Manufactured home lender specializing in chattel (home-only) financing",
-    topics: ["financing", "chattel-loans", "manufactured-homes"],
-  },
-  {
-    source: "Triad Financial Services",
-    url: "https://www.triadfs.com/",
-    description: "Manufactured home lender offering chattel and land-home financing",
-    topics: ["financing", "chattel-loans", "manufactured-homes"],
-  },
 
   // Industry Data & Statistics
   {

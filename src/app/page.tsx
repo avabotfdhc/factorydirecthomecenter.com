@@ -54,7 +54,7 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "Do you offer financing for manufactured homes?",
-                a: "Yes. We work with several lenders, including 21st Mortgage, Triad Financial, Credit Human, and Lake Michigan Credit Union. We specialize in chattel loans for home-only purchases. We can also arrange land-home packages. Cash buyers receive preferred pricing discounts."
+                a: "No. We are not a lender, we do not arrange or broker financing, and we do not pull credit. You choose your own lender. What we hand you is the list of lenders our customers have used before, with no recommendation attached — chattel loans for home-only purchases, land-home packages and conventional mortgages are all routes buyers take. Cash buyers receive preferred pricing discounts."
               },
               {
                 q: "How long does it take to get a manufactured home delivered?",

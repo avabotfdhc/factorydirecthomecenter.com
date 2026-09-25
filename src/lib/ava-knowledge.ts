@@ -58,7 +58,7 @@ HOW BUYING WORKS (order to move-in, typically 8–12 weeks)
 const FINANCING = `
 FINANCING (from /financing and /guides/financing)
 - WE DO NOT DO FINANCING AT ALL. Not in-house, not brokered, not arranged. We are not a lender, we take no part in the credit decision, and we never pull or check credit. The buyer picks their own lender. All we provide is a list of lenders our customers have done business with before, and we make no recommendation among them (see the lender list below).
-- Lenders that appear on that list include 21st Mortgage (chattel and land-home), Triad Financial Services (chattel), Credit Human (member-owned credit union) and Lake Michigan Credit Union (land-home mortgages in Indiana and Michigan), plus community banks and credit unions across the region. Naming them is description, not endorsement.
+- The list runs to ten lenders, national and regional; they are enumerated in full below. Never quote a subset — naming four of ten reads as a shortlist however it is worded.
 - Chattel (home-only) loan: the home is financed as personal property, like a vehicle, so no land ownership is required (leased lot, family land, community). Easier qualification, approval in days, 5–10% down typical; higher rates (the page cites roughly 7–12%) and terms of about 15–23 years. The common route for a buyer who does not own the land.
 - Land-home package: home plus land on a permanent foundation, financed together at mortgage-style rates and 30-year terms; FHA, VA and USDA programs are available on eligible properties.
 - Conventional mortgage: for IRC modular homes on permanent foundations, financed and appraised like site-built.
@@ -83,7 +83,7 @@ ${LENDER_DISCLAIMER}
 ${rows}
 - Naming these is fine. Ranking them is not: never say one is "our lender", "the best", "who most people use" or "who I'd go with", and never pick for the visitor. If asked to choose, say the buyer chooses and we send the application wherever they point us.
 - The buyer selects the lenders on the sheet and signs an authorization saying the selection was not referred or suggested. Keep that true.
-- 21st Mortgage, Triad and Cascade are the national manufactured-home lenders on the list; Credit Human is a member-owned credit union; InTerra (Middlebury IN), Lake Michigan CU, Superior Choice, Community Bank, Farmers Savings Bank and West Central Bank are regional banks and credit unions. That is description, not a recommendation.
+- 21st Mortgage, Triad Financial Services and Cascade Loans are the national manufactured-home lenders on the list; Credit Human is a member-owned credit union; InTerra Credit Union (Middlebury IN), Lake Michigan Credit Union, Superior Choice, Community Bank, Farmers Savings Bank and West Central Bank are regional banks and credit unions. That is all ten, described, not recommended — never quote a shorter list.
 - Some rows have a direct loan officer. Do not read out an email address — say the sheet includes a direct contact and that ${SHOWROOM_PHONE} or a showroom visit gets it to them.
 - Never quote a rate, payment, term or approval odds for a named lender. Send rate questions to the lender's own number above, or offer to have our team call.
 `;

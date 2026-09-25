@@ -144,7 +144,7 @@ Facts flow from Kyle to this repo, not from the listing copy.
 
 # City blog posts: cover a town once, and make each post genuinely different
 
-The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). 25 of the closest cities are now covered: 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan).
+The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). The 13 August posts were written before that rule and carried 29 `modular` mentions between them — "a new Champion manufactured or modular home" in the opening, and a boilerplate "modular homes on permanent foundations extend your options" clause in the placement paragraph of eleven of them, which gave modular equal billing in posts that are supposed to be about HUD-code homes. Swept on 2026-09-25. Where a buyer genuinely needs the alternative named — the three FAQs asking whether a home can go inside town limits — the answer now points at `/guides/manufactured-vs-modular` instead of selling modular inline. 25 of the closest cities are now covered: 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan).
 
 Rules for adding another:
 
@@ -168,6 +168,16 @@ DealerTide as the financing attachment (`npm run lender-sheet` →
   `directContact` is a named loan officer's email — printed sheet and CRM only. Those people did
   not agree to appear on a public page and a published address is scraped within days. Never
   render `directContact` in a page, a feed, a sitemap or an Ava reply.
+- **Name them all, or name none.** A subset is a recommendation with the verb taken out. Ava's
+  four-lender shortlist was fixed on 2026-09-23 on exactly this rule, but the sweep stopped there:
+  on 2026-09-25 the same four names (21st Mortgage, Triad, Credit Human, Lake Michigan CU) were
+  still typed into the homepage FAQ, `faqs.ts`, `/about`, the financing calculator's disclaimer,
+  `blog.ts`, the privacy policy — as "financing **partners**" — and five blog posts. The homepage
+  answer also still said we "work with" them and could "arrange land-home packages". All removed.
+  `tests/disclaimers.test.ts` now derives the ten names from `LENDERS` and fails any file under
+  `src/` that names some but not all of them; `lenders.ts` is the only exemption, and
+  `ava-knowledge.ts` passes by naming all ten in full (it used shorthand — "Triad", "Lake Michigan
+  CU" — which is why Ava's roster now spells each one exactly as `lenders.ts` does).
 - **Never rank them.** The sheet's own disclaimer ("does not recommend any specific lender") and
   the authorization the buyer signs ("this selection was not referred or suggested") are what keep
   the referral question clean. No "our lender", no default, no sort by preference. Ava's block

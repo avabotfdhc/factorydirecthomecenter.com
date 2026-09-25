@@ -29,7 +29,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Every home from both builders is constructed to the federal HUD Code (or state IRC code for modular), inspected at the factory, and backed by a manufacturer's warranty. You won't go wrong on construction with either. Champion's <a href="/champion-homes">Aspire, Prime, and Paramount lines</a> give you a wide range of layouts and finishes.</p>
 
 <h2>Financing: independent vs. in-house</h2>
-<p>This is where the models differ most. A vertically integrated builder typically steers you toward its own affiliated lender. As an independent dealer, we work with <em>multiple</em> lenders — 21st Mortgage, Triad Financial, Credit Human, and Lake Michigan Credit Union — so you can compare offers and pick the best one for your situation instead of taking the first one handed to you. Always compare rates, no matter who you buy from. Our <a href="/financing">financing page</a> explains the options.</p>
+<p>This is where the models differ most. A vertically integrated builder typically steers you toward its own affiliated lender. As an independent dealer, we hand you the full list of lenders our customers have used, recommend none of them, and leave the choosing to you — so you compare offers yourself instead of taking the first one handed to you. Always compare rates, no matter who you buy from. Our <a href="/financing">financing page</a> explains the options.</p>
 
 <h2>The buying experience</h2>
 <p>With a national chain you get a big-brand process. With a local independent dealer you get a name, a face, and someone 20 minutes away who answers the phone after the sale. We also let you stay in control of your own site work with your own licensed contractors — where many buyers save real money — rather than bundling everything into one price.</p>
@@ -112,7 +112,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 
 <h2>How Factory Direct Homes Center fits in</h2>
 <p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 30 miles from Champion's Topeka plant — one of the largest factory-built home facilities in the country. That means short freight distances, direct access to the full Aspire, Prime, and Paramount lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
-<p>On financing, we already work with the lenders who specialize in this space every day — 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union — across chattel (home-only) loans, land-home packages, and conventional mortgages for modular homes. As the Act's expanded FHA options take shape, those same partners are positioned to help you use them. Our <a href="/financing">financing page</a> walks through how each loan type works.</p>
+<p>On financing, we do not lend, broker or pull credit — buyers apply directly to the lender of their choice, across chattel (home-only) loans, land-home packages and conventional mortgages. As the Act's expanded FHA options take shape, they will be available through the same lenders on the list we hand you. Our <a href="/financing">financing page</a> walks through how each loan type works.</p>
 <p>And as always, site work — foundation or pad, utilities, and driveway — is handled by <strong>your own licensed contractors</strong>, which is where many buyers save real money versus dealer-bundled site work. We're glad to share a referral list of licensed and insured contractors past customers have used.</p>
 
 <h2>The bottom line</h2>
@@ -135,11 +135,11 @@ export const localBlogPosts: ApiBlogDetail[] = [
     slug: "manufactured-homes-fort-wayne-buyers-guide",
     title: "Buying a Manufactured Home Near Fort Wayne: A 2026 Buyer's Guide",
     excerpt:
-      "What Fort Wayne and Allen County buyers should know before purchasing a manufactured or modular home — placement options, costs, delivery, and why the best deals are 25 minutes up the road.",
+      "What Fort Wayne and Allen County buyers should know before purchasing a manufactured home — placement options, costs, delivery, and why the best deals are 25 minutes up the road.",
     image: "/images/homepage/double-wides.webp",
     date: "August 12, 2026",
     html: `
-<p>Fort Wayne's housing market has priced a lot of good people out of a new site-built home. If you're one of them, a new manufactured or modular home is the most realistic path to new construction in northeast Indiana — and Fort Wayne buyers have a geographic advantage most of the country doesn't: you live about 25 minutes from a factory-direct Champion dealer, and under an hour from the largest Champion factory in the country. Here's what that means for you, and what to know before you buy.</p>
+<p>Fort Wayne's housing market has priced a lot of good people out of a new site-built home. If you're one of them, a new HUD-code manufactured home is the most realistic path to new construction in northeast Indiana — and Fort Wayne buyers have a geographic advantage most of the country doesn't: you live about 25 minutes from a factory-direct Champion dealer, and under an hour from the largest Champion factory in the country. Here's what that means for you, and what to know before you buy.</p>
 
 <h2>Why Fort Wayne buyers shop in Auburn</h2>
 <p>Our showroom at 1211 State Road 8 in Auburn is about 25 minutes north of Fort Wayne, straight up I-69. That drive matters for two reasons. First, you can walk through real model homes — floor plans on a screen don't tell you how a kitchen feels. Second, the factory that builds these homes is in Topeka, Indiana, about 30 miles from us. Freight is one of the biggest hidden costs in manufactured housing, and homes that travel a short distance cost less to deliver than homes trucked in from hundreds of miles away. That saving shows up in your quote.</p>
@@ -149,24 +149,24 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <ul>
   <li><strong>Your own land.</strong> Rural and unincorporated areas of Allen County — and neighboring DeKalb, Whitley, and Noble counties — allow manufactured homes on private land in many zoning districts. Rules vary parcel by parcel, so you or your contractor verify zoning and setbacks and pull the permits for your specific site. Our <a href="/guides/zoning">zoning guide</a> covers how this works in Indiana.</li>
   <li><strong>A land-lease community.</strong> The Fort Wayne area has established manufactured home communities where you own the home and lease the lot — the lowest cash-to-move-in option.</li>
-  <li><strong>A modular home on a permanent foundation.</strong> Built to the same Indiana residential code as site-built houses, modular homes can go where site-built homes go — including many Fort Wayne suburbs — and finance with conventional mortgages.</li>
+  <li><strong>Private land outside the city.</strong> Rural Allen County parcels are where HUD-code homes are most straightforwardly permitted, and where most of our Fort Wayne-area buyers end up.</li>
 </ul>
 
 <h2>What it costs</h2>
-<p>What you'll pay depends on the size, series, and options you choose — single wides are the most affordable path, double wides the mid-range, and IRC-code modular homes the top of the market. Compare factory-direct pricing with what new site-built construction runs in Allen County and the math explains why factory-built housing is the fastest-growing path to homeownership in the region. For a deeper cost breakdown, read our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> — and remember our quotes are line-item: the home, the options, the delivery, each priced separately so you can compare honestly against any other dealer.</p>
+<p>What you'll pay depends on the size, series, and options you choose — single wides are the most affordable path and double wides the mid-range. Compare factory-direct pricing with what new site-built construction runs in Allen County and the math explains why factory-built housing is the fastest-growing path to homeownership in the region. For a deeper cost breakdown, read our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> — and remember our quotes are line-item: the home, the options, the delivery, each priced separately so you can compare honestly against any other dealer.</p>
 <p>Site work — foundation or pad, utilities, driveway — is separate, and in our model <strong>you hire your own licensed contractors</strong> for it. Most buyers save money that way versus dealer-bundled site work, and we can share a referral list of licensed and insured contractors past customers around Fort Wayne have used.</p>
 
 <h2>How delivery works from here</h2>
 <p>Once your home is built at the Topeka factory, it's transported to your site — a short, low-cost trip anywhere in the Fort Wayne area, including New Haven, Huntertown, Churubusco, Columbia City, and the surrounding counties. From order to move-in typically runs 8&ndash;12 weeks: 6&ndash;8 weeks of factory build time, plus site preparation and permitting that your contractor can run in parallel.</p>
 
 <h2>Financing for Fort Wayne buyers</h2>
-<p>Manufactured home financing is a specialty, and we work with the lenders who do it every day: 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union. Home-only (chattel) loans, land-home packages, and conventional financing for modular homes are all on the table. Start with our <a href="/financing">financing page</a> to see how the options compare.</p>
+<p>Manufactured home financing is a specialty. We do not offer it ourselves and we recommend no one — you get the full list of lenders our customers have used and apply wherever you like, for home-only (chattel) loans, land-home packages or a conventional mortgage. Start with our <a href="/financing">financing page</a> to see how the options compare.</p>
 
 <h2>FAQ</h2>
 <h3>Do you deliver to Fort Wayne?</h3>
 <p>Yes — Fort Wayne and all of Allen County are squarely in our primary delivery area, about 25 minutes from our Auburn showroom.</p>
 <h3>Can I put a manufactured home inside Fort Wayne city limits?</h3>
-<p>Within city limits, zoning is stricter and typically favors established manufactured home communities or modular construction on permanent foundations. On rural land outside the city, private-land placement is common. Verify the rules for your specific parcel before you buy — we can point you to the right county offices.</p>
+<p>Within city limits, zoning is stricter and typically favors established manufactured home communities. On rural land outside the city, private-land placement is common. If a district rules out a HUD-code home entirely, the IRC-code alternative is covered in our <a href="/guides/manufactured-vs-modular">manufactured vs modular guide</a>. Verify the rules for your specific parcel before you buy — we can point you to the right county offices.</p>
 <h3>What's the difference between buying from you and a Fort Wayne area dealer lot?</h3>
 <p>Factory-direct pricing and line-item transparency. We're an authorized Champion dealer 30 miles from the factory, we don't bundle mystery costs, and you stay in control of site work with your own contractors. See <a href="/locations/fort-wayne">our Fort Wayne page</a> for more on how we serve the area.</p>
 <h3>Can I tour homes before buying?</h3>
@@ -215,7 +215,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Most dealers quote one bundled number, which makes it impossible to tell what the home costs versus what the extras cost. We quote line by line: the home, the options, the delivery. You see each number, you can compare fairly against any other dealer, and you stay in control of the parts of the project — like site work — where hiring your own contractor saves money. Read more in our <a href="/guides/pricing">pricing guide</a>.</p>
 
 <h2>Financing a manufactured home in Indiana</h2>
-<p>Financing is often easier than buyers expect. We work with lenders who specialize in factory-built housing — 21st Mortgage, Triad Financial Services, Credit Human, and Lake Michigan Credit Union — covering chattel (home-only) loans, land-home packages, and conventional financing for modular homes. Our <a href="/financing">financing page</a> and <a href="/guides/financing">financing guide</a> walk through the options and what lenders look for.</p>
+<p>Financing is often easier than buyers expect. We do not arrange it — you pick your own lender from the full list we hand you, covering chattel (home-only) loans, land-home packages and conventional mortgages. Our <a href="/financing">financing page</a> and <a href="/guides/financing">financing guide</a> walk through the options and what lenders look for.</p>
 
 <h2>FAQ</h2>
 <h3>Is a manufactured home cheaper than building on-site in Indiana?</h3>
@@ -240,12 +240,12 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Tour real homes, ten minutes from anywhere in Auburn</h2>
 <p>Photos don't tell you whether a kitchen island crowds the walkway or how a primary suite actually feels. Because the showroom is local, you can stop in on a lunch break, walk through model homes, and come back with your spouse on Saturday. We're open Mon&ndash;Fri 9&ndash;5 and Saturday 10&ndash;4 — browse our <a href="/floor-plans">Champion floor plans</a> before you visit.</p>
 <h2>Placing a home in DeKalb County</h2>
-<p>Much of DeKalb County outside city limits allows manufactured homes on private land, and modular homes on permanent foundations fit nearly anywhere a site-built house can go. Zoning and setbacks are parcel-specific: you or your contractor verify the rules and pull the permits, and because the county offices are minutes away, we can point you to exactly the right desk. Our <a href="/guides/zoning">zoning guide</a> explains the process.</p>
+<p>Much of DeKalb County outside city limits allows manufactured homes on private land. Zoning and setbacks are parcel-specific: you or your contractor verify the rules and pull the permits, and because the county offices are minutes away, we can point you to exactly the right desk. Our <a href="/guides/zoning">zoning guide</a> explains the process.</p>
 <h2>The factory question</h2>
 <p>Champion's Topeka plant — the largest Champion factory in the country — is about 30 miles from Auburn. Short freight means lower delivery cost on your line-item quote, and it's why Auburn buyers consistently see some of the lowest delivered prices in our service area. Every home is quoted line-item for your exact configuration; see the full breakdown in our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Do you deliver inside Auburn city limits?</h3>
-<p>We deliver anywhere in the area — city-limit placements depend on zoning, which typically favors established communities or modular construction; rural DeKalb parcels are usually simpler. We'll help you check your specific address.</p>
+<p>We deliver anywhere in the area — city-limit placements depend on zoning, which typically favors established communities (the IRC-code route is covered in our <a href="/guides/manufactured-vs-modular">manufactured vs modular guide</a>); rural DeKalb parcels are usually simpler. We'll help you check your specific address.</p>
 <h3>What towns near Auburn do you serve?</h3>
 <p>All of DeKalb County — Garrett, Waterloo, Butler, St. Joe, Corunna, Ashley — plus the wider region. See <a href="/locations/auburn">our Auburn page</a> for the full picture.</p>
 `,
@@ -262,7 +262,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Ten minutes to the showroom</h2>
 <p>Our Auburn showroom on State Road 8 is roughly a ten-minute drive from Garrett. That makes the buying process unusually easy: tour model homes after work, bring your questions back as many times as you like, and deal with people who know Garrett — not a call center three states away.</p>
 <h2>Land options around Garrett</h2>
-<p>Buyers around Garrett typically choose between rural DeKalb County acreage — where manufactured homes are permitted on many parcels — and placing a modular home on a permanent foundation closer to town. Zoning is parcel-specific; you or your contractor verify requirements and pull permits with the county, and our <a href="/guides/zoning">zoning guide</a> walks through how that works.</p>
+<p>Buyers around Garrett mostly land on rural DeKalb County acreage, where manufactured homes are permitted on many parcels. Zoning is parcel-specific; you or your contractor verify requirements and pull permits with the county, and our <a href="/guides/zoning">zoning guide</a> walks through how that works.</p>
 <h2>What Garrett buyers pay</h2>
 <p>Whatever the floor plan, every quote is line-item — home, options, delivery each priced separately — and delivery costs here are among the lowest anywhere we serve, because Garrett sits minutes from both our lot and short freight range of Champion's Topeka factory. Our <a href="/blog/manufactured-home-cost-indiana">cost guide</a> explains every line of the quote.</p>
 <h2>FAQ</h2>
@@ -284,7 +284,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Why proximity pays</h2>
 <p>Two of the biggest soft costs in manufactured housing are freight and logistics. Waterloo effectively eliminates both: our lot is minutes away, and Champion's Topeka factory — where your home is built — is about 30 miles from Auburn. Shorter trips mean lower delivery line items on your quote, and simpler scheduling for your contractor.</p>
 <h2>Your placement options</h2>
-<p>Rural parcels around Waterloo and across DeKalb County commonly allow manufactured homes; modular homes on permanent foundations extend your options closer to town. As everywhere in Indiana, zoning is parcel-by-parcel — you or your contractor confirm the rules and pull permits, and we can point you to the right DeKalb County offices. Details in our <a href="/guides/zoning">zoning guide</a>.</p>
+<p>Rural parcels around Waterloo and across DeKalb County commonly allow manufactured homes. As everywhere in Indiana, zoning is parcel-by-parcel — you or your contractor confirm the rules and pull permits, and we can point you to the right DeKalb County offices. Details in our <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>Costs, honestly</h2>
 <p>Every quote we write is line-item — home, options, delivery, each priced separately — so you can compare us against anyone. Start with the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>, then browse <a href="/floor-plans">70+ Champion floor plans</a>.</p>
 <h2>FAQ</h2>
@@ -302,13 +302,13 @@ export const localBlogPosts: ApiBlogDetail[] = [
     image: "/images/homepage/about-2.webp",
     date: "August 12, 2026",
     html: `
-<p>Butler anchors the eastern edge of DeKalb County, close enough to the Ohio line that plenty of families shop both states. Wherever you land, the housing math is the same: new site-built construction has outrun local budgets, and a new Champion manufactured or modular home is the practical way to get new construction on your own terms.</p>
+<p>Butler anchors the eastern edge of DeKalb County, close enough to the Ohio line that plenty of families shop both states. Wherever you land, the housing math is the same: new site-built construction has outrun local budgets, and a new Champion manufactured home is the practical way to get new construction on your own terms.</p>
 <h2>A short drive, a real showroom</h2>
 <p>Our Auburn showroom is an easy drive west from Butler on State Road 8 — the same road. Walk through model homes, compare layouts side by side, and get line-item numbers for exactly the home you want. Hours are Mon&ndash;Fri 9&ndash;5, Saturday 10&ndash;4.</p>
 <h2>Placing a home around Butler</h2>
-<p>Eastern DeKalb County is largely rural, and many parcels allow manufactured homes on private land; modular homes on permanent foundations broaden the options further. You or your contractor verify zoning for your parcel and pull the permits — our <a href="/guides/zoning">zoning guide</a> covers the Indiana process, and we serve Ohio buyers across the line too.</p>
+<p>Eastern DeKalb County is largely rural, and many parcels allow manufactured homes on private land. You or your contractor verify zoning for your parcel and pull the permits — our <a href="/guides/zoning">zoning guide</a> covers the Indiana process, and we serve Ohio buyers across the line too.</p>
 <h2>What it costs</h2>
-<p>Singles, doubles, and modular homes each occupy their own part of the budget — ask for a line-item quote and you'll see every number for the exact configuration you want — and Butler's proximity to the Topeka factory keeps the delivery line low. Full breakdown in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Single wides and double wides each occupy their own part of the budget — ask for a line-item quote and you'll see every number for the exact configuration you want — and Butler's proximity to the Topeka factory keeps the delivery line low. Full breakdown in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Do you serve buyers just across the Ohio line?</h3>
 <p>Yes — we deliver throughout Ohio, including the countryside just east of Butler. See <a href="/locations">all the areas we serve</a>.</p>
@@ -326,7 +326,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
     html: `
 <p>Kendallville is Noble County's commercial hub, and the countryside around it is exactly the kind of place factory-built housing shines: rural parcels, reasonable land prices, and county zoning that accommodates manufactured homes on many private lots. Add a 25-minute drive to our Auburn showroom and Kendallville buyers have one of the simplest paths to new construction in northeast Indiana.</p>
 <h2>Rural Noble County land works in your favor</h2>
-<p>Much of Noble County outside municipal limits permits manufactured homes on private land, and modular homes on permanent foundations extend your reach into more restrictive districts. Rules are parcel-specific — you or your contractor verify zoning and setbacks and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> explains each step.</p>
+<p>Much of Noble County outside municipal limits permits manufactured homes on private land. Rules are parcel-specific — you or your contractor verify zoning and setbacks and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> explains each step.</p>
 <h2>Close to the showroom, close to the factory</h2>
 <p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and your home is built at Champion's Topeka plant — the largest Champion factory in the country — a short freight hop away. Short distances show up as real savings on the delivery line of your quote.</p>
 <h2>The numbers</h2>
@@ -350,7 +350,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>The Albion advantage: permits without the runaround</h2>
 <p>Every manufactured home placement in Indiana runs through county zoning and permitting, handled by you or your contractor. Albion buyers have the shortest possible trip — the Noble County offices are local, and we can tell you exactly which desk to visit. Start with our <a href="/guides/zoning">zoning guide</a> so you know what to ask.</p>
 <h2>A 30-minute trip to compare real homes</h2>
-<p>Our Auburn showroom is about a half-hour drive from Albion. Walk through single wide, double wide, and modular models, then get a line-item quote — home, options, delivery, each priced separately — for the exact configuration you want from our <a href="/floor-plans">70+ Champion floor plans</a>.</p>
+<p>Our Auburn showroom is about a half-hour drive from Albion. Walk through single wide and double wide models, then get a line-item quote — home, options, delivery, each priced separately — for the exact configuration you want from our <a href="/floor-plans">70+ Champion floor plans</a>.</p>
 <h2>What Albion buyers spend</h2>
 <p>Every home is quoted line-item for the exact configuration you choose. Site work — pad or foundation, utilities, driveway — is separate and handled by your own licensed contractors, which is where many buyers save real money. The <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> breaks down every driver.</p>
 <h2>FAQ</h2>
@@ -372,7 +372,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Why factory proximity matters in your quote</h2>
 <p>Freight is one of the larger non-negotiable costs in manufactured housing, priced by distance and escort requirements. Ligonier-area deliveries are about as short as they come, and because our quotes are line-item, you'll see that saving as its own number — not buried in a bundle.</p>
 <h2>Placing a home in western Noble County</h2>
-<p>The countryside around Ligonier offers rural parcels where manufactured homes are commonly permitted, and modular homes on permanent foundations open up additional districts. Zoning is parcel-specific: you or your contractor verify requirements and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> shows the steps.</p>
+<p>The countryside around Ligonier offers rural parcels where manufactured homes are commonly permitted. Zoning is parcel-specific: you or your contractor verify requirements and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> shows the steps.</p>
 <h2>Seeing the homes</h2>
 <p>Our Auburn showroom is about a 40-minute drive from Ligonier — model homes open Mon&ndash;Fri 9&ndash;5, Saturday 10&ndash;4. Preview our <a href="/floor-plans">Champion floor plans</a> first, including Aspire-series homes built right in Topeka. Each is quoted line-item for your exact configuration; see the <a href="/blog/manufactured-home-cost-indiana">cost guide</a> for what moves the number.</p>
 <h2>FAQ</h2>
@@ -390,14 +390,14 @@ export const localBlogPosts: ApiBlogDetail[] = [
     image: "/images/homepage/feature-find-home.webp",
     date: "August 15, 2026",
     html: `
-<p>Angola and the Steuben County lake country around it — the county promotes its 101 lakes for good reason — draw two kinds of buyers: families who want to live near the water year-round, and owners replacing an aging lake cottage with something modern. Both keep discovering the same answer: a new Champion manufactured or modular home delivers new construction at a price the lake-area market otherwise doesn't offer.</p>
+<p>Angola and the Steuben County lake country around it — the county promotes its 101 lakes for good reason — draw two kinds of buyers: families who want to live near the water year-round, and owners replacing an aging lake cottage with something modern. Both keep discovering the same answer: a new Champion manufactured home delivers new construction at a price the lake-area market otherwise doesn't offer.</p>
 <h2>Lake lots and rural Steuben parcels</h2>
-<p>Around the lakes, placement depends on the parcel: rural Steuben County land commonly accommodates manufactured homes, while some lake communities have their own standards — and modular homes on permanent foundations fit nearly anywhere a site-built cottage could. Verify zoning for the specific lot (you or your contractor pull the permits); our <a href="/guides/zoning">zoning guide</a> covers what to check before you buy land.</p>
+<p>Around the lakes, placement depends on the parcel: rural Steuben County land commonly accommodates manufactured homes, while some lake communities set their own standards. Verify zoning for the specific lot (you or your contractor pull the permits); our <a href="/guides/zoning">zoning guide</a> covers what to check before you buy land.</p>
 <h2>A straight shot down I-69</h2>
 <p>Our Auburn showroom is an easy drive south from Angola on I-69. Tour models in person, then get line-item pricing for the exact floor plan and options you want from our <a href="/floor-plans">70+ Champion plans</a>. Every home is quoted line-item — the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> explains the ranges.</p>
 <h2>FAQ</h2>
 <h3>Can a manufactured home work as a lake home?</h3>
-<p>Yes — modern HUD-code homes are fully insulated, four-season houses, and modular homes on permanent foundations finance and appraise like site-built. Many buyers use them as primary residences near the water.</p>
+<p>Yes — modern HUD-code homes are fully insulated, four-season houses. Many buyers use them as primary residences near the water.</p>
 <h3>Do you deliver throughout Steuben County?</h3>
 <p>Yes — Angola, Fremont, Hamilton, Pleasant Lake, and the surrounding townships. See <a href="/locations/angola">our Angola page</a> and <a href="/locations/steuben-county">Steuben County page</a>.</p>
 `,
@@ -412,12 +412,12 @@ export const localBlogPosts: ApiBlogDetail[] = [
     html: `
 <p>Huntertown and the corridor north of Fort Wayne have been growing fast, and new site-built subdivisions there price accordingly. If you want new construction on the north side without a subdivision price tag, factory-built housing is the honest alternative — especially with our showroom just up the road in Auburn.</p>
 <h2>Between the city and the country</h2>
-<p>Huntertown buyers sit at a sweet spot: minutes from Fort Wayne, but close to rural Allen and DeKalb County land where manufactured homes are commonly permitted on private parcels. Modular homes on permanent foundations extend the options into more developed areas. Zoning is parcel-specific — you or your contractor verify and pull permits; see the <a href="/guides/zoning">zoning guide</a>.</p>
+<p>Huntertown buyers sit at a sweet spot: minutes from Fort Wayne, but close to rural Allen and DeKalb County land where manufactured homes are commonly permitted on private parcels. Zoning is parcel-specific — you or your contractor verify and pull permits; see the <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>The closest dealer to the north side</h2>
 <p>From Huntertown, our Auburn showroom is a short drive north — closer than crossing Fort Wayne. Walk through models, then get line-item quotes on any of our <a href="/floor-plans">Champion floor plans</a>, built about 30 miles away at the Topeka plant. Every home is quoted line-item; details in the <a href="/blog/manufactured-home-cost-indiana">cost guide</a> and the <a href="/blog/manufactured-homes-fort-wayne-buyers-guide">Fort Wayne buyer's guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Can I place a manufactured home in Huntertown itself?</h3>
-<p>Within town limits, zoning typically favors modular construction on permanent foundations; manufactured homes are commonly placed on rural land just outside. We'll help you check your specific parcel.</p>
+<p>Within town limits, zoning is tighter — see the IRC-code option in our <a href="/guides/manufactured-vs-modular">manufactured vs modular guide</a>; manufactured homes are commonly placed on rural land just outside. We'll help you check your specific parcel.</p>
 <h3>More local info?</h3>
 <p>See <a href="/locations/huntertown">our Huntertown page</a> or <a href="/contact-us">get in touch</a>.</p>
 `,
@@ -432,11 +432,11 @@ export const localBlogPosts: ApiBlogDetail[] = [
     html: `
 <p>New Haven has always been Fort Wayne's practical eastern neighbor — close to everything, easier on the wallet. The same logic points straight at factory-built housing: for the price of a dated fixer-upper in east Allen County, you can own brand-new construction with a manufacturer warranty.</p>
 <h2>East Allen options</h2>
-<p>East and southeast of New Haven, rural Allen County parcels commonly accommodate manufactured homes on private land, and established manufactured home communities offer the lowest cash-to-move-in path. Modular homes on permanent foundations — built to Indiana's residential code — fit nearly anywhere site-built homes go. As always, zoning is parcel-specific: you or your contractor verify and pull permits (<a href="/guides/zoning">how it works</a>).</p>
+<p>East and southeast of New Haven, rural Allen County parcels commonly accommodate manufactured homes on private land, and established manufactured home communities offer the lowest cash-to-move-in path. As always, zoning is parcel-specific: you or your contractor verify and pull permits (<a href="/guides/zoning">how it works</a>).</p>
 <h2>Getting to us is the easy part</h2>
-<p>Our Auburn showroom is a straightforward drive north of New Haven. Tour single wide, double wide, and modular models, and leave with line-item pricing — home, options, delivery, each its own number. Browse <a href="/floor-plans">70+ Champion floor plans</a> first; each is quoted line-item (<a href="/blog/manufactured-home-cost-indiana">full cost guide</a>).</p>
+<p>Our Auburn showroom is a straightforward drive north of New Haven. Tour single wide and double wide models, and leave with line-item pricing — home, options, delivery, each its own number. Browse <a href="/floor-plans">70+ Champion floor plans</a> first; each is quoted line-item (<a href="/blog/manufactured-home-cost-indiana">full cost guide</a>).</p>
 <h2>Financing</h2>
-<p>We work with the manufactured-housing specialists — 21st Mortgage, Triad Financial Services, Credit Human, Lake Michigan Credit Union — for chattel loans, land-home packages, and conventional modular financing. Start at <a href="/financing">financing</a>.</p>
+<p>We do not do financing or recommend a lender — you get the full list our customers have used and choose for yourself, for chattel loans, land-home packages or a conventional mortgage. Start at <a href="/financing">financing</a>.</p>
 <h2>FAQ</h2>
 <h3>Do you deliver to New Haven and east Allen County?</h3>
 <p>Yes — New Haven, Woodburn, Monroeville, and the townships between. More on <a href="/locations/new-haven">our New Haven page</a> and the <a href="/blog/manufactured-homes-fort-wayne-buyers-guide">Fort Wayne buyer's guide</a>.</p>
@@ -452,9 +452,9 @@ export const localBlogPosts: ApiBlogDetail[] = [
     html: `
 <p>Columbia City works hard: the US-30 corridor carries Whitley County commuters to Fort Wayne one way and Warsaw the other. What the corridor hasn't carried lately is affordable new housing — which is why more Whitley County families are looking at factory-built homes on their own land.</p>
 <h2>Whitley County land is the opportunity</h2>
-<p>Outside municipal limits, much of Whitley County accommodates manufactured homes on private parcels, and modular homes on permanent foundations extend into more developed districts. The county seat is right there in Columbia City, which makes the permit process — handled by you or your contractor — conveniently local. Our <a href="/guides/zoning">zoning guide</a> lays out the steps.</p>
+<p>Outside municipal limits, much of Whitley County accommodates manufactured homes on private parcels. The county seat is right there in Columbia City, which makes the permit process — handled by you or your contractor — conveniently local. Our <a href="/guides/zoning">zoning guide</a> lays out the steps.</p>
 <h2>Worth the drive to Auburn</h2>
-<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide, double wide, and modular homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at the Topeka plant about 30 miles from our lot. Every home is quoted line-item — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide and double wide homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at the Topeka plant about 30 miles from our lot. Every home is quoted line-item — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>What Whitley County areas do you serve?</h3>
 <p>All of them — Columbia City, Churubusco, South Whitley, Larwill, and the surrounding townships. See <a href="/locations/columbia-city">our Columbia City page</a> and <a href="/locations/whitley-county">Whitley County page</a>.</p>
@@ -470,11 +470,11 @@ export const localBlogPosts: ApiBlogDetail[] = [
     image: "/images/homepage/double-wides.webp",
     date: "August 18, 2026",
     html: `
-<p>Churubusco — Turtle Town USA, if you know your local festivals — is the kind of small town people move to on purpose: quiet roads, real community, and a quick hop to Fort Wayne when you need it. The housing challenge is the same as everywhere: not much new construction, and what exists costs plenty. A new manufactured or modular home solves both problems at once.</p>
+<p>Churubusco — Turtle Town USA, if you know your local festivals — is the kind of small town people move to on purpose: quiet roads, real community, and a quick hop to Fort Wayne when you need it. The housing challenge is the same as everywhere: not much new construction, and what exists costs plenty. A new manufactured home solves both problems at once.</p>
 <h2>An easy 30 minutes to compare homes</h2>
 <p>Our Auburn showroom is about a 30-minute drive from Churubusco. That's close enough to visit twice before deciding — once to walk the models, once to bring the family. Model homes are open Mon&ndash;Fri 9&ndash;5 and Saturday 10&ndash;4; preview <a href="/floor-plans">70+ Champion floor plans</a> before you come.</p>
 <h2>Placing a home around Churubusco</h2>
-<p>The countryside around Churubusco — northern Whitley County and neighboring Allen and Noble County townships — commonly accommodates manufactured homes on rural parcels, with modular-on-foundation extending the options. You or your contractor verify parcel zoning and pull permits; the <a href="/guides/zoning">zoning guide</a> shows how.</p>
+<p>The countryside around Churubusco — northern Whitley County and neighboring Allen and Noble County townships — commonly accommodates manufactured homes on rural parcels. You or your contractor verify parcel zoning and pull permits; the <a href="/guides/zoning">zoning guide</a> shows how.</p>
 <h2>The budget picture</h2>
 <p>Every home is quoted line-item so you see the home, the options, and the delivery — which stays low here, since Champion's Topeka factory is a short freight run away. Full details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>

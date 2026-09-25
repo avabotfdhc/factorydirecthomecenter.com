@@ -159,7 +159,7 @@ export function FinancingCalculator() {
           <strong>Truth in Lending / Regulation Z disclosure.</strong> Monthly payment estimates are provided for
           illustrative purposes only and do not constitute an offer of credit, a loan commitment, or a rate lock.
           Actual terms, interest rates, and loan availability depend on individual borrower credit qualification
-          through third-party lenders (including 21st Mortgage, Triad Financial Services, and Credit Human). Taxes,
+          through third-party lenders the buyer selects for themselves. Taxes,
           insurance, site prep, and fees are not included.
         </p>
       </div>
