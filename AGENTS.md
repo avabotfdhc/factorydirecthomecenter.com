@@ -603,7 +603,7 @@ stops at the first `</script` — JSON quoting is irrelevant, because the parser
 never looks inside the JSON. Five emitters existed and only `JsonLd.tsx`
 escaped. `jsonLdScript()` in `src/lib/json-ld.ts` is the only serialiser now.
 Nothing in the catalogue or the repo carries a `<` in a schema field today
-(checked before and after), so this is a guard, not a repair. ` `/` `
+(checked before and after), so this is a guard, not a repair. U+2028 and U+2029
 are deliberately *not* escaped: an ld+json block is parsed as JSON, never
 executed, so the inline-script hazard does not apply.
 
