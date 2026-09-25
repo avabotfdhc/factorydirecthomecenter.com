@@ -28,7 +28,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray-light)] mb-6">
               Explore
             </p>
             <ul className="space-y-3">
@@ -58,7 +58,7 @@ export function Footer() {
 
           {/* Home Types */}
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray-light)] mb-6">
               Home Types
             </p>
             <ul className="space-y-3">
@@ -79,7 +79,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-6">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray-light)] mb-6">
               Visit Us
             </p>
             <address className="not-italic space-y-3 text-sm text-[var(--color-gray-light)]">
@@ -102,7 +102,7 @@ export function Footer() {
                   sales@factorydirecthomescenter.com
                 </a>
               </p>
-              <div className="pt-2 text-xs text-[var(--color-gray)]">
+              <div className="pt-2 text-xs text-[var(--color-gray-light)]">
                 <p>Mon–Fri: 9 AM – 5 PM</p>
                 <p>Sat: 10 AM – 4 PM</p>
                 <p>Sun: Closed</p>
@@ -114,7 +114,7 @@ export function Footer() {
         {/* Newsletter Signup */}
         <div className="mt-16 pt-10 border-t border-white/10">
           <div className="max-w-xl mx-auto text-center">
-            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray)] mb-3">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray-light)] mb-3">
               Stay Informed
             </p>
             <p className="text-sm text-[var(--color-gray-light)] mb-6">
@@ -128,7 +128,7 @@ export function Footer() {
                 name="email"
                 placeholder="Enter your email"
                 aria-label="Email address for newsletter"
-                className="flex-1 px-4 py-3 text-sm bg-white/10 border border-white/10 rounded text-white placeholder:text-[var(--color-gray)] focus:border-[var(--color-lime)] focus:ring-2 focus:ring-[var(--color-lime)]/30 focus:outline-none transition-colors"
+                className="flex-1 px-4 py-3 text-sm bg-white/10 border border-white/10 rounded text-white placeholder:text-[var(--color-gray-light)] focus:border-[var(--color-lime)] focus:ring-2 focus:ring-[var(--color-lime)]/30 focus:outline-none transition-colors"
               />
               <button
                 type="submit"

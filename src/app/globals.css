@@ -73,6 +73,40 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 2px;
 }
 
+/* Brand buttons need a DIFFERENT focus indicator, not a stronger one in the
+   same colour. They already wear a permanent 2px orange box-shadow ring (see
+   below), and the global rule above drew a thin orange outline just outside
+   it — so tabbing onto one swapped a thick orange ring for a thin orange ring
+   and a gap. Measured at 4x in Chromium: the focused state was *less*
+   prominent than the resting state, which is backwards, and only 3.1% of the
+   button's pixels changed at all.
+
+   A white gap plus a charcoal halo reads as focus on every surface we use —
+   cream, white and the dark charcoal sections — and cannot be mistaken for
+   the orange brand ring. Charcoal on cream is 13.9:1, and the white gap keeps
+   it legible where the section behind is dark. WCAG 2.4.11 wants at least a
+   2px perimeter at 3:1 against what it touches; this is 3px. */
+a[class~="bg-[var(--color-teal)]"]:focus-visible,
+a[class~="bg-[var(--color-teal-dark)]"]:focus-visible,
+a[class~="bg-[var(--color-lime)]"]:focus-visible,
+a[class~="bg-[var(--color-lime-dark)]"]:focus-visible,
+button[class~="bg-[var(--color-teal)]"]:focus-visible,
+button[class~="bg-[var(--color-teal-dark)]"]:focus-visible,
+button[class~="bg-[var(--color-lime)]"]:focus-visible,
+button[class~="bg-[var(--color-lime-dark)]"]:focus-visible,
+.btn-brand:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #E07820,
+    0 0 0 5px #FFFFFF,
+    0 0 0 8px #1e293b;
+  /* `button { transition: all 0.3s }` further down animates box-shadow, so the
+     indicator faded in over ~400ms — long enough that fast tabbing never saw a
+     full ring, and long enough to fool a screenshot taken on focus. Focus is a
+     state change, not an animation. */
+  transition: none;
+}
+
 /* Brand buttons: green fill with the logo-orange outline (Kyle, 2026-09-09).
    Every filled-green <a>/<button> gets the ring automatically — the [class~=]
    selector matches the exact utility token, so outline buttons that only fill
@@ -390,5 +424,29 @@ button {
   iframe[title*="chat" i] {
     bottom: 4.75rem !important;
     right: 1rem !important;
+  }
+}
+
+/* Respect the OS "reduce motion" setting.
+ *
+ * Safe here because nothing on the site reveals content *with* a CSS
+ * animation: `FadeIn` flips an inline `opacity` from an IntersectionObserver,
+ * so collapsing the duration makes the reveal instant rather than invisible.
+ * (Verified in Chromium with reduced motion emulated — every section still
+ * paints.) `scroll-behavior` has to be overridden explicitly; a duration of
+ * zero does not stop smooth scrolling.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

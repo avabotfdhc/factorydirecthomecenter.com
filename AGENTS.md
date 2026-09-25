@@ -559,3 +559,60 @@ options", and two surviving "we can help you check your parcel" claims in
 must render the notice (injection-tested in both directions, including the
 template case), and `ComplianceDisclaimers` must keep `ReferralDisclaimer` with
 its wording coming from `referrals.ts`.
+
+# Focus, motion and the ld+json escape: three fixes you can only confirm in a browser
+
+Shipped 2026-09-25, and every one of them was mis-diagnosed at least once from
+source alone. The lesson repeats: measure the rendered page, and measure it
+**after** transitions settle.
+
+**The focus indicator was orange on orange.** Brand buttons carry a permanent
+`box-shadow: 0 0 0 2px var(--color-orange)` ring, and the global
+`:focus-visible` rule drew a *second* orange outline 2px outside it. Tabbing
+onto a button swapped one orange ring for two, which is not a state change a
+keyboard user can rely on — WCAG 2.4.11 wants the indicator to contrast 3:1
+against what it touches, and orange against orange is 1:1. Brand buttons now
+get their own `:focus-visible`: orange ring, 3px white gap, 3px charcoal halo,
+which reads on cream, white and the dark sections alike.
+
+Two traps on the way, both of which produced a *wrong* diagnosis first:
+
+- **`button { transition: all 0.3s }` animates box-shadow.** Every measurement
+  taken at the moment of focus caught the ring mid-interpolation — layers
+  reported as `rgba(0,0,0,0) 0px` and screenshots showed a thinner ring than
+  the resting state, which is how "the focus ring is invisible" and "focus
+  makes it weaker" both got written down. At t=400ms the real value was there
+  all along. The new rule sets `transition: none`, because focus is a state,
+  not an animation.
+- `getComputedStyle` and the CSSOM disagreed with the served stylesheet often
+  enough to be useless on their own. CDP's `CSS.getMatchedStylesForNode` with
+  `forcePseudoState` is the tool that actually answers "which rule wins".
+
+**Reduced motion is now honoured.** `@media (prefers-reduced-motion: reduce)`
+collapses animation and transition durations and forces `scroll-behavior: auto`
+(a zero duration does not stop smooth scrolling — it needs the explicit
+override). This is safe *here* specifically because `FadeIn` reveals content by
+flipping an inline `opacity` from an IntersectionObserver, not with a CSS
+animation: collapsing the duration makes the reveal instant. Verified in
+Chromium with reduced motion emulated — 0 of 33 fade wrappers stay transparent,
+versus a 700ms fade otherwise. If a future reveal is ever driven by a CSS
+`animation`, re-check this block before trusting it.
+
+**Every ld+json block escapes `<` now.** Inside a `<script>` the HTML parser
+stops at the first `</script` — JSON quoting is irrelevant, because the parser
+never looks inside the JSON. Five emitters existed and only `JsonLd.tsx`
+escaped. `jsonLdScript()` in `src/lib/json-ld.ts` is the only serialiser now.
+Nothing in the catalogue or the repo carries a `<` in a schema field today
+(checked before and after), so this is a guard, not a repair. ` `/` `
+are deliberately *not* escaped: an ld+json block is parsed as JSON, never
+executed, so the inline-script hazard does not apply.
+
+Also fixed in the pass: the homepage hero `ImageObject` named a hand-written
+`Organization` author with our name and no `@id` — a second business node, the
+thing `businessRef()` exists to prevent — and the footer's four column headings
+and three opening-hours lines sat at **3.07:1** (`--color-gray` is 4.7:1 on
+white but only 3.07:1 on the dark footer). Now 5.71:1 at 12px, measured.
+
+`tests/structured-data.test.ts` fails on an ld+json block built with a raw
+`JSON.stringify`, and asserts the escaper both closes `</script` and still
+round-trips through `JSON.parse`. Injection-tested.

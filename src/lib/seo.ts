@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { businessJsonLd, businessRef, BUSINESS_ID, ownerJsonLd } from "./business";
+import { jsonLdScript } from "@/lib/json-ld";
 
 interface SEOConfig {
   title: string;
@@ -379,7 +380,7 @@ export function StructuredData({ data }: { data: object }) {
   return React.createElement('script', {
     type: 'application/ld+json',
     dangerouslySetInnerHTML: {
-      __html: JSON.stringify(data),
+      __html: jsonLdScript(data),
     },
   });
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { H2 } from "@/components/Heading";
 import { absoluteImageUrl } from "@/lib/image-alt";
 import { HOME_VIDEO, isHomeVideoConfigured, type HomeVideoConfig } from "@/lib/home-video";
+import { jsonLdScript } from "@/lib/json-ld";
 
 // Server-rendered homepage video section: a YouTube embed (privacy-enhanced,
 // lazy) or a native <video> for a hosted MP4, plus VideoObject JSON-LD so the
@@ -81,7 +82,7 @@ export function HomeVideo({ video = HOME_VIDEO }: { video?: HomeVideoConfig }) {
         </p>
       </div>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(schema) }} />
     </section>
   );
 }

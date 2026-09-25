@@ -18,6 +18,7 @@ import assert from "node:assert/strict";
 import { structuredData } from "../src/lib/seo";
 import { businessRef, businessJsonLd, BUSINESS_ID, BUSINESS, GOOGLE_LISTING_URL } from "../src/lib/business";
 import { GOOGLE_REVIEWS_URL } from "../src/lib/reviews";
+import { jsonLdScript } from "../src/lib/json-ld";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
@@ -269,4 +270,50 @@ test("the Google listing is the one we publish and the one we send reviewers to"
 test("the business node publishes every profile", () => {
   const node = businessJsonLd() as { sameAs?: unknown };
   assert.deepEqual(node.sameAs, [...BUSINESS.sameAs], "businessJsonLd must publish the full sameAs list");
+});
+
+// Every JSON-LD block goes through jsonLdScript().
+//
+// Inside a <script>, the HTML parser stops at the first `</script` — JSON
+// quoting does not protect it, because the parser never looks inside the
+// JSON. Five places emitted an ld+json block and only one escaped `<`, so a
+// plan name or FAQ answer containing a tag would have ended the block early.
+// No live content carries a `<` in a schema field today; this keeps the four
+// that were unguarded from drifting back.
+test("no JSON-LD block is built with a raw JSON.stringify", () => {
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (rel === "src/lib/json-ld.ts") continue;
+      const lines = readFileSync(full, "utf8").split("\n");
+      for (const [i, line] of lines.entries()) {
+        if (!/application\/ld\+json/.test(line)) continue;
+        // The serialiser may sit on this line or in the dozen that follow it.
+        const window = lines.slice(i, i + 14).join("\n");
+        if (/JSON\.stringify/.test(window) && !/jsonLdScript/.test(window)) {
+          offenders.push(`${rel}:${i + 1}`);
+        }
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(offenders, [], "these ld+json blocks serialise without escaping `<` — use jsonLdScript()");
+});
+
+// The escaping itself, not just its call sites.
+test("jsonLdScript closes the </script> escape and still round-trips", () => {
+  const hostile = {
+    name: 'Peak </script><img src=x onerror="alert(1)">',
+    detail: "a < b, and 3 < 4",
+  };
+  const out = jsonLdScript(hostile);
+
+  assert.ok(!/<\/script/i.test(out), "the serialised block must not contain </script");
+  assert.ok(!out.includes("<"), "no raw < may survive");
+  assert.deepEqual(JSON.parse(out), hostile, "a consumer must still read the original strings back");
 });
