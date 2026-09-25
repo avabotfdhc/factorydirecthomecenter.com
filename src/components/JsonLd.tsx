@@ -1,6 +1,7 @@
 // JSON-LD structured data blocks. Each renders one <script type="application/ld+json">.
 
 import { businessJsonLd, SITE_URL } from "@/lib/business";
+import { jsonLdScript } from "@/lib/json-ld";
 
 const SITE = SITE_URL;
 
@@ -8,7 +9,7 @@ function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
+      dangerouslySetInnerHTML={{ __html: jsonLdScript(data) }}
     />
   );
 }

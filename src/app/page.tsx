@@ -12,6 +12,8 @@ import { HeroCopy } from "@/components/HeroCopy";
 import { HomeVideo } from "@/components/HomeVideo";
 import { OwnerIntro } from "@/components/OwnerIntro";
 import type { Metadata } from "next";
+import { jsonLdScript } from "@/lib/json-ld";
+import { businessRef } from "@/lib/business";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -170,7 +172,10 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          // `author` used to be a hand-written Organization stub carrying our
+          // name and no @id — a second business node beside the canonical one,
+          // which is exactly what businessRef() exists to prevent.
+          __html: jsonLdScript({
             "@context": "https://schema.org",
             "@type": "ImageObject",
             "contentUrl": "https://factorydirecthomescenter.com/images/hero-home.jpg",
@@ -178,10 +183,7 @@ export default async function Home() {
             "description": "Modern manufactured home with white siding and black trim on foundation with professional landscaping",
             "width": 1920,
             "height": 1071,
-            "author": {
-              "@type": "Organization",
-              "name": "Factory Direct Homes Center"
-            }
+            "author": businessRef()
           })
         }}
       />

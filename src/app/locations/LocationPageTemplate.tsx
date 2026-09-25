@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { trackLocationView, trackCTAClick } from "@/lib/analytics";
 import { businessJsonLd } from "@/lib/business";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { jsonLdScript } from "@/lib/json-ld";
 
 interface LocationFAQ {
   question: string;
@@ -69,7 +70,7 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": ldGraph }) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript({ "@context": "https://schema.org", "@graph": ldGraph }) }}
       />
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
