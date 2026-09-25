@@ -616,3 +616,40 @@ white but only 3.07:1 on the dark footer). Now 5.71:1 at 12px, measured.
 `tests/structured-data.test.ts` fails on an ld+json block built with a raw
 `JSON.stringify`, and asserts the escaper both closes `</script` and still
 round-trips through `JSON.parse`. Injection-tested.
+
+# A green Vercel build can still ship stale CSS — check the asset, not the deploy
+
+On 2026-09-25 the merge of #124 deployed to production, went READY, and served
+**the previous build's CSS**. The HTML was correct (the footer's new colour
+token and the `businessRef()` author were both there), so every signal said
+shipped: CI green, deployment READY on commit `70824ca`, both Vercel projects
+Ready, the live HTML carrying the change. Only reading the stylesheet showed
+that neither `@media (prefers-reduced-motion: reduce)` nor the brand
+`:focus-visible` rule existed in it — the file still had the old
+`:focus-visible{outline:2px solid var(--color-orange)}` and nothing else from
+that commit's `globals.css`.
+
+Same source built locally had both rules, and the merged commit provably
+contained them (`git show 70824ca:src/app/globals.css`). A plain redeploy of
+**the same commit** fixed it and produced a different CSS filename
+(`07pan4trct1_-.css` → `0a20e354yw_rn.css`), which is the tell: the first build
+reused a cached CSS artifact while rebuilding everything else.
+
+What this means in practice:
+
+- **Verifying a CSS or asset change on production means fetching the
+  stylesheet.** The rendered HTML is not evidence: HTML and CSS came from
+  different builds in this incident. Pull the `href` out of the page and check
+  the file for the rule you shipped.
+- **A redeploy of the same commit is the remedy**, and it is safe — same code,
+  new build. `create_deployment` with `deploymentId` + `forceNew: "1"`.
+- `x-vercel-cache: HIT` on the asset is a red herring; the CDN was faithfully
+  serving what that deployment built.
+- Local `npm run build` emits `/_next/static/chunks/…`, production emits
+  `/_next/static/immutable/chunks/…`. The paths differing is normal and is not
+  itself a sign of trouble — compare rule contents, not filenames.
+
+This is the second time a change looked shipped and was not (see the Netlify
+note at the top: a "success" that was really a cancelled build). Treat
+"deployed" and "live" as two separate claims, and only make the second one
+after reading the thing a visitor would download.
