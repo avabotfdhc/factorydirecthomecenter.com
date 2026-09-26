@@ -114,8 +114,8 @@ export default function PrivacyPage() {
 
           <H2 className="font-serif text-2xl font-light mb-4">Information Sharing</H2>
           <p className="text-[var(--color-gray)] mb-4 leading-relaxed">
-            We do not sell your personal information. We may share your information with financing partners (such as 21st
-            Mortgage, Triad Financial, and Credit Human) only when you request financing assistance. We may also share
+            We do not sell your personal information. We choose no lender for you and we do not pull credit; we may pass your
+            information to a lender only when you ask us to send it, and only to the lender you have selected. We may also share
             information with service providers who assist us in operating our website and conducting our business, provided
             they agree to keep your information confidential and use it only for the services they perform for us.
           </p>

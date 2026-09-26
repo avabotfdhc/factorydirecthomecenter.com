@@ -416,3 +416,55 @@ test("the no-recommendation line reaches every page through the footer", () => {
     assert.match(text, /not a recommendation|recommends no lender/i, `${name} must state that the list is not a recommendation`);
   }
 });
+
+// Name them all, or name none.
+//
+// Kyle, 2026-09-23: "we don't do financing at all. Clients choose their own
+// financial lender we provide them a list… but we make no recommendations."
+// Ava's four-lender shortlist was fixed that day on exactly that rule. The
+// sweep missed everywhere else: on 2026-09-25 the same four names — 21st
+// Mortgage, Triad, Credit Human, Lake Michigan CU — were still typed into the
+// homepage FAQ, `faqs.ts`, `about`, the financing calculator's disclaimer,
+// `blog.ts`, the privacy policy ("financing partners") and five blog posts.
+// The homepage answer also still said we "work with" them and could "arrange
+// land-home packages".
+//
+// A subset is a recommendation with the verb removed. Four names out of ten,
+// repeated across the site, is the shortlist the buyer's signed authorization
+// ("this selection was not referred or suggested") says does not exist. So the
+// rule is absolute and mechanical: a file may name lenders only if it names
+// every one of them. `lenders.ts` is the list itself; `ava-knowledge.ts`
+// enumerates all ten on purpose.
+test("no file names a subset of the lenders", () => {
+  const names = [...readFileSync("src/lib/lenders.ts", "utf8").matchAll(/^\s*name: "([^"]+)",$/gm)].map(
+    (m) => m[1],
+  );
+  assert.ok(names.length >= 10, `expected the full lender list, parsed ${names.length}`);
+
+  // The source of truth may of course hold the names.
+  const EXEMPT = new Set(["src/lib/lenders.ts"]);
+
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (EXEMPT.has(rel)) continue;
+      const text = readFileSync(full, "utf8");
+      const found = names.filter((n) => text.includes(n));
+      if (found.length > 0 && found.length < names.length) {
+        offenders.push(`${rel} — names ${found.length} of ${names.length}: ${found.join(", ")}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(
+    offenders,
+    [],
+    "name every lender or none of them — a subset reads as a shortlist, and the buyer's " +
+      "authorization says the selection was not referred or suggested",
+  );
+});

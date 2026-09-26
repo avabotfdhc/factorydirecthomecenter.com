@@ -104,7 +104,7 @@ const aboutFAQs = [
   },
   {
     question: "Does Factory Direct Homes Center offer financing?",
-    answer: "No. We are not a lender, we do not arrange or broker financing, and we do not pull credit. You choose your own lender. What we hand you is a list of lenders our customers have used before — 21st Mortgage, Triad Financial, Credit Human and Lake Michigan Credit Union among them — with no recommendation attached. Chattel loans, land-home packages and conventional mortgages for modular homes are all routes buyers take."
+    answer: "No. We are not a lender, we do not arrange or broker financing, and we do not pull credit. You choose your own lender. What we hand you is the list of lenders our customers have used before, with no recommendation attached. Chattel loans, land-home packages and conventional mortgages for modular homes are all routes buyers take."
   },
   {
     question: "Can I visit the Factory Direct Homes Center showroom?",

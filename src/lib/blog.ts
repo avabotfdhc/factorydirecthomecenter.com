@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: "What credit score do I need to buy a manufactured home?",
-        answer: "Credit score requirements vary by loan type. Conventional mortgages and land-home packages generally look for scores of 620 or higher. Chattel loans from lenders like 21st Mortgage may approve scores as low as 575. Higher scores get better interest rates across all loan types.",
+        answer: "Credit score requirements vary by loan type. Conventional mortgages and land-home packages generally look for scores of 620 or higher. Some chattel lenders approve scores as low as 575; thresholds vary by lender and change over time, so ask the lenders you apply to. Higher scores get better interest rates across all loan types.",
       },
       {
         question: "How long does it take to buy a manufactured home?",
