@@ -111,6 +111,12 @@ export default async function Home() {
 
           <FeaturedHomes homes={featuredHomes} />
 
+          {/* Champion's specifications disclaimer belongs with the renderings
+              it qualifies. It used to sit inside the hero, laid over the
+              photograph in grey — unreadable, which is the one thing a
+              required notice may not be. */}
+          <SpecsDisclaimer className="mt-14 max-w-3xl mx-auto text-center" />
+
           <div className="text-center mt-10">
             <Link href="/floor-plans" className="btn-primary inline-flex items-center gap-2 bg-[var(--color-lime)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300">
               View All Floor Plans
@@ -200,7 +206,7 @@ function ParallaxHeroSection() {
   const sale = getSaleStatus();
 
   return (
-    <section className="relative h-[320px] sm:h-[360px] lg:h-[420px]" aria-label="Hero section">
+    <section className="relative min-h-[320px] sm:min-h-[360px] lg:min-h-[420px]" aria-label="Hero section">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -215,7 +221,7 @@ function ParallaxHeroSection() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative h-full flex flex-col justify-center px-4 lg:px-8 pt-4">
+      <div className="relative min-h-[320px] sm:min-h-[360px] lg:min-h-[420px] flex flex-col justify-center px-4 lg:px-8 py-8">
         <div className="max-w-7xl mx-auto w-full">
           {/* Sale badge — only while the campaign is live (src/lib/sale.ts). It
               previously hardcoded the discount and "Ends August 31", so it kept
@@ -233,8 +239,6 @@ function ParallaxHeroSection() {
           
           <HeroCopy />
         </div>
-
-        <SpecsDisclaimer className="mt-16 max-w-3xl mx-auto text-center" />
       </div>
     </section>
   );
