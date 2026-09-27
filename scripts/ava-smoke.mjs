@@ -3,9 +3,11 @@
 // real lead channel.
 //
 // It starts one local HTTP server that plays two roles:
-//   • a mock OpenAI chat-completions API (scripted tool calls + replies), and
-//   • a mock legacy CMS (so /api/leads' CMS channel and the catalogue fetch
-//     hit localhost instead of api.factorydirecthomescenter.com).
+//   • a mock OpenAI chat-completions API (scripted tool calls + replies),
+//   • a mock DealerTide (POST /leads), which is where a lead actually goes
+//     today, and
+//   • a mock legacy CMS, kept only for the catalogue fetch — the CMS lead
+//     channel was retired on 2026-09-11 and is off unless LEGACY_CMS_LEADS=1.
 // Then it drives a Next.js dev server through the same requests the widget
 // sends and checks the route's behaviour: page context, plan lookup,
 // showroom-visit booking, quote capture, duplicate guards, and what the lead
@@ -13,7 +15,9 @@
 //
 // Usage (two terminals, or let this script spawn the dev server):
 //   OPENAI_API_KEY=test OPENAI_BASE_URL=http://127.0.0.1:4545/v1 \
-//   NEXT_PUBLIC_API_URL=http://127.0.0.1:4545 npx next dev -p 3100
+//   NEXT_PUBLIC_API_URL=http://127.0.0.1:4545 \
+//   DEALERTIDE_API_BASE=http://127.0.0.1:4545 DEALERTIDE_API_KEY=test-key-not-real \
+//   npx next dev -p 3100
 //   node scripts/ava-smoke.mjs            # against http://127.0.0.1:3100
 //
 // Or in one go:  node scripts/ava-smoke.mjs --spawn
@@ -25,7 +29,7 @@ const MOCK_PORT = 4545;
 const SITE = process.env.SMOKE_SITE || "http://127.0.0.1:3100";
 const SPAWN = process.argv.includes("--spawn");
 
-const seen = { openai: [], cms: [] };
+const seen = { openai: [], cms: [], dealertide: [] };
 
 function readJson(req) {
   return new Promise((resolve) => {
@@ -112,6 +116,17 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({ error: "not found" }));
     return;
   }
+  // DealerTide's inbound lead intake (src/lib/dealertide.ts POSTs here). This
+  // is the channel a real lead travels today, so it is the one worth asserting.
+  if (url.pathname === "/leads" && req.method === "POST") {
+    // Use the body this handler already parsed above — reading the request
+    // stream a second time never resolves, which hangs until DealerTide's
+    // 6s timeout and looks exactly like a dead channel.
+    seen.dealertide.push(body);
+    res.writeHead(201, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ id: `dt_${seen.dealertide.length}` }));
+    return;
+  }
   if (url.pathname === "/api/enquiry/rash-enquiry") {
     seen.cms.push(body);
     res.end(JSON.stringify({ success: true }));
@@ -136,6 +151,8 @@ if (SPAWN) {
       OPENAI_API_KEY: "test",
       OPENAI_BASE_URL: `http://127.0.0.1:${MOCK_PORT}/v1`,
       NEXT_PUBLIC_API_URL: `http://127.0.0.1:${MOCK_PORT}`,
+      DEALERTIDE_API_BASE: `http://127.0.0.1:${MOCK_PORT}`,
+      DEALERTIDE_API_KEY: "test-key-not-real",
     },
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -198,19 +215,33 @@ try {
   const r2b = await chat([{ role: "user", content: "what about the nonexistent one" }], { page: "/" });
   check("lookup of unknown plan degrades gracefully", /No plan matched/.test(r2b.reply), r2b.reply?.slice(0, 120));
 
-  // 3. Showroom visit booking → lead pipeline (CMS channel) with the visit label.
-  const cmsBefore = seen.cms.length;
+  // 3. Showroom visit booking → lead pipeline, with the visit label.
+  //
+  // These used to assert against the legacy CMS mock. That channel was retired
+  // on 2026-09-11 (LEGACY_CMS_LEADS is off by default), so seen.cms stayed
+  // empty and all three checks failed for two weeks while the lead itself was
+  // being saved perfectly well — a red test that proved nothing. They now
+  // assert against DealerTide, which is where the lead really goes.
+  const dtBefore = seen.dealertide.length;
   const r3 = await chat([{ role: "user", content: "please book me" }], { page: "/homes-on-sale" });
   check("visit booked", r3.status === 200 && r3.visitRequested === true && /"status":"requested"/.test(r3.reply), r3.reply?.slice(0, 160));
-  const cmsVisit = seen.cms[cmsBefore];
-  check("visit reached the lead pipeline", Boolean(cmsVisit), JSON.stringify(cmsVisit || {}).slice(0, 200));
-  check("visit lead labelled as Ava showroom visit", cmsVisit?.leadSource === "Ava Chat — Showroom Visit" && /Saturday around 11 AM/.test(cmsVisit?.address || ""), cmsVisit?.address);
+  const dtVisit = seen.dealertide[dtBefore];
+  check("visit reached the lead pipeline", Boolean(dtVisit), JSON.stringify(dtVisit || {}).slice(0, 200));
+  check(
+    "visit lead labelled as Ava showroom visit",
+    /Form: Ava Chat — Showroom Visit/.test(dtVisit?.message || "") && /Saturday around 11 AM/.test(dtVisit?.message || ""),
+    (dtVisit?.message || "").slice(0, 200),
+  );
 
   // 4. Quote capture → lead pipeline with the quote label.
   const r4 = await chat([{ role: "user", content: "send me a quote" }], { page: "/floor-plans/dutch-aspire-sheridan-2444h32382" });
   check("quote captured", r4.status === 200 && r4.leadCaptured === true && /"status":"saved"/.test(r4.reply), r4.reply?.slice(0, 160));
-  const cmsQuote = seen.cms.at(-1);
-  check("quote lead labelled as Ava quote request", cmsQuote?.leadSource === "Ava Chat — Quote Request" && /cash buyer/.test(cmsQuote?.address || ""), cmsQuote?.address);
+  const dtQuote = seen.dealertide.at(-1);
+  check(
+    "quote lead labelled as Ava quote request",
+    /Form: Ava Chat — Quote Request/.test(dtQuote?.message || "") && /cash buyer/.test(dtQuote?.message || ""),
+    (dtQuote?.message || "").slice(0, 200),
+  );
 
   // 5. Duplicate guards: the widget says a visit is already requested.
   const r5 = await chat([{ role: "user", content: "book again" }], { page: "/", captured: { visit: true } });
