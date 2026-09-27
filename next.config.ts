@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { HTML_LIMITED_BOT_UA_RE } from "next/dist/shared/lib/router/utils/html-bots";
 import { legacyFloorPlanRedirects } from "./src/lib/legacy-redirects";
+import { retiredSeriesRedirects } from "./src/lib/retired-series";
 
 // Crawlers that must get <title>/<meta> in <head>. Next.js streams metadata
 // into the <body> for every user agent that is not on its built-in
@@ -102,6 +103,12 @@ const nextConfig: NextConfig = {
         destination: '/homes-on-sale',
         permanent: true,
       },
+      // 301s for the retired Paramount line → the surviving home for the same
+      // Champion model number, or the Redman hub when only Paramount published
+      // it. These come first so no Paramount URL can fall through to a 404;
+      // legacy-redirects.ts points straight at the same destinations, so a
+      // pre-CMS URL for one of these homes still resolves in a single hop.
+      ...retiredSeriesRedirects,
       // 301s for the retired pre-CMS floor-plan URLs (old short slugs) →
       // current homes, so old indexed/linked pages don't 404.
       ...legacyFloorPlanRedirects,

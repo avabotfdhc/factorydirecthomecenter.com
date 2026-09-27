@@ -26,7 +26,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 </ul>
 
 <h2>Build quality: honestly, both are strong</h2>
-<p>Every home from both builders is constructed to the federal HUD Code (or state IRC code for modular), inspected at the factory, and backed by a manufacturer's warranty. You won't go wrong on construction with either. Champion's <a href="/champion-homes">Aspire, Prime, and Paramount lines</a> give you a wide range of layouts and finishes.</p>
+<p>Every home from both builders is constructed to the federal HUD Code (or state IRC code for modular), inspected at the factory, and backed by a manufacturer's warranty. You won't go wrong on construction with either. Champion's <a href="/champion-homes">Aspire, Prime, and Redman lines</a> give you a wide range of layouts and finishes.</p>
 
 <h2>Financing: independent vs. in-house</h2>
 <p>This is where the models differ most. A vertically integrated builder typically steers you toward its own affiliated lender. As an independent dealer, we hand you the full list of lenders our customers have used, recommend none of them, and leave the choosing to you — so you compare offers yourself instead of taking the first one handed to you. Always compare rates, no matter who you buy from. Our <a href="/financing">financing page</a> explains the options.</p>
@@ -41,7 +41,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Is Champion or Clayton better quality?</h3>
 <p>Both build to the same federal HUD Code (or state IRC code for modular homes), are factory-inspected, and carry manufacturer warranties. Quality is comparable — the meaningful differences are brand selection, financing flexibility, and whether you buy from a corporate store or an independent local dealer.</p>
 <h3>Is Factory Direct Homes Center a Clayton dealer?</h3>
-<p>No — we're an independent, authorized <strong>Champion Homes</strong> dealer in Auburn, Indiana. We sell Champion's Aspire, Prime, and Paramount series, built at Champion's Indiana plants.</p>
+<p>No — we're an independent, authorized <strong>Champion Homes</strong> dealer in Auburn, Indiana. We sell Champion's Aspire, Prime, and Redman series, built at Champion's Indiana plants.</p>
 <h3>Can I compare Champion homes in person near Fort Wayne?</h3>
 <p>Yes. Our Auburn showroom is about 25 minutes from Fort Wayne. Browse our <a href="/floor-plans">Champion floor plans</a> or <a href="/design-your-home">design your home online</a>, then <a href="/contact-us">visit us</a> to walk through models in person.</p>
 `,
@@ -111,7 +111,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>In the meantime, today's HUD-code <a href="/floor-plans">Champion manufactured homes</a> and IRC-code <a href="/guides/manufactured-vs-modular">modular homes</a> already deliver the affordability and quality this law is built to expand — you don't have to wait to take advantage of factory-direct pricing.</p>
 
 <h2>How Factory Direct Homes Center fits in</h2>
-<p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 30 miles from Champion's Topeka plant — one of the largest factory-built home facilities in the country. That means short freight distances, direct access to the full Aspire, Prime, and Paramount lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
+<p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 30 miles from Champion's Topeka plant — one of the largest factory-built home facilities in the country. That means short freight distances, direct access to the full Aspire, Prime, and Redman lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
 <p>On financing, we do not lend, broker or pull credit — buyers apply directly to the lender of their choice, across chattel (home-only) loans, land-home packages and conventional mortgages. As the Act's expanded FHA options take shape, they will be available through the same lenders on the list we hand you. Our <a href="/financing">financing page</a> walks through how each loan type works.</p>
 <p>And as always, site work — foundation or pad, utilities, and driveway — is handled by <strong>your own licensed contractors</strong>, which is where many buyers save real money versus dealer-bundled site work. We're glad to share a referral list of licensed and insured contractors past customers have used.</p>
 
@@ -550,7 +550,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Do it the other way. Get the soil evaluation moving, get your septic design in front of the county, and let the factory build run in parallel. A Champion <strong>manufactured home</strong> takes 6 to 8 weeks to build; that is 6 to 8 weeks your excavator and well driller can be working. Handled in the right order, the whole project is 8 to 12 weeks. Handled backwards, it is five months.</p>
 
 <h2>What fits on acreage</h2>
-<p>With land you are not squeezed by setbacks, so the multi-section lineup opens up &mdash; <a href="/series/paramount">Paramount</a> and multi-section <a href="/series/aspire">Aspire</a> homes run to five bedrooms with kitchen islands and full primary suites. All HUD-code manufactured homes, built indoors and delivered finished. Browse the <a href="/floor-plans">floor plans</a> and note two or three before you visit.</p>
+<p>With land you are not squeezed by setbacks, so the multi-section lineup opens up &mdash; <a href="/series/redman">Redman</a> and multi-section <a href="/series/aspire">Aspire</a> homes run to five bedrooms with kitchen islands and full primary suites. All HUD-code manufactured homes, built indoors and delivered finished. Browse the <a href="/floor-plans">floor plans</a> and note two or three before you visit.</p>
 
 <h2>You hire your own crews</h2>
 <p>We sell the home and arrange delivery. Site work, foundation, well, septic, utility hookups and setup are yours to contract &mdash; which is how most buyers here save real money, because you are hiring the same local excavator you would hire anyway rather than paying a dealer&rsquo;s markup on him. We keep a referral list of licensed and insured crews previous customers have used. Delivery, set-up and site-work ranges are published in the <a href="/guides/pricing">pricing guide</a> so you can budget before you commit.</p>
@@ -610,7 +610,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Pull your parcel number from the property tax record &mdash; it tells you the county and township outright. Then call that county&rsquo;s plan commission with the parcel number in hand and ask three questions: is a HUD-code manufactured home permitted in this zoning district, what foundation and skirting are required, and what permits do I need before delivery. Write the answers down with the name of the person who gave them. Our <a href="/guides/zoning">zoning guide</a> lays this out in more detail.</p>
 
 <h2>Then the easy part</h2>
-<p>Ashley is a short drive from our Auburn showroom &mdash; close enough to come twice. Champion&rsquo;s HUD-code lineup runs from single-section <a href="/series/prime">Prime</a> homes through multi-section <a href="/series/paramount">Paramount</a> layouts, all built indoors in 6 to 8 weeks and quoted line by line. Browse <a href="/floor-plans">floor plans</a> before you come so the visit is about deciding, not browsing.</p>
+<p>Ashley is a short drive from our Auburn showroom &mdash; close enough to come twice. Champion&rsquo;s HUD-code lineup runs from single-section <a href="/series/prime">Prime</a> homes through multi-section <a href="/series/aspire">Aspire</a> layouts, all built indoors in 6 to 8 weeks and quoted line by line. Browse <a href="/floor-plans">floor plans</a> before you come so the visit is about deciding, not browsing.</p>
 
 <h2>Common questions</h2>
 <h3>Which county is Ashley in?</h3>
@@ -638,7 +638,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Noble County is generally workable ground for manufactured homes on rural parcels, and Avilla itself has in-town lots where a single-section home fits comfortably. As everywhere, it is parcel-specific: the zoning district, foundation requirements and setbacks decide what you can place. You or your contractor confirm with the county and pull permits &mdash; start with our <a href="/guides/zoning">zoning guide</a>. We do not perform site work or setup, so none of that is marked up in your quote.</p>
 
 <h2>What you are actually buying</h2>
-<p>A HUD-code home built indoors on a controlled line, inspected through the build, delivered finished. Champion&rsquo;s <a href="/series/aspire">Aspire</a> series is the broadest lineup we carry &mdash; single-section homes for first-time buyers and downsizers, multi-section homes with full family layouts. <a href="/series/paramount">Paramount</a> goes larger, with islands and big primary suites. See the <a href="/floor-plans">full catalogue</a>, then come walk a few in Auburn; it is a short drive east.</p>
+<p>A HUD-code home built indoors on a controlled line, inspected through the build, delivered finished. Champion&rsquo;s <a href="/series/aspire">Aspire</a> series is the broadest lineup we carry &mdash; single-section homes for first-time buyers and downsizers, multi-section homes with full family layouts. <a href="/series/redman">Redman</a> goes larger, with islands and big primary suites. See the <a href="/floor-plans">full catalogue</a>, then come walk a few in Auburn; it is a short drive east.</p>
 
 <h2>Common questions</h2>
 <h3>How close is the factory really?</h3>
@@ -695,7 +695,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Replacing an old unit on ground you already own is usually the most affordable route to a genuinely new home in Steuben County &mdash; you own the land, the utilities are there, and the access already carried a home in once. The parts to plan for: demolition and disposal of the old unit, an honest look at whether the existing septic still meets county requirements, whether the existing pad or piers suit the new home, and any setback rules the old placement was grandfathered against but the new one will not be. You or your contractor handle all of that and pull the permits; we sell the home and arrange delivery. See the <a href="/guides/site-work">site work guide</a> and our <a href="/guides/zoning">zoning guide</a>.</p>
 
 <h2>Built for northern Indiana winters</h2>
-<p>Champion builds to the northern thermal zone for homes staying here. Insulation levels, window packages and furnace sizing are ordered up front as <a href="/options">factory options</a> &mdash; worth spending on when the lot is exposed and the wind comes off the lake. Browse the <a href="/floor-plans">Champion lineup</a>, from single-section <a href="/series/prime">Prime</a> homes to multi-section <a href="/series/paramount">Paramount</a> layouts.</p>
+<p>Champion builds to the northern thermal zone for homes staying here. Insulation levels, window packages and furnace sizing are ordered up front as <a href="/options">factory options</a> &mdash; worth spending on when the lot is exposed and the wind comes off the lake. Browse the <a href="/floor-plans">Champion lineup</a>, from single-section <a href="/series/prime">Prime</a> homes to multi-section <a href="/series/aspire">Aspire</a> layouts.</p>
 
 <h2>Common questions</h2>
 <h3>Is a manufactured home the same as a mobile home?</h3>
@@ -747,7 +747,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 
 <h2>The structural math</h2>
 <p>A new-construction project has two costs: the land and the house. You cannot negotiate the land down &mdash; the market sets it. You can change what the house costs per finished square foot, and that is where a factory-built home does its work. Champion&rsquo;s <strong>manufactured homes</strong> are built indoors on a production line, with materials bought at volume and no weather delays, and we sell them factory-direct with the home, options and delivery each on their own line. The saving is not a discount on a lesser house; it is a different cost structure for a comparable one.</p>
-<p>Multi-section <a href="/series/paramount">Paramount</a> and <a href="/series/aspire">Aspire</a> homes reach five bedrooms with kitchen islands, walk-in closets and full primary suites. Walk one before you assume what the category looks like &mdash; most people&rsquo;s mental image is thirty years out of date. Start with the <a href="/floor-plans">full lineup</a>.</p>
+<p>Multi-section <a href="/series/redman">Redman</a> and <a href="/series/aspire">Aspire</a> homes reach five bedrooms with kitchen islands, walk-in closets and full primary suites. Walk one before you assume what the category looks like &mdash; most people&rsquo;s mental image is thirty years out of date. Start with the <a href="/floor-plans">full lineup</a>.</p>
 
 <h2>Allen County placement, honestly</h2>
 <p>Allen County is large and its rules are not uniform across it. Whether a HUD-code manufactured home is permitted on a given parcel depends on the zoning district, and some districts and subdivisions have covenants of their own that zoning will not tell you about. Check both &mdash; the county for zoning and permits, the deed and plat for private restrictions &mdash; before you buy the land, not after. Our <a href="/guides/zoning">zoning guide</a> explains how to run both checks.</p>
@@ -839,7 +839,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Much of the ground around Wolcottville is lake and near-lake property, and septic is usually the deciding factor. If you are buying a parcel with an existing system, have it evaluated before closing rather than after &mdash; an older system may not meet what the county would require for a new home, and replacing one is a real budget line. If you are starting fresh, the soil evaluation drives the design and the design drives the permit, so start it early and let the factory build run alongside. The <a href="/guides/site-work">site work guide</a> explains the sequence.</p>
 
 <h2>A short run from the plant</h2>
-<p>Champion&rsquo;s Topeka plant is in LaGrange County, close to this area, and our Auburn showroom is about 30 miles east of it. Wolcottville sits between the two &mdash; a short freight route, quoted as its own line rather than folded into the home price. Browse the <a href="/floor-plans">Champion lineup</a> and come walk a few; single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes for tighter lots, multi-section <a href="/series/paramount">Paramount</a> layouts where the parcel allows.</p>
+<p>Champion&rsquo;s Topeka plant is in LaGrange County, close to this area, and our Auburn showroom is about 30 miles east of it. Wolcottville sits between the two &mdash; a short freight route, quoted as its own line rather than folded into the home price. Browse the <a href="/floor-plans">Champion lineup</a> and come walk a few; single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes for tighter lots, multi-section <a href="/series/aspire">Aspire</a> layouts where the parcel allows.</p>
 
 <h2>Common questions</h2>
 <h3>Which county am I in?</h3>

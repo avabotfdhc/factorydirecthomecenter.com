@@ -22,9 +22,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const hub = getSeriesHub(slug);
   if (!hub) return {};
+  // A hub that took over a retired range says so in the description, because
+  // that snippet is what someone who searched the old name reads before they
+  // decide whether to click.
+  const formerly = hub.formerly
+    ? ` Champion\u2019s ${hub.formerly.name} plans are ordered here.`
+    : "";
   return genMeta({
     title: `${hub.fullName} Floor Plans & Pricing`,
-    description: `${hub.tagline} Browse ${hub.name} series manufactured homes from Factory Direct Homes Center in Auburn, IN, with factory-direct, line-item pricing.`,
+    description: `${hub.tagline} Browse ${hub.name} series manufactured homes from Factory Direct Homes Center in Auburn, IN, with factory-direct, line-item pricing.${formerly}`,
     url: `/series/${hub.slug}`,
   });
 }
@@ -78,6 +84,20 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
               <span className="italic text-[var(--color-teal-light)]">{hub.tagline}</span>
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">{hub.intro}</p>
+            {hub.formerly && (
+              <div className="mt-8 max-w-xl rounded-xl border border-white/15 bg-white/5 p-6">
+                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-teal-light)] mb-3">
+                  Looking for {hub.formerly.name}?
+                </p>
+                <p className="text-sm text-white/70 leading-relaxed">{hub.formerly.note}</p>
+                <Link
+                  href="/floor-plans"
+                  className="inline-block mt-4 text-sm font-semibold text-[var(--color-teal-light)] hover:underline"
+                >
+                  Browse every home we publish &rarr;
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -117,7 +137,14 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight">
-              {hub.name} floor plans <span className="text-[var(--color-gray)] text-lg align-middle">({plans.length})</span>
+              {plans.length > 0 ? (
+                <>
+                  {hub.name} floor plans{" "}
+                  <span className="text-[var(--color-gray)] text-lg align-middle">({plans.length})</span>
+                </>
+              ) : (
+                <>{hub.name} homes we order</>
+              )}
             </H2>
             <Link href="/floor-plans" className="text-sm font-semibold text-[var(--color-teal)] hover:underline">
               See every series →
@@ -138,8 +165,18 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
             <div className="rounded-2xl bg-[var(--color-cream)] p-8 lg:p-10 max-w-2xl">
               <p className="text-[var(--color-charcoal)] font-semibold mb-2">We order {hub.name} homes to spec.</p>
               <p className="text-[var(--color-gray)] mb-6">
-                None are published on the site yet. Tell us the plan you have in mind, or the size and bedrooms you need, and we&rsquo;ll send Champion&rsquo;s spec sheet and a line-item quote.
+                These plans do not have a page of their own on the site. Name the one you want, or tell us the size and bedrooms you need, and we&rsquo;ll send Champion&rsquo;s spec sheet and a line-item quote.
               </p>
+              {hub.quoteOnRequest && hub.quoteOnRequest.length > 0 && (
+                <ul className="mb-6 divide-y divide-[var(--color-charcoal)]/10 border-y border-[var(--color-charcoal)]/10">
+                  {hub.quoteOnRequest.map((q) => (
+                    <li key={q.name} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
+                      <span className="font-semibold text-[var(--color-charcoal)]">{q.name}</span>
+                      <span className="text-sm text-[var(--color-gray)]">{q.detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
               <Link
                 href="/contact-us"
                 className="inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-7 py-3.5 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] hover:text-white transition-colors"

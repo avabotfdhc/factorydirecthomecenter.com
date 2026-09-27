@@ -5,14 +5,14 @@ import { H2, H3 } from "@/components/Heading";
 import { GuideMeta } from "@/components/GuideMeta";
 
 export const metadata = genMeta({
-  title: "Champion Homes & Our Series — Aspire, Prime & Paramount",
+  title: "Champion Homes & Our Series — Aspire, Prime & Redman",
   description:
-    "Meet Champion Homes and the series we sell at Factory Direct Homes Center: Aspire, Prime, and Paramount. How factory-built homes are made, HUD vs. IRC code, quality, warranty, and which Champion series fits you — built 30 miles from our Auburn, IN showroom.",
+    "Meet Champion Homes and the series we sell at Factory Direct Homes Center: Aspire, Prime, and Redman. How factory-built homes are made, HUD vs. IRC code, quality, warranty, and which Champion series fits you — built 30 miles from our Auburn, IN showroom.",
   keywords: [
     "Champion Homes",
     "Champion Aspire series",
     "Champion Prime series",
-    "Champion Paramount series",
+    "Champion Redman series",
     "Champion manufactured homes Indiana",
     "who makes Champion homes",
   ],
@@ -28,10 +28,10 @@ const series = [
     body: "Aspire is the heart of our lineup and the broadest selection we carry — single wides for first-time buyers and downsizers, and multi-section homes with full family layouts. Built to the federal HUD code at Champion's Topeka, Indiana plant just 30 miles from our showroom, Aspire pairs smart, livable floor plans with genuine factory-direct value. Many plans offer factory layout options — 2-bedroom conversions, added studies, optional kitchens and islands.",
   },
   {
-    name: "Paramount",
+    name: "Redman",
     plant: "Topeka, Indiana",
-    tag: "Elevated finishes on a multi-section home",
-    body: "Paramount is Champion's step-up multi-section series, also built in Topeka — the same short-freight advantage, with an emphasis on upgraded interior selections and finishes. If you want the room and presence of a sectional home with a more finished, custom feel, Paramount is where to look.",
+    tag: "Expansive sectionals, ordered to spec",
+    body: "Redman is Champion's expansive sectional range out of the same Topeka plant — 28' and 32' wide homes with island kitchens, generous great rooms and luxury primary suites, in HUD code or as IRC modular on the plans Champion builds both ways. Champion's own factory literature calls the range \"Redman Paramount\", so this is where the plans we once listed as Paramount belong. We order these to spec: name the plan, or the width, size and bedrooms you need, and you get Champion's spec sheet and a line-item quote.",
   },
   {
     name: "Prime",
@@ -45,12 +45,12 @@ const championFAQs = [
   {
     question: "Who makes Champion Homes?",
     answer:
-      "Champion Homes (Champion Home Builders) is one of the largest producers of factory-built housing in North America, with plants across the country. The homes we sell are built at Champion's Indiana facilities — Aspire and Paramount in Topeka, about 30 miles from our Auburn showroom, and Prime in Decatur. Building close to us keeps freight costs and delivery times low.",
+      "Champion Homes (Champion Home Builders) is one of the largest producers of factory-built housing in North America, with plants across the country. The homes we sell are built at Champion's Indiana facilities — Aspire and Redman in Topeka, about 30 miles from our Auburn showroom, and Prime in Decatur. Building close to us keeps freight costs and delivery times low.",
   },
   {
-    question: "What's the difference between the Aspire, Prime, and Paramount series?",
+    question: "What's the difference between the Aspire, Prime, and Redman series?",
     answer:
-      "All three are Champion-built. Aspire is our broadest, most popular line and the best value, built in Topeka. Paramount is a step-up multi-section series with elevated finishes, also from Topeka. Prime is Champion's series from the Decatur, Indiana plant. Which is right for you comes down to home type, layout, and the finishes you want — we're glad to help you compare.",
+      "All three are Champion-built. Aspire is our broadest, most popular line and the best value, built in Topeka. Redman is the expansive sectional range from the same plant, ordered to spec — Champion calls it \"Redman Paramount\", so it covers the plans we used to list as Paramount. Prime is Champion's series from the Decatur, Indiana plant. Which is right for you comes down to home type, layout, and the finishes you want — we're glad to help you compare.",
   },
   {
     question: "Are Champion manufactured homes good quality?",

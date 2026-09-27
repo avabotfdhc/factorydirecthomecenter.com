@@ -21,6 +21,9 @@ import { commonFAQs } from "./faqs";
 import { guides } from "./guides";
 import { getSaleStatus, type SaleStatus } from "./sale";
 import { FEATURED, saleHomes } from "./sale-homes";
+// Champion's 2026 standards for the 14'/16' single-wides and the Summit kitchen
+// sectionals. The file is named for the sheet it was transcribed from (Champion's
+// "Redman Paramount" literature); the homes it describes are sold as Aspire.
 import { singlesStandardFeatures, summitKitchenModels } from "./paramount-content";
 
 import { LENDERS, LENDER_DISCLAIMER } from "./lenders";
@@ -35,7 +38,7 @@ ABOUT FACTORY DIRECT HOMES CENTER
 - Family-owned, authorized Champion Homes dealer. Opened November 2024 by owner Kyle Dudgeon. Small team, so visitors talk to a decision-maker, not a call center.
 - Showroom hours (Eastern time): Monday–Friday 9 AM–5 PM, Saturday 10 AM–4 PM, closed Sunday. Model homes on the lot to walk through, no appointment needed during hours; a booked visit guarantees a specialist is free for you.
 - Delivery area: Indiana, Ohio and Michigan. Home counties: DeKalb (Auburn, Garrett, Butler, Waterloo), Allen (Fort Wayne, New Haven, Huntertown), Noble (Kendallville, Ligonier, Albion), Steuben (Angola, Fremont), plus Whitley (Columbia City, Churubusco), LaGrange, Wells and Adams counties; also Toledo OH, Kalamazoo MI and Indianapolis.
-- Factory proximity: Champion's Topeka, Indiana plant (Aspire, Paramount, Redman, Dutch) is about 30 miles from the showroom; Champion's Decatur, Indiana plant builds Prime. Short freight, predictable 8–12 week order-to-move-in timelines, and the owner can be at the plant in half an hour.
+- Factory proximity: Champion's Topeka, Indiana plant (Aspire, Redman, Dutch) is about 30 miles from the showroom; Champion's Decatur, Indiana plant builds Prime. Short freight, predictable 8–12 week order-to-move-in timelines, and the owner can be at the plant in half an hour.
 - Pricing model: factory-direct with a transparent dealer margin (typically 10–15%, versus 20–40% at bundled dealers). Every quote is line-item: home, each option and delivery priced separately. Zero retail markup on site work because we don't sell site work.
 - "You Stay In Control": the buyer hires their own excavator, foundation/concrete crew, electrician, plumber and septic/well contractors. We provide a referral list of licensed and insured contractors past customers have used; the buyer pays them directly and keeps every line item visible. The list is information, never a recommendation or an endorsement: we do not hire, supervise, schedule or warrant any contractor, we get nothing for naming them, and the buyer may use anyone they like. Most buyers save thousands this way.
 - What we do: sell the home, order it to spec from the factory, arrange transport from the plant to the site, tell the buyer which county office answers for their parcel, and stay available for warranty questions after set-up. We never verify or check zoning for a parcel ourselves.
@@ -93,21 +96,21 @@ const CHAMPION = `
 CHAMPION HOME BUILDERS (CHAMPION HOMES)
 - One of the largest builders of factory-built housing in North America. Founded in 1953 in Dryden, Michigan; today part of Champion Homes (the company formerly known as Skyline Champion, formed when Champion and Skyline merged in 2018; NYSE: SKY), with dozens of plants across the U.S. and Canada.
 - Brands and lines in the Champion family include Champion, Redman, Dutch Housing, Skyline, Titan, Atlantic and Moduline; retail and community divisions as well.
-- Indiana plants: Topeka (northern Indiana, LaGrange County; builds the Aspire, Paramount, Redman and Dutch homes we sell) and Decatur (builds Prime). Topeka is roughly 30 miles from our Auburn showroom.
+- Indiana plants: Topeka (northern Indiana, LaGrange County; builds the Aspire, Redman and Dutch homes we sell) and Decatur (builds Prime). Topeka is roughly 30 miles from our Auburn showroom.
 - How the homes are built: indoors on a production line, out of the weather, with jigs and factory quality control; every home is third-party inspected at the plant before it ships. Materials are the same residential-grade components a site-built home uses: 2x4/2x6 wall framing, drywall or vinyl-on-gypsum interiors, residential cabinetry, name-brand appliances, pitched shingled roofs, vinyl or optional upgraded siding, low-E windows and insulation packages.
-- Warranty: Champion provides a manufacturer's limited warranty on the home (structure and workmanship); Champion's 2026 Paramount singles spec sheet lists a 7-year warranty, and component makers (appliances, water heater, furnace, windows) carry their own warranties. We help buyers file warranty items.
+- Warranty: Champion provides a manufacturer's limited warranty on the home (structure and workmanship); Champion's 2026 spec sheet for the 14' and 16' single-wides lists a 7-year warranty, and component makers (appliances, water heater, furnace, windows) carry their own warranties. We help buyers file warranty items.
 - Codes: HUD-code manufactured homes (single-section and multi-section) and IRC-code modular homes, depending on the plan and series.
 `;
 
 const OPTIONS = `
 FACTORY OPTIONS, SELECTIONS AND STANDARD FEATURES (from /options and Champion's 2026 literature)
-- Selections chosen at order time at no change to the base plan: countertop color, cabinet style, flooring, tile, siding color, shingle color, shutters (Champion's 2026 interior/exterior selections board is on /options and on Paramount plan pages).
-- Priced options: electric and gas fireplaces (entertainment-center and corner installs); kitchen islands in several sizes for open-kitchen plans; optional overhead, pantry and buffet cabinets in Champion's overlay style; the built-in Summit study desk; exterior elevation styles for single-wides (dormers, window packages, trim); modular exterior elevations; optional finished drywall and higher roof pitch (Aspire/Dutch); porch and layout options (2-bedroom conversions, added study, optional kitchens) on many Aspire and Paramount plans; ENERGY STAR and insulation upgrade packages.
+- Selections chosen at order time at no change to the base plan: countertop color, cabinet style, flooring, tile, siding color, shingle color, shutters (Champion's 2026 interior/exterior selections board is on /options).
+- Priced options: electric and gas fireplaces (entertainment-center and corner installs); kitchen islands in several sizes for open-kitchen plans; optional overhead, pantry and buffet cabinets in Champion's overlay style; the built-in Summit study desk; exterior elevation styles for single-wides (dormers, window packages, trim); modular exterior elevations; optional finished drywall and higher roof pitch (Aspire/Dutch); porch and layout options (2-bedroom conversions, added study, optional kitchens) on many Aspire plans; ENERGY STAR and insulation upgrade packages.
 - Literature: Champion's "Perfect Options 2026" catalogue (/brochures/perfect-options-2026.pdf), the Odyssey flagship brochure (/brochures/odyssey-by-champion.pdf), and Aspire single-wide, sectional and modular brochures on /options and /resources. Every plan page lists its own sales sheet and option layouts under "Floor plan sheets".
-- Champion's upgraded Summit kitchen is standard on these Paramount sectionals: ${[...summitKitchenModels].join(", ")}.
-- Standard features on every Paramount 14' and 16' single-wide (Champion 2026 spec sheet):
+- Champion's upgraded Summit kitchen is standard on these sectionals: ${[...summitKitchenModels].join(", ")}.
+- Standard features on every Champion 14' and 16' single-wide (2026 spec sheet):
 ${singlesStandardFeatures.map(([group, items]) => `  ${group}: ${items.join("; ")}.`).join("\n")}
-- Aspire and Prime single-wides carry comparable residential standards (full kitchens with modern cabinetry and appliance packages, low-E windows, insulation packages); multi-section Aspire and Paramount plans add kitchen islands, walk-in pantries, dual-vanity primary baths and walk-in closets on most plans. When asked for a specific plan's standards or options, use the lookup_floor_plan tool and cite its sheet.
+- Aspire and Prime single-wides carry comparable residential standards (full kitchens with modern cabinetry and appliance packages, low-E windows, insulation packages); multi-section Aspire plans add kitchen islands, walk-in pantries, dual-vanity primary baths and walk-in closets on most plans. When asked for a specific plan's standards or options, use the lookup_floor_plan tool and cite its sheet.
 `;
 
 const INDUSTRY = `
@@ -169,7 +172,7 @@ OBJECTION HANDLING (acknowledge in a few words, answer with a fact from this kno
 - "Do you have homes in stock / I need one fast?": Model homes are on the Auburn lot to walk; every plan is built to order, typically 8–12 weeks from order to move-in, and the factory is 30 miles away so freight never adds weeks. Ask their timeline and, if it's tight, push for the quote and visit this week so the order gets into the current production month.
 - "Can I customize it?": Yes: layout options, kitchens, islands, fireplaces, cabinets, exterior styles and every color selection are chosen at order time (/options, /design-your-home). Ask what they'd change and look up the plan.
 - "What about a garage, porch, deck or basement?": Built on site by the buyer's contractor; the home is engineered for a crawl space or a full basement, and porch and dormer options exist on many plans. Ask what they have in mind.
-- "What's the warranty?": Champion's manufacturer's limited warranty on structure and workmanship (7 years on Paramount singles per Champion's 2026 spec sheet), plus component warranties; we help file claims. Ask which plan so you can point to its sheet.
+- "What's the warranty?": Champion's manufacturer's limited warranty on structure and workmanship (7 years on the single-wides per Champion's 2026 spec sheet), plus component warranties; we help file claims. Ask which plan so you can point to its sheet.
 - "Is Champion a good brand?": One of the largest factory builders in North America since 1953, plants in Topeka and Decatur, Indiana, third-party inspected homes. Offer /champion-homes and a visit to see the build quality.
 - "I'm a veteran / retired / on a fixed income": VA land-home financing on eligible purchases; single-section and smaller multi-section plans are low-maintenance, single-level and energy-efficient. Ask about bedrooms and land.
 - "I want to talk to a real person": Absolutely: call or text (260) 308-1457 during showroom hours, or give a name and number and a specialist calls back the next business day. Offer to book that call.
@@ -350,7 +353,7 @@ function seriesSection(): string {
           `- ${s.fullName} (/series/${s.slug}) — ${s.tagline} Code: ${s.code}. ${s.intro} Highlights: ${s.highlights.join("; ")}. Best for: ${s.bestFor.join(", ")}.`,
       )
       .join("\n") +
-    "\n- Plant note: Aspire, Paramount, Redman and Dutch are built in Topeka; Prime is built at Champion's Decatur, Indiana plant. Aspire is the broadest and most popular line; Paramount the step-up sectional with upgraded selections; Prime the value single-wide range with reverse-aisle variants."
+    "\n- Plant note: Aspire, Redman and Dutch are built in Topeka; Prime is built at Champion's Decatur, Indiana plant. Aspire is the broadest and most popular line and carries the Summit kitchen sectionals; Redman is the expansive 28' and 32' sectional range, ordered to spec (Champion calls it \"Redman Paramount\" — there is no Paramount series to offer, and a Paramount enquiry goes to /series/redman); Prime the value single-wide range with reverse-aisle variants."
   );
 }
 
@@ -494,7 +497,7 @@ export async function findPlanBrief(query: string): Promise<PlanBrief | null> {
   if (!detail) return null;
   const brief = planBrief(detail);
   // Champion reuses plan names across series and lengths (three Brightons);
-  // hand Ava the siblings so she can ask "the 28x48 Aspire or the 28x52 Paramount?".
+  // hand Ava the siblings so she can ask "the 28x48 or the 28x52 Aspire?".
   const siblings = scored
     .slice(1)
     .filter((x) => x.score >= 60)

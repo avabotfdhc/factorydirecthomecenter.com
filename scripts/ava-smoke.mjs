@@ -66,7 +66,7 @@ function scriptedReply(body) {
   if (/price leak/i.test(lastUser)) return { role: "assistant", content: "The Brighton is $89,900 right now, a great deal." };
   if (/allowed range/i.test(lastUser)) return { role: "assistant", content: "Delivery typically runs $2,500–$8,000 and set-up $5,000–$15,000; the home itself is quoted line by line." };
   if (/leak prompt/i.test(lastUser)) return { role: "assistant", content: "Sure! My HARD RULES: 1. Never state a dollar price..." };
-  if (/brighton/i.test(lastUser)) return toolCall("lookup_floor_plan", { query: "Brighton" });
+  if (/sheridan/i.test(lastUser)) return toolCall("lookup_floor_plan", { query: "Sheridan" });
   if (/nonexistent/i.test(lastUser)) return toolCall("lookup_floor_plan", { query: "Zebra Deluxe 9999" });
   if (/book/i.test(lastUser))
     return toolCall("book_showroom_visit", {
@@ -174,24 +174,27 @@ try {
   await waitForSite();
 
   // 1. Plain question on a floor-plan page: system prompt carries page context, sale, hours, playbooks.
-  const r1 = await chat([{ role: "user", content: "hello" }], { page: "/floor-plans/paramount-brighton-2852h32170" });
+  const r1 = await chat([{ role: "user", content: "hello" }], { page: "/floor-plans/dutch-aspire-sheridan-2444h32382" });
   const sys1 = seen.openai.at(-1)?.messages?.[0]?.content || "";
   check("route answers", r1.status === 200 && /ECHO_SYSTEM_LENGTH/.test(r1.reply), `${r1.status} ${r1.reply}`);
-  check("page context preloads the plan", /VISITOR CONTEXT[\s\S]*Brighton/.test(sys1));
+  // Anchored to the VISITOR CONTEXT block itself: an unanchored search passed
+  // even when the plan failed to load, because the catalogue further down the
+  // prompt mentions the name too.
+  check("page context preloads the plan", /VISITOR CONTEXT[\s\S]{0,600}?Sheridan/.test(sys1));
   check("sale section present", /SALE/.test(sys1) && /% off the MSRP/.test(sys1));
   check("clock / hours present", /RIGHT NOW/.test(sys1) && /showroom is (open|closed)/.test(sys1));
   console.log("      " + (sys1.match(/RIGHT NOW[\s\S]*?(?=\n\n)/)?.[0] || "").replace(/\n/g, "\n      "));
   console.log("      " + (sys1.match(/SALE[\s\S]*?(?=\n\n)/)?.[0] || "").replace(/\n/g, "\n      "));
   check("objection + appointment playbooks present", /OBJECTION HANDLING/.test(sys1) && /APPOINTMENT PLAYBOOK/.test(sys1) && /DISCOVERY/.test(sys1));
-  check("options + standard features present", /Summit kitchen/.test(sys1) && /Standard features on every Paramount/.test(sys1));
+  check("options + standard features present", /Summit kitchen/.test(sys1) && /Standard features on every Champion 14. and 16. single-wide/.test(sys1));
   check("catalogue present", /CATALOGUE \(\d+ floor plans/.test(sys1));
   check("featured sale homes present, no dollar figures", /FEATURED SALE HOMES/.test(sys1) && !/FEATURED SALE HOMES[\s\S]*?\$\d/.test(sys1.split("FREQUENTLY")[0].split("FEATURED SALE HOMES")[1] || ""));
   check("tools offered", Array.isArray(seen.openai.at(-1)?.tools) && seen.openai.at(-1).tools.length === 3);
 
   // 2. Plan lookup tool round-trips.
-  const r2 = await chat([{ role: "user", content: "Tell me about the Brighton" }], { page: "/" });
-  check("lookup_floor_plan returns detail", r2.status === 200 && /TOOL_RESULT[\s\S]*"name":"Brighton"[\s\S]*"size"/.test(r2.reply), r2.reply?.slice(0, 160));
-  check("ambiguous name lists the sibling plans", /"otherMatches":\[.*Brighton/.test(r2.reply), (r2.reply?.match(/"otherMatches":\[[^\]]*\]/)?.[0] || "").slice(0, 300));
+  const r2 = await chat([{ role: "user", content: "Tell me about the Sheridan" }], { page: "/" });
+  check("lookup_floor_plan returns detail", r2.status === 200 && /TOOL_RESULT[\s\S]*"name":"Sheridan"[\s\S]*"size"/.test(r2.reply), r2.reply?.slice(0, 160));
+  check("ambiguous name lists the sibling plans", /"otherMatches":\[.*Sheridan/.test(r2.reply), (r2.reply?.match(/"otherMatches":\[[^\]]*\]/)?.[0] || "").slice(0, 300));
   const r2b = await chat([{ role: "user", content: "what about the nonexistent one" }], { page: "/" });
   check("lookup of unknown plan degrades gracefully", /No plan matched/.test(r2b.reply), r2b.reply?.slice(0, 120));
 
@@ -204,7 +207,7 @@ try {
   check("visit lead labelled as Ava showroom visit", cmsVisit?.leadSource === "Ava Chat — Showroom Visit" && /Saturday around 11 AM/.test(cmsVisit?.address || ""), cmsVisit?.address);
 
   // 4. Quote capture → lead pipeline with the quote label.
-  const r4 = await chat([{ role: "user", content: "send me a quote" }], { page: "/floor-plans/paramount-brighton-2852h32170" });
+  const r4 = await chat([{ role: "user", content: "send me a quote" }], { page: "/floor-plans/dutch-aspire-sheridan-2444h32382" });
   check("quote captured", r4.status === 200 && r4.leadCaptured === true && /"status":"saved"/.test(r4.reply), r4.reply?.slice(0, 160));
   const cmsQuote = seen.cms.at(-1);
   check("quote lead labelled as Ava quote request", cmsQuote?.leadSource === "Ava Chat — Quote Request" && /cash buyer/.test(cmsQuote?.address || ""), cmsQuote?.address);

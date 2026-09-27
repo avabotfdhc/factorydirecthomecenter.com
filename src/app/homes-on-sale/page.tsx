@@ -190,10 +190,10 @@ export default function HomesOnSalePage() {
               </H2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 {!sale.active
-                  ? `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full list is below.`
+                  ? `A shortlist of ${saleHomes.length} — twenty from Aspire and ten from Prime. All ${saleListings.length} floor plans are available to order at factory-direct pricing; the full list is below.`
                   : SHOW_SALE_PRICES
-                    ? `The ${saleHomes.length} homes we publish a price on — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for a price on any of the others.`
-                    : `A shortlist of ${saleHomes.length} — ten each from Aspire, Paramount and Prime, five single-section and five multi-section per series, picked to span each range. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for the price on any of them.`}
+                    ? `The ${saleHomes.length} homes we publish a price on — twenty from Aspire and ten from Prime, half single-section and half multi-section in each, picked to span both ranges. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for a price on any of the others.`
+                    : `A shortlist of ${saleHomes.length} — twenty from Aspire and ten from Prime, half single-section and half multi-section in each, picked to span both ranges. All ${saleListings.length} of our floor plans are on sale at the same ${sale.discountPercent}% off MSRP; call for the price on any of them.`}
               </p>
             </div>
           </FadeIn>

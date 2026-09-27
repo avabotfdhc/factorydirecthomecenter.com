@@ -351,7 +351,7 @@ export default function AboutPage() {
                 <div className="space-y-8 border-l-2 border-[var(--color-teal)]/20 pl-8">
                   {[
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
-                    { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Paramount, Redman, and Dutch series homes built just 30 miles away." },
+                    { label: "The Partnership", text: "Direct access to Champion's Topeka, IN facility — the largest in the country. Aspire, Redman, and Dutch series homes built just 30 miles away." },
                     { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through referrals and repeat customers." },
                   ].map((item) => (
                     <div key={item.label} className="relative">
@@ -433,8 +433,8 @@ export default function AboutPage() {
               <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
                 Champion is the #2 manufactured home builder in America. Their Topeka, 
                 Indiana facility — the largest Champion factory in the country — is 
-                just 30 miles from our showroom. This plant produces the Aspire Series, 
-                Paramount, Redman, and Dutch series homes. Shorter delivery distances 
+                just 30 miles from our showroom. This plant produces the Aspire, 
+                Redman, and Dutch series homes. Shorter delivery distances 
                 mean lower costs and faster delivery for you.
               </p>
             </FadeIn>

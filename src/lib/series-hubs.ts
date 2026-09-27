@@ -15,6 +15,13 @@ export interface SeriesHub {
   /** Extra slug prefix filter (Dutch-branded Aspire homes carry a "dutch-" slug). */
   slugPrefix?: string;
   code: "HUD" | "IRC" | "HUD or IRC";
+  /** A range Champion has sold under another name, and where that name's plans
+   *  are now. Rendered as a plain note so the buyer who searched the old name
+   *  is answered instead of being left on a redirect with no explanation. */
+  formerly?: { name: string; note: string };
+  /** Plans we order but do not publish a page for. Named so the page says
+   *  something specific rather than offering a bare quote form. */
+  quoteOnRequest?: Array<{ name: string; detail: string }>;
 }
 
 export const seriesHubs: SeriesHub[] = [
@@ -55,40 +62,36 @@ export const seriesHubs: SeriesHub[] = [
     code: "HUD",
   },
   {
-    slug: "paramount",
-    name: "Paramount",
-    fullName: "Champion Paramount Series",
-    eyebrow: "Sectional homes with room to grow",
-    tagline: "Spacious multi-section homes with the features of a site-built house.",
-    intro:
-      "Paramount is our largest multi-section line: open-plan living, kitchen islands, walk-in closets and up to 5 bedrooms, delivered as two or three sections and joined on your foundation.",
-    bestFor: ["Larger families", "Replacing an older home on owned land", "Buyers comparing against site-built"],
-    highlights: [
-      "24' to 32' wide, 1,300 to 2,300+ sq ft plans",
-      "Optional layouts for kitchens, baths and porches on most models",
-      "Primary suites with dual vanities and walk-in closets",
-      "Ready for permanent foundations and land-home financing",
-    ],
-    catalogSeries: ["Paramount"],
-    code: "HUD",
-  },
-  {
     slug: "redman",
     name: "Redman",
     fullName: "Champion Redman Series",
-    eyebrow: "Expansive sectional homes",
+    eyebrow: "Expansive sectional homes, built to order",
     tagline: "Kitchen islands, luxury primary suites and wide-open floor plans.",
     intro:
-      "Redman is Champion's expansive sectional line: big kitchens with islands, luxury primary suites and generous living areas. We order Redman plans to spec from the Topeka plant; the catalogue below lists any we currently publish, and every other Redman plan can be quoted on request.",
-    bestFor: ["Buyers who want the most home per dollar", "Entertaining kitchens", "Acreage and land-home packages"],
+      "Redman is Champion's expansive sectional line out of the Topeka plant — big kitchens with islands, luxury primary suites and generous living areas. Champion's own factory literature calls the range \"Redman Paramount\", so Redman is where the Paramount plans belong. We order these homes to spec: tell us the plan, or the width, size and bedroom count you need, and you get Champion's spec sheet and a line-item quote.",
+    bestFor: ["Buyers who want the most home per dollar", "Entertaining kitchens", "Acreage and land-home packages", "Anyone who was shopping a Paramount plan"],
     highlights: [
-      "Multi-section plans with open great rooms",
+      "28' and 32' wide sectionals up to 2,305 sq ft and 4 bedrooms",
       "Kitchen islands and full-size appliance packages",
       "Luxury primary suites with soaking tubs on select plans",
+      "HUD-code, or IRC modular on the plans Champion builds both ways",
       "Built to order: pick the plan, we price it line by line",
     ],
     catalogSeries: ["Redman"],
-    code: "HUD",
+    code: "HUD or IRC",
+    formerly: {
+      name: "Paramount",
+      note:
+        "We no longer publish a Paramount series. Most Paramount plans were the same Champion model as an Aspire plan — identical model number, one home — so those pages now point at the Aspire listing for that home, and nothing about the home itself has changed. The plans that only ever came as Paramount are the sectionals listed below, and we still order every one of them.",
+    },
+    quoteOnRequest: [
+      { name: "Stafford", detail: "28' wide, 1,813N—2,027 sq ft, 3N—4 bed / 2N—3 bath" },
+      { name: "Fenton", detail: "32' wide, 1,820N—2,063 sq ft, 3 bed / 2 bath" },
+      { name: "Apollo", detail: "32' wide, 2,184N—2,305 sq ft, 4 bed / 2 bath" },
+      { name: "Red Cedar", detail: "32' wide, 2,305 sq ft, 4 bed / 3 bath" },
+      { name: "Alberta", detail: "28' wide, 1,707 sq ft, 4 bed / 2 bath" },
+      { name: "Myrtle", detail: "28' wide, 1,600 sq ft, 3 bed / 2 bath" },
+    ],
   },
   {
     slug: "dutch",
