@@ -626,3 +626,75 @@ white but only 3.07:1 on the dark footer). Now 5.71:1 at 12px, measured.
 `tests/structured-data.test.ts` fails on an ld+json block built with a raw
 `JSON.stringify`, and asserts the escaper both closes `</script` and still
 round-trips through `JSON.parse`. Injection-tested.
+
+# Paramount is retired, and not one of its URLs was thrown away
+
+Kyle, 2026-09-26: *"remove Paramount Series and the floor plans associated with
+it … However I would like to make sure we do everything we can to capture leads
+and website traffic for Redman and Paramount Series."* Those two halves only
+hold together if nothing 404s, so nothing does.
+
+**Paramount was never a separate range.** Champion's own literature calls it
+"Redman Paramount" (see the standards-sheet citation at the top of
+`paramount-content.ts`), and `catalog-index.ts` had already recorded that the
+Aspire/Paramount split could not be settled from Champion's price sheet —
+`aspire-floor-plans.ts` and `paramount-floor-plans.ts` each claimed 41 of the
+same model numbers. Measured against the catalogue on 2026-09-26, **164 of the
+186 active Paramount plans were the same Champion model number as an Aspire
+plan**, and in every one of those 164 cases the surviving slug is the same slug
+with `paramount-` swapped for `aspire-` (verified in SQL: 164 follow the rule, 0
+break it, 0 destinations missing or inactive). So retiring Paramount mostly
+*consolidated duplicate pages for one physical home* — the thing `AGENTS.md`
+already flagged as "a product decision, not a code one". Kyle has now made it.
+
+- `src/lib/retired-series.ts` is the whole model: the 186 slugs, the 22 with no
+  twin, `paramountDestination()`, and `retiredSeriesRedirects` (186 plan 301s
+  plus `/series/paramount`). `next.config.ts` spreads it **before**
+  `legacyFloorPlanRedirects`, whose Paramount destinations were repointed at the
+  same targets so a pre-CMS URL still resolves in **one** hop, not two.
+- **The 22 that only ever came as Paramount** are the big Alberta, Apollo,
+  Fenton, Myrtle, Red Cedar and Stafford sectionals. They land on
+  `/series/redman`, which now names all six families with their widths and sizes
+  and offers a quote — a page that answers the search, not a bare form. None of
+  the 22 is on the master price sheet, so no home left the sale.
+- **Suppression is in code, not in Supabase.** `published()` in `api-content.ts`
+  filters retired homes out of `getApiFloorPlans()` (so: grid, sitemap, featured
+  set, configurator, Ava's catalogue, series hubs) and `getApiFloorPlanBySlug()`
+  returns null for a retired slug *or* a retired series label. Flipping
+  `is_active` in the CMS instead would have skipped review and would not have
+  covered the repo-published copies at all.
+- `catalog-index.ts`'s 61 Paramount entries now name the Aspire page for the
+  same model, so the sale page links to the listing that is still for sale and
+  labels it correctly. The featured thirty are now Aspire 20 / Prime 10 (ten
+  single and ten multi-section in Aspire, five and five in Prime), and the copy
+  on `/homes-on-sale` says that rather than "ten each from three series".
+- `/series/paramount` is gone from `seriesHubs` and from the page registry; the
+  Redman entry inherited its priority and keeps a `paramount` topic so a page
+  about the old range can still surface its replacement.
+
+**`/images/paramount/**` stays.** Those are photo filenames on disk for homes
+that still sell as Aspire; 44 of them appear in the sitemap as `<image:loc>`
+entries and none is a page URL. Renaming them would churn every location page
+hero for nothing. `series.ts` keeps its `paramount` keyword too — the label has
+to be *recognised* to be filtered — and `image-alt.ts` keeps stripping the word
+out of legacy filenames.
+
+**Known consequence, not fixed here.** The repo-published catalogue has never
+carried a plain `aspire-*` slug (it uses `dutch-aspire-*`, `paramount-*`,
+`prime-*`), so in the degraded path where `getSupabaseFloorPlans()` returns `[]`
+the 164 redirect destinations are not in the fallback list. This does not create
+a new failure class — the 172 CMS Aspire plans already behave that way, and
+`getSupabaseFloorPlanBySlug` throws rather than faking a 404 at runtime — but it
+does move 186 more URLs into it. Closing it properly means re-slugging the repo
+data files to match the CMS, which collides with `mergePlans`' local-wins rule
+and would let the repo copy override CMS data for 164 live plans. That is its
+own change, with its own testing.
+
+`tests/retired-series.test.ts` holds the line: every retired URL has exactly one
+301 to a live, non-retired destination; no redirect chains; nothing in `src/`
+links a retired URL; no hub or registry entry publishes a retired series; the
+Redman hub carries the Paramount term and names all six orphan families; and a
+source scan fails any page that reads as an offer to sell a Paramount home
+(sentences that explain the retirement are exempt). Four violation shapes were
+injected and confirmed caught.
+

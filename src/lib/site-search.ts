@@ -106,9 +106,10 @@ export async function runSiteSearch(rawQuery: string): Promise<SiteSearchRespons
   const q = rawQuery.trim().slice(0, 100);
   if (q.length < 2) return { results: [], source: "none" };
 
-  // Supabase holds the imported catalogue (Aspire today); the PRIME and
-  // Paramount homes are repo-published, so the repo catalogue is always
-  // searched too and the two are merged by URL.
+  // Supabase holds the imported catalogue (Aspire and Redman); the PRIME
+  // homes are repo-published, so the repo catalogue is always searched too and
+  // the two are merged by URL. Retired homes are already filtered out upstream
+  // by getApiFloorPlans (see src/lib/retired-series.ts).
   let remote: SearchResult[] = [];
   let source = "supabase+local";
   try {

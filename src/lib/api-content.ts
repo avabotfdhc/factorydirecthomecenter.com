@@ -7,6 +7,7 @@ import { galleryOverlays, sheetExtras } from "./gallery-overlays";
 import { virtualTours } from "./virtual-tours";
 import { bedOptions } from "./spec-overrides";
 import { anchorPriceFor } from "./price-sheet";
+import { isRetiredSeries, isRetiredPlanSlug } from "./retired-series";
 
 
 export interface ApiFloorPlan {
@@ -190,6 +191,16 @@ function mergePlans(remote: ApiFloorPlan[], local: ApiFloorPlan[]): ApiFloorPlan
   ];
 }
 
+/** False for a home whose series has been retired (see retired-series.ts).
+ * Checked on the slug as well as the series so a stale CMS row that still
+ * carries a live-looking series label cannot put a retired home back in the
+ * catalogue. Every one of these URLs 301s in next.config.ts, so dropping them
+ * here takes them out of the grid, the sitemap, the featured set, the
+ * configurator and Ava's catalogue without leaving a 404 behind. */
+function published(p: { slug: string; series: string }): boolean {
+  return !isRetiredSeries(p.series) && !isRetiredPlanSlug(p.slug);
+}
+
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
 export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   // Source priority (imported lazily to avoid load-time env reads):
@@ -198,13 +209,13 @@ export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
   //   3. Legacy CMS (below) as the final fallback.
   // Repo-published local plans always merge in on top of the chosen source.
   const { supabaseConfigured, getSupabaseFloorPlans } = await import("./supabase-content");
-  if (supabaseConfigured()) return mergePlans(await getSupabaseFloorPlans(), await localPlans()).map(decoratePlan);
+  if (supabaseConfigured()) return mergePlans(await getSupabaseFloorPlans(), await localPlans()).filter(published).map(decoratePlan);
 
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
-  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).map(decoratePlan);
+  if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).filter(published).map(decoratePlan);
 
   // No CMS configured: the repo-published catalogue is the site.
-  return (await localPlans()).map(decoratePlan);
+  return (await localPlans()).filter(published).map(decoratePlan);
 }
 
 /** Small, presentable set of homes for the homepage featured section — homes
@@ -233,12 +244,22 @@ export interface ApiFloorPlanDetail extends ApiFloorPlan {
 
 /** One floor plan by slug, with full detail, from the CMS. */
 export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
+  // A retired home genuinely is not in the catalogue any more, so null (a 404)
+  // is the honest answer — but no visitor reaches it, because next.config.ts
+  // 301s every one of these URLs before routing. This is the backstop for a
+  // slug the redirect list does not name.
+  if (isRetiredPlanSlug(slug)) return null;
+
   // Repo-published PRIME models resolve first (same local-first rule as blog posts).
   {
     const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE, planDescription, seriesLabel } = await import("./local-floor-plans");
     const { paramountExtraHtml } = await import("./paramount-content");
     const p = localFloorPlans.find((x) => x.slug === slug);
     if (p?.hidden) return null;
+    // Belt and braces: every repo-published Paramount slug is in the redirect
+    // list above, but checking the series too means a plan added to the repo
+    // later cannot get a detail page just because the two lists drifted apart.
+    if (p && isRetiredSeries(p.series)) return null;
     if (p) {
       const local = decoratePlan({
         slug: p.slug,
@@ -287,6 +308,9 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   if (supabaseConfigured()) {
     const d = await getSupabaseFloorPlanBySlug(slug);
     if (!d) return d;
+    // A row still labelled with a retired series is not for sale, whatever slug
+    // it sits under.
+    if (isRetiredSeries(d.series)) return null;
     return decoratePlan(d);
   }
 
@@ -294,6 +318,7 @@ export async function getApiFloorPlanBySlug(slug: string): Promise<ApiFloorPlanD
   if (feedConfigured()) {
     const d = await getFeedFloorPlanBySlug(slug);
     if (!d) return d;
+    if (isRetiredSeries(d.series)) return null;
     // decoratePlan applies the repo-mapped tour when the feed has none.
     return decoratePlan(d);
   }

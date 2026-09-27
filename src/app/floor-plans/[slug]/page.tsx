@@ -303,9 +303,10 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
           </div>
         )}
 
-        {/* Hand-written description from /admin (floor_plans.floor_plan_html)
-            or, for repo-published Paramount plans, Champion's spec-sheet
-            extras. Renders above the generated narrative so real copy wins. */}
+        {/* Hand-written description from /admin (floor_plans.floor_plan_html),
+            or Champion's spec-sheet extras for the single-wides the factory
+            literature covers. Renders above the generated narrative so real
+            copy wins. */}
         {plan.floorPlanHtml && (
           <div className="mt-14 max-w-3xl">
             <h2 className="font-serif text-2xl font-light mb-5">About this home</h2>

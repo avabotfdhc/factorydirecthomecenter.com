@@ -80,7 +80,7 @@ export function SiteSearch({ placeholder = "Search homes, series, model numbers,
         <div className="absolute left-0 right-0 top-full mt-2 z-30 bg-white rounded-xl shadow-2xl border border-[var(--color-charcoal)]/10 max-h-96 overflow-y-auto">
           {results.length === 0 && !loading ? (
             <p className="p-4 text-sm text-[var(--color-gray)]">
-              No matches. Try a model number, series (Prime, Aspire, Paramount) or a topic like &ldquo;financing&rdquo;.
+              No matches. Try a model number, series (Prime, Aspire, Redman) or a topic like &ldquo;financing&rdquo;.
             </p>
           ) : (
             <ul role="listbox">

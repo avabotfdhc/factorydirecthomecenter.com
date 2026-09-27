@@ -160,24 +160,20 @@ export const sitePages: SitePage[] = [
     changeFrequency: "weekly",
   },
   {
-    url: "/series/paramount",
-    title: "Champion Paramount Series Floor Plans",
-    description: "Spacious multi-section Paramount homes with kitchen islands, walk-in closets and up to 5 bedrooms.",
-    topics: ["paramount", "double-wide", "multi-section", "champion-homes", "floor-plans"],
+    // Carries the weight the retired /series/paramount entry used to, because
+    // every Paramount URL now 301s here or to the Aspire page for the same
+    // home (src/lib/retired-series.ts). The "paramount" topic stays so a page
+    // written about the old range can still surface this one in Related
+    // Resources — it is the answer to that query now.
+    url: "/series/redman",
+    title: "Champion Redman Series Homes — Expansive Sectionals, Built to Order",
+    description: "Expansive Redman sectional homes with kitchen islands and luxury primary suites, ordered to spec from the Topeka plant. Champion calls the range \"Redman Paramount\", so this is where the Paramount plans live.",
+    shortTitle: "Redman Series",
+    topics: ["redman", "paramount", "double-wide", "multi-section", "champion-homes", "floor-plans"],
     cluster: "products",
     pillar: "/floor-plans",
     priority: 0.8,
     changeFrequency: "weekly",
-  },
-  {
-    url: "/series/redman",
-    title: "Champion Redman Series Homes",
-    description: "Expansive Redman sectional homes with kitchen islands and luxury primary suites, ordered to spec from the Topeka plant.",
-    topics: ["redman", "multi-section", "champion-homes"],
-    cluster: "products",
-    pillar: "/floor-plans",
-    priority: 0.7,
-    changeFrequency: "monthly",
   },
   {
     url: "/series/dutch",
