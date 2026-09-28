@@ -11,7 +11,8 @@
     "test": "tsx --test tests/*.test.ts",
     "sheet-previews": "node scripts/render-sheet-previews.mjs",
     "legacy-media": "node scripts/migrate-legacy-media.mjs",
-    "lender-sheet": "tsx scripts/build-lender-sheet.ts"
+    "lender-sheet": "tsx scripts/build-lender-sheet.ts",
+    "image-audit": "tsx scripts/audit-image-alt.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.9",

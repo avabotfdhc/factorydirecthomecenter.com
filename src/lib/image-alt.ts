@@ -31,6 +31,11 @@ const ROOMS: [RegExp, string][] = [
   [/\binterior\b/, "interior"],
   [/\bfireplace\b/, "fireplace"],
   [/\bcutaway\b/, "construction cutaway"],
+  // Champion's marketing art for a plan it has not photographed. Worth naming:
+  // it tells a reader (and Google Images) this is an artist's impression, not a
+  // photograph of a home that exists, which is the same thing SpecsDisclaimer
+  // says in words. Ranked below the named rooms so "monte-dining" still wins.
+  [/\brendering\b|\brender\b/, "exterior rendering"],
   [/\bdrone\b|\baerial\b/, "aerial exterior view"],
   [/\b(floor[-_ ]?plan|floorplan|plan|sales|apb|apf|lit|l-?10[12]|drawing|sheet|opt\d*)\b/, "floor plan sheet"],
   [/\bdetails?\b/, "detail view"],

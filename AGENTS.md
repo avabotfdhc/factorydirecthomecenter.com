@@ -492,6 +492,54 @@ locks the filename shapes. No image in the repo is missing meaningful alt text:
 five `alt=""` are genuinely decorative (a 20%-opacity quote mark, a 7%-opacity
 background, two admin thumbnails behind auth, the Meta Pixel noscript beacon).
 
+## Every catalogue image gets checked, and the bar differs by `kind`
+
+Kyle, 2026-09-28, after catching 14 bad rows I had added: *"You should have known
+to do this before I said anything. Please make sure you add this step to all
+images being used currently and in the future."*
+
+**`npm run image-audit`** (`scripts/audit-image-alt.ts`, run it as
+`vercel env run -- npm run image-audit`) reads every `floor_plan_images` row on
+an active, non-retired plan and exits non-zero on a real defect. Run it after
+anything that adds catalogue imagery. It exists as a *script* rather than a test
+because `tests/image-alt.test.ts` pins `public/seed/box-import-manifest.json` — a
+committed file, checkable in CI with no network — and therefore cannot see a row
+added later by `/admin`, by a migration, or by an agent writing SQL. That blind
+spot is exactly how the 14 rows landed.
+
+**The bar is not the same for every image, and conflating them gives a wrong
+answer.** Measured 2026-09-28 across 771 rows on 214 published plans:
+
+| `kind` | rows | names a room | what "good" means |
+|---|---|---|---|
+| `gallery` | 548 | **96.5%** | a photo of *part* of a home — the alt must say which part |
+| `banner` | 191 | 21% | a hero shot of the *whole* home; "Woodward multi-section home by Champion Homes" **is** the right alt |
+| `floorplan` | 20 | 100% | a drawing |
+| `rendering` | 12 | 0% | all Champion's `_LR` suffix — deliberately left alone, see above |
+
+Scoring banners against a room-naming bar produced a misleading "72.9%" and
+nearly triggered a pointless rewrite of alt text that was already correct. The
+audit keeps the two apart; `tests/image-alt.test.ts` pins the fallback shape a
+hero image relies on.
+
+The audit also fails on the two defects that are never a judgement call: a
+**document filed as a photo** (a sales sheet is `kind='floorplan'`, never
+`kind='gallery'`) and an **absolute URL in `path`** (it bypasses `imgUrl()`).
+
+`rendering`/`render` now maps to "exterior rendering" — eleven files in
+`/images/prime/` described nothing before. It is ranked *below* the named rooms,
+so `kitchen-rendering.webp` is still "kitchen". Both directions are
+injection-tested, and the ordering assertion uses a filename carrying **both**
+words: the first version tested it with a filename that had no "rendering" in it
+at all and so proved nothing, and passed while the rule was hoisted above every
+room.
+
+**The 10 gallery photos that still fall back are correct as they are.** Each is a
+plan's own card image reused in its gallery, so the filename is just a model
+number (`2460h42096.webp`, `legacy/silverton-2856h32174.webp`) — there is no room
+to name because the picture is the whole home. Do not invent "exterior" for them,
+for the same reason `_LR` is left alone.
+
 # We do not do financing. The buyer picks their own lender, and we rank nobody
 
 Kyle, 2026-09-23: *"we don't do financing at all. Clients choose their own
@@ -718,3 +766,65 @@ source scan fails any page that reads as an offer to sell a Paramount home
 (sentences that explain the retirement are exempt). Four violation shapes were
 injected and confirmed caught.
 
+
+# The sale page links the page Google can see, and the photos moved first
+
+Until 2026-09-28, 42 of the `CATALOG_INDEX` entries that `/homes-on-sale` takes
+its links from named a `dutch-aspire-*` slug. Those pages come from the repo
+data files, not the CMS, and `mergePlans()` drops a repo plan whose CMS twin
+carries the same series and model code — so **not one of the 42 was in
+`/floor-plans`, `sitemap.xml`, the featured set or Ava's catalogue** (measured:
+0 of 42 in the live sitemap, against 172 for the CMS Aspire pages). They still
+*rendered*, because `getApiFloorPlanBySlug` falls back to the repo list, so
+nothing 404'd and nothing looked wrong. Every buyer who clicked a sale home just
+landed on a duplicate of the CMS page that Google cannot index.
+
+All 42 now point at the CMS page. The ordering mattered:
+
+- **The photography shipped before the links.** 14 of the CMS records carried
+  only the banner and the option drawing, while the repo twin showed Champion's
+  photo set — the Woodward pair 13 photos vs 2, the 1672 15 vs 3. Switching
+  first would have stripped those from the page buyers actually reach.
+  `supabase/migrations/20260928_catalogue_photo_parity.sql` carries the **34
+  professional shots** across and closes those three gaps completely.
+- **Parity was the wrong target, and copying it blindly was a real mistake.**
+  The first version of that migration reproduced the repo galleries exactly —
+  including 14 rows of legacy S3 *banner* art. On a page Google cannot see that
+  art cost nothing; on the canonical page it is a liability, and it took Kyle
+  asking "did you verify all images have metadata correctly input for SEO" to
+  catch it. Each one was **~600×400** against the photos' 1800×1200, showed a
+  **different model number** (the 2856/2860 Warren banners landed on the 2852
+  Warren's page), had no room in the filename so `describeImageFile()` returned
+  `""` and the alt fell back to the generic form — **13 of 48 additions, i.e.
+  72.9% specific against the 95% floor `tests/image-alt.test.ts` holds** — and
+  one was a **sales sheet, not a photograph**, filed as `kind='gallery'`.
+  `sitemap.ts` feeds `plan.gallery` into `<image:loc>`, so all of it would have
+  gone to Google Images. All 14 rows were deleted. Eleven homes now show one or
+  two fewer images than their repo twin did; what they lost was a blurry
+  thumbnail of another length of the same home. **Check what an image *is*
+  before copying a gallery — matching a count is not the goal.**
+- **No upload was needed.** `floor_plan_images.path` already holds two forms and
+  `imgUrl()` resolves both: `/images/…` for a file served from the repo, and a
+  bare storage key (`legacy/…`) for the bucket. **Never an absolute URL** —
+  there were 0 in the table and adding one would bypass `imgUrl()`.
+- **Every added row is `kind = 'gallery'`, appended after the existing rows.**
+  `banner` would compete with the `floor_plans.banner_image` column, and
+  `floorplan` would change which image `drawingFrom()` picks as the plan
+  drawing. Appending keeps the existing `-opt2` row winning that pick — checked
+  for all 14, since `DRAWING_RE` matches `floor-plan` and *every* resolved
+  storage URL contains `/floor-plans/`.
+- **Slugs are not a prefix swap.** The CMS drops the family name on some models
+  (`dutch-aspire-westbrook-1676h32107` → `aspire-1676h32107`). Read each slug
+  from the CMS row for that model number; rewriting the old slug invents a URL
+  that 404s.
+
+`tests/catalog-index.test.ts` fails if an entry points back at a
+`dutch-aspire-*` slug, at a retired series or plan, or at a slug whose prefix
+disagrees with its series. Both violation shapes were injected and confirmed
+caught.
+
+**Two measurement traps cost a wrong answer here first.** Counting every image
+on a rendered plan page includes the four comparable-home cards, so a 9-vs-9
+gallery reads as "13 vs 14" — count only the gallery. And reading `mergePlans()`
+alone says these URLs cannot resolve; the detail route has its own fallback, so
+they do. Fetch the page.
