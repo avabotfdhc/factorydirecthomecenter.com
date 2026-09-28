@@ -841,5 +841,8 @@ sales channel at all, so there is no "Champion sells only through dealers" FAQ.
 What we may say: "Factory Direct" is the business name; we order each home from
 Champion's Topeka plant, quote it line by line and arrange delivery. What we may not say:
 that the buyer purchases from the factory or the manufacturer, or that there is no dealer,
-dealer markup or middleman in the sale. "No markup" on contractor work (the buyer pays
-crews directly) is a different claim and is fine.
+dealer markup or middleman in the sale.
+
+Also removed at Kyle's request the same day: any claim of "no dealer markup" or "zero
+markup" on contractor or site work (the pricing guide, two city posts, Ava's context).
+Say only that the buyer hires and pays their own contractors.

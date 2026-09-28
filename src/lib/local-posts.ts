@@ -553,7 +553,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>With land you are not squeezed by setbacks, so the multi-section lineup opens up &mdash; <a href="/series/redman">Redman</a> and multi-section <a href="/series/aspire">Aspire</a> homes run to five bedrooms with kitchen islands and full primary suites. All HUD-code manufactured homes, built indoors and delivered finished. Browse the <a href="/floor-plans">floor plans</a> and note two or three before you visit.</p>
 
 <h2>You hire your own crews</h2>
-<p>We sell the home and arrange delivery. Site work, foundation, well, septic, utility hookups and setup are yours to contract &mdash; which is how most buyers here save real money, because you are hiring the same local excavator you would hire anyway rather than paying a dealer&rsquo;s markup on him. We keep a referral list of licensed and insured crews previous customers have used. Delivery, set-up and site-work ranges are published in the <a href="/guides/pricing">pricing guide</a> so you can budget before you commit.</p>
+<p>We sell the home and arrange delivery. Site work, foundation, well, septic, utility hookups and setup are yours to contract. We keep a referral list of licensed and insured crews previous customers have used. Delivery, set-up and site-work ranges are published in the <a href="/guides/pricing">pricing guide</a> so you can budget before you commit.</p>
 
 <h2>Common questions</h2>
 <h3>Can I put a manufactured home on my own land here?</h3>
@@ -782,7 +782,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>Most people out here are not only placing a house. There is a pole barn, a shop, a garage, or livestock housing either already standing or planned. Site the home with that in mind from the start: leave the equipment access you will need, keep the septic field clear of where you intend to build or drive, and think about the driveway serving both. Moving a house later is possible and expensive; moving a septic field is worse.</p>
 
 <h2>What we do and what you contract</h2>
-<p>We sell the home and arrange its delivery from Champion&rsquo;s Topeka plant, about 30 miles from our Auburn lot. Foundation, utilities, setup and site work are hired by you &mdash; the same local crews you would hire anyway, without a dealer&rsquo;s markup layered on. Delivery, set-up and site-work ranges are published in our <a href="/guides/pricing">pricing guide</a>, and every home is quoted line by line. Browse the <a href="/floor-plans">Champion lineup</a> before you visit.</p>
+<p>We sell the home and arrange its delivery from Champion&rsquo;s Topeka plant, about 30 miles from our Auburn lot. Foundation, utilities, setup and site work are hired by you. Delivery, set-up and site-work ranges are published in our <a href="/guides/pricing">pricing guide</a>, and every home is quoted line by line. Browse the <a href="/floor-plans">Champion lineup</a> before you visit.</p>
 
 <h2>Common questions</h2>
 <h3>Can I put a manufactured home on my farm ground?</h3>
