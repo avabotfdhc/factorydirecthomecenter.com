@@ -66,7 +66,7 @@ const championFAQs = [
 
 export default function ChampionHomesPage() {
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
       <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-5">
@@ -181,6 +181,6 @@ export default function ChampionHomesPage() {
       </section>
 
       <FAQSection title="Champion Homes — Common Questions" subtitle="Who builds them, the series, and how they're made" faqs={championFAQs} />
-    </main>
+    </div>
   );
 }

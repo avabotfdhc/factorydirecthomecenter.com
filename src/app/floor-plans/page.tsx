@@ -54,11 +54,11 @@ export default async function FloorPlansPage() {
   };
 
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
       <StructuredData data={itemListLd} />      {/* Hero */}
       <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime-on-dark)] mb-4">
             Champion Home Builders Dealer
           </p>
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mb-5">
@@ -68,7 +68,7 @@ export default async function FloorPlansPage() {
             Explore {plans.length}{" "}Champion single wide, double wide, and modular floor plans
             {" "}— factory-direct pricing from Auburn, Indiana, serving IN, OH &amp; MI. Every home
             is built to order:{" "}
-            <a href="/options" className="text-[var(--color-teal-light)] underline underline-offset-4">
+            <a href="/options" className="text-[var(--color-lime-on-dark)] underline underline-offset-4">
               browse factory options &amp; selections
             </a>.
           </p>
@@ -88,7 +88,7 @@ export default async function FloorPlansPage() {
             means the price depends on the plan and options you choose and on your property, which
             is why you won&apos;t find a single headline figure on these cards.
           </p>
-          <p className="text-sm text-[var(--color-charcoal)]/60">
+          <p className="text-sm text-[var(--color-charcoal)]/80">
             <a href="/homes-on-sale" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
               See what&rsquo;s on sale right now
             </a>
@@ -128,6 +128,6 @@ export default async function FloorPlansPage() {
         subtitle="Sizes, customization, pricing, and delivery"
         faqs={commonFAQs.homepage.slice(0, 6)}
       />
-    </main>
+    </div>
   );
 }

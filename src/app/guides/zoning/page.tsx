@@ -238,7 +238,7 @@ export default function ZoningPage() {
                       <ul className="space-y-2">
                         {state.restrictions.map((restriction, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
-                            <span className="text-[var(--color-orange)] mt-1">•</span>
+                            <span className="text-[var(--color-orange-text)] mt-1">•</span>
                             {restriction}
                           </li>
                         ))}

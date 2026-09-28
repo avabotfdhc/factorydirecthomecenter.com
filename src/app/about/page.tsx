@@ -240,7 +240,8 @@ export default function AboutPage() {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            priority
+            preload
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
@@ -460,7 +461,7 @@ export default function AboutPage() {
             
             {/* External Citation */}
             <div className="mt-8 text-sm text-[var(--color-gray)]">
-              Source: <a href="https://www.championhomes.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-teal)] hover:underline">Champion Homes Official Website</a>
+              Source: <a href="https://www.championhomes.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-teal)] underline underline-offset-2 hover:decoration-2">Champion Homes Official Website</a>
             </div>
           </div>
         </div>

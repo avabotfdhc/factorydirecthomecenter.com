@@ -276,7 +276,8 @@ export default function FortWaynePage() {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            priority
+            preload
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
@@ -318,23 +319,23 @@ export default function FortWaynePage() {
               <div className="font-serif text-3xl font-bold">
                 <AnimatedCounter end={30} suffix=" mi" />
               </div>
-              <div className="text-sm text-white/70">From Our Showroom</div>
+              <div className="text-sm text-white/90">From Our Showroom</div>
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="font-serif text-3xl font-bold">$2,800</div>
-              <div className="text-sm text-white/70">Est. Delivery Cost</div>
+              <div className="text-sm text-white/90">Est. Delivery Cost</div>
             </FadeIn>
             <FadeIn direction="up" delay={300}>
               <div className="font-serif text-3xl font-bold">
                 <AnimatedCounter end={8} suffix="-12" />
               </div>
-              <div className="text-sm text-white/70">Weeks Delivery</div>
+              <div className="text-sm text-white/90">Weeks Delivery</div>
             </FadeIn>
             <FadeIn direction="up" delay={450}>
               <div className="font-serif text-3xl font-bold">
                 <AnimatedCounter end={7} />
               </div>
-              <div className="text-sm text-white/70">Counties Served</div>
+              <div className="text-sm text-white/90">Counties Served</div>
             </FadeIn>
           </StaggerContainer>
         </div>
@@ -495,26 +496,26 @@ export default function FortWaynePage() {
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="bg-[var(--color-orange)]/10 rounded-xl p-8">
-                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">Considerations</H3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange-text)]">Considerations</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Fort Wayne city limits have restrictions</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Minimum lot sizes vary by township</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Setback requirements apply</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Building permits required</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>We point you to the right zoning office</span>
                   </li>
                 </ul>

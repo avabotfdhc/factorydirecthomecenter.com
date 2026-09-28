@@ -14,17 +14,27 @@
   --color-orange: #E07820;
   --color-orange-light: #F2A35A;
   --color-orange-dark: #C46516;
+  /* Orange as TEXT. #E07820 is 3.05:1 on white — fine for fills, fails AA as
+     type. #9a4a0e is 6.25:1 on white, 5.83:1 on cream. */
+  --color-orange-text: #9a4a0e;
   --color-lime: #047857;
   --color-lime-light: #34d399;
   --color-lime-dark: #065f46;
+  /* Green TEXT on charcoal. --color-lime (#047857) is 2.66:1 there;
+     emerald-400 is 7.61:1. Light surfaces keep --color-lime. */
+  --color-lime-on-dark: #34d399;
   /* Dark surface: warm slate instead of muddy charcoal */
   --color-charcoal: #1e293b;
   --color-charcoal-light: #334155;
   --color-charcoal-lighter: #475569;
   --color-cream: #F8F7F4;
   --color-cream-dark: #EDECEA;
-  /* Neutral text: slate-500 (4.7:1 on white) / slate-400 */
-  --color-gray: #64748b;
+  /* Neutral text. #586579 is 5.52:1 on cream, 5.01:1 on cream-dark and 5.91:1
+     on white. It was slate-500 (#64748b) until 2026-09-28, which is 4.44:1 on
+     cream and 4.03:1 on cream-dark — under AA 4.5:1 on the two backgrounds most
+     of the site sits on (Lighthouse color-contrast failed on /). Light-on-light
+     only: on charcoal any mid-gray fails, so dark surfaces use white/alpha. */
+  --color-gray: #586579;
   --color-gray-light: #94a3b8;
   --color-white: #FFFFFF;
   

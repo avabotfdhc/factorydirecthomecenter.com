@@ -281,7 +281,8 @@ export default function FinancingPage() {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            priority
+            preload
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
@@ -510,26 +511,26 @@ export default function FinancingPage() {
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="bg-[var(--color-orange)]/10 rounded-xl p-8">
-                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">What to Consider</H3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange-text)]">What to Consider</H3>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Chattel rates higher than traditional mortgages</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Shorter loan terms (15-20 years typical)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Credit score affects rate significantly</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Land required for best mortgage rates</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Pre-qualification recommended before shopping</span>
                   </li>
                 </ul>

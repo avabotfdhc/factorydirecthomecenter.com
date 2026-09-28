@@ -221,7 +221,7 @@ export default function ResourcesPage() {
                   className="group flex flex-col bg-white border border-[var(--color-charcoal)]/8 rounded-lg p-5 hover:border-[var(--color-teal)] hover:shadow-md transition-all duration-300"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 flex items-center justify-center rounded bg-[var(--color-cream-dark)] text-[var(--color-charcoal)]/60 flex-shrink-0">
+                    <div className="w-8 h-8 flex items-center justify-center rounded bg-[var(--color-cream-dark)] text-[var(--color-charcoal)]/80 flex-shrink-0">
                       {resource.icon}
                     </div>
                     <span className={`text-xs font-medium px-2 py-0.5 rounded ${categoryColors[resource.category]}`}>

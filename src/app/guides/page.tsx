@@ -54,7 +54,7 @@ export default function GuidesPage() {
                   <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-lime-dark)] group-hover:text-[var(--color-teal)] transition-colors">
                     Read Guide →
                   </span>
-                  <span className="text-xs text-[var(--color-gray-light)] text-right">
+                  <span className="text-xs text-[var(--color-gray)] text-right">
                     {guide.readTime}
                     <br />
                     <time dateTime={guide.updated}>Updated {formatGuideDate(guide.updated)}</time>

@@ -213,7 +213,8 @@ function ParallaxHeroSection() {
           src="/images/hero-home.jpg"
           alt="New Champion manufactured home exterior — Factory Direct Homes Center, Auburn, Indiana"
           fill
-          priority
+          preload
+          fetchPriority="high"
           className="object-cover"
           sizes="100vw"
         />

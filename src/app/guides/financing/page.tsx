@@ -169,12 +169,12 @@ export default function FinancingPage() {
                     </div>
                     <div className="flex gap-6">
                       <div className="text-center">
-                        <div className="text-xs uppercase tracking-wider text-white/40 mb-1">Down Payment</div>
-                        <div className="font-serif text-2xl font-semibold text-[var(--color-lime)]">{loan.downPayment}</div>
+                        <div className="text-xs uppercase tracking-wider text-white/70 mb-1">Down Payment</div>
+                        <div className="font-serif text-2xl font-semibold text-[var(--color-lime-on-dark)]">{loan.downPayment}</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-xs uppercase tracking-wider text-white/40 mb-1">Credit Score</div>
-                        <div className="font-serif text-2xl font-semibold text-[var(--color-lime)]">{loan.creditScore}</div>
+                        <div className="text-xs uppercase tracking-wider text-white/70 mb-1">Credit Score</div>
+                        <div className="font-serif text-2xl font-semibold text-[var(--color-lime-on-dark)]">{loan.creditScore}</div>
                       </div>
                     </div>
                   </div>
@@ -195,11 +195,11 @@ export default function FinancingPage() {
                     </div>
 
                     <div>
-                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-4">Considerations</H4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange-text)] mb-4">Considerations</H4>
                       <ul className="space-y-2">
                         {loan.cons.map((con, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm">
-                            <span className="text-[var(--color-orange)] mt-1">•</span>
+                            <span className="text-[var(--color-orange-text)] mt-1">•</span>
                             {con}
                           </li>
                         ))}

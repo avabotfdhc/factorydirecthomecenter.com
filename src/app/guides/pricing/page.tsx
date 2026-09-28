@@ -135,19 +135,19 @@ export default function PricingPage() {
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>You can’t see where your money goes</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Hidden markups on delivery and site work</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>Forced to use their contractors (more markup)</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-[var(--color-orange)] mt-1">•</span>
+                    <span className="text-[var(--color-orange-text)] mt-1">•</span>
                     <span>No way to save by doing some work yourself</span>
                   </li>
                 </ul>
@@ -167,7 +167,7 @@ export default function PricingPage() {
                   “Includes everything!” (But what does that mean?)
                 </div>
                 <div className="bg-[var(--color-orange)]/10 rounded-lg p-4 mt-6">
-                  <p className="text-sm text-[var(--color-orange)]">
+                  <p className="text-sm text-[var(--color-orange-text)]">
                     <strong>Reality:</strong> You’re paying for hidden markups on delivery, 
                     setup, and site work. And you have no choice in contractors.
                   </p>
@@ -311,30 +311,30 @@ export default function PricingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option A: Use Our Referral List</H3>
-              <p className="text-white/60 text-sm mb-6">
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option A: Use Our Referral List</H3>
+              <p className="text-white/75 text-sm mb-6">
                 Start with our referral list of licensed and insured contractors past customers
                 have used for setup and site work. You hire them directly — no dealer markup.
               </p>
-              <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Busy families</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-white/70">Best for: Busy families</span>
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option B: You Pick Contractors</H3>
-              <p className="text-white/60 text-sm mb-6">
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option B: You Pick Contractors</H3>
+              <p className="text-white/75 text-sm mb-6">
                 Use any licensed, insured contractor you choose and manage the work yourself.
                 Buyers often save 10-20% this way.
               </p>
-              <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Hands-on buyers</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-white/70">Best for: Hands-on buyers</span>
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Option C: Mix & Match</H3>
-              <p className="text-white/60 text-sm mb-6">
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option C: Mix & Match</H3>
+              <p className="text-white/75 text-sm mb-6">
                 We arrange delivery — that’s our part. You pick your setup crew and site-work
                 contractors from our referral list, your own contacts, or both.
               </p>
-              <span className="text-xs font-bold uppercase tracking-wider text-white/40">Best for: Custom needs</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-white/70">Best for: Custom needs</span>
             </div>
           </div>
         </div>

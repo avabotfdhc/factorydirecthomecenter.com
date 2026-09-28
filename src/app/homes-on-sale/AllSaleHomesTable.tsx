@@ -172,7 +172,7 @@ export function AllSaleHomesTable({
                           sizes="64px"
                         />
                       ) : (
-                        <span className="absolute inset-0 flex items-center justify-center text-[10px] leading-tight text-center text-gray-400">
+                        <span className="absolute inset-0 flex items-center justify-center text-[10px] leading-tight text-center text-gray-600">
                           Photo
                           <br />
                           soon
@@ -193,7 +193,7 @@ export function AllSaleHomesTable({
                 </th>
                 <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
                   {l.series}
-                  <span className="block text-xs text-gray-400">
+                  <span className="block text-xs text-gray-600">
                     {l.homeType === "Multi-Section" ? "Multi-section" : "Single section"}
                   </span>
                 </td>

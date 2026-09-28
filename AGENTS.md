@@ -843,3 +843,42 @@ Champion's Topeka plant, quote it line by line and arrange delivery. What we may
 that the buyer purchases from the factory or the manufacturer, or that there is no dealer,
 dealer markup or middleman in the sale. "No markup" on contractor work (the buyer pays
 crews directly) is a different claim and is fine.
+
+# Lighthouse 2026-09-28: the gray text token failed AA, and pages nested <main>
+
+A mobile Lighthouse run on `/` scored Performance 98 / Accessibility 97 / Best
+Practices 100 / SEO 100. Every accessibility failure was one of two things, and an
+axe sweep of ~100 pages found the same pairings repeated sitewide:
+
+- **`--color-gray` was slate-500 (#64748b)**: 4.44:1 on cream, 4.03:1 on
+  cream-dark — under 4.5:1 on the backgrounds most body copy sits on. It is now
+  **#586579** (5.52 / 5.01 / 5.91 on cream / cream-dark / white). Light surfaces
+  only; on charcoal use white with alpha.
+- Two text tokens exist for the pairings that failed elsewhere:
+  `--color-lime-on-dark` (green on charcoal; `--color-lime` is 2.66:1 there) and
+  `--color-orange-text` (`--color-orange` is 3.05:1 on white — fine as a fill,
+  fails as type). Faded text (`text-white/40`, `/70` on teal, `charcoal/50–60`,
+  `text-gray-400`, `--color-gray-light` on white) was raised until it passed.
+- Inline links in running text are underlined, not colour-only (axe
+  `link-in-text-block`: teal vs charcoal is 2.66:1).
+- **Only the root layout renders `<main>`.** Eleven pages opened their own inside
+  it. `PageFooter` is an `<aside aria-label="Related resources">` and its crumb
+  nav is "Page location" (pages with their own visible breadcrumb had two navs
+  named "Breadcrumb"); `AnnouncementBar` is an `<aside>`.
+
+`tests/accessibility.test.ts` holds the token contrasts and the single-`<main>`
+rule. Individual element contrast still needs a browser — axe composites alpha
+against the real background; source reading cannot.
+
+Performance: hero images use `preload` + `fetchPriority="high"` (Next 16
+deprecates `priority`, which preloaded **without** a fetch priority — the one LCP
+check that failed). The header logo is `loading="eager"`, not preloaded, so it
+does not compete with the hero. `experimental.inlineCss` was A/B-tested and gave
+no measurable gain, so it is off. The "Legacy JavaScript" insight (~14 KiB) is
+Next's own built-in polyfill module, which Turbopack always bundles; it is
+unscored and cannot be removed from config.
+
+Best Practices: `Cross-Origin-Opener-Policy: same-origin` added. An *enforced*
+CSP with nonces is the remaining unscored "High" item; nonces force every page to
+render dynamically (no static/ISR HTML), which would cost the performance score
+it is meant to protect, so it is a deliberate non-goal for now.

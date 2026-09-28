@@ -240,11 +240,11 @@ export default function SiteWorkPage() {
                       </ul>
                     </div>
                     <div>
-                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange)] mb-2">Considerations</H4>
+                      <H4 className="font-bold text-sm uppercase tracking-wider text-[var(--color-orange-text)] mb-2">Considerations</H4>
                       <ul className="space-y-1">
                         {foundation.cons.map((con, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs">
-                            <span className="text-[var(--color-orange)]">•</span>
+                            <span className="text-[var(--color-orange-text)]">•</span>
                             {con}
                           </li>
                         ))}
@@ -270,8 +270,8 @@ export default function SiteWorkPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Use Our Referral List</H3>
-              <p className="text-white/60 text-sm mb-6">
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Use Our Referral List</H3>
+              <p className="text-white/75 text-sm mb-6">
                 Ask for our referral list of licensed and insured contractors that past
                 customers have used. You hire and pay them directly.
               </p>
@@ -284,8 +284,8 @@ export default function SiteWorkPage() {
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Pick Your Own</H3>
-              <p className="text-white/60 text-sm mb-6">
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Pick Your Own</H3>
+              <p className="text-white/75 text-sm mb-6">
                 You choose and hire every contractor yourself. We&apos;ll time the home&apos;s
                 delivery around your crew&apos;s schedule. Maximum flexibility, potential savings.
               </p>
@@ -298,8 +298,8 @@ export default function SiteWorkPage() {
             </div>
 
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime)]">Hybrid Approach</H3>
-              <p className="text-white/60 text-sm mb-6">
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Hybrid Approach</H3>
+              <p className="text-white/75 text-sm mb-6">
                 Mix and match. Hire contractors for the critical items (foundation, utilities)
                 and do the optional work yourself (driveway, landscaping). Best of both worlds.
               </p>

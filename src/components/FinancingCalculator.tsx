@@ -59,7 +59,7 @@ export function FinancingCalculator() {
                 }`}
               >
                 <span className="block text-sm font-bold">{LOANS[k].label}</span>
-                <span className={`block text-[11px] mt-0.5 ${loan === k ? "text-white/80" : "text-[var(--color-gray)]"}`}>
+                <span className={`block text-xs mt-0.5 ${loan === k ? "text-white" : "text-[var(--color-gray)]"}`}>
                   {LOANS[k].sub}
                 </span>
               </button>

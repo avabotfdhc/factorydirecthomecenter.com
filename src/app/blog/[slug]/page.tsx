@@ -69,7 +69,7 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
   });
 
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
       {published ? <StructuredData data={articleLd} /> : null}      <div className="border-b border-[var(--color-charcoal)]/5 bg-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 py-4 text-sm text-[var(--color-gray)]">
           <Link href="/blog" className="hover:text-[var(--color-teal)]">Blog</Link>
@@ -102,6 +102,6 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
           </Link>
         </div>
       </article>
-    </main>
+    </div>
   );
 }
