@@ -16,6 +16,7 @@ import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
 import { businessRef } from "@/lib/business";
+import { planTitle } from "@/lib/page-title";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -33,9 +34,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
   return {
     // "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN": the
-    // brand, the home type as people search for it, and the place, ahead of
-    // the layout's "| Factory Direct Homes" suffix.
-    title: `${plan.name} — ${plan.beds} Bed ${plan.baths} Bath Champion ${planTypeLabel(plan)}, Auburn IN`,
+    // brand, the home type as people search for it, and the place. Absolute,
+    // because the layout's "| Factory Direct Homes" suffix pushed every plan
+    // title to ~90 characters; planTitle() drops the optional words until it
+    // fits in 65 (src/lib/page-title.ts).
+    title: { absolute: planTitle(plan.name, plan.beds, plan.baths, planTypeLabel(plan)) },
     description: desc,
     alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {

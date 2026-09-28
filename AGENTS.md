@@ -882,3 +882,40 @@ Best Practices: `Cross-Origin-Opener-Policy: same-origin` added. An *enforced*
 CSP with nonces is the remaining unscored "High" item; nonces force every page to
 render dynamically (no static/ISR HTML), which would cost the performance score
 it is meant to protect, so it is a deliberate non-goal for now.
+
+# DealerTide review 2026-09-28: titles, page weight, and two checker false positives
+
+DealerTide's automated review scored the site 88/100 with four findings. Two were
+real, two were the checker's.
+
+- **Titles over 65 characters — real, and much wider than its sample.** Every
+  floor-plan title (~200 pages) and every blog post (~30) ran 70–160 once the
+  layout's " | Factory Direct Homes" suffix was added. `src/lib/page-title.ts`
+  now builds them: `fitTitle()` takes candidates from most to least descriptive
+  and returns the first ≤ 65 as an **absolute** title. Plans: name — beds/baths
+  Champion type, Auburn IN → drop the place → drop the brand → drop the type.
+  Posts: headline + brand → headline → subject (before the colon) + brand →
+  subject; the H1 keeps the full headline. `generateMetadata()` in `seo.ts`
+  keeps the brand suffix only when it fits. `tests/page-title.test.ts` runs the
+  ladder over the longest CMS names and every published post. When adding a page
+  with a hand-written `metadata.title`, keep title + 23-char suffix ≤ 65.
+- **HTML over 600 KB — real.** `/floor-plans` was 1.2 MB and `/homes-on-sale`
+  800 KB, almost all of it repetition: ~2 KB of utility classes per card (now
+  `.fp-card*` / `.fp-compare*` in `globals.css`, same styles), and srcsets that
+  repeated the full Supabase URL ten times per image. Catalogue photos now render
+  through `/fp/<key>` — a same-origin rewrite to the bucket (`src/lib/image-src.ts`,
+  `next.config.ts`) — and `deviceSizes` drops 2048/3840, which no image is shown
+  at. Only the *display* src is short: sitemap `<image:loc>`, og:image and JSON-LD
+  keep the canonical Supabase URL. The sale table's 64px thumbnails were
+  `fill` + `sizes="64px"`; next/image only parses `vw` in `sizes`, so each listed
+  every width up to 1920. Fixed-size thumbnails list 1x/2x. The grid's client
+  props no longer carry the unused `title` and use short image paths.
+- **"No local business markup" — false positive.** The node (address, geo,
+  hours, areaServed) was on every page, typed `["MobileHomeDealer",
+  "RealEstateAgent", "HomeAndConstructionBusiness"]`, all LocalBusiness
+  subtypes. The checker matched the literal string. `BUSINESS_TYPES` now names
+  `LocalBusiness` too, which costs nothing.
+- **"Render-blocking script" — false positive, not fixable in config.** The only
+  head script without async/defer is Next's `<script noModule>` polyfill, emitted
+  unconditionally by `app-render.js`. A browser that supports ES modules — every
+  browser since 2018 — never downloads a `nomodule` script, so it blocks nothing.

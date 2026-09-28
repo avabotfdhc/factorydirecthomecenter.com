@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { shortImageSrc } from "@/lib/image-src";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import Image from "next/image";
 import { generateMetadata as genMeta } from "@/lib/seo";
@@ -201,7 +202,7 @@ export default function HomesOnSalePage() {
         </div>
       </div>
 
-      <SaleHomesGrid homes={saleHomes} discountPercent={sale.discountPercent} saleActive={sale.active} />
+      <SaleHomesGrid homes={saleHomes.map((h) => ({ ...h, image: h.image && shortImageSrc(h.image) }))} discountPercent={sale.discountPercent} saleActive={sale.active} />
 
       {/* Every home on the price sheet, not just the featured ones */}
       <section id="all-homes" className="bg-white border-t border-gray-200 py-14 scroll-mt-24">
@@ -227,7 +228,7 @@ export default function HomesOnSalePage() {
             what you save.
           </p>
           <AllSaleHomesTable
-            listings={saleListings}
+            listings={saleListings.map((l) => ({ ...l, image: l.image && shortImageSrc(l.image) }))}
             discountPercent={sale.discountPercent}
             saleActive={sale.active}
           />

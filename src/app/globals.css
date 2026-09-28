@@ -460,3 +460,57 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Catalogue card and sale-table classes.
+   /floor-plans renders ~214 cards and /homes-on-sale a 30-row table plus a
+   grid, and the same long utility strings were repeated in the HTML for every
+   one of them — ~2 KB of class attributes per card, 440 KB on /floor-plans
+   alone (DealerTide review, 2026-09-28: "2 pages over 600KB of HTML"). The
+   styles are identical; only where they are written changed. */
+@layer components {
+  .fp-card {
+    @apply relative flex flex-col h-full border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1;
+  }
+  .fp-card-media {
+    @apply relative aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] overflow-hidden border-b border-[var(--color-charcoal)]/5;
+  }
+  .fp-card-img-cover {
+    @apply object-cover group-hover:scale-105 transition-transform duration-700;
+  }
+  .fp-card-img-sheet {
+    @apply object-contain p-3 bg-slate-50;
+  }
+  .fp-card-shade {
+    @apply absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity;
+  }
+  .fp-card-badge {
+    @apply absolute text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none;
+  }
+  .fp-card-title {
+    @apply font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors;
+  }
+  .fp-card-specs {
+    @apply flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)];
+  }
+  .fp-card-sep {
+    @apply text-[var(--color-gray-light)];
+  }
+  .fp-card-cta {
+    @apply rounded-lg bg-[var(--color-teal)] py-2.5 text-xs font-bold tracking-wider uppercase text-white hover:bg-[var(--color-teal-dark)] transition-colors;
+  }
+  .fp-compare {
+    @apply inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer border transition-colors;
+  }
+  .fp-compare-on {
+    @apply bg-[var(--color-teal)] text-white border-[var(--color-teal)];
+  }
+  .fp-compare-off {
+    @apply bg-white text-[var(--color-charcoal)] border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/50;
+  }
+  .fp-compare-box {
+    @apply w-4 h-4 accent-[var(--color-teal)];
+  }
+  .fp-card-cta-outline {
+    @apply flex items-center justify-center rounded-lg border border-[var(--color-charcoal)]/15 py-2.5 text-xs font-bold tracking-wider uppercase text-[var(--color-charcoal)] hover:border-[var(--color-teal)]/50 hover:text-[var(--color-teal)] transition-colors;
+  }
+}

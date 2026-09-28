@@ -260,15 +260,13 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
               bedsFlex={bedsRange(p)[0] < bedsRange(p)[1]}
               compareSlot={
                 <label
-                  className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer border transition-colors ${
-                    selected
-                      ? "bg-[var(--color-teal)] text-white border-[var(--color-teal)]"
-                      : "bg-white text-[var(--color-charcoal)] border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/50"
-                  } ${!selected && compare.length >= MAX_COMPARE ? "opacity-50 cursor-not-allowed" : ""}`}
+                  className={`fp-compare ${selected ? "fp-compare-on" : "fp-compare-off"}${
+                    !selected && compare.length >= MAX_COMPARE ? " opacity-50 cursor-not-allowed" : ""
+                  }`}
                 >
                   <input
                     type="checkbox"
-                    className="w-4 h-4 accent-[var(--color-teal)]"
+                    className="fp-compare-box"
                     checked={selected}
                     disabled={!selected && compare.length >= MAX_COMPARE}
                     onChange={() => toggleCompare(p.slug)}

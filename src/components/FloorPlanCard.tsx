@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { shortImageSrc } from "@/lib/image-src";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ApiFloorPlan } from "@/lib/api-content";
@@ -38,39 +39,39 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
   const hidePrice = /call for pricing/i.test(p.priceFrom || p.price || "") || !(p.priceFrom || p.price);
 
   return (
-    <div className="relative flex flex-col h-full border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
-      <div className="relative aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] overflow-hidden border-b border-[var(--color-charcoal)]/5">
+    <div className="fp-card">
+      <div className="fp-card-media">
         <Link href={`/floor-plans/${p.slug}`} className="group block absolute inset-0" aria-label={`View the ${p.name} floor plan`}>
           {src ? (
             <Image
-              src={src}
+              src={shortImageSrc(src)}
               alt={
                 showingPlan
                   ? `${p.name} floor plan drawing — ${bedsLabel} bed ${p.baths} bath`
                   : `${p.name} — ${bedsLabel} bed ${p.baths} bath manufactured home floor plan`
               }
               fill
-              className={isSheet ? "object-contain p-3 bg-slate-50" : "object-cover group-hover:scale-105 transition-transform duration-700"}
+              className={isSheet ? "fp-card-img-sheet" : "fp-card-img-cover"}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray)] text-sm">{t("noPhoto")}</div>
           )}
-          {!isSheet && <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />}
+          {!isSheet && <div className="fp-card-shade" />}
         </Link>
 
         {p.series && (
-          <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none">
+          <span className="fp-card-badge top-3 left-3 bg-[var(--color-teal)]">
             {p.series} Series
           </span>
         )}
         {bedsFlex && (
-          <span className="absolute top-3 right-3 bg-[var(--color-lime)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none">
+          <span className="fp-card-badge top-3 right-3 bg-[var(--color-lime)]">
             {bedsLabel} Bed
           </span>
         )}
         {p.virtualTour && !hasDrawing && (
-          <span className="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none">
+          <span className="fp-card-badge bottom-3 right-3 bg-black/60">
             3D Tour
           </span>
         )}
@@ -104,7 +105,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-3 mb-2">
           <Link href={`/floor-plans/${p.slug}`} className="group">
-            <h2 className="font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors">{p.name}</h2>
+            <h2 className="fp-card-title">{p.name}</h2>
           </Link>
           {!hidePrice && (
             <span className="text-sm font-bold text-[var(--color-lime-dark)] whitespace-nowrap">{p.priceFrom || p.price}</span>
@@ -114,11 +115,11 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
           {p.brand}
           {p.series ? ` · ${t("series", { series: p.series })}` : ""}
         </p>
-        <div className="flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)]">
+        <div className="fp-card-specs">
           <span>{p.sqft.toLocaleString()} {t("sqft")}</span>
-          <span className="text-[var(--color-gray-light)]">|</span>
+          <span className="fp-card-sep" aria-hidden="true">|</span>
           <span>{bedsLabel} {t("bed")}</span>
-          <span className="text-[var(--color-gray-light)]">|</span>
+          <span className="fp-card-sep" aria-hidden="true">|</span>
           <span>{p.baths} {t("bath")}</span>
         </div>
 
@@ -126,13 +127,13 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
           <button
             type="button"
             onClick={() => setQuoteOpen(true)}
-            className="rounded-lg bg-[var(--color-teal)] py-2.5 text-xs font-bold tracking-wider uppercase text-white hover:bg-[var(--color-teal-dark)] transition-colors"
+            className="fp-card-cta"
           >
             {t("getPricing")}
           </button>
           <Link
             href={`/floor-plans/${p.slug}`}
-            className="flex items-center justify-center rounded-lg border border-[var(--color-charcoal)]/15 py-2.5 text-xs font-bold tracking-wider uppercase text-[var(--color-charcoal)] hover:border-[var(--color-teal)]/50 hover:text-[var(--color-teal)] transition-colors"
+            className="fp-card-cta-outline"
           >
             {t("viewPlan")}
           </Link>

@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { shortImageSrc } from "@/lib/image-src";
 import { FadeIn } from "@/components/VisualEffects";
 import type { SaleHome } from "@/lib/sale-homes";
 import { PriceTriple, PricingDisclaimer } from "@/components/Pricing";
@@ -220,7 +221,7 @@ export function SaleHomesGrid({
                     <div className="relative h-56 bg-gray-100">
                       {home.image ? (
                         <Image
-                          src={home.image}
+                          src={shortImageSrc(home.image)}
                           alt={`${home.name} — ${home.sqft} sq ft, ${home.beds} bed ${home.baths} bath Champion home`}
                           fill
                           className="object-cover"
