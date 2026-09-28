@@ -22,13 +22,23 @@
 // repo list), so they rendered, and /homes-on-sale sent every buyer to the one
 // page Google cannot see — a duplicate of the CMS page for the same home.
 //
-// All 42 now name the CMS page. That was only safe once the photos matched:
+// All 42 now name the CMS page. That was only safe once the photography moved:
 // 14 of the CMS records held just the banner and the option drawing while the
-// repo twin showed the full Champion photo set (the Woodward pair 13 vs 2, the
-// 1672 15 vs 3). supabase/migrations/20260928_catalogue_photo_parity.sql adds
-// the missing 48 gallery rows, so every one of the 42 destinations now carries
-// exactly the gallery its repo twin did. Verified per plan, both sides, before
-// and after. Nothing here gains a photo and nothing loses one.
+// repo twin showed Champion's photo set (the Woodward pair 13 vs 2, the 1672
+// 15 vs 3). supabase/migrations/20260928_catalogue_photo_parity.sql carries the
+// 34 professional shots across, so the three big gaps close completely.
+//
+// It deliberately does NOT reproduce the repo galleries exactly. Those also
+// carried 14 rows of legacy S3 banner art, and a canonical page is the wrong
+// home for it: ~600x400 against the photos' 1800x1200, shot of a DIFFERENT
+// model number (the 2856/2860 Warren banners sat on the 2852 Warren's page),
+// no room in the filename so describeImageFile() yields the generic alt, and
+// one that is a sales sheet rather than a photograph. sitemap.ts feeds
+// plan.gallery into <image:loc>, so each would have gone to Google Images.
+// Eleven homes therefore show one or two fewer images than their repo twin did;
+// what they lost was a blurry thumbnail of another length of the same home.
+// Kyle made that call on 2026-09-28. Every surviving addition is 1800px and
+// carries room-specific alt text.
 //
 // Slugs are NOT a prefix swap — the CMS drops the family name on some models
 // ("dutch-aspire-westbrook-1676h32107" → "aspire-1676h32107"). Take each slug
