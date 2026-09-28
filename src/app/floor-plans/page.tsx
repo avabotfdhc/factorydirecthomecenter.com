@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { shortImageSrc } from "@/lib/image-src";
 import { getApiFloorPlans } from "@/lib/api-content";
 import { StructuredData } from "@/lib/seo";
 import { FAQSection } from "@/components/FAQSection";
@@ -115,7 +116,17 @@ export default async function FloorPlansPage() {
         ) : (
           <>
             <div className="mb-8 max-w-2xl"><SiteSearch /></div>
-            <FloorPlansGrid plans={plans} />
+            {/* The grid is a client component, so every field passed here is
+                serialised into the page a second time. It never reads
+                `title`, and the image addresses go in their short form. */}
+            <FloorPlansGrid
+              plans={plans.map((p) => ({
+                ...p,
+                title: "",
+                image: shortImageSrc(p.image),
+                floorPlanImage: p.floorPlanImage ? shortImageSrc(p.floorPlanImage) : p.floorPlanImage,
+              }))}
+            />
           </>
         )}
         <SpecsDisclaimer className="mt-12" />

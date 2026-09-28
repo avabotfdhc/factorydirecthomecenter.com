@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { HTML_LIMITED_BOT_UA_RE } from "next/dist/shared/lib/router/utils/html-bots";
 import { legacyFloorPlanRedirects } from "./src/lib/legacy-redirects";
 import { retiredSeriesRedirects } from "./src/lib/retired-series";
+import { CATALOGUE_BUCKET_URL, SHORT_IMAGE_PREFIX } from "./src/lib/image-src";
 
 // Crawlers that must get <title>/<meta> in <head>. Next.js streams metadata
 // into the <body> for every user agent that is not on its built-in
@@ -20,6 +21,11 @@ const nextConfig: NextConfig = {
     // Catalogue photos live in Supabase Storage; next/image resizes to the
     // displayed size, serves AVIF/WebP and caches the variants.
     formats: ["image/avif", "image/webp"],
+    // Next's default adds 2048 and 3840 — widths no image on this site is
+    // shown at (the widest is the 100vw hero; 1920 covers a 1080p desktop at
+    // 1x and a phone at 3x). Every srcset carried both, 214 times over on
+    // /floor-plans. The hero/LCP picks (640/750/828/1080) are unchanged.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     // Optimised variants are immutable for a month (catalogue photos change
     // by getting a new path, not by being overwritten).
     minimumCacheTTL: 2678400,
@@ -31,6 +37,13 @@ const nextConfig: NextConfig = {
         pathname: "/storage/v1/object/public/**",
       },
     ],
+  },
+  async rewrites() {
+    return [
+      // Short same-origin path for catalogue photos, so next/image srcsets on
+      // the card grids stop repeating the full storage URL (src/lib/image-src.ts).
+      { source: `${SHORT_IMAGE_PREFIX}:path*`, destination: `${CATALOGUE_BUCKET_URL}:path*` },
+    ];
   },
   async redirects() {
     return [

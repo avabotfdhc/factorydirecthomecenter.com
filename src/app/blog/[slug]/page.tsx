@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { postTitle } from "@/lib/page-title";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
@@ -15,7 +16,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!post) return { title: "Article Not Found" };
   const url = `${SITE}/blog/${post.slug}`;
   return {
-    title: post.title,
+    // The H1 keeps the full headline; the <title> keeps what fits in 65.
+    title: { absolute: postTitle(post.title) },
     description: post.excerpt,
     alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {
