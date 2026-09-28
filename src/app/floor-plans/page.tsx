@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { shortImageSrc } from "@/lib/image-src";
-import { getApiFloorPlans } from "@/lib/api-content";
-import { StructuredData } from "@/lib/seo";
+import { getApiFloorPlans, type ApiFloorPlan } from "@/lib/api-content";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
@@ -40,23 +39,45 @@ export const metadata: Metadata = {
 // and Next serves the last-good copy if the API is briefly unavailable.
 export const revalidate = 300;
 
+/**
+ * Only what the grid and its cards read, with empty fields left out (an
+ * undefined key is not serialised) and image addresses in their short form.
+ * 214 homes × the fields the grid never used — title, updatedAt, the "Call for
+ * pricing" placeholder, empty priceFrom/virtualTour — was ~25 KB of the page.
+ * An empty price hides the price label exactly as "Call for pricing" did.
+ */
+function gridPlan(p: ApiFloorPlan): ApiFloorPlan {
+  const priced = p.price && !/call for pricing/i.test(p.price) ? p.price : "";
+  return {
+    slug: p.slug,
+    name: p.name,
+    title: "",
+    price: priced,
+    sqft: p.sqft,
+    beds: p.beds,
+    baths: p.baths,
+    image: shortImageSrc(p.image),
+    brand: p.brand,
+    homeType: p.homeType,
+    series: p.series,
+    priceFrom: p.priceFrom || undefined,
+    virtualTour: p.virtualTour || undefined,
+    widthFt: p.widthFt,
+    bedsMin: p.bedsMin,
+    bedsMax: p.bedsMax,
+    flexNote: p.flexNote || undefined,
+    floorPlanImage: p.floorPlanImage ? shortImageSrc(p.floorPlanImage) : undefined,
+  };
+}
+
 export default async function FloorPlansPage() {
   const plans = await getApiFloorPlans();
 
-  const itemListLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: plans.slice(0, 100).map((p, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      url: `${SITE}/floor-plans/${p.slug}`,
-      name: p.name,
-    })),
-  };
 
   return (
     <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      <StructuredData data={itemListLd} />      {/* Hero */}
+      {/* The ItemList schema is rendered by FloorPlansGrid, from its props. */}
+      {/* Hero */}
       <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime-on-dark)] mb-4">
@@ -117,15 +138,9 @@ export default async function FloorPlansPage() {
           <>
             <div className="mb-8 max-w-2xl"><SiteSearch /></div>
             {/* The grid is a client component, so every field passed here is
-                serialised into the page a second time. It never reads
-                `title`, and the image addresses go in their short form. */}
+                serialised into the page a second time — see gridPlan(). */}
             <FloorPlansGrid
-              plans={plans.map((p) => ({
-                ...p,
-                title: "",
-                image: shortImageSrc(p.image),
-                floorPlanImage: p.floorPlanImage ? shortImageSrc(p.floorPlanImage) : p.floorPlanImage,
-              }))}
+              plans={plans.map(gridPlan)}
             />
           </>
         )}

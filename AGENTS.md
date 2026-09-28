@@ -910,6 +910,18 @@ real, two were the checker's.
   `fill` + `sizes="64px"`; next/image only parses `vw` in `sizes`, so each listed
   every width up to 1920. Fixed-size thumbnails list 1x/2x. The grid's client
   props no longer carry the unused `title` and use short image paths.
+  **Measured live after that pass: `/homes-on-sale` 796 → 516 KB, `/floor-plans`
+  1,214 → 810 KB — still over.** Two things only production showed: Vercel adds a
+  38-character `&dpl=<deployment id>` to every *same-origin* optimiser URL (so
+  moving photos to `/fp/` grew each srcset entry back), and next/image always
+  emits every configured width. Floor-plan cards now render through
+  `CatalogueImage` — a plain `<img>` with a **three-width** srcset (640/828/1080)
+  of the same `/_next/image` URLs, no `dpl` tag — and `gridPlan()` in
+  `floor-plans/page.tsx` sends the grid only the fields it reads. The page's
+  ItemList schema is rendered by `FloorPlansGrid` from its props, because
+  anything a *server* component renders is serialised a second time into the
+  RSC payload. Verified on production before this pass: `/_next/image?url=/fp/…`
+  answers 200 `image/webp`, so the rewrite works through Vercel's optimiser.
 - **"No local business markup" — false positive.** The node (address, geo,
   hours, areaServed) was on every page, typed `["MobileHomeDealer",
   "RealEstateAgent", "HomeAndConstructionBusiness"]`, all LocalBusiness

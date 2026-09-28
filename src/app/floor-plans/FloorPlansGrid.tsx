@@ -5,6 +5,7 @@ import { useLocationSearch } from "@/lib/use-browser-value";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import { CompareTray, MAX_COMPARE } from "./CompareTray";
 import { FloorPlanCard } from "@/components/FloorPlanCard";
+import { jsonLdScript } from "@/lib/json-ld";
 
 // Client-side filters over the server-fetched plan list. All cards are in the
 // initial HTML (the unfiltered view), so crawlers see the full catalog. The
@@ -173,8 +174,28 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
   const selectCls =
     "px-3 py-2.5 bg-white border border-[var(--color-charcoal)]/15 rounded-lg text-sm text-[var(--color-charcoal)] min-h-12";
 
+  // The ItemList schema is built here from the props rather than on the page:
+  // anything a server component renders is also serialised into the page's
+  // RSC payload, so the 100-item list shipped twice. Rendered from the full,
+  // unfiltered list, it is identical on the server and on hydration.
+  const itemListLd = useMemo(
+    () =>
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: plans.slice(0, 100).map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          url: `https://factorydirecthomescenter.com/floor-plans/${p.slug}`,
+          name: p.name,
+        })),
+      }),
+    [plans],
+  );
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: itemListLd }} />
       {/* Series filter — only shown when the catalog spans more than one series */}
       {seriesOptions.length > 1 && (
         <div className="flex flex-wrap items-center gap-2 mb-6" role="group" aria-label="Filter floor plans by series">

@@ -474,6 +474,21 @@ button {
   .fp-card-media {
     @apply relative aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] overflow-hidden border-b border-[var(--color-charcoal)]/5;
   }
+  .fp-card-link {
+    @apply block absolute inset-0;
+  }
+  .fp-card-body {
+    @apply flex flex-1 flex-col p-6;
+  }
+  .fp-card-head {
+    @apply flex items-start justify-between gap-3 mb-2;
+  }
+  .fp-card-brand {
+    @apply text-sm text-[var(--color-teal)] font-medium mb-4;
+  }
+  .fp-card-actions {
+    @apply mt-auto pt-5 grid grid-cols-2 gap-2;
+  }
   .fp-card-img-cover {
     @apply object-cover group-hover:scale-105 transition-transform duration-700;
   }
