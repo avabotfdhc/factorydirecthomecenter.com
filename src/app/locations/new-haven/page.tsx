@@ -29,7 +29,7 @@ const data: CityLocationData = {
     "Champion manufactured & modular homes delivered to New Haven and eastern Allen County — factory-direct from our Auburn showroom with local delivery and contractor referrals for setup.",
   intro: [
     "New Haven sits just east of Fort Wayne in Allen County, and it's an easy drive from our Auburn showroom. For families who want to stay close to the Fort Wayne area but stretch their budget further, a factory-direct Champion home is a smart alternative to the rising cost of site-built houses.",
-    "We deliver Champion single wides, double wides, and modular homes throughout New Haven and the surrounding communities of Woodburn, Monroeville, and greater Allen County. Because we buy directly from the Champion factory, you get transparent line-item pricing without the dealer markup.",
+    "We deliver Champion single wides, double wides, and modular homes throughout New Haven and the surrounding communities of Woodburn, Monroeville, and greater Allen County. We order every home from Champion's Topeka plant and quote it line by line — the home, each option and delivery on separate lines.",
     <>
       See our <Link href="/floor-plans" className="text-[var(--color-teal)] underline">floor plans</Link>, explore{" "}
       <Link href="/financing" className="text-[var(--color-teal)] underline">financing options</Link>, or{" "}
@@ -59,7 +59,7 @@ const data: CityLocationData = {
     {
       question: "How is buying factory-direct different near Fort Wayne?",
       answer:
-        "You buy directly from the factory through us, so your money goes into the home. That means line-item pricing — you see exactly what you're paying for the home and delivery, and you hire your own contractor for setup — and short delivery times because the Champion factory is close by.",
+        "We order your home from Champion's Topeka plant and quote it line by line — you see exactly what you're paying for the home and delivery, and you hire your own contractor for setup — and short delivery times because the Champion factory is close by.",
     },
     {
       question: "What homes can I buy near New Haven?",

@@ -22,7 +22,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Who they are</h2>
 <ul>
   <li><strong>Clayton Homes</strong> is the largest builder of factory-built homes in the country, owned by Berkshire Hathaway. Clayton builds its own family of brands and sells them primarily through company-owned Clayton Homes retail centers. It's a vertically integrated model — the same company builds the home, runs the store, and (through affiliated companies) offers the mortgage and insurance.</li>
-  <li><strong>Champion Homes</strong> is one of the largest factory-built home producers in North America, sold through <em>independent, authorized dealers</em> — like Factory Direct Homes Center. We're a local, family-run business, not a corporate store, and we build every home at Champion's Indiana plants, most of them 30 miles up the road in Topeka.</li>
+  <li><strong>Champion Homes</strong> is one of the largest factory-built home producers in North America. Factory Direct Homes Center is a local, family-run business, not a corporate store, and every home we sell is built at Champion's Indiana plants, most of them 30 miles up the road in Topeka.</li>
 </ul>
 
 <h2>Build quality: honestly, both are strong</h2>
@@ -989,7 +989,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
     image: "/images/homepage/hero-banner.webp",
     date: "September 28, 2026",
     html: `
-<p>Topeka, in LaGrange County, is where Champion builds the homes we sell &mdash; the plant is about 30 miles from our Auburn showroom. Buyers from here sometimes ask why they should come to Auburn at all when the homes are built down the road. The short answer: the plant builds, and a dealer sells, orders, arranges delivery and stays your point of contact afterward. The longer answer is about the day the home arrives, which is the part of the process nobody prepares you for.</p>
+<p>Topeka, in LaGrange County, is where Champion builds the homes we sell &mdash; the plant is about 30 miles from our Auburn showroom. We order your home to spec, quote it line by line, arrange delivery and stay your point of contact after move-in. This post is about the day the home arrives, which is the part of the process nobody prepares you for.</p>
 
 <h2>From the plant to your site</h2>
 <p>Once your order is placed, Champion builds the home indoors in about 6 to 8 weeks. While that happens, your own contractor prepares the site &mdash; foundation, utilities, driveway approach. When both are ready, the home travels from the plant to your site, and your set-up contractor places it, levels it, joins the sections on a multi-section home, and connects it. We arrange the transport; site work and setup are yours to contract, and we never perform them. The <a href="/guides/delivery-and-setup">delivery and set-up guide</a> walks through the day hour by hour.</p>
@@ -1009,8 +1009,6 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>A new home settles on its foundation. Small adjustments in the first month or two &mdash; a door, a trim piece &mdash; are normal. Keep adding to your list rather than calling about each one, and send it in together.</p>
 
 <h2>Common questions</h2>
-<h3>Can I buy straight from the plant?</h3>
-<p>Champion sells through retailers. We order the home to your spec, quote it line by line, arrange transport and stay available after move-in.</p>
 <h3>Does being close to the plant lower delivery cost?</h3>
 <p>Freight is quoted per route as its own line on your sheet, and a short run from Topeka is about as short as it gets.</p>
 <h3>Where to next?</h3>

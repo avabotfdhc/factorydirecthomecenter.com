@@ -59,7 +59,7 @@ const data: CityLocationData = {
     {
       question: "Why buy factory-direct near Huntertown?",
       answer:
-        "You skip the traditional dealer markup and buy directly from the factory through us, with transparent line-item pricing. With the Champion factory and our showroom both nearby, Huntertown buyers also get some of the shortest delivery times in the region.",
+        "We order your home from Champion's Topeka plant and quote it with transparent line-item pricing — the home, each option and delivery on separate lines. With the Champion factory and our showroom both nearby, Huntertown buyers also get some of the shortest delivery times in the region.",
     },
     {
       question: "What homes can I buy near Huntertown?",

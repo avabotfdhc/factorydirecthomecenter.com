@@ -828,3 +828,18 @@ on a rendered plan page includes the four comparable-home cards, so a 9-vs-9
 gallery reads as "13 vs 14" — count only the gallery. And reading `mergePlans()`
 alone says these URLs cannot resolve; the detail route has its own fallback, so
 they do. Fetch the page.
+
+# We are the dealer. Never say the buyer buys "from the factory"
+
+Kyle, 2026-09-28: *"Champion only sells to dealers."* The site had drifted into saying
+buyers "buy directly from the factory through us", "skip the traditional dealer markup",
+and get "no middlemen". Those claims deny that we are a dealer. They were removed from
+`/`, `/about`, the Auburn, Huntertown, Columbia City and New Haven location pages,
+`blog.ts` and `local-posts.ts`. At his request the site also no longer discusses Champion's
+sales channel at all, so there is no "Champion sells only through dealers" FAQ.
+
+What we may say: "Factory Direct" is the business name; we order each home from
+Champion's Topeka plant, quote it line by line and arrange delivery. What we may not say:
+that the buyer purchases from the factory or the manufacturer, or that there is no dealer,
+dealer markup or middleman in the sale. "No markup" on contractor work (the buyer pays
+crews directly) is a different claim and is fine.

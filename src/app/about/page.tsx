@@ -386,7 +386,7 @@ export default function AboutPage() {
             {[
               {
                 title: "Honest Pricing",
-                description: "Factory-direct means no middlemen, no markups, no games. The price we quote is the price you pay. We believe transparency builds trust, and trust builds lasting relationships.",
+                description: "Factory-direct means line-item pricing and no games. The price we quote is the price you pay. We believe transparency builds trust, and trust builds lasting relationships.",
                 icon: "💰"
               },
               {
