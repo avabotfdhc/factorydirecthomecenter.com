@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { CatalogueImage } from "@/components/CatalogueImage";
 import { shortImageSrc } from "@/lib/image-src";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -41,16 +41,15 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
   return (
     <div className="fp-card">
       <div className="fp-card-media">
-        <Link href={`/floor-plans/${p.slug}`} className="group block absolute inset-0" aria-label={`View the ${p.name} floor plan`}>
+        <Link href={`/floor-plans/${p.slug}`} className="fp-card-link group" aria-label={`View the ${p.name} floor plan`}>
           {src ? (
-            <Image
+            <CatalogueImage
               src={shortImageSrc(src)}
               alt={
                 showingPlan
                   ? `${p.name} floor plan drawing — ${bedsLabel} bed ${p.baths} bath`
                   : `${p.name} — ${bedsLabel} bed ${p.baths} bath manufactured home floor plan`
               }
-              fill
               className={isSheet ? "fp-card-img-sheet" : "fp-card-img-cover"}
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
@@ -102,8 +101,8 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-start justify-between gap-3 mb-2">
+      <div className="fp-card-body">
+        <div className="fp-card-head">
           <Link href={`/floor-plans/${p.slug}`} className="group">
             <h2 className="fp-card-title">{p.name}</h2>
           </Link>
@@ -111,7 +110,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
             <span className="text-sm font-bold text-[var(--color-lime-dark)] whitespace-nowrap">{p.priceFrom || p.price}</span>
           )}
         </div>
-        <p className="text-sm text-[var(--color-teal)] font-medium mb-4">
+        <p className="fp-card-brand">
           {p.brand}
           {p.series ? ` · ${t("series", { series: p.series })}` : ""}
         </p>
@@ -123,7 +122,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
           <span>{p.baths} {t("bath")}</span>
         </div>
 
-        <div className="mt-auto pt-5 grid grid-cols-2 gap-2">
+        <div className="fp-card-actions">
           <button
             type="button"
             onClick={() => setQuoteOpen(true)}
