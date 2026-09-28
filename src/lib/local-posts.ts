@@ -850,4 +850,171 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations/noble-county">Noble County</a>, <a href="/locations/lagrange-county">LaGrange County</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-woodburn-indiana",
+    title: "Manufactured Homes in Woodburn, Indiana: Building Near the Floodplain",
+    excerpt:
+      "Eastern Allen County is Maumee River country, and some parcels sit in a mapped flood zone. How to find out before you buy, and what it changes about placing a manufactured home.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Woodburn sits out in the flat farm country of eastern Allen County, toward the Ohio line, where the land drains to the Maumee. Most parcels here are perfectly ordinary building ground. Some are not &mdash; and the difference is a line on a federal flood map that most buyers never look at until a lender or a permit clerk brings it up.</p>
+
+<h2>Look up the flood map before you buy the land</h2>
+<p>FEMA publishes flood maps for every county, searchable by address in its Flood Map Service Center. If any part of the spot where you want the home falls in a <em>special flood hazard area</em>, three things follow: the county&rsquo;s floodplain ordinance applies to the placement, a lender will almost certainly require flood insurance, and the cost of the foundation goes up. None of that makes the parcel unbuildable. It makes it a different project, and you want to know which project you are buying before you close on the ground.</p>
+<p>Allen County has a floodplain administrator whose job is exactly this question. Call with the parcel number, ask whether the home site is in a mapped zone, and if it is, ask what elevation the lowest floor has to sit at. Indiana sets its flood protection grade above the federal base flood elevation, so do not assume a national rule of thumb applies here &mdash; get the figure for your parcel, in writing.</p>
+
+<h2>What a flood zone changes about the home</h2>
+<p>A HUD-code <strong>manufactured home</strong> placed in a flood zone has to be elevated to the required height and anchored so it cannot float or shift. That is foundation work &mdash; taller piers or a raised foundation, anchoring designed for the site, sometimes fill brought in to raise the pad. It is your contractor&rsquo;s scope, not ours; we sell the home and arrange delivery, and we never perform site work or setup. What we can tell you is that the home itself does not change: the same Champion floor plans fit, built indoors to the federal HUD code.</p>
+<p>Often the best answer is simply moving the home site. On a larger parcel, the mapped zone may only cover the low corner by the ditch, and shifting the pad a hundred feet puts it on ordinary ground. Walk the land with the map in hand before you pick the spot.</p>
+
+<h2>Budget the site honestly</h2>
+<p>Elevation and anchoring are the kind of costs that surprise people because they are invisible on a floor plan. The <a href="/guides/pricing">pricing guide</a> publishes typical ranges for delivery, set-up and site work, and the <a href="/guides/site-work">site work guide</a> explains the foundation options. Your quote from us lists the home, options and delivery on separate lines, so the site budget stays yours to control.</p>
+
+<h2>Common questions</h2>
+<h3>How do I know whether my Woodburn parcel is in a flood zone?</h3>
+<p>Look the address up on FEMA&rsquo;s flood map, then confirm with the Allen County floodplain administrator. The administrator&rsquo;s answer is the one that governs your permit.</p>
+<h3>Can a manufactured home go in a flood zone at all?</h3>
+<p>Usually yes, if it is elevated and anchored to the county&rsquo;s standard. It costs more at the foundation, and flood insurance becomes a line in your monthly budget.</p>
+<h3>What next?</h3>
+<p>See <a href="/locations/fort-wayne">our Allen County page</a>, read the <a href="/guides/zoning">zoning guide</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-pleasant-lake-indiana",
+    title: "Manufactured Homes in Pleasant Lake, Indiana: Single-Level Living That Lasts",
+    excerpt:
+      "Pleasant Lake buyers are often planning for the next twenty years, not the next five. How to choose a manufactured home you can still get around in at 80 — entry height, hallways and bathrooms.",
+    image: "/images/homepage/about-2.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Pleasant Lake is a small town in southern Steuben County, a few minutes off I-69 and not far from our Auburn lot. A lot of the buyers we meet from around here are not first-time buyers at all. They are selling a two-story house, or moving closer to family, and the question on their mind is simple: <em>will I still be comfortable in this home when my knees are twenty years older?</em></p>
+
+<h2>Every room on one floor is only the start</h2>
+<p>A Champion <strong>manufactured home</strong> is single-level by design &mdash; no stairs to the bedroom, no basement laundry. That is a real advantage, but it is not the whole answer. Two homes with the same square footage can be very different to live in if you use a walker, a cane or a wheelchair, or if you might one day. Walk the floor plans with these in mind:</p>
+<ul>
+  <li><strong>Hallway width and turns.</strong> A straight, short hallway is easier than one with a dog-leg.</li>
+  <li><strong>The primary bathroom.</strong> Look at the shower, not just the tub. A walk-in shower is easier to live with than a tub you have to step over, and space beside the toilet matters if a grab bar goes in later.</li>
+  <li><strong>Laundry location.</strong> Near the bedrooms means fewer trips carrying baskets.</li>
+  <li><strong>Kitchen layout.</strong> An open plan with room to turn beats a narrow galley.</li>
+</ul>
+<p>Plans vary, and so do the factory options. Bring a tape measure and your actual needs to the showroom and ask which options a specific plan offers &mdash; do not assume a feature is available from a photo.</p>
+
+<h2>The steps at the front door are a foundation decision</h2>
+<p>The one thing a floor plan cannot show you is how high the front door will be off the ground. That is set by the foundation your contractor builds &mdash; piers, a crawlspace, a raised pad &mdash; and it decides how many steps you climb every day, or how long a ramp would need to be. If a ramp or a low entry matters to you, tell your site contractor before the foundation is designed, not after. The <a href="/guides/site-work">site work guide</a> explains the foundation choices, and the <a href="/guides/delivery-and-setup">delivery and set-up guide</a> covers the steps and skirting that finish the job.</p>
+
+<h2>Lake-area parcels</h2>
+<p>Steuben County is lake country, and a parcel near the water can carry lake-association covenants on top of county zoning. Read the covenants and ask the county plan commission about your specific parcel before you buy. Our <a href="/guides/zoning">zoning guide</a> lists the questions to ask.</p>
+
+<h2>Common questions</h2>
+<h3>Single-section or multi-section for downsizing?</h3>
+<p>Both work. Single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes keep the footprint small and the upkeep light; a multi-section home gives wider rooms, which is often what makes a wheelchair workable. See <a href="/guides/single-wide-vs-double-wide">single-wide vs double-wide</a>.</p>
+<h3>Can I see the homes without a long walk?</h3>
+<p>The showroom is open Monday to Friday 9&ndash;5 and Saturday 10&ndash;4. Call ahead and tell us which plans you want to see, and we will point you straight to them.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/steuben-county">our Steuben County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-orland-indiana",
+    title: "Manufactured Homes in Orland, Indiana: Floor Plans for Two Generations",
+    excerpt:
+      "Moving a parent in, or a grown child back home? How Orland-area families choose a manufactured home layout that gives two households room — split bedrooms, second living areas and bathroom count.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Orland is a quiet town in northwest Steuben County, close to the Michigan line and a short run from the Topeka plant where Champion builds our homes. More and more of the families we talk to from out this way are shopping for two generations at once &mdash; a widowed parent moving in, a grown child coming home with a baby, or a couple who want Grandma close but not in the next bedroom.</p>
+
+<h2>What makes a layout work for two households</h2>
+<p>Square footage matters less than where the rooms sit. When you browse the <a href="/floor-plans">floor plans</a>, look for these:</p>
+<ul>
+  <li><strong>Split bedrooms.</strong> The primary suite at one end of the home, the other bedrooms at the far end, with the kitchen and living room between. It is the single most useful feature for shared living &mdash; two sets of sleep schedules, no shared wall.</li>
+  <li><strong>Two full bathrooms, minimum.</strong> One attached to the primary suite, one for everyone else. Three is better if the plan allows.</li>
+  <li><strong>A second living area.</strong> Many multi-section plans include a den or family room separate from the main living room. That is where a parent watches their own programmes, or where the kids go when the adults want quiet.</li>
+  <li><strong>A bedroom near a bathroom, on the ground-level entry side.</strong> If mobility is part of the reason for the move, fewer steps between bed, bath and the door is everything.</li>
+</ul>
+<p>Multi-section <a href="/series/aspire">Aspire</a> and <a href="/series/redman">Redman</a> homes are where most of these layouts live, running up to four and five bedrooms. They are all HUD-code <strong>manufactured homes</strong>, built indoors in 6 to 8 weeks and delivered finished.</p>
+
+<h2>Check what the parcel allows</h2>
+<p>A larger multi-section home needs room for its footprint plus setbacks, parking and a septic field sized for the bedroom count &mdash; septic permits are usually tied to how many bedrooms the home has. Before you commit to a five-bedroom plan, ask the county health department what the soil on your parcel can support, and ask the Steuben County plan commission about zoning, foundation and setback rules for your specific parcel. You or your contractor confirm those and pull the permits; the <a href="/guides/zoning">zoning guide</a> and <a href="/guides/site-work">site work guide</a> cover what to ask.</p>
+
+<h2>Bring everyone to the showroom</h2>
+<p>This is a decision better made with every generation in the room. Walk two or three multi-section homes together and let each person say where they would sleep, sit and cook. Every quote is line-item &mdash; home, options, delivery, each on its own line &mdash; so you can compare layouts on equal terms.</p>
+
+<h2>Common questions</h2>
+<h3>How many bedrooms do we need?</h3>
+<p>Count the bedrooms you need now, then add one for the change you can see coming. Remember the septic permit follows the bedroom count.</p>
+<h3>Is a multi-section home harder to deliver to Orland?</h3>
+<p>Not usually. It travels in sections, and freight from our lot is quoted as its own line. Walk your driveway approach with your contractor before delivery.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/steuben-county">our Steuben County page</a>, or <a href="/contact-us">send us the size of your household and parcel</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-laotto-indiana",
+    title: "Manufactured Homes in Laotto, Indiana: Your Own Land or a Land-Lease Community?",
+    excerpt:
+      "Laotto buyers commuting to Fort Wayne weigh two very different ways to place a manufactured home: on ground they own, or on a leased lot in a community. How the two compare.",
+    image: "/images/homepage/single-wides.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Laotto is a small community in southern Noble County, right where the farm country starts to give way to the Fort Wayne commute. The buyers we meet from around here usually have one foot in each world &mdash; a job in town, a wish for a little space &mdash; and before they choose a floor plan they have to choose where the home will sit. There are two very different answers.</p>
+
+<h2>Option one: a home on land you own</h2>
+<p>You buy a parcel, or use ground you already have, and place the home on it. You own both, so you build equity in the land as well as the home, and nobody else sets rules beyond the county&rsquo;s zoning. The trade-off is up-front work: a parcel search, a well and a septic system on most rural ground, a driveway, utility connections and a foundation, all of which you contract yourself. The <a href="/guides/site-work">site work guide</a> lays out that sequence, and the <a href="/guides/pricing">pricing guide</a> publishes typical site-work ranges so you can budget it.</p>
+
+<h2>Option two: a home in a land-lease community</h2>
+<p>You buy the home and rent the lot it sits on. The community has already built the roads, water, sewer and pads, so the site cost is mostly done for you and the cash needed to move in is usually lower. The trade-offs are a monthly lot rent that can rise over time, no equity in the ground, and the community&rsquo;s own rules. Those rules matter to a buyer: many communities set a minimum or maximum home width, require particular skirting or steps, and approve the home before it can be placed. Get the community&rsquo;s written requirements before you choose a floor plan, and ask what the lot rent has done over the past few years.</p>
+
+<h2>Financing is not the same for both</h2>
+<p>A home on land you own can often be financed together with the land. A home on a leased lot is usually financed as the home alone, on different terms. You choose your own lender either way; our <a href="/guides/financing">financing guide</a> explains the loan types in plain language, and the <a href="/financing">lender list on our financing page</a> names lenders past customers have used &mdash; we recommend none of them.</p>
+
+<h2>The home is the same either way</h2>
+<p>Whichever you choose, the home is a Champion HUD-code <strong>manufactured home</strong>, built indoors in 6 to 8 weeks. Single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes suit most community lots; multi-section homes open up on your own ground. Browse the <a href="/floor-plans">floor plans</a> with your placement in mind.</p>
+
+<h2>Common questions</h2>
+<h3>Which costs less?</h3>
+<p>Less cash up front is usually the community; less cost over twenty years is often your own land. Put both on paper with real figures before you decide.</p>
+<h3>Will a community accept any home?</h3>
+<p>No &mdash; each community sets its own rules on size, age and appearance. Read them before you pick a plan.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/noble-county">our Noble County page</a>, or <a href="/contact-us">tell us which route you are leaning toward</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-topeka-indiana",
+    title: "Manufactured Homes in Topeka, Indiana: What to Check on Delivery Day",
+    excerpt:
+      "Topeka is where Champion builds our homes. What happens between the plant gate and move-in, what to inspect when your manufactured home arrives, and how warranty items get handled.",
+    image: "/images/homepage/hero-banner.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Topeka, in LaGrange County, is where Champion builds the homes we sell &mdash; the plant is about 30 miles from our Auburn showroom. Buyers from here sometimes ask why they should come to Auburn at all when the homes are built down the road. The short answer: the plant builds, and a dealer sells, orders, arranges delivery and stays your point of contact afterward. The longer answer is about the day the home arrives, which is the part of the process nobody prepares you for.</p>
+
+<h2>From the plant to your site</h2>
+<p>Once your order is placed, Champion builds the home indoors in about 6 to 8 weeks. While that happens, your own contractor prepares the site &mdash; foundation, utilities, driveway approach. When both are ready, the home travels from the plant to your site, and your set-up contractor places it, levels it, joins the sections on a multi-section home, and connects it. We arrange the transport; site work and setup are yours to contract, and we never perform them. The <a href="/guides/delivery-and-setup">delivery and set-up guide</a> walks through the day hour by hour.</p>
+
+<h2>What to check when it arrives</h2>
+<p>A home that has travelled on a highway deserves a careful look before you sign off on anything. Walk it slowly, with a notebook and your phone&rsquo;s camera:</p>
+<ul>
+  <li><strong>Every door and window.</strong> Open and close each one. Sticking can mean the home still needs levelling.</li>
+  <li><strong>Walls and ceilings.</strong> Look for cracks at corners and along the marriage line where sections join.</li>
+  <li><strong>Floors.</strong> Walk every room; note soft spots or seams that do not sit flat.</li>
+  <li><strong>Water.</strong> Once plumbing is connected, run every tap and shower and look underneath sinks for drips.</li>
+  <li><strong>Appliances and systems.</strong> Confirm the furnace, water heater and each appliance start, and keep the paperwork that came with them.</li>
+</ul>
+<p>Write down each item with a photo and the date. Some things are for your set-up contractor &mdash; levelling, a door that needs adjustment after the home settles, connections. Others are manufacturer items covered by Champion&rsquo;s limited warranty, and appliances and equipment carry their own makers&rsquo; warranties. Send the list to us in writing; we stay your point of contact and help you file warranty items with Champion.</p>
+
+<h2>Give the home a few weeks</h2>
+<p>A new home settles on its foundation. Small adjustments in the first month or two &mdash; a door, a trim piece &mdash; are normal. Keep adding to your list rather than calling about each one, and send it in together.</p>
+
+<h2>Common questions</h2>
+<h3>Can I buy straight from the plant?</h3>
+<p>Champion sells through retailers. We order the home to your spec, quote it line by line, arrange transport and stay available after move-in.</p>
+<h3>Does being close to the plant lower delivery cost?</h3>
+<p>Freight is quoted per route as its own line on your sheet, and a short run from Topeka is about as short as it gets.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a quote</a>.</p>
+`,
+  },
 ];
