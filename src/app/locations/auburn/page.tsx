@@ -219,7 +219,7 @@ export default function AuburnLocationPage() {
               Because we&rsquo;re only 30 miles from the Champion factory in Topeka — the largest Champion
               plant in the country — Auburn-area buyers get some of the shortest delivery times and
               lowest freight costs anywhere in our region. That&rsquo;s the factory-direct advantage:
-              fewer middlemen, transparent line-item pricing, and homes delivered fast.
+              a nearby plant, transparent line-item pricing, and homes delivered fast.
             </p>
             <p className="text-[var(--color-gray)] leading-relaxed">
               From single wides to spacious double wides and IRC-code modular homes, we help Auburn

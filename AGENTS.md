@@ -164,12 +164,12 @@ Facts flow from Kyle to this repo, not from the listing copy.
 
 # City blog posts: cover a town once, and make each post genuinely different
 
-The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). The 13 August posts were written before that rule and carried 29 `modular` mentions between them — "a new Champion manufactured or modular home" in the opening, and a boilerplate "modular homes on permanent foundations extend your options" clause in the placement paragraph of eleven of them, which gave modular equal billing in posts that are supposed to be about HUD-code homes. Swept on 2026-09-25. Where a buyer genuinely needs the alternative named — the three FAQs asking whether a home can go inside town limits — the answer now points at `/guides/manufactured-vs-modular` instead of selling modular inline. 25 of the closest cities are now covered: 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan).
+The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). The 13 August posts were written before that rule and carried 29 `modular` mentions between them — "a new Champion manufactured or modular home" in the opening, and a boilerplate "modular homes on permanent foundations extend your options" clause in the placement paragraph of eleven of them, which gave modular equal billing in posts that are supposed to be about HUD-code homes. Swept on 2026-09-25. Where a buyer genuinely needs the alternative named — the three FAQs asking whether a home can go inside town limits — the answer now points at `/guides/manufactured-vs-modular` instead of selling modular inline. 30 of the closest cities are now covered: 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan), and 5 added 2026-09-28 (Woodburn, Pleasant Lake, Orland, Laotto, Topeka).
 
 Rules for adding another:
 
 - **One post per town.** A town with a post and a `/locations/*` page already has two assets competing for the same query; a third is cannibalisation, not coverage. Check `local-posts.ts` before writing.
-- **Each post must teach something the others do not.** Mass-produced pages that differ only by place name are the doorway-page pattern in Google's spam policies, and the risk is a manual action, not just weak ranking. Every post in this set is built around a different subject — county-line jurisdiction (Ashley, Wolcottville), well and septic sequencing (St. Joe, Grabill), delivery access on rural lanes (Spencerville, Harlan), lake-lot constraints (Rome City), pre-1976 trailer vs HUD-code replacement (Hamilton), northern-winter insulation options (Fremont), land-versus-house budget structure (Leo-Cedarville), freight distance (Avilla), single-section fit on small platted lots (Corunna).
+- **Each post must teach something the others do not.** Mass-produced pages that differ only by place name are the doorway-page pattern in Google's spam policies, and the risk is a manual action, not just weak ranking. Every post in this set is built around a different subject — county-line jurisdiction (Ashley, Wolcottville), well and septic sequencing (St. Joe, Grabill), delivery access on rural lanes (Spencerville, Harlan), lake-lot constraints (Rome City), pre-1976 trailer vs HUD-code replacement (Hamilton), northern-winter insulation options (Fremont), land-versus-house budget structure (Leo-Cedarville), freight distance (Avilla), single-section fit on small platted lots (Corunna), floodplain elevation (Woodburn), single-level living and entry height (Pleasant Lake), two-generation layouts and bedroom-count septic sizing (Orland), own land versus a land-lease community (Laotto), delivery-day inspection and warranty items (Topeka).
 - `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
 - Distances: county-level figures come from the vetted table in `src/app/locations/page.tsx`. Do not invent a town-to-town mileage that is not already published somewhere in the repo — say "a short drive" instead.
 - The usual claim rules apply: no home dollar figures, contractor ranges only from `/guides/pricing`, and never say FDHC performs site work or setup.
@@ -828,3 +828,18 @@ on a rendered plan page includes the four comparable-home cards, so a 9-vs-9
 gallery reads as "13 vs 14" — count only the gallery. And reading `mergePlans()`
 alone says these URLs cannot resolve; the detail route has its own fallback, so
 they do. Fetch the page.
+
+# We are the dealer. Never say the buyer buys "from the factory"
+
+Kyle, 2026-09-28: *"Champion only sells to dealers."* The site had drifted into saying
+buyers "buy directly from the factory through us", "skip the traditional dealer markup",
+and get "no middlemen". Those claims deny that we are a dealer. They were removed from
+`/`, `/about`, the Auburn, Huntertown, Columbia City and New Haven location pages,
+`blog.ts` and `local-posts.ts`. At his request the site also no longer discusses Champion's
+sales channel at all, so there is no "Champion sells only through dealers" FAQ.
+
+What we may say: "Factory Direct" is the business name; we order each home from
+Champion's Topeka plant, quote it line by line and arrange delivery. What we may not say:
+that the buyer purchases from the factory or the manufacturer, or that there is no dealer,
+dealer markup or middleman in the sale. "No markup" on contractor work (the buyer pays
+crews directly) is a different claim and is fine.

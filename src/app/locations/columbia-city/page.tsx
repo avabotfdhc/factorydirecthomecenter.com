@@ -59,7 +59,7 @@ const data: CityLocationData = {
     {
       question: "Is factory-direct cheaper than a traditional Columbia City dealer?",
       answer:
-        "Buying factory-direct means no traditional dealer markup — you buy straight from the factory through us, with transparent line-item pricing. You see exactly what you're paying for the home and delivery, and you hire your own contractors for setup and site work — which is how most buyers save even more.",
+        "Buying factory-direct means we order your home from Champion's Topeka plant and quote it with transparent line-item pricing. You see exactly what you're paying for the home and delivery, and you hire your own contractors for setup and site work — which is how most buyers save even more.",
     },
     {
       question: "What's the closest showroom to Columbia City?",
