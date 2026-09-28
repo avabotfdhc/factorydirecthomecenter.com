@@ -492,6 +492,54 @@ locks the filename shapes. No image in the repo is missing meaningful alt text:
 five `alt=""` are genuinely decorative (a 20%-opacity quote mark, a 7%-opacity
 background, two admin thumbnails behind auth, the Meta Pixel noscript beacon).
 
+## Every catalogue image gets checked, and the bar differs by `kind`
+
+Kyle, 2026-09-28, after catching 14 bad rows I had added: *"You should have known
+to do this before I said anything. Please make sure you add this step to all
+images being used currently and in the future."*
+
+**`npm run image-audit`** (`scripts/audit-image-alt.ts`, run it as
+`vercel env run -- npm run image-audit`) reads every `floor_plan_images` row on
+an active, non-retired plan and exits non-zero on a real defect. Run it after
+anything that adds catalogue imagery. It exists as a *script* rather than a test
+because `tests/image-alt.test.ts` pins `public/seed/box-import-manifest.json` — a
+committed file, checkable in CI with no network — and therefore cannot see a row
+added later by `/admin`, by a migration, or by an agent writing SQL. That blind
+spot is exactly how the 14 rows landed.
+
+**The bar is not the same for every image, and conflating them gives a wrong
+answer.** Measured 2026-09-28 across 771 rows on 214 published plans:
+
+| `kind` | rows | names a room | what "good" means |
+|---|---|---|---|
+| `gallery` | 548 | **96.5%** | a photo of *part* of a home — the alt must say which part |
+| `banner` | 191 | 21% | a hero shot of the *whole* home; "Woodward multi-section home by Champion Homes" **is** the right alt |
+| `floorplan` | 20 | 100% | a drawing |
+| `rendering` | 12 | 0% | all Champion's `_LR` suffix — deliberately left alone, see above |
+
+Scoring banners against a room-naming bar produced a misleading "72.9%" and
+nearly triggered a pointless rewrite of alt text that was already correct. The
+audit keeps the two apart; `tests/image-alt.test.ts` pins the fallback shape a
+hero image relies on.
+
+The audit also fails on the two defects that are never a judgement call: a
+**document filed as a photo** (a sales sheet is `kind='floorplan'`, never
+`kind='gallery'`) and an **absolute URL in `path`** (it bypasses `imgUrl()`).
+
+`rendering`/`render` now maps to "exterior rendering" — eleven files in
+`/images/prime/` described nothing before. It is ranked *below* the named rooms,
+so `kitchen-rendering.webp` is still "kitchen". Both directions are
+injection-tested, and the ordering assertion uses a filename carrying **both**
+words: the first version tested it with a filename that had no "rendering" in it
+at all and so proved nothing, and passed while the rule was hoisted above every
+room.
+
+**The 10 gallery photos that still fall back are correct as they are.** Each is a
+plan's own card image reused in its gallery, so the filename is just a model
+number (`2460h42096.webp`, `legacy/silverton-2856h32174.webp`) — there is no room
+to name because the picture is the whole home. Do not invent "exterior" for them,
+for the same reason `_LR` is left alone.
+
 # We do not do financing. The buyer picks their own lender, and we rank nobody
 
 Kyle, 2026-09-23: *"we don't do financing at all. Clients choose their own

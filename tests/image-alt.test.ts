@@ -77,3 +77,41 @@ test("every alt names the home, so no photo is described by its room alone", () 
   assert.match(fallback, /Prime Peak/);
   assert.match(fallback, /Champion Homes/);
 });
+
+// Champion's marketing art for a plan it has not photographed. Naming it costs
+// nothing and says the picture is an artist's impression rather than a home
+// that exists — the same thing SpecsDisclaimer says in words. Eleven files in
+// /images/prime/ are named this way and described nothing before 2026-09-28.
+test("a rendering is described as a rendering, and never outranks a named room", () => {
+  assert.equal(describeImageFile("/images/prime/apex-rendering.webp"), "exterior rendering");
+  assert.equal(describeImageFile("/images/prime/crown-rendering.webp"), "exterior rendering");
+  // A file that names a room is still that room, not a rendering. These two
+  // carry BOTH words, which is the only shape that actually tests the ordering
+  // — asserting it with a filename that has no "rendering" in it proves
+  // nothing, and the first version of this test did exactly that.
+  assert.equal(describeImageFile("kitchen-rendering.webp"), "kitchen");
+  assert.equal(describeImageFile("primary-bedroom-render.jpg"), "primary bedroom");
+  assert.equal(describeImageFile("/images/prime/monte-dining.webp"), "dining area");
+  assert.equal(describeImageFile("/images/prime/monte-exterior-1.webp"), "exterior");
+  // A drawing is still a drawing.
+  assert.equal(describeImageFile("/images/prime/barkley-floorplan.webp"), "floor plan sheet");
+});
+
+// The alt bar applies to GALLERY photos, which show one part of a home. A hero
+// image is of the whole home, so "Woodward multi-section home by Champion
+// Homes" is the correct alt for it, not a failure to describe. Measuring hero
+// images against a room-naming bar produced a misleading "72.9% coverage" on
+// 2026-09-28 and nearly triggered a pointless rewrite. scripts/audit-image-alt.ts
+// keeps the two apart when it checks the live catalogue; this pins the shape the
+// fallback has to keep for that to be true.
+test("a home's own card image gets a complete alt without naming a room", () => {
+  // Filenames that are just the model number: nothing to describe, by design.
+  assert.equal(describeImageFile("/images/paramount/2460h42096.webp"), "");
+  assert.equal(describeImageFile("legacy/silverton-2856h32174.webp"), "");
+
+  const alt = planImageAlt("legacy/silverton-2856h32174.webp", "Silverton", "Multi-Section", 0, 1);
+  assert.match(alt, /Silverton/, "the home is named");
+  assert.match(alt, /multi-section home/, "the kind of home is named");
+  assert.match(alt, /Champion Homes/, "the builder is named");
+  assert.ok(alt.trim().length > 20, `fallback alt must be substantive, got "${alt}"`);
+});
