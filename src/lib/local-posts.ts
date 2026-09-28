@@ -1015,4 +1015,182 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a quote</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-monroeville-indiana",
+    title: "Manufactured Homes in Monroeville, Indiana: Planning Your Timeline Around the Seasons",
+    excerpt:
+      "Want to be moved in by a certain date? How Monroeville buyers work backward from move-in day — order date, factory build, frost, spring thaw and road postings — so the calendar works for them.",
+    image: "/images/homepage/double-wides.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Monroeville sits in the southeast corner of Allen County, out where the farm fields run toward the Ohio line. The families we talk to from here usually have a date in mind &mdash; a lease that ends in May, a school year that starts in August, a parent who needs to move before winter. The good news is that a <strong>manufactured home</strong> is one of the most predictable ways to build. The catch is that northern Indiana weather is not, and the calendar works best when you plan backward from the day you want to move in.</p>
+
+<h2>Work backward from move-in day</h2>
+<p>From order to move-in usually runs 8 to 12 weeks. Champion builds the home indoors in about 6 to 8 of those weeks, and the plant schedules production by month, so the date your order is placed decides when your home comes off the line. While the home is being built, your own contractor prepares the site &mdash; permits, foundation, well and septic if you need them, utility connections and a driveway the transport can use. Both have to finish before delivery day. Whichever runs longer sets your move-in date.</p>
+<p>So the useful question is not &ldquo;how long does the home take?&rdquo; It is &ldquo;how long will my site take, and when can my contractor start?&rdquo; Get that answer first.</p>
+
+<h2>What the seasons change</h2>
+<ul>
+  <li><strong>Winter.</strong> The factory keeps building, because it is indoors. Frozen ground is what slows things down: digging footings, septic work and grading all get harder once the frost sets in. Ordering in winter for spring delivery is a common and sensible plan.</li>
+  <li><strong>Spring thaw.</strong> Soft ground and seasonal load limits on some county roads can delay a heavy transport. Rural sites near Monroeville are exactly where that matters. Ask your contractor how the approach to your site holds up in March and April.</li>
+  <li><strong>Summer and early fall.</strong> Usually the easiest window for both site work and delivery. They are also the busiest months for contractors, so book your crew early.</li>
+</ul>
+
+<h2>A simple plan</h2>
+<ol>
+  <li>Pick your target move-in month.</li>
+  <li>Ask your site contractor how long your parcel will take and when they can start.</li>
+  <li>Choose your floor plan and options, and place the order so production lines up with the site finishing.</li>
+  <li>Confirm the delivery date once the site is ready &mdash; not before.</li>
+</ol>
+<p>The <a href="/guides/delivery-and-setup">delivery and set-up guide</a> walks through the final weeks, and the <a href="/guides/site-work">site work guide</a> covers what your contractor handles. We sell the home and arrange delivery; site work and setup are yours to contract.</p>
+
+<h2>Common questions</h2>
+<h3>Can a home be delivered in winter?</h3>
+<p>Often yes, if the site is ready and the roads and approach can carry the transport. Frost usually slows the site work, not the delivery.</p>
+<h3>What if my site is not ready when the home is built?</h3>
+<p>That is why the order date should follow the site schedule. Ask us how the timing works before you order.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/fort-wayne">our Allen County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">tell us your target move-in month</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-cromwell-indiana",
+    title: "Manufactured Homes in Cromwell, Indiana: Choosing a Heating Fuel for a Rural Lot",
+    excerpt:
+      "No natural gas line on your road? How Cromwell-area buyers choose between propane, electric and natural gas for a new manufactured home, and what to settle before you order.",
+    image: "/images/homepage/single-wides.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Cromwell is a small town in the southwest corner of Noble County, surrounded by farm ground and the lakes that run toward Kosciusko County. Buyers here tend to find out the same thing partway through planning: the natural gas main does not come down every country road. That turns a question most city buyers never think about &mdash; what will heat the house? &mdash; into one you should answer before you order the home.</p>
+
+<h2>Why it matters before you order</h2>
+<p>The furnace and water heater are built into a <strong>manufactured home</strong> at the plant. What fuel they burn depends on the plan and the factory options you choose, so it is far easier to get right on the order than to change after the home arrives. Ask which options a specific plan offers; do not assume from a photo.</p>
+
+<h2>The three usual choices</h2>
+<ul>
+  <li><strong>Natural gas.</strong> Where a gas main reaches your road, it is often the simplest choice. Call the gas utility with your address and ask whether service is available and what connecting it involves.</li>
+  <li><strong>Propane.</strong> The common answer on rural lots without gas service. It means a tank on your property, placed where the supplier and local fire rules allow, and a delivery truck that can reach it year-round. Talk to a propane supplier before you decide where the home sits, because tank placement and the driveway both affect it.</li>
+  <li><strong>All-electric.</strong> No tank and no gas line, just one utility bill. Ask your electric provider about service to the site, and ask us which electric heating options a given plan offers.</li>
+</ul>
+<p>None of these is right for everyone. The best answer depends on what reaches your parcel, your electric provider, and how you like to heat. Get the facts for your address and decide from them.</p>
+
+<h2>Who does what</h2>
+<p>We sell the home and arrange delivery. Utility connections &mdash; the gas line, the propane tank and its piping, the electric service &mdash; are handled by your contractors and your utility or propane supplier. Put those calls on the list early; a utility connection can have its own lead time. The <a href="/guides/site-work">site work guide</a> explains the order things happen in, and the <a href="/guides/pricing">pricing guide</a> publishes typical ranges for site work.</p>
+
+<h2>Common questions</h2>
+<h3>Can I switch fuels later?</h3>
+<p>Sometimes, but it usually means new equipment and new connections. It is much simpler to choose on the order.</p>
+<h3>Does the fuel choice change the floor plan?</h3>
+<p>Not usually. It changes the equipment inside the home and what your contractor connects outside it.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/noble-county">our Noble County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask which heating options a plan offers</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-hudson-indiana",
+    title: "Manufactured Homes in Hudson, Indiana: Adding a Porch, Deck or Garage",
+    excerpt:
+      "Most Hudson buyers want a porch, a deck or a garage with their new manufactured home. How those get built, why they usually stand on their own, and which permits to expect.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Hudson is a small town in southwest Steuben County, a short drive from our Auburn showroom. Almost every buyer we meet from out this way has a picture in mind that goes beyond the house itself &mdash; a covered front porch, a back deck for summer evenings, a garage for the truck and the mower. All of that is possible with a <strong>manufactured home</strong>. It just helps to know how it is done before you start.</p>
+
+<h2>Outdoor structures usually stand on their own</h2>
+<p>A HUD-code home is engineered as a complete structure, and the manufacturer&rsquo;s installation instructions set out what can and cannot be attached to it. The common approach for decks, porches and garages is to build them <em>freestanding</em> &mdash; on their own footings and posts &mdash; rather than hanging their weight off the home. Before anyone designs an attached porch or roof, check the home&rsquo;s installation instructions and ask how the addition must be supported.</p>
+
+<h2>Plan them with the site, not after it</h2>
+<ul>
+  <li><strong>Where the steps land.</strong> The foundation sets how high your doors are off the ground, which decides how big a porch or deck needs to be.</li>
+  <li><strong>Where the garage goes.</strong> A detached garage needs its own footprint, setbacks and driveway. Decide where it goes before the home is placed so the two work together.</li>
+  <li><strong>What the lot allows.</strong> Steuben County setbacks and lot-coverage rules apply to the garage and the deck too, not just the home.</li>
+</ul>
+
+<h2>Permits and who builds them</h2>
+<p>Decks, porches and garages usually need their own building permits. You or your contractor apply for them and build them; we sell the home and arrange its delivery and do not perform site work, setup or construction. Ask the Steuben County plan commission what is required for your parcel. The <a href="/guides/zoning">zoning guide</a> lists the questions to ask, and the <a href="/guides/site-work">site work guide</a> covers the foundation and setup side.</p>
+
+<h2>Choose the home with the outdoor space in mind</h2>
+<p>Look at where the doors are on each floor plan. A plan with a door off the kitchen or dining area makes a back deck easy to use every day. Browse the <a href="/floor-plans">floor plans</a> with that in mind, then come walk a few at the showroom.</p>
+
+<h2>Common questions</h2>
+<h3>Can I attach a porch roof to the home?</h3>
+<p>Only if the home&rsquo;s installation instructions allow it and the design follows them. Many buyers build a freestanding porch instead.</p>
+<h3>Can I add a garage later?</h3>
+<p>Yes, but leave room for it when you place the home, and check setbacks for both at the start.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/steuben-county">our Steuben County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-lagrange-indiana",
+    title: "Manufactured Homes in LaGrange, Indiana: How Your Home Is Titled and Taxed",
+    excerpt:
+      "Is a manufactured home personal property or real estate? For LaGrange County buyers the answer depends on the land and the foundation, and it affects taxes, insurance and resale. What to ask.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "September 28, 2026",
+    html: `
+<p>LaGrange is the county seat of LaGrange County, the same county as Champion&rsquo;s Topeka plant. It is also where the county auditor, assessor and recorder keep their offices &mdash; which matters, because one of the least understood parts of buying a <strong>manufactured home</strong> is how it is titled and taxed. The answer changes more than paperwork. It affects your property tax bill, your insurance, how a loan is written, and what the home is worth when you sell.</p>
+
+<h2>Personal property or real estate?</h2>
+<p>A new HUD-code home leaves the plant much like a vehicle, with a title. What happens next depends on where it goes:</p>
+<ul>
+  <li><strong>On land you own, on a permanent foundation.</strong> The home can often be joined to the land and treated as real estate &mdash; one parcel, taxed and sold together. That usually involves steps with the title and with the county, done in a set order.</li>
+  <li><strong>On a leased lot or land you do not own.</strong> The home usually stays personal property, with its own title, separate from the ground.</li>
+</ul>
+<p>The rules and the steps belong to the state and the county, not to us, and they can change. Before you close, ask the LaGrange County auditor and assessor how a manufactured home on your parcel will be listed and taxed, and ask the title office what is needed to treat it as real estate if that is your goal.</p>
+
+<h2>Why it matters beyond taxes</h2>
+<ul>
+  <li><strong>Financing.</strong> A home treated as real estate with the land can usually be financed differently from a home-only loan. You choose your own lender; the <a href="/guides/financing">financing guide</a> explains the loan types in plain language.</li>
+  <li><strong>Insurance.</strong> Tell your insurer how the home is titled and placed.</li>
+  <li><strong>Resale.</strong> A home and land sold together as one property is a simpler sale for the next buyer.</li>
+</ul>
+
+<h2>The foundation is part of the answer</h2>
+<p>Treating a home as real estate usually goes hand in hand with a permanent foundation. That is your contractor&rsquo;s work, and it is worth deciding early, because it changes the site budget. The <a href="/guides/site-work">site work guide</a> explains the foundation options, and the <a href="/guides/pricing">pricing guide</a> publishes typical ranges.</p>
+
+<h2>Common questions</h2>
+<h3>Do I pay property tax on a manufactured home?</h3>
+<p>Yes, in one form or another. How it is assessed depends on how the home is titled and placed. The county assessor answers for your parcel.</p>
+<h3>Can I change it to real estate later?</h3>
+<p>Often, if the home is on land you own and meets the requirements. Ask the county and the title office what that involves.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, or <a href="/contact-us">ask us for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-howe-indiana",
+    title: "Manufactured Homes in Howe, Indiana: Where to Put the Home on Your Land",
+    excerpt:
+      "Buying acreage near Howe? Where the home sits on the parcel decides your driveway, utility runs, drainage, morning light and delivery day. How to pick the spot before anything is dug.",
+    image: "/images/homepage/about-2.webp",
+    date: "September 28, 2026",
+    html: `
+<p>Howe is a small town in northern LaGrange County, close to the Michigan line and the Pigeon River. Buyers from around here usually have room &mdash; a few acres, a wooded corner, a field with a view. Room is a gift, but it brings a question city lots never raise: <em>where exactly should the home go?</em> Pick the spot well and the home is easier to build, cheaper to connect and nicer to live in. Pick it in a hurry and you pay for it every day.</p>
+
+<h2>Things to walk the land for</h2>
+<ul>
+  <li><strong>Distance to the road.</strong> Every foot back from the road is more driveway, a longer electric run and a longer path for the delivery transport. A home set far back can be lovely; just budget for the lane and the utilities.</li>
+  <li><strong>Where the septic field goes.</strong> On rural ground, the soil test decides where the septic system can go, and the well has to keep its distance from it. Settle both before you place the home, not after.</li>
+  <li><strong>Drainage.</strong> Stand on the spot after a hard rain. Water should run away from the home. Low spots and wet ground cost money to fix.</li>
+  <li><strong>Sun and wind.</strong> Think about which rooms face morning light, where afternoon sun will heat the living room in July, and where winter wind comes from. Mature trees give shade but drop limbs; keep a sensible distance.</li>
+  <li><strong>Room to deliver.</strong> A multi-section home arrives in pieces, each on its own transport, and each needs a clear path and room to turn.</li>
+</ul>
+
+<h2>Match the floor plan to the spot</h2>
+<p>Once you know which way the home will face, look at the floor plans with that in mind &mdash; where the front door lands, which side the kitchen windows are on, where a back deck would go. Browse the <a href="/floor-plans">floor plans</a> and bring a sketch of your parcel to the showroom.</p>
+
+<h2>Who does what</h2>
+<p>We sell the home and arrange delivery. Site layout, the foundation, the driveway, well, septic and utilities are yours to contract, and LaGrange County&rsquo;s setback and zoning rules apply to where the home can go. Ask the county about your parcel before you decide. The <a href="/guides/site-work">site work guide</a> and <a href="/guides/zoning">zoning guide</a> cover what to ask.</p>
+
+<h2>Common questions</h2>
+<h3>Should I put the home near the road or back in the trees?</h3>
+<p>Either can work. Closer is cheaper to connect and deliver to; farther back costs more in lane and utilities. Price both with your contractor.</p>
+<h3>When should I decide?</h3>
+<p>Before you order, and before any digging starts. The spot drives the site plan, and the site plan drives the timeline.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, or <a href="/contact-us">send us a sketch of your parcel</a>.</p>
+`,
+  },
 ];
