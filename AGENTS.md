@@ -718,3 +718,51 @@ source scan fails any page that reads as an offer to sell a Paramount home
 (sentences that explain the retirement are exempt). Four violation shapes were
 injected and confirmed caught.
 
+
+# The sale page links the page Google can see, and the photos moved first
+
+Until 2026-09-28, 42 of the `CATALOG_INDEX` entries that `/homes-on-sale` takes
+its links from named a `dutch-aspire-*` slug. Those pages come from the repo
+data files, not the CMS, and `mergePlans()` drops a repo plan whose CMS twin
+carries the same series and model code — so **not one of the 42 was in
+`/floor-plans`, `sitemap.xml`, the featured set or Ava's catalogue** (measured:
+0 of 42 in the live sitemap, against 172 for the CMS Aspire pages). They still
+*rendered*, because `getApiFloorPlanBySlug` falls back to the repo list, so
+nothing 404'd and nothing looked wrong. Every buyer who clicked a sale home just
+landed on a duplicate of the CMS page that Google cannot index.
+
+All 42 now point at the CMS page. The ordering mattered:
+
+- **The photos shipped before the links.** 14 of the CMS records carried only
+  the banner and the option drawing, while the repo twin showed Champion's full
+  photo set — the Woodward pair 13 photos vs 2, the 1672 15 vs 3. Switching
+  first would have stripped those from the page buyers actually reach.
+  `supabase/migrations/20260928_catalogue_photo_parity.sql` adds the 48 missing
+  gallery rows. Every one of the 42 destinations now carries exactly the gallery
+  its repo twin did: **nothing gains a photo, nothing loses one**, verified per
+  plan on both sides before and after.
+- **No upload was needed.** `floor_plan_images.path` already holds two forms and
+  `imgUrl()` resolves both: `/images/…` for a file served from the repo, and a
+  bare storage key (`legacy/…`) for the bucket. **Never an absolute URL** —
+  there were 0 in the table and adding one would bypass `imgUrl()`.
+- **Every added row is `kind = 'gallery'`, appended after the existing rows.**
+  `banner` would compete with the `floor_plans.banner_image` column, and
+  `floorplan` would change which image `drawingFrom()` picks as the plan
+  drawing. Appending keeps the existing `-opt2` row winning that pick — checked
+  for all 14, since `DRAWING_RE` matches `floor-plan` and *every* resolved
+  storage URL contains `/floor-plans/`.
+- **Slugs are not a prefix swap.** The CMS drops the family name on some models
+  (`dutch-aspire-westbrook-1676h32107` → `aspire-1676h32107`). Read each slug
+  from the CMS row for that model number; rewriting the old slug invents a URL
+  that 404s.
+
+`tests/catalog-index.test.ts` fails if an entry points back at a
+`dutch-aspire-*` slug, at a retired series or plan, or at a slug whose prefix
+disagrees with its series. Both violation shapes were injected and confirmed
+caught.
+
+**Two measurement traps cost a wrong answer here first.** Counting every image
+on a rendered plan page includes the four comparable-home cards, so a 9-vs-9
+gallery reads as "13 vs 14" — count only the gallery. And reading `mergePlans()`
+alone says these URLs cannot resolve; the detail route has its own fallback, so
+they do. Fetch the page.
