@@ -128,7 +128,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Where can I learn the basics before I buy?</h3>
 <p>Start with our <a href="/guides/buyers-guide">complete buyer's guide</a>, then browse <a href="/floor-plans">our Champion floor plans</a> and <a href="/contact-us">reach out</a> when you're ready to see homes in person at our Auburn showroom.</p>
 
-<p style="font-size:0.85em;opacity:0.7;margin-top:2rem"><em>Sources: <a href="https://www.limaohio.com/top-stories/2026/08/16/manufactured-housing-law-expands-access-to-affordable-homes/" target="_blank" rel="noopener noreferrer">Lima News — "Manufactured housing law expands access to affordable homes"</a>; U.S. Senate Committee on Banking, Housing, and Urban Affairs, 21st Century ROAD to Housing Act section-by-section summary. This article is general information, not legal or financial advice.</em></p>
+<p style="font-size:0.85em;margin-top:2rem"><em>Sources: <a href="https://www.limaohio.com/top-stories/2026/08/16/manufactured-housing-law-expands-access-to-affordable-homes/" target="_blank" rel="noopener noreferrer">Lima News — "Manufactured housing law expands access to affordable homes"</a>; U.S. Senate Committee on Banking, Housing, and Urban Affairs, 21st Century ROAD to Housing Act section-by-section summary. This article is general information, not legal or financial advice.</em></p>
 `,
   },
   {

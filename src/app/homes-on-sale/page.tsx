@@ -61,14 +61,15 @@ export default function HomesOnSalePage() {
   const sale = getSaleStatus();
 
   return (
-    <main className="min-h-screen bg-white">      {/* Hero */}
+    <div className="min-h-screen bg-white">      {/* Hero */}
       <section className="relative w-full min-h-[400px] md:min-h-[450px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/2026-03-22-hero-autumn.webp"
             alt="Modern manufactured home with autumn landscaping"
             fill
-            priority
+            preload
+            fetchPriority="high"
             className="object-cover"
             sizes="100vw"
           />
@@ -138,7 +139,7 @@ export default function HomesOnSalePage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="#sale-homes"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors text-base"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-[#4d7c0f] hover:bg-[#3f6212] text-white font-bold rounded-lg transition-colors text-base"
                 >
                   {sale.active ? "View Sale Homes" : "View These Homes"}
                   <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -262,6 +263,6 @@ export default function HomesOnSalePage() {
           </FadeIn>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

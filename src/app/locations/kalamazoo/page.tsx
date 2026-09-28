@@ -51,7 +51,7 @@ export default function KalamazooPage() {
 
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/paramount/bayport-exterior.webp" alt={generateAltText("location", { name: "Manufactured Homes Kalamazoo Michigan", location: "Kalamazoo, MI" })} fill className="object-cover opacity-30" sizes="100vw" priority />
+          <Image src="/images/paramount/bayport-exterior.webp" alt={generateAltText("location", { name: "Manufactured Homes Kalamazoo Michigan", location: "Kalamazoo, MI" })} fill className="object-cover opacity-30" sizes="100vw" preload fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -71,10 +71,10 @@ export default function KalamazooPage() {
       <section className="py-8 bg-[var(--color-teal)] text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <FadeIn direction="up" delay={0}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={95} suffix=" mi" /></div><div className="text-sm text-white/70">From Showroom</div></FadeIn>
-            <FadeIn direction="up" delay={150}><div className="font-serif text-3xl font-bold">$3,800</div><div className="text-sm text-white/70">Est. Delivery</div></FadeIn>
-            <FadeIn direction="up" delay={300}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={6} /></div><div className="text-sm text-white/70">MI Counties</div></FadeIn>
-            <FadeIn direction="up" delay={450}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={8} suffix="-12" /></div><div className="text-sm text-white/70">Weeks Delivery</div></FadeIn>
+            <FadeIn direction="up" delay={0}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={95} suffix=" mi" /></div><div className="text-sm text-white/90">From Showroom</div></FadeIn>
+            <FadeIn direction="up" delay={150}><div className="font-serif text-3xl font-bold">$3,800</div><div className="text-sm text-white/90">Est. Delivery</div></FadeIn>
+            <FadeIn direction="up" delay={300}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={6} /></div><div className="text-sm text-white/90">MI Counties</div></FadeIn>
+            <FadeIn direction="up" delay={450}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={8} suffix="-12" /></div><div className="text-sm text-white/90">Weeks Delivery</div></FadeIn>
           </StaggerContainer>
         </div>
       </section>

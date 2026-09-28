@@ -104,10 +104,10 @@ const brochures: Array<{ name: string; desc: string; href: string; external?: bo
 
 export default function OptionsPage() {
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
       <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime)] mb-4">
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime-on-dark)] mb-4">
             Built to Your Order
           </p>
           <h1 className="font-serif text-4xl lg:text-6xl font-light tracking-tight mb-5">
@@ -117,7 +117,7 @@ export default function OptionsPage() {
             Every home we sell is built to order at Champion&apos;s Indiana plants — which means colors,
             finishes, fireplaces, islands, cabinets, and exterior styling are your call. Browse
             Champion&apos;s factory literature below, then{" "}
-            <a href="/contact-us" className="text-[var(--color-teal-light)] underline underline-offset-4">ask us to price the options you want</a>.
+            <a href="/contact-us" className="text-[var(--color-lime-on-dark)] underline underline-offset-4">ask us to price the options you want</a>.
           </p>
           <a
             href="/design-your-home"
@@ -153,7 +153,7 @@ export default function OptionsPage() {
           gridClassName="max-w-4xl"
           imgClassName="w-full rounded-xl border border-[var(--color-charcoal)]/8 bg-white cursor-zoom-in"
         />
-        <p className="text-xs text-[var(--color-charcoal)]/50 mt-3">
+        <p className="text-xs text-[var(--color-charcoal)]/80 mt-3">
           Samples shown are for illustration only — see actual products for accurate color and pattern. Champion Homes, Dec. 2025.
         </p>
         <div className="mt-6">
@@ -204,7 +204,7 @@ export default function OptionsPage() {
           {drawingGroups.map((g) => (
             <div key={g.prefix}>
               <h3 className="font-serif text-2xl font-light mb-1">{g.title}</h3>
-              <p className="text-sm text-[var(--color-charcoal)]/60 mb-5">{g.blurb}</p>
+              <p className="text-sm text-[var(--color-charcoal)]/80 mb-5">{g.blurb}</p>
               <LightboxGallery
                 images={Array.from({ length: g.pages }, (_, i) => ({
                   src: `/images/options/${g.prefix}-${i + 1}.webp`,
@@ -223,7 +223,7 @@ export default function OptionsPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <h2 className="font-serif text-3xl font-light mb-2">Want line-item pricing on options?</h2>
-            <p className="text-white/80 max-w-xl">
+            <p className="text-white/95 max-w-xl">
               Tell us the floor plan and the options you&apos;re considering — we quote every line
               separately so you can see exactly what each upgrade costs.
             </p>
@@ -244,6 +244,6 @@ export default function OptionsPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

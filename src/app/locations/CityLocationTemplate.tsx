@@ -110,7 +110,8 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            priority
+            preload
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
@@ -153,19 +154,19 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <FadeIn direction="up" delay={0}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={data.distanceMi} suffix=" mi" /></div>
-              <div className="text-sm text-white/70">From Our Showroom</div>
+              <div className="text-sm text-white/90">From Our Showroom</div>
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={data.driveMin} suffix=" min" /></div>
-              <div className="text-sm text-white/70">Drive from Auburn</div>
+              <div className="text-sm text-white/90">Drive from Auburn</div>
             </FadeIn>
             <FadeIn direction="up" delay={300}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={8} suffix="-12" /></div>
-              <div className="text-sm text-white/70">Weeks Delivery</div>
+              <div className="text-sm text-white/90">Weeks Delivery</div>
             </FadeIn>
             <FadeIn direction="up" delay={450}>
               <div className="font-serif text-3xl font-bold">Direct</div>
-              <div className="text-sm text-white/70">Factory Pricing</div>
+              <div className="text-sm text-white/90">Factory Pricing</div>
             </FadeIn>
           </StaggerContainer>
         </div>

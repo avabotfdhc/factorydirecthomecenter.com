@@ -39,8 +39,12 @@ export function OwnerIntro() {
                   className="object-cover"
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-5xl text-[var(--color-teal)]/30">
+                // Monogram placeholder until there is a photograph. Decorative
+                // (the name is the heading beside it), but still full-strength
+                // teal: axe checks text contrast even under aria-hidden, and
+                // the old /30 tint was 1.51:1.
+                <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                  <span className="font-serif text-5xl text-[var(--color-teal)]">
                     {owner.name
                       .split(" ")
                       .map((part) => part[0])

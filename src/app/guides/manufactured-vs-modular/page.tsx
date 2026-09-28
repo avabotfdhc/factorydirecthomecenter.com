@@ -97,11 +97,11 @@ export default function ManufacturedVsModularPage() {
       <section className="py-14 lg:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <H2 className="font-serif text-3xl font-light mb-6">Side-by-Side Comparison</H2>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Side-by-side comparison table">
             <table className="w-full text-sm border border-[var(--color-charcoal)]/10 rounded-lg overflow-hidden">
               <thead>
                 <tr className="bg-[var(--color-cream-dark)] text-left">
-                  <th className="p-3 font-semibold"> </th>
+                  <th className="p-3 font-semibold"><span className="sr-only">Feature</span></th>
                   <th className="p-3 font-semibold">Manufactured</th>
                   <th className="p-3 font-semibold">Modular</th>
                   <th className="p-3 font-semibold">Mobile (pre-1976)</th>

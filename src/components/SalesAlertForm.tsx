@@ -107,7 +107,7 @@ export function SalesAlertForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="px-8 py-4 bg-[#84cc16] hover:bg-[#65a30d] disabled:opacity-60 text-white font-bold rounded-lg transition-colors whitespace-nowrap"
+          className="px-8 py-4 bg-[#4d7c0f] hover:bg-[#3f6212] disabled:opacity-60 text-white font-bold rounded-lg transition-colors whitespace-nowrap"
         >
           {status === "submitting" ? "Sending…" : "Get Alerts"}
         </button>

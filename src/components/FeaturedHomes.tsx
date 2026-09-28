@@ -36,7 +36,7 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
                 loading={i === 0 ? "eager" : "lazy"}
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">No photo</div>
+              <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray)] text-sm">No photo</div>
             )}
             {plan.homeType && (
               <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded z-10">

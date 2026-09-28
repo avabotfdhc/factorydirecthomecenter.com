@@ -211,7 +211,7 @@ export function SaleHomesGrid({
                         <span className="absolute top-4 left-4 z-10 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                           On Sale
                         </span>
-                        <span className="absolute top-4 right-4 z-10 bg-[#84cc16] text-white px-3 py-1 rounded-full text-sm font-bold">
+                        <span className="absolute top-4 right-4 z-10 bg-[#4d7c0f] text-white px-3 py-1 rounded-full text-sm font-bold">
                           {discountPercent}% Off
                         </span>
                       </>
@@ -227,7 +227,7 @@ export function SaleHomesGrid({
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">
+                        <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-600">
                           Photo coming soon
                         </div>
                       )}

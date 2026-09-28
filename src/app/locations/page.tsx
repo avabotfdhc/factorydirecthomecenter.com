@@ -244,7 +244,7 @@ export default function LocationsPage() {
                       >
                         <span
                           className="self-start text-[10px] font-bold tracking-wider uppercase px-2 py-1 rounded mb-3"
-                          style={{ backgroundColor: zone.accent, color: zone.id === "core" ? "var(--color-charcoal)" : "#fff" }}
+                          style={{ backgroundColor: zone.accent, color: "#fff" }}
                         >
                           {zone.name.split(" — ")[0]}
                         </span>

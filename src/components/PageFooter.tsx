@@ -23,7 +23,9 @@ export function PageFooter() {
   const citations = currentPage ? getCitations(currentPage.topics, 4) : [];
 
   return (
-    <>
+    // A landmark, so this content is not orphaned between the main content and the
+    // site footer (axe `region`).
+    <aside aria-label="Related resources">
       {/* THE site's BreadcrumbList. This runs on every non-home page, so no
           page should emit its own — until 2026-09-20 twenty-odd of them did,
           and those pages shipped TWO BreadcrumbList nodes describing the same
@@ -99,7 +101,7 @@ export function PageFooter() {
                     href={cite.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--color-teal)] hover:underline"
+                    className="text-[var(--color-teal)] underline underline-offset-2 hover:decoration-2"
                   >
                     {cite.source}
                   </a>
@@ -114,7 +116,7 @@ export function PageFooter() {
 
       {/* Breadcrumb Navigation */}
       {breadcrumbs.length > 1 && (
-        <nav aria-label="Breadcrumb" className="py-4 border-t border-[var(--color-charcoal)]/5">
+        <nav aria-label="Page location" className="py-4 border-t border-[var(--color-charcoal)]/5">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <ol className="flex items-center gap-2 text-xs text-[var(--color-gray)]">
               {breadcrumbs.map((crumb, idx) => (
@@ -137,6 +139,6 @@ export function PageFooter() {
           </div>
         </nav>
       )}
-    </>
+    </aside>
   );
 }

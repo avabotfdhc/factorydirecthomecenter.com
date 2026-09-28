@@ -27,7 +27,7 @@ const LINKS = [
 
 export default function NotFound() {
   return (
-    <main className="min-h-[70vh] flex items-center px-6 py-20">
+    <div className="min-h-[70vh] flex items-center px-6 py-20">
       <div className="max-w-3xl mx-auto w-full">
         <p className="text-xs font-bold tracking-[0.25em] uppercase text-[var(--color-lime-dark)] mb-4">
           Page not found
@@ -71,6 +71,6 @@ export default function NotFound() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

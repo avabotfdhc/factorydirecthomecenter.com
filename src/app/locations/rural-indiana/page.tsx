@@ -66,7 +66,7 @@ export default function RuralIndianaPage() {
 
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/doublewide-exterior.webp" alt={generateAltText("location", { name: "Manufactured Homes Rural Indiana", location: "Northeast Indiana" })} fill className="object-cover opacity-30" sizes="100vw" priority />
+          <Image src="/images/doublewide-exterior.webp" alt={generateAltText("location", { name: "Manufactured Homes Rural Indiana", location: "Northeast Indiana" })} fill className="object-cover opacity-30" sizes="100vw" preload fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -86,10 +86,10 @@ export default function RuralIndianaPage() {
       <section className="py-8 bg-[var(--color-teal)] text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <FadeIn direction="up" delay={0}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={7} /></div><div className="text-sm text-white/70">Rural Counties</div></FadeIn>
-            <FadeIn direction="up" delay={150}><div className="font-serif text-3xl font-bold">$3-10K</div><div className="text-sm text-white/70">Per Acre</div></FadeIn>
-            <FadeIn direction="up" delay={300}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={20} suffix=" mi" /></div><div className="text-sm text-white/70">From Factory</div></FadeIn>
-            <FadeIn direction="up" delay={450}><div className="font-serif text-3xl font-bold">Low</div><div className="text-sm text-white/70">Restrictions</div></FadeIn>
+            <FadeIn direction="up" delay={0}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={7} /></div><div className="text-sm text-white/90">Rural Counties</div></FadeIn>
+            <FadeIn direction="up" delay={150}><div className="font-serif text-3xl font-bold">$3-10K</div><div className="text-sm text-white/90">Per Acre</div></FadeIn>
+            <FadeIn direction="up" delay={300}><div className="font-serif text-3xl font-bold"><AnimatedCounter end={20} suffix=" mi" /></div><div className="text-sm text-white/90">From Factory</div></FadeIn>
+            <FadeIn direction="up" delay={450}><div className="font-serif text-3xl font-bold">Low</div><div className="text-sm text-white/90">Restrictions</div></FadeIn>
           </StaggerContainer>
         </div>
       </section>
@@ -158,13 +158,13 @@ export default function RuralIndianaPage() {
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="bg-[var(--color-orange)]/10 rounded-xl p-8">
-                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange)]">Considerations</H3>
+                <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-orange-text)]">Considerations</H3>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Well and septic needed</span></li>
-                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Longer drive to services</span></li>
-                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Road maintenance</span></li>
-                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Internet availability varies</span></li>
-                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange)] mt-1">•</span><span>Weather considerations</span></li>
+                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange-text)] mt-1">•</span><span>Well and septic needed</span></li>
+                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange-text)] mt-1">•</span><span>Longer drive to services</span></li>
+                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange-text)] mt-1">•</span><span>Road maintenance</span></li>
+                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange-text)] mt-1">•</span><span>Internet availability varies</span></li>
+                  <li className="flex items-start gap-2"><span className="text-[var(--color-orange-text)] mt-1">•</span><span>Weather considerations</span></li>
                 </ul>
               </div>
             </FadeIn>

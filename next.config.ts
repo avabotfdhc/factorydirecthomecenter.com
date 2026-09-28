@@ -132,6 +132,10 @@ const nextConfig: NextConfig = {
           // max-age with preload eligibility.
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          // Isolates our window from any page we open or that opens us
+          // (Lighthouse Best Practices, "No COOP header found"). Share
+          // links and tel:/sms:/mailto: do not rely on window.opener.
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(self), payment=()',

@@ -127,7 +127,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
   };
 
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
       {priceNumeric ? <StructuredData data={productLd} /> : null}
       <SingleFamilyResidenceSchema
         name={plan.name}
@@ -182,7 +182,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 index={Math.max(0, plan.gallery.indexOf(plan.image))}
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)]">No photo</div>
+              <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray)]">No photo</div>
             )}
           </div>
 
@@ -333,6 +333,6 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
         <SpecsDisclaimer />
       </div>
-    </main>
+    </div>
   );
 }

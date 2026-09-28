@@ -111,19 +111,19 @@ export default async function SearchPage({
             </p>
             <p>
               Try a shorter phrase, or start from{" "}
-              <Link href="/floor-plans" className="text-[var(--color-teal)] hover:underline">
+              <Link href="/floor-plans" className="text-[var(--color-teal)] underline underline-offset-2 hover:decoration-2">
                 every floor plan
               </Link>
               ,{" "}
-              <Link href="/homes-on-sale" className="text-[var(--color-teal)] hover:underline">
+              <Link href="/homes-on-sale" className="text-[var(--color-teal)] underline underline-offset-2 hover:decoration-2">
                 the homes on sale
               </Link>{" "}
               or{" "}
-              <Link href="/guides" className="text-[var(--color-teal)] hover:underline">
+              <Link href="/guides" className="text-[var(--color-teal)] underline underline-offset-2 hover:decoration-2">
                 the buying guides
               </Link>
               . You can also call the showroom on{" "}
-              <a href="tel:2603081457" className="text-[var(--color-teal)] hover:underline">
+              <a href="tel:2603081457" className="text-[var(--color-teal)] underline underline-offset-2 hover:decoration-2">
                 (260) 308-1457
               </a>
               .

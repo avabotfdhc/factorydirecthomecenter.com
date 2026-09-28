@@ -54,7 +54,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">{t("noPhoto")}</div>
+            <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray)] text-sm">{t("noPhoto")}</div>
           )}
           {!isSheet && <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />}
         </Link>

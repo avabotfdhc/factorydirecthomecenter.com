@@ -160,7 +160,7 @@ function Overlay({
         </>
       )}
 
-      <div className="absolute bottom-4 right-4 hidden sm:block text-white/40 text-xs">
+      <div className="absolute bottom-4 right-4 hidden sm:block text-white/70 text-xs">
         click image to zoom · esc to close
       </div>
     </div>,
@@ -202,7 +202,8 @@ export function ZoomableImage({
         alt={alt}
         fill
         sizes={sizes}
-        priority={priority}
+        preload={priority}
+        fetchPriority={priority ? "high" : undefined}
         loading={priority ? undefined : "lazy"}
         unoptimized={!isOptimizableImage(src)}
         onClick={() => setOpenAt(Math.min(index, set.length - 1))}
