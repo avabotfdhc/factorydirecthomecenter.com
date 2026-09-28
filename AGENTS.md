@@ -10,11 +10,31 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 **Env vars are managed only on Vercel** — never write `.env.local` in this repo. `.vercelignore` excludes all `.env*` files from Vercel uploads, so a local `.env.local` with stale or placeholder values will NOT reach production, but it WILL break `npm run dev` if you put empty/placeholder values in it. If you need production env vars locally for debugging, use `vercel env pull .vercel/.env.production.local --environment=production --yes` (writes outside the project root) or `vercel env run -- npm run dev` (no file written).
 
-**Currently wired tracking** (all set via `vercel env add` on Vercel side, shadowed if a local `.env.local` exists):
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID` — Google Analytics 4
-- `NEXT_PUBLIC_GTM_ID` — Google Tag Manager
-- `NEXT_PUBLIC_FB_PIXEL_ID` — Meta/Facebook Pixel
-- `NEXT_PUBLIC_CLARITY_PROJECT_ID` — Microsoft Clarity
+**Tracking: what is actually running** (verified against production 2026-09-28 —
+the previous version of this list said all four were "set via `vercel env add`",
+and none of the four env vars is set):
+- **Google Analytics 4 — working**, from the ID committed as the default in
+  `src/lib/analytics.tsx` (`G-6PMB9SZX4H`). `NEXT_PUBLIC_GA_MEASUREMENT_ID` overrides it.
+- **Microsoft Clarity — working**, same way (`tjh2nfoq85`).
+  `NEXT_PUBLIC_CLARITY_PROJECT_ID` overrides it.
+- **Google Tag Manager — NOT running.** `NEXT_PUBLIC_GTM_ID` is unset and defaults
+  to `""`, so the script never loads. GA4 runs directly, so GTM is optional.
+- **Meta Pixel — NOT running.** `NEXT_PUBLIC_FB_PIXEL_ID` is unset, same as above.
+
+A GA4 or Clarity ID is a PUBLIC value that ships in the page source, which is why
+those two are deliberately committed rather than left to env vars; keys and
+secrets never are. `docs/vercel-env-setup.md` lists every variable, what is
+missing, and how to add it.
+
+**Do not conclude tracking is broken by reading the HTML.** `AnalyticsProvider`
+returns `null` until BOTH gates pass — the visitor has accepted cookies
+(`useTrackingAllowed`) and has interacted with the page (`useDeferUntilInteraction`,
+which defers the scripts for speed). A `curl` or a view-source before accepting
+the banner shows zero tracking scripts on a perfectly healthy site. That inference
+was made and reported as an outage on 2026-09-28; the actual check is a browser —
+accept the banner, click and scroll, then confirm requests to
+`googletagmanager.com/gtag/js` and `clarity.ms/tag/…`. `GET /api/health` reports
+only whether the *env vars* are set, which for these two is `false` by design.
 
 **Feature env vars** (also Vercel-only):
 - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` — the Supabase project holding the catalogue, `/admin`, the `leads` table and `/api/search`. **Production is wired to project `mvetqzhjszlullttfkwa` (dashboard name "supabase-purple-queen")** — verified via `/api/health` on 2026-09-09. The project named "FDHC Site" (`wmkidrlcwncrskyzynsn`) holds the original copy of the same schema and catalogue (172 plans, 504 images, 15 literature rows) but the site does not read from it; treat it as a backup until the env vars are switched, and apply schema changes to the wired project first. Without the URL + anon key the site serves the repo-published catalogue and search falls back to it.
