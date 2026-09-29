@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { AnalyticsProvider, GoogleTagManagerNoScript } from "@/lib/analytics";
 import { TrackingProvider } from "@/components/TrackingProvider";
 import { StructuredData, structuredData } from "@/lib/seo";
-import { PageFooter } from "@/components/PageFooter";
+import { DeferredPageFooter } from "@/components/DeferredPageFooter";
 import { MobileActionBar } from "@/components/MobileActionBar";
 import { DeferredOverlays } from "@/components/DeferredOverlays";
 import { ConsentBanner } from "@/components/ConsentBanner";
@@ -128,7 +128,7 @@ export default function RootLayout({
         <LocaleProvider>
           <Header />
           <main id="main-content" className="flex-1">{children}</main>
-          <PageFooter />
+          <DeferredPageFooter />
           <Footer />
           <MobileActionBar />
           <DeferredOverlays />

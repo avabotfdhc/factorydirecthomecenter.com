@@ -142,3 +142,5 @@ export function PageFooter() {
     </aside>
   );
 }
+
+export default PageFooter;
