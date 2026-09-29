@@ -444,7 +444,7 @@ export default function AboutPage() {
               {[
                 { value: "#2", label: "National Builder" },
                 { value: "20%", label: "Market Share" },
-                { value: "20 mi", label: "From Our Lot" },
+                { value: "30 mi", label: "From Our Lot" },
               ].map((stat, idx) => (
                 <FadeIn key={stat.label} direction="up" delay={idx * 150}>
                   <div className="bg-[var(--color-cream-dark)] rounded-xl p-6">
