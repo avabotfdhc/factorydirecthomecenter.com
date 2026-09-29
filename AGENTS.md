@@ -934,3 +934,27 @@ real, two were the checker's.
   head script without async/defer is Next's `<script noModule>` polyfill, emitted
   unconditionally by `app-render.js`. A browser that supports ES modules — every
   browser since 2018 — never downloads a `nomodule` script, so it blocks nothing.
+
+# PageFooter is lazy, because it carries every blog post
+
+PageSpeed on 2026-09-29 scored `/` at 93 (LCP 3.2 s) against 98 the day before.
+The largest first-party script on every page was ~235 KB raw / ~67 KB compressed
+of **blog post HTML**: `PageFooter` is a client component (it needs
+`usePathname`), it imports `sitePages` from `src/lib/pages.ts`, and the registry
+is derived from `localBlogPosts` — bodies and all. Every new post made every
+page heavier; five were added on each of 2026-09-28 and 2026-09-29.
+
+The root layout now renders `DeferredPageFooter`, which `React.lazy`-loads
+`PageFooter`. It is still server-rendered (the cards, crumbs and the
+BreadcrumbList schema are in the HTML), but its chunk is requested after
+hydration starts instead of before the LCP image. Verified in a browser: footer
+present, crumbs correct per page, no hydration errors. `tests/bundle-weight.test.ts`
+fails if the layout imports `PageFooter` directly again.
+
+Measurement caveat, learned the hard way: local Lighthouse (simulated, Moto G /
+slow 4G) matched PageSpeed's 93 closely, but five runs of *identical* code
+spread 80–96, and four variants (baseline, no font preload, lazy footer, the old
+`priority` prop) all landed at a median of 91–92. Run-to-run noise is larger
+than any of these changes, so do not read one PageSpeed run as a regression or
+a win — take the median of three or more. Font `preload: false` measurably
+**hurt** FCP (1.22 → 1.54 s) and was not kept.
