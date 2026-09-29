@@ -103,12 +103,27 @@ export function resolveConsent(): ConsentState {
 
 /** Subscribes to consent changes, including ones made in another tab. */
 export function subscribeConsent(onChange: () => void): () => void {
-  window.addEventListener(CONSENT_EVENT, onChange);
-  window.addEventListener("storage", onChange);
-  return () => {
-    window.removeEventListener(CONSENT_EVENT, onChange);
-    window.removeEventListener("storage", onChange);
+  const handle = () => {
+    syncAnsweredAttr();
+    onChange();
   };
+  window.addEventListener(CONSENT_EVENT, handle);
+  window.addEventListener("storage", handle);
+  return () => {
+    window.removeEventListener(CONSENT_EVENT, handle);
+    window.removeEventListener("storage", handle);
+  };
+}
+
+/**
+ * Keeps CONSENT_ANSWERED_ATTR in step with the stored choice after page load.
+ * Without this, "Cookie preferences" in the footer (resetConsent) would re-open
+ * the banner in React while the attribute set before paint kept it hidden.
+ */
+function syncAnsweredAttr(): void {
+  const root = document.documentElement;
+  if (resolveConsent().needsPrompt) root.removeAttribute(CONSENT_ANSWERED_ATTR);
+  else root.setAttribute(CONSENT_ANSWERED_ATTR, "");
 }
 
 export function getTrackingAllowedSnapshot(): boolean {
@@ -128,3 +143,32 @@ export function getNeedsPromptSnapshot(): boolean {
 export function getServerConsentSnapshot(): boolean {
   return false;
 }
+
+/**
+ * Server snapshot for the banner only: `true`, so the notice is in the static
+ * HTML and paints with the first frame instead of after hydration. On the
+ * homepage the notice is the largest thing on a phone screen, so gating it on
+ * hydration made it the LCP element at ~4 s on a mobile Lighthouse run
+ * (2026-09-29). The cached HTML still carries nothing visitor-specific: every
+ * visitor gets the same markup, and CONSENT_PREPAINT_SCRIPT hides it before
+ * first paint for anyone who has already answered or sends GPC.
+ */
+export function getServerNeedsPromptSnapshot(): boolean {
+  return true;
+}
+
+/** Set on <html> by CONSENT_PREPAINT_SCRIPT when the banner must not show. */
+export const CONSENT_ANSWERED_ATTR = "data-consent-answered";
+
+/**
+ * Inline <head> script that runs before the body paints. It repeats
+ * resolveConsent()'s "no prompt" test (GPC, or a current stored answer) with
+ * the same key, version and age limit, and marks <html> so globals.css hides
+ * the server-rendered banner. Without it, a returning visitor would see the
+ * notice flash until hydration removed it.
+ */
+export const CONSENT_PREPAINT_SCRIPT = `(function(){try{var d=document.documentElement;if(navigator.globalPrivacyControl===true){d.setAttribute(${JSON.stringify(
+  CONSENT_ANSWERED_ATTR,
+)},"");return}var r=localStorage.getItem(${JSON.stringify(STORAGE_KEY)});if(!r)return;var p=JSON.parse(r);if(p&&p.v===${VERSION}&&p.at&&Date.now()-p.at<=${MAX_AGE_MS})d.setAttribute(${JSON.stringify(
+  CONSENT_ANSWERED_ATTR,
+)},"")}catch(e){}})();`;

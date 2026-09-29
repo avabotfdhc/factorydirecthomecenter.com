@@ -958,3 +958,37 @@ spread 80–96, and four variants (baseline, no font preload, lazy footer, the o
 than any of these changes, so do not read one PageSpeed run as a regression or
 a win — take the median of three or more. Font `preload: false` measurably
 **hurt** FCP (1.22 → 1.54 s) and was not kept.
+
+# The consent banner is in the server HTML, because it was the mobile LCP
+
+PageSpeed mobile on 2026-09-29 scored `/` at 86 with LCP 4.0 s, and the LCP
+element was the consent banner's paragraph, not the hero. The banner was absent
+from the HTML (server snapshot `false`) and mounted after hydration, so ~all of
+its LCP was "element render delay" waiting on the JS. It is now rendered on the
+server for everyone (`getServerNeedsPromptSnapshot()` → `true`) and paints in the
+first frame. `CONSENT_PREPAINT_SCRIPT` (inline in the root layout's `<head>`)
+sets `data-consent-answered` on `<html>` before paint for a visitor who has
+answered or sends GPC, and `globals.css` hides `#consent-banner` under it, so a
+returning visitor sees no flash; hydration then removes the element.
+`subscribeConsent()` keeps the attribute in step afterwards, which is what lets
+"Cookie preferences" re-open the banner. Nothing visitor-specific is in the
+cached HTML and the homepage stays static. Reading the consent cookie with
+`cookies()` in the layout was rejected for the same reason as CSP nonces: it
+makes every page dynamic. Analytics gating is unchanged — it still uses
+`getServerConsentSnapshot()` (`false`).
+
+Measured locally with Lighthouse mobile using `--throttling-method=devtools` and
+the hero image blocked (the one setup that reproduces production's LCP element):
+LCP 3.4 s → 1.8 s, score 86 → 92–94, three runs each. The default *simulated*
+throttling does not show the gain on localhost: every script finishes before the
+first frame there, so Lantern attributes all the JS to LCP whatever paints
+first. Check the observed timings (`metrics` audit: observed LCP = observed FCP
+after the change) before concluding a render-path change did nothing.
+`tests/consent-banner.test.ts` runs the pre-paint script against
+`resolveConsent()`'s cases (answered, GPC, expired, wrong version, blocked
+storage).
+
+Two other suggestions from the same audit were checked and are already settled
+above: `experimental.inlineCss` (A/B-tested, no gain, off) and the "Legacy
+JavaScript" polyfills (Next's own built-in module; a `browserslist` entry does
+not remove it).

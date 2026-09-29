@@ -10,6 +10,7 @@ import { DeferredPageFooter } from "@/components/DeferredPageFooter";
 import { MobileActionBar } from "@/components/MobileActionBar";
 import { DeferredOverlays } from "@/components/DeferredOverlays";
 import { ConsentBanner } from "@/components/ConsentBanner";
+import { CONSENT_PREPAINT_SCRIPT } from "@/lib/consent";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { LocalBusinessSchema } from "@/components/JsonLd";
 
@@ -111,6 +112,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${jakarta.variable} h-full antialiased`}
     >
       <head>
+        {/* Hides the server-rendered consent banner before first paint for a
+            visitor who has already answered (see ConsentBanner). Runs before
+            <body> is parsed, so there is no flash. */}
+        <script dangerouslySetInnerHTML={{ __html: CONSENT_PREPAINT_SCRIPT }} />
         {/* Global Structured Data — LocalBusiness + WebSite on every page */}
         <LocalBusinessSchema />
         <StructuredData data={structuredData.website()} />
