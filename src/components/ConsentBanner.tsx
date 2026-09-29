@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useBottomBarHeight } from "@/lib/bottom-bars";
 import {
   getNeedsPromptSnapshot,
-  getServerConsentSnapshot,
+  getServerNeedsPromptSnapshot,
   subscribeConsent,
   writeConsent,
 } from "@/lib/consent";
@@ -14,15 +14,18 @@ import {
 // suppressed entirely for a browser sending Global Privacy Control, and is
 // re-openable from the footer's "Cookie preferences" link.
 //
-// The server snapshot is `false`, so the banner is absent from the cached HTML
-// and appears on hydration only if this particular visitor still needs to be
-// asked — no hydration mismatch, and no visitor's choice baked into a shared
-// cached page.
+// The server snapshot is `true`, so the banner is in the cached HTML for every
+// visitor and paints with the first frame. Waiting for hydration made it the
+// homepage's LCP element at 4.0 s on mobile (Lighthouse, 2026-09-29). Nothing
+// visitor-specific is baked in: CONSENT_PREPAINT_SCRIPT (root layout <head>)
+// hides it before first paint for a visitor who has answered or sends GPC, and
+// hydration then removes it — useSyncExternalStore hydrates against the server
+// snapshot and swaps, so there is no mismatch.
 export function ConsentBanner() {
   const visible = useSyncExternalStore(
     subscribeConsent,
     getNeedsPromptSnapshot,
-    getServerConsentSnapshot,
+    getServerNeedsPromptSnapshot,
   );
   const ref = useRef<HTMLDivElement>(null);
   // The notice sits at the very bottom of the screen; everything else pinned
@@ -34,6 +37,7 @@ export function ConsentBanner() {
   return (
     <div
       ref={ref}
+      id="consent-banner"
       role="region"
       aria-label="Tracking preferences"
       className="fixed bottom-0 inset-x-0 z-[60] bg-[var(--color-charcoal)] text-white shadow-2xl border-t border-white/10"

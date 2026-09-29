@@ -53,6 +53,14 @@
   --radius-2xl: 1.5rem;
 }
 
+/* The consent banner is server-rendered for everyone so it paints with the
+   first frame (it was the mobile LCP element). CONSENT_PREPAINT_SCRIPT in the
+   root layout sets this attribute before paint for visitors who have already
+   answered; hydration then removes the element. */
+html[data-consent-answered] #consent-banner {
+  display: none;
+}
+
 @theme inline {
   --font-sans: var(--font-jakarta);
   --font-serif: var(--font-cormorant);
