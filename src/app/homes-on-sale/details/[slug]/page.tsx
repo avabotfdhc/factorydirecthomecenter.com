@@ -79,7 +79,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
   }));
 
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="bg-gray-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -128,7 +128,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
                     index={0}
                   />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-600">
                     Photography for this plan is on the way — call for photos and the floor plan.
                   </div>
                 )}
@@ -286,7 +286,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/contact-us"
-                  className="flex-1 text-center py-4 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors"
+                  className="flex-1 text-center py-4 bg-[#4d7c0f] hover:bg-[#3f6212] text-white font-bold rounded-lg transition-colors"
                 >
                   Get This Deal
                 </Link>
@@ -343,6 +343,6 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
           <SpecsDisclaimer className="mt-12 max-w-3xl mx-auto text-center" />
         </div>
       </section>
-    </main>
+    </div>
   );
 }

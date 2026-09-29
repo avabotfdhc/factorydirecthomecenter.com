@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { shortImageSrc } from "@/lib/image-src";
 import { H3 } from "./Heading";
 import type { ApiFloorPlan } from "@/lib/api-content";
 
@@ -28,7 +29,7 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
           <figure className="aspect-[16/11] bg-gradient-to-br from-gray-100 to-gray-50 relative overflow-hidden">
             {plan.image ? (
               <Image
-                src={plan.image}
+                src={shortImageSrc(plan.image)}
                 alt={`${plan.name} ${plan.homeType} floor plan — ${plan.sqft} sq ft, ${plan.beds} bed, ${plan.baths} bath`}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -36,7 +37,7 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
                 loading={i === 0 ? "eager" : "lazy"}
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray-light)] text-sm">No photo</div>
+              <div className="absolute inset-0 flex items-center justify-center text-[var(--color-gray)] text-sm">No photo</div>
             )}
             {plan.homeType && (
               <span className="absolute top-3 left-3 bg-[var(--color-teal)] text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded z-10">

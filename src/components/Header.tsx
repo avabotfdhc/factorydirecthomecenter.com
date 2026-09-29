@@ -103,7 +103,9 @@ export function Header() {
                 width={180}
                 height={50}
                 className="h-11 sm:h-12 w-auto"
-                priority
+                // Eager, not preloaded: the logo is never the LCP element, and a
+                // second preload competes with the hero image for bandwidth.
+                loading="eager"
               />
             </Link>
 

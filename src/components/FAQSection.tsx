@@ -34,7 +34,7 @@ export function FAQSection({ title, subtitle, faqs, showSchema = true }: FAQSect
             )}
           </header>
 
-          <div className="space-y-4" role="list">
+          <div className="space-y-4">
             {faqs.map((faq, idx) => (
               <details
                 key={idx}
@@ -43,7 +43,6 @@ export function FAQSection({ title, subtitle, faqs, showSchema = true }: FAQSect
                 onToggle={(e) => {
                   setOpenIndex(e.currentTarget.open ? idx : null);
                 }}
-                role="listitem"
               >
                 <summary
                   className="flex items-center justify-between p-6 cursor-pointer list-none hover:bg-[var(--color-cream)] transition-colors"

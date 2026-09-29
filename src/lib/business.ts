@@ -39,8 +39,14 @@ export const GOOGLE_LISTING_URL =
  * eligibility path entirely. `RealEstateAgent` and
  * `HomeAndConstructionBusiness` stay because the dealership genuinely does
  * both: it sells homes and it coordinates the site work.
+ *
+ * `LocalBusiness` is listed explicitly too (2026-09-28). Every type above is a
+ * LocalBusiness subtype, so it adds nothing for Google, but DealerTide's site
+ * review matched the literal string and reported "No local business markup"
+ * on every page while this node — address, geo, hours — was on all of them.
+ * Naming the parent type costs nothing and makes any checker agree.
  */
-export const BUSINESS_TYPES = ["MobileHomeDealer", "RealEstateAgent", "HomeAndConstructionBusiness"] as const;
+export const BUSINESS_TYPES = ["LocalBusiness", "MobileHomeDealer", "RealEstateAgent", "HomeAndConstructionBusiness"] as const;
 
 export const BUSINESS = {
   legalName: "Factory Direct Homes Center LLC",

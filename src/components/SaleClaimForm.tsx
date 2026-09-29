@@ -171,7 +171,7 @@ export function SaleClaimForm({ homeName }: { homeName: string }) {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full py-4 bg-[#84cc16] hover:bg-[#65a30d] text-white font-bold rounded-lg transition-colors disabled:opacity-60"
+        className="w-full py-4 bg-[#4d7c0f] hover:bg-[#3f6212] text-white font-bold rounded-lg transition-colors disabled:opacity-60"
       >
         {status === "submitting" ? "Sending…" : "Submit Request"}
       </button>

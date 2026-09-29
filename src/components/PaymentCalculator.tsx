@@ -111,13 +111,15 @@ export function PaymentCalculator() {
             <div className="space-y-6">
               {/* Loan Type */}
               <div>
-                <label className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
+                <p id="pc-loan-type" className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
                   Loan Type
-                </label>
-                <div className="grid grid-cols-2 gap-2">
+                </p>
+                <div className="grid grid-cols-2 gap-2" role="group" aria-labelledby="pc-loan-type">
                   {(Object.keys(loanTypeInfo) as Array<keyof typeof loanTypeInfo>).map((type) => (
                     <button
                       key={type}
+                      type="button"
+                      aria-pressed={state.loanType === type}
                       onClick={() => setState((prev) => ({ ...prev, loanType: type }))}
                       className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
                         state.loanType === type
@@ -136,12 +138,13 @@ export function PaymentCalculator() {
 
               {/* Home Price */}
               <div>
-                <label className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
+                <label htmlFor="pc-price" className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
                   Home Price
                 </label>
                 <div className="flex items-center gap-3">
                   <span className="text-lg font-bold text-[var(--color-charcoal)]">$</span>
                   <input
+                    id="pc-price"
                     type="number"
                     value={state.homePrice}
                     onChange={(e) => handleHomePriceChange(Number(e.target.value))}
@@ -153,6 +156,7 @@ export function PaymentCalculator() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Home price slider"
                   value={state.homePrice}
                   onChange={(e) => handleHomePriceChange(Number(e.target.value))}
                   className="w-full mt-3 accent-[var(--color-teal)]"
@@ -168,12 +172,13 @@ export function PaymentCalculator() {
 
               {/* Down Payment */}
               <div>
-                <label className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
+                <label htmlFor="pc-down" className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
                   Down Payment ({state.downPaymentPercent.toFixed(0)}%)
                 </label>
                 <div className="flex items-center gap-3">
                   <span className="text-lg font-bold text-[var(--color-charcoal)]">$</span>
                   <input
+                    id="pc-down"
                     type="number"
                     value={state.downPayment}
                     onChange={(e) => handleDownPaymentChange(Number(e.target.value))}
@@ -185,6 +190,7 @@ export function PaymentCalculator() {
                 </div>
                 <input
                   type="range"
+                  aria-label="Down payment percent slider"
                   value={state.downPaymentPercent}
                   onChange={(e) => handleDownPaymentPercentChange(Number(e.target.value))}
                   className="w-full mt-3 accent-[var(--color-teal)]"
@@ -200,10 +206,11 @@ export function PaymentCalculator() {
 
               {/* Credit Tier */}
               <div>
-                <label className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
+                <label htmlFor="pc-credit" className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
                   Credit Score
                 </label>
                 <select
+                  id="pc-credit"
                   value={state.creditTier}
                   onChange={(e) =>
                     setState((prev) => ({ ...prev, creditTier: e.target.value as CalculatorState["creditTier"] }))
@@ -219,15 +226,17 @@ export function PaymentCalculator() {
 
               {/* Loan Term */}
               <div>
-                <label className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
+                <p id="pc-loan-term" className="block text-sm font-semibold text-[var(--color-charcoal)] mb-2">
                   Loan Term
-                </label>
-                <div className="flex gap-2">
+                </p>
+                <div className="flex gap-2" role="group" aria-labelledby="pc-loan-term">
                   {[10, 15, 20, 25, 30]
                     .filter((term) => term <= loanTypeInfo[state.loanType].maxTerm)
                     .map((term) => (
                       <button
                         key={term}
+                        type="button"
+                        aria-pressed={state.loanTerm === term}
                         onClick={() => setState((prev) => ({ ...prev, loanTerm: term }))}
                         className={`flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                           state.loanTerm === term

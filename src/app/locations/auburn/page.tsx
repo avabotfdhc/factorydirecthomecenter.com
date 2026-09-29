@@ -139,7 +139,8 @@ export default function AuburnLocationPage() {
             fill
             className="object-cover opacity-30"
             sizes="100vw"
-            priority
+            preload
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-charcoal)]/80 via-[var(--color-charcoal)]/60 to-[var(--color-charcoal)]/90" />
         </div>
@@ -186,19 +187,19 @@ export default function AuburnLocationPage() {
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <FadeIn direction="up" delay={0}>
               <div className="font-serif text-3xl font-bold">Auburn</div>
-              <div className="text-sm text-white/70">Our Showroom</div>
+              <div className="text-sm text-white/90">Our Showroom</div>
             </FadeIn>
             <FadeIn direction="up" delay={150}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={20} suffix=" mi" /></div>
-              <div className="text-sm text-white/70">From the Factory</div>
+              <div className="text-sm text-white/90">From the Factory</div>
             </FadeIn>
             <FadeIn direction="up" delay={300}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={8} suffix="-12" /></div>
-              <div className="text-sm text-white/70">Weeks Delivery</div>
+              <div className="text-sm text-white/90">Weeks Delivery</div>
             </FadeIn>
             <FadeIn direction="up" delay={450}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={25} suffix=" min" /></div>
-              <div className="text-sm text-white/70">North of Fort Wayne</div>
+              <div className="text-sm text-white/90">North of Fort Wayne</div>
             </FadeIn>
           </StaggerContainer>
         </div>

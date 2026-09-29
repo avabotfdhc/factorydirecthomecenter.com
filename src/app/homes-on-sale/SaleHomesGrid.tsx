@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { shortImageSrc } from "@/lib/image-src";
 import { FadeIn } from "@/components/VisualEffects";
 import type { SaleHome } from "@/lib/sale-homes";
 import { PriceTriple, PricingDisclaimer } from "@/components/Pricing";
@@ -211,7 +212,7 @@ export function SaleHomesGrid({
                         <span className="absolute top-4 left-4 z-10 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                           On Sale
                         </span>
-                        <span className="absolute top-4 right-4 z-10 bg-[#84cc16] text-white px-3 py-1 rounded-full text-sm font-bold">
+                        <span className="absolute top-4 right-4 z-10 bg-[#4d7c0f] text-white px-3 py-1 rounded-full text-sm font-bold">
                           {discountPercent}% Off
                         </span>
                       </>
@@ -220,14 +221,14 @@ export function SaleHomesGrid({
                     <div className="relative h-56 bg-gray-100">
                       {home.image ? (
                         <Image
-                          src={home.image}
+                          src={shortImageSrc(home.image)}
                           alt={`${home.name} — ${home.sqft} sq ft, ${home.beds} bed ${home.baths} bath Champion home`}
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">
+                        <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-600">
                           Photo coming soon
                         </div>
                       )}

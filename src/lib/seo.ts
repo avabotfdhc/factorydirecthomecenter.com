@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { businessJsonLd, businessRef, BUSINESS_ID, ownerJsonLd } from "./business";
 import { jsonLdScript } from "@/lib/json-ld";
+import { fitTitle } from "@/lib/page-title";
 
 interface SEOConfig {
   title: string;
@@ -44,7 +45,9 @@ export function generateMetadata(config: SEOConfig): Metadata {
   const imageDims = image === "/images/hero-home.jpg" ? { width: 1920, height: 1071 } : {};
 
   return {
-    title,
+    // The layout template would append " | Factory Direct Homes" regardless
+    // of length; keep the suffix only when the whole thing still fits in 65.
+    title: { absolute: fitTitle([`${title} | Factory Direct Homes`, title]) },
     description,
     keywords: [
       "manufactured homes",

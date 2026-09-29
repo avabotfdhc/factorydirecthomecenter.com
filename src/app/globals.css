@@ -14,17 +14,27 @@
   --color-orange: #E07820;
   --color-orange-light: #F2A35A;
   --color-orange-dark: #C46516;
+  /* Orange as TEXT. #E07820 is 3.05:1 on white — fine for fills, fails AA as
+     type. #9a4a0e is 6.25:1 on white, 5.83:1 on cream. */
+  --color-orange-text: #9a4a0e;
   --color-lime: #047857;
   --color-lime-light: #34d399;
   --color-lime-dark: #065f46;
+  /* Green TEXT on charcoal. --color-lime (#047857) is 2.66:1 there;
+     emerald-400 is 7.61:1. Light surfaces keep --color-lime. */
+  --color-lime-on-dark: #34d399;
   /* Dark surface: warm slate instead of muddy charcoal */
   --color-charcoal: #1e293b;
   --color-charcoal-light: #334155;
   --color-charcoal-lighter: #475569;
   --color-cream: #F8F7F4;
   --color-cream-dark: #EDECEA;
-  /* Neutral text: slate-500 (4.7:1 on white) / slate-400 */
-  --color-gray: #64748b;
+  /* Neutral text. #586579 is 5.52:1 on cream, 5.01:1 on cream-dark and 5.91:1
+     on white. It was slate-500 (#64748b) until 2026-09-28, which is 4.44:1 on
+     cream and 4.03:1 on cream-dark — under AA 4.5:1 on the two backgrounds most
+     of the site sits on (Lighthouse color-contrast failed on /). Light-on-light
+     only: on charcoal any mid-gray fails, so dark surfaces use white/alpha. */
+  --color-gray: #586579;
   --color-gray-light: #94a3b8;
   --color-white: #FFFFFF;
   
@@ -448,5 +458,74 @@ button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Catalogue card and sale-table classes.
+   /floor-plans renders ~214 cards and /homes-on-sale a 30-row table plus a
+   grid, and the same long utility strings were repeated in the HTML for every
+   one of them — ~2 KB of class attributes per card, 440 KB on /floor-plans
+   alone (DealerTide review, 2026-09-28: "2 pages over 600KB of HTML"). The
+   styles are identical; only where they are written changed. */
+@layer components {
+  .fp-card {
+    @apply relative flex flex-col h-full border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1;
+  }
+  .fp-card-media {
+    @apply relative aspect-[16/10] bg-gradient-to-br from-[var(--color-cream-dark)] to-[var(--color-cream)] overflow-hidden border-b border-[var(--color-charcoal)]/5;
+  }
+  .fp-card-link {
+    @apply block absolute inset-0;
+  }
+  .fp-card-body {
+    @apply flex flex-1 flex-col p-6;
+  }
+  .fp-card-head {
+    @apply flex items-start justify-between gap-3 mb-2;
+  }
+  .fp-card-brand {
+    @apply text-sm text-[var(--color-teal)] font-medium mb-4;
+  }
+  .fp-card-actions {
+    @apply mt-auto pt-5 grid grid-cols-2 gap-2;
+  }
+  .fp-card-img-cover {
+    @apply object-cover group-hover:scale-105 transition-transform duration-700;
+  }
+  .fp-card-img-sheet {
+    @apply object-contain p-3 bg-slate-50;
+  }
+  .fp-card-shade {
+    @apply absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity;
+  }
+  .fp-card-badge {
+    @apply absolute text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none;
+  }
+  .fp-card-title {
+    @apply font-serif text-xl font-semibold group-hover:text-[var(--color-teal)] transition-colors;
+  }
+  .fp-card-specs {
+    @apply flex gap-4 text-xs tracking-wider uppercase text-[var(--color-gray)];
+  }
+  .fp-card-sep {
+    @apply text-[var(--color-gray-light)];
+  }
+  .fp-card-cta {
+    @apply rounded-lg bg-[var(--color-teal)] py-2.5 text-xs font-bold tracking-wider uppercase text-white hover:bg-[var(--color-teal-dark)] transition-colors;
+  }
+  .fp-compare {
+    @apply inline-flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer border transition-colors;
+  }
+  .fp-compare-on {
+    @apply bg-[var(--color-teal)] text-white border-[var(--color-teal)];
+  }
+  .fp-compare-off {
+    @apply bg-white text-[var(--color-charcoal)] border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/50;
+  }
+  .fp-compare-box {
+    @apply w-4 h-4 accent-[var(--color-teal)];
+  }
+  .fp-card-cta-outline {
+    @apply flex items-center justify-center rounded-lg border border-[var(--color-charcoal)]/15 py-2.5 text-xs font-bold tracking-wider uppercase text-[var(--color-charcoal)] hover:border-[var(--color-teal)]/50 hover:text-[var(--color-teal)] transition-colors;
   }
 }

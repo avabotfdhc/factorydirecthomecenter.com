@@ -846,3 +846,91 @@ dealer markup or middleman in the sale.
 Also removed at Kyle's request the same day: any claim of "no dealer markup" or "zero
 markup" on contractor or site work (the pricing guide, two city posts, Ava's context).
 Say only that the buyer hires and pays their own contractors.
+
+# Lighthouse 2026-09-28: the gray text token failed AA, and pages nested <main>
+
+A mobile Lighthouse run on `/` scored Performance 98 / Accessibility 97 / Best
+Practices 100 / SEO 100. Every accessibility failure was one of two things, and an
+axe sweep of ~100 pages found the same pairings repeated sitewide:
+
+- **`--color-gray` was slate-500 (#64748b)**: 4.44:1 on cream, 4.03:1 on
+  cream-dark — under 4.5:1 on the backgrounds most body copy sits on. It is now
+  **#586579** (5.52 / 5.01 / 5.91 on cream / cream-dark / white). Light surfaces
+  only; on charcoal use white with alpha.
+- Two text tokens exist for the pairings that failed elsewhere:
+  `--color-lime-on-dark` (green on charcoal; `--color-lime` is 2.66:1 there) and
+  `--color-orange-text` (`--color-orange` is 3.05:1 on white — fine as a fill,
+  fails as type). Faded text (`text-white/40`, `/70` on teal, `charcoal/50–60`,
+  `text-gray-400`, `--color-gray-light` on white) was raised until it passed.
+- Inline links in running text are underlined, not colour-only (axe
+  `link-in-text-block`: teal vs charcoal is 2.66:1).
+- **Only the root layout renders `<main>`.** Eleven pages opened their own inside
+  it. `PageFooter` is an `<aside aria-label="Related resources">` and its crumb
+  nav is "Page location" (pages with their own visible breadcrumb had two navs
+  named "Breadcrumb"); `AnnouncementBar` is an `<aside>`.
+
+`tests/accessibility.test.ts` holds the token contrasts and the single-`<main>`
+rule. Individual element contrast still needs a browser — axe composites alpha
+against the real background; source reading cannot.
+
+Performance: hero images use `preload` + `fetchPriority="high"` (Next 16
+deprecates `priority`, which preloaded **without** a fetch priority — the one LCP
+check that failed). The header logo is `loading="eager"`, not preloaded, so it
+does not compete with the hero. `experimental.inlineCss` was A/B-tested and gave
+no measurable gain, so it is off. The "Legacy JavaScript" insight (~14 KiB) is
+Next's own built-in polyfill module, which Turbopack always bundles; it is
+unscored and cannot be removed from config.
+
+Best Practices: `Cross-Origin-Opener-Policy: same-origin` added. An *enforced*
+CSP with nonces is the remaining unscored "High" item; nonces force every page to
+render dynamically (no static/ISR HTML), which would cost the performance score
+it is meant to protect, so it is a deliberate non-goal for now.
+
+# DealerTide review 2026-09-28: titles, page weight, and two checker false positives
+
+DealerTide's automated review scored the site 88/100 with four findings. Two were
+real, two were the checker's.
+
+- **Titles over 65 characters — real, and much wider than its sample.** Every
+  floor-plan title (~200 pages) and every blog post (~30) ran 70–160 once the
+  layout's " | Factory Direct Homes" suffix was added. `src/lib/page-title.ts`
+  now builds them: `fitTitle()` takes candidates from most to least descriptive
+  and returns the first ≤ 65 as an **absolute** title. Plans: name — beds/baths
+  Champion type, Auburn IN → drop the place → drop the brand → drop the type.
+  Posts: headline + brand → headline → subject (before the colon) + brand →
+  subject; the H1 keeps the full headline. `generateMetadata()` in `seo.ts`
+  keeps the brand suffix only when it fits. `tests/page-title.test.ts` runs the
+  ladder over the longest CMS names and every published post. When adding a page
+  with a hand-written `metadata.title`, keep title + 23-char suffix ≤ 65.
+- **HTML over 600 KB — real.** `/floor-plans` was 1.2 MB and `/homes-on-sale`
+  800 KB, almost all of it repetition: ~2 KB of utility classes per card (now
+  `.fp-card*` / `.fp-compare*` in `globals.css`, same styles), and srcsets that
+  repeated the full Supabase URL ten times per image. Catalogue photos now render
+  through `/fp/<key>` — a same-origin rewrite to the bucket (`src/lib/image-src.ts`,
+  `next.config.ts`) — and `deviceSizes` drops 2048/3840, which no image is shown
+  at. Only the *display* src is short: sitemap `<image:loc>`, og:image and JSON-LD
+  keep the canonical Supabase URL. The sale table's 64px thumbnails were
+  `fill` + `sizes="64px"`; next/image only parses `vw` in `sizes`, so each listed
+  every width up to 1920. Fixed-size thumbnails list 1x/2x. The grid's client
+  props no longer carry the unused `title` and use short image paths.
+  **Measured live after that pass: `/homes-on-sale` 796 → 516 KB, `/floor-plans`
+  1,214 → 810 KB — still over.** Two things only production showed: Vercel adds a
+  38-character `&dpl=<deployment id>` to every *same-origin* optimiser URL (so
+  moving photos to `/fp/` grew each srcset entry back), and next/image always
+  emits every configured width. Floor-plan cards now render through
+  `CatalogueImage` — a plain `<img>` with a **three-width** srcset (640/828/1080)
+  of the same `/_next/image` URLs, no `dpl` tag — and `gridPlan()` in
+  `floor-plans/page.tsx` sends the grid only the fields it reads. The page's
+  ItemList schema is rendered by `FloorPlansGrid` from its props, because
+  anything a *server* component renders is serialised a second time into the
+  RSC payload. Verified on production before this pass: `/_next/image?url=/fp/…`
+  answers 200 `image/webp`, so the rewrite works through Vercel's optimiser.
+- **"No local business markup" — false positive.** The node (address, geo,
+  hours, areaServed) was on every page, typed `["MobileHomeDealer",
+  "RealEstateAgent", "HomeAndConstructionBusiness"]`, all LocalBusiness
+  subtypes. The checker matched the literal string. `BUSINESS_TYPES` now names
+  `LocalBusiness` too, which costs nothing.
+- **"Render-blocking script" — false positive, not fixable in config.** The only
+  head script without async/defer is Next's `<script noModule>` polyfill, emitted
+  unconditionally by `app-render.js`. A browser that supports ES modules — every
+  browser since 2018 — never downloads a `nomodule` script, so it blocks nothing.

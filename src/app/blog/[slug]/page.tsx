@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { postTitle } from "@/lib/page-title";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
@@ -15,7 +16,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!post) return { title: "Article Not Found" };
   const url = `${SITE}/blog/${post.slug}`;
   return {
-    title: post.title,
+    // The H1 keeps the full headline; the <title> keeps what fits in 65.
+    title: { absolute: postTitle(post.title) },
     description: post.excerpt,
     alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {
@@ -69,7 +71,7 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
   });
 
   return (
-    <main className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
       {published ? <StructuredData data={articleLd} /> : null}      <div className="border-b border-[var(--color-charcoal)]/5 bg-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 py-4 text-sm text-[var(--color-gray)]">
           <Link href="/blog" className="hover:text-[var(--color-teal)]">Blog</Link>
@@ -102,6 +104,6 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
           </Link>
         </div>
       </article>
-    </main>
+    </div>
   );
 }

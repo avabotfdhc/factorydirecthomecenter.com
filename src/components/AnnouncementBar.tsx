@@ -33,7 +33,7 @@ export function AnnouncementBar() {
   if (isDismissed || !sale.active) return null;
 
   return (
-    <div className="bg-gradient-to-r from-[#1a365d] via-[#2c7a7b] to-[#1a365d] text-white relative overflow-hidden">
+    <aside aria-label="Current promotion" className="bg-gradient-to-r from-[#1a365d] via-[#2c7a7b] to-[#1a365d] text-white relative overflow-hidden">
       {/* Animated background effect */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTZ2LTRoLTJ2NGgyem0tNiA2aC00djJoNHYtMnptMC02di00aC00djRoNHptLTYgNmgtNHYyaDR2LTJ6bTAtNnYtNGgtNHY0aDR6Ii8+PC9nPjwvZz48L3N2Zz4=')]" />
@@ -45,7 +45,7 @@ export function AnnouncementBar() {
             href="/homes-on-sale" 
             className="flex items-center gap-2 text-sm font-medium hover:underline transition-all"
           >
-            <span className="animate-pulse">🎉</span>
+            <span className="animate-pulse" aria-hidden="true">🎉</span>
             <span className="hidden sm:inline">
               <strong>Save up to {sale.discountPercent}% off</strong> select new Champion floor plans!
             </span>
@@ -74,6 +74,6 @@ export function AnnouncementBar() {
           </button>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }

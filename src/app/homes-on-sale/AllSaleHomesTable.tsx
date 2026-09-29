@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { shortImageSrc } from "@/lib/image-src";
 import type { SaleListing } from "@/lib/sale-homes";
 import { CallForPricing, formatUsd, PricingDisclaimer } from "@/components/Pricing";
 import { salePriceFor } from "@/lib/sale";
@@ -165,14 +166,19 @@ export function AllSaleHomesTable({
                     <span className="relative flex-shrink-0 w-16 h-12 rounded-md overflow-hidden bg-gray-100">
                       {l.image ? (
                         <Image
-                          src={l.image}
+                          src={shortImageSrc(l.image)}
                           alt={`${l.name} Champion home`}
-                          fill
-                          className="object-cover"
-                          sizes="64px"
+                          // Fixed 64×48, not `fill` + sizes="64px": next/image
+                          // only parses vw in `sizes`, so the fill version
+                          // listed every width up to 1920 for a thumbnail —
+                          // ~1 KB of srcset per row, 147 rows. Fixed size
+                          // gives the 1x/2x pair and nothing else.
+                          width={64}
+                          height={48}
+                          className="h-full w-full object-cover"
                         />
                       ) : (
-                        <span className="absolute inset-0 flex items-center justify-center text-[10px] leading-tight text-center text-gray-400">
+                        <span className="absolute inset-0 flex items-center justify-center text-[10px] leading-tight text-center text-gray-600">
                           Photo
                           <br />
                           soon
@@ -193,7 +199,7 @@ export function AllSaleHomesTable({
                 </th>
                 <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
                   {l.series}
-                  <span className="block text-xs text-gray-400">
+                  <span className="block text-xs text-gray-600">
                     {l.homeType === "Multi-Section" ? "Multi-section" : "Single section"}
                   </span>
                 </td>
