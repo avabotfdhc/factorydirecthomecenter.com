@@ -314,7 +314,7 @@ export default function PricingPage() {
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option A: Use Our Referral List</H3>
               <p className="text-white/75 text-sm mb-6">
                 Start with our referral list of licensed and insured contractors past customers
-                have used for setup and site work. You hire them directly — no dealer markup.
+                have used for setup and site work. You hire them directly.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/70">Best for: Busy families</span>
             </div>
