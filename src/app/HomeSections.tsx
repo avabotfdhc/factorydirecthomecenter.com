@@ -203,7 +203,7 @@ export function AnimatedHomeSections() {
               <div className="text-sm text-white/70 mt-1">Floor Plans</div>
             </FadeIn>
             <FadeIn direction="up" delay={150}>
-              <div className="font-serif text-3xl lg:text-4xl font-bold">20mi</div>
+              <div className="font-serif text-3xl lg:text-4xl font-bold">30mi</div>
               <div className="text-sm text-white/70 mt-1">From the Factory</div>
             </FadeIn>
             <FadeIn direction="up" delay={300}>
@@ -430,7 +430,7 @@ export function TrustAndProcess() {
             <FadeIn direction="up" delay={300}>
               <div className="text-center">
                 <div className="text-3xl mb-2">🚚</div>
-                <div className="font-semibold text-sm">20 Mile Delivery</div>
+                <div className="font-semibold text-sm">30 Miles From Topeka</div>
               </div>
             </FadeIn>
           </StaggerContainer>
@@ -456,7 +456,7 @@ export function TrustAndProcess() {
             {[
               { step: "1", title: "Browse", desc: "Explore floor plans online or visit our showroom", icon: "🔍" },
               { step: "2", title: "Customize", desc: "Choose your options and get a detailed quote", icon: "⚙️" },
-              { step: "3", title: "Finance", desc: "We connect you with the best lenders for your situation", icon: "💰" },
+              { step: "3", title: "Finance", desc: "Choose your own lender from a list our customers have used", icon: "💰" },
               { step: "4", title: "Build & Deliver", desc: "Your home is built and delivered in 8-12 weeks", icon: "🏠" },
             ].map((item, idx) => (
               <FadeIn key={item.step} direction="up" delay={idx * 200}>

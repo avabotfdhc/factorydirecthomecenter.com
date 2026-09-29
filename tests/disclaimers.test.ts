@@ -224,7 +224,7 @@ test("no page offers financing, ranks a lender, or calls one a partner", () => {
     [/\bpreferred lender\b/i, "no preferred lender"],
     [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,40}\b(offer|offers|provide|provides|arrange|arranges|broker|brokers)\b(?:(?!\byour\b)[^.\n;]){0,25}\bfinanc/i, "we do not offer or arrange financing"],
     [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,40}\b(pull|pulls|run|runs|check|checks)\b[^.\n;]{0,15}\bcredit\b/i, "we never pull credit"],
-    [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,50}\b(best|right)\b(?:(?!\byour\b)[^.\n;]){0,20}\b(lender|loan|financing|rate)\b/i, "we make no recommendation"],
+    [/\b(we|our team)\b(?:(?!\byour\b)[^.\n;]){0,50}\b(best|right)\b(?:(?!\byour\b)[^.\n;]){0,20}\b(lenders?|loans?|financing|rates?)\b/i, "we make no recommendation"],
   ];
   // Denials are the point of the copy — and Ava's playbook states the rule by
   // quoting the banned phrase ('never say one is "our lender"'), so a line that
@@ -467,4 +467,33 @@ test("no file names a subset of the lenders", () => {
     "name every lender or none of them — a subset reads as a shortlist, and the buyer's " +
       "authorization says the selection was not referred or suggested",
   );
+});
+
+// Champion's Topeka plant is 30 miles from the Auburn showroom (Kyle,
+// 2026-09-16). The sweep that corrected "20 miles" matched the spelled-out
+// word, so the homepage's "20mi / From the Factory" stat, its "20 Mile
+// Delivery" badge and /about's "20 mi / From Our Lot" survived until
+// 2026-09-29. Stat cards split the figure and its label across lines, so this
+// looks at a three-line window. City-to-city distances are measured from the
+// showroom ("Kendallville … about 20 miles west of our Auburn showroom") and
+// are correct, so a line that names the showroom is exempt.
+test("the factory is never said to be 20 miles away", () => {
+  const TWENTY = /\b20[\s-]?(?:mi|mile|miles)\b/i;
+  const PLANT = /\b(factory|plant|topeka|our lot|delivery)\b/i;
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const lines = readFileSync(full, "utf8").split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        if (!TWENTY.test(lines[i]) || /\bshowroom\b/i.test(lines[i])) continue;
+        const window = lines.slice(Math.max(0, i - 1), i + 3).join(" ");
+        if (PLANT.test(window)) offenders.push(`${relative(process.cwd(), full)}:${i + 1}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(offenders, [], "the Topeka plant is 30 miles from the showroom");
 });
