@@ -317,3 +317,58 @@ test("jsonLdScript closes the </script> escape and still round-trips", () => {
   assert.ok(!out.includes("<"), "no raw < may survive");
   assert.deepEqual(JSON.parse(out), hostile, "a consumer must still read the original strings back");
 });
+
+// A node that represents us is built by a helper, never typed out by hand.
+//
+// The generator walk above only sees `structuredData.*` output. `GuideMeta`
+// inlined its own Article schema in a component, so its anonymous
+// `{ "@type": "Organization", name: "Factory Direct Homes Center" }` author
+// and publisher were invisible to every existing guard — and shipped a second
+// organisation carrying our name, with no @id and no address, on all eight
+// guide pages. The WebSite node did the same thing on all 168.
+//
+// This scans source instead: an Organization/LocalBusiness object literal that
+// names us must come from businessRef() / publisherRef(), not be written out.
+test("no component hand-writes a node carrying the business name", () => {
+  const NAME = "Factory Direct Homes Center";
+  const offenders: string[] = [];
+
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      // business.ts defines the canonical node and the refs built from it.
+      if (rel === "src/lib/business.ts") continue;
+      const lines = readFileSync(full, "utf8").split("\n");
+      for (const [i, line] of lines.entries()) {
+        if (!/"@type":\s*"(Organization|LocalBusiness)"/.test(line)) continue;
+        // The literal and its fields, however they are wrapped.
+        const block = lines.slice(i, i + 6).join("\n");
+        if (!block.includes(NAME)) continue;          // some other organisation
+        if (/"@id"|businessRef\(|publisherRef\(/.test(block)) continue;
+        offenders.push(`${rel}:${i + 1}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(
+    offenders, [],
+    "these hand-write a node named after the business without an @id — use businessRef() or publisherRef()",
+  );
+});
+
+// The WebSite node is a separate entity from the business and needs its own
+// identifier; unnamed it read as a second node carrying our name sitewide.
+test("the WebSite node is identified and points at the business", () => {
+  const site = structuredData.website() as Record<string, unknown>;
+  assert.equal(site["@type"], "WebSite");
+  assert.ok(typeof site["@id"] === "string" && (site["@id"] as string).includes("#website"),
+    "the WebSite node needs its own @id, distinct from the business");
+  const publisher = site.publisher as Record<string, unknown> | undefined;
+  assert.ok(publisher && publisher["@id"] === BUSINESS_ID,
+    "the WebSite must name the business as its publisher by canonical @id");
+  assert.ok(publisher && "address" in publisher, "that publisher ref must carry an address");
+});

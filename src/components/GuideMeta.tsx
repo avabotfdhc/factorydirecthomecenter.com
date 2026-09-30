@@ -1,5 +1,5 @@
 import { formatGuideDate, getGuide } from "@/lib/guides";
-import { StructuredData } from "@/lib/seo";
+import { StructuredData, structuredData } from "@/lib/seo";
 
 // The "Last updated · N min read" byline under a guide's headline, plus the
 // matching Article schema carrying the same dateModified. Guides are evergreen
@@ -21,28 +21,24 @@ export function GuideMeta({
 
   return (
     <>
+      {/* Built by the shared generator, never hand-written. This block used to
+          inline its own Article schema with anonymous Organization author and
+          publisher nodes — so all eight guide pages published a second
+          organisation carrying our name with no @id and no address, the exact
+          entity-fragmentation businessRef() exists to prevent. The generator
+          walk in tests/structured-data.test.ts could not see it, because the
+          node was in a component rather than in structuredData. */}
       <StructuredData
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Article",
+        data={structuredData.article({
           headline: guide.title,
           description: guide.description,
+          // Guides carry no image of their own; the site default is what the
+          // page's own Open Graph tags already use.
+          image: "/images/hero-home.jpg",
           datePublished: guide.updated,
           dateModified: guide.updated,
-          author: { "@type": "Organization", name: "Factory Direct Homes Center" },
-          publisher: {
-            "@type": "Organization",
-            name: "Factory Direct Homes Center",
-            logo: {
-              "@type": "ImageObject",
-              url: "https://factorydirecthomescenter.com/images/logo.png",
-            },
-          },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://factorydirecthomescenter.com${guide.href}`,
-          },
-        }}
+          url: guide.href,
+        })}
       />
       <p className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-sm ${className}`}>
         <span>

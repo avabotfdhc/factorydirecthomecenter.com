@@ -992,3 +992,50 @@ Two other suggestions from the same audit were checked and are already settled
 above: `experimental.inlineCss` (A/B-tested, no gain, off) and the "Legacy
 JavaScript" polyfills (Next's own built-in module; a `browserslist` entry does
 not remove it).
+
+# The business-node guard walked the generators; the violation was in a component
+
+Kyle reported local-markup errors for a missing address on multiple pages
+(2026-09-30). Crawling all 168 sitemap routes and parsing every ld+json block
+found **no LocalBusiness node missing an address** — that specific error was
+not reproducible. What it did find was the same family of defect one level
+over: **184 nodes carrying our name with no `@id`**.
+
+- the `WebSite` node from `structuredData.website()`, on all **168** pages
+- anonymous `Organization` `author` *and* `publisher` on the **8** guide pages,
+  hand-written inside `GuideMeta` rather than taken from a generator
+- `HomeVideo`'s `publisher`, found only by the new source scan
+
+`structuredData.article()` had been correct the whole time — it sets the
+canonical `@id`. `GuideMeta` never called it; it inlined its own Article
+schema. That is why every existing guard missed this: `tests/structured-data.test.ts`
+walks the output of `structuredData.*`, and a node typed out in a component is
+invisible to that walk. **A guard that only inspects the generators cannot
+prove anything about the page.**
+
+Fixed by giving every one of them a helper:
+
+- `publisherRef()` (`src/lib/seo.ts`) — `businessRef()` plus the `logo` Google
+  wants on a publisher, so the node merges on `@id` *and* validates standalone
+  with an address. Used by `article()`, `videoObject()` and `HomeVideo`.
+- `GuideMeta` now calls `structuredData.article()` instead of inlining.
+- The `WebSite` node gets its own `@id` (`/#website`) — it is a genuinely
+  different entity from the business — and names the business as its
+  `publisher` via `businessRef()`, so the two are linked rather than two
+  unrelated nodes sharing a name.
+
+Two new guards, both injection-tested by reintroducing the exact bug:
+
+- a **source scan** that fails when any file hand-writes an
+  `Organization`/`LocalBusiness` literal carrying the business name without an
+  `@id` or a `…Ref()` call. This is the one that would have caught `GuideMeta`,
+  and it found `HomeVideo` immediately.
+- the `WebSite` node must carry its own `@id` and a publisher ref with an
+  address.
+
+**When a crawler reports a structured-data problem, crawl every route and parse
+the blocks before believing or dismissing it.** The reported symptom (missing
+address) was not present; the underlying disease (unidentified duplicate nodes
+carrying our name) was, on every page of the site. Check the compare-audits
+file for the real crawl timestamp too — Semrush export dates are not crawl
+dates, and a stale export describes a site that no longer exists.
