@@ -61,7 +61,7 @@ const aeoContent = [
   },
   {
     question: "What is Champion Homes and why do you partner with them?",
-    directAnswer: "Champion Homes is America's second-largest manufactured home builder, producing over 20% of all factory-built homes nationwide.",
+    directAnswer: "Champion Homes is one of the largest producers of factory-built housing in North America, building homes since 1953.",
     supportingDetails: [
       "We chose Champion for their build quality, materials, and comprehensive warranty coverage.",
       "Their Topeka, Indiana plant, where our homes are built, is just 30 miles from our showroom."
@@ -129,7 +129,7 @@ const citations = [
   {
     source: "Champion Homes Official Website",
     url: "https://www.championhomes.com",
-    description: "America's #2 manufactured home builder with 20% national market share"
+    description: "Champion Homes, one of North America's largest factory-built home producers"
   },
   {
     source: "Manufactured Housing Institute",
@@ -392,7 +392,7 @@ export default function AboutPage() {
               },
               {
                 title: "Quality First",
-                description: "We chose to partner exclusively with Champion Home Builders — America's second-largest home manufacturer — because their build quality, materials, and warranty stand behind every home we sell.",
+                description: "We chose to partner exclusively with Champion Home Builders — one of North America's largest factory-built home producers — because their build quality, materials, and warranty stand behind every home we sell.",
                 icon: "🏆"
               },
               {
@@ -432,7 +432,7 @@ export default function AboutPage() {
                 Champion Home Builders
               </H2>
               <p className="text-base text-[var(--color-gray)] leading-relaxed mb-8">
-                Champion is the #2 manufactured home builder in America. Their Topeka, 
+                Champion is one of the largest producers of factory-built housing in North America. Their Topeka, 
                 Indiana plant is 
                 just 30 miles from our showroom. This plant produces the Aspire, 
                 Redman, and Dutch series homes. Shorter delivery distances 
@@ -442,8 +442,8 @@ export default function AboutPage() {
             
             <StaggerContainer staggerDelay={150} className="grid grid-cols-3 gap-8 mt-12">
               {[
-                { value: "#2", label: "National Builder" },
-                { value: "20%", label: "Market Share" },
+                { value: "1953", label: "Building Since" },
+                { value: "2", label: "Indiana Plants" },
                 { value: "30 mi", label: "From Our Lot" },
               ].map((stat, idx) => (
                 <FadeIn key={stat.label} direction="up" delay={idx * 150}>

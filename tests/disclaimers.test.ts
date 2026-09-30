@@ -520,3 +520,28 @@ test("no page calls the Topeka plant the largest", () => {
   walk(resolve(process.cwd(), "src"));
   assert.deepEqual(offenders, [], "the plant's size is not a claim we can back");
 });
+
+// /about ranked Champion "America's #2 manufactured home builder" with a
+// "20% market share", with no source behind either figure. Kyle had both
+// softened on 2026-09-30 to the wording /champion-homes already used ("one of
+// the largest producers of factory-built housing in North America"). A rank or
+// a share figure changes year to year and needs a citation; don't add one back
+// without it.
+test("no page ranks Champion or quotes its market share", () => {
+  const CLAIM = /#\s?2\b[^\n]{0,40}\b(builder|manufacturer|producer)|\bsecond[- ]largest\b[^\n]{0,40}\b(builder|manufacturer|producer)|\bmarket share\b|\b\d+%\s+of all (?:factory-built|manufactured)/i;
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      const lines = readFileSync(full, "utf8").split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        // Stat tiles put the figure and its label on neighbouring lines.
+        if (CLAIM.test(lines.slice(i, i + 2).join(" "))) offenders.push(`${relative(process.cwd(), full)}:${i + 1}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(offenders, [], "Champion's rank and market share need a source");
+});
