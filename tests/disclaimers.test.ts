@@ -497,3 +497,26 @@ test("the factory is never said to be 20 miles away", () => {
   walk(resolve(process.cwd(), "src"));
   assert.deepEqual(offenders, [], "the Topeka plant is 30 miles from the showroom");
 });
+
+// "The largest Champion plant in the country" was printed about the Topeka
+// plant in eighteen places, with nothing to back it. Kyle had it removed on
+// 2026-09-30. Statements about Champion the company ("one of the largest
+// factory-built home producers in North America") are a different claim and
+// are not matched: "factory-built" and "factory builders" describe the company.
+test("no page calls the Topeka plant the largest", () => {
+  const PLANT = String.raw`(?:plant|facilit(?:y|ies)|factory(?![- ](?:built|builders)))`;
+  const CLAIM = new RegExp(String.raw`\blargest\b[^.\n]{0,40}\b${PLANT}|\b${PLANT}\b[^.\n]{0,40}\blargest\b`, "i");
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      for (const [i, line] of readFileSync(full, "utf8").split("\n").entries()) {
+        if (CLAIM.test(line)) offenders.push(`${relative(process.cwd(), full)}:${i + 1}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(offenders, [], "the plant's size is not a claim we can back");
+});

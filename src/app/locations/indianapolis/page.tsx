@@ -68,7 +68,7 @@ const aeoContent = [
   },
   {
     question: "What makes Factory Direct worth the drive from Indianapolis?",
-    directAnswer: "Factory Direct offers true factory-direct pricing from Champion's largest manufacturing facility, often offsetting delivery costs.",
+    directAnswer: "Factory Direct offers true factory-direct pricing from Champion's Topeka, Indiana plant, often offsetting delivery costs.",
     supportingDetails: [
       "Our line-item transparency lets you see exactly what you're paying for.",
       "You can use your own contractors for site work, potentially saving thousands."
@@ -88,7 +88,7 @@ const locationFAQs = [
   },
   {
     question: "Is it worth buying from Factory Direct if I'm in Indianapolis?",
-    answer: "Many Indianapolis buyers find our factory-direct pricing competitive even with delivery costs. We're 110 miles away, but we source directly from Champion's largest factory. Our line-item pricing and contractor flexibility often make the total a smart buy, plus you get our transparent, no-pressure approach."
+    answer: "Many Indianapolis buyers find our factory-direct pricing competitive even with delivery costs. We're 110 miles away, but every home we sell comes from Champion's Topeka, Indiana plant. Our line-item pricing and contractor flexibility often make the total a smart buy, plus you get our transparent, no-pressure approach."
   },
   {
     question: "What is the best location for a manufactured home near Indianapolis?",
@@ -376,7 +376,7 @@ export default function IndianapolisPage() {
                 <div className="mt-8 p-4 bg-[var(--color-cream-dark)] rounded-lg">
                   <p className="text-sm text-[var(--color-gray)]">
                     <strong>Why Indianapolis buyers choose us:</strong> Factory-direct 
-                    pricing from Champion’s largest facility often offsets delivery costs, 
+                    pricing from Champion’s Topeka plant often offsets delivery costs, 
                     plus you get our transparent, no-pressure approach.
                   </p>
                 </div>
