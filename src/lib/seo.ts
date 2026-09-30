@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { businessJsonLd, businessRef, BUSINESS_ID, ownerJsonLd } from "./business";
+import { businessJsonLd, businessRef, SITE_URL, ownerJsonLd } from "./business";
 import { jsonLdScript } from "@/lib/json-ld";
 import { fitTitle } from "@/lib/page-title";
 
@@ -108,6 +108,25 @@ export function languageAlternates(url: string): Record<string, string> {
 }
 
 // Structured Data Generators
+/** The dealership as an Article/VideoObject `publisher`.
+ *
+ *  `businessRef()` for the identity (canonical @id + address, so the node
+ *  merges with the root business node and still validates standalone) plus the
+ *  `logo` Google wants on a publisher. Never hand-write this shape: an
+ *  anonymous `{ "@type": "Organization", name: "Factory Direct Homes Center" }`
+ *  publishes a SECOND organisation sharing our name, which is the
+ *  entity-fragmentation problem business.ts exists to prevent. `GuideMeta`
+ *  did exactly that on all eight guide pages until 2026-09-30. */
+export function publisherRef(): Record<string, unknown> {
+  return {
+    ...businessRef(),
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/images/logo.png`,
+    },
+  };
+}
+
 export const structuredData = {
   // Local Business Schema — the shared `#business` node (src/lib/business.ts)
   // plus the granular county/city footprint that mirrors /locations. Location
@@ -209,7 +228,7 @@ export const structuredData = {
     // defect businessRef() exists to prevent, see src/lib/business.ts).
     author: image.author
       ? { "@type": "Organization", name: image.author }
-      : { "@type": "Organization", "@id": BUSINESS_ID, name: "Factory Direct Homes Center" },
+      : businessRef(),
   }),
 
   // Video Object Schema
@@ -229,15 +248,7 @@ export const structuredData = {
     contentUrl: video.contentUrl,
     uploadDate: video.uploadDate,
     duration: video.duration,
-    publisher: {
-      "@type": "Organization",
-      "@id": BUSINESS_ID,
-      name: "Factory Direct Homes Center",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://factorydirecthomescenter.com/images/logo.png",
-      },
-    },
+    publisher: publisherRef(),
   }),
 
   // Breadcrumb Schema
@@ -336,25 +347,13 @@ export const structuredData = {
     dateModified: article.dateModified || article.datePublished,
     author: article.authorIsOwner
       ? ownerJsonLd()
-      : {
-          "@type": "Organization",
-          // The house byline is the business itself, so it carries the
-          // canonical @id. Only a genuinely different named author gets an
-          // unlinked node.
-          ...(article.author && article.author !== "Factory Direct Homes Center"
-            ? {}
-            : { "@id": BUSINESS_ID }),
-          name: article.author || "Factory Direct Homes Center",
-        },
-    publisher: {
-      "@type": "Organization",
-      "@id": BUSINESS_ID,
-      name: "Factory Direct Homes Center",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://factorydirecthomescenter.com/images/logo.png",
-      },
-    },
+      : article.author && article.author !== "Factory Direct Homes Center"
+        // A genuinely different named author is its own node.
+        ? { "@type": "Organization", name: article.author }
+        // The house byline is the business itself: full ref, so it merges on
+        // @id and still carries an address standalone.
+        : businessRef(),
+    publisher: publisherRef(),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://factorydirecthomescenter.com${article.url}`,
@@ -365,8 +364,13 @@ export const structuredData = {
   website: () => ({
     "@context": "https://schema.org",
     "@type": "WebSite",
+    // The site is its own entity, distinct from the business, so it gets its
+    // own @id — but named after us with no identifier at all it read as a
+    // second unlinked node carrying our name on all 168 pages.
+    "@id": `${SITE_URL}/#website`,
     name: "Factory Direct Homes Center",
-    url: "https://factorydirecthomescenter.com",
+    url: SITE_URL,
+    publisher: businessRef(),
     potentialAction: {
       "@type": "SearchAction",
       target: {

@@ -3,6 +3,7 @@ import { H2 } from "@/components/Heading";
 import { absoluteImageUrl } from "@/lib/image-alt";
 import { HOME_VIDEO, isHomeVideoConfigured, type HomeVideoConfig } from "@/lib/home-video";
 import { jsonLdScript } from "@/lib/json-ld";
+import { publisherRef } from "@/lib/seo";
 
 // Server-rendered homepage video section: a YouTube embed (privacy-enhanced,
 // lazy) or a native <video> for a hosted MP4, plus VideoObject JSON-LD so the
@@ -23,11 +24,9 @@ export function HomeVideo({ video = HOME_VIDEO }: { video?: HomeVideoConfig }) {
     ...(video.youtubeId
       ? { embedUrl: `https://www.youtube-nocookie.com/embed/${video.youtubeId}` }
       : { contentUrl: video.mp4Url }),
-    publisher: {
-      "@type": "Organization",
-      name: "Factory Direct Homes Center",
-      logo: { "@type": "ImageObject", url: absoluteImageUrl("/images/logo.png") },
-    },
+    // publisherRef(), not a hand-written stub: an anonymous Organization
+    // carrying our name is a second entity beside the canonical one.
+    publisher: publisherRef(),
   };
 
   return (
