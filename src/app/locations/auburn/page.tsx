@@ -65,7 +65,7 @@ const locationFAQs = [
   {
     question: "How far is your showroom from the Champion factory?",
     answer:
-      "About 30 miles. The Champion plant in Topeka, Indiana is the largest Champion factory in the country, and being this close means shorter delivery times and lower freight costs passed directly to you.",
+      "About 30 miles. Champion builds our homes at its plant in Topeka, Indiana, and being this close means shorter delivery times and lower freight costs passed directly to you.",
   },
 ];
 
@@ -217,8 +217,8 @@ export default function AuburnLocationPage() {
               zoning, permitting, and site work.
             </p>
             <p className="text-[var(--color-gray)] leading-relaxed mb-4">
-              Because we&rsquo;re only 30 miles from the Champion factory in Topeka — the largest Champion
-              plant in the country — Auburn-area buyers get some of the shortest delivery times and
+              Because we&rsquo;re only 30 miles from the Champion factory in Topeka,
+              Auburn-area buyers get some of the shortest delivery times and
               lowest freight costs anywhere in our region. That&rsquo;s the factory-direct advantage:
               a nearby plant, transparent line-item pricing, and homes delivered fast.
             </p>

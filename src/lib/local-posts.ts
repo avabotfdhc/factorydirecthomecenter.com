@@ -111,7 +111,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>In the meantime, today's HUD-code <a href="/floor-plans">Champion manufactured homes</a> and IRC-code <a href="/guides/manufactured-vs-modular">modular homes</a> already deliver the affordability and quality this law is built to expand — you don't have to wait to take advantage of factory-direct pricing.</p>
 
 <h2>How Factory Direct Homes Center fits in</h2>
-<p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 30 miles from Champion's Topeka plant — one of the largest factory-built home facilities in the country. That means short freight distances, direct access to the full Aspire, Prime, and Redman lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
+<p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 30 miles from Champion's Topeka plant. That means short freight distances, direct access to the full Aspire, Prime, and Redman lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
 <p>On financing, we do not lend, broker or pull credit — buyers apply directly to the lender of their choice, across chattel (home-only) loans, land-home packages and conventional mortgages. As the Act's expanded FHA options take shape, they will be available through the same lenders on the list we hand you. Our <a href="/financing">financing page</a> walks through how each loan type works.</p>
 <p>And as always, site work — foundation or pad, utilities, and driveway — is handled by <strong>your own licensed contractors</strong>, which is where many buyers save real money versus dealer-bundled site work. We're glad to share a referral list of licensed and insured contractors past customers have used.</p>
 
@@ -139,7 +139,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
     image: "/images/homepage/double-wides.webp",
     date: "August 12, 2026",
     html: `
-<p>Fort Wayne's housing market has priced a lot of good people out of a new site-built home. If you're one of them, a new HUD-code manufactured home is the most realistic path to new construction in northeast Indiana — and Fort Wayne buyers have a geographic advantage most of the country doesn't: you live about 25 minutes from a factory-direct Champion dealer, and under an hour from the largest Champion factory in the country. Here's what that means for you, and what to know before you buy.</p>
+<p>Fort Wayne's housing market has priced a lot of good people out of a new site-built home. If you're one of them, a new HUD-code manufactured home is the most realistic path to new construction in northeast Indiana — and Fort Wayne buyers have a geographic advantage most of the country doesn't: you live about 25 minutes from a factory-direct Champion dealer, and under an hour from Champion's Topeka plant. Here's what that means for you, and what to know before you buy.</p>
 
 <h2>Why Fort Wayne buyers shop in Auburn</h2>
 <p>Our showroom at 1211 State Road 8 in Auburn is about 25 minutes north of Fort Wayne, straight up I-69. That drive matters for two reasons. First, you can walk through real model homes — floor plans on a screen don't tell you how a kitchen feels. Second, the factory that builds these homes is in Topeka, Indiana, about 30 miles from us. Freight is one of the biggest hidden costs in manufactured housing, and homes that travel a short distance cost less to deliver than homes trucked in from hundreds of miles away. That saving shows up in your quote.</p>
@@ -200,7 +200,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>3. Options and finishes</h3>
 <p>Upgraded kitchens, drywall throughout, energy packages, porches, and exterior upgrades each move the price. Champion's option catalog is deep — this is where two homes with the same floor plan can differ by five figures.</p>
 <h3>4. Freight distance from the factory</h3>
-<p>Here's an advantage of buying in northeast Indiana: Champion's largest plant in the country is in Topeka, IN — about 30 miles from our Auburn showroom. Homes that travel 30 miles cost less to deliver than homes that travel 300, and that saving lands in your quote.</p>
+<p>Here's an advantage of buying in northeast Indiana: Champion builds homes at its plant in Topeka, IN — about 30 miles from our Auburn showroom. Homes that travel 30 miles cost less to deliver than homes that travel 300, and that saving lands in your quote.</p>
 
 <h2>The costs that are NOT in the home price</h2>
 <p>Any honest cost guide has to mention these, because they surprise buyers everywhere:</p>
@@ -242,7 +242,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Placing a home in DeKalb County</h2>
 <p>Much of DeKalb County outside city limits allows manufactured homes on private land. Zoning and setbacks are parcel-specific: you or your contractor verify the rules and pull the permits, and because the county offices are minutes away, we can point you to exactly the right desk. Our <a href="/guides/zoning">zoning guide</a> explains the process.</p>
 <h2>The factory question</h2>
-<p>Champion's Topeka plant — the largest Champion factory in the country — is about 30 miles from Auburn. Short freight means lower delivery cost on your line-item quote, and it's why Auburn buyers consistently see some of the lowest delivered prices in our service area. Every home is quoted line-item for your exact configuration; see the full breakdown in our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Champion's Topeka plant is about 30 miles from Auburn. Short freight means lower delivery cost on your line-item quote, and it's why Auburn buyers consistently see some of the lowest delivered prices in our service area. Every home is quoted line-item for your exact configuration; see the full breakdown in our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>Do you deliver inside Auburn city limits?</h3>
 <p>We deliver anywhere in the area — city-limit placements depend on zoning, which typically favors established communities (the IRC-code route is covered in our <a href="/guides/manufactured-vs-modular">manufactured vs modular guide</a>); rural DeKalb parcels are usually simpler. We'll help you check your specific address.</p>
@@ -328,7 +328,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h2>Rural Noble County land works in your favor</h2>
 <p>Much of Noble County outside municipal limits permits manufactured homes on private land. Rules are parcel-specific — you or your contractor verify zoning and setbacks and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> explains each step.</p>
 <h2>Close to the showroom, close to the factory</h2>
-<p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and your home is built at Champion's Topeka plant — the largest Champion factory in the country — a short freight hop away. Short distances show up as real savings on the delivery line of your quote.</p>
+<p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and your home is built at Champion's Topeka plant, a short freight hop away. Short distances show up as real savings on the delivery line of your quote.</p>
 <h2>The numbers</h2>
 <p>Quotes are line-item — home, options, and delivery each priced separately — and site work is handled by your own licensed contractors, where most buyers save real money. Details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
@@ -368,7 +368,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
     image: "/images/homepage/double-wides.webp",
     date: "August 15, 2026",
     html: `
-<p>Here's a fact most Ligonier residents don't realize: the largest Champion Homes factory in the country builds homes just up the road in Topeka. If you buy a new manufactured home in Ligonier, it will likely travel fewer miles to reach your site than almost any factory-built home delivered anywhere in America. That's not trivia — it's money.</p>
+<p>Here's a fact most Ligonier residents don't realize: Champion Homes builds homes just up the road in Topeka. If you buy a new Champion manufactured home in Ligonier, it travels only a short distance from the plant to your site. That's not trivia — it's money.</p>
 <h2>Why factory proximity matters in your quote</h2>
 <p>Freight is one of the larger non-negotiable costs in manufactured housing, priced by distance and escort requirements. Ligonier-area deliveries are about as short as they come, and because our quotes are line-item, you'll see that saving as its own number — not buried in a bundle.</p>
 <h2>Placing a home in western Noble County</h2>
@@ -494,7 +494,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
     html: `
 <p>Indianapolis has Indiana's biggest housing market and its steepest affordability squeeze. For buyers with land — or plans to buy land — in the counties around Marion, a factory-direct manufactured or modular home is often the only realistic route to new construction. And here's the part most central Indiana buyers don't know: shopping a factory-direct dealer up north can beat metro-area dealer pricing, even after the longer delivery.</p>
 <h2>The factory-direct math for central Indiana</h2>
-<p>Our dealership in Auburn sits about 30 miles from Champion's largest factory in the country. We buy direct, quote line-item, and don't carry metro-market overhead. Delivery to central Indiana costs more than delivery near Auburn — that's physics — but it's one transparent line on your quote, and the home price itself is the same factory-direct number our local buyers get. Every home is quoted line-item (<a href="/blog/manufactured-home-cost-indiana">cost guide</a>).</p>
+<p>Our dealership in Auburn sits about 30 miles from Champion's Topeka plant. We buy direct, quote line-item, and don't carry metro-market overhead. Delivery to central Indiana costs more than delivery near Auburn — that's physics — but it's one transparent line on your quote, and the home price itself is the same factory-direct number our local buyers get. Every home is quoted line-item (<a href="/blog/manufactured-home-cost-indiana">cost guide</a>).</p>
 <h2>Where Indy-area buyers place homes</h2>
 <p>Manufactured homes are commonly placed on rural parcels in the counties surrounding Indianapolis, and in established land-lease communities throughout the metro. Modular homes on permanent foundations — IRC-code construction — fit suburban lots where site-built homes go. Zoning is parcel-specific everywhere: you or your contractor verify the rules and pull permits. Start with our <a href="/guides/zoning">zoning guide</a>.</p>
 <h2>How buying from a distance works</h2>
