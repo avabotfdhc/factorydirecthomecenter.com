@@ -1193,4 +1193,189 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, or <a href="/contact-us">send us a sketch of your parcel</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-decatur-indiana",
+    title: "Manufactured Homes in Decatur, Indiana: Storms, Tie-Downs and a Safe Place to Go",
+    excerpt:
+      "Adams County gets its share of spring storms. How a manufactured home is anchored, who installs the tie-downs, and why every household should plan where to shelter before the first warning.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "September 30, 2026",
+    html: `
+<p>Decatur is the county seat of Adams County, about 55 miles south of our Auburn lot, in wide-open farm country where you can watch weather build across the fields for an hour before it arrives. Buyers from here ask a fair question about a <strong>manufactured home</strong>: how does it hold up when the wind comes? The honest answer has two parts &mdash; how the home is anchored, and where your family goes when a warning is issued.</p>
+
+<h2>How the home is held down</h2>
+<p>Every HUD-code home is built to a federal wind standard for the zone it is going to, and all of Indiana falls in the lowest-risk zone on HUD&rsquo;s map, Wind Zone I. Just as important is what happens on site: the home is set on its piers and tied to the ground with anchors and straps, following the manufacturer&rsquo;s installation instructions and state installation rules. That work belongs to your licensed installer. We sell the home and arrange delivery; we do not perform setup, anchoring or site work.</p>
+<p>Ask your installer to show you the anchors before the skirting goes on, and keep the paperwork. Anchors and straps are simple hardware, and knowing they are there, and correctly installed, is worth the five minutes.</p>
+
+<h2>Plan where you will shelter</h2>
+<p>No house that is not a purpose-built shelter is the right place to ride out a tornado, and the National Weather Service advises anyone in a manufactured home to go to a sturdy shelter when a tornado warning is issued. So make the plan now, while the weather is calm:</p>
+<ul>
+  <li><strong>Know your nearest sturdy building</strong> and how long it takes to reach it.</li>
+  <li><strong>Consider a storm shelter or safe room on your own land.</strong> Many rural buyers put in a below-ground shelter or a separate safe room. FEMA publishes design guidance for safe rooms; your contractor can tell you what fits your site and what permits apply.</li>
+  <li><strong>Get warnings on your phone</strong> and keep a weather radio for the nights the phone is on the charger.</li>
+</ul>
+
+<h2>Plan it with the site</h2>
+<p>If you want a shelter on the property, decide where it goes when you lay out the home, the driveway and the septic field, not after. The <a href="/guides/site-work">site work guide</a> walks through the order things happen in, and the <a href="/guides/delivery-and-setup">delivery and set-up guide</a> covers the setup day itself.</p>
+
+<h2>Common questions</h2>
+<h3>Is a newer manufactured home stronger than an old trailer?</h3>
+<p>Homes built since the 1976 HUD code are engineered to a federal standard that older units were not. Proper installation matters as much as the construction.</p>
+<h3>Who checks the tie-downs?</h3>
+<p>Your licensed installer does the work, and your county may inspect it. Ask both what they check.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/adams-county">our Adams County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-ossian-indiana",
+    title: "Manufactured Homes in Ossian, Indiana: A Second Home on the Family Farm",
+    excerpt:
+      "Want to put a home for a parent or grown child on the family farm near Ossian? What to ask about a second dwelling, splitting off a lot, and sharing a well or septic before you order.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "September 30, 2026",
+    html: `
+<p>Ossian sits in northern Wells County, a short drive south of Fort Wayne and surrounded by family farms. A lot of the calls we get from this area start the same way: &ldquo;Mom and Dad have the farm, and we want to put a home out there so we can be close.&rdquo; Or the reverse &mdash; parents who want their grown kids on the land. A <strong>manufactured home</strong> is a natural fit. The part that needs sorting out first is not the home. It is the land.</p>
+
+<h2>Can a second home go on the parcel?</h2>
+<p>Counties treat a second dwelling on one parcel differently. Some allow it in an agricultural district with conditions; some require the new home to sit on its own lot. Before you pick a spot or a floor plan, call the Wells County plan commission with the parcel number and ask:</p>
+<ul>
+  <li>Is a second single-family dwelling allowed on this parcel as it is zoned?</li>
+  <li>If not, what does it take to split off a separate lot, and what is the minimum lot size and road frontage?</li>
+  <li>What setbacks apply from the existing house, the barns and the road?</li>
+</ul>
+<p>Write the answers down. They decide everything that follows.</p>
+
+<h2>Well, septic and utilities</h2>
+<p>This is where family-farm projects most often stall. A new home usually needs its own approved septic system, sized for its bedrooms and placed where the soil allows. Whether it can share the existing well is a question for the county health department and your well contractor. Electric service may mean a new meter and a line from the road. Get those answers before you order the home; the <a href="/guides/site-work">site work guide</a> explains the sequence.</p>
+
+<h2>Think about ownership now</h2>
+<p>Who owns the home, and who owns the ground under it, matters for financing, insurance, taxes and one day for inheritance. If the home sits on land a parent owns, talk it through as a family, and with an attorney if the farm is in a trust or partnership. You choose your own lender; the <a href="/guides/financing">financing guide</a> explains how loans differ when the home is on land you do not own.</p>
+
+<h2>Choosing the home</h2>
+<p>Single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes keep the footprint small on a farm yard; multi-section homes give a growing family room. Browse the <a href="/floor-plans">floor plans</a> and come see a few. We sell the home and arrange delivery; site work and setup are yours to contract.</p>
+
+<h2>Common questions</h2>
+<h3>Do I have to split off a lot?</h3>
+<p>Sometimes. It depends on the zoning of the parcel. The plan commission answers for your land.</p>
+<h3>Can the new home share the farm&rsquo;s septic?</h3>
+<p>Usually a new home needs its own system. The county health department decides.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/wells-county">our Wells County page</a>, or <a href="/contact-us">tell us about the parcel</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-south-whitley-indiana",
+    title: "Manufactured Homes in South Whitley, Indiana: Insuring Your New Home",
+    excerpt:
+      "Insurance is one of the last calls most buyers make and one of the first a lender asks about. What South Whitley-area buyers should ask an insurer about a new manufactured home before closing.",
+    image: "/images/homepage/single-wides.webp",
+    date: "September 30, 2026",
+    html: `
+<p>South Whitley is a small town on the Eel River in southwest Whitley County. Buyers from around here tend to plan carefully &mdash; land, foundation, delivery date &mdash; and then leave the insurance call until the week before move-in. That is late. If you finance the home, the lender will want proof of coverage before closing, and if you are paying cash, you still want the home covered from the day it arrives.</p>
+
+<h2>Start the call early</h2>
+<p>Call two or three insurers once you have picked a floor plan. Tell them it is a new HUD-code <strong>manufactured home</strong>, give them the model, the size and the year, and tell them where it will sit and on what kind of foundation. Not every company writes policies on manufactured homes, and the ones that do will ask different questions. Starting early leaves you time to compare.</p>
+
+<h2>Questions worth asking</h2>
+<ul>
+  <li><strong>Replacement cost or actual cash value?</strong> A replacement-cost policy pays to replace the home; an actual-cash-value policy subtracts depreciation. Ask which one you are being quoted.</li>
+  <li><strong>What about the things attached to the home?</strong> Porches, decks, skirting, steps and a detached garage may be covered differently, or not at all.</li>
+  <li><strong>Wind and hail.</strong> Ask how storm damage is handled and what the deductible is for it.</li>
+  <li><strong>Flood.</strong> Standard policies usually exclude flood. If your parcel is near the river or in a mapped flood zone, ask about a separate flood policy.</li>
+  <li><strong>How the home is titled and placed.</strong> A home on land you own on a permanent foundation may be written differently from a home on a leased lot.</li>
+</ul>
+
+<h2>Keep your paperwork together</h2>
+<p>Keep the sales documents, the home&rsquo;s data plate information, your installer&rsquo;s paperwork and photos of the finished home in one place. An insurer will ask for some of it at the start, and all of it if you ever file a claim.</p>
+
+<h2>What we provide</h2>
+<p>We sell the home, quote it line by line and arrange delivery, and we can give you the model and specification details an insurer asks for. We do not sell insurance or recommend an insurer; the choice is yours. Browse the <a href="/floor-plans">floor plans</a>, and read the <a href="/guides/buyers-guide">buyer&rsquo;s guide</a> for the rest of the checklist.</p>
+
+<h2>Common questions</h2>
+<h3>When do I need coverage in place?</h3>
+<p>If you finance, before closing. Either way, by the day the home arrives.</p>
+<h3>Is flood covered?</h3>
+<p>Usually not by a standard policy. Ask about a separate flood policy if your land is near water.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/whitley-county">our Whitley County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-kimmell-indiana",
+    title: "Manufactured Homes in Kimmell, Indiana: Caring for Your Home in the First Year",
+    excerpt:
+      "A new manufactured home settles, breathes and meets its first Indiana winter in year one. A simple first-year care list for Kimmell-area owners: level, skirting vents, gutters, filters and water.",
+    image: "/images/homepage/about-2.webp",
+    date: "September 30, 2026",
+    html: `
+<p>Kimmell is a small community in western Noble County, a short drive from Ligonier and the lakes. The owners we hear from after move-in usually want to know one thing: <em>what should I be keeping an eye on?</em> A new <strong>manufactured home</strong> needs very little, but the first year is when a few simple habits pay off for the next twenty.</p>
+
+<h2>A first-year care list</h2>
+<ul>
+  <li><strong>Check that it is still level.</strong> A new home settles on its piers, especially after the first freeze and thaw. Doors that start to stick or gaps that open at the corners are the usual signs. Your set-up contractor can re-level it; ask when they recommend a check.</li>
+  <li><strong>Keep the skirting vents clear.</strong> The space under the home needs air. Keep leaves, snow and mulch away from the vents and make sure the ground cover under the home stays in place.</li>
+  <li><strong>Move water away from the home.</strong> Clean gutters, keep downspouts pointed away, and watch where water stands after a hard rain. Water under the home is the problem most worth preventing.</li>
+  <li><strong>Change the furnace filter</strong> on the schedule in the equipment paperwork, and keep the return-air path clear.</li>
+  <li><strong>Look under the sinks</strong> every few weeks for drips, and know where your main water shut-off is.</li>
+  <li><strong>Before winter,</strong> check heat tape on any exposed water line, close up gaps in the skirting, and disconnect garden hoses.</li>
+</ul>
+
+<h2>Keep a list for warranty items</h2>
+<p>Small adjustments in the first months are normal. Keep a written list with photos and dates rather than calling about each one, and send it together. Some items belong to your set-up contractor, others are covered by the manufacturer&rsquo;s limited warranty, and appliances carry their own makers&rsquo; warranties. We stay your point of contact. Our <a href="/blog/manufactured-homes-topeka-indiana">delivery-day checklist</a> covers what to look for when the home first arrives.</p>
+
+<h2>Read the homeowner manual</h2>
+<p>The home comes with a homeowner&rsquo;s manual and equipment paperwork. Keep them together with your purchase papers. They say what the manufacturer expects for maintenance, and following it protects your warranty.</p>
+
+<h2>Common questions</h2>
+<h3>How often should the home be re-leveled?</h3>
+<p>Ask your set-up contractor. A check after the first winter is a common starting point.</p>
+<h3>Who fixes a door that sticks after a few months?</h3>
+<p>Usually it is a levelling issue for your set-up contractor. Put it on your list and send it in.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/noble-county">our Noble County page</a>, or <a href="/contact-us">get in touch</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-shipshewana-indiana",
+    title: "Manufactured Homes in Shipshewana, Indiana: Which Options to Decide at Order",
+    excerpt:
+      "Some choices are built into a manufactured home at the plant and are hard to change later; others are easy to add after move-in. How Shipshewana-area buyers sort one from the other.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "September 30, 2026",
+    html: `
+<p>Shipshewana, in northern LaGrange County, is not far from the Topeka plant where Champion builds the homes we sell. Buyers from around here tend to be practical: they want to spend where it counts and skip what does not. With a <strong>manufactured home</strong>, the most useful thing to know is which choices have to be made when you order, because the home is built at the plant, and which ones you can just as easily make after you move in.</p>
+
+<h2>Decide these at order</h2>
+<p>Anything built into the structure or the walls is far easier and cheaper to get right at the plant:</p>
+<ul>
+  <li><strong>The floor plan and any layout options</strong> &mdash; an extra bedroom, an open kitchen, a larger bathroom.</li>
+  <li><strong>Windows and doors</strong> &mdash; where they go, how many, and whether you want an upgraded package.</li>
+  <li><strong>Insulation and energy options</strong> offered for the plan.</li>
+  <li><strong>Electrical</strong> &mdash; extra outlets, ceiling fan boxes, exterior outlets and lights.</li>
+  <li><strong>Heating and water-heater fuel</strong>, if the plan offers a choice.</li>
+  <li><strong>Interior finishes built into the walls and ceilings</strong>, where options are offered.</li>
+</ul>
+<p>Options vary by plan and series. Ask which ones a specific plan offers, and do not assume from a photo, because renderings can show optional features.</p>
+
+<h2>Easy to add later</h2>
+<ul>
+  <li>Paint colours and window coverings.</li>
+  <li>Most lighting fixtures, as long as the box is there.</li>
+  <li>Freestanding furniture, rugs and storage.</li>
+  <li>Outdoor space &mdash; a deck, porch or shed, built freestanding by your contractor with its own permit.</li>
+</ul>
+
+<h2>How the quote shows it</h2>
+<p>Every quote from us lists the home, each option and delivery on separate lines, so you can see exactly what each choice adds and decide with the numbers in front of you. Browse the <a href="/floor-plans">floor plans</a>, note the options that matter to you, and walk a few homes at the showroom to see them in person.</p>
+
+<h2>Common questions</h2>
+<h3>Can I change options after I order?</h3>
+<p>Changes get harder once the home is scheduled for production. Settle them before you sign.</p>
+<h3>Which option matters most?</h3>
+<p>The one you would use every day. For many buyers that is the kitchen layout or an extra bathroom.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
 ];
