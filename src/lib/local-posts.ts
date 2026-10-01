@@ -1378,4 +1378,173 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-bluffton-indiana",
+    title: "Manufactured Homes in Bluffton, Indiana: Selling Your Current House First",
+    excerpt:
+      "Moving from an older house in Bluffton into a new manufactured home? How to line up the sale, the order and the move so you are not paying for two homes, or living out of boxes, for months.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 1, 2026",
+    html: `
+<p>Bluffton is the county seat of Wells County, on the Wabash River south of Fort Wayne. Many of the buyers we hear from here already own a house &mdash; often an older two-story they raised a family in &mdash; and want something newer, smaller or easier to keep up. The home is the easy part. The hard part is timing: selling one house and moving into another without carrying both, or ending up with nowhere to live for a month.</p>
+
+<h2>Three ways to sequence it</h2>
+<ul>
+  <li><strong>Sell first, then order.</strong> The cleanest financially. The catch is that you may need somewhere to live while the new <strong>manufactured home</strong> is built and the site is prepared &mdash; usually 8 to 12 weeks from order to move-in.</li>
+  <li><strong>Order first, sell during the build.</strong> Popular when the land is already yours. List the house once the order is placed and the site work is scheduled, so the closing lands near move-in day. It works best when you are confident about your sale.</li>
+  <li><strong>Sell with a delayed possession date.</strong> Some sellers negotiate a closing or possession date that gives them a few extra weeks in the house. Your real estate agent can tell you what buyers in your market will accept.</li>
+</ul>
+<p>Which one fits depends on your finances, your land and how quickly houses are selling in your neighbourhood. Talk it through with your agent and your lender before you sign anything; you choose your own lender, and the <a href="/guides/financing">financing guide</a> explains the loan types in plain language.</p>
+
+<h2>Measure what you are taking with you</h2>
+<p>A move from a bigger house means deciding what fits. Measure the pieces you are keeping &mdash; the dining table, the bed, the piano &mdash; and compare them with the room dimensions on the <a href="/floor-plans">floor plans</a>. Bring the measurements to the showroom; walking a home with real numbers in hand settles a lot of questions quickly.</p>
+
+<h2>Keep the site work on schedule</h2>
+<p>Whichever order you choose, the site has to be ready when the home is. Your own contractors handle the foundation, utilities and setup; we sell the home and arrange delivery. The <a href="/guides/site-work">site work guide</a> lays out the sequence, and the <a href="/guides/pricing">pricing guide</a> publishes typical site-work ranges so the budget is not a surprise.</p>
+
+<h2>Common questions</h2>
+<h3>How long between ordering and moving in?</h3>
+<p>Usually 8 to 12 weeks. The factory build is 6 to 8 weeks, and your site work runs alongside it.</p>
+<h3>Should I sell before I order?</h3>
+<p>It depends on your finances and your market. Ask your agent and lender, then choose the order that leaves you the least exposed.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations/wells-county">our Wells County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-berne-indiana",
+    title: "Manufactured Homes in Berne, Indiana: Testing Your Well Water First",
+    excerpt:
+      "Most rural Adams County homes run on a private well. Why Berne-area buyers should test the water before they order, and how to leave room in the floor plan for any treatment it turns out to need.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 1, 2026",
+    html: `
+<p>Berne is a small town in southern Adams County, surrounded by farm ground where almost every home outside town runs on a private well. That brings a question city buyers never face: <em>what is actually in the water?</em> Asking it before you order a new <strong>manufactured home</strong> costs little, and the answer can shape the floor plan you choose.</p>
+
+<h2>Test before you build</h2>
+<p>If the parcel already has a well, have the water tested by a certified laboratory before you finalise your plans &mdash; ideally before you close on the land. If a new well is going in, test it once it is drilled. The county health department can tell you which tests are recommended and where to send samples. Common things a test looks at include bacteria, nitrates, hardness and iron.</p>
+
+<h2>Why it matters for the floor plan</h2>
+<p>If the water needs treatment &mdash; a softener, an iron filter, or something else your well contractor or a water-treatment company recommends &mdash; that equipment needs a home, usually near where the water line enters the house, with a drain and an electrical outlet nearby. In a manufactured home that is often the utility or laundry room. When you browse the <a href="/floor-plans">floor plans</a>, look at how much room the utility area has, and ask which options a plan offers. Planning for it now beats squeezing a tank into a closet later.</p>
+
+<h2>Who does what</h2>
+<p>Your well contractor drills or services the well, and a water-treatment company or plumber installs any equipment. Those are your contractors; we sell the home and arrange delivery, and we do not perform site work, setup or plumbing connections. The <a href="/guides/site-work">site work guide</a> explains where the well fits in the sequence, alongside septic, electric and the foundation.</p>
+
+<h2>Keep testing</h2>
+<p>A single test is a snapshot. Ask the lab or the health department how often to retest, and keep your results with your home paperwork.</p>
+
+<h2>Common questions</h2>
+<h3>Do I need to test a well that has always been used?</h3>
+<p>It is still worth testing before you commit. Water can change, and a new household may use it differently.</p>
+<h3>Where does a water softener go in a manufactured home?</h3>
+<p>Usually in the utility or laundry area, near the water line. Check the room size on the floor plan.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/adams-county">our Adams County page</a>, or <a href="/contact-us">ask which plans have the utility space you need</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-larwill-indiana",
+    title: "Manufactured Homes in Larwill, Indiana: Check Internet Service Before You Buy Land",
+    excerpt:
+      "Working from home, school online, streaming at night — on rural Whitley County ground the internet service available at your address can decide whether a parcel works. How to check before you buy.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 1, 2026",
+    html: `
+<p>Larwill is a small town in western Whitley County, a short drive from Columbia City along US-30. It is quiet country, which is why people move here, and it is exactly the kind of place where the internet connection at one address can be very different from the one down the road. For a family that works from home or has kids doing schoolwork online, that matters as much as the soil test.</p>
+
+<h2>Check the address, not the town</h2>
+<p>Internet service is decided address by address. Before you buy a parcel, find out what is actually available there:</p>
+<ul>
+  <li><strong>Look the address up on the FCC&rsquo;s National Broadband Map,</strong> which lists the providers that report service at that location.</li>
+  <li><strong>Call the providers</strong> that show up and ask them to confirm service, speeds and installation for that exact address. A map is a starting point, not a promise.</li>
+  <li><strong>Ask the neighbours</strong> what they use and how well it works.</li>
+  <li><strong>Ask about installation.</strong> A long lane may need a longer line run, and the provider may need to know where the home will sit.</li>
+</ul>
+
+<h2>Plan the line with the rest of the utilities</h2>
+<p>If a wired service is available, its line usually comes in with, or alongside, the electric service. Decide where the home sits and tell both the electric provider and the internet provider early, so the trenching happens once. Your site contractor coordinates that; we sell the home and arrange delivery and do not perform site work. The <a href="/guides/site-work">site work guide</a> covers the order things happen in.</p>
+
+<h2>Choose a plan with a place to work</h2>
+<p>If someone in the house works from home, look for a <strong>manufactured home</strong> floor plan with a den, a spare bedroom or a room away from the living area. Browse the <a href="/floor-plans">floor plans</a> with that in mind.</p>
+
+<h2>Common questions</h2>
+<h3>Can I rely on the broadband map alone?</h3>
+<p>No. Use it to find providers, then confirm service at your exact address with each one.</p>
+<h3>When should I check?</h3>
+<p>Before you buy the land. It is one of the few things you cannot change afterward.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/whitley-county">our Whitley County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-wawaka-indiana",
+    title: "Manufactured Homes in Wawaka, Indiana: Choosing a Plan With a Real Home Office",
+    excerpt:
+      "Working from home is the norm for many families near Wawaka. How to pick a manufactured home floor plan with a quiet place to work — where the room sits, doors, light, outlets and storage.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "October 1, 2026",
+    html: `
+<p>Wawaka is a small community in western Noble County, a short drive from Ligonier. More and more of the families we talk to from out this way have at least one person working from home. A kitchen table works for a week. For years of work, you want a real place to do it &mdash; and with a <strong>manufactured home</strong>, the time to plan that is when you choose the floor plan.</p>
+
+<h2>Where the room sits matters most</h2>
+<p>The best home office is away from the noise. When you look at the <a href="/floor-plans">floor plans</a>, notice:</p>
+<ul>
+  <li><strong>Distance from the living room and kitchen.</strong> A spare bedroom or den at the end of the home, not off the main living space, keeps calls quieter.</li>
+  <li><strong>A door that closes.</strong> An open &ldquo;flex space&rdquo; is pleasant, but a room with a door is an office.</li>
+  <li><strong>Windows.</strong> Natural light makes a long workday easier. Think about which way the room will face once the home is placed.</li>
+  <li><strong>Storage.</strong> A closet keeps files and equipment out of sight.</li>
+</ul>
+
+<h2>Ask about electrical options at order</h2>
+<p>Outlets are far easier to add at the plant than after the home is built. If you know where the desk will go, ask which electrical options a plan offers &mdash; an extra outlet, a ceiling fan box &mdash; before you order. Our <a href="/blog/manufactured-homes-shipshewana-indiana">post on which options to decide at order</a> covers the rest of that list.</p>
+
+<h2>And check the connection</h2>
+<p>A great office is no use without a reliable internet connection. Check what service is actually available at your address before you commit to a parcel; our <a href="/blog/manufactured-homes-larwill-indiana">post on checking internet service</a> explains how.</p>
+
+<h2>Come see it in person</h2>
+<p>Bring your laptop bag and stand in the room. You will know quickly whether it works. The showroom is open Monday to Friday 9&ndash;5 and Saturday 10&ndash;4, and every quote is line by line &mdash; home, each option and delivery on separate lines.</p>
+
+<h2>Common questions</h2>
+<h3>Is a three-bedroom plan with one room as an office better than a plan with a den?</h3>
+<p>Often, yes &mdash; a bedroom has a door and a closet. But a den placed well can work just as well. Walk both.</p>
+<h3>Can I add outlets after move-in?</h3>
+<p>Usually, but it is easier and tidier to choose them at order.</p>
+<h3>Next step?</h3>
+<p>See <a href="/locations/noble-county">our Noble County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-stroh-indiana",
+    title: "Manufactured Homes in Stroh, Indiana: Driveway Permits, Culverts and Your New Address",
+    excerpt:
+      "A new home on bare ground in LaGrange County needs a way in from the road and an address emergency crews can find. What Stroh-area buyers should ask about driveway permits, culverts and address assignment.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 1, 2026",
+    html: `
+<p>Stroh is a small lake community in southeast LaGrange County, close to the Noble County line. Many of the buyers we hear from around here are building on ground that has never had a house on it. That raises two small questions that are easy to miss until they hold up a project: <em>how do we get onto the property from the road,</em> and <em>what is our address?</em></p>
+
+<h2>The driveway starts at the road</h2>
+<p>A new driveway onto a county road usually needs approval from the county highway department, and often a culvert under the entrance so the roadside ditch keeps draining. Before you design the driveway &mdash; and before anyone digs &mdash; ask the county:</p>
+<ul>
+  <li>Is a permit required for a new driveway entrance on this road?</li>
+  <li>Is a culvert required, and what size and material?</li>
+  <li>Are there rules on where the entrance can go, such as sight distance near a curve or hill?</li>
+</ul>
+<p>Get the answers in writing. The driveway also has to carry the home&rsquo;s delivery, so build it for that, not just for the family car.</p>
+
+<h2>Get an address before you need one</h2>
+<p>Bare land often has a parcel number but no street address. A new home needs one &mdash; for utility service, mail, deliveries, and most importantly so emergency crews can find you. Ask the county which office assigns addresses and what it needs from you, and do it early, because utility companies may ask for the address before they will schedule service.</p>
+
+<h2>Who does what</h2>
+<p>The driveway, culvert and site work are yours to contract; we sell the home and arrange delivery, and we do not perform site work or setup. The <a href="/guides/site-work">site work guide</a> lays out the order things happen in, and the <a href="/guides/delivery-and-setup">delivery and set-up guide</a> explains what the transport needs to reach your site.</p>
+
+<h2>Common questions</h2>
+<h3>Do I always need a culvert?</h3>
+<p>Not always. It depends on the road and the ditch. The county highway department answers for your entrance.</p>
+<h3>When should I request an address?</h3>
+<p>As soon as you know where the driveway and home will go. Utilities may need it to schedule service.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
 ];
