@@ -11,7 +11,7 @@ import { SalesAlertForm } from "@/components/SalesAlertForm";
 import { SaleHomesGrid } from "./SaleHomesGrid";
 import { AllSaleHomesTable } from "./AllSaleHomesTable";
 import { saleHomes, saleListings } from "@/lib/sale-homes";
-import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleAmount, saleDeadlineLabel, saleScope } from "@/lib/sale";
 import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // ============================================
@@ -40,10 +40,10 @@ export function generateMetadata() {
     // truncated it mid-phrase. "Fall into Savings Sales Event" is the longest
     // sale name we run, and this lands at 57.
     title: sale.active
-      ? `${sale.name}: Up to ${sale.discountPercent}% Off`
+      ? `${sale.name}: ${sale.allHomes ? "" : "Up to "}${sale.discountPercent}% Off`
       : "Champion Floor Plans on Sale",
     description: sale.active
-      ? `${sale.name}: save up to ${sale.discountPercent}% off MSRP on select new Champion floor plans. Single wide, double wide, and modular homes on sale through ${sale.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`
+      ? `${sale.name}: save ${saleAmount(sale)} off MSRP base price on ${saleScope(sale)}. Single wide, double wide, and modular homes on sale through ${sale.endDateLabel} from Factory Direct Homes Center in Auburn, Indiana.`
       : "Featured Champion manufactured and modular homes at factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Call for the discounts running right now.",
     keywords: [
       "manufactured homes sale",
@@ -90,10 +90,10 @@ export default function HomesOnSalePage() {
 
                   <p className="text-lg md:text-xl text-white font-semibold mb-1">{sale.name}</p>
                   <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
-                    UP TO {sale.discountPercent}% OFF
+                    {saleAmount(sale).toUpperCase()} OFF
                   </h1>
                   <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
-                    Select New Champion Floor Plans
+                    {sale.allHomes ? "Every New Champion Floor Plan" : "Select New Champion Floor Plans"}
                   </p>
                   <p className="text-base text-white/80 max-w-xl mx-auto mb-3">
                     Save thousands on your new Champion manufactured home. Factory-direct pricing
