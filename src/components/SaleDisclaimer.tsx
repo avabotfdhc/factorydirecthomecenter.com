@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getSaleStatus } from "@/lib/sale";
+import { getSaleStatus, saleAmount, saleScope, saleTerms } from "@/lib/sale";
 
 interface SaleDisclaimerProps {
   variant?: "compact" | "full" | "inline";
@@ -16,7 +16,9 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
   const [isExpanded, setIsExpanded] = useState(false);
   // Terms follow whichever campaign phase is running, so a stepped campaign's
   // second tier never inherits the first tier's percentage or production month.
-  const { active, endDateLabel, discountPercent: pct, productionMonth } = getSaleStatus();
+  const sale = getSaleStatus();
+  const { active, endDateLabel, productionMonth } = sale;
+  const headline = `*Save ${saleAmount(sale)} off MSRP base price on ${saleScope(sale)}.`;
   // Past tense once the offer is over, so an archived page doesn't read as a
   // live offer to a visitor who lands on it later.
   const expiry = active
@@ -27,7 +29,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
     return (
       <div className={`bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800 ${className}`}>
         <p className="font-medium">
-          *Save up to {pct}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
+          {headline} Excludes options, delivery, setup, site work, taxes &amp; fees.
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="underline hover:text-amber-900 ml-1"
@@ -37,9 +39,9 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
         </p>
         {isExpanded && (
           <div className="mt-2 text-amber-700 space-y-1 border-t border-amber-200 pt-2">
-            <p>Good on new purchases only. Order must be authorized for production in {productionMonth}. {expiry}.</p>
-            <p>MSRP = Manufacturer&rsquo;s Suggested Retail Price. Subject to credit approval.</p>
-            <p>Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. See dealer for complete details.</p>
+            <p>New purchases only. Purchase agreement and deposit required by {endDateLabel}; order must be authorized for production in {productionMonth}. {expiry}.</p>
+            <p>MSRP = Manufacturer&rsquo;s Suggested Retail Price. We do not provide financing; any loan is between you and a lender of your choosing.</p>
+            <p>Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. The signed purchase agreement governs. See dealer for complete details.</p>
           </div>
         )}
       </div>
@@ -49,9 +51,10 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
   if (variant === "inline") {
     return (
       <p className={`text-xs text-gray-500 ${className}`}>
-        *Save up to {pct}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, skirting, taxes, title fees, and optional upgrades.
+        {headline} Excludes options and upgrades, delivery, setup, foundation, site work, skirting, taxes, title and fees.
         Not valid with any other specials or discounts and cannot be used in combination with other specials or discounts. Good on new purchases only;
-        order must be authorized for production in {productionMonth}. {expiry}. Subject to credit approval. See dealer for details.
+        purchase agreement and deposit required by {endDateLabel}, and order must be authorized for production in {productionMonth}. {expiry}.
+        We do not provide financing. The signed purchase agreement governs. See dealer for details.
       </p>
     );
   }
@@ -73,20 +76,13 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
           </p>
         )}
         <p>
-          <strong>*SAVE UP TO {pct}% OFF MSRP BASE PRICE DISCLOSURE:</strong> Offer valid on select new Champion manufactured and modular floor plans.
-          Discount of up to {pct}% applies to MSRP (Manufacturer&rsquo;s Suggested Retail Price) base price only and does not include delivery, setup, skirting, taxes,
-          title fees, or optional upgrades.
+          <strong>*{saleAmount(sale).toUpperCase()} OFF MSRP BASE PRICE DISCLOSURE.</strong> {expiry}.
         </p>
-        <p>
-          This offer is not valid with any other specials or discounts and cannot be used in combination with other specials or discounts.
-          Good on new purchases only, and order must be authorized for production in <strong>{productionMonth}</strong>. {expiry}.
-          Subject to credit approval. Factory Direct Homes Center reserves the right to modify or cancel this promotion at any time without notice.
-        </p>
-        <p>
-          Prices shown are for the home only and do not include taxes, title, delivery, installation,
-          or site preparation costs. All homes are built by Champion Home Builders to HUD or modular building codes.
-          Warranty information available upon request.
-        </p>
+        <ul className="list-disc pl-5 space-y-2">
+          {saleTerms(sale).map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
         <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-200">
           Factory Direct Homes Center LLC | 1211 State Road 8, Auburn, IN 46706 | (260) 308-1457
         </p>

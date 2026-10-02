@@ -8,7 +8,7 @@ import { SaleClaimForm } from "@/components/SaleClaimForm";
 import { SaleDisclaimer } from "@/components/SaleDisclaimer";
 import { getSaleHome, saleHomes } from "@/lib/sale-homes";
 import { formatUsd, PriceTriple, PricingDisclaimer } from "@/components/Pricing";
-import { getSaleStatus, saleDeadlineLabel, salePriceFor } from "@/lib/sale";
+import { getSaleStatus, saleAmount, saleDeadlineLabel, salePriceFor, saleScope } from "@/lib/sale";
 import { SHOW_SALE_PRICES } from "@/lib/price-visibility";
 
 // ============================================
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return genMeta({
     title: sale.active
-      ? `${home.name} — Up to ${sale.discountPercent}% Off MSRP`
+      ? `${home.name} — ${sale.allHomes ? "" : "Up to "}${sale.discountPercent}% Off MSRP`
       : `${home.name} — Champion Home`,
     // A price only appears here when MSRP, sale price and savings can all be
     // stated together — the same all-or-nothing rule the page itself follows.
@@ -98,7 +98,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
         <div className="bg-gradient-to-r from-red-500 to-red-600 text-white py-3">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p className="font-bold text-lg">
-              🔥 {sale.name}: save up to {sale.discountPercent}% off select new Champion floor plans! 🔥
+              🔥 {sale.name}: save {saleAmount(sale)} off {saleScope(sale)}! 🔥
             </p>
             <p className="text-sm text-white/90">{saleDeadlineLabel(sale)}</p>
           </div>
@@ -248,7 +248,7 @@ export default async function SaleHomeDetailPage({ params }: { params: Promise<{
               <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl mb-6 border border-red-100">
                 {sale.active && (
                   <p className="text-sm text-red-600 font-semibold mb-2">
-                    {sale.name.toUpperCase()} — SAVE UP TO {sale.discountPercent}% OFF MSRP
+                    {sale.name.toUpperCase()} — SAVE {saleAmount(sale).toUpperCase()} OFF MSRP
                   </p>
                 )}
                 <PriceTriple

@@ -301,8 +301,8 @@ export function saleSection(status: SaleStatus = getSaleStatus()): string {
     ? ` After that, the ${status.nextPhase.name} continues at ${status.nextPhase.discountPercent}% off through ${status.nextPhase.endDate}.`
     : "";
   return `SALE (running now — use it, honestly)
-- ${status.name}: ${status.discountPercent}% off the MSRP (Manufacturer's Suggested Retail Price) base price of every new Champion floor plan we sell, on orders authorized for ${status.productionMonth} production. Ends ${status.endDateLabel} (${status.daysLeft} day${status.daysLeft === 1 ? "" : "s"} left${status.endingSoon ? " — ending soon" : ""}).${next}
-- Terms: the discount applies to the MSRP base price of the home only, not options, upgrades, delivery, set-up, site work or fees; cannot be combined with other offers or prior sales; financing subject to credit approval; see dealer for details. The page is /homes-on-sale; each featured home has a "Claim this deal" form.
+- ${status.name}: ${status.allHomes ? "" : "up to "}${status.discountPercent}% off the MSRP (Manufacturer's Suggested Retail Price) base price of ${status.allHomes ? "every new Champion floor plan we sell" : "select new Champion floor plans"}, on a purchase agreement signed with deposit by the deadline and authorized for for ${status.productionMonth} production. Ends ${status.endDateLabel} (${status.daysLeft} day${status.daysLeft === 1 ? "" : "s"} left${status.endingSoon ? " — ending soon" : ""}).${next}
+- Terms: the discount applies to the MSRP base price of the home only, not options, upgrades, delivery, set-up, site work or fees; cannot be combined with other offers or prior sales; we do not provide financing, so any loan is between the buyer and their own lender; the signed purchase agreement governs; see dealer for details. The page is /homes-on-sale; each featured home has a "Claim this deal" form.
 - Every dollar figure on the sale is quoted by the team, not by Ava: state the percentage and the deadline, then offer the quote or a visit.`;
 }
 

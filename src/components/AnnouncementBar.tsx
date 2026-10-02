@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState, useSyncExternalStore } from "react";
-import { saleDeadlineLabel, saleStatusForDay, todayInSaleZone } from "@/lib/sale";
+import { saleAmount, saleDeadlineLabel, saleScope, saleStatusForDay, todayInSaleZone } from "@/lib/sale";
 
 // The banner hides itself once the promo ends so it can never display an
 // expired offer. Both the cut-off and the visible copy come from
@@ -47,10 +47,10 @@ export function AnnouncementBar() {
           >
             <span className="animate-pulse" aria-hidden="true">🎉</span>
             <span className="hidden sm:inline">
-              <strong>Save up to {sale.discountPercent}% off</strong> select new Champion floor plans!
+              <strong>Save {saleAmount(sale)} off</strong> {saleScope(sale)}!
             </span>
             <span className="sm:hidden">
-              <strong>Up to {sale.discountPercent}% off</strong> Champion plans!
+              <strong>{sale.allHomes ? "" : "Up to "}{sale.discountPercent}% off</strong> Champion homes!
             </span>
             <span className="text-yellow-300 font-semibold whitespace-nowrap">
               {saleDeadlineLabel(sale)}

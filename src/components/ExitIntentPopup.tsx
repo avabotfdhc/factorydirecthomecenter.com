@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
 import { trackFormSubmit } from "@/lib/analytics";
-import { getSaleStatus, saleDeadlineLabel } from "@/lib/sale";
+import { getSaleStatus, saleAmount, saleDeadlineLabel, saleScope } from "@/lib/sale";
 
 interface ExitIntentPopupProps {
   offer?: string;
@@ -18,7 +18,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
   const headline =
     offer ??
     (sale.active
-      ? `${sale.name}: save up to ${sale.discountPercent}% off select Champion floor plans!`
+      ? `${sale.name}: save ${saleAmount(sale)} off ${saleScope(sale)}!`
       : "Get a free, line-item factory-direct quote");
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState("");
@@ -139,7 +139,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                     <span className="text-[var(--color-lime-dark)]">✓</span>
                     <span className="text-sm text-[var(--color-charcoal)]">
                       {sale.active ? (
-                        <><strong>Up to {sale.discountPercent}% off MSRP</strong> base price</>
+                        <><strong>{sale.allHomes ? "" : "Up to "}{sale.discountPercent}% off MSRP</strong> base price</>
                       ) : (
                         <><strong>Line-item pricing</strong> — home, delivery, setup and site work priced separately</>
                       )}
@@ -151,7 +151,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[var(--color-lime-dark)]">✓</span>
-                    <span className="text-sm text-[var(--color-charcoal)]">Free site evaluation included</span>
+                    <span className="text-sm text-[var(--color-charcoal)]">Line-item quote on every home</span>
                   </div>
                 </div>
 
@@ -174,7 +174,7 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
 
                 {sale.active && (
                   <p className="text-xs text-center text-[var(--color-gray)] mt-4">
-                    *Save up to {sale.discountPercent}% off MSRP base price on select new Champion floor plans. Excludes delivery, setup, taxes &amp; fees.
+                    *Save {saleAmount(sale)} off MSRP base price on {saleScope(sale)}. Excludes delivery, setup, taxes &amp; fees.
                     Not valid with other specials or discounts. New purchases only; order must be authorized for production in {sale.productionMonth}. Valid through {sale.endDateLabel}.
                   </p>
                 )}

@@ -22,6 +22,14 @@ export interface SalePhase {
   endDate: string;
   /** Month an order must be authorized for production in, e.g. "September 2026". */
   productionMonth: string;
+  /**
+   * True when the discount applies to every new Champion floor plan we sell,
+   * at exactly `discountPercent`. Omitted (false) means "up to N% off select
+   * floor plans", which is how every campaign before October 2026 was worded.
+   * The ad copy and the disclaimer both read this, so they can never disagree
+   * about which homes the offer covers.
+   */
+  allHomes?: boolean;
 }
 
 // ── The campaign calendar ───────────────────────────────────────────────────
@@ -62,6 +70,17 @@ export const SALE_PHASES: SalePhase[] = [
     startDate: "2026-09-17",
     endDate: "2026-09-30",
     productionMonth: "September 2026",
+  },
+  // Kyle, 2026-10-02: 20% off MSRP base price on every new Champion home, for
+  // a purchase agreement signed and deposited by October 31 with the order
+  // authorized for October 2026 production.
+  {
+    name: "Fall into Savings Sales Event",
+    discountPercent: 20,
+    startDate: "2026-10-01",
+    endDate: "2026-10-31",
+    productionMonth: "October 2026",
+    allHomes: true,
   },
 ];
 
@@ -115,6 +134,8 @@ export interface SaleStatus {
   discountPercent: number;
   /** Production month for the terms. */
   productionMonth: string;
+  /** True when the discount covers every new floor plan at the full rate. */
+  allHomes: boolean;
   /** "September 15, 2026" — the running phase's last day (or the last one that ran). */
   endDateLabel: string;
   /** Days remaining in the running phase, counting today. 0 when inactive. */
@@ -167,6 +188,7 @@ export function saleStatusForDay(today: string): SaleStatus {
       name: "",
       discountPercent: 0,
       productionMonth: "",
+      allHomes: false,
       endDateLabel: "",
       daysLeft: 0,
       endingSoon: false,
@@ -190,6 +212,7 @@ export function saleStatusForDay(today: string): SaleStatus {
     name: reference.name,
     discountPercent: reference.discountPercent,
     productionMonth: reference.productionMonth,
+    allHomes: Boolean(reference.allHomes),
     endDateLabel: formatSaleDate(phase ? runEnd.endDate : reference.endDate),
     daysLeft,
     endingSoon: Boolean(phase) && daysLeft <= 3,
@@ -221,6 +244,41 @@ export function saleDeadlineLabel(status: SaleStatus = getSaleStatus()): string 
   if (status.daysLeft === 1) return "Ends today";
   if (status.daysLeft === 2) return "Ends tomorrow";
   return `Ends ${status.endDateLabel}`;
+}
+
+/** "20%" for an every-home offer, "up to 25%" for a select-plans one. */
+export function saleAmount(status: Pick<SaleStatus, "allHomes" | "discountPercent">): string {
+  return status.allHomes ? `${status.discountPercent}%` : `up to ${status.discountPercent}%`;
+}
+
+/** Which homes the offer covers, phrased to follow "off MSRP base price on". */
+export function saleScope(status: Pick<SaleStatus, "allHomes">): string {
+  return status.allHomes ? "every new Champion floor plan" : "select new Champion floor plans";
+}
+
+/**
+ * The full terms of the running (or most recent) offer, one sentence per
+ * entry. `SaleDisclaimer` renders these on the site, and the campaign kit in
+ * docs/campaigns copies the same sentences into every ad, so the terms a buyer
+ * reads on Facebook are the terms on the sale page. Edit them here.
+ */
+export function saleTerms(status: SaleStatus = getSaleStatus()): string[] {
+  const pct = `${status.discountPercent}%`;
+  const deadline = status.endDateLabel;
+  const covers = status.allHomes
+    ? `every new Champion manufactured and modular floor plan ordered through Factory Direct Homes Center`
+    : `select new Champion manufactured and modular floor plans ordered through Factory Direct Homes Center; the discount varies by plan, up to ${pct}`;
+  return [
+    `Offer: ${status.allHomes ? pct : `up to ${pct}`} off the MSRP base price on ${covers}.`,
+    `MSRP means the Manufacturer's Suggested Retail Price set by Champion Home Builders for the base home on the date of order. The discount applies to the MSRP base price of the home only.`,
+    `To qualify, a purchase agreement must be signed and the required deposit received by ${deadline}, and the order must be authorized for production in ${status.productionMonth}. Production and delivery dates are set by the manufacturer and are not guaranteed.`,
+    `Excludes factory options and upgrades, freight and delivery, installation and set-up, foundation, site work, skirting, steps, air conditioning, utility connections, permits, taxes, title and other fees.`,
+    `New purchases only. Not valid on prior purchases or orders already placed, not combinable with any other special, discount or promotion, has no cash value, and is non-transferable.`,
+    `Factory Direct Homes Center does not provide, arrange or broker financing. Any financing is between the buyer and a lender of the buyer's own choosing and is subject to that lender's approval and terms.`,
+    `The buyer is responsible for zoning, permits and all site work, foundation and set-up, performed by contractors the buyer hires.`,
+    `Prices, specifications, features and availability are set by the manufacturer and may change without notice. Photos and renderings may show optional features not included in the base price. Not responsible for typographical or pictorial errors.`,
+    `Factory Direct Homes Center may modify or end this promotion for orders not yet signed. The signed purchase agreement governs every sale and controls over any advertisement. Void where prohibited. See dealer for complete details.`,
+  ];
 }
 
 /**
