@@ -73,11 +73,22 @@ export const SALE_PHASES: SalePhase[] = [
   },
   // Kyle, 2026-10-02: 20% off MSRP base price on every new Champion home, for
   // a purchase agreement signed and deposited by October 31 with the order
-  // authorized for October 2026 production.
+  // authorized for October 2026 production. Advertised Oct 2–3 at 20%.
   {
     name: "Fall into Savings Sales Event",
     discountPercent: 20,
     startDate: "2026-10-01",
+    endDate: "2026-10-03",
+    productionMonth: "October 2026",
+    allHomes: true,
+  },
+  // Kyle raised October to 25% off (2026-10-04). As with September's raise, the
+  // 20% row above is left as it ran, so the increase starts today and carries
+  // to the end of the month on the same terms.
+  {
+    name: "Fall into Savings Sales Event",
+    discountPercent: 25,
+    startDate: "2026-10-04",
     endDate: "2026-10-31",
     productionMonth: "October 2026",
     allHomes: true,
