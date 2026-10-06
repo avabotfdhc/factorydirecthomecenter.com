@@ -22,3 +22,14 @@ test("the root layout renders PageFooter through the lazy wrapper", () => {
   const wrapper = readFileSync("src/components/DeferredPageFooter.tsx", "utf8");
   assert.match(wrapper, /lazy\(\(\) => import\(["']\.\/PageFooter["']\)\)/);
 });
+
+test("the lazy wrapper never imports the registry, and skips the homepage", () => {
+  // DeferredPageFooter is in the layout, so whatever it imports ships on every
+  // page. canonicalPathname lives in its own import-free module for that reason.
+  const wrapper = readFileSync("src/components/DeferredPageFooter.tsx", "utf8");
+  assert.ok(!/from\s+["']@\/lib\/pages["']/.test(wrapper), "DeferredPageFooter must not import @/lib/pages");
+  assert.match(wrapper, /canonicalPathname\(usePathname\(\)\)/);
+  assert.match(wrapper, /pathname === "\/"\) return null/);
+  const helper = readFileSync("src/lib/canonical-pathname.ts", "utf8");
+  assert.ok(!/^import /m.test(helper), "canonical-pathname.ts must stay import-free");
+});

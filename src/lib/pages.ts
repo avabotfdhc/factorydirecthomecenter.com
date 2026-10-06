@@ -713,6 +713,8 @@ export function getAllPages(): SitePage[] {
 }
 
 // Get related pages by topic overlap, excluding the current page
+export { canonicalPathname } from "./canonical-pathname";
+
 export function getRelatedPages(currentUrl: string, count = 4): SitePage[] {
   const allPages = buildAllPages();
   const current = allPages.find((p) => p.url === currentUrl);

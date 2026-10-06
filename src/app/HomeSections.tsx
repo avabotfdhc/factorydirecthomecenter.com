@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -8,10 +6,8 @@ import {
   AnimatedCounter,
   MagneticButton,
 } from "@/components/VisualEffects";
-import { useState } from "react";
-import { trackPhoneClick } from "@/lib/analytics";
 import { H2, H3 } from "@/components/Heading";
-import PriceQuoteModal from "@/components/PriceQuoteModal";
+import { GetPricingButton, TrackedPhoneLink } from "./HomeSectionIslands";
 import { REVIEWS as reviews, GOOGLE_REVIEWS_URL } from "@/lib/reviews";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
@@ -79,7 +75,6 @@ const checkable = [
 // interactions hydrate. Everything else is server-rendered in app/page.tsx.
 export function AnimatedHomeSections() {
   // Which home type's pricing modal is open ("" = none).
-  const [quoteFor, setQuoteFor] = useState("");
 
   return (
     <>
@@ -165,13 +160,10 @@ export function AnimatedHomeSections() {
                     ))}
                   </ul>
                   <div className="mt-auto flex items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setQuoteFor(home.title)}
+                    <GetPricingButton
+                      modelName={`${home.title} home`}
                       className="inline-flex items-center justify-center min-h-11 px-5 rounded-lg bg-[var(--color-teal)] text-white text-sm font-bold tracking-wide hover:bg-[var(--color-teal-dark)] transition-colors"
-                    >
-                      Get Pricing
-                    </button>
+                    />
                     <Link
                       href="/floor-plans"
                       className="inline-flex items-center justify-center gap-1 min-h-11 min-w-11 px-4 rounded-lg text-sm font-semibold text-slate-100 hover:text-white hover:bg-white/10 transition-colors"
@@ -185,11 +177,6 @@ export function AnimatedHomeSections() {
             ))}
           </div>
         </div>
-        <PriceQuoteModal
-          isOpen={Boolean(quoteFor)}
-          onClose={() => setQuoteFor("")}
-          modelName={quoteFor ? `${quoteFor} home` : "Direct Inquiry"}
-        />
       </section>
 
       {/* Stats with Animated Counters */}
@@ -340,13 +327,13 @@ export function AnimatedHomeSections() {
               </Link>
             </MagneticButton>
             <MagneticButton>
-              <a 
-                href="tel:+12603081457" 
-                onClick={() => trackPhoneClick("financing_cta")}
+              <TrackedPhoneLink
+                href="tel:+12603081457"
+                location="financing_cta"
                 className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 text-[var(--color-charcoal)] px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-charcoal)]/5 transition-colors duration-300"
               >
                 Call Us
-              </a>
+              </TrackedPhoneLink>
             </MagneticButton>
           </div>
         </div>
