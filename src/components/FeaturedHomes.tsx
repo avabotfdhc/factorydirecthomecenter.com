@@ -33,7 +33,7 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
                 alt={`${plan.name} ${plan.homeType} floor plan — ${plan.sqft} sq ft, ${plan.beds} bed, ${plan.baths} bath`}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                sizes="(max-width: 640px) 88vw, (max-width: 1024px) 45vw, 22vw"
                 loading={i === 0 ? "eager" : "lazy"}
               />
             ) : (

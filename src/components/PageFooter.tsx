@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getRelatedPages, getBreadcrumbs, getPillarPage, sitePages } from "@/lib/pages";
+import { canonicalPathname, getRelatedPages, getBreadcrumbs, getPillarPage, sitePages } from "@/lib/pages";
 import { getCitations } from "@/lib/citations";
 import { StructuredData, structuredData } from "@/lib/seo";
 
 export function PageFooter() {
-  const pathname = usePathname();
+  // Never the raw value: an ISR regeneration of "/" reports "/index" on the
+  // server only, and branching on that is a hydration mismatch (see
+  // src/lib/canonical-pathname.ts).
+  const pathname = canonicalPathname(usePathname());
 
   // Skip on homepage — it has its own layout
   if (pathname === "/") return null;

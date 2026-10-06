@@ -1,6 +1,8 @@
 "use client";
 
 import { lazy, Suspense } from "react";
+import { usePathname } from "next/navigation";
+import { canonicalPathname } from "@/lib/canonical-pathname";
 
 // PageFooter (related-resource cards, citations, breadcrumbs and the site's
 // BreadcrumbList) needs the page registry to find the current URL's entry,
@@ -17,6 +19,12 @@ import { lazy, Suspense } from "react";
 const PageFooter = lazy(() => import("./PageFooter"));
 
 export function DeferredPageFooter() {
+  // PageFooter renders nothing on the homepage, but rendering it there still
+  // downloaded and ran its chunk — the registry and every post (~73 KB raw) —
+  // during the homepage's load: an 82 ms long task in the 2026-10-06
+  // Lighthouse run, on the one page where it shows nothing.
+  const pathname = canonicalPathname(usePathname());
+  if (pathname === "/") return null;
   return (
     <Suspense fallback={null}>
       <PageFooter />

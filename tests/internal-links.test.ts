@@ -118,3 +118,16 @@ test("the sitelinks searchbox target is a route that exists", () => {
     `SearchAction points at /${path} but ${route} does not exist — either build the page or drop the SearchAction`,
   );
 });
+
+test("the footer treats the server's /index as the homepage", async () => {
+  // Vercel's ISR regeneration of "/" renders with usePathname() === "/index";
+  // the browser sees "/". Branching on the raw value rendered a footer on the
+  // server and none on the client — React #418 on every homepage load.
+  const { canonicalPathname } = await import("../src/lib/pages");
+  assert.equal(canonicalPathname("/index"), "/");
+  assert.equal(canonicalPathname("/"), "/");
+  assert.equal(canonicalPathname(null), "/");
+  assert.equal(canonicalPathname("/floor-plans/"), "/floor-plans");
+  assert.equal(canonicalPathname("/blog/indexing-guide"), "/blog/indexing-guide");
+  assert.equal(getBreadcrumbs(canonicalPathname("/index")).some((c) => c.url === "/index"), false);
+});

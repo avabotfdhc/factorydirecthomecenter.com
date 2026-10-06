@@ -1046,3 +1046,37 @@ address) was not present; the underlying disease (unidentified duplicate nodes
 carrying our name) was, on every page of the site. Check the compare-audits
 file for the real crawl timestamp too — Semrush export dates are not crawl
 dates, and a stale export describes a site that no longer exists.
+
+# Lighthouse 2026-10-06: the homepage's #418 came from ISR, not from the code you can see
+
+A mobile Lighthouse run (Performance 92, Best Practices 96) logged `Minified React
+error #418 (HTML)` on every homepage load. It **cannot be reproduced locally** — not in
+`next dev`, not with `next build && next start`, not with Lighthouse's user agent, a
+foreign time zone or locale, or a clock moved forward. It was found by replaying
+production's own HTML and chunks in Chromium (fetched through the Vercel MCP, served
+with Playwright route interception), which threw #418 the moment PageFooter's lazy chunk
+hydrated.
+
+- **Cause:** when Vercel regenerates `/` under ISR, the server render sees
+  `usePathname() === "/index"`. PageFooter returns `null` on `/`, so it rendered a
+  "Home › Index" trail **and a BreadcrumbList naming `/index`** (a URL that 404s) into the
+  cached homepage; every browser sees `/`, renders nothing, and React discards the
+  boundary. The locally built page is correct because the build-time prerender sees `/`.
+- **Fix:** `canonicalPathname()` (`src/lib/canonical-pathname.ts`, import-free on purpose)
+  maps `/index` to `/`. PageFooter and DeferredPageFooter both use it. Never branch on the
+  raw `usePathname()` value in anything that renders on the server.
+- **DeferredPageFooter now skips `/` entirely**, so the homepage no longer downloads the
+  footer chunk — the registry plus every post's HTML, ~73 KB raw, an 82 ms long task — to
+  render nothing. `tests/bundle-weight.test.ts` keeps the wrapper free of `@/lib/pages`.
+- **HomeSections is a server component.** Only `GetPricingButton` and `TrackedPhoneLink`
+  (`src/app/HomeSectionIslands.tsx`) are client islands; the ~400 lines of static cards,
+  stats and copy no longer hydrate. FadeIn/StaggerContainer/AnimatedCounter/MagneticButton
+  are still client components wrapping server children.
+- `experimental.inlineCss` was A/B-tested **again** (3 runs each) now that the hero is the
+  LCP element: LCP 3.4–3.5 s vs 3.3 s without, TBT 140–170 ms vs 40–60 ms. Still off.
+- Measured locally (Lighthouse 13 mobile, simulated, median of 3, `next start`): main
+  91 / LCP 3.5 s / TBT 55 ms → this change 95 / LCP 2.9 s / TBT 40 ms. Local simulated
+  LCP runs high (observed LCP is ~0.2 s); compare runs, do not read the absolute number.
+- Not fixable from config, already settled above: the ~14 KiB "legacy JavaScript"
+  polyfill module, and the floor-plan card "image larger than displayed" insight, which
+  compares against CSS pixels and would have us serve blurry images to every real phone.
