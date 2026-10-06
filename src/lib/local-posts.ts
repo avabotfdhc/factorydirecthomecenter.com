@@ -1547,4 +1547,182 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations/lagrange-county">our LaGrange County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-warsaw-indiana",
+    title: "Manufactured Homes in Warsaw, Indiana: New or Used — What to Weigh",
+    excerpt:
+      "Kosciusko County buyers often compare a new manufactured home against a used one already on the market. The questions that decide it: age and HUD label, moving and setup, condition, title and warranty.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Warsaw is the county seat of Kosciusko County, lake country on US-30 west of Columbia City. Buyers from here often start the same way: there is a used manufactured home for sale down the road, and they want to know whether it is a better deal than a new one. Sometimes it is. Often the answer changes once every cost is on paper. These are the questions that settle it.</p>
+
+<h2>Start with the age and the label</h2>
+<p>Every <strong>manufactured home</strong> built since June 1976 carries a red HUD certification label on the outside of each section and a data plate inside, usually in a kitchen cabinet or bedroom closet. The data plate tells you the year, the manufacturer and the wind and roof-load zones the home was built for. A home without them, or built before the HUD code, is a different conversation entirely &mdash; and some counties and lenders treat it very differently.</p>
+
+<h2>Count the whole cost, not the asking price</h2>
+<p>A used home that has to be moved is not just its price. Add:</p>
+<ul>
+  <li><strong>Taking it down and moving it</strong> &mdash; disconnecting, transporting and re-setting a home that has already been installed once.</li>
+  <li><strong>Setup on your site</strong> &mdash; the same foundation, utilities and set-up a new home needs.</li>
+  <li><strong>Repairs</strong> &mdash; roof, furnace, water heater, flooring, windows. A home inspector who knows manufactured homes can tell you what you are buying.</li>
+</ul>
+<p>Then compare that total with a new home quoted line by line &mdash; the home, each option and delivery on separate lines &mdash; and the site-work ranges in our <a href="/guides/pricing">pricing guide</a>.</p>
+
+<h2>Paperwork, financing and warranty</h2>
+<p>Check that the seller holds a clear title. Ask your lender how they finance a used home versus a new one, since terms can differ; you choose your own lender, and our <a href="/guides/financing">financing guide</a> explains the loan types. A new home comes with the manufacturer&rsquo;s limited warranty; a used one usually does not.</p>
+
+<h2>Where a new home fits</h2>
+<p>If a new home makes more sense once the numbers are in, browse the <a href="/floor-plans">Champion floor plans</a> and come walk a few. We deliver across Indiana, with freight quoted per route as its own line. Site work and setup are yours to contract; we sell the home and arrange delivery.</p>
+
+<h2>Common questions</h2>
+<h3>Is a used manufactured home always cheaper?</h3>
+<p>Not once moving, setup and repairs are added. Put both totals side by side before deciding.</p>
+<h3>Where is the HUD label?</h3>
+<p>On the outside of each section, usually near one end. The data plate is inside the home.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote on a new home</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-huntington-indiana",
+    title: "Manufactured Homes in Huntington, Indiana: Planning for Pets and a Busy Household",
+    excerpt:
+      "Dogs, muddy boots and a back door that gets used fifty times a day. How Huntington-area families choose a manufactured home layout, flooring and yard plan that hold up to real life.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Huntington is the county seat of Huntington County, on the Wabash River southwest of Fort Wayne. A lot of the families we hear from around here have a yard full of life &mdash; a dog or two, kids in and out, work boots by the door. A new <strong>manufactured home</strong> handles that well, as long as the floor plan and finishes are chosen with it in mind.</p>
+
+<h2>Look for a real back entry</h2>
+<p>The door your family actually uses every day matters more than the front door. When you browse the <a href="/floor-plans">floor plans</a>, look for:</p>
+<ul>
+  <li><strong>A side or rear door into the laundry or utility room</strong>, so mud and wet dogs stop there instead of crossing the living room.</li>
+  <li><strong>Space by that door</strong> for a bench, hooks and a mat.</li>
+  <li><strong>A short path from that door to a bathroom</strong> for quick clean-ups.</li>
+</ul>
+
+<h2>Choose floors and finishes for wear</h2>
+<p>Flooring is one of the choices to make at order. Ask which flooring options a specific plan offers and how each one handles claws, water and grit. Many busy households choose hard-surface flooring in the entry, kitchen and laundry, and save carpet for bedrooms. Do not assume a finish from a photo; renderings can show optional features.</p>
+
+<h2>Plan the yard with the home</h2>
+<p>A fenced yard is usually the first project after move-in. Fences often need a permit or have to respect setbacks and easements, so ask the county before you build. Decide where the home and the back door sit, then plan the fence and gate around them. Your contractor handles the fence and site work; we sell the home and arrange delivery.</p>
+
+<h2>Come see it with your household in mind</h2>
+<p>Walk a few homes and imagine a rainy Tuesday. Where do the boots go? Where does the dog sleep? Every quote is line-item &mdash; home, each option and delivery &mdash; so you can see what each choice adds.</p>
+
+<h2>Common questions</h2>
+<h3>Which floor plans have a separate back entry?</h3>
+<p>Many multi-section plans and some single-section plans do. Check the door placement on each plan.</p>
+<h3>Do I need a permit for a fence?</h3>
+<p>Often. Ask the county or town before you build.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-goshen-indiana",
+    title: "Manufactured Homes in Goshen, Indiana: How a HUD-Code Home Differs From an RV or Park Model",
+    excerpt:
+      "Elkhart County builds more RVs than anywhere, so Goshen buyers ask a fair question: what makes a manufactured home different from an RV, a park model or a tiny home? Codes, placement, financing and year-round living.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Goshen is the county seat of Elkhart County, the heart of the RV industry and right next door to LaGrange County, where Champion&rsquo;s Topeka plant builds the homes we sell. With so many factory-built products made around here, buyers sometimes ask whether a <strong>manufactured home</strong> is really so different from an RV, a park model or a tiny home. It is &mdash; and the difference matters for where you can put it, how you finance it and how you live in it.</p>
+
+<h2>Different products, different rules</h2>
+<ul>
+  <li><strong>A HUD-code manufactured home</strong> is built to the federal Manufactured Home Construction and Safety Standards, the HUD code. It is designed as a permanent, year-round residence and carries a HUD label on each section.</li>
+  <li><strong>An RV</strong> is a vehicle built to recreational-vehicle standards, meant for travel and seasonal use, not as a permanent home.</li>
+  <li><strong>A park model RV</strong> is a larger recreational unit, usually for seasonal use in a campground or resort. It is not a HUD-code home.</li>
+  <li><strong>A &ldquo;tiny home&rdquo;</strong> can be almost anything &mdash; an RV, a park model, or a small site-built house. The label tells you nothing until you know which code it was built to.</li>
+</ul>
+
+<h2>Why the difference matters</h2>
+<p><strong>Placement.</strong> Zoning rules usually treat a permanent dwelling very differently from a recreational vehicle. Many places do not allow living in an RV year-round on a residential lot. Ask the county about your parcel before you buy anything.</p>
+<p><strong>Financing and insurance.</strong> Lenders and insurers treat a HUD-code home, an RV and a park model differently. You choose your own lender; our <a href="/guides/financing">financing guide</a> explains the loan types for manufactured homes.</p>
+<p><strong>Living.</strong> A manufactured home has full-size rooms, residential appliances and insulation designed for year-round living in its climate zone.</p>
+
+<h2>See the difference in person</h2>
+<p>Walk a Champion home and you will see it quickly. Browse the <a href="/floor-plans">floor plans</a>, read <a href="/guides/manufactured-vs-modular">manufactured vs. modular</a> for the other comparison buyers ask about, and come to the showroom. We sell the home and arrange delivery; site work and setup are yours to contract.</p>
+
+<h2>Common questions</h2>
+<h3>Can I live in a park model year-round?</h3>
+<p>That depends on local rules and the unit itself. Ask the county, and know that a park model is not a HUD-code home.</p>
+<h3>How do I tell what I am looking at?</h3>
+<p>Look for the red HUD label on each section and the data plate inside. A HUD-code home has both.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-wabash-indiana",
+    title: "Manufactured Homes in Wabash, Indiana: Making a Smaller Home Feel Bigger",
+    excerpt:
+      "Square footage is only part of the story. How Wabash County buyers pick a manufactured home that feels larger than its size — open layouts, ceiling height, windows, light and storage.",
+    image: "/images/homepage/about-2.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Wabash is the county seat of Wabash County, on the river of the same name. Many buyers we hear from here want to keep their budget and upkeep in check without feeling cramped. The good news is that how big a <strong>manufactured home</strong> feels depends on much more than its square footage. Two homes the same size can feel completely different inside.</p>
+
+<h2>What makes a home feel bigger</h2>
+<ul>
+  <li><strong>An open kitchen, dining and living area.</strong> One shared space with long sightlines feels larger than three small rooms.</li>
+  <li><strong>Ceiling height and shape.</strong> A higher or vaulted ceiling in the main living area changes the feel of a room. Ask which ceiling options a plan offers.</li>
+  <li><strong>Windows and light.</strong> More and larger windows make rooms feel open. Think about which way the main room will face once the home is placed.</li>
+  <li><strong>Hallways kept short.</strong> Less space spent on corridors means more spent on rooms.</li>
+  <li><strong>Storage built in.</strong> A walk-in closet, a pantry or a linen closet keeps clutter out of the living space, which is half the battle.</li>
+</ul>
+
+<h2>Compare plans, not just numbers</h2>
+<p>When you browse the <a href="/floor-plans">floor plans</a>, look past the square footage. Find two plans of similar size and compare where the space goes. Single-section <a href="/series/prime">Prime</a> and <a href="/series/aspire">Aspire</a> homes keep the footprint and upkeep small; multi-section homes give wider rooms. Our guide to <a href="/guides/single-wide-vs-double-wide">single-wide vs double-wide</a> covers the trade-offs.</p>
+
+<h2>Decide the structural choices at order</h2>
+<p>Ceilings, windows and layout options are built in at the plant, so settle them before you order. Paint, lighting and furniture can come later. Every quote lists the home, each option and delivery on separate lines, so you can see what each choice adds. We sell the home and arrange delivery; site work and setup are yours to contract.</p>
+
+<h2>Common questions</h2>
+<h3>Does a vaulted ceiling cost more?</h3>
+<p>Options are priced individually on the quote. Ask which ceiling options a specific plan offers.</p>
+<h3>Is a single-section home big enough for a family?</h3>
+<p>For some families, yes &mdash; especially a well-laid-out three-bedroom plan. Walk one and see.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-portland-indiana",
+    title: "Manufactured Homes in Portland, Indiana: Moving From Renting to Owning",
+    excerpt:
+      "Tired of paying rent? How Portland and Jay County renters can get ready to own a new manufactured home — savings, talking to lenders, land or a leased lot, and a realistic timeline.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Portland is the county seat of Jay County, in east-central Indiana close to the Ohio line. Many of the people who reach us from this part of the state are renting today and wondering whether owning is within reach. For a lot of households, a new <strong>manufactured home</strong> is the most practical first step into ownership. Here is how to get ready.</p>
+
+<h2>Step one: know where the home will go</h2>
+<p>Before anything else, decide where the home will sit. There are two common routes:</p>
+<ul>
+  <li><strong>Land you own or will buy.</strong> You own the home and the ground, and you contract the site work &mdash; foundation, utilities, well and septic if needed.</li>
+  <li><strong>A leased lot in a community.</strong> Less work up front, with a monthly lot rent and the community&rsquo;s own rules.</li>
+</ul>
+<p>Our <a href="/blog/manufactured-homes-laotto-indiana">post on own land versus a land-lease community</a> compares the two in detail.</p>
+
+<h2>Step two: get your finances in order</h2>
+<p>Talk to lenders early. Ask what they need to see, what down payment they expect, and how long approval takes. You choose your own lender; we do not arrange financing or pull credit, and the <a href="/financing">lender list on our financing page</a> names lenders past customers have used &mdash; we recommend none of them. Our <a href="/guides/financing">financing guide</a> explains the loan types in plain language.</p>
+
+<h2>Step three: budget the whole project</h2>
+<p>The home is one line. Add delivery, setup, site work, permits and utility connections. Every quote from us lists the home, each option and delivery separately, and the <a href="/guides/pricing">pricing guide</a> publishes typical ranges for the contractor work. Leave room for the unexpected.</p>
+
+<h2>Step four: time it with your lease</h2>
+<p>From order to move-in usually takes 8 to 12 weeks, plus the time to prepare the site. Count back from the end of your lease and start early enough to avoid paying rent and a mortgage at the same time.</p>
+
+<h2>Common questions</h2>
+<h3>Do you deliver to Jay County?</h3>
+<p>We deliver across Indiana, with freight quoted per route as its own line on your quote.</p>
+<h3>What size home should a first-time buyer choose?</h3>
+<p>The one that fits your household and budget today, with a little room to grow. Browse the <a href="/floor-plans">floor plans</a> and walk a few.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
 ];
