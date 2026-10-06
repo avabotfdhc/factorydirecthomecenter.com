@@ -8,7 +8,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { fitTitle, planTitle, postTitle, titleLength, TITLE_MAX, TITLE_MIN } from "../src/lib/page-title";
-import { localBlogPosts } from "../src/lib/local-posts";
+import { allLocalBlogPosts } from "../src/lib/local-posts";
 import { shortImageSrc, CATALOGUE_BUCKET_URL } from "../src/lib/image-src";
 
 test("fitTitle returns the first candidate that fits", () => {
@@ -31,8 +31,8 @@ test("plan titles stay within 15–65 for the longest catalogue names", () => {
   assert.equal(planTitle("Thornton", 3, 2, "Double Wide Home"), "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN");
 });
 
-test("every published post has a title within 15–65", () => {
-  for (const post of localBlogPosts) {
+test("every post, scheduled ones included, has a title within 15–65", () => {
+  for (const post of allLocalBlogPosts) {
     const t = postTitle(post.title);
     assert.ok(titleLength(t) <= TITLE_MAX && titleLength(t) >= TITLE_MIN, `${post.slug}: "${t}" (${titleLength(t)})`);
   }

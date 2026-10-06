@@ -8,7 +8,18 @@
 
 import type { ApiBlogDetail } from "./api-content";
 
-export const localBlogPosts: ApiBlogDetail[] = [
+/**
+ * A post may carry `publishAt` (an ISO instant) to be scheduled: it stays out
+ * of every published list — the blog index, the post route, the sitemap and
+ * the page registry — until a deployment BUILT at or after that instant.
+ * The cut-off is the build time (`SITE_BUILT_AT`, set in next.config.ts), not
+ * the request time, so the server and the browser bundle always agree and a
+ * scheduled post appears everywhere at once. Publishing on the day therefore
+ * takes a production build after `publishAt` (a merge or a redeploy).
+ */
+export type LocalBlogPost = ApiBlogDetail & { publishAt?: string };
+
+export const allLocalBlogPosts: LocalBlogPost[] = [
   {
     slug: "champion-vs-clayton-homes",
     title: "Champion vs. Clayton Homes: How to Choose in 2026",
@@ -1900,4 +1911,219 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations/fulton-county">our Fulton County page</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-roanoke-indiana",
+    title: "Manufactured Homes in Roanoke, Indiana: How to Compare Two Quotes Line by Line",
+    excerpt:
+      "Shopping for a new manufactured home near Roanoke and holding more than one quote? How to line them up so you compare the same home, the same options and the same costs — and spot what one quote leaves out.",
+    image: "/images/homepage/feature-financing.webp",
+    date: "October 12, 2026",
+    publishAt: "2026-10-12T13:00:00Z",
+    html: `
+<p>Roanoke sits in the northeast corner of Huntington County, close enough to Fort Wayne that many buyers here shop more than one dealer before they choose a <strong>manufactured home</strong>. That is sensible. The hard part is that two quotes rarely list the same things in the same way, so a lower total can simply mean something was left out.</p>
+
+<h2>Start by matching the home itself</h2>
+<p>Before you compare totals, make sure both quotes describe the same house:</p>
+<ul>
+  <li><strong>Manufacturer, series and model number.</strong> Two homes with similar names can be different plans, widths or lengths.</li>
+  <li><strong>Size and sections.</strong> Single-section or multi-section, and the overall dimensions.</li>
+  <li><strong>Construction code.</strong> A HUD-code manufactured home and a modular home are built and permitted differently; make sure you are comparing like with like.</li>
+  <li><strong>Options.</strong> Siding, roof pitch, windows, insulation packages, appliances, flooring and any upgrades should each be named. &ldquo;Upgraded package&rdquo; without a list is not something you can compare.</li>
+</ul>
+
+<h2>Then sort every cost into its own line</h2>
+<p>A useful quote separates the home from everything that happens around it. Put both quotes side by side under these headings:</p>
+<ul>
+  <li><strong>The home and its options.</strong></li>
+  <li><strong>Freight</strong> &mdash; delivery from the plant to your site.</li>
+  <li><strong>Site work and setup</strong> &mdash; foundation, utilities, setting the home, skirting. Many buyers hire these from their own contractors; check whether either quote includes them, and if so, exactly what is covered.</li>
+  <li><strong>Fees and taxes</strong> &mdash; titling, permits and sales tax, so neither total hides them.</li>
+</ul>
+<p>If one quote has a line the other does not, ask about it before you compare the bottom numbers. Our <a href="/guides/pricing">pricing guide</a> explains what each part usually covers.</p>
+
+<h2>Questions to ask each dealer</h2>
+<ul>
+  <li>Is this price for the exact model number and options listed?</li>
+  <li>What is and is not included in freight?</li>
+  <li>How long is the quote good for, and what could change it?</li>
+  <li>What does the manufacturer&rsquo;s warranty cover, and who handles a warranty visit?</li>
+</ul>
+
+<h2>How we quote</h2>
+<p>We quote every Champion home line by line &mdash; the home, each option and the freight on their own rows. Site work and setup are yours to contract with the crews you choose, so they are not buried in our number. Browse the <a href="/floor-plans">floor plans</a> and ask for a quote you can lay next to any other.</p>
+
+<h2>Common questions</h2>
+<h3>Is the lowest total the best deal?</h3>
+<p>Only if both quotes cover the same home, the same options and the same services. Match them first.</p>
+<h3>Should I compare monthly payments?</h3>
+<p>Compare the purchase first. Financing is a separate decision you make with the lender you choose.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/huntington-county">our Huntington County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-north-manchester-indiana",
+    title: "Manufactured Homes in North Manchester, Indiana: Reading the HUD Label and Data Plate",
+    excerpt:
+      "Every HUD-code manufactured home carries a red certification label and a data plate. Here is what they say, why lenders, insurers and inspectors ask for them, and where to find them on a home near North Manchester.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "October 12, 2026",
+    publishAt: "2026-10-12T13:00:00Z",
+    html: `
+<p>North Manchester is a college town on the Eel River in northern Wabash County. Buyers here tend to ask good questions, and one of the best is: <em>how do I know this is really a HUD-code home?</em> The answer is on two small pieces of the house itself &mdash; the <strong>HUD certification label</strong> and the <strong>data plate</strong>.</p>
+
+<h2>The HUD certification label</h2>
+<p>Each transportable section of a manufactured home built since June 15, 1976 carries a small metal label, usually red, fixed to the outside near the tail-light end of the section. It shows that the section was built to the federal Manufactured Home Construction and Safety Standards. A two-section home has two labels.</p>
+<p>The label number matters later. Lenders, insurers, appraisers and county offices may ask for it, and it is one way to confirm a home is a manufactured home rather than an older mobile home or a park model.</p>
+
+<h2>The data plate</h2>
+<p>Inside the home &mdash; often in a kitchen cabinet, a bedroom closet or near the electrical panel &mdash; is a paper data plate. It records:</p>
+<ul>
+  <li>The manufacturer, plant location, serial number and date of manufacture.</li>
+  <li>The <strong>wind zone</strong>, <strong>roof load zone</strong> and <strong>thermal zone</strong> the home was built for.</li>
+  <li>The appliances installed at the factory.</li>
+</ul>
+<p>Those zones are why a home built for northern Indiana suits northern Indiana: it is engineered for the snow load and winter temperatures here. The <a href="/guides/manufactured-vs-modular">manufactured vs. modular guide</a> explains how this code differs from the one used for site-built houses.</p>
+
+<h2>Why to keep a photo of both</h2>
+<p>Photograph the labels and the data plate on delivery day and keep the pictures with your title papers. If the paper plate is ever damaged, you still have the record, and you will have the numbers ready when an insurer, lender or buyer asks.</p>
+
+<h2>Common questions</h2>
+<h3>Does a new Champion home have both?</h3>
+<p>Yes. Every HUD-code home leaves the plant with a label on each section and a data plate inside.</p>
+<h3>What if a used home is missing its label?</h3>
+<p>Ask the seller and the lender before you go further &mdash; a missing label can complicate financing, insurance and resale.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/wabash-county">our Wabash County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask us a question</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-syracuse-indiana",
+    title: "Manufactured Homes in Syracuse, Indiana: Leaving a Lake Home Empty for the Winter",
+    excerpt:
+      "Bought a manufactured home near Lake Wawasee or Syracuse Lake to use part of the year? How to shut it down for winter, what to check while you are away, and what to look at when you open it in spring.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 12, 2026",
+    publishAt: "2026-10-12T13:00:00Z",
+    html: `
+<p>Syracuse sits between Lake Wawasee and Syracuse Lake in northern Kosciusko County, and plenty of homes around it are lived in from spring to fall and left empty through the winter. A <strong>manufactured home</strong> handles a northern Indiana winter well when it is lived in. Left empty, it needs a little preparation so nothing freezes, leaks or invites pests while you are gone.</p>
+
+<h2>Decide: heated or fully winterized</h2>
+<p>There are two ways to leave a home for the winter:</p>
+<ul>
+  <li><strong>Leave the heat on low.</strong> Simpler, and the plumbing stays usable, but you are relying on the furnace and the power staying on while nobody is there. Arrange for someone to check the house regularly.</li>
+  <li><strong>Winterize the plumbing.</strong> Shut off and drain the water system so there is nothing in the lines to freeze. Many owners have a plumber do this the first year and learn the steps.</li>
+</ul>
+<p>Read the owner&rsquo;s manual that comes with your Champion home first; it describes the plumbing and the manufacturer&rsquo;s guidance. Your insurer may also have requirements for a home left vacant, so ask them before you leave.</p>
+
+<h2>A shut-down checklist</h2>
+<ul>
+  <li>Empty the refrigerator, prop the doors open, and remove anything that can freeze or attract mice.</li>
+  <li>Check the skirting and vents for gaps where animals could get underneath.</li>
+  <li>Clear gutters and make sure snow can slide off without blocking doors or vents.</li>
+  <li>Leave a key and your phone number with a neighbour or a house-checking service.</li>
+</ul>
+
+<h2>Opening up in spring</h2>
+<p>Walk the outside before you go in: skirting, roof, doors and windows. Inside, look under sinks and around the water heater once the water is back on, and check the floors for soft spots. Note anything that may be a warranty item and report it promptly.</p>
+
+<h2>Common questions</h2>
+<h3>Can a manufactured home be a seasonal home?</h3>
+<p>Yes, where the local rules allow it. Confirm with the county or town before you buy a lot, and read any lake association covenants too.</p>
+<h3>Which floor plans suit a lake lot?</h3>
+<p>Lake lots are often narrow, which suits single-section plans. Start with the lot&rsquo;s setbacks, then <a href="/floor-plans">browse the floor plans</a>.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/kosciusko-county">our Kosciusko County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-nappanee-indiana",
+    title: "Manufactured Homes in Nappanee, Indiana: Choosing a Kitchen That Fits How You Cook",
+    excerpt:
+      "The kitchen is where most buyers near Nappanee spend their time in the showroom. How to compare kitchen layouts in Champion manufactured homes — islands, pantries, counter space and where the table goes.",
+    image: "/images/homepage/about-2.webp",
+    date: "October 15, 2026",
+    publishAt: "2026-10-15T13:00:00Z",
+    html: `
+<p>Nappanee sits in southwestern Elkhart County, surrounded by farm country where meals are still made at home and often for a crowd. When buyers from here walk through our homes, they head for the kitchen first. That is the right instinct: the kitchen layout is fixed by the floor plan, so it is worth choosing carefully before you order a <strong>manufactured home</strong>.</p>
+
+<h2>Start with how you actually cook</h2>
+<ul>
+  <li><strong>Who cooks, and how many at once?</strong> Two cooks need room to pass each other and two places to work.</li>
+  <li><strong>How many do you feed?</strong> A large family needs counter space for serving and a table that seats everyone.</li>
+  <li><strong>Do you bake, can or preserve?</strong> Then storage and a long run of counter matter more than an island.</li>
+</ul>
+
+<h2>Layouts you will see</h2>
+<ul>
+  <li><strong>Island kitchens.</strong> Common in multi-section homes. An island adds work space and a place to sit, and keeps the cook facing the living area.</li>
+  <li><strong>Galley and L-shaped kitchens.</strong> Common in single-section homes. Efficient for one cook; check the walkway width if two will work together.</li>
+  <li><strong>Pantries.</strong> A walk-in or cabinet pantry changes how much the kitchen can hold. Count shelves, not just doors.</li>
+  <li><strong>Dining space.</strong> Some plans have a separate dining area; others put the table at the end of the kitchen. Measure your table against the plan.</li>
+</ul>
+
+<h2>Options to decide at order</h2>
+<p>Appliances, cabinet finishes, countertops and some layout options are chosen when the home is ordered at the plant, and are much harder to change later. Our <a href="/guides/buyers-guide">buyer&rsquo;s guide</a> walks through what to settle before you sign.</p>
+
+<h2>See it in person</h2>
+<p>Pictures flatten a kitchen. Bring a tape measure and your largest pan to the showroom, open the cabinets, and stand where you would cook. Then compare the <a href="/floor-plans">floor plans</a> side by side.</p>
+
+<h2>Common questions</h2>
+<h3>Can I get an island in a single-section home?</h3>
+<p>Some single-section plans include one; many do not. Compare plans by width and kitchen layout.</p>
+<h3>Are the kitchen photos showing standard features?</h3>
+<p>Not always. Photos and renderings can show optional features, so check the plan&rsquo;s standard list.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/elkhart-county">our Elkhart County page</a>, or <a href="/contact-us">tell us which plans you want to see</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-geneva-indiana",
+    title: "Manufactured Homes in Geneva, Indiana: Getting Electric Service to a Rural Lot",
+    excerpt:
+      "Placing a new manufactured home on country land near Geneva? Electric service is often the longest lead time on the site. Who to call, what they will ask, and why to start before you order the home.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 15, 2026",
+    publishAt: "2026-10-15T13:00:00Z",
+    html: `
+<p>Geneva is a small town in southern Adams County, near the Limberlost and the Wabash River, with farm ground in every direction. Many buyers here place a <strong>manufactured home</strong> on rural land that has never had a house on it. On a lot like that, getting electric service in can take longer than anything else on the site, so it deserves an early start.</p>
+
+<h2>Find out who serves the parcel</h2>
+<p>Rural Indiana is served by investor-owned utilities and by rural electric membership cooperatives (REMCs). Which one serves your land depends on its exact location. Call the utility with the parcel address or number and ask whether the land is in their territory.</p>
+
+<h2>What the utility will ask</h2>
+<ul>
+  <li><strong>Where the home will sit.</strong> A site plan showing the home, the driveway and where you want the meter.</li>
+  <li><strong>The size of the service.</strong> Your electrician works this out from the home&rsquo;s data plate, the heating system and anything else on the lot, such as a well pump or a garage.</li>
+  <li><strong>Overhead or underground.</strong> The choice affects cost, timing and who digs the trench.</li>
+  <li><strong>Permits and inspection.</strong> An electrical permit and inspection are usually required before the utility connects power; ask the county which applies.</li>
+</ul>
+
+<h2>Why to start before you order</h2>
+<p>A new line or transformer can take weeks to schedule. If you start the application when you choose the floor plan, power can be ready about when the home is set. If you wait until delivery day, the home may sit unpowered, which delays the well, the heat and your move-in.</p>
+
+<h2>Who does what</h2>
+<p>We sell the home and arrange its delivery. The electrical service, trenching and hookups are part of the site work you contract with your own licensed electrician and the utility. The <a href="/guides/site-work">site work guide</a> shows where electric service fits in the order of jobs.</p>
+
+<h2>Common questions</h2>
+<h3>Can the meter be on a pole instead of on the home?</h3>
+<p>Often, yes. Ask the utility and your electrician which they prefer for your site.</p>
+<h3>Does heating fuel affect the service size?</h3>
+<p>Yes. An all-electric home generally needs more capacity than one heated with propane or natural gas.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/adams-county">our Adams County page</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
+`,
+  },
 ];
+
+/** When this build was made; outside a Next build (tests, scripts) it is now. */
+export function siteBuiltAt(): string {
+  return process.env.SITE_BUILT_AT || new Date().toISOString();
+}
+
+export function isPublished(post: { publishAt?: string }, at: string = siteBuiltAt()): boolean {
+  return !post.publishAt || Date.parse(post.publishAt) <= Date.parse(at);
+}
+
+/** The posts this build publishes. Everything that lists or serves posts reads this. */
+export const localBlogPosts: LocalBlogPost[] = allLocalBlogPosts.filter((p) => isPublished(p));

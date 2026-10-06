@@ -17,6 +17,12 @@ const htmlLimitedBots = new RegExp(`${HTML_LIMITED_BOT_UA_RE.source}|${SEO_AUDIT
 
 const nextConfig: NextConfig = {
   htmlLimitedBots,
+  // Inlined into server and client bundles alike, so a scheduled blog post
+  // (\`publishAt\` in src/lib/local-posts.ts) is in or out of a deployment
+  // consistently everywhere — never decided per request.
+  env: {
+    SITE_BUILT_AT: new Date().toISOString(),
+  },
   images: {
     // Catalogue photos live in Supabase Storage; next/image resizes to the
     // displayed size, serves AVIF/WebP and caches the variants.
