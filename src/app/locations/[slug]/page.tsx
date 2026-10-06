@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { countyPages, getCountyPage } from "@/lib/county-pages";
+import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 // Programmatic county landing pages. Data lives in src/lib/county-pages.ts.
 // A county that also has its own folder under src/app/locations/ is served by
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!c) return {};
   return genMeta({
     title: `Manufactured Homes in ${c.county}, IN`,
-    description: `Champion manufactured and modular homes delivered to ${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with factory-direct pricing and line-item transparency from Auburn, IN.`,
+    description: `Champion manufactured homes delivered to ${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
     url: `/locations/${c.slug}`,
     type: "article",
   });
@@ -50,13 +51,17 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
             containedInPlace: { "@type": "State", name: c.state },
           },
         }}
-      />      <StructuredData
+      />
+      <StructuredData
         data={structuredData.service({
-          name: `Manufactured & Modular Home Delivery — ${c.county}, IN`,
-          description: `Champion manufactured and modular homes delivered and set in ${c.county}, Indiana, ${c.milesFromTopeka} from the Topeka plant.`,
+          name: `Manufactured Home Delivery — ${c.county}, IN`,
+          description: c.milesFromTopeka
+            ? `Champion manufactured homes delivered to ${c.county}, Indiana, ${c.milesFromTopeka} from the Topeka plant.`
+            : `Champion manufactured homes delivered to ${c.county}, Indiana, with freight quoted per route.`,
           areaServed: c.state,
         })}
       />
+      {c.faqs && c.faqs.length > 0 && <StructuredData data={structuredData.faqPage(c.faqs)} />}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -80,7 +85,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
               <div className="decorative-line mb-6" />
               <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
                 Why {c.county} Buyers<br />
-                <span className="italic text-[var(--color-teal)]">Order Factory Direct</span>
+                <span className="italic text-[var(--color-teal)]">Shop With Us</span>
               </H2>
               <div className="space-y-6 text-[var(--color-gray)] leading-relaxed">
                 <p>{c.driveNote}</p>
@@ -104,14 +109,18 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
                   </li>
                 ))}
               </ul>
-              <p className="text-sm text-[var(--color-gray)] mb-2">
-                <strong className="text-[var(--color-charcoal)]">Distance from our Auburn lot:</strong> {c.milesFromAuburn}
-              </p>
-              <p className="text-sm text-[var(--color-gray)] mb-2">
-                <strong className="text-[var(--color-charcoal)]">Delivery from Champion&rsquo;s Topeka plant:</strong> {c.milesFromTopeka}
-              </p>
+              {c.milesFromAuburn && (
+                <p className="text-sm text-[var(--color-gray)] mb-2">
+                  <strong className="text-[var(--color-charcoal)]">Distance from our Auburn lot:</strong> {c.milesFromAuburn}
+                </p>
+              )}
+              {c.milesFromTopeka && (
+                <p className="text-sm text-[var(--color-gray)] mb-2">
+                  <strong className="text-[var(--color-charcoal)]">Delivery from Champion&rsquo;s Topeka plant:</strong> {c.milesFromTopeka}
+                </p>
+              )}
               <p className="text-sm text-[var(--color-gray)]">
-                Delivery and set-up are quoted line by line for your exact site. See{" "}
+                Freight is quoted line by line for your exact site; site work and set-up are done by the contractors you hire. See{" "}
                 <Link href="/guides/delivery-and-setup" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
                   what to expect on delivery day
                 </Link>.
@@ -143,6 +152,47 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
         </div>
       </section>
 
+      {(c.relatedPosts?.length || c.faqs?.length) ? (
+        <section className="py-20">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            {c.relatedPosts && c.relatedPosts.length > 0 && (
+              <div className="mb-12">
+                <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-6">
+                  Read more about <span className="italic text-[var(--color-teal)]">{c.county}</span>
+                </H2>
+                <ul className="space-y-3">
+                  {c.relatedPosts.map((p) => (
+                    <li key={p.href}>
+                      <Link href={p.href} className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+                        {p.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {c.faqs && c.faqs.length > 0 && (
+              <div>
+                <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-6">
+                  {c.county} questions
+                </H2>
+                <div className="space-y-6">
+                  {c.faqs.map((f) => (
+                    <div key={f.question}>
+                      <H3 className="font-serif text-xl font-semibold mb-2">{f.question}</H3>
+                      <p className="text-[var(--color-gray)] leading-relaxed">{f.answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="mt-10">
+              <NoRecommendationNotice subject="both" />
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
@@ -150,7 +200,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
             <span className="italic text-[var(--color-teal-light)]">your {c.county} site</span>
           </H2>
           <p className="text-white/60 mb-10 max-w-xl mx-auto">
-            Pick a floor plan, tell us the parcel, and we&rsquo;ll price the home, delivery and set-up separately so you can see every dollar.
+            Pick a floor plan, tell us where it is going, and we&rsquo;ll price the home, its options and the freight on separate lines. Site work and set-up are yours to contract.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

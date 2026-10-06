@@ -1581,7 +1581,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Where is the HUD label?</h3>
 <p>On the outside of each section, usually near one end. The data plate is inside the home.</p>
 <h3>Where do I start?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote on a new home</a>.</p>
+<p>See <a href="/locations/kosciusko-county">our Kosciusko County page</a>, or <a href="/contact-us">ask for a line-item quote on a new home</a>.</p>
 `,
   },
   {
@@ -1617,7 +1617,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Do I need a permit for a fence?</h3>
 <p>Often. Ask the county or town before you build.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/huntington-county">our Huntington County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1652,7 +1652,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>How do I tell what I am looking at?</h3>
 <p>Look for the red HUD label on each section and the data plate inside. A HUD-code home has both.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/elkhart-county">our Elkhart County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1686,7 +1686,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Is a single-section home big enough for a family?</h3>
 <p>For some families, yes &mdash; especially a well-laid-out three-bedroom plan. Walk one and see.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/wabash-county">our Wabash County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1722,7 +1722,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>What size home should a first-time buyer choose?</h3>
 <p>The one that fits your household and budget today, with a little room to grow. Browse the <a href="/floor-plans">floor plans</a> and walk a few.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/jay-county">our Jay County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1758,7 +1758,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Can I do the rest by phone and email?</h3>
 <p>Much of it, yes. The visit is for walking the homes and settling the plan; follow-up questions can be handled from home.</p>
 <h3>Where do I start?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">tell us which plans you want to see</a>.</p>
+<p>See <a href="/locations/grant-county">our Grant County page</a>, or <a href="/contact-us">tell us which plans you want to see</a>.</p>
 `,
   },
   {
@@ -1792,7 +1792,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Is the inspection process different?</h3>
 <p>Yes. The home is inspected at the plant to the HUD code; the county inspects your site work and setup.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/blackford-county">our Blackford County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1828,7 +1828,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Can I upgrade skirting later?</h3>
 <p>Yes, though it is easiest to choose well during setup.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/miami-county">our Miami County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1862,7 +1862,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Which exterior choice matters most?</h3>
 <p>Usually roof pitch and the front porch. Walk a few homes and see.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+<p>See <a href="/locations/marshall-county">our Marshall County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
   {
@@ -1897,7 +1897,7 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <h3>Do lake lots have extra rules?</h3>
 <p>Often &mdash; covenants, setbacks from the water and septic requirements. Ask early.</p>
 <h3>Where to next?</h3>
-<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
+<p>See <a href="/locations/fulton-county">our Fulton County page</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
 `,
   },
 ];

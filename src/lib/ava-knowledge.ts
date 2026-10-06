@@ -130,7 +130,7 @@ MANUFACTURED HOUSING: TERMS AND FACTS
 
 const LOCATIONS = `
 LOCATION PAGES (link the matching page when a visitor names their area)
-- Counties: /locations/dekalb-county, /locations/noble-county, /locations/steuben-county, /locations/whitley-county, /locations/lagrange-county, /locations/wells-county, /locations/adams-county, /locations/rural-indiana.
+- Counties: /locations/dekalb-county, /locations/noble-county, /locations/steuben-county, /locations/whitley-county, /locations/lagrange-county, /locations/wells-county, /locations/adams-county, /locations/kosciusko-county, /locations/huntington-county, /locations/elkhart-county, /locations/wabash-county, /locations/jay-county, /locations/grant-county, /locations/blackford-county, /locations/miami-county, /locations/marshall-county, /locations/fulton-county, /locations/rural-indiana.
 - Cities: /locations/auburn, /locations/fort-wayne, /locations/new-haven, /locations/huntertown, /locations/garrett, /locations/butler, /locations/waterloo, /locations/kendallville, /locations/ligonier, /locations/albion, /locations/angola, /locations/columbia-city, /locations/churubusco, /locations/indianapolis, /locations/toledo, /locations/kalamazoo.
 - Anywhere else in Indiana, Ohio or Michigan: we deliver; freight is priced as its own line in the quote. Outside those three states: take their details and let the team confirm.
 `;
