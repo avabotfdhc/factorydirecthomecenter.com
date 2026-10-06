@@ -1725,4 +1725,179 @@ export const localBlogPosts: ApiBlogDetail[] = [
 <p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-marion-indiana",
+    title: "Manufactured Homes in Marion, Indiana: Making One Showroom Visit Count",
+    excerpt:
+      "Driving up from Grant County? How to plan a single showroom visit so you leave with real answers — what to bring, what to ask, and how to compare homes while you are standing in them.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Marion is the county seat of Grant County, on the Mississinewa River in east-central Indiana. Buyers from this far south usually plan one trip to our Auburn showroom rather than several, and that is a perfectly good way to buy a <strong>manufactured home</strong> &mdash; as long as the visit is planned. A little homework turns a pleasant look-around into a day that ends with a line-item quote you can act on.</p>
+
+<h2>Before you leave home</h2>
+<ul>
+  <li><strong>Shortlist plans online.</strong> Browse the <a href="/floor-plans">floor plans</a> and pick three or four to walk, plus a couple of alternates. Tell us which ones when you call ahead.</li>
+  <li><strong>Bring your land details</strong> &mdash; the address or parcel number, rough dimensions, and anything you already know about the well, septic or utilities.</li>
+  <li><strong>Measure what you are keeping.</strong> The bed, the sofa, the dining table. Write the sizes down.</li>
+  <li><strong>Write your questions down</strong>, and bring everyone who will live in the home if you can.</li>
+</ul>
+
+<h2>While you are walking the homes</h2>
+<p>Stand in each room and picture a normal day. Open the closets. Run water at the kitchen sink and look at where the light falls. Compare two homes of similar size back to back, so the differences are fresh. Ask which options each plan offers, because renderings and models can show optional features.</p>
+
+<h2>Leave with a quote, not just brochures</h2>
+<p>Ask for a line-item quote on your top choice: the home, each option and delivery on separate lines. That is what lets you compare honestly at home, against another dealer if you like. Site work and setup are yours to contract, so budget them separately using the ranges in our <a href="/guides/pricing">pricing guide</a>; we sell the home and arrange delivery.</p>
+
+<h2>Plan the day</h2>
+<p>The showroom is open Monday to Friday 9&ndash;5 and Saturday 10&ndash;4. Call ahead so the homes you want to see are ready, and allow a couple of hours to walk them properly.</p>
+
+<h2>Common questions</h2>
+<h3>Do you deliver to Grant County?</h3>
+<p>We deliver across Indiana, with freight quoted per route as its own line on your quote.</p>
+<h3>Can I do the rest by phone and email?</h3>
+<p>Much of it, yes. The visit is for walking the homes and settling the plan; follow-up questions can be handled from home.</p>
+<h3>Where do I start?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">tell us which plans you want to see</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-hartford-city-indiana",
+    title: "Manufactured Homes in Hartford City, Indiana: How the Process Differs From Stick-Built",
+    excerpt:
+      "Building a new home on your Blackford County lot? How a factory-built manufactured home and a site-built house differ in sequence, weather risk, inspections and the number of crews on your land.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Hartford City is the county seat of Blackford County, in the farm country of east-central Indiana. Buyers here who own a lot often weigh two paths: build a house on site, or place a new <strong>manufactured home</strong>. The finished homes look more alike than most people expect. The process of getting there is what really differs.</p>
+
+<h2>Where the house gets built</h2>
+<p>A site-built house is framed, roofed, wired and finished on your land, in whatever weather the season brings, by a series of trades scheduled one after another. A HUD-code manufactured home is built indoors at the plant, then delivered finished. While the home is being built, your own contractor prepares the site at the same time, instead of the house waiting on the site or the site waiting on the house.</p>
+
+<h2>What that changes for you</h2>
+<ul>
+  <li><strong>Weather.</strong> Rain and cold slow a site-built framing crew. The plant keeps building indoors; weather mostly affects your site work.</li>
+  <li><strong>Time.</strong> From order to move-in usually runs 8 to 12 weeks for a manufactured home, depending on your site. A site-built house generally takes longer.</li>
+  <li><strong>Crews on your land.</strong> A manufactured home needs site prep, delivery and setup. A site-built house needs a long sequence of trades on site.</li>
+  <li><strong>Inspections and codes.</strong> A manufactured home is built and inspected to the federal HUD code at the plant; the county inspects the site work and setup. A site-built house is inspected on site to local building codes throughout.</li>
+  <li><strong>Price clarity.</strong> We quote the home line by line &mdash; the home, each option and delivery &mdash; before you order. Site work is quoted by your own contractors.</li>
+</ul>
+
+<h2>Check the lot first either way</h2>
+<p>Whichever path you choose, ask the county what is allowed on your lot and what foundation is required. Our <a href="/guides/zoning">zoning guide</a> lists the questions, and <a href="/guides/manufactured-vs-modular">manufactured vs. modular</a> explains the other factory-built option. We sell the home and arrange delivery; site work and setup are yours to contract.</p>
+
+<h2>Common questions</h2>
+<h3>Will a manufactured home look out of place next to site-built houses?</h3>
+<p>Many multi-section homes with porches, garages and good landscaping fit in well. Walk a few and judge for yourself.</p>
+<h3>Is the inspection process different?</h3>
+<p>Yes. The home is inspected at the plant to the HUD code; the county inspects your site work and setup.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-peru-indiana",
+    title: "Manufactured Homes in Peru, Indiana: Choosing and Caring for Skirting",
+    excerpt:
+      "Skirting finishes the look of a manufactured home, but it also keeps out animals, protects plumbing in winter and lets the crawlspace breathe. What Miami County buyers should know before choosing it.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Peru is the county seat of Miami County, on the Wabash River north of Kokomo. When buyers here picture a new <strong>manufactured home</strong>, they think about the kitchen and the bedrooms. Skirting rarely comes up until the end. It deserves more thought than that, because it does a real job every day the home stands.</p>
+
+<h2>What skirting actually does</h2>
+<ul>
+  <li><strong>Closes the space under the home</strong>, so animals do not move in.</li>
+  <li><strong>Protects plumbing</strong> from the worst of the wind in winter.</li>
+  <li><strong>Lets the crawlspace breathe</strong> through vents, which keeps moisture down.</li>
+  <li><strong>Finishes the look</strong>, which matters for curb appeal and resale.</li>
+</ul>
+
+<h2>Common choices</h2>
+<p>Buyers commonly choose between vinyl skirting, insulated panel systems, and masonry-look or real masonry around a permanent foundation. Each differs in appearance, durability, cost and how easily you can get underneath for maintenance. Your setup contractor can show you what they install and what your county requires. Some counties set rules for skirting, so ask before you choose.</p>
+
+<h2>Plan for access and ventilation</h2>
+<p>Whatever you choose, make sure there is an access panel where you can reach the water shut-off and the plumbing, and enough vents for the crawlspace to breathe. Keep soil and mulch from piling against it, and check it after a hard winter. Our <a href="/blog/manufactured-homes-kimmell-indiana">first-year care post</a> covers the rest of the routine.</p>
+
+<h2>Who does what</h2>
+<p>Skirting is part of the setup and site work, which you contract yourself; we sell the home and arrange delivery. Budget it alongside the foundation using the ranges in our <a href="/guides/pricing">pricing guide</a>, and read the <a href="/guides/delivery-and-setup">delivery and set-up guide</a> for where it fits in the sequence.</p>
+
+<h2>Common questions</h2>
+<h3>Is skirting required?</h3>
+<p>Often, by the county or a community. Ask before you finalise your setup plans.</p>
+<h3>Can I upgrade skirting later?</h3>
+<p>Yes, though it is easiest to choose well during setup.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-plymouth-indiana",
+    title: "Manufactured Homes in Plymouth, Indiana: Exterior Choices and Neighbourhood Rules",
+    excerpt:
+      "Siding, roof pitch, porches and colour decide how a manufactured home looks from the street. How Marshall County buyers choose an exterior that fits the neighbourhood and any covenants on the lot.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Plymouth is the county seat of Marshall County, where US-30 meets US-31. Many buyers here are placing a new <strong>manufactured home</strong> in an established neighbourhood or a subdivision, and they want it to look right from the street. That comes down to a handful of exterior choices &mdash; and, sometimes, to rules written into the lot itself.</p>
+
+<h2>Read the rules before you choose</h2>
+<p>Some lots carry deed restrictions or subdivision covenants that set a minimum home size, a roof pitch, siding materials, a garage or foundation type. Town and county zoning can add rules of their own. Read the deed restrictions and ask the planning office before you pick a plan, so the exterior you love is one the lot allows. Our <a href="/guides/zoning">zoning guide</a> lists the questions to ask.</p>
+
+<h2>The choices that shape the look</h2>
+<ul>
+  <li><strong>Roof pitch.</strong> A steeper roof reads more like a site-built house. Ask which roof options a plan offers.</li>
+  <li><strong>Siding and trim colour.</strong> A well-chosen colour pairing does more for curb appeal than almost anything else.</li>
+  <li><strong>Windows and front door.</strong> Size and placement change how the front of the home looks.</li>
+  <li><strong>Porch and steps.</strong> A covered front porch, built freestanding by your contractor, makes a strong first impression. Our <a href="/blog/manufactured-homes-hudson-indiana">post on porches, decks and garages</a> explains how they are built.</li>
+  <li><strong>Foundation and skirting.</strong> A finished foundation or skirting that matches the home ties it to the ground.</li>
+</ul>
+
+<h2>Choose at order, finish at setup</h2>
+<p>Roof, siding, windows and doors are built at the plant, so settle them before you order; renderings can show optional features, so ask what each plan offers. Porch, foundation finish and landscaping come at setup, contracted by you. We sell the home and arrange delivery. Every quote lists the home, each option and delivery on separate lines.</p>
+
+<h2>Common questions</h2>
+<h3>Can a manufactured home meet subdivision covenants?</h3>
+<p>Often, with the right plan and options. Read the covenants first, then choose.</p>
+<h3>Which exterior choice matters most?</h3>
+<p>Usually roof pitch and the front porch. Walk a few homes and see.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-rochester-indiana",
+    title: "Manufactured Homes in Rochester, Indiana: What to Check Before You Close on Land",
+    excerpt:
+      "Buying a lot or acreage near Rochester for a new manufactured home? The checks to put in the purchase agreement first — survey, easements, soil and septic, utilities, access and what the county allows.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 6, 2026",
+    html: `
+<p>Rochester is the county seat of Fulton County, on the shore of Lake Manitou. Many buyers here start with the land: a lot near the lake, or a few acres outside town. The single most useful thing you can do is make sure the land will actually take the <strong>manufactured home</strong> you want <em>before</em> you own it. A purchase agreement can give you time to check.</p>
+
+<h2>Ask for time to check, in writing</h2>
+<p>Talk to your real estate agent or attorney about making the purchase subject to the checks below, with a deadline to complete them. If a check fails, you can renegotiate or walk away instead of owning a lot you cannot use.</p>
+
+<h2>The checks that matter most</h2>
+<ul>
+  <li><strong>What the county allows.</strong> Is a HUD-code manufactured home permitted in this zoning district, and on what foundation? Ask the county with the parcel number. Our <a href="/guides/zoning">zoning guide</a> lists the questions.</li>
+  <li><strong>Covenants and deed restrictions.</strong> Some lots, especially near lakes, carry rules about home type and size.</li>
+  <li><strong>Survey and easements.</strong> Know exactly where the lines are and whether utility or access easements cross the land.</li>
+  <li><strong>Soil and septic.</strong> If there is no sewer, a soil evaluation decides whether and where a septic system can go.</li>
+  <li><strong>Water and utilities.</strong> Well or city water, electric service, and internet at that exact address.</li>
+  <li><strong>Access and floodplain.</strong> A legal way in from the road, room for the delivery transport, and whether any of the land is in a mapped flood zone.</li>
+</ul>
+
+<h2>Then choose the home</h2>
+<p>Once the land checks out, the floor plan is the easy part. Browse the <a href="/floor-plans">Champion floor plans</a> with the parcel&rsquo;s shape and rules in mind. We sell the home and arrange delivery; site work and setup are yours to contract, and the <a href="/guides/site-work">site work guide</a> explains the order things happen in.</p>
+
+<h2>Common questions</h2>
+<h3>Which check should come first?</h3>
+<p>What the county allows. If the answer is no, nothing else matters.</p>
+<h3>Do lake lots have extra rules?</h3>
+<p>Often &mdash; covenants, setbacks from the water and septic requirements. Ask early.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations">our delivery area</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
+`,
+  },
 ];
