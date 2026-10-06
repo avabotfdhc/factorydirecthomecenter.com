@@ -86,7 +86,7 @@ const zones: Zone[] = [
     maxMiles: 30,
     freight: "Low end of $2,500–$8,000",
     blurb:
-      "DeKalb, Noble, Steuben, Allen and Whitley counties. Shortest freight run, easiest permits, and the fastest we can get a crew back out to you after set.",
+      "DeKalb, Noble, Steuben, Allen and Whitley counties. Shortest freight run and the closest drive to our showroom. Your own contractors handle site work and set-up.",
     accent: "var(--color-lime)",
   },
   {
