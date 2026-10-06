@@ -17,7 +17,9 @@ export const metadata = genMeta({
 // far we actually go, which is the first thing a buyer wants to know.
 interface ServedCity {
   name: string;
-  miles: number;
+  /** Road miles from Auburn, from a vetted figure. null = not published; the
+   *  card says freight is quoted per route and carries no zone badge. */
+  miles: number | null;
   /** Overrides the "N miles from Auburn" line where a range or label reads better. */
   distanceLabel?: string;
   slug: string;
@@ -47,6 +49,16 @@ const cities: ServedCity[] = [
   { name: "Rural Indiana", miles: 35, distanceLabel: "25–45 miles", slug: "rural-indiana", state: "Indiana" },
   { name: "Wells County", miles: 50, slug: "wells-county", state: "Indiana" },
   { name: "Adams County", miles: 55, slug: "adams-county", state: "Indiana" },
+  { name: "Kosciusko County", miles: null, distanceLabel: "Freight quoted per route", slug: "kosciusko-county", state: "Indiana" },
+  { name: "Huntington County", miles: null, distanceLabel: "Freight quoted per route", slug: "huntington-county", state: "Indiana" },
+  { name: "Elkhart County", miles: null, distanceLabel: "Freight quoted per route", slug: "elkhart-county", state: "Indiana" },
+  { name: "Wabash County", miles: null, distanceLabel: "Freight quoted per route", slug: "wabash-county", state: "Indiana" },
+  { name: "Grant County", miles: null, distanceLabel: "Freight quoted per route", slug: "grant-county", state: "Indiana" },
+  { name: "Blackford County", miles: null, distanceLabel: "Freight quoted per route", slug: "blackford-county", state: "Indiana" },
+  { name: "Jay County", miles: null, distanceLabel: "Freight quoted per route", slug: "jay-county", state: "Indiana" },
+  { name: "Miami County", miles: null, distanceLabel: "Freight quoted per route", slug: "miami-county", state: "Indiana" },
+  { name: "Marshall County", miles: null, distanceLabel: "Freight quoted per route", slug: "marshall-county", state: "Indiana" },
+  { name: "Fulton County", miles: null, distanceLabel: "Freight quoted per route", slug: "fulton-county", state: "Indiana" },
   { name: "Toledo", miles: 75, slug: "toledo", state: "Ohio" },
   { name: "Kalamazoo", miles: 95, slug: "kalamazoo", state: "Michigan" },
   { name: "Indianapolis", miles: 110, slug: "indianapolis", state: "Indiana" },
@@ -99,8 +111,10 @@ const zones: Zone[] = [
   },
 ];
 
-function zoneFor(city: ServedCity): Zone {
-  return zones.find((z) => city.miles <= z.maxMiles) ?? zones[zones.length - 1];
+function zoneFor(city: ServedCity): Zone | null {
+  const miles = city.miles;
+  if (miles === null) return null;
+  return zones.find((z) => miles <= z.maxMiles) ?? zones[zones.length - 1];
 }
 
 const STATES: Array<ServedCity["state"]> = ["Indiana", "Ohio", "Michigan"];
@@ -225,7 +239,7 @@ export default function LocationsPage() {
           {STATES.map((state) => {
             const inState = cities
               .filter((c) => c.state === state)
-              .sort((a, b) => a.miles - b.miles);
+              .sort((a, b) => (a.miles ?? Number.MAX_SAFE_INTEGER) - (b.miles ?? Number.MAX_SAFE_INTEGER));
             if (inState.length === 0) return null;
 
             return (
@@ -244,9 +258,9 @@ export default function LocationsPage() {
                       >
                         <span
                           className="self-start text-[10px] font-bold tracking-wider uppercase px-2 py-1 rounded mb-3"
-                          style={{ backgroundColor: zone.accent, color: "#fff" }}
+                          style={{ backgroundColor: zone?.accent ?? "var(--color-charcoal)", color: "#fff" }}
                         >
-                          {zone.name.split(" — ")[0]}
+                          {zone ? zone.name.split(" — ")[0] : "Per route"}
                         </span>
                         <h4 className="font-serif text-xl font-semibold mb-2 group-hover:text-[var(--color-teal)] transition-colors">
                           {city.name}
