@@ -2296,6 +2296,214 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>See <a href="/locations/fulton-county">our Fulton County page</a>, or <a href="/contact-us">ask for a line-item quote on a plan you like</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-milford-indiana",
+    title: "Manufactured Homes in Milford, Indiana: Split-Bedroom or Same-Side Layout?",
+    excerpt:
+      "Where the bedrooms sit changes how a home lives. How split-bedroom and same-side manufactured home layouts compare for privacy, noise and young children, and how to tell them apart on a plan.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Milford sits in northern Kosciusko County, between the lakes and the farm ground. Buyers here range from young families to couples whose children have left home, and the floor plan question that splits them most is not square footage. It is <strong>where the bedrooms are</strong>.</p>
+
+<h2>Two basic arrangements</h2>
+<ul>
+  <li><strong>Split-bedroom.</strong> The primary bedroom sits at one end of the <strong>manufactured home</strong> and the other bedrooms at the far end, with the kitchen and living room between them.</li>
+  <li><strong>Same-side.</strong> All the bedrooms share one end of the home, usually along a hallway, and the living space has the other end to itself.</li>
+</ul>
+
+<h2>Who each one suits</h2>
+<p>A <strong>split-bedroom</strong> layout gives the most privacy. It suits households with teenagers, a home office in a spare bedroom, guests who stay for a week, or one person who works early shifts. The kitchen and living room act as a buffer for sound.</p>
+<p>A <strong>same-side</strong> layout keeps everyone close. Parents of babies and young children often prefer it, because a cry down the hall is easier to hear than one from across the house. It can also leave the living end of the home more open, without a hallway cutting through it.</p>
+
+<h2>Noise is about more than distance</h2>
+<p>Look at what sits on the other side of each bedroom wall. A bedroom that backs onto the laundry, a bathroom or the living room TV wall will hear it. On a drawing, check:</p>
+<ul>
+  <li>which rooms share a wall with each bedroom</li>
+  <li>where the washer and dryer are, and whether you plan to run them at night</li>
+  <li>whether the primary bedroom door opens onto the living room or onto a short hall</li>
+</ul>
+
+<h2>Single-section homes</h2>
+<p>Many single-section plans are split-bedroom by design, with a bedroom at each end. If you want a same-side single-section home, look for plans with a short hallway of bedrooms. Our Akron post covers reading a floor plan drawing in more detail.</p>
+
+<h2>See both before you choose</h2>
+<p>Walking one of each at the showroom answers the question faster than any drawing. Browse the <a href="/floor-plans">floor plans</a> and note one of each kind to compare.</p>
+
+<h2>Common questions</h2>
+<h3>Is one layout cheaper than the other?</h3>
+<p>Not by itself. Price depends on the size of the home, the series and the options you choose. Ask for a line-item quote on each plan you are comparing.</p>
+<h3>Can I move a bedroom to the other end?</h3>
+<p>Layouts are set by the plan. Some plans come in a reversed version, so ask when you order.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/kosciusko-county">our Kosciusko County page</a>, or <a href="/contact-us">ask us a question</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-warren-indiana",
+    title: "Manufactured Homes in Warren, Indiana: Choosing the Bathrooms",
+    excerpt:
+      "Tub or walk-in shower, one sink or two, and where the second bath sits. What to look at in the bathrooms of a manufactured home plan before you order, and which choices are hard to change later.",
+    image: "/images/homepage/about-2.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Warren is a small town in southern Huntington County, just off I-69. Buyers who come up to Auburn from here tend to spend most of their visit in two rooms: the kitchen and the bathrooms. Our Nappanee post covers kitchens. This one is about the bathrooms of a <strong>manufactured home</strong>, and the choices that are easy now and hard later.</p>
+
+<h2>How many bathrooms, and where</h2>
+<p>Most multi-section homes have two full bathrooms, and many single-section homes do too. The question is where the second one sits. In a split-bedroom plan it usually serves the far bedrooms and doubles as the guest bath. Check whether a visitor can reach it without walking through a bedroom.</p>
+
+<h2>Tub or shower in the primary bath</h2>
+<ul>
+  <li><strong>Walk-in shower.</strong> Easier to step into, and easier to use as you get older. Our Pleasant Lake post covers single-level living.</li>
+  <li><strong>Garden tub with separate shower.</strong> More space, and more to clean.</li>
+  <li><strong>Tub and shower combination.</strong> The practical choice where small children will be bathed.</li>
+</ul>
+<p>Which one a plan offers depends on the plan and the series, and some offer it as an option. It is far easier to choose it at order than to rebuild a bathroom later. Our Shipshewana post covers which options to decide at order.</p>
+
+<h2>Sinks, storage and light</h2>
+<ul>
+  <li>Two sinks help most where two people get ready at the same time.</li>
+  <li>Look for a linen closet in or near each bathroom. Our Middlebury post covers storage.</li>
+  <li>A window brings in light and helps ventilation. Every bathroom should still have an exhaust fan, and it should be used.</li>
+</ul>
+
+<h2>Laundry nearby</h2>
+<p>Some plans put the laundry next to the primary bath, which saves carrying clothes across the house. Others put it by the back door, which is handy for muddy work clothes. Pick the one that fits how your household lives.</p>
+
+<h2>Common questions</h2>
+<h3>Can I add grab bars later?</h3>
+<p>Yes, but they need solid backing in the wall. Ask at order whether the plan or an option provides it.</p>
+<h3>Do the photos show standard fixtures?</h3>
+<p>Not always. Photos and renderings can show optional features not included in the base home, so check the plan&rsquo;s standard features list.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/huntington-county">our Huntington County page</a>, or browse the <a href="/floor-plans">floor plans</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-dunkirk-indiana",
+    title: "Manufactured Homes in Dunkirk, Indiana: Smoke Alarms and an Escape Plan",
+    excerpt:
+      "Smoke alarms, the exit window in each bedroom, and a family escape plan. The fire safety habits to set up in the first week in a new manufactured home, and what to keep clear outside.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Dunkirk is a small town in western Jay County, on the line with Blackford County. Wherever you live, the first week in a new home is the right time to set up fire safety habits, while you are already walking every room. This post covers the basics for a new HUD-code <strong>manufactured home</strong>.</p>
+
+<h2>Smoke alarms</h2>
+<p>A new HUD-code home leaves the factory with smoke alarms already installed, as the federal code requires. Your part is to keep them working:</p>
+<ul>
+  <li>Test each alarm when you move in, then once a month.</li>
+  <li>Learn which ones have batteries and replace them as the manufacturer says.</li>
+  <li>Never take one down because cooking set it off. Use the hush button or open a window.</li>
+  <li>Alarms do not last forever. Check the date on each one and replace it when the manufacturer says to.</li>
+</ul>
+
+<h2>The exit window in each bedroom</h2>
+<p>Bedrooms in a HUD-code home have a window large enough to climb out of in an emergency. Open each one on move-in day so everyone knows how it works. Keep beds, dressers and stored boxes from blocking it, and teach children that this window is their second way out.</p>
+
+<h2>Make an escape plan</h2>
+<ul>
+  <li>Walk two ways out of every room: the door and the window.</li>
+  <li>Pick one meeting place outside, such as the mailbox or a tree near the road.</li>
+  <li>Practise it once with the whole household, including at night.</li>
+  <li>Make sure your address is easy for emergency crews to read from the road. Our Stroh post covers address numbers.</li>
+</ul>
+
+<h2>Outside the home</h2>
+<p>Keep firewood, propane cylinders and burn piles well away from the house, the skirting and any porch. Do not store anything that can burn under the home. Keep space heaters away from curtains and bedding inside.</p>
+
+<h2>Fire extinguishers</h2>
+<p>An extinguisher in the kitchen and another near the laundry or utility room are good places to start. Read the instructions before you need them. If a fire is more than small and contained, get out and call 911.</p>
+
+<h2>Common questions</h2>
+<h3>Does my insurance care about any of this?</h3>
+<p>It can. Ask your agent. Our South Whitley post covers insuring the home.</p>
+<h3>Who answers questions about my smoke alarms?</h3>
+<p>Your home&rsquo;s manual covers the installed alarms. For anything else, <a href="/contact-us">ask us</a> and we will point you to the right place.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/jay-county">our Jay County page</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-bristol-indiana",
+    title: "Manufactured Homes in Bristol, Indiana: Buying Land with School in Mind",
+    excerpt:
+      "A mailing address does not tell you which school a child attends. How to check the school district, bus stop and drive before you buy land for a manufactured home in rural Indiana.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Bristol sits on the St. Joseph River in northern Elkhart County, close to the Michigan line. Families buying land around here often have one question that matters more than the view: <strong>which school will the children go to?</strong> The answer is not always the one the address suggests. Check it before you buy land for a <strong>manufactured home</strong>.</p>
+
+<h2>Address and school district are different things</h2>
+<p>Rural mailing addresses follow post office routes. School district lines follow different boundaries. Two parcels on the same road with the same town in their address can sit in different school corporations. The school corporation&rsquo;s own office is the place to confirm which one serves a parcel.</p>
+
+<h2>What to ask the school corporation</h2>
+<ul>
+  <li>Which elementary, middle and high school serve this parcel?</li>
+  <li>Does a bus run past it, and where would the stop be?</li>
+  <li>What time is pick-up in the morning?</li>
+  <li>Are any boundary changes being discussed?</li>
+</ul>
+<p>Give them the parcel number from the listing, not just the road name.</p>
+
+<h2>Drive it at school time</h2>
+<p>Drive from the parcel to the school on a weekday morning. Note the traffic, the road in winter, and how far a child would walk to the bus stop. A shoulder with no sidewalk feels different at 7 am in January.</p>
+
+<h2>Bedrooms and the layout</h2>
+<p>Once you know where the children will go to school, the house can follow. Our Gas City post covers choosing the number of bedrooms, and our Milford post covers split-bedroom and same-side layouts.</p>
+
+<h2>Finish the land checks too</h2>
+<p>School is one check among several. Our Rochester post covers what to finish before you close on land, from zoning to septic.</p>
+
+<h2>Common questions</h2>
+<h3>Can you tell me which district a parcel is in?</h3>
+<p>No. We do not check parcels. The school corporation will tell you, and the county can confirm the parcel details.</p>
+<h3>Does the school district change the home I can buy?</h3>
+<p>No, but zoning and covenants might. Check those with the county. Our Plymouth post covers subdivision covenants.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/elkhart-county">our Elkhart County page</a>, or <a href="/contact-us">ask us a question</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-hoagland-indiana",
+    title: "Manufactured Homes in Hoagland, Indiana: Planting Around Your New Home",
+    excerpt:
+      "Call 811 before you dig, keep beds clear of the skirting and vents, and give trees room. How to plant and landscape around a new manufactured home without causing problems underneath it.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Hoagland is a farm town in southeast Allen County, with big lots and long growing seasons. Once a new <strong>manufactured home</strong> is set and the site work is done, most owners want a lawn and a few beds by the front door. A little planning keeps the planting from causing problems under the home.</p>
+
+<h2>Call 811 before you dig</h2>
+<p>Before any shovel goes in the ground, call 811 or use Indiana 811&rsquo;s website. It is free, and the utilities mark their buried lines. Your new home&rsquo;s water, power and septic lines may run where you plan to put a bed or a fence post. Your own contractor&rsquo;s private lines are not marked by 811, so ask them where they ran.</p>
+
+<h2>Let the ground settle</h2>
+<p>Disturbed soil around a new home settles over the first season. Wait before you lay sod or build beds right against the house, and keep the slope running away from it. Our Bremen post covers grading, gutters and a dry crawlspace.</p>
+
+<h2>Keep the skirting and vents clear</h2>
+<ul>
+  <li>Leave a gap between beds and the skirting so soil and mulch do not pile against it.</li>
+  <li>Never cover the crawlspace vents with plants, mulch or decorative stone.</li>
+  <li>Keep the access panel to the crawlspace easy to reach.</li>
+  <li>Avoid sprinklers that spray the skirting or the siding every day.</li>
+</ul>
+<p>Our Peru post covers skirting itself.</p>
+
+<h2>Trees need room</h2>
+<p>A small tree planted near the house becomes a large one. Its roots can reach drain lines and the septic field, and its branches can rub the roof. Check how big the tree will grow, and plant it well away from the home and the septic area.</p>
+
+<h2>Windbreaks</h2>
+<p>On open ground, a row of evergreens on the windward side can soften winter wind. Plant it far enough away to leave room for a delivery truck or a future garage. Our Decatur post covers wind and tie-downs.</p>
+
+<h2>Common questions</h2>
+<h3>Do you do landscaping or site work?</h3>
+<p>No. We sell and deliver the home. You hire your own contractors for site work, set-up and landscaping.</p>
+<h3>When is the best time to plant?</h3>
+<p>Spring and early fall are the usual choices in northern Indiana. Your local extension office can advise on plants that suit your soil.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/allen-county">our Allen County page</a>.</p>
+`,
+  },
 ];
 
 /** When this build was made; outside a Next build (tests, scripts) it is now. */
