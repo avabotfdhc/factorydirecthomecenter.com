@@ -2114,6 +2114,188 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>See <a href="/locations/adams-county">our Adams County page</a>, or <a href="/contact-us">send us the parcel details</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-bremen-indiana",
+    title: "Manufactured Homes in Bremen, Indiana: Keeping Water Away From Your Home",
+    excerpt:
+      "Flat farm ground around Bremen holds water. How grading, gutters, downspouts and a dry crawlspace protect a new manufactured home — and what to settle with your site contractor before the home arrives.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Bremen sits in northeastern Marshall County, on flat, fertile farm ground. Flat land is easy to build on, but it does not shed water on its own. For a <strong>manufactured home</strong>, the space underneath matters as much as the rooms above it: a dry crawlspace protects the floor, the plumbing and the insulation for the life of the home.</p>
+
+<h2>Start with the grade</h2>
+<p>The ground around the home should slope away from it on every side, so rain and snowmelt run off rather than collect underneath. That shaping is part of the site work you contract before delivery. Ask your site contractor how the finished grade will drain, and where the water goes once it leaves the pad.</p>
+
+<h2>Gutters and downspouts</h2>
+<ul>
+  <li><strong>Gutters</strong> collect roof water before it splashes down beside the skirting.</li>
+  <li><strong>Downspout extensions</strong> carry that water several feet out, away from the foundation.</li>
+  <li>Check both after the first heavy rain and clear them every fall, when leaves come down.</li>
+</ul>
+
+<h2>Under the home</h2>
+<ul>
+  <li><strong>Ground cover.</strong> A vapor barrier over the soil under the home keeps ground moisture from rising into the floor system. Ask your installer what the setup instructions call for.</li>
+  <li><strong>Ventilation.</strong> Skirting needs vents so moisture can escape. Blocking them traps damp air.</li>
+  <li><strong>Plumbing.</strong> Look under the home after the first few weeks of use for any drips at the connections.</li>
+</ul>
+
+<h2>Where we fit</h2>
+<p>We sell the home and arrange its delivery. Grading, the pad, gutters and skirting are part of the site work you hire out; the <a href="/guides/site-work">site work guide</a> shows where each job falls in the sequence. Then browse the <a href="/floor-plans">floor plans</a> with the lot in mind.</p>
+
+<h2>Common questions</h2>
+<h3>How do I know if the lot drains well?</h3>
+<p>Walk it after a heavy rain. Standing water or soggy ground tells you where the grading needs work.</p>
+<h3>Do manufactured homes come with gutters?</h3>
+<p>It depends on the model and options. Ask about gutters when you order, or plan to add them after setup.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/marshall-county">our Marshall County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-gas-city-indiana",
+    title: "Manufactured Homes in Gas City, Indiana: How Many Bedrooms Do You Really Need?",
+    excerpt:
+      "Choosing between two, three and four bedrooms in a new manufactured home near Gas City. How to plan for the next ten years, where a flex room fits, and what the bedroom count changes on your site.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Gas City sits beside Marion along I-69 in Grant County, and buyers here range from first-time owners to couples whose children have moved out. Nearly every one of them asks the same question early: <em>how many bedrooms?</em> The answer shapes the size of the <strong>manufactured home</strong>, the floor plan and even parts of the site work, so it is worth thinking through before you shop.</p>
+
+<h2>Plan for the next ten years, not just today</h2>
+<ul>
+  <li><strong>Growing family.</strong> A third bedroom you do not need yet is far easier to buy now than to add later.</li>
+  <li><strong>Grown children and visitors.</strong> A guest room that becomes an office the rest of the year earns its space.</li>
+  <li><strong>Downsizing.</strong> Two bedrooms and a larger living area may suit you better than three small rooms.</li>
+  <li><strong>Working from home.</strong> A bedroom used as an office should be away from the main living area.</li>
+</ul>
+
+<h2>Bedrooms are not the only measure</h2>
+<p>Compare the whole plan, not just the count. A two-bedroom home with a den or flex room can do the work of three bedrooms, and a three-bedroom home with small rooms may feel tighter than a well-laid-out two. Look at closet space, where the bathrooms sit, and whether the main bedroom is separated from the others.</p>
+
+<h2>What the count changes on the site</h2>
+<p>On a rural lot without sewer, the septic system is commonly sized by the number of bedrooms. Ask the county health department what your plan will require before you settle on a home. Our Orland post explains how bedroom count and septic sizing connect.</p>
+
+<h2>Compare the plans</h2>
+<p>Filter the <a href="/floor-plans">floor plans</a> by bedrooms and baths, then walk a few in person at the Auburn showroom, Monday to Friday 9 to 5 and Saturday 10 to 4.</p>
+
+<h2>Common questions</h2>
+<h3>Is a den the same as a bedroom?</h3>
+<p>Not always. A room may need a closet and a window to count as a bedroom for local rules, so ask before you plan on it.</p>
+<h3>Can I add a bedroom later?</h3>
+<p>Adding rooms to a manufactured home is difficult and needs approvals. Buying the right size at the start is much simpler.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/grant-county">our Grant County page</a>, or <a href="/contact-us">tell us which plans you want to compare</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-middlebury-indiana",
+    title: "Manufactured Homes in Middlebury, Indiana: Planning for Storage You Will Actually Use",
+    excerpt:
+      "Closets, pantries, a utility room and a place for boots and coats. How to judge the storage in a manufactured home floor plan near Middlebury before you order — and what to plan outside the home.",
+    image: "/images/homepage/about-2.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Middlebury sits in northeastern Elkhart County, surrounded by farm country, and homes here work hard: boots by the door, canning jars in the pantry, tools and seasonal gear that all need a place. When you choose a <strong>manufactured home</strong>, storage is one of the things a floor plan decides for good. It is worth counting before you order.</p>
+
+<h2>Count storage room by room</h2>
+<ul>
+  <li><strong>Entry.</strong> Is there a closet or a utility room near the door you will use every day? That is where coats and muddy boots go.</li>
+  <li><strong>Kitchen.</strong> Count the cabinets and the pantry shelves, not just the floor space.</li>
+  <li><strong>Bedrooms.</strong> Look for walk-in closets in the main bedroom and real closets, not just alcoves, in the others.</li>
+  <li><strong>Linen and cleaning supplies.</strong> A hall closet near the bathrooms saves a lot of carrying.</li>
+  <li><strong>Utility room.</strong> Room beside the washer and dryer for folding, shelves and a broom.</li>
+</ul>
+
+<h2>Bring your own list</h2>
+<p>Before visiting the showroom, list what you need to store: holiday decorations, sports gear, canning supplies, bulk groceries. Then stand in each closet of a plan you like and picture it full. Our <a href="/guides/buyers-guide">buyer&rsquo;s guide</a> has a fuller checklist of what to compare.</p>
+
+<h2>Plan the outside storage too</h2>
+<p>Lawn equipment, bikes and tools usually belong outside the home. A freestanding shed or garage is a separate project with its own permit, built by a contractor you hire; our Hudson post covers what to check before adding one.</p>
+
+<h2>Common questions</h2>
+<h3>Can I add cabinets or shelves after delivery?</h3>
+<p>Often, yes, but check what the warranty says about changes to the home before you drill into walls.</p>
+<h3>Do multi-section homes have more storage?</h3>
+<p>Usually more total space, but layout matters more than size. Compare closets plan by plan.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/elkhart-county">our Elkhart County page</a>, browse the <a href="/floor-plans">floor plans</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-montpelier-indiana",
+    title: "Manufactured Homes in Montpelier, Indiana: The Paperwork to Keep",
+    excerpt:
+      "From purchase agreement to title, warranty, permits and manuals — the documents a new manufactured home owner near Montpelier should file and keep, and why each one matters later.",
+    image: "/images/homepage/feature-financing.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Montpelier is a small town on the Salamonie River in Blackford County. Buyers here often keep a home for decades, which makes one unglamorous job matter more than it looks: <strong>keeping the paperwork</strong>. The documents that come with a new <strong>manufactured home</strong> answer questions from insurers, lenders, assessors, warranty departments and, one day, a buyer.</p>
+
+<h2>The documents to file</h2>
+<ul>
+  <li><strong>Purchase agreement.</strong> The signed agreement lists the home, its options and the terms of the sale.</li>
+  <li><strong>Title or certificate of origin.</strong> Proves ownership. How a manufactured home is titled in Indiana depends on how it is set and whether it becomes real estate; our LaGrange post explains the difference.</li>
+  <li><strong>Warranty papers.</strong> The manufacturer&rsquo;s warranty, its length and how to make a claim.</li>
+  <li><strong>Owner&rsquo;s manual and appliance manuals.</strong> Care instructions and the information you need to order parts.</li>
+  <li><strong>HUD label and data plate details.</strong> Photograph them and keep the photos with your papers; our North Manchester post explains what each one shows.</li>
+  <li><strong>Permits and inspection records.</strong> From the county and from the contractors who did your site work and setup.</li>
+  <li><strong>Contractor invoices.</strong> Who did the foundation, utilities, skirting and setup, and when.</li>
+</ul>
+
+<h2>How to keep them</h2>
+<p>Keep the originals in one fire-resistant folder or box, and scan or photograph every page into a second copy stored somewhere else. When you call about a warranty item or an insurance claim, you will have the serial number and dates in front of you.</p>
+
+<h2>Why it pays off</h2>
+<p>A complete file makes refinancing, insuring, appealing a tax assessment and selling the home far easier. A buyer&rsquo;s lender may ask for the same documents you were given.</p>
+
+<h2>Common questions</h2>
+<h3>Who gives me these documents?</h3>
+<p>Some come with the home, some from the county and some from your contractors. Ask each one for copies as the job finishes.</p>
+<h3>What if I lose the title?</h3>
+<p>Contact the Indiana Bureau of Motor Vehicles or your county office, depending on how the home is titled, about a replacement.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/blackford-county">our Blackford County page</a>, or <a href="/contact-us">ask us a question</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-akron-indiana",
+    title: "Manufactured Homes in Akron, Indiana: How to Read a Floor Plan Drawing",
+    excerpt:
+      "Nominal size, dimensions, door swings, window symbols and the marriage line. How to read a manufactured home floor plan drawing before you order, so the home you picture is the home that arrives.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "October 7, 2026",
+    html: `
+<p>Akron is a small town in eastern Fulton County, a long way from most showrooms. Many buyers here narrow their choice from floor plan drawings before they ever drive to Auburn. That works well, as long as you know how to read what the drawing is telling you about the <strong>manufactured home</strong>.</p>
+
+<h2>Size: nominal versus actual</h2>
+<p>A home described as &ldquo;28 by 60&rdquo; is a <strong>nominal</strong> size, a convenient label. The actual living space and outside dimensions are usually a little different, because of how the hitch, roof overhangs and walls are counted. The square footage on the drawing is the number to compare between plans.</p>
+
+<h2>Reading the drawing</h2>
+<ul>
+  <li><strong>Room dimensions.</strong> Usually written as width by length. Measure your largest furniture at home and check it against the room.</li>
+  <li><strong>Doors.</strong> A curved line shows which way each door swings. Make sure a door does not swing into the path of a bed or a dresser.</li>
+  <li><strong>Windows.</strong> Shown as breaks or thin lines in the walls. Note which rooms get morning or evening light once you know how the home will sit on the lot.</li>
+  <li><strong>The marriage line.</strong> On a multi-section home, a line down the middle shows where the sections join on site.</li>
+  <li><strong>Optional features.</strong> Dashed lines or notes often mark options, such as a fireplace or a different kitchen island, that are not part of the base home.</li>
+</ul>
+
+<h2>Check it against the lot</h2>
+<p>Hold the drawing up against your lot plan. Which side will face the road, where is the front door, and where do the driveway and utilities arrive? A home that fits the land the right way round is easier to live in. Our Howe post covers siting the home on acreage.</p>
+
+<h2>Then see it in person</h2>
+<p>A drawing gets you to a shortlist. Walking a similar plan at the showroom confirms it. Browse the <a href="/floor-plans">floor plans</a>, then bring your top choices with you.</p>
+
+<h2>Common questions</h2>
+<h3>Do renderings and photos match the drawing?</h3>
+<p>Not always. They can show optional features not included in the base home, so read the plan&rsquo;s standard features list.</p>
+<h3>Can a plan be flipped left to right?</h3>
+<p>Some plans have a reversed version. Ask when you order.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/fulton-county">our Fulton County page</a>, or <a href="/contact-us">ask for a line-item quote on a plan you like</a>.</p>
+`,
+  },
 ];
 
 /** When this build was made; outside a Next build (tests, scripts) it is now. */
