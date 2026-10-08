@@ -61,3 +61,29 @@ export function postTitle(headline: string): string {
     subject,
   ]);
 }
+
+// Google shows roughly 150–160 characters of a meta description. 62 of 75 post
+// excerpts ran 161–236 (measured 2026-10-08), so the snippet ended mid-sentence.
+// The excerpt still feeds the blog cards and the Article schema in full; only
+// the meta / og / twitter description is fitted.
+export const DESCRIPTION_MAX = 160;
+
+/**
+ * The whole excerpt when it fits. Otherwise whole sentences, if they fill most
+ * of the snippet; if not (a short opening line followed by the specific one),
+ * as many words as fit, closed with an ellipsis, so the specific part is kept.
+ */
+export function fitDescription(text: string, max = DESCRIPTION_MAX): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  let whole = "";
+  for (const sentence of clean.split(/(?<=[.!?])\s+/)) {
+    const next = whole ? `${whole} ${sentence}` : sentence;
+    if (next.length > max) break;
+    whole = next;
+  }
+  if (whole.length >= max * 0.75) return whole;
+  const cut = clean.slice(0, max - 1);
+  const space = cut.lastIndexOf(" ");
+  return `${(space > max / 2 ? cut.slice(0, space) : cut).replace(/[\s,;:.\u2014\u2013-]+$/, "")}\u2026`;
+}

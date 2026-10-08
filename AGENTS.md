@@ -909,6 +909,10 @@ real, two were the checker's.
   keeps the brand suffix only when it fits. `tests/page-title.test.ts` runs the
   ladder over the longest CMS names and every published post. When adding a page
   with a hand-written `metadata.title`, keep title + 23-char suffix ≤ 65.
+  Post meta descriptions go through `fitDescription()` (same file, 160 chars):
+  62 of 75 excerpts ran 161–236 on 2026-10-08 and were cut off mid-sentence in
+  results. Whole sentences when they fill the snippet, otherwise a word-boundary
+  cut with an ellipsis; the excerpt itself still feeds the cards and Article schema.
 - **HTML over 600 KB — real.** `/floor-plans` was 1.2 MB and `/homes-on-sale`
   800 KB, almost all of it repetition: ~2 KB of utility classes per card (now
   `.fp-card*` / `.fp-compare*` in `globals.css`, same styles), and srcsets that

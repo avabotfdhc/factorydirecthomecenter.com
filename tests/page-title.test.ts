@@ -7,7 +7,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fitTitle, planTitle, postTitle, titleLength, TITLE_MAX, TITLE_MIN } from "../src/lib/page-title";
+import { DESCRIPTION_MAX, fitDescription, fitTitle, planTitle, postTitle, titleLength, TITLE_MAX, TITLE_MIN } from "../src/lib/page-title";
 import { allLocalBlogPosts } from "../src/lib/local-posts";
 import { shortImageSrc, CATALOGUE_BUCKET_URL } from "../src/lib/image-src";
 
@@ -45,4 +45,17 @@ test("catalogue photos get a short same-origin src, and nothing else changes", (
   assert.equal(shortImageSrc(escaped), escaped);
   assert.equal(shortImageSrc("/images/hero-home.jpg"), "/images/hero-home.jpg");
   assert.equal(shortImageSrc("https://example.supabase.co/storage/v1/object/public/floor-plans/a.webp"), "https://example.supabase.co/storage/v1/object/public/floor-plans/a.webp");
+});
+
+test("post meta descriptions fit in a search snippet and end on a whole sentence", () => {
+  for (const post of allLocalBlogPosts) {
+    const d = fitDescription(post.excerpt);
+    assert.ok(d.length <= DESCRIPTION_MAX, `${post.slug}: ${d.length}`);
+    assert.ok(d.length >= 120, `${post.slug} description too thin: ${d}`);
+    assert.ok(/[.!?…]$/.test(d), `${post.slug} ends mid-sentence: ${d}`);
+  }
+  // Short text passes through untouched; an over-long single sentence is cut at a word.
+  assert.equal(fitDescription("Short and complete."), "Short and complete.");
+  const cut = fitDescription(`${"word ".repeat(60).trim()}.`);
+  assert.ok(cut.length <= DESCRIPTION_MAX && cut.endsWith("word…"), cut);
 });
