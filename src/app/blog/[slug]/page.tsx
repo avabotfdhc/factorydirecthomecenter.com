@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { postTitle } from "@/lib/page-title";
+import { fitDescription, postTitle } from "@/lib/page-title";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
@@ -15,14 +15,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await getApiBlogBySlug(slug).catch(() => null);
   if (!post) return { title: "Article Not Found" };
   const url = `${SITE}/blog/${post.slug}`;
+  // The excerpt can run past what a search result shows; fit it to whole sentences.
+  const description = fitDescription(post.excerpt);
   return {
     // The H1 keeps the full headline; the <title> keeps what fits in 65.
     title: { absolute: postTitle(post.title) },
-    description: post.excerpt,
+    description,
     alternates: { canonical: url, languages: languageAlternates(url) },
     openGraph: {
       title: post.title,
-      description: post.excerpt,
+      description,
       url,
       type: "article",
       ...(post.date ? { publishedTime: new Date(post.date).toISOString() } : {}),
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.excerpt,
+      description,
       images: post.image ? [{ url: absoluteImageUrl(post.image), alt: post.title }] : undefined,
     },
   };
