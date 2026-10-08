@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const c = getCountyPage(slug);
   if (!c) return {};
   return genMeta({
-    title: `Manufactured Homes in ${c.county}, IN`,
-    description: `Champion manufactured homes delivered to ${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
+    title: c.seat ? `Manufactured Homes in ${c.seat} & ${c.county}, IN` : `Manufactured Homes in ${c.county}, IN`,
+    description: `Champion manufactured homes delivered to ${c.seat ? `${c.seat} and ` : ""}${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
     url: `/locations/${c.slug}`,
     type: "article",
   });
@@ -71,7 +71,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
             </div>
             <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
               Manufactured Homes<br />
-              <span className="italic text-[var(--color-teal-light)]">in {c.county}</span>
+              <span className="italic text-[var(--color-teal-light)]">in {c.seat ? `${c.seat} & ${c.county}` : c.county}</span>
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">{c.intro}</p>
           </div>

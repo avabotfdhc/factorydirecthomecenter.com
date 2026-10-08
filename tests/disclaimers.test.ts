@@ -85,6 +85,17 @@ test("every public page that shows plans or renderings carries the specs disclai
   );
 });
 
+test("the home-type landing pages render the specs disclaimer through their shared component", () => {
+  // /single-wide-homes and /double-wide-homes hand the whole page to
+  // HomeTypeLanding, so the page files carry no marker the scan above sees.
+  const component = readFileSync(resolve(process.cwd(), "src/components/HomeTypeLanding.tsx"), "utf8");
+  assert.ok(component.includes("<FloorPlansGrid") && component.includes("<SpecsDisclaimer"));
+  for (const page of ["single-wide-homes", "double-wide-homes"]) {
+    const source = readFileSync(resolve(process.cwd(), `src/app/${page}/page.tsx`), "utf8");
+    assert.ok(source.includes("<HomeTypeLanding"), `${page} should render HomeTypeLanding`);
+  }
+});
+
 test("the specs disclaimer is still rendered on the two floor-plan routes", () => {
   // These two are the reason the component exists; the marker scan above does
   // not catch the detail page, which renders one plan directly.
