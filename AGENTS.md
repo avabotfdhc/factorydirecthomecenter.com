@@ -1084,3 +1084,32 @@ hydrated.
 - Not fixable from config, already settled above: the ~14 KiB "legacy JavaScript"
   polyfill module, and the floor-plan card "image larger than displayed" insight, which
   compares against CSS pixels and would have us serve blurry images to every real phone.
+
+# Competitor review 2026-10-08: type pages, an FAQ hub, and county towns in titles
+
+A research pass over the local dealers that compete for our searches — Champion Homes
+Center (Topeka), Fahl Homes (Warsaw), Clayton Homes Factory Direct of Garrett, Factory Expo
+(Nappanee) and Home Nation — found them ranking with page types we did not have. Semrush
+had no API units that day and competitor sites could not be fetched from the sandbox, so
+the evidence was search-result listings, not volumes; rerun with Semrush units for numbers.
+
+- **`/double-wide-homes` and `/single-wide-homes`** (`src/components/HomeTypeLanding.tsx`):
+  the live catalogue filtered by `isMultiSectionHud` / `isSingleSectionHud`
+  (`src/lib/grid-plan.ts`, modular twins excluded). The hero figures — plan count, widths,
+  square feet, bedrooms — are computed from the plans, never typed. Every footer "Home Types"
+  link used to point at `/floor-plans`; they now point at these pages. The disclaimer guard
+  follows the delegation: `HomeTypeLanding` renders `SpecsDisclaimer` for both pages.
+- **`/faq`** gathers `commonFAQs` under one URL with a single FAQPage node, linked from the
+  footer, with `NoRecommendationNotice` under the lender answers.
+- **County pages name their main town** (`seat` in `county-pages.ts`) in the title and H1 —
+  "Manufactured Homes in Warsaw & Kosciusko County, IN" — for the ten counties whose town has
+  no location page of its own. Allen, DeKalb, Noble and Steuben are left alone so their
+  county page never competes with the Fort Wayne, Auburn, Kendallville or Angola pages.
+- **`/locations/auburn` still said "just 20 miles from the Champion factory".** The
+  `disclaimers.test.ts` distance guard reads line by line and the sentence wrapped between
+  "20" and "miles". Now 30, and "buy factory-direct" became "we order every home from
+  Champion's Topeka, IN plant".
+
+Not done, and why: Ohio/Michigan county pages (need Kyle to confirm which counties he
+delivers to), a Fort Wayne modular page (AGENTS.md keeps modular in the guides), and model
+codes in plan titles (the `fitTitle` ladder already leads with the plan name).
