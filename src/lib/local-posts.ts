@@ -2504,6 +2504,224 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>See <a href="/locations/allen-county">our Allen County page</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-andrews-indiana",
+    title: "Manufactured Homes in Andrews, Indiana: The Costs That Come After Closing",
+    excerpt:
+      "Property tax, insurance, utilities, upkeep and, in a community, lot rent. The ongoing costs of owning a manufactured home near Andrews, and how to list them before you choose a plan.",
+    image: "/images/homepage/feature-financing.webp",
+    date: "October 8, 2026",
+    html: `
+<p>Andrews is a small town on the Wabash River in western Huntington County. Buyers here tend to plan carefully, and the question that catches people out is not the price of the home. It is what a <strong>manufactured home</strong> costs to own month after month, once the paperwork is signed.</p>
+
+<h2>List every ongoing cost</h2>
+<ul>
+  <li><strong>Property tax.</strong> How the home is taxed depends on whether it is titled as personal property or real estate. Our LaGrange post covers titling and taxes.</li>
+  <li><strong>Insurance.</strong> Your lender will ask for it. Our South Whitley post covers insuring the home.</li>
+  <li><strong>Loan payment.</strong> If you finance, ask each lender you apply to for the full monthly figure, including any escrow.</li>
+  <li><strong>Lot rent.</strong> Only if the home sits in a land-lease community. Our Laotto post covers owning land versus leasing it.</li>
+  <li><strong>Utilities.</strong> Electric, heating fuel, water or well power, trash and internet.</li>
+  <li><strong>Upkeep.</strong> Furnace filters, gutters, caulk, skirting and septic pumping if you have one.</li>
+</ul>
+
+<h2>Utilities depend on choices you make now</h2>
+<p>The heating fuel, the size of the home and the insulation package all change the monthly bills. Our Cromwell post covers heating fuel on a rural lot, and our Fremont post covers insulation for northern winters. Ask your utility providers what similar homes nearby use in a year.</p>
+
+<h2>Set aside for upkeep</h2>
+<p>Every home needs care. A small amount put aside each month means a worn part does not become a surprise. Our Kimmell post covers first-year care.</p>
+
+<h2>Put it on one page</h2>
+<p>Write each cost on one sheet, by month. Compare that total with what you pay now in rent or a mortgage. That page is a better guide to what you can afford than the price of the home alone. Our Portland post covers moving from renting to owning.</p>
+
+<h2>Common questions</h2>
+<h3>Do you help with financing?</h3>
+<p>No. We do not offer or arrange financing. We can give you a list of lenders our customers have used, and you choose your own.</p>
+<h3>Are property taxes the same everywhere?</h3>
+<p>No. They vary by county and by how the home is titled. Ask the county assessor.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/huntington-county">our Huntington County page</a>, or <a href="/contact-us">ask for a line-item quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-redkey-indiana",
+    title: "Manufactured Homes in Redkey, Indiana: Snow, Ice and Winter Access",
+    excerpt:
+      "Who plows the lane, where the snow goes, and keeping steps and vents clear. How to plan winter access to a new manufactured home on a rural lot near Redkey before the first storm.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 8, 2026",
+    html: `
+<p>Redkey is a small town in western Jay County, surrounded by flat, open farm ground where the wind moves snow into drifts. For a new <strong>manufactured home</strong> on a rural lot, the first big storm is a good test of how well the site was planned.</p>
+
+<h2>Who clears the driveway?</h2>
+<p>A county plow clears the road, not your lane. Decide before winter who will clear your driveway, whether that is you with a tractor or a blower, or someone you hire. Ask early, because many people who plow are booked by November.</p>
+
+<h2>Where does the snow go?</h2>
+<ul>
+  <li>Leave room beside the driveway to pile snow without blocking the view of the road.</li>
+  <li>Do not pile it against the home, the skirting or the porch.</li>
+  <li>Keep it off the septic field markers and the well cap so you can find them.</li>
+</ul>
+
+<h2>Drifts and the lie of the land</h2>
+<p>On open ground, snow drifts on the downwind side of anything in its path, including the home. Our Howe post covers siting the home on acreage, and our Decatur post covers wind. A windbreak planted far enough away can help. Our Hoagland post covers planting.</p>
+
+<h2>Steps, landings and vents</h2>
+<ul>
+  <li>Keep steps and landings clear and salted, and add a handrail if there is none.</li>
+  <li>Clear snow from around any furnace or water heater vents on the outside wall.</li>
+  <li>Keep the meter and any propane tank reachable for the reader and the delivery driver.</li>
+</ul>
+
+<h2>Before the first storm</h2>
+<p>Put flashlights, a few days of water and food, and a phone charger somewhere easy to reach. Know where the main water shut-off is. Our Kimmell post covers the rest of first-year care.</p>
+
+<h2>Common questions</h2>
+<h3>Should I clear snow off the roof?</h3>
+<p>Do not climb onto the roof. If you are worried about a heavy load, call a professional.</p>
+<h3>Can the home be delivered in winter?</h3>
+<p>Often, but weather and ground conditions can delay delivery and site work. Plan with some room in the schedule.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/jay-county">our Jay County page</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-mentone-indiana",
+    title: "Manufactured Homes in Mentone, Indiana: Locks, Lighting and Peace of Mind",
+    excerpt:
+      "Rekeying, outdoor lighting, a lit address and a home that looks lived in. Simple ways to secure a new manufactured home on a quiet country lot near Mentone, especially while it sits empty.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 8, 2026",
+    html: `
+<p>Mentone is a small town in southeast Kosciusko County, with long stretches of quiet road between houses. A new <strong>manufactured home</strong> out here often sits on its own, and it may stand empty for a while between delivery and move-in. A few simple steps go a long way.</p>
+
+<h2>While the home stands empty</h2>
+<p>Between delivery and move-in, the home may be on site for some time while your contractors work. Keep it locked when no one is working. Ask your contractors who has keys and keep the list short. Do not store new appliances or tools inside before you move in.</p>
+
+<h2>Change the locks</h2>
+<p>When you move in, have the exterior locks rekeyed or replaced so only your household has keys. It is quick and inexpensive, and it is the first thing many owners do.</p>
+
+<h2>Light the outside</h2>
+<ul>
+  <li>A light at every exterior door.</li>
+  <li>Motion lights covering the driveway and the back of the home.</li>
+  <li>Lighting that lets you see the steps on a dark evening.</li>
+</ul>
+<p>Ask at order which exterior lights and outlets the plan includes. Any added after delivery are for a licensed electrician you hire.</p>
+
+<h2>A house number people can find</h2>
+<p>Large, reflective numbers at the road help emergency crews find you quickly. Our Stroh post covers address assignment.</p>
+
+<h2>Look lived in</h2>
+<ul>
+  <li>Use timers on a few lamps when you are away.</li>
+  <li>Ask a neighbour to collect packages and mail.</li>
+  <li>Keep the drive clear in winter. Our Redkey post covers snow.</li>
+</ul>
+
+<h2>Cameras and alarms</h2>
+<p>Many owners add a doorbell camera or an alarm. Check what internet service reaches your lot first. Our Larwill post covers checking internet before you buy land.</p>
+
+<h2>Common questions</h2>
+<h3>Does insurance reward a monitored alarm?</h3>
+<p>Some insurers offer a discount. Ask your agent. Our South Whitley post covers insurance.</p>
+<h3>Who keeps the keys at delivery?</h3>
+<p>Ask when your delivery is scheduled, and agree who holds keys while your contractors work.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/kosciusko-county">our Kosciusko County page</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-argos-indiana",
+    title: "Manufactured Homes in Argos, Indiana: Living with a Septic System",
+    excerpt:
+      "What goes down the drain, how often to pump, and where not to park. Day-to-day septic care for a new manufactured home on a rural lot near Argos, so the system lasts as long as the home.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 8, 2026",
+    html: `
+<p>Argos is a small town in southern Marshall County, and most homes outside it run on a private septic system. Our St. Joe and Grabill posts cover putting a well and septic in. This one is about living with the system once your <strong>manufactured home</strong> is lived in, because how you use it decides how long it lasts.</p>
+
+<h2>Know where it is</h2>
+<p>Ask your septic contractor for a drawing of the tank and the drain field, and keep it with your paperwork. Our Montpelier post covers what to keep. Mark the tank lid so you can find it under snow or grass.</p>
+
+<h2>What goes down the drain</h2>
+<ul>
+  <li><strong>Only</strong> toilet paper and human waste in the toilet. No wipes, even ones labelled flushable.</li>
+  <li>No grease or cooking fat in the sink. Wipe pans with a paper towel first.</li>
+  <li>Go easy on harsh cleaners and bleach.</li>
+  <li>Spread out laundry over the week rather than running every load on one day.</li>
+</ul>
+
+<h2>Pump it on schedule</h2>
+<p>Solids build up in the tank over time and need pumping out. How often depends on the tank size and how many people live in the home. Ask your septic contractor for a schedule, and write down each pumping date.</p>
+
+<h2>Protect the drain field</h2>
+<ul>
+  <li>Do not drive or park on it.</li>
+  <li>Do not build a shed, deck or garage on top of it. Our Hudson post covers freestanding porches, decks and garages.</li>
+  <li>Keep trees and large shrubs away from it. Our Hoagland post covers planting.</li>
+  <li>Point gutter downspouts away from it. Our Bremen post covers drainage.</li>
+</ul>
+
+<h2>Signs of trouble</h2>
+<p>Slow drains in several fixtures, gurgling, a sewage smell, or wet, green patches over the field are worth a call to a septic professional straight away.</p>
+
+<h2>Common questions</h2>
+<h3>Does a bigger household need a bigger system?</h3>
+<p>Often, yes. Systems are usually sized by bedroom count. Our Orland post covers this.</p>
+<h3>Do you install septic systems?</h3>
+<p>No. We sell and deliver the home. You hire your own contractors for the septic system and other site work.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/marshall-county">our Marshall County page</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-upland-indiana",
+    title: "Manufactured Homes in Upland, Indiana: Hiring Your Own Site Contractors",
+    excerpt:
+      "Written quotes, a clear scope, insurance and a schedule that matches delivery. What to ask the contractors you hire for site work and set-up on a new manufactured home near Upland.",
+    image: "/images/homepage/about-2.webp",
+    date: "October 8, 2026",
+    html: `
+<p>Upland is a small college town in eastern Grant County. Buyers here, as everywhere we deliver, hire their own contractors for site work, foundation and set-up. We sell and deliver the <strong>manufactured home</strong>, and the work that touches your land is between you and the people you hire. Here is how to hire them well.</p>
+
+<h2>Get every quote in writing</h2>
+<p>Ask each contractor for a written quote that lists exactly what they will do and what they will not. A quote that says &ldquo;site prep&rdquo; with one number tells you very little. Our Roanoke post covers reading a quote line by line.</p>
+
+<h2>Know who does what</h2>
+<p>A typical job can involve several trades. Make sure each piece has an owner:</p>
+<ul>
+  <li>Clearing, grading and the driveway.</li>
+  <li>The foundation or piers.</li>
+  <li>Setting and anchoring the home.</li>
+  <li>Electric, water or well, and septic or sewer connections.</li>
+  <li>Skirting, steps and any porch or deck.</li>
+</ul>
+<p>Any gap between two contractors&rsquo; quotes is a job no one has agreed to do.</p>
+
+<h2>Questions to ask each one</h2>
+<ul>
+  <li>Are you licensed for this work where required, and insured?</li>
+  <li>Who pulls the permits, and who schedules the inspections?</li>
+  <li>When can you start, and how long will it take?</li>
+  <li>What do you need from me, and by when?</li>
+  <li>How do you want to be paid, and when?</li>
+</ul>
+
+<h2>Line the schedule up with delivery</h2>
+<p>The site must be ready before the home arrives, and set-up follows delivery. Share your delivery window with every contractor. Our Monroeville post covers working backward from move-in.</p>
+
+<h2>Keep a file</h2>
+<p>Keep every quote, contract, permit and receipt together. Our Montpelier post covers the paperwork to keep.</p>
+
+<h2>Common questions</h2>
+<h3>Do you do site work or set-up?</h3>
+<p>No. You hire and pay your own contractors.</p>
+<h3>Can you tell me which office handles permits?</h3>
+<p>We can tell you which county office answers for your area. The permits and inspections themselves are between you, your contractors and that office.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/grant-county">our Grant County page</a>, or read the <a href="/guides/site-work">site work guide</a>.</p>
+`,
+  },
 ];
 
 /** When this build was made; outside a Next build (tests, scripts) it is now. */
