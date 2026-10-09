@@ -1,5 +1,5 @@
 import { generateMetadata as genMeta, StructuredData } from "@/lib/seo";
-import { businessJsonLd } from "@/lib/business";
+import { businessRef } from "@/lib/business";
 import ContactForm from "./ContactForm";
 
 export const metadata = genMeta({
@@ -9,10 +9,6 @@ export const metadata = genMeta({
 });
 
 export default function ContactPage() {
-  // Nested nodes must not repeat @context — the enclosing document already
-  // declares it, and a second one is redundant at best.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { "@context": _ctx, ...business } = businessJsonLd();
   return (
     <>
       {/* The page a buyer lands on to get in touch carried no structured data
@@ -28,7 +24,12 @@ export default function ContactPage() {
           url: "https://factorydirecthomescenter.com/contact-us",
           description:
             "Contact Factory Direct Homes Center in Auburn, Indiana — showroom address, phone, and enquiry form.",
-          mainEntity: business,
+          // A reference, not a copy. Spreading the full `businessJsonLd()`
+          // here published the identity node a second time on this page, and
+          // Semrush counts its markup error once per node (2026-10-09 crawl).
+          // `businessRef()` carries the canonical @id and an address, so
+          // Google merges it with the node the root layout already published.
+          mainEntity: businessRef(),
         }}
       />      <ContactForm />
     </>

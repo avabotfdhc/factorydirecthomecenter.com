@@ -91,7 +91,7 @@ As of 2026-09-11 nothing on the site depends on AWS. The Express/MySQL CMS on EC
 
 # SEO: one business entity, per-plan content, honest sitemap dates
 
-- `src/lib/business.ts` is the single source of the dealership's identity for structured data (name, address, phone, `sales@` email, map pin, hours). Both JSON-LD generators (`LocalBusinessSchema` in `src/components/JsonLd.tsx`, used by the root layout, and `structuredData.localBusiness()` in `src/lib/seo.ts`, spread by the location pages) read it, so every page describes the same `#business` node. Change the pin or hours there only. Location pages may narrow `areaServed`/`serviceArea`; they must not override identity fields (a per-city `hasMap` used to give Google three different maps for one business).
+- `src/lib/business.ts` is the single source of the dealership's identity for structured data (name, address, phone, `sales@` email, map pin, hours). **One** generator publishes the node — `LocalBusinessSchema` in `src/components/JsonLd.tsx`, rendered by the root layout on every page — so every page describes the same `#business` entity. Change the pin or hours there only. `structuredData.localBusiness()` used to be a second generator for the location pages to spread; it is gone, because spreading it gave twenty pages a second full copy of the node (see "Semrush 2026-10-09" below). A page that wants to narrow `areaServed`/`serviceArea` to its own city calls `businessAreaRef()`, which patches the canonical node instead of restating it; identity fields are never overridden (a per-city `hasMap` used to give Google three different maps for one business).
 - Floor-plan detail pages generate their editorial body from `src/lib/plan-content.ts` (`buildPlanNarrative`): plan-specific sections (size, HUD vs IRC construction and what it means for the site, plant and delivery, series, options), the HUD/modular twin and same-box-other-series callouts, four comparable homes, guide and delivery-area links, and six plan-specific FAQs (which feed the FAQPage schema). This exists because all 400 CMS plans had empty `description`/`floor_plan_html` on 2026-09-11, so every page was one templated sentence plus the six homepage FAQs. Hand-written copy entered in `/admin` renders above the generated narrative — write it for the featured sale homes first. Keep the no-dollar-figure rule in that file.
 - `<title>` on plan pages is `{name} — {beds} Bed {baths} Bath Champion {Single Wide|Double Wide|Multi-Section|Modular} Home, Auburn IN`.
 - `sitemap.xml` only sends `lastmod` when the date is real: a guide's `updated`, a post's date, or the CMS row's `updated_at` (`ApiFloorPlan.updatedAt`). Do not put `new Date()` back.
@@ -111,7 +111,7 @@ Vercel's functions intermittently fail to reach Supabase — production logs for
 - `src/lib/reviews.ts` is the only place customer reviews may live. It is empty on purpose: the three homepage testimonials ("David B.", "Sarah M.", "James T.") and the "4.8 Star rating from verified customers" badge were placeholder copy from the original build, confirmed by Kyle on 2026-09-14 and removed. Invented reviews breach Google's fake-engagement policy and the FTC endorsement rule. Add a row only by copying a real review verbatim, with the reviewer's own name, the date and a link. `reviewStats()` computes the rating from those rows and returns null when there are none — no `AggregateRating` is published unless real reviews back it, and a hand-typed rating never goes in.
 - With no reviews, the homepage shows what a buyer can verify instead (Champion dealer status, line-item pricing, the showroom) and links to the Google listing. Real rows switch that section back to quotes automatically.
 - `src/app/design-system/page.tsx` keeps a testimonial card as a layout specimen; it is labelled "not a real customer". Never copy it onto a public page.
-- The owner lives in `BUSINESS.owner` (`src/lib/business.ts`) and is published as a `Person` node by `ownerJsonLd()` — cited as the business `founder`, rendered by `src/components/OwnerIntro.tsx` on `/` and `/about`, and defined once on `/about` under the `OWNER_ID` `@id`. `BUSINESS.foundingDate` ("2024-11") is the one answer for how long the dealership has traded. Kyle's bio in `OwnerIntro.tsx` is a draft written from claims the site already made — he should rewrite it in his own words. Setting `BUSINESS.owner.image` to a real photograph makes both the section and the schema use it.
+- The owner lives in `BUSINESS.owner` (`src/lib/business.ts`) and is published as a `Person` node by `ownerJsonLd()` — cited as the business `founder`, rendered by `src/components/OwnerIntro.tsx` on `/` and `/about`, and defined once on `/about` under the `OWNER_ID` `@id`. `BUSINESS.foundingDate` ("2024-11") is the one answer for how long the dealership has traded in prose; the JSON-LD `foundingDate` comes from `BUSINESS.foundingDay`, which needs a full calendar day and is empty until Kyle supplies one (see "Semrush 2026-10-09" below). Kyle's bio in `OwnerIntro.tsx` is a draft written from claims the site already made — he should rewrite it in his own words. Setting `BUSINESS.owner.image` to a real photograph makes both the section and the schema use it.
 - Post bylines: a post whose `author` equals `BUSINESS.owner.name` publishes the owner `Person` as its schema author; anything else stays an Organization byline (`structuredData.article({ authorIsOwner })`). Never attribute a post to a person who did not write it.
 
 # The page registry is built FROM the blog route's own source
@@ -172,12 +172,12 @@ Facts flow from Kyle to this repo, not from the listing copy.
 
 # City blog posts: cover a town once, and make each post genuinely different
 
-The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). The 13 August posts were written before that rule and carried 29 `modular` mentions between them — "a new Champion manufactured or modular home" in the opening, and a boilerplate "modular homes on permanent foundations extend your options" clause in the placement paragraph of eleven of them, which gave modular equal billing in posts that are supposed to be about HUD-code homes. Swept on 2026-09-25. Where a buyer genuinely needs the alternative named — the three FAQs asking whether a home can go inside town limits — the answer now points at `/guides/manufactured-vs-modular` instead of selling modular inline. 70 cities are now covered (five of them scheduled — see below): 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan), 5 added 2026-09-28 (Woodburn, Pleasant Lake, Orland, Laotto, Topeka), 5 more the same day (Monroeville, Cromwell, Hudson, LaGrange, Howe), 5 on 2026-09-30 (Decatur, Ossian, South Whitley, Kimmell, Shipshewana), 5 on 2026-10-01 (Bluffton, Berne, Larwill, Wawaka, Stroh), and 5 on 2026-10-06 in counties with no location page at all (Warsaw/Kosciusko, Huntington, Goshen/Elkhart, Wabash, Portland/Jay), and 5 more on 2026-10-06 the same way (Marion/Grant, Hartford City/Blackford, Peru/Miami, Plymouth/Marshall, Rochester/Fulton). Those ten counties had no location page, so on 2026-10-06 each got one in `src/lib/county-pages.ts` (served by `/locations/[slug]`), and each post now links its county page. They are not in the vetted distance table, so their pages publish **no mileage** — `milesFromAuburn`/`milesFromTopeka` are optional and left unset, the card on `/locations` reads "Freight quoted per route" with no zone badge, and the copy says "freight quoted per route". Add a figure only when Kyle supplies one. Every county page carries `NoRecommendationNotice`, its posts as `relatedPosts`, and three county-specific FAQs (FAQPage schema). A new town post in an uncovered county should get its county page the same way. Five more were written 2026-10-06 and **scheduled** with `publishAt`: Roanoke, North Manchester and Syracuse for Monday 2026-10-12, Nappanee and Geneva for Thursday 2026-10-15 (Kyle chose a 3/2 split). Five more published normally on 2026-10-07: Bremen (Marshall), Gas City (Grant), Middlebury (Elkhart), Montpelier (Blackford), Akron (Fulton). And five more the same day: Milford (Kosciusko), Warren (Huntington), Dunkirk (Jay), Bristol (Elkhart), Hoagland (Allen).
+The blog carries one post per nearby town, focused on **HUD-code manufactured homes** (Kyle, 2026-09-18 — not modular; modular is covered by the guides and the series pages). The 13 August posts were written before that rule and carried 29 `modular` mentions between them — "a new Champion manufactured or modular home" in the opening, and a boilerplate "modular homes on permanent foundations extend your options" clause in the placement paragraph of eleven of them, which gave modular equal billing in posts that are supposed to be about HUD-code homes. Swept on 2026-09-25. Where a buyer genuinely needs the alternative named — the three FAQs asking whether a home can go inside town limits — the answer now points at `/guides/manufactured-vs-modular` instead of selling modular inline. 75 cities are now covered (five of them scheduled — see below): 13 written in August 2026 (Auburn, Garrett, Waterloo, Butler, Huntertown, Kendallville, Churubusco, Angola, Albion, New Haven, Columbia City, Fort Wayne, Ligonier) and 12 added 2026-09-18 for the closest towns that had none (Corunna, St. Joe, Spencerville, Ashley, Avilla, Rome City, Wolcottville, Hamilton, Fremont, Leo-Cedarville, Grabill, Harlan), 5 added 2026-09-28 (Woodburn, Pleasant Lake, Orland, Laotto, Topeka), 5 more the same day (Monroeville, Cromwell, Hudson, LaGrange, Howe), 5 on 2026-09-30 (Decatur, Ossian, South Whitley, Kimmell, Shipshewana), 5 on 2026-10-01 (Bluffton, Berne, Larwill, Wawaka, Stroh), and 5 on 2026-10-06 in counties with no location page at all (Warsaw/Kosciusko, Huntington, Goshen/Elkhart, Wabash, Portland/Jay), and 5 more on 2026-10-06 the same way (Marion/Grant, Hartford City/Blackford, Peru/Miami, Plymouth/Marshall, Rochester/Fulton). Those ten counties had no location page, so on 2026-10-06 each got one in `src/lib/county-pages.ts` (served by `/locations/[slug]`), and each post now links its county page. They are not in the vetted distance table, so their pages publish **no mileage** — `milesFromAuburn`/`milesFromTopeka` are optional and left unset, the card on `/locations` reads "Freight quoted per route" with no zone badge, and the copy says "freight quoted per route". Add a figure only when Kyle supplies one. Every county page carries `NoRecommendationNotice`, its posts as `relatedPosts`, and three county-specific FAQs (FAQPage schema). A new town post in an uncovered county should get its county page the same way. Five more were written 2026-10-06 and **scheduled** with `publishAt`: Roanoke, North Manchester and Syracuse for Monday 2026-10-12, Nappanee and Geneva for Thursday 2026-10-15 (Kyle chose a 3/2 split). Five more published normally on 2026-10-07: Bremen (Marshall), Gas City (Grant), Middlebury (Elkhart), Montpelier (Blackford), Akron (Fulton). And five more the same day: Milford (Kosciusko), Warren (Huntington), Dunkirk (Jay), Bristol (Elkhart), Hoagland (Allen). Five more on 2026-10-08: Andrews (Huntington), Redkey (Jay), Mentone (Kosciusko), Argos (Marshall), Upland (Grant).
 
 Rules for adding another:
 
 - **One post per town.** A town with a post and a `/locations/*` page already has two assets competing for the same query; a third is cannibalisation, not coverage. Check `local-posts.ts` before writing.
-- **Each post must teach something the others do not.** Mass-produced pages that differ only by place name are the doorway-page pattern in Google's spam policies, and the risk is a manual action, not just weak ranking. Every post in this set is built around a different subject — county-line jurisdiction (Ashley, Wolcottville), well and septic sequencing (St. Joe, Grabill), delivery access on rural lanes (Spencerville, Harlan), lake-lot constraints (Rome City), pre-1976 trailer vs HUD-code replacement (Hamilton), northern-winter insulation options (Fremont), land-versus-house budget structure (Leo-Cedarville), freight distance (Avilla), single-section fit on small platted lots (Corunna), floodplain elevation (Woodburn), single-level living and entry height (Pleasant Lake), two-generation layouts and bedroom-count septic sizing (Orland), own land versus a land-lease community (Laotto), delivery-day inspection and warranty items (Topeka), working backward from move-in through the seasons (Monroeville), heating fuel on a rural lot (Cromwell), freestanding porches, decks and garages (Hudson), titling and taxes — personal property vs real estate (LaGrange), siting the home on acreage (Howe), wind, tie-downs and where to shelter (Decatur), a second home on the family farm (Ossian), insuring the home (South Whitley), first-year care (Kimmell), options to decide at order vs later (Shipshewana), selling your current house first (Bluffton), well-water testing and room for treatment (Berne), checking internet service before buying land (Larwill), a plan with a real home office (Wawaka), driveway permits, culverts and address assignment (Stroh), new versus used (Warsaw), pets and a busy household (Huntington), HUD-code home vs RV, park model and tiny home (Goshen), making a smaller home feel bigger (Wabash), renting to owning (Portland), making one showroom visit count (Marion), how the process differs from a stick-built house (Hartford City), skirting (Peru), exterior choices and subdivision covenants (Plymouth), checks to finish before closing on land (Rochester), comparing two dealers' quotes line by line (Roanoke), the HUD label and data plate (North Manchester), leaving a lake home empty for winter (Syracuse), choosing a kitchen layout (Nappanee), getting electric service to a rural lot (Geneva), grading, gutters and a dry crawlspace (Bremen), choosing the bedroom count (Gas City), storage inside the home (Middlebury), the paperwork to keep (Montpelier), reading a floor plan drawing (Akron), split-bedroom versus same-side layouts (Milford), choosing the bathrooms (Warren), smoke alarms and an escape plan (Dunkirk), buying land with the school district in mind (Bristol), planting around the new home (Hoagland).
+- **Each post must teach something the others do not.** Mass-produced pages that differ only by place name are the doorway-page pattern in Google's spam policies, and the risk is a manual action, not just weak ranking. Every post in this set is built around a different subject — county-line jurisdiction (Ashley, Wolcottville), well and septic sequencing (St. Joe, Grabill), delivery access on rural lanes (Spencerville, Harlan), lake-lot constraints (Rome City), pre-1976 trailer vs HUD-code replacement (Hamilton), northern-winter insulation options (Fremont), land-versus-house budget structure (Leo-Cedarville), freight distance (Avilla), single-section fit on small platted lots (Corunna), floodplain elevation (Woodburn), single-level living and entry height (Pleasant Lake), two-generation layouts and bedroom-count septic sizing (Orland), own land versus a land-lease community (Laotto), delivery-day inspection and warranty items (Topeka), working backward from move-in through the seasons (Monroeville), heating fuel on a rural lot (Cromwell), freestanding porches, decks and garages (Hudson), titling and taxes — personal property vs real estate (LaGrange), siting the home on acreage (Howe), wind, tie-downs and where to shelter (Decatur), a second home on the family farm (Ossian), insuring the home (South Whitley), first-year care (Kimmell), options to decide at order vs later (Shipshewana), selling your current house first (Bluffton), well-water testing and room for treatment (Berne), checking internet service before buying land (Larwill), a plan with a real home office (Wawaka), driveway permits, culverts and address assignment (Stroh), new versus used (Warsaw), pets and a busy household (Huntington), HUD-code home vs RV, park model and tiny home (Goshen), making a smaller home feel bigger (Wabash), renting to owning (Portland), making one showroom visit count (Marion), how the process differs from a stick-built house (Hartford City), skirting (Peru), exterior choices and subdivision covenants (Plymouth), checks to finish before closing on land (Rochester), comparing two dealers' quotes line by line (Roanoke), the HUD label and data plate (North Manchester), leaving a lake home empty for winter (Syracuse), choosing a kitchen layout (Nappanee), getting electric service to a rural lot (Geneva), grading, gutters and a dry crawlspace (Bremen), choosing the bedroom count (Gas City), storage inside the home (Middlebury), the paperwork to keep (Montpelier), reading a floor plan drawing (Akron), split-bedroom versus same-side layouts (Milford), choosing the bathrooms (Warren), smoke alarms and an escape plan (Dunkirk), buying land with the school district in mind (Bristol), planting around the new home (Hoagland), ongoing costs after closing (Andrews), snow and winter access (Redkey), locks, lighting and security (Mentone), living with a septic system (Argos), hiring your own site contractors (Upland).
 - **Scheduling a post:** give it `publishAt` (an ISO instant; 13:00Z = 9 am Eastern) and set `date` to that day. Scheduled posts live in `allLocalBlogPosts`; everything that lists or serves posts reads `localBlogPosts`, which drops any post whose `publishAt` is after `SITE_BUILT_AT` — the **build** time, inlined by `next.config.ts` into server and client alike, so a deployment publishes a post everywhere (index, route, sitemap, registry, related cards) or nowhere. Consequence: **a post only appears after a production build made at or after its `publishAt`** — merge or redeploy on the day; the clock passing is not enough. `tests/scheduled-posts.test.ts` holds the cut-off, the date/`publishAt` match and the registry agreement; `tests/page-title.test.ts` checks scheduled titles too.
 - `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
 - Distances: county-level figures come from the vetted table in `src/app/locations/page.tsx`. Do not invent a town-to-town mileage that is not already published somewhere in the repo — say "a short drive" instead.
@@ -1086,3 +1086,105 @@ hydrated.
 - Not fixable from config, already settled above: the ~14 KiB "legacy JavaScript"
   polyfill module, and the floor-plan card "image larger than displayed" insight, which
   compares against CSS pixels and would have us serve blurry images to every real phone.
+
+# Competitor review 2026-10-08: type pages, an FAQ hub, and county towns in titles
+
+A research pass over the local dealers that compete for our searches — Champion Homes
+Center (Topeka), Fahl Homes (Warsaw), Clayton Homes Factory Direct of Garrett, Factory Expo
+(Nappanee) and Home Nation — found them ranking with page types we did not have. Semrush
+had no API units that day and competitor sites could not be fetched from the sandbox, so
+the evidence was search-result listings, not volumes; rerun with Semrush units for numbers.
+
+- **`/double-wide-homes` and `/single-wide-homes`** (`src/components/HomeTypeLanding.tsx`):
+  the live catalogue filtered by `isMultiSectionHud` / `isSingleSectionHud`
+  (`src/lib/grid-plan.ts`, modular twins excluded). The hero figures — plan count, widths,
+  square feet, bedrooms — are computed from the plans, never typed. Every footer "Home Types"
+  link used to point at `/floor-plans`; they now point at these pages. The disclaimer guard
+  follows the delegation: `HomeTypeLanding` renders `SpecsDisclaimer` for both pages.
+- **`/faq`** gathers `commonFAQs` under one URL with a single FAQPage node, linked from the
+  footer, with `NoRecommendationNotice` under the lender answers.
+- **County pages name their main town** (`seat` in `county-pages.ts`) in the title and H1 —
+  "Manufactured Homes in Warsaw & Kosciusko County, IN" — for the ten counties whose town has
+  no location page of its own. Allen, DeKalb, Noble and Steuben are left alone so their
+  county page never competes with the Fort Wayne, Auburn, Kendallville or Angola pages.
+- **`/locations/auburn` still said "just 20 miles from the Champion factory".** The
+  `disclaimers.test.ts` distance guard reads line by line and the sentence wrapped between
+  "20" and "miles". Now 30, and "buy factory-direct" became "we order every home from
+  Champion's Topeka, IN plant".
+
+Not done, and why: Ohio/Michigan county pages (need Kyle to confirm which counties he
+delivers to), a Fort Wayne modular page (AGENTS.md keeps modular in the guides), and model
+codes in plan titles (the `fitTitle` ladder already leads with the plan name).
+
+# Semrush 2026-10-09: the markup error is counted per business node, not per page
+
+The crawl reported **65 "structured data that contains markup errors" across 45
+pages** — 1 on most, 2 on twenty. Crawling the built site and counting nodes
+gave the rule in one line: **the count equals the number of nodes carrying the
+full identity.** All 45 pages agreed, with no exceptions, once the twenty
+duplicate-node pages were accounted for. That is what a crawler finding looks
+like when you measure it instead of reading it: the number of *pages* was never
+the signal.
+
+Two halves, both now closed:
+
+- **Twenty pages published the identity node twice.** `structuredData.localBusiness()`
+  existed only to be spread into a page's own block (`{...structuredData.localBusiness(),
+  areaServed: …}`), which restated every field under the same `@id`. Both copies
+  validate on their own, so no schema checker objects — Semrush simply counted the
+  node's error once per node. `businessAreaRef(area)` replaces the pattern: the
+  canonical `@id`, an address and the page's geography, nothing else.
+  `structuredData.localBusiness()` is **gone**, and its granular county/city
+  footprint moved into `businessJsonLd()` as `AREA_SERVED`, so the one canonical
+  node now carries all 24 areas on every page instead of three States. The
+  stragglers the first pass missed were `/contact-us` (`mainEntity`) and the five
+  county pages on `LocationPageTemplate` — both hand-wrote
+  `const { "@context": _ctx, ...node } = businessJsonLd()`.
+- **The error inside the node is `foundingDate`.** It was `"2024-11"`, and
+  schema.org's `Date` is `xsd:date`, which takes `YYYY-MM-DD` only — the node's
+  one reduced-precision date value, and the only field in it that a schema-level
+  validator can reject (schema.org declares no required properties, so a
+  required-field complaint is Google's, not schema.org's). `BUSINESS.foundingDay`
+  now holds the schema value and is **empty**, so `businessJsonLd()` omits the
+  property. It is empty because nobody has given us the day: Kyle says November
+  2024, the Google listing said 21 September, and an invented `2024-11-01` would
+  be a third answer. Set `foundingDay` to `"2024-11-DD"` and it publishes again.
+  `BUSINESS.foundingDate` ("2024-11") is unchanged and still drives the prose.
+
+`tests/structured-data.test.ts` holds both: a source scan that allows
+`businessJsonLd` only in `src/components/JsonLd.tsx` (the root layout's one
+emitter) — comments are stripped first, because the fix left prose naming the
+helper in three files — and a check that any published `foundingDate` is a full
+calendar day inside the month the rest of the site cites. Three violations were
+injected and confirmed caught (a page spreading the node, a reduced-precision
+day, a day in the wrong month).
+
+**The validator is not reachable from the sandbox** (`validator.schema.org`
+answers 403 CONNECT, as does every other outbound host), and
+`structured-data-testing-tool` from npm cannot parse a multi-type `@type` array,
+so it reports our node as one opaque failure. The usable method is the one above:
+crawl the built site on `next start`, parse every `application/ld+json` block,
+count nodes, and correlate against the crawler's own per-URL numbers.
+
+## The other four findings from the same export
+
+- **Broken external links (42 across 25 pages)** — still unverifiable here, but
+  arithmetic pins almost all of it. Per-page broken counts against each page's
+  actual external links solve exactly: **one of** `https://www.indianamha.org/`
+  **or** `https://www.in.gov/dhs/…/industrialized-building-systems-modularmobile-structures/`
+  (22 pages), `https://www.naco.org/resources/manufactured-housing` (15),
+  `https://www.consumerfinance.gov/housing/manufactured-housing/` (2),
+  `https://www.planning.org/knowledgebase/manufacturedhousing/` (1), one link on
+  `/about` (likely `https://www.hud.gov/program_offices/housing/rmra/mhs`, the
+  pre-reorganisation HUD path) and one on `/financing`. 22+15+2+1+1+1 = 42,
+  exactly. `/faq` is the key: 1 broken out of 1 external link, which names
+  consumerfinance.gov outright. Every one of them lives in `src/lib/citations.ts`
+  (two are duplicated inline in `about` and `financing`), so it is one file to
+  edit — but do **not** swap a URL you cannot fetch, since replacing a working
+  link with a broken one is the same defect.
+- **Pages with only one internal link (9)** — a partial-crawl artifact. Semrush
+  reached 49 of the sitemap's 216 URLs; the nine pages have 2–7 inbound internal
+  links each when counted against the whole site.
+- **Low text to HTML ratio (42)** and **Content not optimized (2)** — already
+  settled above: inherent to a React/Next app shipping an RSC payload beside the
+  markup.

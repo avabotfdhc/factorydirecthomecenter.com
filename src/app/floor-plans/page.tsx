@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { shortImageSrc } from "@/lib/image-src";
-import { getApiFloorPlans, type ApiFloorPlan } from "@/lib/api-content";
+import { getApiFloorPlans } from "@/lib/api-content";
+import { gridPlan } from "@/lib/grid-plan";
 import { FAQSection } from "@/components/FAQSection";
 import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
@@ -38,37 +38,6 @@ export const metadata: Metadata = {
 // redeploy — but the API is hit at most once per window (not once per visitor),
 // and Next serves the last-good copy if the API is briefly unavailable.
 export const revalidate = 300;
-
-/**
- * Only what the grid and its cards read, with empty fields left out (an
- * undefined key is not serialised) and image addresses in their short form.
- * 214 homes × the fields the grid never used — title, updatedAt, the "Call for
- * pricing" placeholder, empty priceFrom/virtualTour — was ~25 KB of the page.
- * An empty price hides the price label exactly as "Call for pricing" did.
- */
-function gridPlan(p: ApiFloorPlan): ApiFloorPlan {
-  const priced = p.price && !/call for pricing/i.test(p.price) ? p.price : "";
-  return {
-    slug: p.slug,
-    name: p.name,
-    title: "",
-    price: priced,
-    sqft: p.sqft,
-    beds: p.beds,
-    baths: p.baths,
-    image: shortImageSrc(p.image),
-    brand: p.brand,
-    homeType: p.homeType,
-    series: p.series,
-    priceFrom: p.priceFrom || undefined,
-    virtualTour: p.virtualTour || undefined,
-    widthFt: p.widthFt,
-    bedsMin: p.bedsMin,
-    bedsMax: p.bedsMax,
-    flexNote: p.flexNote || undefined,
-    floorPlanImage: p.floorPlanImage ? shortImageSrc(p.floorPlanImage) : undefined,
-  };
-}
 
 export default async function FloorPlansPage() {
   const plans = await getApiFloorPlans();
@@ -111,7 +80,15 @@ export default async function FloorPlansPage() {
             is why you won&apos;t find a single headline figure on these cards.
           </p>
           <p className="text-sm text-[var(--color-charcoal)]/80">
-            <a href="/homes-on-sale" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+<a href="/single-wide-homes" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+              Single wide homes
+            </a>
+            {" · "}
+            <a href="/double-wide-homes" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+              Double wide homes
+            </a>
+            {" · "}
+<a href="/homes-on-sale" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
               See what&rsquo;s on sale right now
             </a>
             {" · "}

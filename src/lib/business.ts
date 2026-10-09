@@ -104,9 +104,26 @@ export const BUSINESS = {
     { days: ["Saturday"], opens: "10:00", closes: "16:00" },
   ],
   states: ["Indiana", "Ohio", "Michigan"],
-  /** Month the dealership opened. Used for foundingDate and anywhere the site
-   *  says how long we have been trading — so it stays one answer. */
+  /** Month the dealership opened. Used anywhere the site says how long we
+   *  have been trading — so it stays one answer. */
   foundingDate: "2024-11",
+  /**
+   * The same opening date as a full calendar day, which is the only form
+   * schema.org's `Date` (xsd:date) accepts.
+   *
+   * Semrush's 2026-10-09 crawl reported exactly one structured-data error per
+   * business node on every one of the 45 HTML pages it reached — 65 errors
+   * across 45 pages, matching the node count page for page — and
+   * `foundingDate: "2024-11"` is the node's only reduced-precision date value.
+   *
+   * It is empty because nobody has given us the day. `businessJsonLd()` omits
+   * the property while it is empty rather than publish an invented one: Kyle
+   * said November 2024 and the Google listing said 21 September, so a made-up
+   * "2024-11-01" would be a third answer. Set this to "2024-11-DD" and the
+   * property comes back; `tests/structured-data.test.ts` checks it is a full
+   * date in the month `foundingDate` names.
+   */
+  foundingDay: "",
   owner: {
     name: "Kyle Dudgeon",
     jobTitle: "Owner",
@@ -115,6 +132,40 @@ export const BUSINESS = {
     image: "",
   },
 } as const;
+
+/**
+ * The service footprint the `#business` node publishes, mirroring /locations.
+ *
+ * This list used to live in `structuredData.localBusiness()`, a generator
+ * whose whole job was to be spread into a page's own copy of the business —
+ * which is how twenty pages came to publish the full identity node twice
+ * (Semrush counted the markup once per node). The footprint belongs to the one
+ * canonical node, so it lives here and the generator is gone.
+ */
+const AREA_SERVED: ReadonlyArray<{ "@type": string; name: string }> = [
+  ...BUSINESS.states.map((name) => ({ "@type": "State", name })),
+  { "@type": "AdministrativeArea", name: "DeKalb County, Indiana" },
+  { "@type": "AdministrativeArea", name: "Noble County, Indiana" },
+  { "@type": "AdministrativeArea", name: "Allen County, Indiana" },
+  { "@type": "AdministrativeArea", name: "Whitley County, Indiana" },
+  { "@type": "AdministrativeArea", name: "Steuben County, Indiana" },
+  { "@type": "AdministrativeArea", name: "LaGrange County, Indiana" },
+  { "@type": "City", name: "Auburn, Indiana" },
+  { "@type": "City", name: "Fort Wayne, Indiana" },
+  { "@type": "City", name: "Kendallville, Indiana" },
+  { "@type": "City", name: "Angola, Indiana" },
+  { "@type": "City", name: "Columbia City, Indiana" },
+  { "@type": "City", name: "New Haven, Indiana" },
+  { "@type": "City", name: "Huntertown, Indiana" },
+  { "@type": "City", name: "Garrett, Indiana" },
+  { "@type": "City", name: "Butler, Indiana" },
+  { "@type": "City", name: "Churubusco, Indiana" },
+  { "@type": "City", name: "Ligonier, Indiana" },
+  { "@type": "City", name: "Albion, Indiana" },
+  { "@type": "City", name: "Indianapolis, Indiana" },
+  { "@type": "City", name: "Toledo, Ohio" },
+  { "@type": "City", name: "Kalamazoo, Michigan" },
+];
 
 /** The postal address, built once so every node that needs one agrees. */
 export function businessAddressJsonLd(): Record<string, unknown> {
@@ -141,6 +192,27 @@ export function businessAddressJsonLd(): Record<string, unknown> {
  * the canonical node means Google merges the two instead of competing, and
  * the nested node still validates standalone.
  */
+/**
+ * The dealership narrowed to one page's geography.
+ *
+ * A location page wants to say "this business serves Auburn" — it does NOT
+ * want to republish the whole business. Spreading `structuredData.localBusiness()`
+ * did exactly that: a second full node, same `@id`, every identity field
+ * duplicated, on twenty pages. Semrush counted the markup twice because there
+ * genuinely were two nodes (2026-10-09 crawl).
+ *
+ * `businessRef()` carries the canonical `@id` and an address, so this patch
+ * merges into the node the root layout already published and adds only the
+ * geography. One business on the page, with the area attached.
+ */
+export function businessAreaRef(area: Record<string, unknown>): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    ...businessRef(),
+    ...area,
+  };
+}
+
 export function businessRef(): Record<string, unknown> {
   return {
     "@type": [...BUSINESS_TYPES],
@@ -178,12 +250,12 @@ export function businessJsonLd(): Record<string, unknown> {
       opens: h.opens,
       closes: h.closes,
     })),
-    areaServed: BUSINESS.states.map((name) => ({ "@type": "State", name })),
+    areaServed: [...AREA_SERVED],
     makesOffer: {
       "@type": "Offer",
       itemOffered: { "@type": "Product", name: "Champion manufactured and modular homes" },
     },
-    foundingDate: BUSINESS.foundingDate,
+    ...(BUSINESS.foundingDay ? { foundingDate: BUSINESS.foundingDay } : {}),
     founder: ownerJsonLd(),
   };
 }

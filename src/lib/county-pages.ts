@@ -10,6 +10,13 @@ export interface CountyPage {
   eyebrow: string;         // hero kicker
   intro: string;
   towns: string[];         // communities we deliver to
+  /**
+   * The county's main town, named in the title and H1 so the page answers
+   * "manufactured homes {town}". Only for counties whose main town has no
+   * location page of its own (Fort Wayne, Auburn, Kendallville and Angola do),
+   * so two pages never compete for the same town.
+   */
+  seat?: string;
   /** Only from the vetted table in src/app/locations/page.tsx — omit rather than guess. */
   milesFromAuburn?: string; // "about 25 miles"
   driveNote: string;
@@ -121,6 +128,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "kosciusko-county",
+    seat: "Warsaw",
     county: "Kosciusko County",
     state: "Indiana",
     eyebrow: "Warsaw & the Lakes",
@@ -160,6 +168,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "huntington-county",
+    seat: "Huntington",
     county: "Huntington County",
     state: "Indiana",
     eyebrow: "Huntington, Roanoke & Andrews",
@@ -199,6 +208,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "elkhart-county",
+    seat: "Goshen",
     county: "Elkhart County",
     state: "Indiana",
     eyebrow: "Goshen, Elkhart & Nappanee",
@@ -238,6 +248,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "wabash-county",
+    seat: "Wabash",
     county: "Wabash County",
     state: "Indiana",
     eyebrow: "Wabash & North Manchester",
@@ -277,6 +288,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "jay-county",
+    seat: "Portland",
     county: "Jay County",
     state: "Indiana",
     eyebrow: "Portland & the Ohio Line",
@@ -316,6 +328,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "grant-county",
+    seat: "Marion",
     county: "Grant County",
     state: "Indiana",
     eyebrow: "Marion, Gas City & Upland",
@@ -354,6 +367,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "blackford-county",
+    seat: "Hartford City",
     county: "Blackford County",
     state: "Indiana",
     eyebrow: "Hartford City & Montpelier",
@@ -393,6 +407,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "miami-county",
+    seat: "Peru",
     county: "Miami County",
     state: "Indiana",
     eyebrow: "Peru, Bunker Hill & Converse",
@@ -432,6 +447,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "marshall-county",
+    seat: "Plymouth",
     county: "Marshall County",
     state: "Indiana",
     eyebrow: "Plymouth, Bremen & Culver",
@@ -471,6 +487,7 @@ export const countyPages: CountyPage[] = [
   },
   {
     slug: "fulton-county",
+    seat: "Rochester",
     county: "Fulton County",
     state: "Indiana",
     eyebrow: "Rochester & Lake Manitou",

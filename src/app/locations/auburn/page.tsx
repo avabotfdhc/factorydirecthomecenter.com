@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { BUSINESS } from "@/lib/business";
+import { BUSINESS, businessAreaRef } from "@/lib/business";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { H2, H3 } from "@/components/Heading";
@@ -15,7 +15,7 @@ import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Manufactured Homes in Auburn, IN",
+  title: "Manufactured Homes in Auburn, IN | Champion Dealer on SR 8",
   description:
     "Champion manufactured and modular homes in Auburn, Indiana. Visit our DeKalb County showroom at 1211 State Road 8 — factory-direct pricing, single wides, double wides & modular homes. Serving Auburn, Garrett, Waterloo, Butler & Fort Wayne.",
   keywords: [
@@ -74,8 +74,7 @@ export default function AuburnLocationPage() {
     <>
       {/* ===== STRUCTURED DATA ===== */}
       <StructuredData
-        data={{
-          ...structuredData.localBusiness(),
+        data={businessAreaRef({
           areaServed: {
             "@type": "City",
             name: "Auburn",
@@ -86,7 +85,7 @@ export default function AuburnLocationPage() {
             geoMidpoint: { "@type": "GeoCoordinates", latitude: BUSINESS.latitude, longitude: BUSINESS.longitude },
             geoRadius: "50 miles",
           },
-        }}
+        })}
       />
       <StructuredData
         data={structuredData.article({
@@ -159,8 +158,8 @@ export default function AuburnLocationPage() {
               </h1>
               <p className="text-lg text-white/60 leading-relaxed max-w-xl mb-8">
                 Our showroom is right here in Auburn, at 1211 State Road 8. Walk through Champion
-                single wides, double wides, and modular homes, then buy factory-direct — just 20
-                miles from the Champion factory in Topeka.
+                single wides, double wides, and modular homes. We order every home from
+                Champion&apos;s Topeka, IN plant, about 30 miles from our lot, and quote it line by line.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link

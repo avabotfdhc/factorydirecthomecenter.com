@@ -40,6 +40,7 @@ export function Footer() {
                 { href: "/financing", label: "Financing" },
                 { href: "/resources", label: "Resources" },
                 { href: "/guides", label: "Guides" },
+                { href: "/faq", label: "FAQs" },
                 { href: "/blog", label: "Blog" },
                 { href: "/about", label: "About Us" },
                 { href: "/contact-us", label: "Contact" },
@@ -62,18 +63,20 @@ export function Footer() {
               Home Types
             </p>
             <ul className="space-y-3">
-              {["Single Wide Homes", "Multi-Section Homes", "Modular Homes"].map(
-                (type) => (
-                  <li key={type}>
-                    <Link
-                      href="/floor-plans"
-                      className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime-light)] transition-colors duration-300"
-                    >
-                      {type}
-                    </Link>
-                  </li>
-                )
-              )}
+              {[
+                { href: "/single-wide-homes", label: "Single Wide Homes" },
+                { href: "/double-wide-homes", label: "Double Wide Homes" },
+                { href: "/guides/manufactured-vs-modular", label: "Modular Homes" },
+              ].map((type) => (
+                <li key={type.href}>
+                  <Link
+                    href={type.href}
+                    className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime-light)] transition-colors duration-300"
+                  >
+                    {type.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

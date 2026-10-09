@@ -5,6 +5,7 @@ import { StructuredData, structuredData } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { H2, H3 } from "@/components/Heading";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { businessAreaRef } from "@/lib/business";
 
 // Reusable, SSR (server component) local-SEO city page. Renders full schema
 // (LocalBusiness + geo, Website, Breadcrumb, Article, Service, FAQPage) plus
@@ -41,8 +42,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
     <>
       {/* ===== STRUCTURED DATA ===== */}
       <StructuredData
-        data={{
-          ...structuredData.localBusiness(),
+        data={businessAreaRef({
           areaServed: {
             "@type": "City",
             name: data.city,
@@ -53,7 +53,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
             geoMidpoint: { "@type": "GeoCoordinates", latitude: data.lat, longitude: data.lng },
             geoRadius: "40 miles",
           },
-        }}
+        })}
       />
       <StructuredData
         data={structuredData.article({

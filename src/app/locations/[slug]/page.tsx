@@ -5,6 +5,7 @@ import { H2, H3 } from "@/components/Heading";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { countyPages, getCountyPage } from "@/lib/county-pages";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { businessAreaRef } from "@/lib/business";
 
 // Programmatic county landing pages. Data lives in src/lib/county-pages.ts.
 // A county that also has its own folder under src/app/locations/ is served by
@@ -25,8 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const c = getCountyPage(slug);
   if (!c) return {};
   return genMeta({
-    title: `Manufactured Homes in ${c.county}, IN`,
-    description: `Champion manufactured homes delivered to ${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
+    title: c.seat ? `Manufactured Homes in ${c.seat} & ${c.county}, IN` : `Manufactured Homes in ${c.county}, IN`,
+    description: `Champion manufactured homes delivered to ${c.seat ? `${c.seat} and ` : ""}${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
     url: `/locations/${c.slug}`,
     type: "article",
   });
@@ -43,14 +44,13 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
           any kind — no business node, no breadcrumb — while the hand-built
           city pages next to them carried five blocks each. */}
       <StructuredData
-        data={{
-          ...structuredData.localBusiness(),
+        data={businessAreaRef({
           areaServed: {
             "@type": "AdministrativeArea",
             name: `${c.county}, ${c.state}`,
             containedInPlace: { "@type": "State", name: c.state },
           },
-        }}
+        })}
       />
       <StructuredData
         data={structuredData.service({
@@ -71,7 +71,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
             </div>
             <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight mb-6">
               Manufactured Homes<br />
-              <span className="italic text-[var(--color-teal-light)]">in {c.county}</span>
+              <span className="italic text-[var(--color-teal-light)]">in {c.seat ? `${c.seat} & ${c.county}` : c.county}</span>
             </h1>
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">{c.intro}</p>
           </div>
