@@ -5,6 +5,7 @@ import { H2, H3 } from "@/components/Heading";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
 import { countyPages, getCountyPage } from "@/lib/county-pages";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { businessAreaRef } from "@/lib/business";
 
 // Programmatic county landing pages. Data lives in src/lib/county-pages.ts.
 // A county that also has its own folder under src/app/locations/ is served by
@@ -43,14 +44,13 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
           any kind — no business node, no breadcrumb — while the hand-built
           city pages next to them carried five blocks each. */}
       <StructuredData
-        data={{
-          ...structuredData.localBusiness(),
+        data={businessAreaRef({
           areaServed: {
             "@type": "AdministrativeArea",
             name: `${c.county}, ${c.state}`,
             containedInPlace: { "@type": "State", name: c.state },
           },
-        }}
+        })}
       />
       <StructuredData
         data={structuredData.service({

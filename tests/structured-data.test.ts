@@ -16,7 +16,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { structuredData } from "../src/lib/seo";
-import { businessRef, businessJsonLd, BUSINESS_ID, BUSINESS, GOOGLE_LISTING_URL } from "../src/lib/business";
+import { businessRef, businessAreaRef, businessJsonLd, BUSINESS_ID, BUSINESS, GOOGLE_LISTING_URL } from "../src/lib/business";
 import { GOOGLE_REVIEWS_URL } from "../src/lib/reviews";
 import { jsonLdScript } from "../src/lib/json-ld";
 import { readdirSync, readFileSync } from "node:fs";
@@ -53,7 +53,7 @@ function businessNodes(value: unknown, found: Node[] = []): Node[] {
 
 /** One sample of every generator that can carry a business node. */
 const samples: Record<string, unknown> = {
-  localBusiness: structuredData.localBusiness(),
+  businessAreaRef: businessAreaRef({ areaServed: { "@type": "City", name: "Auburn" } }),
   service: structuredData.service({
     name: "Manufactured Home Delivery",
     description: "Delivery to northeast Indiana",
@@ -371,4 +371,102 @@ test("the WebSite node is identified and points at the business", () => {
   assert.ok(publisher && publisher["@id"] === BUSINESS_ID,
     "the WebSite must name the business as its publisher by canonical @id");
   assert.ok(publisher && "address" in publisher, "that publisher ref must carry an address");
+});
+
+// ---------------------------------------------------------------------------
+// One full business node per page, and a foundingDate that is a real date.
+//
+// Semrush's 2026-10-09 crawl reported 65 "structured data that contains markup
+// errors" across 45 pages. Crawling the built site and counting nodes showed
+// the error is not per page but PER BUSINESS NODE: on all 45 pages the count
+// equals the number of nodes carrying the full identity (the ones with
+// `foundingDate`), 1 on most pages and 2 on the twenty that spread
+// `businessJsonLd()` into their own block. So the fix has two halves, and
+// these two guards hold each of them.
+// ---------------------------------------------------------------------------
+
+/** Source with `//` and block comments removed, so a scan reads code only. */
+function stripComments(source: string): string {
+  return source.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/\/\/[^\n]*/g, " ");
+}
+
+test("only the root layout's LocalBusinessSchema publishes the full business node", () => {
+  // A page that spreads `businessJsonLd()` ships the identity node a second
+  // time: same @id, every field restated. Both copies validate on their own,
+  // so no schema checker objects — Semrush just counts the node's error twice.
+  // Twenty pages did this through `structuredData.localBusiness()` (now gone),
+  // and /contact-us plus the five county pages on LocationPageTemplate did it
+  // by hand. Attach a page's geography with `businessAreaRef()` instead.
+  const allowed = new Set([
+    // The one emitter: rendered by the root layout on every page.
+    "src/components/JsonLd.tsx",
+    // Where it is defined.
+    "src/lib/business.ts",
+  ]);
+
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+        continue;
+      }
+      if (!entry.name.endsWith(".tsx") && !entry.name.endsWith(".ts")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (allowed.has(rel)) continue;
+      // Comments are stripped first: the fix left prose explaining the trap in
+      // three files, and a scan that reads a comment as a call reports them.
+      if (/\bbusinessJsonLd\b/.test(stripComments(readFileSync(full, "utf8")))) offenders.push(rel);
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+
+  assert.deepEqual(
+    offenders,
+    [],
+    "these files publish a second copy of the full business node — use businessAreaRef() or businessRef()",
+  );
+});
+
+test("the guard would catch a page republishing the full node", () => {
+  // The shape that was live on six pages: strip @context, spread the rest.
+  const reintroduced = `const { "@context": _c, ...node } = businessJsonLd();`;
+  assert.match(stripComments(reintroduced), /\bbusinessJsonLd\b/);
+  // ...and it must not fire on prose that merely names the helper.
+  assert.doesNotMatch(
+    stripComments("// published once, by businessJsonLd() in the root layout\nconst x = 1;"),
+    /\bbusinessJsonLd\b/,
+  );
+});
+
+test("foundingDate is either absent or a full calendar day", () => {
+  const node = businessJsonLd();
+  if (!("foundingDate" in node)) {
+    // Omitted on purpose while nobody has given us the day — see BUSINESS.foundingDay.
+    assert.equal(BUSINESS.foundingDay, "");
+    return;
+  }
+  const published = node.foundingDate as string;
+  assert.match(
+    published,
+    /^\d{4}-\d{2}-\d{2}$/,
+    `schema.org Date is xsd:date, so "${published}" is a value-type error — use YYYY-MM-DD`,
+  );
+  assert.ok(
+    published.startsWith(`${BUSINESS.foundingDate}-`),
+    `foundingDate "${published}" is not in ${BUSINESS.foundingDate}, the month the rest of the site cites`,
+  );
+  assert.ok(!Number.isNaN(Date.parse(published)), `foundingDate "${published}" is not a real date`);
+});
+
+test("no node in any generator carries a reduced-precision date", () => {
+  // The defect this pass fixed, generalised: a YYYY-MM where a Date belongs.
+  for (const [name, sample] of Object.entries(samples)) {
+    const json = JSON.stringify(sample);
+    assert.ok(
+      !/"(?:foundingDate|datePublished|dateModified|dateCreated|startDate|endDate|validFrom|validThrough)":\s*"\d{4}-\d{2}"/.test(json),
+      `${name} publishes a YYYY-MM where schema.org expects a full Date`,
+    );
+  }
 });
