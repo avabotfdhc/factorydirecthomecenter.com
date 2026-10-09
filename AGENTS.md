@@ -57,6 +57,20 @@ Adding a new tracking platform: scaffold the component in `src/lib/analytics.tsx
 
 Multiple Ava sessions can run in parallel (Telegram-triggered, cron jobs, manual). They share this working tree. If you're about to do something race-prone (edit `.env.local`, run `npm run build`, modify `src/lib/pages.ts` while another session is adding pages), check `ps aux | grep claude` first. A prior session wrote a partial `.env.local` on 2026-04-11 and silently broke tracking on production for an hour — that's the kind of thing `.vercelignore` now prevents but coordination would prevent sooner.
 
+# DealerTide inventory is staged, never imported straight into the catalogue
+
+DealerTide's public inventory feed (241 homes linked to Champion models, Oct 2026) is
+pulled by the Supabase edge function `dealertide-sync` into the private table
+`dealertide_inventory`, and `dealertide_catalogue_match` lines each home up against
+`floor_plans` by Champion model code (Prime also by plan name). Kyle's rule
+(2026-10-09): add to the current catalogue **without duplicates or disturbing it**,
+and check photos and floor plans against what we already have first. So nothing writes
+to `floor_plans` / `floor_plan_images` from the feed until that comparison has been
+reviewed; a model already in the catalogue never gets a second page, and a
+Paramount-only model stays retired. The token is the Supabase secret
+`DEALERTIDE_INVENTORY_TOKEN`; start a sync with `select public.dealertide_sync_start()`.
+Details and the step-2 rules: `docs/dealertide-inventory-sync.md`.
+
 # Catalogue media from Champion's Box library
 
 Champion shares its literature and photo library through two Box folders (Topeka IN, Decatur IN). On 2026-09-09 every 2026 sales sheet (APB/APF, L-101/L-102, LIT-1), WEB-size photo set and literature PDF was copied into the `floor-plans` storage bucket and attached in the CMS (`floor_plan_documents`, `floor_plan_images`, `literature`), without downloads:
