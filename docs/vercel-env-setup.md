@@ -38,15 +38,24 @@ mistake was made on 2026-09-28.
 
 Listed in the order they are worth doing.
 
-### 1. `OPENAI_API_KEY` — turns Ava on
+### 1. `ANTHROPIC_API_KEY` — turns Ava on
 
-The biggest functional gap. Without it `POST /api/chat` returns **503** and the
-chat widget silently falls back to canned scripted replies, so Ava is not doing
-the job she was built for (discovery, plan lookup, quote and showroom-visit
-capture).
+The biggest functional gap. Without an AI key `POST /api/chat` returns **503**
+and the chat widget silently falls back to canned scripted replies, so Ava is
+not doing the job she was built for (discovery, plan lookup, quote and
+showroom-visit capture).
 
-- Value: an OpenAI API key (`sk-…`) from <https://platform.openai.com/api-keys>
-- Optional: `OPENAI_CHAT_MODEL` (defaults to `gpt-4o-mini`)
+- Value: an Anthropic API key (`sk-ant-…`) from
+  <https://console.anthropic.com/settings/keys>. Set a monthly spend limit in
+  the same console (Settings → Limits).
+- Model: Claude Haiku 5.5 (`claude-haiku-5-5`). Optional override:
+  `ANTHROPIC_CHAT_MODEL`.
+- Cost: at ~500 chats a month, a few dollars. Ava's instructions and catalogue
+  (~17k tokens) go with every message, but they are prompt-cached, so repeats
+  within a few minutes bill at a tenth of the input price.
+- **Fallback:** `OPENAI_API_KEY` (optional `OPENAI_CHAT_MODEL`, default
+  `gpt-4o-mini`) is used only when `ANTHROPIC_API_KEY` is unset. Keep it set
+  while switching over; it can be removed once Claude is confirmed working.
 
 ### 2. `RESEND_API_KEY` — lead alert emails
 
@@ -104,7 +113,7 @@ Dashboard (easiest):
    reach the live site* — that is the most common way this goes wrong.
 4. **Save**
 
-Or from a terminal with the Vercel CLI: `vercel env add OPENAI_API_KEY production`
+Or from a terminal with the Vercel CLI: `vercel env add ANTHROPIC_API_KEY production`
 
 ## Then redeploy, then verify
 

@@ -33,6 +33,7 @@ export async function GET() {
     supabaseUrl: set("NEXT_PUBLIC_SUPABASE_URL"),
     supabaseAnonKey: set("NEXT_PUBLIC_SUPABASE_ANON_KEY") || set("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
     supabaseServiceRole: set("SUPABASE_SERVICE_ROLE_KEY"),
+    anthropic: set("ANTHROPIC_API_KEY"),
     openai: set("OPENAI_API_KEY"),
     resend: set("RESEND_API_KEY"),
     leadWebhookSecret: set("LEAD_WEBHOOK_SECRET"),

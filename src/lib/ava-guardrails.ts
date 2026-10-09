@@ -13,7 +13,7 @@
 //                          attempts before they reach the model; the route
 //                          answers with a fixed, polite refusal instead.
 //   • checkRateLimit     — per-IP message budget so one visitor (or a bot)
-//                          cannot run up the OpenAI bill or spam leads.
+//                          cannot run up the model bill or spam leads.
 //   • enforceReplyPolicy — post-filters the model's reply: removes links to
 //                          any host but our own, blocks any dollar figure that
 //                          is not one of the published contractor ranges,

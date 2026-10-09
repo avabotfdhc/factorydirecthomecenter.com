@@ -5,11 +5,11 @@ import { H4 } from "./Heading";
 import PriceQuoteModal from "./PriceQuoteModal";
 import { getSaleStatus } from "@/lib/sale";
 
-// Ava — the site's sales copilot. Replies come from /api/chat (OpenAI with
-// Ava's sales persona, the running sale, the live catalogue and her sales
+// Ava — the site's sales copilot. Replies come from /api/chat (Claude Haiku
+// 5.5, or OpenAI as the fallback, with Ava's sales persona, the running sale, the live catalogue and her sales
 // playbook). The widget tells the route which page the visitor is on and
 // whether a quote or a showroom visit has already been requested in this
-// session. When the route is not configured (no OPENAI_API_KEY) or fails, the
+// session. When the route is not configured (neither ANTHROPIC_API_KEY nor OPENAI_API_KEY) or fails, the
 // widget answers from the scripted replies below so the visitor is never left
 // hanging.
 

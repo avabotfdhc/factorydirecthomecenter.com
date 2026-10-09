@@ -1,5 +1,6 @@
+import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
-import { buildAvaKnowledge, findPlanBrief, planBrief, showroomStatus, SHOWROOM_PHONE } from "@/lib/ava-knowledge";
+import { buildAvaKnowledgeParts, findPlanBrief, planBrief, showroomStatus, SHOWROOM_PHONE } from "@/lib/ava-knowledge";
 import { getApiFloorPlanBySlug } from "@/lib/api-content";
 import { submitLead } from "@/app/actions/leads";
 import {
@@ -14,7 +15,8 @@ import {
 
 // POST /api/chat — Ava, the site's sales copilot.
 //
-// Uses OpenAI (gpt-4o-mini: cheapest capable model) with a fixed sales
+// Runs on Claude Haiku 5.5 (Anthropic) when ANTHROPIC_API_KEY is set, and on
+// OpenAI (gpt-4o-mini) when only OPENAI_API_KEY is, with a fixed sales
 // persona plus the full knowledge base in src/lib/ava-knowledge.ts (company,
 // the running sale, series, every floor plan, options and standard features,
 // financing, Champion, the industry, the site's FAQs, and the discovery /
@@ -38,13 +40,20 @@ import {
 // text is sanitized and screened for "ignore your instructions" attempts
 // before it reaches the model; each IP gets a message budget; and every reply
 // is post-filtered so it cannot carry an off-site link, a home price, or a
-// copy of these instructions. Requests are sent with store:false so OpenAI
-// does not retain the conversation.
+// copy of these instructions. OpenAI requests are sent with store:false so
+// OpenAI does not retain the conversation.
 //
-// Requires OPENAI_API_KEY on Vercel; without it the route answers 503 and the
-// widget falls back to its scripted replies, so the site never shows a broken
-// chat. OPENAI_BASE_URL overrides the API host (used by the local mock in
-// scripts/ava-smoke.mjs).
+// Provider: ANTHROPIC_API_KEY wins (model ANTHROPIC_CHAT_MODEL, default
+// claude-haiku-5-5); otherwise OPENAI_API_KEY (OPENAI_CHAT_MODEL, default
+// gpt-4o-mini). With neither set the route answers 503 and the widget falls
+// back to its scripted replies, so the site never shows a broken chat.
+// ANTHROPIC_BASE_URL / OPENAI_BASE_URL override the API host (used by the
+// local mock in scripts/ava-smoke.mjs).
+//
+// On Claude the system prompt is sent as two blocks: the persona plus the
+// stable knowledge base (cached — repeat reads bill at a tenth of the input
+// price), then the clock, the sale and the visitor context, which change per
+// request and must stay after the cache breakpoint or nothing is ever reused.
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -329,11 +338,165 @@ async function runBookVisit(raw: string, path: string): Promise<{ result: string
   };
 }
 
+// ── Model providers ────────────────────────────────────────────────────────
+//
+// The tool loop below is provider-neutral: each driver keeps its own
+// conversation in its API's shape and hands back the reply text plus any tool
+// calls, with the arguments as a JSON string for the run* helpers above.
+
+interface PendingCall {
+  id: string;
+  name: string;
+  args: string;
+}
+
+interface ModelTurn {
+  text: string;
+  calls: PendingCall[];
+  /** The model declined the request (Claude's `refusal` stop reason). */
+  refused: boolean;
+}
+
+interface ChatDriver {
+  /** Writes the provider and model to the logs, so a failure names them. */
+  label: string;
+  next(withTools: boolean): Promise<ModelTurn | null>;
+  addToolResults(results: { id: string; content: string }[]): void;
+}
+
+interface SystemParts {
+  /** Persona + knowledge base — identical across requests, so cacheable. */
+  stable: string;
+  /** Clock, sale and visitor context — changes per request. */
+  volatile: string;
+}
+
+// Claude reasons before answering; that thinking counts against max_tokens,
+// so the cap sits well above the 2–4 sentence replies the prompt asks for.
+// Reply length is still bounded by the prompt and by enforceReplyPolicy.
+const CLAUDE_MAX_TOKENS = 2048;
+
+const CLAUDE_TOOLS: Anthropic.Tool[] = TOOLS.map((t) => ({
+  name: t.function.name,
+  description: t.function.description,
+  input_schema: t.function.parameters as unknown as Anthropic.Tool.InputSchema,
+}));
+
+function anthropicDriver(apiKey: string, system: SystemParts, history: ChatMessage[]): ChatDriver {
+  const client = new Anthropic({ apiKey, maxRetries: 1, timeout: 20_000 });
+  const model = process.env.ANTHROPIC_CHAT_MODEL || "claude-haiku-5-5";
+  const systemBlocks: Anthropic.TextBlockParam[] = [
+    { type: "text", text: system.stable, cache_control: { type: "ephemeral" } },
+    { type: "text", text: system.volatile },
+  ];
+  // The Messages API requires the conversation to open with a user turn; the
+  // widget's own greeting can arrive first.
+  const firstUser = history.findIndex((m) => m.role === "user");
+  const messages: Anthropic.MessageParam[] = history.slice(Math.max(firstUser, 0)).map((m) => ({ role: m.role, content: m.content }));
+
+  return {
+    label: `anthropic/${model}`,
+    async next(withTools) {
+      let res: Anthropic.Message;
+      try {
+        res = await client.messages.create({
+          model,
+          max_tokens: CLAUDE_MAX_TOKENS,
+          // A sales chat answers from the knowledge base; low effort keeps
+          // replies fast and cheap without losing tool use.
+          output_config: { effort: "low" },
+          system: systemBlocks,
+          messages,
+          // Once the conversation carries tool calls the tools must stay
+          // declared; the last round turns them off with tool_choice instead.
+          tools: CLAUDE_TOOLS,
+          tool_choice: { type: withTools ? "auto" : "none" },
+        });
+      } catch (err) {
+        if (err instanceof Anthropic.APIError) console.error("[chat] Anthropic HTTP", err.status, err.message.slice(0, 300));
+        else console.error("[chat] Anthropic request failed:", err);
+        return null;
+      }
+      if (res.stop_reason === "refusal") return { text: "", calls: [], refused: true };
+      const text = res.content
+        .filter((b): b is Anthropic.TextBlock => b.type === "text")
+        .map((b) => b.text)
+        .join("")
+        .trim();
+      const calls = res.content
+        .filter((b): b is Anthropic.ToolUseBlock => b.type === "tool_use")
+        .map((b) => ({ id: b.id, name: b.name, args: JSON.stringify(b.input ?? {}) }));
+      // The whole content goes back, thinking blocks included, unchanged.
+      if (calls.length) messages.push({ role: "assistant", content: res.content });
+      return { text, calls, refused: false };
+    },
+    addToolResults(results) {
+      // Every result for one turn goes back in a single user message.
+      messages.push({
+        role: "user",
+        content: results.map((r) => ({ type: "tool_result" as const, tool_use_id: r.id, content: r.content })),
+      });
+    },
+  };
+}
+
+function openAIDriver(apiKey: string, system: SystemParts, history: ChatMessage[]): ChatDriver {
+  const model = process.env.OPENAI_CHAT_MODEL || "gpt-4o-mini";
+  const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
+  const convo: ConversationMessage[] = [{ role: "system", content: `${system.stable}\n\n${system.volatile}` }, ...history];
+
+  return {
+    label: `openai/${model}`,
+    async next(withTools) {
+      const res = await fetch(`${baseUrl}/chat/completions`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model,
+          temperature: 0.3,
+          max_tokens: 450,
+          store: false,
+          messages: convo,
+          ...(withTools ? { tools: TOOLS, tool_choice: "auto" } : {}),
+        }),
+      });
+      if (!res.ok) {
+        console.error("[chat] OpenAI HTTP", res.status, (await res.text()).slice(0, 300));
+        return null;
+      }
+      const data = (await res.json()) as { choices?: OpenAIChoice[] };
+      const msg = data.choices?.[0]?.message;
+      if (!msg) return null;
+      const calls = (msg.tool_calls || []).filter((c) => c.type === "function");
+      if (calls.length) convo.push({ role: "assistant", content: msg.content || null, tool_calls: calls });
+      return {
+        text: msg.content?.trim() || "",
+        calls: calls.map((c) => ({ id: c.id, name: c.function.name, args: c.function.arguments })),
+        refused: false,
+      };
+    },
+    addToolResults(results) {
+      for (const r of results) convo.push({ role: "tool", tool_call_id: r.id, content: r.content });
+    },
+  };
+}
+
+/** Claude when its key is set, OpenAI otherwise, nothing when neither is. */
+function pickDriver(): ((system: SystemParts, history: ChatMessage[]) => ChatDriver) | null {
+  const anthropicKey = process.env.ANTHROPIC_API_KEY;
+  if (anthropicKey) return (system, history) => anthropicDriver(anthropicKey, system, history);
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (openaiKey) return (system, history) => openAIDriver(openaiKey, system, history);
+  return null;
+}
+
+const REFUSAL_REPLY = `That's not something I can help with here, but the Auburn team can — call or text ${SHOWROOM_PHONE}, or ask me about our homes, the sale or a showroom visit.`;
+
 // ── Handler ────────────────────────────────────────────────────────────────
 
 export async function POST(request: Request) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
+  const makeDriver = pickDriver();
+  if (!makeDriver) {
     return NextResponse.json({ error: "Chat unavailable" }, { status: 503 });
   }
 
@@ -364,62 +527,46 @@ export async function POST(request: Request) {
   }
 
   try {
-    const [knowledge, context] = await Promise.all([buildAvaKnowledge(), visitorContext(path, captured)]);
-    const systemMessage: ConversationMessage = {
-      role: "system",
-      content: `${AVA_SYSTEM_PROMPT}\n\n${context}\n\nKNOWLEDGE BASE (authoritative — prefer it over general knowledge):\n${knowledge}`,
-    };
-    const model = process.env.OPENAI_CHAT_MODEL || "gpt-4o-mini";
-    const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
+    const [knowledge, context] = await Promise.all([buildAvaKnowledgeParts(), visitorContext(path, captured)]);
+    const driver = makeDriver(
+      {
+        stable: `${AVA_SYSTEM_PROMPT}\n\nKNOWLEDGE BASE (authoritative — prefer it over general knowledge):\n${knowledge.stable}`,
+        volatile: `${knowledge.live}\n\n${context}`,
+      },
+      messages,
+    );
 
-    const complete = async (msgs: ConversationMessage[], withTools: boolean): Promise<AssistantMessage | null> => {
-      const res = await fetch(`${baseUrl}/chat/completions`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model,
-          temperature: 0.3,
-          max_tokens: 450,
-          store: false,
-          messages: msgs,
-          ...(withTools ? { tools: TOOLS, tool_choice: "auto" } : {}),
-        }),
-      });
-      if (!res.ok) {
-        console.error("[chat] OpenAI HTTP", res.status, (await res.text()).slice(0, 300));
-        return null;
-      }
-      const data = (await res.json()) as { choices?: OpenAIChoice[] };
-      return data.choices?.[0]?.message ?? null;
-    };
-
-    const convo: ConversationMessage[] = [systemMessage, ...messages];
     let leadCaptured = false;
     let visitRequested = false;
+    let refused = false;
     let reply = "";
 
     for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
       const withTools = round < MAX_TOOL_ROUNDS;
-      const msg = await complete(convo, withTools);
-      if (!msg) break;
-      const calls = (msg.tool_calls || []).filter((c) => c.type === "function");
-      if (calls.length === 0) {
-        reply = msg.content?.trim() || "";
+      const turn = await driver.next(withTools);
+      if (!turn) break;
+      if (turn.refused) {
+        console.warn(`[chat] ${driver.label} declined the request`);
+        refused = true;
         break;
       }
-      convo.push({ role: "assistant", content: msg.content || null, tool_calls: calls });
-      for (const call of calls) {
+      if (turn.calls.length === 0) {
+        reply = turn.text;
+        break;
+      }
+      const results: { id: string; content: string }[] = [];
+      for (const call of turn.calls) {
         let result: string;
-        switch (call.function.name) {
+        switch (call.name) {
           case "lookup_floor_plan":
-            result = await runLookup(call.function.arguments);
+            result = await runLookup(call.args);
             break;
           case "capture_lead": {
             if (leadCaptured || captured.lead) {
               result = JSON.stringify({ status: "duplicate", next: "A quote request is already saved; confirm that and move to the showroom visit." });
               break;
             }
-            const r = await runCaptureLead(call.function.arguments, path);
+            const r = await runCaptureLead(call.args, path);
             leadCaptured = leadCaptured || r.ok;
             result = r.result;
             break;
@@ -429,20 +576,22 @@ export async function POST(request: Request) {
               result = JSON.stringify({ status: "duplicate", next: "A visit is already requested; confirm that and offer the line-item quote." });
               break;
             }
-            const r = await runBookVisit(call.function.arguments, path);
+            const r = await runBookVisit(call.args, path);
             visitRequested = visitRequested || r.ok;
             result = r.result;
             break;
           }
           default:
-            result = JSON.stringify({ error: `Unknown tool ${call.function.name}` });
+            result = JSON.stringify({ error: `Unknown tool ${call.name}` });
         }
-        convo.push({ role: "tool", tool_call_id: call.id, content: result });
+        results.push({ id: call.id, content: result });
       }
+      driver.addToolResults(results);
     }
 
     if (!reply) {
-      if (visitRequested) reply = `Got it — your showroom visit request is in. The Auburn team will confirm the time by call or text. Anything you'd like ready for you when you arrive?`;
+      if (refused && !visitRequested && !leadCaptured) reply = REFUSAL_REPLY;
+      else if (visitRequested) reply = `Got it — your showroom visit request is in. The Auburn team will confirm the time by call or text. Anything you'd like ready for you when you arrive?`;
       else if (leadCaptured) reply = `Got it. Our Auburn team will call or text you within one business day with your line-item quote and spec sheet. Would you like to set up a lot visit as well?`;
       else return NextResponse.json({ error: "Chat unavailable" }, { status: 502 });
     }
