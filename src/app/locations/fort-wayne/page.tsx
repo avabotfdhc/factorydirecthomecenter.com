@@ -10,6 +10,7 @@ import {
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { businessAreaRef } from "@/lib/business";
 
 // ============================================
 // FORT WAYNE LOCATION PAGE - MAXIMUM SEO/AEO
@@ -190,8 +191,7 @@ export default function FortWaynePage() {
           ============================================ */}
       
       {/* 1. LocalBusiness with Fort Wayne focus */}
-      <StructuredData data={{
-        ...structuredData.localBusiness(),
+      <StructuredData data={businessAreaRef({
         areaServed: {
           "@type": "City",
           name: "Fort Wayne",
@@ -209,7 +209,7 @@ export default function FortWaynePage() {
           },
           geoRadius: "50 miles"
         }
-      }} />
+      })} />
       
       {/* WebSite schema comes from the root layout */}
       

@@ -1113,3 +1113,76 @@ the evidence was search-result listings, not volumes; rerun with Semrush units f
 Not done, and why: Ohio/Michigan county pages (need Kyle to confirm which counties he
 delivers to), a Fort Wayne modular page (AGENTS.md keeps modular in the guides), and model
 codes in plan titles (the `fitTitle` ladder already leads with the plan name).
+
+# Semrush 2026-10-09: the markup error is counted per business node, not per page
+
+The crawl reported **65 "structured data that contains markup errors" across 45
+pages** — 1 on most, 2 on twenty. Crawling the built site and counting nodes
+gave the rule in one line: **the count equals the number of nodes carrying the
+full identity.** All 45 pages agreed, with no exceptions, once the twenty
+duplicate-node pages were accounted for. That is what a crawler finding looks
+like when you measure it instead of reading it: the number of *pages* was never
+the signal.
+
+Two halves, both now closed:
+
+- **Twenty pages published the identity node twice.** `structuredData.localBusiness()`
+  existed only to be spread into a page's own block (`{...structuredData.localBusiness(),
+  areaServed: …}`), which restated every field under the same `@id`. Both copies
+  validate on their own, so no schema checker objects — Semrush simply counted the
+  node's error once per node. `businessAreaRef(area)` replaces the pattern: the
+  canonical `@id`, an address and the page's geography, nothing else.
+  `structuredData.localBusiness()` is **gone**, and its granular county/city
+  footprint moved into `businessJsonLd()` as `AREA_SERVED`, so the one canonical
+  node now carries all 24 areas on every page instead of three States. The
+  stragglers the first pass missed were `/contact-us` (`mainEntity`) and the five
+  county pages on `LocationPageTemplate` — both hand-wrote
+  `const { "@context": _ctx, ...node } = businessJsonLd()`.
+- **The error inside the node is `foundingDate`.** It was `"2024-11"`, and
+  schema.org's `Date` is `xsd:date`, which takes `YYYY-MM-DD` only — the node's
+  one reduced-precision date value, and the only field in it that a schema-level
+  validator can reject (schema.org declares no required properties, so a
+  required-field complaint is Google's, not schema.org's). `BUSINESS.foundingDay`
+  now holds the schema value and is **empty**, so `businessJsonLd()` omits the
+  property. It is empty because nobody has given us the day: Kyle says November
+  2024, the Google listing said 21 September, and an invented `2024-11-01` would
+  be a third answer. Set `foundingDay` to `"2024-11-DD"` and it publishes again.
+  `BUSINESS.foundingDate` ("2024-11") is unchanged and still drives the prose.
+
+`tests/structured-data.test.ts` holds both: a source scan that allows
+`businessJsonLd` only in `src/components/JsonLd.tsx` (the root layout's one
+emitter) — comments are stripped first, because the fix left prose naming the
+helper in three files — and a check that any published `foundingDate` is a full
+calendar day inside the month the rest of the site cites. Three violations were
+injected and confirmed caught (a page spreading the node, a reduced-precision
+day, a day in the wrong month).
+
+**The validator is not reachable from the sandbox** (`validator.schema.org`
+answers 403 CONNECT, as does every other outbound host), and
+`structured-data-testing-tool` from npm cannot parse a multi-type `@type` array,
+so it reports our node as one opaque failure. The usable method is the one above:
+crawl the built site on `next start`, parse every `application/ld+json` block,
+count nodes, and correlate against the crawler's own per-URL numbers.
+
+## The other four findings from the same export
+
+- **Broken external links (42 across 25 pages)** — still unverifiable here, but
+  arithmetic pins almost all of it. Per-page broken counts against each page's
+  actual external links solve exactly: **one of** `https://www.indianamha.org/`
+  **or** `https://www.in.gov/dhs/…/industrialized-building-systems-modularmobile-structures/`
+  (22 pages), `https://www.naco.org/resources/manufactured-housing` (15),
+  `https://www.consumerfinance.gov/housing/manufactured-housing/` (2),
+  `https://www.planning.org/knowledgebase/manufacturedhousing/` (1), one link on
+  `/about` (likely `https://www.hud.gov/program_offices/housing/rmra/mhs`, the
+  pre-reorganisation HUD path) and one on `/financing`. 22+15+2+1+1+1 = 42,
+  exactly. `/faq` is the key: 1 broken out of 1 external link, which names
+  consumerfinance.gov outright. Every one of them lives in `src/lib/citations.ts`
+  (two are duplicated inline in `about` and `financing`), so it is one file to
+  edit — but do **not** swap a URL you cannot fetch, since replacing a working
+  link with a broken one is the same defect.
+- **Pages with only one internal link (9)** — a partial-crawl artifact. Semrush
+  reached 49 of the sitemap's 216 URLs; the nine pages have 2–7 inbound internal
+  links each when counted against the whole site.
+- **Low text to HTML ratio (42)** and **Content not optimized (2)** — already
+  settled above: inherent to a React/Next app shipping an RSC payload beside the
+  markup.

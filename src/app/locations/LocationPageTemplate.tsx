@@ -4,7 +4,7 @@ import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { useEffect } from "react";
 import { trackLocationView, trackCTAClick } from "@/lib/analytics";
-import { businessJsonLd } from "@/lib/business";
+import { businessAreaRef } from "@/lib/business";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import { jsonLdScript } from "@/lib/json-ld";
 
@@ -40,20 +40,22 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
     trackLocationView(city, state);
   }, [city, state]);
 
+  // A patch on the `#business` node the root layout already published, not a
+  // copy of it: spreading `businessJsonLd()` here gave this page a second full
+  // identity node, and Semrush counts the node's markup error once per node
+  // (2026-10-09 crawl — five county pages and /contact-us were still doing it
+  // after the location templates were fixed). `@context` is declared by the
+  // enclosing @graph, so the standalone one is dropped.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { "@context": _ctx, ...businessNode } = businessJsonLd();
+  const { "@context": _ctx, ...businessNode } = businessAreaRef({
+    description: `Authorized Champion Homes dealer serving ${city}, ${state} and the surrounding ${counties.map((c) => `${c} County`).join(", ")} area with factory-direct manufactured and modular homes.`,
+    areaServed: [
+      { "@type": "City", name: `${city}, ${state}` },
+      ...counties.map((c) => ({ "@type": "AdministrativeArea" as const, name: `${c} County, ${state}` })),
+    ],
+  });
   const ldGraph: Record<string, unknown>[] = [
-    {
-      // The same `#business` node every page emits (src/lib/business.ts),
-      // narrowed to this city's service area — not a separate business per
-      // location page.
-      ...businessNode,
-      description: `Authorized Champion Homes dealer serving ${city}, ${state} and the surrounding ${counties.map((c) => `${c} County`).join(", ")} area with factory-direct manufactured and modular homes.`,
-      areaServed: [
-        { "@type": "City", name: `${city}, ${state}` },
-        ...counties.map((c) => ({ "@type": "AdministrativeArea" as const, name: `${c} County, ${state}` })),
-      ],
-    },
+    businessNode,
     ...(faqs && faqs.length
       ? [{
           "@type": "FAQPage",

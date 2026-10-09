@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
-import { BUSINESS } from "@/lib/business";
+import { BUSINESS, businessAreaRef } from "@/lib/business";
 import { StructuredData, structuredData, generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn, StaggerContainer, AnimatedCounter } from "@/components/VisualEffects";
 import { H2, H3 } from "@/components/Heading";
@@ -74,8 +74,7 @@ export default function AuburnLocationPage() {
     <>
       {/* ===== STRUCTURED DATA ===== */}
       <StructuredData
-        data={{
-          ...structuredData.localBusiness(),
+        data={businessAreaRef({
           areaServed: {
             "@type": "City",
             name: "Auburn",
@@ -86,7 +85,7 @@ export default function AuburnLocationPage() {
             geoMidpoint: { "@type": "GeoCoordinates", latitude: BUSINESS.latitude, longitude: BUSINESS.longitude },
             geoRadius: "50 miles",
           },
-        }}
+        })}
       />
       <StructuredData
         data={structuredData.article({

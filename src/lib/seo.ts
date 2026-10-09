@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { businessJsonLd, businessRef, SITE_URL, ownerJsonLd } from "./business";
+import { businessRef, SITE_URL, ownerJsonLd } from "./business";
 import { jsonLdScript } from "@/lib/json-ld";
 import { fitTitle } from "@/lib/page-title";
 
@@ -128,38 +128,13 @@ export function publisherRef(): Record<string, unknown> {
 }
 
 export const structuredData = {
-  // Local Business Schema — the shared `#business` node (src/lib/business.ts)
-  // plus the granular county/city footprint that mirrors /locations. Location
-  // pages spread this and narrow `areaServed` to their own city.
-  localBusiness: () => ({
-    ...businessJsonLd(),
-    areaServed: [
-      { "@type": "State", name: "Indiana" },
-      { "@type": "State", name: "Ohio" },
-      { "@type": "State", name: "Michigan" },
-      { "@type": "AdministrativeArea", name: "DeKalb County, Indiana" },
-      { "@type": "AdministrativeArea", name: "Noble County, Indiana" },
-      { "@type": "AdministrativeArea", name: "Allen County, Indiana" },
-      { "@type": "AdministrativeArea", name: "Whitley County, Indiana" },
-      { "@type": "AdministrativeArea", name: "Steuben County, Indiana" },
-      { "@type": "AdministrativeArea", name: "LaGrange County, Indiana" },
-      { "@type": "City", name: "Auburn, Indiana" },
-      { "@type": "City", name: "Fort Wayne, Indiana" },
-      { "@type": "City", name: "Kendallville, Indiana" },
-      { "@type": "City", name: "Angola, Indiana" },
-      { "@type": "City", name: "Columbia City, Indiana" },
-      { "@type": "City", name: "New Haven, Indiana" },
-      { "@type": "City", name: "Huntertown, Indiana" },
-      { "@type": "City", name: "Garrett, Indiana" },
-      { "@type": "City", name: "Butler, Indiana" },
-      { "@type": "City", name: "Churubusco, Indiana" },
-      { "@type": "City", name: "Ligonier, Indiana" },
-      { "@type": "City", name: "Albion, Indiana" },
-      { "@type": "City", name: "Indianapolis, Indiana" },
-      { "@type": "City", name: "Toledo, Ohio" },
-      { "@type": "City", name: "Kalamazoo, Michigan" },
-    ],
-  }),
+  // The `#business` node itself is NOT here. It is published once, by
+  // `LocalBusinessSchema` in the root layout, from `businessJsonLd()`. A
+  // generator here invited pages to spread it into their own block, which is
+  // how twenty pages shipped the full identity node twice (2026-10-09 crawl).
+  // To attach one page's geography to the canonical node use
+  // `businessAreaRef()`; to nest the dealership in another schema use
+  // `businessRef()` / `publisherRef()`.
 
   // FAQ Page Schema
   faqPage: (faqs: Array<{ question: string; answer: string }>) => ({
