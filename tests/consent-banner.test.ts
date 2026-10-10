@@ -9,7 +9,8 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join, relative, resolve, sep } from "node:path";
 import vm from "node:vm";
 import { CONSENT_ANSWERED_ATTR, CONSENT_PREPAINT_SCRIPT } from "../src/lib/consent";
 
@@ -64,4 +65,78 @@ test("the banner renders on the server, the layout runs the script, and CSS hide
   assert.match(layout, /__html: CONSENT_PREPAINT_SCRIPT/);
   const css = readFileSync("src/app/globals.css", "utf8");
   assert.match(css, new RegExp(`html\\[${CONSENT_ANSWERED_ATTR}\\] #consent-banner\\s*\\{\\s*display: none;`));
+});
+
+// ---------------------------------------------------------------------------
+// The Google Maps embed is an iframe on google.com, so it sets Google's own
+// cookies the moment it renders — a production Lighthouse run on /contact-us
+// (2026-10-10) counted 30, including NID, __Secure-3PSID and
+// __Secure-3PAPISID: advertising and identity cookies, not map state. Both
+// maps (/ and /contact-us) were server-rendered unconditionally, so every
+// visitor got all thirty on first paint while the consent banner was still
+// asking. LocationMap now waits for an affirmative acceptance or a click.
+//
+// Only LocationMap may embed the map. A raw iframe dropped back into a page
+// would restore the old behaviour silently, and no test that reads consent
+// state would notice.
+// ---------------------------------------------------------------------------
+
+test("only LocationMap embeds the Google Maps iframe", () => {
+  const allowed = new Set(["src/components/LocationMap.tsx"]);
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+        continue;
+      }
+      if (!entry.name.endsWith(".tsx") && !entry.name.endsWith(".ts")) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (allowed.has(rel)) continue;
+      const source = readFileSync(full, "utf8");
+      // An <iframe> whose src is a Google Maps embed, however it is spelled.
+      if (/<iframe[^>]*google\.com\/maps/s.test(source) || /google\.com\/maps[^"'`]*output=embed/.test(source)) {
+        offenders.push(rel);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(
+    offenders,
+    [],
+    "these files embed Google Maps directly — use <LocationMap>, which waits for consent or a click",
+  );
+});
+
+test("LocationMap gates on affirmative consent, not the opt-out snapshot", () => {
+  // getTrackingAllowedSnapshot returns true for a visitor who has not answered
+  // the banner (opt-out model), so gating on it renders the iframe for
+  // everyone. That was the first version of this fix and it did nothing.
+  const source = readFileSync(
+    resolve(process.cwd(), "src/components/LocationMap.tsx"),
+    "utf8",
+  );
+  assert.match(source, /getConsentGrantedSnapshot/, "LocationMap must read the affirmative-consent snapshot");
+  assert.doesNotMatch(
+    source,
+    /getTrackingAllowedSnapshot\s*,/,
+    "getTrackingAllowedSnapshot is the opt-out answer — it is true before the visitor replies",
+  );
+});
+
+test("affirmative consent is stricter than the opt-out answer", () => {
+  // Pinning the distinction the fix depends on: with no stored choice the
+  // opt-out answer allows tracking, and the affirmative one does not.
+  const consent = readFileSync(resolve(process.cwd(), "src/lib/consent.ts"), "utf8");
+  assert.match(
+    consent,
+    /export function getConsentGrantedSnapshot\(\)[\s\S]{0,200}readStoredConsent\(\)\s*===\s*"granted"/,
+    "getConsentGrantedSnapshot must require a stored \"granted\", not merely the absence of a refusal",
+  );
+  assert.match(
+    consent,
+    /export function getConsentGrantedSnapshot\(\)[\s\S]{0,200}hasGlobalPrivacyControl\(\)/,
+    "a Global Privacy Control signal must still win over a stored acceptance",
+  );
 });

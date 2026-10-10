@@ -6,6 +6,7 @@ import { useLocationSearch } from "@/lib/use-browser-value";
 import { useAntiSpam } from "@/lib/use-anti-spam";
 import { H2, H3 } from "@/components/Heading";
 import { DeliveryChecker } from "@/components/DeliveryChecker";
+import { LocationMap } from "@/components/LocationMap";
 import { LeadConsent, LeadUrgency } from "@/components/LeadConsent";
 import {
   trackLeadFormStart,
@@ -243,13 +244,9 @@ export default function ContactForm() {
 
               {/* Google Map — matches the Google Business Profile location */}
               <div className="rounded-lg overflow-hidden border border-[var(--color-charcoal)]/10">
-                <iframe
+                <LocationMap
                   title="Factory Direct Homes Center — 1211 State Road 8, Auburn, IN 46706 on Google Maps"
-                  src="https://www.google.com/maps?q=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706&output=embed"
-                  className="w-full h-72 border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
+                  className="w-full h-72"
                 />
               </div>
               <div className="flex flex-wrap gap-3 mt-4">

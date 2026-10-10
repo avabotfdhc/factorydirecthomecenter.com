@@ -10,6 +10,7 @@ import { H2, H3 } from "@/components/Heading";
 import { GetPricingButton, TrackedPhoneLink } from "./HomeSectionIslands";
 import { REVIEWS as reviews, GOOGLE_REVIEWS_URL } from "@/lib/reviews";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { LocationMap } from "@/components/LocationMap";
 
 const homeTypes = [
   {
@@ -379,7 +380,7 @@ export function AnimatedHomeSections() {
             </div>
 
             <div className="aspect-square lg:aspect-[4/3] bg-gray-100 rounded-lg border border-[var(--color-charcoal)]/5 overflow-hidden">
-              <iframe title="Factory Direct Homes Center location" src="https://www.google.com/maps?q=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706&output=embed" width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+              <LocationMap title="Factory Direct Homes Center location on Google Maps" className="h-full w-full" />
             </div>
           </div>
         </div>
