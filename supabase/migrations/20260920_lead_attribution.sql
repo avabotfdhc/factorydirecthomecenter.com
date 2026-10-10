@@ -61,8 +61,25 @@ COMMENT ON COLUMN public.leads.first_touch_source IS
 -- Reporting view: one row per lead with the channel resolved, so Kyle can
 -- answer "which channel produced leads last month" without writing SQL every
 -- time. Read it in the Supabase SQL editor or wire it into a dashboard.
+--
+-- `security_invoker = true` is NOT optional, and it was missing in the first
+-- version of this file. Without it a view runs with its owner's rights, and
+-- the owner here is `postgres`, which bypasses RLS. Combined with Supabase's
+-- default grants on the public schema — which hand `anon` every privilege on
+-- a newly created view in `public` — that made this view a hole straight
+-- through the RLS on `leads`: measured on the live project 2026-10-10, `anon`
+-- read 0 rows from `public.leads` directly and all 52 through this view,
+-- names and contact details included, with the anon key that ships in every
+-- page. The view is single-table and so auto-updatable, so UPDATE and DELETE
+-- went through too.
+--
+-- The grants below are the second half of the fix and are equally required:
+-- security_invoker makes the caller's RLS apply, the revoke means `anon` has
+-- no privilege to apply it to. tests/attribution.test.ts fails if either half
+-- goes missing from this file.
 -- =====================================================
-CREATE OR REPLACE VIEW public.lead_attribution_report AS
+CREATE OR REPLACE VIEW public.lead_attribution_report
+    WITH (security_invoker = true) AS
 SELECT
     l.id,
     l.created_at,
@@ -98,5 +115,14 @@ SELECT
     END AS channel
 FROM public.leads l;
 
+-- `anon` must never hold a privilege on a view that selects lead PII. Nothing
+-- in the application reads this view: /admin reads `leads` with the service
+-- role. Staff may read it; nothing writes through it.
+REVOKE ALL ON public.lead_attribution_report FROM anon;
+REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER
+    ON public.lead_attribution_report FROM authenticated;
+
 COMMENT ON VIEW public.lead_attribution_report IS
-    'Leads with their acquisition channel resolved. Source: src/lib/attribution.ts.';
+    'Leads with their acquisition channel resolved. Source: src/lib/attribution.ts. '
+    'security_invoker=on: reads are subject to the caller''s RLS on public.leads. '
+    'Do not grant anon any privilege on this view — it exposes lead PII.';

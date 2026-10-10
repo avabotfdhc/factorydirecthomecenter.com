@@ -135,6 +135,29 @@ export function getNeedsPromptSnapshot(): boolean {
 }
 
 /**
+ * Whether the visitor has **affirmatively accepted** — not merely "has not
+ * declined yet".
+ *
+ * `getTrackingAllowedSnapshot` answers the opt-out question: with no stored
+ * choice it returns `true`, so first-party analytics may run while the banner
+ * is up. That is a reasonable call for scripts we control, load late and can
+ * stop on a decline.
+ *
+ * It is the wrong question for a third-party embed. A Google Maps iframe sets
+ * Google's own cookies the instant it renders — 30 of them on /contact-us,
+ * including `NID` and `__Secure-3PSID` — and nothing we do afterwards takes
+ * them back. So `LocationMap` waits for a real "yes" instead, and otherwise
+ * offers the visitor a button.
+ *
+ * Gating the map on the opt-out snapshot was the first attempt at this and it
+ * silently did nothing: the iframe rendered for every unanswered visitor, just
+ * one hydration tick later than before.
+ */
+export function getConsentGrantedSnapshot(): boolean {
+  return !hasGlobalPrivacyControl() && readStoredConsent() === "granted";
+}
+
+/**
  * Server snapshot for both of the above. Rendering "no tracking, no banner" on
  * the server is the safe default: the real answer is only knowable in the
  * browser, and this way nothing about a visitor's choice can leak into cached

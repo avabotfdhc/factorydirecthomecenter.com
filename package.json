@@ -12,7 +12,8 @@
     "sheet-previews": "node scripts/render-sheet-previews.mjs",
     "legacy-media": "node scripts/migrate-legacy-media.mjs",
     "lender-sheet": "tsx scripts/build-lender-sheet.ts",
-    "image-audit": "tsx scripts/audit-image-alt.ts"
+    "image-audit": "tsx scripts/audit-image-alt.ts",
+    "citation-nap": "tsx scripts/citation-nap.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.9",
