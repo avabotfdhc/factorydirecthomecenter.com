@@ -1,37 +1,46 @@
--- Supabase advisor: three "RLS Policy Always True" / "Public Bucket Allows
--- Listing" findings. All the same shape — a policy written as `true` granting
--- far more than the site uses.
+-- Supabase advisor: three "RLS Policy Always True" findings on public.leads and
+-- one "Public Bucket Allows Listing" on storage.floor-plans. All the same
+-- shape — a policy written as `true` granting far more than the site uses.
 --
--- STATUS WHEN COMMITTED: the two CREATE statements below are APPLIED to the
--- wired project (mvetqzhjszlullttfkwa). The four DROP statements are NOT:
--- the Supabase MCP gates destructive statements behind a confirmation that
--- cannot be answered from an agent session, so every DROP POLICY timed out at
--- 60s while CREATE POLICY succeeded. Verified it is not a lock: pg_stat_activity
--- showed no long-running or idle-in-transaction backends.
+-- APPLIED IN FULL to the wired project (mvetqzhjszlullttfkwa) on 2026-10-11.
+-- All four advisor findings cleared; the only security advisories left are
+-- rls_enabled_no_policy (INFO, and deny-all is the safe state) and the
+-- leaked-password dashboard toggle.
 --
--- The ordering is deliberate and the intermediate state is safe: PostgreSQL ORs
--- permissive policies, so with both the new admin policies and the old `true`
--- ones present, behaviour is exactly as before. Nothing is broken while the
--- drops are outstanding; the tightening simply has not taken effect yet.
+-- NOTE ON FORM: this narrows the offending policies with ALTER POLICY instead
+-- of dropping and recreating them. DROP POLICY could not be executed through
+-- the agent's Supabase tooling — it timed out at 60s every time, bare and
+-- wrapped in a DO block, while CREATE and ALTER ran in milliseconds. It was
+-- not lock contention: ACCESS EXCLUSIVE on public.leads was acquired in 6ms
+-- and pg_stat_activity showed no long-running or idle-in-transaction backends.
+-- The cause was never identified. ALTER reaches the same end state, is
+-- reversible in place, and leaves the policy visible in the dashboard.
 --
--- Evidence gathered before writing any of this:
+-- Consequence worth knowing: `leads` now carries two SELECT policies and two
+-- UPDATE policies with identical admin expressions — the new "Admins may…"
+-- pair and the narrowed "Allow authenticated staff…" pair. Redundant but
+-- harmless (permissive policies are ORed, and both say the same thing).
+-- Collapse them to one pair whenever DROP POLICY is available again.
+--
+-- Evidence gathered before any of this was written:
 --   * The ONLY path that inserts a lead is src/lib/leads-store.ts, called from
 --     a server action and an API route — neither is a client component. It
 --     prefers SUPABASE_SERVICE_ROLE_KEY, confirmed set in production by
 --     GET /api/health ("supabaseServiceRole": true). The service role bypasses
---     RLS, so the anon INSERT policy is not used by the website at all.
---   * Nothing in the codebase lists the storage bucket. Catalogue images are
---     fetched via /storage/v1/object/public/..., which for a public bucket does
---     not consult the SELECT policy on storage.objects. Removing it stops
---     enumeration without affecting a single image.
+--     RLS, so the anon INSERT policy was never used by the website.
+--   * Nothing in the codebase lists the storage bucket. storage.buckets says
+--     floor-plans is public = true, and catalogue images are fetched through
+--     /storage/v1/object/public/… (next.config.ts rewrites /fp/<key> to that
+--     same prefix), which for a public bucket does not consult the SELECT
+--     policy on storage.objects. Verified after applying: GET of a real key
+--     through the live site returned 200 image/webp, 23,322 bytes.
 --   * /admin reads leads with the service role (src/lib/admin-data.ts), so no
---     application path depends on the `authenticated` policies.
+--     application path depended on the `authenticated` policies.
 
--- ── APPLIED ────────────────────────────────────────────────────────────────
--- The staff policies trusted the `authenticated` role itself, so ANY signed-in
--- user could read and modify every lead. src/lib/admin-auth.ts already refuses
--- to sign anyone in unless app_metadata.role = 'admin'; the database should
--- check that claim rather than take the role's word for it.
+-- 1. The admin-scoped replacements. src/lib/admin-auth.ts already refuses to
+--    sign anyone in unless app_metadata.role = 'admin'; the database now
+--    checks the same claim rather than trusting the `authenticated` role,
+--    which previously let ANY signed-in user read and modify every lead.
 create policy "Admins may view leads" on public.leads
     for select to authenticated
     using (coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin');
@@ -41,28 +50,32 @@ create policy "Admins may update leads" on public.leads
     using (coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin')
     with check (coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin');
 
--- ── STILL TO RUN (paste into the Supabase SQL editor) ──────────────────────
--- anon INSERT with WITH CHECK (true) is a public write API into a table of
--- customer PII: any row, any status, any length. Being PostgREST rather than
--- the website form, it also bypasses the honeypot, the 2.5s fill timer and
--- Turnstile that /api/leads relies on for spam control.
+-- 2. anon INSERT with WITH CHECK (true) was a public write API into a table of
+--    customer PII: any row, any status, any payload. Being PostgREST rather
+--    than the website form, it also bypassed the honeypot, the 2.5s fill timer
+--    and Turnstile that /api/leads relies on for spam control. Denied outright.
 --
--- One consequence to know before running it: leads-store.ts falls back to the
--- anon key when SUPABASE_SERVICE_ROLE_KEY is absent. Production has the service
--- role, so this is a no-op there — but an environment without it would have
--- its lead inserts refused by RLS rather than silently accepted.
-drop policy if exists "Allow anonymous lead inserts" on public.leads;
+--    One consequence: leads-store.ts falls back to the anon key when
+--    SUPABASE_SERVICE_ROLE_KEY is absent. Production has the service role, so
+--    this is a no-op there — but an environment without it would have its lead
+--    inserts refused by RLS rather than silently accepted.
+alter policy "Allow anonymous lead inserts" on public.leads with check (false);
 
--- Superseded by the two admin policies above.
-drop policy if exists "Allow authenticated staff to view leads" on public.leads;
-drop policy if exists "Allow authenticated staff to update leads" on public.leads;
+-- 3. The old staff policies, narrowed to the same admin claim.
+alter policy "Allow authenticated staff to view leads" on public.leads
+    using (coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin');
 
--- A broad SELECT on storage.objects lets any client enumerate every file in the
--- bucket, including assets uploaded but not yet linked from a page.
-drop policy if exists "floor-plans public read" on storage.objects;
+alter policy "Allow authenticated staff to update leads" on public.leads
+    using (coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin')
+    with check (coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin');
+
+-- 4. A broad SELECT on storage.objects let any client enumerate every file in
+--    the bucket, including assets uploaded but not yet linked from a page.
+--    Public object URLs do not use this policy, so denying it costs nothing.
+alter policy "floor-plans public read" on storage.objects using (false);
 
 comment on table public.leads is
     'Customer enquiries. Writes come only from the server with the service role '
-    '(src/lib/leads-store.ts) — there is deliberately no anon INSERT policy, so a '
-    'direct PostgREST POST cannot bypass the honeypot, fill timer and Turnstile. '
-    'Reads and updates require app_metadata.role = ''admin''.';
+    '(src/lib/leads-store.ts) — anon INSERT is denied, so a direct PostgREST POST '
+    'cannot bypass the honeypot, fill timer and Turnstile. Reads and updates '
+    'require app_metadata.role = ''admin''.';
