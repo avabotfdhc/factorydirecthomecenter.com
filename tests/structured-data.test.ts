@@ -470,3 +470,22 @@ test("no node in any generator carries a reduced-precision date", () => {
     );
   }
 });
+
+// Search Console, 2026-10-12: the business node nested a bare Product inside
+// `makesOffer`, and because that node renders on every page, every crawled URL
+// was reported as an invalid product snippet. Google requires offers, review
+// or aggregateRating on any Product it finds, at any depth.
+test("the business node carries no Product that Google would reject as a product snippet", () => {
+  const bad: string[] = [];
+  const walk = (node: unknown, path: string) => {
+    if (Array.isArray(node)) return node.forEach((n, i) => walk(n, `${path}[${i}]`));
+    if (!node || typeof node !== "object") return;
+    const o = node as Record<string, unknown>;
+    const types = ([] as unknown[]).concat(o["@type"] ?? []);
+    if (types.includes("Product") && !o.offers && !o.review && !o.aggregateRating) bad.push(path);
+    for (const [k, v] of Object.entries(o)) walk(v, `${path}.${k}`);
+  };
+  walk(businessJsonLd(), "business");
+  walk(businessRef(), "businessRef");
+  assert.deepEqual(bad, [], `Product without offers/review/aggregateRating at: ${bad.join(", ")}`);
+});
