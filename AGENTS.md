@@ -1347,6 +1347,17 @@ against production the same day.
   on every page. It is now a `Service`. The plan page's own Product was already
   correct (emitted only with a price). `tests/structured-data.test.ts` fails if
   the business node carries a Product without offers, review or aggregateRating.
-- **Not code:** "Page with redirect" (204) is almost entirely `?lang=es` /
-  `?lang=my` URLs, and the 18 "Google chose different canonical" rows are
-  Paramount pages last crawled before their 301s shipped. Both clear on recrawl.
+- **hreflang removed.** "Page with redirect" (204) is almost entirely `?lang=es`
+  / `?lang=my` URLs, and every page was the reason Google crawled them: each
+  published hreflang alternates at those URLs, which render English on the
+  server and canonicalise to the plain URL. All `languages:` alternates and
+  `languageAlternates()` are gone (the root layout's copy pointed every page
+  that set no alternates of its own at the *homepage's* `?lang=` URLs). The
+  language switcher still works for visitors. Add hreflang back only when a
+  translation renders on the server at its own URL.
+- **Sitemap gaps.** `/champion-homes` and `/design-your-home` rendered and were
+  indexable but were not in `sitePages`, so `sitemap.xml` never listed them.
+  `tests/indexing.test.ts` fails on any static page route missing from the
+  registry, and on any `languages:` / `?lang=` in `src/`.
+- **Not code:** the 18 "Google chose different canonical" rows are Paramount
+  pages last crawled before their 301s shipped. They clear on recrawl.

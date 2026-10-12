@@ -50,14 +50,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
-    // hreflang: the UI chrome is available in Spanish and Burmese via ?lang=
-    // (persisted in a cookie); English is the default and x-default.
-    languages: {
-      en: "/",
-      es: "/?lang=es",
-      my: "/?lang=my",
-      "x-default": "/",
-    },
     types: {
       "application/rss+xml": [
         { url: "/blog/feed.xml", title: "The Manufactured Home Blog — Factory Direct Homes Center" },

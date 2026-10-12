@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { LightboxGallery } from "@/components/ImageLightbox";
-import { languageAlternates } from "@/lib/seo";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -8,7 +7,7 @@ export const metadata: Metadata = {
   title: "Champion Factory Options & Selections",
   description:
     "Browse Champion's factory options for your new manufactured or modular home: interior and exterior selections, fireplaces, kitchen islands, optional cabinets, exterior styles, and full series brochures — from Factory Direct Homes Center in Auburn, Indiana.",
-  alternates: { canonical: `${SITE}/options`, languages: languageAlternates(`${SITE}/options`) },
+  alternates: { canonical: `${SITE}/options` },
   openGraph: {
     title: "Factory Options & Selections — Champion Homes | Factory Direct Homes Center",
     url: `${SITE}/options`,
