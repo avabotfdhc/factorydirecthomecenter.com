@@ -79,9 +79,6 @@ export function generateMetadata(config: SEOConfig): Metadata {
     },
     alternates: {
       canonical: fullUrl,
-      // hreflang: the UI chrome renders in Spanish and Burmese via ?lang=
-      // (see src/i18n); English is the default and x-default.
-      languages: languageAlternates(fullUrl),
     },
     robots: {
       index: true,
@@ -97,15 +94,12 @@ export function generateMetadata(config: SEOConfig): Metadata {
   };
 }
 
-// hreflang alternates for a page URL (absolute or site-relative). The UI
-// chrome renders in Spanish and Burmese via ?lang= (see src/i18n); English is
-// the default and x-default. Use in every page-level `alternates`.
-export function languageAlternates(url: string): Record<string, string> {
-  const abs = /^https?:\/\//.test(url)
-    ? url
-    : `https://factorydirecthomescenter.com${url.startsWith("/") ? url : `/${url}`}`;
-  return { en: abs, es: `${abs}?lang=es`, my: `${abs}?lang=my`, "x-default": abs };
-}
+// No hreflang. The UI chrome switches to Spanish or Burmese on the client
+// (?lang= / NEXT_LOCALE cookie, see src/i18n), but the server always renders
+// English, so a `?lang=es` URL is the same English page canonicalised to the
+// plain URL. Advertising it as a Spanish alternate gave Search Console ~200
+// "Page with redirect" / alternate-canonical rows (2026-10-12). Add hreflang
+// back only when a translated page renders on the server at its own URL.
 
 // Structured Data Generators
 /** The dealership as an Article/VideoObject `publisher`.

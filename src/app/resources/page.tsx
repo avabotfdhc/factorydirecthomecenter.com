@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { languageAlternates } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Floor Plans & Buyer Guide Downloads",
@@ -8,7 +7,6 @@ export const metadata: Metadata = {
     "Download 2026 Champion Homes floor plans, sales options, decor guide, Aspire literature, and installation manuals. All resources from Factory Direct Homes Center in Auburn, IN.",
   alternates: {
     canonical: "/resources",
-    languages: languageAlternates("/resources"),
   },
   openGraph: {
     title: "Floor Plans & Buyer Guide Downloads | Factory Direct Homes Center",

@@ -1323,3 +1323,41 @@ Two traps when filling a listing in, both easy to get wrong:
 Accounts could not be created from the agent sandbox, so the registry
 submissions themselves are Kyle's to do; the generator exists so that every one
 of them carries byte-identical details.
+
+# Search Console 2026-10-12: 66 dead URLs, and a Product on every page
+
+Read from the live Page indexing and Product snippets reports, then checked
+against production the same day.
+
+- **404s.** 68 of the 75 URLs checked still answered 404 and six more 301'd
+  through an older pattern rule into one. `src/lib/search-console-redirects.ts`
+  holds a 301 for each, and `next.config.ts` spreads it **first** — the
+  `/brands/…/Sectionals/:slug` and `/special-plans/details/:slug` patterns
+  otherwise catch some of them and send them to a URL that does not exist.
+  66 are `dutch-aspire-*` plan pages that stopped rendering; each destination is
+  the `aspire-*` page with the same Champion model code, read from the live
+  sitemap (all 66 matched exactly one). The 44 `dutch-aspire-*` URLs that still
+  render were left alone — retiring those is the same product decision the sale
+  page section above describes. Family-name pages (`/floor-plans/warren`) land
+  on the shortest current plan in that family; change the pick in `FAMILY_PAGES`
+  if a different length should be the landing page.
+- **Product snippets.** Every item in the report was named "Champion
+  manufactured and modular homes" — not a plan. It was the `makesOffer` →
+  `itemOffered` Product inside `businessJsonLd()`, which the root layout renders
+  on every page. It is now a `Service`. The plan page's own Product was already
+  correct (emitted only with a price). `tests/structured-data.test.ts` fails if
+  the business node carries a Product without offers, review or aggregateRating.
+- **hreflang removed.** "Page with redirect" (204) is almost entirely `?lang=es`
+  / `?lang=my` URLs, and every page was the reason Google crawled them: each
+  published hreflang alternates at those URLs, which render English on the
+  server and canonicalise to the plain URL. All `languages:` alternates and
+  `languageAlternates()` are gone (the root layout's copy pointed every page
+  that set no alternates of its own at the *homepage's* `?lang=` URLs). The
+  language switcher still works for visitors. Add hreflang back only when a
+  translation renders on the server at its own URL.
+- **Sitemap gaps.** `/champion-homes` and `/design-your-home` rendered and were
+  indexable but were not in `sitePages`, so `sitemap.xml` never listed them.
+  `tests/indexing.test.ts` fails on any static page route missing from the
+  registry, and on any `languages:` / `?lang=` in `src/`.
+- **Not code:** the 18 "Google chose different canonical" rows are Paramount
+  pages last crawled before their 301s shipped. They clear on recrawl.
