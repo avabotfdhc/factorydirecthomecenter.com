@@ -1352,9 +1352,12 @@ against production the same day.
   otherwise catch some of them and send them to a URL that does not exist.
   66 are `dutch-aspire-*` plan pages that stopped rendering; each destination is
   the `aspire-*` page with the same Champion model code, read from the live
-  sitemap (all 66 matched exactly one). The 44 `dutch-aspire-*` URLs that still
-  render were left alone — retiring those is the same product decision the sale
-  page section above describes. Family-name pages (`/floor-plans/warren`) land
+  sitemap (all 66 matched exactly one). The other 44 `dutch-aspire-*` URLs, which
+  still rendered from the repo data files as unlisted duplicates of the CMS page,
+  were 301'd the same way on 2026-10-13 at Kyle's request (`LIVE_DUTCH_ASPIRE`;
+  the two `/floor-plans/woodward-28xx` legacy redirects were repointed so they
+  stay one hop). The test fails if a `dutch-aspire-*` slug in the data files has
+  no 301. Family-name pages (`/floor-plans/warren`) land
   on the shortest current plan in that family; change the pick in `FAMILY_PAGES`
   if a different length should be the landing page.
 - **Product snippets.** Every item in the report was named "Champion
