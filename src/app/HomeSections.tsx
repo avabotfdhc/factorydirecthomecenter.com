@@ -129,7 +129,7 @@ export function AnimatedHomeSections() {
                 <figure className="aspect-[16/10] relative overflow-hidden">
                   <Image
                     src={home.image}
-                    alt={`${home.title} manufactured home - ${home.sqft}, ${home.beds}, ${home.baths}`}
+                    alt={`${home.title === "Modular" ? "Modular home" : `${home.title} manufactured home`} - ${home.sqft}, ${home.beds}, ${home.baths}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 1024px) 100vw, 33vw"

@@ -29,7 +29,11 @@ export function generateMetadata(config: SEOConfig): Metadata {
     description,
     keywords = [],
     image = "/images/hero-home.jpg",
-    imageAlt = "Factory Direct Homes Center - Manufactured and Modular Homes",
+    // Describes /images/hero-home.jpg, the default share image: a new
+    // manufactured home with a front porch. It said "Manufactured and Modular
+    // Homes" until 2026-10-13, so every page without its own image told SEO
+    // tools its photo was of a modular home.
+    imageAlt = "New manufactured home with a front porch — Factory Direct Homes Center, Auburn, IN",
     url,
     type = "website",
     publishedTime,

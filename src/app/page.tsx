@@ -278,7 +278,7 @@ export default async function Home() {
             "@type": "ImageObject",
             "contentUrl": "https://factorydirecthomescenter.com/images/hero-home.jpg",
             "name": "Modern Manufactured Home Exterior",
-            "description": "Modern manufactured home with white siding and black trim on foundation with professional landscaping",
+            "description": "New manufactured home with cream siding, teal trim, green shutters and a wooden front porch on a rural lot",
             "width": 1920,
             "height": 1071,
             "author": businessRef()
