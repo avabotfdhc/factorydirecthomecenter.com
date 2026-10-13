@@ -4,7 +4,7 @@ import { isSingleSectionHud } from "@/lib/grid-plan";
 import { HomeTypeLanding, homeTypeFacts } from "@/components/HomeTypeLanding";
 
 export const metadata = genMeta({
-  title: "Single Wide Homes for Sale in Indiana | Champion",
+  title: "Single Wide Mobile Homes for Sale in Indiana | Champion",
   description:
     "Champion single wide manufactured homes for sale in Indiana. Compare single-section floor plans by size and bedrooms, then get a line-item quote from our Auburn, IN showroom.",
   keywords: [

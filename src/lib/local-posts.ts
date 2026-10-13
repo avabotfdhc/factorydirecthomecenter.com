@@ -24,37 +24,64 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
     slug: "champion-vs-clayton-homes",
     title: "Champion vs. Clayton Homes: How to Choose in 2026",
     excerpt:
-      "Both build quality factory-built homes — the real difference is who you buy from and how the deal is structured. An honest comparison for northeast Indiana buyers weighing Champion and Clayton.",
+      "Both build quality homes to the same HUD code. The real differences are what you can compare, who you buy from and how the deal is put together. An honest side-by-side guide for northeast Indiana buyers weighing Champion and Clayton.",
     image: "/images/homepage/double-wide-exterior.webp",
     date: "August 17, 2026",
     html: `
-<p>If you're shopping for a manufactured or modular home in northeast Indiana, two names come up fast: <strong>Clayton</strong> and <strong>Champion</strong>. Both build quality homes to the same federal standards. The real difference isn't the hammer and nails — it's <em>who you buy from and how the deal is structured.</em> Here's an honest breakdown to help you choose.</p>
+<p>If you&rsquo;re shopping for a new manufactured home (most people still call it a mobile home) in northeast Indiana, two names come up fast: <strong>Clayton</strong> and <strong>Champion</strong>. Both build homes to the same federal HUD code, and both are big, established builders. The real differences are in <em>what you can compare, who you buy from, and how the deal is put together.</em> Here&rsquo;s an honest breakdown, written by a Champion dealer, so read it with that in mind and check every point against the quotes you get.</p>
 
 <h2>Who they are</h2>
 <ul>
-  <li><strong>Clayton Homes</strong> is the largest builder of factory-built homes in the country, owned by Berkshire Hathaway. Clayton builds its own family of brands and sells them primarily through company-owned Clayton Homes retail centers. It's a vertically integrated model — the same company builds the home, runs the store, and (through affiliated companies) offers the mortgage and insurance.</li>
-  <li><strong>Champion Homes</strong> is one of the largest factory-built home producers in North America. Factory Direct Homes Center is a local, family-run business, not a corporate store, and every home we sell is built at Champion's Indiana plants, most of them 30 miles up the road in Topeka.</li>
+  <li><strong>Clayton Homes</strong> is one of the largest builders of factory-built homes in the country and is owned by Berkshire Hathaway. Clayton builds its own family of brands and sells them mainly through company-owned Clayton Homes retail centers, with affiliated companies offering mortgages and insurance. The closest one to us is on State Road 8 in Garrett.</li>
+  <li><strong>Champion Homes</strong> is one of the largest producers of factory-built housing in North America. Champion sells through independent dealers. Factory Direct Homes Center is one of them: an owner-operated dealership in Auburn, run by Kyle Dudgeon, selling Champion&rsquo;s <a href="/champion-homes">Aspire, Prime and Redman series</a>, built at Champion&rsquo;s Indiana plants, most of them 30 miles away in Topeka.</li>
 </ul>
 
 <h2>Build quality: honestly, both are strong</h2>
-<p>Every home from both builders is constructed to the federal HUD Code (or state IRC code for modular), inspected at the factory, and backed by a manufacturer's warranty. You won't go wrong on construction with either. Champion's <a href="/champion-homes">Aspire, Prime, and Redman lines</a> give you a wide range of layouts and finishes.</p>
+<p>Every new manufactured home from either builder is built to the federal HUD code, inspected during construction, and carries a HUD label and a data plate. Modular homes from either are built to the state building code instead. Neither brand is a gamble on construction. What varies is the specific model and the options on it, so compare <em>homes</em>, not brands.</p>
 
-<h2>Financing: independent vs. in-house</h2>
-<p>This is where the models differ most. A vertically integrated builder typically steers you toward its own affiliated lender. As an independent dealer, we hand you the full list of lenders our customers have used, recommend none of them, and leave the choosing to you — so you compare offers yourself instead of taking the first one handed to you. Always compare rates, no matter who you buy from. Our <a href="/financing">financing page</a> explains the options.</p>
+<h2>How to compare two homes side by side</h2>
+<p>Pick two homes of similar size and layout, one from each builder, and put these on a sheet next to each other. Every item is on the data plate, the spec sheet or the quote:</p>
+<ul>
+  <li><strong>Thermal zone, wind zone and roof load zone</strong> on the data plate. Northeast Indiana needs the right thermal zone and a roof rated for our snow load.</li>
+  <li><strong>Insulation</strong> in the walls, floor and ceiling, and the window type.</li>
+  <li><strong>Wall and ceiling finish</strong>: taped and textured drywall or vinyl-covered panels, and the ceiling height.</li>
+  <li><strong>Roof pitch, siding and shingles</strong>, which drive both looks and upkeep.</li>
+  <li><strong>Kitchen and bath</strong>: cabinet construction, countertops, appliances, and whether the photos show the standard package or options.</li>
+  <li><strong>Warranty</strong>: how long the manufacturer&rsquo;s warranty runs and what it covers.</li>
+</ul>
+<p>Not sure how to read a plan or a data plate? Our <a href="/blog/manufactured-homes-north-manchester-indiana">guide to the HUD label and data plate</a> walks through it, and you can browse <a href="/double-wide-homes">double wides</a> and <a href="/single-wide-homes">single wides</a> with full specs on each page.</p>
 
-<h2>The buying experience</h2>
-<p>With a national chain you get a big-brand process. With a local independent dealer you get a name, a face, and someone 20 minutes away who answers the phone after the sale. We also let you stay in control of your own site work with your own licensed contractors — where many buyers save real money — rather than bundling everything into one price.</p>
+<h2>How the purchase is put together</h2>
+<p>This is where the two models really differ.</p>
+<ul>
+  <li><strong>The lender.</strong> When the same company owns the store and an affiliated lender, the store&rsquo;s own financing is usually what&rsquo;s offered first. We don&rsquo;t offer financing at all: we hand you the list of lenders our customers have used, recommend none of them, and you apply to as many as you like. Wherever you buy, compare rates from more than one lender.</li>
+  <li><strong>Site work and setup.</strong> At our dealership you hire and pay your own licensed contractors for site work, the foundation and setup, and we give you a referral list to start from. Other retailers may package some of that into their price. Neither is wrong, but you need to know which you&rsquo;re looking at, or two quotes won&rsquo;t compare.</li>
+  <li><strong>The quote itself.</strong> We list the home, each option and delivery as separate lines. Ask every dealer for the same, in writing.</li>
+</ul>
+
+<h2>Getting quotes you can actually compare</h2>
+<p>A single bottom-line number tells you almost nothing. Before you compare two dealers, make sure both quotes answer the same questions:</p>
+<ul>
+  <li>Is delivery included, and from which plant?</li>
+  <li>Is setup included: blocking, leveling, tie-downs, joining the sections?</li>
+  <li>Are air conditioning, skirting, steps and gutters included or extra?</li>
+  <li>Which options are on the home in the photos, and which are on the home in the quote?</li>
+  <li>Which fees appear only at signing?</li>
+</ul>
+<p>Our <a href="/blog/manufactured-homes-roanoke-indiana">guide to comparing two dealers&rsquo; quotes line by line</a> goes deeper, and <a href="/guides/pricing">how our pricing works</a> shows what goes on each line of ours.</p>
 
 <h2>How to decide</h2>
-<p>Want a national brand's footprint and one-stop process? Clayton delivers that. Want an independent local partner, the Champion lineup, the ability to compare financing, and line-item pricing with no bundled mystery costs? That's us. Either way, tour homes in person and get every cost in writing before you sign.</p>
+<p>If you want one company handling the store, the home and the financing, a company-owned store is built for that. If you want the Champion lineup, an itemized quote, and the freedom to choose your own lender and contractors, that&rsquo;s how we work. Either way, walk through homes in person, compare the same items on both, and get every cost in writing before you sign.</p>
 
 <h2>FAQ</h2>
 <h3>Is Champion or Clayton better quality?</h3>
-<p>Both build to the same federal HUD Code (or state IRC code for modular homes), are factory-inspected, and carry manufacturer warranties. Quality is comparable — the meaningful differences are brand selection, financing flexibility, and whether you buy from a corporate store or an independent local dealer.</p>
+<p>Both build to the same federal HUD code (or the state building code for modular homes), are inspected during construction, and carry manufacturer warranties. Compare specific models: insulation, wall finish, roof, windows and warranty matter more than the brand name.</p>
+<h3>Are Champion homes mobile homes?</h3>
+<p>&ldquo;Mobile home&rdquo; is the everyday name. Strictly, it means a home built before June 15, 1976. New Champion single wides and double wides are HUD-code manufactured homes, which is what most people mean when they search for a new mobile home.</p>
 <h3>Is Factory Direct Homes Center a Clayton dealer?</h3>
-<p>No — we're an independent, authorized <strong>Champion Homes</strong> dealer in Auburn, Indiana. We sell Champion's Aspire, Prime, and Redman series, built at Champion's Indiana plants.</p>
+<p>No. We&rsquo;re an independent, authorized <strong>Champion Homes</strong> dealer in Auburn, Indiana, selling Champion&rsquo;s Aspire, Prime and Redman series.</p>
 <h3>Can I compare Champion homes in person near Fort Wayne?</h3>
-<p>Yes. Our Auburn showroom is about 25 minutes from Fort Wayne. Browse our <a href="/floor-plans">Champion floor plans</a> or <a href="/design-your-home">design your home online</a>, then <a href="/contact-us">visit us</a> to walk through models in person.</p>
+<p>Yes. Our Auburn showroom is about 25 minutes from Fort Wayne. Browse our <a href="/floor-plans">Champion floor plans</a> or <a href="/design-your-home">design your home online</a>, then <a href="/contact-us">visit us</a> to walk through homes in person.</p>
 `,
   },
   {

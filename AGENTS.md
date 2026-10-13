@@ -1361,3 +1361,25 @@ against production the same day.
   registry, and on any `languages:` / `?lang=` in `src/`.
 - **Not code:** the 18 "Google chose different canonical" rows are Paramount
   pages last crawled before their 301s shipped. They clear on recrawl.
+
+# Competitor review 2026-10-13: link the town pages, say "mobile homes", stop saying "exclusive"
+
+Full findings and Kyle's to-do list: `docs/competitor-research-2026-10-13.md`.
+
+- **Nothing outside `/locations` linked a town page** — not the homepage, not
+  the footer — while Fahl Homes (Warsaw) ranked for "manufactured homes Auburn
+  Indiana" with its own Auburn page and we were absent from every Fort Wayne
+  search. `src/lib/service-area-links.ts` now feeds the footer (every page) and
+  the homepage "Areas we serve" block; `tests/indexing.test.ts` fails if a link
+  there is not a registered page.
+- **"Mobile homes" is the word buyers and every competitor use.** Key titles
+  (Fort Wayne, Auburn, Kendallville, single/double wide) now carry "Mobile &
+  Manufactured". The homepage FAQ explains the June 15, 1976 HUD-code line.
+- **We are not the "exclusive" Champion dealer** — Fahl sells the same Aspire
+  line. Say "authorized Champion dealer" and "Champion is the only builder we
+  sell". `/about` also lost an unsupported "better pricing than dealers who
+  split focus" claim.
+- **Do not answer Fahl / Home Nation with another batch of town pages.** The
+  site added ~75 town posts and county pages in seven weeks, and Google's
+  September 2026 spam update (from 2026-09-24) targets scaled place-name
+  content. Strengthen and link what exists; reassess with Search Console data.

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
 import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 import { CookiePreferencesLink } from "./CookiePreferencesLink";
+import { SERVICE_AREA_LINKS } from "@/lib/service-area-links";
 
 export function Footer() {
   return (
@@ -21,8 +22,8 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed text-[var(--color-gray-light)] max-w-xs">
-              Your Champion Homes exclusive dealer serving Indiana, Michigan &amp; Ohio
-              with factory-direct pricing.
+              Authorized Champion Homes dealer in Auburn, Indiana, selling new
+              manufactured and mobile homes across Indiana, Michigan &amp; Ohio.
             </p>
           </div>
 
@@ -74,6 +75,25 @@ export function Footer() {
                     className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime-light)] transition-colors duration-300"
                   >
                     {type.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Areas We Serve: until 2026-10-13 no page outside /locations
+                linked a single town page, so Google treated them as
+                unimportant and they did not rank for their own towns. */}
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-[var(--color-gray-light)] mt-10 mb-6">
+              Areas We Serve
+            </p>
+            <ul className="space-y-3">
+              {SERVICE_AREA_LINKS.map((area) => (
+                <li key={area.href}>
+                  <Link
+                    href={area.href}
+                    className="text-sm text-[var(--color-gray-light)] hover:text-[var(--color-lime-light)] transition-colors duration-300"
+                  >
+                    {area.label}
                   </Link>
                 </li>
               ))}
