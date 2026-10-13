@@ -547,8 +547,20 @@ async function staticKnowledge(): Promise<string> {
   return text;
 }
 
+/**
+ * Ava's context in two halves: `live` (clock and sale — changes by the minute)
+ * and `stable` (everything else, cached 10 min). Kept apart so a provider with
+ * prompt caching can cache `stable` and send `live` after it.
+ */
+export async function buildAvaKnowledgeParts(now: Date = new Date()): Promise<{ live: string; stable: string }> {
+  return {
+    live: [nowSection(now), saleSection(getSaleStatus(now))].join("\n\n"),
+    stable: await staticKnowledge(),
+  };
+}
+
 /** The full system context for Ava: live sale and clock first, then the cached knowledge. */
 export async function buildAvaKnowledge(now: Date = new Date()): Promise<string> {
-  const [live, stable] = [[nowSection(now), saleSection(getSaleStatus(now))].join("\n\n"), await staticKnowledge()];
+  const { live, stable } = await buildAvaKnowledgeParts(now);
   return `${live}\n\n${stable}`;
 }

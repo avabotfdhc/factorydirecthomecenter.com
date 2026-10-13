@@ -47,14 +47,16 @@ assistant. Implemented in `src/components/AvaChatWidget.tsx` + `/api/chat`
   next-business-day response.
 
 ## Status (2026-09-10)
-Live: `src/components/AvaChatWidget.tsx` → `POST /api/chat` on OpenAI
-(`OPENAI_API_KEY`, default model `gpt-4o-mini`), knowledge base assembled at
+Live: `src/components/AvaChatWidget.tsx` → `POST /api/chat` on Claude Haiku
+5.5 (`ANTHROPIC_API_KEY`, model `claude-haiku-5-5`) since 2026-10-08, with
+OpenAI (`OPENAI_API_KEY`, default `gpt-4o-mini`) as the fallback when only that
+key is set; knowledge base assembled at
 request time by `src/lib/ava-knowledge.ts` (live catalogue, the running sale
 from `src/lib/sale.ts`, showroom clock, options and standard features,
 financing, discovery / objection / appointment playbooks). Tools:
 `lookup_floor_plan`, `capture_lead`, `book_showroom_visit`; leads go through
 `submitLead` labelled "Ava Chat — …". Verify with `node scripts/ava-smoke.mjs
---spawn`. The pricing policy above is unchanged and enforced in the prompt.
+--spawn` (Claude) and `--spawn --provider=openai` (fallback). The pricing policy above is unchanged and enforced in the prompt.
 
 Guardrails (Kyle, 2026-09-10 — "no open web, tight professional scope, only
 assigned tasks"): enforced in `src/lib/ava-guardrails.ts` + the route, not
