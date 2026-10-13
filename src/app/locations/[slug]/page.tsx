@@ -245,6 +245,12 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
             >
               Call (260) 308-1457
             </a>
+            <Link
+              href="/showroom"
+              className="inline-flex items-center justify-center border-2 border-white/30 text-white px-8 py-4 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-white/10 transition-colors"
+            >
+              Visit the Showroom
+            </Link>
           </div>
         </div>
       </section>

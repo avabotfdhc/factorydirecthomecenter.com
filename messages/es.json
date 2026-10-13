@@ -4,6 +4,7 @@
       "floorPlans": "Planos",
       "designYourHome": "Diseña tu casa",
       "locations": "Ubicaciones",
+      "showroom": "Sala de exhibición",
       "guides": "Guías",
       "blog": "Blog",
       "resources": "Recursos",
@@ -66,6 +67,7 @@
   },
   "mobileBar": {
     "call": "Llamar",
+    "directions": "Cómo llegar",
     "text": "Mensaje",
     "quote": "Cotizar"
   },

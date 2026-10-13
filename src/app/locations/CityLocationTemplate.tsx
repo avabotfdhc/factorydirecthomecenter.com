@@ -236,6 +236,12 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
             >
               Call (260) 308-1457
             </a>
+            <Link
+              href="/showroom"
+              className="border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase rounded hover:bg-white/5 transition-colors"
+            >
+              Visit the Showroom
+            </Link>
           </div>
         </div>
       </section>

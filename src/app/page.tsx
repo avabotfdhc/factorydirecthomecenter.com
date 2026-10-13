@@ -16,6 +16,7 @@ import { jsonLdScript } from "@/lib/json-ld";
 import { businessRef } from "@/lib/business";
 import { MORE_SERVICE_AREA_LINKS, SERVICE_AREA_LINKS } from "@/lib/service-area-links";
 import { FACTORY_DIRECT_FAQ, FACTORY_DIRECT_STEPS } from "@/lib/factory-direct";
+import { ShowroomVisitButton } from "@/components/QuoteModal";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -156,6 +157,37 @@ export default async function Home() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* Showroom invitation. Kyle's 2026-10-13 goal is more calls and lot
+          visits; the lot has walk-through models, appointments preferred. */}
+      <section className="py-14 bg-[var(--color-charcoal)] text-white" aria-labelledby="visit-showroom">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row lg:items-center gap-8">
+          <div className="flex-1">
+            <H2 id="visit-showroom" className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3 text-white">
+              Walk Through Our Model Homes
+            </H2>
+            <p className="text-white/80 leading-relaxed max-w-2xl">
+              See Champion homes in person on our Auburn lot, just off I-69 at State Road 8. Book a time so
+              someone is free to show you around.{" "}
+              <Link href="/showroom" className="underline underline-offset-4 text-white">
+                Hours &amp; directions
+              </Link>
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <ShowroomVisitButton
+              location="homepage_band"
+              className="inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
+            />
+            <a
+              href="tel:+12603081457"
+              className="inline-flex items-center justify-center border-2 border-white/40 px-8 py-4 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-white/10 transition-colors"
+            >
+              Call (260) 308-1457
+            </a>
+          </div>
         </div>
       </section>
 

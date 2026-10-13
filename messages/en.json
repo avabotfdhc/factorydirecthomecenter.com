@@ -4,6 +4,7 @@
       "floorPlans": "Floor Plans",
       "designYourHome": "Design Your Home",
       "locations": "Locations",
+      "showroom": "Showroom",
       "guides": "Guides",
       "blog": "Blog",
       "resources": "Resources",
@@ -66,6 +67,7 @@
   },
   "mobileBar": {
     "call": "Call",
+    "directions": "Directions",
     "text": "Text",
     "quote": "Get Quote"
   },

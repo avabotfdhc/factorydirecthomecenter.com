@@ -147,21 +147,68 @@ export function FloorPlanActions({
   );
 }
 
+/**
+ * "Book a showroom visit" for pages that are not about one home — the
+ * showroom page, the homepage, the location pages. Kyle (2026-10-13): the lot
+ * has walk-through model homes and appointments are preferred, so someone is
+ * free to show the buyer around. Leads reach the CRM as "Showroom Visit".
+ */
+export function ShowroomVisitButton({
+  location,
+  label = "Book a Showroom Visit",
+  className = "",
+}: {
+  /** Where the button sits, for the GA4 cta_click event. */
+  location: string;
+  label?: string;
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          trackCTAClick("book_showroom_visit", location, "visit_modal");
+          setOpen(true);
+        }}
+        className={className}
+      >
+        {label}
+      </button>
+      {open && (
+        <QuoteDialog
+          homeName="the Auburn showroom and model homes"
+          heading="Book a showroom visit"
+          source="Showroom Visit"
+          mode="visit"
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+
 function QuoteDialog({
   homeName,
   mode,
   onClose,
+  heading: headingOverride,
+  source: sourceOverride,
 }: {
   homeName: string;
   mode: Mode;
   onClose: () => void;
+  heading?: string;
+  source?: string;
 }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [started, setStarted] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
 
-  const heading = mode === "visit" ? `Schedule a visit — ${homeName}` : `Get a quote — ${homeName}`;
+  const heading =
+    headingOverride ?? (mode === "visit" ? `Schedule a visit — ${homeName}` : `Get a quote — ${homeName}`);
   const cta = mode === "visit" ? "Request My Visit" : "Get My Quote";
 
   const close = useCallback(() => onClose(), [onClose]);
@@ -197,6 +244,7 @@ function QuoteDialog({
     const phone = (data.get("phone")?.toString() || "").trim();
     const timeframe = data.get("timeframe")?.toString() || "";
     const note = (data.get("message")?.toString() || "").trim();
+    const visitDay = data.get("visitDay")?.toString() || "";
 
     if (!fullName || !email || phone.replace(/\D/g, "").length < 10) {
       setStatus("error");
@@ -209,6 +257,7 @@ function QuoteDialog({
       mode === "visit"
         ? `Lot-visit request for ${homeName}.`
         : `Quote request for ${homeName}.`,
+      visitDay ? `Best day to visit: ${visitDay}` : "",
       note,
     ]
       .filter(Boolean)
@@ -228,7 +277,7 @@ function QuoteDialog({
           interest: homeName,
           timeframe,
           message,
-          source: mode === "visit" ? "Floor Plan — Lot Visit" : "Floor Plan — Get a Quote",
+          source: sourceOverride ?? (mode === "visit" ? "Floor Plan — Lot Visit" : "Floor Plan — Get a Quote"),
           pageUrl: window.location.href,
         }),
       });
@@ -312,7 +361,18 @@ function QuoteDialog({
                 <input name="phone" type="tel" required autoComplete="tel" className="w-full px-3.5 py-2.5 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:outline-none focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30" placeholder="(260) 000-0000" />
               </Field>
             </div>
-            <Field label={mode === "visit" ? "Preferred timing" : "When do you need your home?"}>
+            {mode === "visit" && (
+              <Field label="Best day to visit">
+                <select name="visitDay" className="w-full px-3.5 py-2.5 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:outline-none focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30" defaultValue="">
+                  <option value="">Select…</option>
+                  <option>A weekday this week (Mon–Fri, 9–5)</option>
+                  <option>This Saturday (10–4)</option>
+                  <option>Next week</option>
+                  <option>I’m flexible</option>
+                </select>
+              </Field>
+            )}
+            <Field label="When do you need your home?">
               <select name="timeframe" className="w-full px-3.5 py-2.5 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:outline-none focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30" defaultValue="">
                 <option value="">Select…</option>
                 <option>ASAP — ready to buy now</option>
