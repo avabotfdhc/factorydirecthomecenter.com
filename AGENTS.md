@@ -1290,8 +1290,37 @@ image, and the trap in it:
   sitemap. If the bucket ever needs to be private, the policy has to be
   rewritten to an authenticated read in the same change, not afterwards.
 
+**The backup project was the same door, left open.** `wmkidrlcwncrskyzynsn`
+("FDHC Site") still carried all three original `true` policies on `public.leads`
+until 2026-10-13. The section above tells you to treat it as a backup "until the
+env vars are switched" — so a switch would have restored every hole the wired
+project had just closed, silently. The same three `ALTER POLICY` statements were
+applied there and its advisor now returns **zero findings**; it is actually
+cleaner than the wired project, because it has no duplicate `Admins may…` pair
+to collapse. **Whenever a security change lands on the wired project, apply it
+to the backup in the same pass** — a backup you would promote in an emergency is
+the worst place to keep a known hole. Three things made that pass smaller than
+expected, all measured first: its `leads` held **0 rows** (so no PII was ever
+exposed), its `storage.objects` has **no policies at all** (RLS on with no
+policy is already deny-all, so there was no bucket change to make), and it has
+no `lead_attribution_report` view, so the SECURITY DEFINER leak never existed
+there.
+
 **Still the owner's to do:** leaked-password protection (HaveIBeenPwned
 checking) is an Auth **dashboard toggle**, not SQL, so no migration can set it.
+It is also **not reachable from an agent session**, and this was tested rather
+than assumed on 2026-10-12: there is no auth-config tool in the Supabase MCP
+set; the Management API (`PATCH /v1/projects/{ref}/config/auth`,
+`password_hibp_enabled`) is refused by the sandbox network policy
+(`api.supabase.com:443` → gateway 403 to CONNECT); the Supabase CLI is not
+installed and the repo has no `supabase/config.toml` to push; and the `auth`
+schema has 27 tables, none of them a config table, because cloud GoTrue config
+lives outside the database. The page is
+`/dashboard/project/<ref>/auth/providers?provider=Email`, the org is on the
+`pro` plan so the control is present, and the switch needs its **Save** button —
+a flip alone does not persist. The advisor reflects such changes promptly (it
+picked up the policy narrowing within the same session), so if
+`auth_leaked_password_protection` still reads WARN, it genuinely has not taken.
 The remaining `rls_enabled_no_policy` INFO findings on `dealertide_inventory`,
 `dealertide_sync_runs` and `media_migrations` are **deliberately left alone**:
 RLS on with no policies is deny-all, which is the safe state. Adding policies

@@ -7,6 +7,24 @@
 -- rls_enabled_no_policy (INFO, and deny-all is the safe state) and the
 -- leaked-password dashboard toggle.
 --
+-- ALSO APPLIED to the BACKUP project (wmkidrlcwncrskyzynsn, "FDHC Site") on
+-- 2026-10-13. It carried all three original `true` policies untouched, so a
+-- switch of the env vars to it — which AGENTS.md explicitly contemplates —
+-- would have restored every hole this migration closes. Its advisor now
+-- returns zero findings. Four differences there, each verified rather than
+-- assumed, so do not expect this file to apply identically:
+--   * Only the three ALTERs in step 2 are needed. That project has no
+--     "Admins may…" pair, so step 1 is skipped and it ends up CLEANER than
+--     the wired project — one policy per command, no duplicates to collapse.
+--   * Step 3 is skipped. Its floor-plans bucket is public = true as well, but
+--     storage.objects there carries NO policies at all, which with RLS on is
+--     already deny-all. Adding `using (false)` would change nothing.
+--   * public.leads there held 0 rows, so no lead PII was ever exposed by the
+--     open policies, and nothing was at risk in the change.
+--   * It has no lead_attribution_report view (it predates that migration), so
+--     the SECURITY DEFINER leak fixed in 20261010_secure_lead_attribution_view
+--     never existed there.
+--
 -- NOTE ON FORM: this narrows the offending policies with ALTER POLICY instead
 -- of dropping and recreating them. DROP POLICY could not be executed through
 -- the agent's Supabase tooling — it timed out at 60s every time, bare and
