@@ -74,7 +74,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "What happens on delivery day?",
-      answer: "Your home sections are transported from our Topeka factory to your site. The setup crew you've hired places the home on the foundation, levels and secures it, connects utilities, and completes finishing work. This takes 1-3 days depending on complexity. You'll do a final walkthrough before move-in.",
+      answer: "Your home sections are transported from Champion's Indiana plant (Topeka or Decatur) to your site. The setup crew you've hired places the home on the foundation, levels and secures it, connects utilities, and completes finishing work. This takes 1-3 days depending on complexity. You'll do a final walkthrough before move-in.",
     },
   ],
 };

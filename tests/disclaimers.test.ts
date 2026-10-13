@@ -591,3 +591,26 @@ test("factory-direct copy never says the buyer skips the dealer", () => {
   walk(resolve(process.cwd(), "src"));
   assert.deepEqual(offenders, [], "we are the dealer: say we buy the home from Champion for the buyer");
 });
+
+// Prime is built at Champion's Decatur, IN plant; Aspire, Redman and Dutch in
+// Topeka (Champion's own Box library files Prime under Decatur). The site said
+// "every home comes from Champion's Topeka plant" in about twenty places and
+// once put Prime in Topeka outright — fixed 2026-10-13 at Kyle's request. A
+// line that puts Prime, or every/each/your home, in Topeka must also name Decatur.
+test("Prime is never placed in Topeka, and 'every home' never comes from Topeka alone", () => {
+  const CLAIM = /\bprime\b[^.]{0,80}\btopeka\b|\btopeka\b[^.]{0,80}\bprime\b|\b(?:every|each|your|our|all) (?:home|homes)\b[^.]{0,60}\btopeka\b|\bour topeka (?:factory|plant)\b/i;
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      for (const [i, line] of readFileSync(full, "utf8").split("\n").entries()) {
+        if (/^\s*(\/\/|\*|\/\*)/.test(line) || /decatur/i.test(line)) continue;
+        if (CLAIM.test(line)) offenders.push(`${relative(process.cwd(), full)}:${i + 1}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(offenders, [], "name Decatur for Prime, or say which series Topeka builds");
+});

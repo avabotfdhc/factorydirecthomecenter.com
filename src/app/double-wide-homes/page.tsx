@@ -30,7 +30,7 @@ export default async function DoubleWideHomesPage() {
         eyebrow="Champion Multi-Section Homes · Auburn, Indiana"
         heading="Double Wide Homes for Sale"
         headingAccent="in Indiana"
-        intro={`Every Champion double wide and multi-section HUD-code home we sell, ordered from Champion's Topeka, IN plant about 30 miles from our Auburn showroom. Filter by size and bedrooms, compare up to three, and ask for a line-item quote on any plan.`}
+        intro={`Every Champion double wide and multi-section HUD-code home we sell, ordered from Champion's Indiana plants: Topeka, about 30 miles from our Auburn showroom, for Aspire and Redman, and Decatur for Prime. Filter by size and bedrooms, compare up to three, and ask for a line-item quote on any plan.`}
         plans={plans}
         points={[
           {

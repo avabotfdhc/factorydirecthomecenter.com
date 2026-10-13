@@ -62,7 +62,7 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "How long does it take to get a manufactured home delivered?",
-                a: "From order to move-in usually takes 8 to 12 weeks. The home is built in 6 to 8 weeks at the Champion factory in Topeka, IN, just 30 miles away. Site preparation and permits add 2 to 4 weeks. Because we are close to the factory, our delivery times beat dealers located farther away."
+                a: "From order to move-in usually takes 8 to 12 weeks. The home is built in 6 to 8 weeks at a Champion factory in Indiana: Topeka, just 30 miles away, for Aspire and Redman, or Decatur for Prime. Site preparation and permits add 2 to 4 weeks. Because we are close to the factory, our delivery times beat dealers located farther away."
               },
               {
                 q: "Can I put a manufactured home on my own land?",

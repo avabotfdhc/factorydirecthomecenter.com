@@ -195,7 +195,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>Site work — foundation or pad, utilities, driveway — is separate, and in our model <strong>you hire your own licensed contractors</strong> for it. Most buyers save money that way versus dealer-bundled site work, and we can share a referral list of licensed and insured contractors past customers around Fort Wayne have used.</p>
 
 <h2>How delivery works from here</h2>
-<p>Once your home is built at the Topeka factory, it's transported to your site — a short, low-cost trip anywhere in the Fort Wayne area, including New Haven, Huntertown, Churubusco, Columbia City, and the surrounding counties. From order to move-in typically runs 8&ndash;12 weeks: 6&ndash;8 weeks of factory build time, plus site preparation and permitting that your contractor can run in parallel.</p>
+<p>Once your home is built at Champion's Indiana plant (Topeka for Aspire and Redman, Decatur for Prime), it's transported to your site — a short, low-cost trip anywhere in the Fort Wayne area, including New Haven, Huntertown, Churubusco, Columbia City, and the surrounding counties. From order to move-in typically runs 8&ndash;12 weeks: 6&ndash;8 weeks of factory build time, plus site preparation and permitting that your contractor can run in parallel.</p>
 
 <h2>Financing for Fort Wayne buyers</h2>
 <p>Manufactured home financing is a specialty. We do not offer it ourselves and we recommend no one — you get the full list of lenders our customers have used and apply wherever you like, for home-only (chattel) loans, land-home packages or a conventional mortgage. Start with our <a href="/financing">financing page</a> to see how the options compare.</p>
@@ -366,7 +366,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h2>Rural Noble County land works in your favor</h2>
 <p>Much of Noble County outside municipal limits permits manufactured homes on private land. Rules are parcel-specific — you or your contractor verify zoning and setbacks and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> explains each step.</p>
 <h2>Close to the showroom, close to the factory</h2>
-<p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and your home is built at Champion's Topeka plant, a short freight hop away. Short distances show up as real savings on the delivery line of your quote.</p>
+<p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and Aspire and Redman homes are built at Champion's Topeka plant, a short freight hop away (Prime comes from Champion's Decatur plant). Short distances show up as real savings on the delivery line of your quote.</p>
 <h2>The numbers</h2>
 <p>Quotes are line-item — home, options, and delivery each priced separately — and site work is handled by your own licensed contractors, where most buyers save real money. Details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
@@ -492,7 +492,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h2>Whitley County land is the opportunity</h2>
 <p>Outside municipal limits, much of Whitley County accommodates manufactured homes on private parcels. The county seat is right there in Columbia City, which makes the permit process — handled by you or your contractor — conveniently local. Our <a href="/guides/zoning">zoning guide</a> lays out the steps.</p>
 <h2>Worth the drive to Auburn</h2>
-<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide and double wide homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at the Topeka plant about 30 miles from our lot. Every home is quoted line-item — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide and double wide homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at Champion's Indiana plants in Topeka, about 30 miles from our lot, and Decatur. Every home is quoted line-item — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>What Whitley County areas do you serve?</h3>
 <p>All of them — Columbia City, Churubusco, South Whitley, Larwill, and the surrounding townships. See <a href="/locations/columbia-city">our Columbia City page</a> and <a href="/locations/whitley-county">Whitley County page</a>.</p>
@@ -849,7 +849,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>Once it is on the property, the set location needs working room around the whole perimeter for the crew and equipment. Think about where the septic field goes, where you want the drive to finish, and which way the house should face for winter wind and summer sun &mdash; decisions that cost nothing now and cannot be revisited later. Our <a href="/guides/delivery-and-setup">delivery and set-up guide</a> walks through the day itself.</p>
 
 <h2>The straightforward part</h2>
-<p>The home is built indoors at Champion&rsquo;s Topeka plant, about 30 miles from our Auburn showroom, in 6 to 8 weeks &mdash; no weather delays, no framing crew to chase. Single-section homes for a simple footprint, multi-section for full family layouts; see the <a href="/floor-plans">full lineup</a>. We handle the home and the transport. Site work, foundation, utilities and setup are contracted by you.</p>
+<p>The home is built indoors at a Champion plant in Indiana (Topeka, about 30 miles from our Auburn showroom, for Aspire and Redman; Decatur for Prime) in 6 to 8 weeks &mdash; no weather delays, no framing crew to chase. Single-section homes for a simple footprint, multi-section for full family layouts; see the <a href="/floor-plans">full lineup</a>. We handle the home and the transport. Site work, foundation, utilities and setup are contracted by you.</p>
 
 <h2>Common questions</h2>
 <h3>What if my driveway will not work?</h3>

@@ -113,7 +113,7 @@ const aboutFAQs = [
   },
   {
     question: "What is the relationship between Factory Direct and Champion Homes?",
-    answer: "We are an authorized Champion Homes dealer, and Champion is the only builder we sell. We order each home from Champion's Topeka, Indiana plant, 30 miles from our showroom, and selling one builder's homes lets us know the Aspire, Prime and Redman lines in depth."
+    answer: "We are an authorized Champion Homes dealer, and Champion is the only builder we sell. We order each home from Champion's Indiana plants (Topeka, 30 miles from our showroom, for Aspire and Redman; Decatur for Prime), and selling one builder's homes lets us know the Aspire, Prime and Redman lines in depth."
   },
   {
     question: "Does Factory Direct Homes Center handle delivery and installation?",
@@ -353,7 +353,7 @@ export default function AboutPage() {
                 <div className="space-y-8 border-l-2 border-[var(--color-teal)]/20 pl-8">
                   {[
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
-                    { label: "The Partnership", text: "Our homes come from Champion's Topeka, IN plant. Aspire, Redman, and Dutch series homes built just 30 miles away." },
+                    { label: "The Partnership", text: "Our homes come from Champion's Indiana plants: Aspire, Redman and Dutch series homes from Topeka, just 30 miles away, and Prime from Decatur." },
                     { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through referrals and repeat customers." },
                   ].map((item) => (
                     <div key={item.label} className="relative">

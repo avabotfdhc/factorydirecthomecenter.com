@@ -32,7 +32,7 @@ const steps = [
     n: "1",
     title: "Order & Build (6–8 weeks)",
     body:
-      "Once you choose your floor plan and options, your home is built at the Champion factory in Topeka, IN — about 30 miles from our showroom. Factory construction is fast and weather-protected, so timelines are far more predictable than site-built.",
+      "Once you choose your floor plan and options, your home is built at a Champion factory in Indiana — Topeka, about 30 miles from our showroom, for Aspire and Redman, or Decatur for Prime. Factory construction is fast and weather-protected, so timelines are far more predictable than site-built.",
   },
   {
     n: "2",
