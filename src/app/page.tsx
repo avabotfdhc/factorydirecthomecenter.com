@@ -14,7 +14,7 @@ import { OwnerIntro } from "@/components/OwnerIntro";
 import type { Metadata } from "next";
 import { jsonLdScript } from "@/lib/json-ld";
 import { businessRef } from "@/lib/business";
-import { SERVICE_AREA_LINKS } from "@/lib/service-area-links";
+import { MORE_SERVICE_AREA_LINKS, SERVICE_AREA_LINKS } from "@/lib/service-area-links";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -151,7 +151,7 @@ export default async function Home() {
             New Champion single wides and double wides for buyers across northeast Indiana, from our Auburn showroom on State Road 8.
           </p>
           <ul className="mt-8 flex flex-wrap justify-center gap-3">
-            {SERVICE_AREA_LINKS.map((area) => (
+            {[...SERVICE_AREA_LINKS.filter((a) => a.href !== "/locations"), ...MORE_SERVICE_AREA_LINKS, ...SERVICE_AREA_LINKS.filter((a) => a.href === "/locations")].map((area) => (
               <li key={area.href}>
                 <Link
                   href={area.href}

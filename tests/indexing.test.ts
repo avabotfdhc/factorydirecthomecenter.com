@@ -16,7 +16,7 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { getAllPages } from "../src/lib/pages";
-import { SERVICE_AREA_LINKS } from "../src/lib/service-area-links";
+import { MORE_SERVICE_AREA_LINKS, SERVICE_AREA_LINKS } from "../src/lib/service-area-links";
 
 const APP = "src/app";
 
@@ -60,6 +60,6 @@ test("every static, indexable page route is in the page registry (and so the sit
 
 test("every Areas We Serve link points at a registered page", () => {
   const registered = new Set(getAllPages().map((p) => p.url));
-  const missing = SERVICE_AREA_LINKS.map((l) => l.href).filter((h) => !registered.has(h));
+  const missing = [...SERVICE_AREA_LINKS, ...MORE_SERVICE_AREA_LINKS].map((l) => l.href).filter((h) => !registered.has(h));
   assert.deepEqual(missing, [], "these service-area links are not in the page registry");
 });

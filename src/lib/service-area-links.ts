@@ -28,3 +28,14 @@ export const SERVICE_AREA_LINKS: ServiceAreaLink[] = [
   { href: "/locations/elkhart-county", label: "Goshen & Elkhart County" },
   { href: "/locations", label: "All areas we serve" },
 ];
+
+// Homepage only (the footer stays short): the rest of the towns Fahl Homes
+// of Warsaw targets with its own city pages, per the 2026-10-13 research.
+export const MORE_SERVICE_AREA_LINKS: ServiceAreaLink[] = [
+  { href: "/locations/marshall-county", label: "Plymouth & Marshall County" },
+  { href: "/locations/grant-county", label: "Marion & Grant County" },
+  { href: "/locations/lagrange-county", label: "LaGrange County" },
+  { href: "/locations/whitley-county", label: "Whitley County" },
+  { href: "/locations/noble-county", label: "Noble County" },
+  { href: "/locations/allen-county", label: "Allen County" },
+];
