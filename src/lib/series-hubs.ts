@@ -32,7 +32,7 @@ export const seriesHubs: SeriesHub[] = [
     eyebrow: "Best value single-wides",
     tagline: "Modern kitchens and efficient layouts at the lowest factory-direct price.",
     intro:
-      "PRIME is Champion's value line out of the Topeka, Indiana plant: 14- and 16-foot-wide single-section homes with the finishes buyers actually ask for, built on an 8–12 week schedule. It is the series we recommend first for a budget-conscious first home, a rental, or a lot with limited width.",
+      "PRIME is Champion's value line out of the Decatur, Indiana plant: 14- and 16-foot-wide single-section homes with the finishes buyers actually ask for, built on an 8–12 week schedule. It is the series we recommend first for a budget-conscious first home, a rental, or a lot with limited width.",
     bestFor: ["First-time buyers", "Rental and farm housing", "Narrow or rural lots", "Fast turnaround"],
     highlights: [
       "14' and 16' wide single-section plans from 2 to 4 bedrooms",

@@ -142,6 +142,7 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         brand={plan.brand}
         modelNumber={plan.modelNumber}
         homeType={plan.homeType}
+        series={plan.series}
       />
       <StructuredData
         data={structuredData.breadcrumb([

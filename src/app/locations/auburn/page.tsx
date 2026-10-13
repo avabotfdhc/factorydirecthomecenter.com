@@ -65,7 +65,7 @@ const locationFAQs = [
   {
     question: "How far is your showroom from the Champion factory?",
     answer:
-      "About 30 miles. Champion builds our homes at its plant in Topeka, Indiana, and being this close means shorter delivery times and lower freight costs passed directly to you.",
+      "About 30 miles. Champion builds Aspire and Redman homes at its plant in Topeka, Indiana (Prime comes from its Decatur, Indiana plant), and being this close means shorter delivery times and lower freight costs passed directly to you.",
   },
 ];
 

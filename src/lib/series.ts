@@ -3,7 +3,7 @@
 // field and CMS rows only sometimes carry seriesDetails, so we derive the
 // series from whatever text we have: title, model number, description.
 //
-// FDHC's lineup out of the Topeka plant: Aspire, Prime, Paramount, Redman,
+// FDHC's lineup out of Topeka (Aspire, Paramount, Redman) and Decatur (Prime),
 // and Dutch-branded variants. "Dutch Aspire" titles are brand Dutch + series
 // Aspire — keyword order below makes Aspire win over Dutch on those.
 

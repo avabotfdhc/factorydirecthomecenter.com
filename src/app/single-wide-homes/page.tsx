@@ -30,7 +30,7 @@ export default async function SingleWideHomesPage() {
       eyebrow="Champion Single-Section Homes · Auburn, Indiana"
       heading="Single Wide Homes for Sale"
       headingAccent="in Indiana"
-      intro={`Every Champion single wide HUD-code home we sell, ordered from Champion's Topeka, IN plant about 30 miles from our Auburn showroom. Filter by size and bedrooms, compare up to three, and ask for a line-item quote on any plan.`}
+      intro={`Every Champion single wide HUD-code home we sell, ordered from Champion's Indiana plants: Topeka, about 30 miles from our Auburn showroom, for Aspire and Redman, and Decatur for Prime. Filter by size and bedrooms, compare up to three, and ask for a line-item quote on any plan.`}
       plans={plans}
       points={[
         {

@@ -31,6 +31,8 @@ export interface ResidenceSchemaProps {
   brand?: string;
   modelNumber?: string;
   homeType?: string;
+  /** Champion series; Prime is built in Decatur, everything else in Topeka. */
+  series?: string;
 }
 
 /** A floor plan as a SingleFamilyResidence (with the dealer as the offering business). */
@@ -51,7 +53,7 @@ export function SingleFamilyResidenceSchema(p: ResidenceSchemaProps) {
         additionalProperty: [
           { "@type": "PropertyValue", name: "Manufacturer", value: p.brand || "Champion Home Builders" },
           ...(p.homeType ? [{ "@type": "PropertyValue", name: "Home type", value: p.homeType }] : []),
-          { "@type": "PropertyValue", name: "Construction", value: "Factory-built, delivered from Topeka, Indiana" },
+          { "@type": "PropertyValue", name: "Construction", value: `Factory-built, delivered from ${/prime/i.test(p.series ?? "") ? "Decatur" : "Topeka"}, Indiana` },
         ],
         offeredBy: { "@id": `${SITE}/#business` },
       }}

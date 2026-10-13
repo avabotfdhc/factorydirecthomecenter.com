@@ -88,7 +88,7 @@ const locationFAQs = [
   },
   {
     question: "Is it worth buying from Factory Direct if I'm in Indianapolis?",
-    answer: "Many Indianapolis buyers find our factory-direct pricing competitive even with delivery costs. We're 110 miles away, but every home we sell comes from Champion's Topeka, Indiana plant. Our line-item pricing and contractor flexibility often make the total a smart buy, plus you get our transparent, no-pressure approach."
+    answer: "Many Indianapolis buyers find our factory-direct pricing competitive even with delivery costs. We're 110 miles away, but every home we sell comes from Champion's Indiana plants in Topeka and Decatur. Our line-item pricing and contractor flexibility often make the total a smart buy, plus you get our transparent, no-pressure approach."
   },
   {
     question: "What is the best location for a manufactured home near Indianapolis?",
