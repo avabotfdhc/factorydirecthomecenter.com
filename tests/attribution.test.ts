@@ -8,6 +8,8 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import {
   ATTRIBUTION_COOKIE,
   attributionColumns,
@@ -187,4 +189,54 @@ test("the CRM note names the campaign, and stays quiet when there is nothing to 
   assert.ok(lines.some((l) => l.includes("Source (last touch): google / cpc / spring")), lines.join(" | "));
   assert.ok(lines.some((l) => l.startsWith("First found us via: google / organic")), lines.join(" | "));
   assert.ok(lines.some((l) => l.includes("gclid")), lines.join(" | "));
+});
+
+// ---------------------------------------------------------------------------
+// The reporting view must not be a hole through the RLS on `leads`.
+//
+// Supabase's advisor flagged public.lead_attribution_report as SECURITY
+// DEFINER on 2026-10-10. It was: the view ran as `postgres` (which bypasses
+// RLS) and Supabase's default grants on the public schema had given `anon`
+// every privilege on it. Measured on the live project, `anon` read 0 rows from
+// public.leads directly and all 52 through the view — full_name and
+// contact_info included — with the anon key that ships in the page source, and
+// could UPDATE and DELETE through it because a single-table view is
+// auto-updatable.
+//
+// A test cannot check live database state (CI has no network and no
+// credentials), but it can check that the committed migration still declares
+// both halves of the fix, so re-applying the migration set cannot recreate the
+// hole. That is the whole failure mode here: the first version of this file
+// was correct about the columns and silent about the view's rights.
+// ---------------------------------------------------------------------------
+
+test("the attribution migration creates the reporting view with security_invoker", () => {
+  const sql = readFileSync(
+    resolve(import.meta.dirname, "../supabase/migrations/20260920_lead_attribution.sql"),
+    "utf8",
+  );
+  const create = sql.match(/CREATE OR REPLACE VIEW\s+public\.lead_attribution_report[\s\S]*?\sAS/i);
+  assert.ok(create, "the lead_attribution_report view is no longer created by this migration");
+  assert.match(
+    create[0],
+    /WITH\s*\(\s*security_invoker\s*=\s*(true|on)\s*\)/i,
+    "the view must be created WITH (security_invoker = true), or it runs as postgres and bypasses RLS on leads",
+  );
+});
+
+test("the attribution migration revokes anon's privileges on the reporting view", () => {
+  const sql = readFileSync(
+    resolve(import.meta.dirname, "../supabase/migrations/20260920_lead_attribution.sql"),
+    "utf8",
+  );
+  assert.match(
+    sql,
+    /REVOKE\s+ALL\s+ON\s+public\.lead_attribution_report\s+FROM\s+anon\s*;/i,
+    "anon must hold no privilege on a view that selects lead PII — security_invoker alone is one half of the fix",
+  );
+  assert.match(
+    sql,
+    /REVOKE[\s\S]{0,120}?ON\s+public\.lead_attribution_report\s+FROM\s+authenticated\s*;/i,
+    "nothing should be able to write through the reporting view",
+  );
 });

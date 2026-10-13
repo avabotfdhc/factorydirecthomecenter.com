@@ -8,8 +8,20 @@
 // submission here first means a CRM hiccup can never lose one, and gives a
 // table to reconcile DealerTide against.
 //
-// Server-side only. Prefers the service-role key; falls back to the anon key,
-// which the table's "Allow anonymous lead inserts" policy permits.
+// Server-side only, and it MUST run as the service role. `service_role` is the
+// only one of the three Supabase roles with `rolbypassrls`, which is what lets
+// this insert succeed: since 2026-10-11 the table's "Allow anonymous lead
+// inserts" policy is `with check (false)`, closing a Supabase advisor finding
+// that an unrestricted anon INSERT let a scripted PostgREST POST write straight
+// to `leads`, bypassing the honeypot, the fill timer and Turnstile.
+//
+// The anon/publishable fallback below is therefore a diagnostic, not a working
+// second path: with only that key the POST comes back 403 and `storeLead`
+// throws, which `/api/leads` logs verbatim as "[leads] Supabase store failed"
+// with PostgREST's own RLS message. That is deliberately louder than the
+// "env vars not set" branch — an anon-only deployment is misconfigured, not
+// unconfigured, and the log should say which. Keep SUPABASE_SERVICE_ROLE_KEY
+// first in the chain; `/api/health` reports whether it is set.
 
 import { type Attribution, attributionColumns } from "./attribution";
 

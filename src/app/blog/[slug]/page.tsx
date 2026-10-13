@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { getApiBlogBySlug } from "@/lib/api-content";
 import { StructuredData, structuredData } from "@/lib/seo";
 import { PostImage } from "@/components/PostImage";
-import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl } from "@/lib/image-alt";
 
 const SITE = "https://factorydirecthomescenter.com";
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // The H1 keeps the full headline; the <title> keeps what fits in 65.
     title: { absolute: postTitle(post.title) },
     description,
-    alternates: { canonical: url, languages: languageAlternates(url) },
+    alternates: { canonical: url },
     openGraph: {
       title: post.title,
       description,

@@ -9,6 +9,8 @@
 import { test, before, after, beforeEach } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 type Step = { status: number; body?: string } | "hang";
 let plan: Step[] = [];
@@ -169,4 +171,38 @@ test("DealerTide failure is logged with the reason and does not break the respon
   assert.equal(res.status, 200);
   assert.ok(logged("DealerTide channel failed after 2 attempt(s): HTTP 500"));
   assert.ok(!logged("Problem alert emailed"), "no RESEND_API_KEY → alert is skipped silently");
+});
+
+// ---------------------------------------------------------------------------
+// The durable lead copy must insert as the service role.
+//
+// `service_role` is the only Supabase role with `rolbypassrls` (verified on the
+// live project 2026-10-11: anon false, authenticated false, service_role true).
+// Since the same day, `public.leads`'s "Allow anonymous lead inserts" policy is
+// `with check (false)` — a Supabase advisor finding, because an unrestricted
+// anon INSERT let a scripted PostgREST POST write to `leads` without passing
+// the honeypot, the fill timer or Turnstile.
+//
+// So the order of that key chain is now load-bearing in a way it was not when
+// it was written: with the anon key first, EVERY production lead would fail to
+// be stored while the visitor still saw "Lead received" and DealerTide still
+// got its copy — exactly the silent-loss failure `leads-store.ts` exists to
+// prevent. A source scan is the only check available here, since CI has no
+// network and no credentials.
+// ---------------------------------------------------------------------------
+
+test("leads-store prefers the service-role key over the anon key", () => {
+  const src = readFileSync(resolve(import.meta.dirname, "../src/lib/leads-store.ts"), "utf8");
+  const chain = src.match(/const\s+WRITE_KEY\s*=([\s\S]*?);/);
+  assert.ok(chain, "WRITE_KEY is no longer declared in src/lib/leads-store.ts");
+
+  const keys = [...chain[1].matchAll(/process\.env\.([A-Z0-9_]+)/g)].map((m) => m[1]);
+  assert.ok(keys.length > 0, "WRITE_KEY no longer reads any env var");
+  assert.equal(
+    keys[0],
+    "SUPABASE_SERVICE_ROLE_KEY",
+    `WRITE_KEY must try SUPABASE_SERVICE_ROLE_KEY first (got ${keys[0]}). ` +
+      "Only service_role bypasses RLS, and the anon INSERT policy on public.leads " +
+      "is `with check (false)` — an anon-first chain stores no lead at all.",
+  );
 });

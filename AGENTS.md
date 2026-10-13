@@ -1202,3 +1202,200 @@ count nodes, and correlate against the crawler's own per-URL numbers.
 - **Low text to HTML ratio (42)** and **Content not optimized (2)** — already
   settled above: inherent to a React/Next app shipping an RSC payload beside the
   markup.
+
+# Supabase security 2026-10-10/11: a live lead-PII leak, and four advisor findings
+
+Four Supabase advisor findings and one Lighthouse finding were closed over two
+days. One of them was not a hardening exercise — it was an open door.
+
+**`public.lead_attribution_report` was serving every lead to the anon key.**
+The view was `SECURITY DEFINER` (it ran as `postgres`, which bypasses RLS) and
+Supabase's default public-schema grants had given `anon` every privilege on it.
+Measured on the live project: with the anon key **that ships in the page
+source**, `anon` read **0 rows from `public.leads` directly and all 52 through
+the view** — `full_name` and `contact_info` included — and could UPDATE and
+DELETE through it, because a single-table view is auto-updatable. The fix needs
+**both** halves, and either alone leaves the hole open: `security_invoker = on`
+so the view runs as the caller, **and** `revoke all … from anon`.
+`20260920_lead_attribution.sql` now creates the view that way inline, so
+re-applying the migration set cannot recreate it;
+`20261010_secure_lead_attribution_view.sql` is the repair for the live project.
+`tests/attribution.test.ts` holds both clauses.
+
+**`public.leads` had three policies that were literally `true`.** An
+unrestricted anon INSERT meant a scripted PostgREST POST could write straight
+to `leads`, bypassing the honeypot, the fill timer and Turnstile; the "staff"
+SELECT and UPDATE policies admitted anyone merely signed in, not an admin.
+Now: anon INSERT is `with check (false)`, and the staff pair require
+`auth.jwt() -> 'app_metadata' ->> 'role' = 'admin'`.
+
+- **Consequence: the durable lead copy MUST insert as the service role.**
+  `service_role` is the only one of the three roles with `rolbypassrls`
+  (verified: anon false, authenticated false, service_role true), so it is what
+  makes `storeLead()` work at all now. `WRITE_KEY` in `src/lib/leads-store.ts`
+  tries `SUPABASE_SERVICE_ROLE_KEY` first and the anon key only as a fallback;
+  that fallback is now a **diagnostic, not a working second path** — it returns
+  403 and throws, which `/api/leads` logs with PostgREST's own RLS message,
+  deliberately louder than the "env vars not set" branch. Production has the
+  service-role key set (`/api/health` → `supabaseServiceRole: true`), so lead
+  capture was never interrupted. `tests/leads.test.ts` fails if anything puts
+  the anon key first in that chain: an anon-first chain would lose **every**
+  lead's durable copy while the visitor still saw "Lead received" and DealerTide
+  still got its copy — precisely the silent loss `leads-store.ts` exists to
+  prevent.
+- `leads` now carries two SELECT and two UPDATE policies with identical admin
+  expressions. Redundant but harmless — permissive policies are ORed. Collapse
+  them when `DROP POLICY` works again.
+
+**`DROP POLICY` cannot be executed through the agent's Supabase tooling.** It
+times out at 60 s every time — bare, batched, and wrapped in a `DO … execute`
+block — while `CREATE POLICY` and `ALTER POLICY` return in milliseconds. Two
+candidate causes were ruled out rather than assumed: **not lock contention**
+(`ACCESS EXCLUSIVE` on `public.leads` was acquired in **6 ms**, with no
+long-running or idle-in-transaction backends), and **not a text-level gate on
+destructive SQL** (a `DO` block containing the literal phrase "drop policy" in
+a `RAISE` ran instantly). The real cause is **still unidentified** — do not
+write down a third theory as fact. Use `ALTER POLICY`, which reaches the same
+end state, is reversible in place, and leaves the policy visible in the
+dashboard.
+
+**`storage.floor-plans` allowed listing**, so its `floor-plans public read`
+policy is now `using (false)`. Why that does not break a single catalogue
+image, and the trap in it:
+
+- The bucket is `public = true`, and Supabase's `/object/public/` endpoint
+  **does not consult the `storage.objects` SELECT policy** for a public bucket.
+  `next.config.ts` rewrites `/fp/:path*` to that endpoint, so every catalogue
+  photo on the site uses it. Checked **before** touching anything, then
+  confirmed after: a real key returned **200 `image/webp`, 23,322 bytes**.
+- **The trap:** that policy being `false` is safe *only while the bucket stays
+  public*. Flip `floor-plans` to private and every image on the site 404s at
+  once — the grid, every plan page, the sale table, `<image:loc>` in the
+  sitemap. If the bucket ever needs to be private, the policy has to be
+  rewritten to an authenticated read in the same change, not afterwards.
+
+**Still the owner's to do:** leaked-password protection (HaveIBeenPwned
+checking) is an Auth **dashboard toggle**, not SQL, so no migration can set it.
+The remaining `rls_enabled_no_policy` INFO findings on `dealertide_inventory`,
+`dealertide_sync_runs` and `media_migrations` are **deliberately left alone**:
+RLS on with no policies is deny-all, which is the safe state. Adding policies
+there would open access, not close it.
+
+# The Google Maps embed is consent-gated, and the opt-out snapshot is a trap
+
+Lighthouse Best Practices on production `/contact-us` reported **30
+third-party cookies** — `NID`, `__Secure-3PSID`, `__Secure-3PAPISID` and the
+rest — set by the Google Maps `<iframe>` on the default load, before any
+visitor accepted anything. `src/components/LocationMap.tsx` now renders a pin,
+the `<address>` and a "Show map" button, and only mounts the iframe once the
+visitor has affirmatively accepted or clicked the button. Verified across five
+consent states: unanswered (0 Google requests), click (1), accept + reload (1),
+GPC (0).
+
+**Gate on `getConsentGrantedSnapshot()`, never `getTrackingAllowedSnapshot()`.**
+`resolveConsent()` is deliberately **opt-out**: with no stored answer it returns
+`allowed: true, needsPrompt: true`. So the first version of this component was a
+**silent no-op** — it gated on the opt-out snapshot, which is `true` for a
+visitor who has not replied, and the iframe rendered for everyone exactly as
+before, one hydration tick later. `getConsentGrantedSnapshot()` requires a
+stored `"granted"` and honours GPC. The two functions read almost identically
+at a glance; that is the whole hazard.
+
+**Measurement trap:** the iframe is `loading="lazy"`, so counting network
+requests says "no Google requests" whether the element is in the DOM or not.
+Assert on the **DOM** — is the iframe there — not on request counts. That is
+what caught the no-op.
+
+`tests/consent-banner.test.ts` guards it: only `LocationMap.tsx` may embed the
+Maps iframe, `LocationMap` must not read the opt-out snapshot, and
+`getConsentGrantedSnapshot` must require stored `"granted"` and honour GPC.
+
+Settled in the same pass and not worth re-litigating: the Clarity console
+`TypeError` is inside Clarity's own bundle; an enforced CSP with nonces is
+still the deliberate non-goal recorded under the 2026-09-28 Lighthouse section;
+and `vercel.live/feedback/feedback.js` is **absent from production HTML** (0
+occurrences) — it comes from the Vercel Toolbar in a logged-in session, not
+from site code, so it is not a cache-lifetime finding to fix.
+
+# Local citations: one NAP, generated, and two numbers that are not interchangeable
+
+`npm run citation-nap` (`scripts/citation-nap.ts`) prints the canonical name,
+address, phone, hours and four descriptions capped at 80 / 160 / 250 / 750
+characters, all derived from `src/lib/business.ts` so a directory listing can
+never drift from the site. It **exits non-zero if any description outgrows its
+cap**, because a silently truncated listing is worse than a missing one.
+`docs/local-citations.md` holds the prioritised registry list.
+
+Two traps when filling a listing in, both easy to get wrong:
+
+- **The voice line and the texting line are different numbers** (see "Calls and
+  texts go to two different lines"). `BUSINESS.telephone` is the number that is
+  dialled and belongs in every phone field; `BUSINESS.smsNumber` goes **only**
+  in a field that is explicitly for SMS.
+- **The address has one spelling:** `1211 State Road 8`. Not "IN SR-8", not
+  "State Rd 8", not "Indiana 8". NAP consistency is the whole point of the
+  exercise — a second spelling splits the entity.
+
+Accounts could not be created from the agent sandbox, so the registry
+submissions themselves are Kyle's to do; the generator exists so that every one
+of them carries byte-identical details.
+
+# Search Console 2026-10-12: 66 dead URLs, and a Product on every page
+
+Read from the live Page indexing and Product snippets reports, then checked
+against production the same day.
+
+- **404s.** 68 of the 75 URLs checked still answered 404 and six more 301'd
+  through an older pattern rule into one. `src/lib/search-console-redirects.ts`
+  holds a 301 for each, and `next.config.ts` spreads it **first** — the
+  `/brands/…/Sectionals/:slug` and `/special-plans/details/:slug` patterns
+  otherwise catch some of them and send them to a URL that does not exist.
+  66 are `dutch-aspire-*` plan pages that stopped rendering; each destination is
+  the `aspire-*` page with the same Champion model code, read from the live
+  sitemap (all 66 matched exactly one). The 44 `dutch-aspire-*` URLs that still
+  render were left alone — retiring those is the same product decision the sale
+  page section above describes. Family-name pages (`/floor-plans/warren`) land
+  on the shortest current plan in that family; change the pick in `FAMILY_PAGES`
+  if a different length should be the landing page.
+- **Product snippets.** Every item in the report was named "Champion
+  manufactured and modular homes" — not a plan. It was the `makesOffer` →
+  `itemOffered` Product inside `businessJsonLd()`, which the root layout renders
+  on every page. It is now a `Service`. The plan page's own Product was already
+  correct (emitted only with a price). `tests/structured-data.test.ts` fails if
+  the business node carries a Product without offers, review or aggregateRating.
+- **hreflang removed.** "Page with redirect" (204) is almost entirely `?lang=es`
+  / `?lang=my` URLs, and every page was the reason Google crawled them: each
+  published hreflang alternates at those URLs, which render English on the
+  server and canonicalise to the plain URL. All `languages:` alternates and
+  `languageAlternates()` are gone (the root layout's copy pointed every page
+  that set no alternates of its own at the *homepage's* `?lang=` URLs). The
+  language switcher still works for visitors. Add hreflang back only when a
+  translation renders on the server at its own URL.
+- **Sitemap gaps.** `/champion-homes` and `/design-your-home` rendered and were
+  indexable but were not in `sitePages`, so `sitemap.xml` never listed them.
+  `tests/indexing.test.ts` fails on any static page route missing from the
+  registry, and on any `languages:` / `?lang=` in `src/`.
+- **Not code:** the 18 "Google chose different canonical" rows are Paramount
+  pages last crawled before their 301s shipped. They clear on recrawl.
+
+# Competitor review 2026-10-13: link the town pages, say "mobile homes", stop saying "exclusive"
+
+Full findings and Kyle's to-do list: `docs/competitor-research-2026-10-13.md`.
+
+- **Nothing outside `/locations` linked a town page** — not the homepage, not
+  the footer — while Fahl Homes (Warsaw) ranked for "manufactured homes Auburn
+  Indiana" with its own Auburn page and we were absent from every Fort Wayne
+  search. `src/lib/service-area-links.ts` now feeds the footer (every page) and
+  the homepage "Areas we serve" block; `tests/indexing.test.ts` fails if a link
+  there is not a registered page.
+- **"Mobile homes" is the word buyers and every competitor use.** Key titles
+  (Fort Wayne, Auburn, Kendallville, single/double wide) now carry "Mobile &
+  Manufactured". The homepage FAQ explains the June 15, 1976 HUD-code line.
+- **We are not the "exclusive" Champion dealer** — Fahl sells the same Aspire
+  line. Say "authorized Champion dealer" and "Champion is the only builder we
+  sell". `/about` also lost an unsupported "better pricing than dealers who
+  split focus" claim.
+- **Do not answer Fahl / Home Nation with another batch of town pages.** The
+  site added ~75 town posts and county pages in seven weeks, and Google's
+  September 2026 spam update (from 2026-09-24) targets scaled place-name
+  content. Strengthen and link what exists; reassess with Search Console data.

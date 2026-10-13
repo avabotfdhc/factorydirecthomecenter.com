@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { HTML_LIMITED_BOT_UA_RE } from "next/dist/shared/lib/router/utils/html-bots";
 import { legacyFloorPlanRedirects } from "./src/lib/legacy-redirects";
 import { retiredSeriesRedirects } from "./src/lib/retired-series";
+import { searchConsoleRedirects } from "./src/lib/search-console-redirects";
 import { CATALOGUE_BUCKET_URL, SHORT_IMAGE_PREFIX } from "./src/lib/image-src";
 
 // Crawlers that must get <title>/<meta> in <head>. Next.js streams metadata
@@ -53,6 +54,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // URLs Search Console reported as 404 (2026-10-12). First on purpose:
+      // some would otherwise match the /brands and /special-plans pattern
+      // rules below and be sent on to a URL that does not exist.
+      ...searchConsoleRedirects,
       {
         source: '/contact',
         destination: '/contact-us',

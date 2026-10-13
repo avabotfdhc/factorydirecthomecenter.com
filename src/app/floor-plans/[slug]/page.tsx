@@ -13,7 +13,6 @@ import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanActions } from "@/components/QuoteModal";
 import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
-import { languageAlternates } from "@/lib/seo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
 import { businessRef } from "@/lib/business";
 import { planTitle } from "@/lib/page-title";
@@ -40,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // fits in 65 (src/lib/page-title.ts).
     title: { absolute: planTitle(plan.name, plan.beds, plan.baths, planTypeLabel(plan)) },
     description: desc,
-    alternates: { canonical: url, languages: languageAlternates(url) },
+    alternates: { canonical: url },
     openGraph: {
       title: `${plan.name} | Factory Direct Homes Center`,
       description: desc,

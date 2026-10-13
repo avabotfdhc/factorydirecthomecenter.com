@@ -14,6 +14,7 @@ import { OwnerIntro } from "@/components/OwnerIntro";
 import type { Metadata } from "next";
 import { jsonLdScript } from "@/lib/json-ld";
 import { businessRef } from "@/lib/business";
+import { MORE_SERVICE_AREA_LINKS, SERVICE_AREA_LINKS } from "@/lib/service-area-links";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -26,7 +27,7 @@ export const revalidate = 300;
 // flagged them missing on 2026-08-20; see `htmlLimitedBots` in next.config.ts
 // for the crawler-side cause). `absolute` skips the layout's "%s | …" template.
 export const metadata: Metadata = {
-  title: { absolute: "Factory Direct Homes Center | New Champion Homes in Auburn, IN" },
+  title: { absolute: "Factory Direct Homes Center | Manufactured Homes in Auburn, IN" },
   description:
     "Factory-direct pricing on new Champion manufactured and modular homes. Single wides, double wides & modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN. Contact us for pricing.",
   keywords: [
@@ -40,7 +41,6 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "/",
-    languages: { en: "/", es: "/?lang=es", my: "/?lang=my", "x-default": "/" },
   },
 };
 
@@ -68,7 +68,11 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "What areas do you serve?",
-                a: "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana lot is 30 miles from the Champion factory. That central location lets us serve the whole region with lower delivery costs."
+                a: "We sell and arrange delivery of manufactured and modular homes throughout Indiana, Ohio, and Michigan, from our Auburn, Indiana showroom 30 miles from Champion's Topeka plant. Most of our buyers are in northeast Indiana: Auburn, Garrett, Fort Wayne, Kendallville, Angola, Columbia City, Warsaw, Goshen and the towns around them."
+              },
+              {
+                q: "Is a manufactured home the same as a mobile home?",
+                a: "Mostly, yes. \u201cMobile home\u201d is the everyday name, and most people still search for it that way. Strictly, \u201cmobile home\u201d means a home built before June 15, 1976, when the federal HUD code took effect. Every home built since then to that code is a \u201cmanufactured home\u201d. The new single wides and double wides we sell are HUD-code manufactured homes, so if you are shopping for a new mobile home, this is it. We also sell modular homes, which are built to the state building code instead."
               },
               {
                 q: "Do manufactured homes hold their value?",
@@ -76,7 +80,7 @@ const HOME_FAQS: FaqItem[] = [
               },
               {
                 q: "What is included in the price of a manufactured home?",
-                a: "Our line-item pricing shows exactly what you pay for: the home, delivery from the factory, setup and installation, and site work. Other dealers bundle everything into one number. With us you can hire your own contractors for site work and save thousands."
+                a: "Our quote lists the home, each factory option, and delivery as separate lines, so you can see what every item costs. Site work, the foundation, and setup are not part of our price: you hire and pay your own licensed contractors for those, and our pricing guide lists typical contractor ranges so you can budget for them."
               }
             ];
 
@@ -133,6 +137,33 @@ export default async function Home() {
       <OptionsAndUpgradesSection />
 
       <AnimatedHomeSections />
+
+      {/* Areas we serve: the homepage is the strongest page on the site and,
+          until 2026-10-13, linked none of the town pages. See
+          src/lib/service-area-links.ts. */}
+      <section className="py-16 lg:py-20 bg-white" aria-labelledby="areas-we-serve">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+          <H2 id="areas-we-serve" className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+            Manufactured &amp; Mobile Homes Near You
+          </H2>
+          <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
+          <p className="text-base text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
+            New Champion single wides and double wides for buyers across northeast Indiana, from our Auburn showroom on State Road 8.
+          </p>
+          <ul className="mt-8 flex flex-wrap justify-center gap-3">
+            {[...SERVICE_AREA_LINKS.filter((a) => a.href !== "/locations"), ...MORE_SERVICE_AREA_LINKS, ...SERVICE_AREA_LINKS.filter((a) => a.href === "/locations")].map((area) => (
+              <li key={area.href}>
+                <Link
+                  href={area.href}
+                  className="inline-flex min-h-11 items-center rounded border border-[var(--color-charcoal)]/15 px-4 text-sm font-semibold text-[var(--color-teal)] hover:bg-[var(--color-cream)] transition-colors"
+                >
+                  {area.href === "/locations" ? area.label : `Manufactured homes in ${area.label}`}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       {/* FAQ Section with Schema */}
       <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">

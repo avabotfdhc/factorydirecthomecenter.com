@@ -251,9 +251,20 @@ export function businessJsonLd(): Record<string, unknown> {
       closes: h.closes,
     })),
     areaServed: [...AREA_SERVED],
+    // NOT a Product. This node is on every page, and Google reads any Product
+    // — nested or not — as a product snippet that must carry offers, review
+    // or aggregateRating. We publish no prices and no invented ratings, so a
+    // Product here can never validate: Search Console flagged it on every
+    // crawled page ("Either offers, review, or aggregateRating should be
+    // specified", 39 items and rising, 2026-10-12). What the dealership offers
+    // is the sale of those homes, which is a Service.
     makesOffer: {
       "@type": "Offer",
-      itemOffered: { "@type": "Product", name: "Champion manufactured and modular homes" },
+      itemOffered: {
+        "@type": "Service",
+        name: "Champion manufactured and modular homes",
+        serviceType: "New manufactured and modular home sales",
+      },
     },
     ...(BUSINESS.foundingDay ? { foundingDate: BUSINESS.foundingDay } : {}),
     founder: ownerJsonLd(),
