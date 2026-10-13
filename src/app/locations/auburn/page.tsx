@@ -15,7 +15,7 @@ import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Mobile & Manufactured Homes in Auburn, IN | Champion Dealer",
+  title: "Factory Direct Mobile & Manufactured Homes in Auburn, IN",
   description:
     "Champion manufactured and modular homes in Auburn, Indiana. Visit our DeKalb County showroom at 1211 State Road 8 — factory-direct pricing, single wides, double wides & modular homes. Serving Auburn, Garrett, Waterloo, Butler & Fort Wayne.",
   keywords: [

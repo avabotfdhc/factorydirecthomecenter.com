@@ -4,9 +4,9 @@ import { isMultiSectionHud } from "@/lib/grid-plan";
 import { HomeTypeLanding, homeTypeFacts } from "@/components/HomeTypeLanding";
 
 export const metadata = genMeta({
-  title: "Double Wide Mobile Homes for Sale in Indiana | Champion",
+  title: "Factory Direct Double Wide Mobile Homes in Indiana",
   description:
-    "Champion double wide manufactured homes for sale in Indiana. Compare multi-section floor plans, sizes and bedrooms, then get a line-item quote from our Auburn, IN showroom.",
+    "Factory-direct Champion double wide mobile homes, ordered from Champion’s Indiana plants by an authorized dealer and shipped straight to your land.",
   keywords: [
     "double wide homes for sale indiana",
     "double wide manufactured homes indiana",

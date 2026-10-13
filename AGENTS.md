@@ -870,6 +870,21 @@ Also removed at Kyle's request the same day: any claim of "no dealer markup" or 
 markup" on contractor or site work (the pricing guide, two city posts, Ava's context).
 Say only that the buyer hires and pays their own contractors.
 
+**"Factory direct" is back, said honestly (Kyle, 2026-10-13):** *"I do buy from the
+factory for the customer but you must be a dealer to buy from the factory."* He also
+confirmed every home is built to order and ships straight from the plant to the buyer's
+land, and that there is no wholesaler or distributor between Champion and us. That
+reverses the 2026-09-28 "don't discuss Champion's sales channel" request: the channel is
+now the explanation. `src/lib/factory-direct.ts` is the one wording — the homepage
+"Factory Direct Mobile & Manufactured Homes" section and its first FAQ, the `/about` FAQ
+and Ava all read it. Key titles (homepage description, single/double wide, Fort Wayne,
+Auburn, Kendallville) lead with "Factory Direct". Two accuracy traps: **Prime is built in
+Decatur, not Topeka**, so the shared copy names both plants; and the margin is real —
+say "one dealer's margin, ours", never "no markup". `tests/disclaimers.test.ts` fails on
+"no middleman", "no/zero dealer markup", "skip/cut out the dealer", "without a dealer"
+and "you buy … from the factory/Champion" (comment lines skipped); all three shapes were
+injected and caught.
+
 # Lighthouse 2026-09-28: the gray text token failed AA, and pages nested <main>
 
 A mobile Lighthouse run on `/` scored Performance 98 / Accessibility 97 / Best

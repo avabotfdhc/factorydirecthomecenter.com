@@ -27,6 +27,7 @@ import { FEATURED, saleHomes } from "./sale-homes";
 import { singlesStandardFeatures, summitKitchenModels } from "./paramount-content";
 
 import { LENDERS, LENDER_DISCLAIMER } from "./lenders";
+import { FACTORY_DIRECT_FAQ } from "./factory-direct";
 
 export const SHOWROOM_TIME_ZONE = "America/New_York";
 export const SHOWROOM_PHONE = "(260) 308-1457";
@@ -39,6 +40,7 @@ ABOUT FACTORY DIRECT HOMES CENTER
 - Showroom hours (Eastern time): Monday–Friday 9 AM–5 PM, Saturday 10 AM–4 PM, closed Sunday. Model homes on the lot to walk through, no appointment needed during hours; a booked visit guarantees a specialist is free for you.
 - Delivery area: Indiana, Ohio and Michigan. Home counties: DeKalb (Auburn, Garrett, Butler, Waterloo), Allen (Fort Wayne, New Haven, Huntertown), Noble (Kendallville, Ligonier, Albion), Steuben (Angola, Fremont), plus Whitley (Columbia City, Churubusco), LaGrange, Wells and Adams counties; also Toledo OH, Kalamazoo MI and Indianapolis.
 - Factory proximity: Champion's Topeka, Indiana plant (Aspire, Redman, Dutch) is about 30 miles from the showroom; Champion's Decatur, Indiana plant builds Prime. Short freight, predictable 8–12 week order-to-move-in timelines, and the owner can be at the plant in half an hour.
+- What "factory direct" means (say it this way, never that the visitor buys from the factory themselves, and never "no dealer", "no middleman" or "no dealer markup" — we are the dealer): ${FACTORY_DIRECT_FAQ.a}
 - Pricing model: factory-direct with a transparent dealer margin (typically 10–15%, versus 20–40% at bundled dealers). Every quote is line-item: home, each option and delivery priced separately. We don't sell site work; buyers hire their own contractors.
 - "You Stay In Control": the buyer hires their own excavator, foundation/concrete crew, electrician, plumber and septic/well contractors. We provide a referral list of licensed and insured contractors past customers have used; the buyer pays them directly and keeps every line item visible. The list is information, never a recommendation or an endorsement: we do not hire, supervise, schedule or warrant any contractor, we get nothing for naming them, and the buyer may use anyone they like. Most buyers save thousands this way.
 - What we do: sell the home, order it to spec from the factory, arrange transport from the plant to the site, tell the buyer which county office answers for their parcel, and stay available for warranty questions after set-up. We never verify or check zoning for a parcel ourselves.
