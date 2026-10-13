@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { useLocale } from "@/i18n/LocaleProvider";
 import { trackPhoneClick } from "@/lib/analytics";
 import { AnnouncementBar } from "./AnnouncementBar";
 import { GlobalSearchModal, useGlobalSearch } from "./GlobalSearchModal";
@@ -37,6 +38,13 @@ const SearchIcon = () => (
 
 export function Header() {
   const t = useTranslations("header");
+  // The full desktop bar needs about 1080px in English and Spanish, which
+  // only fits from xl (1280px); below that, and in Burmese at every width
+  // (its labels need about 1220px and max-w-7xl caps the bar at 1216px),
+  // the header keeps the hamburger so the phone button is never pushed off
+  // the edge. Measured in Chromium 2026-10-13.
+  const { locale } = useLocale();
+  const fullNav = locale !== "my";
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -110,15 +118,14 @@ export function Header() {
               />
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-5">
+            <nav className={`${fullNav ? "hidden xl:flex" : "hidden"} items-center gap-4`}>
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  // Showroom joins the desktop bar only at xl: at lg (1024px)
-                  // a tenth link wraps "Floor Plans" and pushes the phone button
-                  // off the edge. The mobile menu always lists it.
-                  className={`${link.key === "showroom" ? "hidden xl:inline " : ""}text-xs font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors duration-300`}
+                  // Showroom stays xl-only in the desktop bar, as before the bar
+                  // itself moved to xl. The mobile menu always lists it.
+                  className={`${link.key === "showroom" ? "hidden xl:inline " : ""}whitespace-nowrap text-xs font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors duration-300`}
                 >
                   {t(`nav.${link.key}`)}
                 </Link>
@@ -143,7 +150,7 @@ export function Header() {
               </a>
             </nav>
 
-            <div className="lg:hidden flex items-center gap-1">
+            <div className={`${fullNav ? "xl:hidden " : ""}flex items-center gap-1`}>
               <button
                 type="button"
                 onClick={openSearch}
@@ -187,7 +194,7 @@ export function Header() {
             role="dialog"
             aria-modal="true"
             aria-label={t("menu")}
-            className="lg:hidden border-t border-[var(--color-charcoal)]/10 bg-white max-h-[calc(100vh-4rem)] overflow-y-auto"
+            className={`${fullNav ? "xl:hidden " : ""}border-t border-[var(--color-charcoal)]/10 bg-white max-h-[calc(100vh-4rem)] overflow-y-auto`}
           >
             <div className="px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (

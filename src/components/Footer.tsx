@@ -121,7 +121,9 @@ export function Footer() {
                 <a
                   href="mailto:sales@factorydirecthomescenter.com"
                   onClick={() => trackEmailClick("footer_contact", "desktop")}
-                  className="inline-flex min-h-12 items-center hover:text-[var(--color-lime-light)] transition-colors"
+                  // overflow-wrap lets the address break inside its grid
+                  // column instead of pushing the page wider at 1024px.
+                  className="inline-flex min-h-12 max-w-full items-center [overflow-wrap:anywhere] hover:text-[var(--color-lime-light)] transition-colors"
                 >
                   sales@factorydirecthomescenter.com
                 </a>
