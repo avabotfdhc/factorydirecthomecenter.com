@@ -4,7 +4,7 @@ import { isMultiSectionHud } from "@/lib/grid-plan";
 import { HomeTypeLanding, homeTypeFacts } from "@/components/HomeTypeLanding";
 
 export const metadata = genMeta({
-  title: "Double Wide Homes for Sale in Indiana | Champion",
+  title: "Double Wide Mobile Homes for Sale in Indiana | Champion",
   description:
     "Champion double wide manufactured homes for sale in Indiana. Compare multi-section floor plans, sizes and bedrooms, then get a line-item quote from our Auburn, IN showroom.",
   keywords: [

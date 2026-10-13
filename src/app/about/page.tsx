@@ -43,7 +43,7 @@ export const metadata = genMeta({
 const aeoContent = [
   {
     question: "Who is Factory Direct Homes Center?",
-    directAnswer: "Factory Direct Homes Center is a family-owned, exclusive Champion Homes dealer based in Auburn, Indiana.",
+    directAnswer: "Factory Direct Homes Center is a family-owned, authorized Champion Homes dealer based in Auburn, Indiana. Champion is the only builder we sell.",
     supportingDetails: [
       "We serve families across Indiana, Ohio, and Michigan with new manufactured and modular homes.",
       "Our dealership operates on State Road 8 in Auburn, just 30 miles from Champion's plant in Topeka, Indiana."
@@ -112,7 +112,7 @@ const aboutFAQs = [
   },
   {
     question: "What is the relationship between Factory Direct and Champion Homes?",
-    answer: "We are an exclusive authorized dealer for Champion Homes. This partnership gives us direct access to their complete product line from the Topeka, Indiana facility. As an exclusive dealer, we focus solely on Champion products, allowing us to provide expert knowledge and better pricing than dealers who split focus among multiple manufacturers."
+    answer: "We are an authorized Champion Homes dealer, and Champion is the only builder we sell. We order each home from Champion's Topeka, Indiana plant, 30 miles from our showroom, and selling one builder's homes lets us know the Aspire, Prime and Redman lines in depth."
   },
   {
     question: "Does Factory Direct Homes Center handle delivery and installation?",

@@ -16,6 +16,7 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { getAllPages } from "../src/lib/pages";
+import { SERVICE_AREA_LINKS } from "../src/lib/service-area-links";
 
 const APP = "src/app";
 
@@ -51,4 +52,14 @@ test("every static, indexable page route is in the page registry (and so the sit
     .filter((r) => !NOT_INDEXED.has(r));
   const missing = routes.filter((r) => !registered.has(r));
   assert.deepEqual(missing, [], "add these routes to sitePages in src/lib/pages.ts so the sitemap lists them");
+});
+
+// 2026-10-13: the homepage and footer now link the town pages (until then
+// nothing outside /locations did). A link to a page that is not registered is
+// either a 404 or a page missing from the sitemap.
+
+test("every Areas We Serve link points at a registered page", () => {
+  const registered = new Set(getAllPages().map((p) => p.url));
+  const missing = SERVICE_AREA_LINKS.map((l) => l.href).filter((h) => !registered.has(h));
+  assert.deepEqual(missing, [], "these service-area links are not in the page registry");
 });
