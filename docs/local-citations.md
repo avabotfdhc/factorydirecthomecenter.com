@@ -89,7 +89,10 @@ shopping for a manufactured home actually looks.
 | # | Registry | Notes |
 |---|---|---|
 | 15 | **MHVillage** | The dominant manufactured-housing marketplace. It carries a dealer directory (`mhvillage.com/dealers/in` lists Indiana dealers) and state-association pages. Listing inventory here is a lead channel, not just a citation. **Highest priority in this tier.** |
-| 16 | **Champion Homes dealer locator** | Kyle is an authorized dealer; being on the manufacturer's own locator is a strong, highly relevant citation. Request via the Champion rep. |
+| 16 | **Champion Homes dealer locator** (`championhomes.com/retailers/in/…`) **and Dutch Housing locator** (`dutch-housing.com/retailers/in/…`) | Kyle is an authorized dealer; being on the manufacturer's own locator is a strong, highly relevant citation. Request both via the Champion rep. **Competitor research 2026-10-13: Fahl Homes (Warsaw) — which sells the same Aspire line — is on both locators; we were not found on either.** |
+| 16a | **manufacturedhomes.com / modularhomes.com / yourindianahomes.com** | One network: a single dealer record (Clayton of Garrett is retailer #3673) is syndicated to all three. Each page ranks for "[type] homes for sale [town]". Sign up once through manufacturedhomes.com's dealer program; check whether listing is free or paid before committing. |
+| 16b | **NewHomeSource** (`newhomesource.com`) | Builder/retailer community listings; Clayton of Garrett is listed. Lower priority than MHVillage. |
+| 16c | **MHBO** (`mhbo.com`) | Lists dealers alongside parks. Low effort. |
 | 17 | **IMHA-RVIC** — Indiana Manufactured Housing Association / Recreation Vehicle Indiana Council | Active trade association, ~400 members, Exec. Dir. Ron Breymier, 3210 Rand Rd, Indianapolis IN 46241, **(317) 247-6258**. Member listing + the MH FacTOURy Summit. **See the warning below about `indianamha.org`.** |
 | 18 | **Manufactured Housing Institute (MHI)** | National association; retailer membership |
 | 19 | **MHBay / Mobile Home Party / MHDealers** | Secondary marketplaces; low effort |
@@ -147,6 +150,10 @@ Fill in as each goes live. Send the URLs over and they go into `BUSINESS.sameAs`
 | Apple Business Connect | | | |
 | MHVillage | | | |
 | Champion dealer locator | | | |
+| Dutch Housing dealer locator | | | |
+| manufacturedhomes.com network | | | |
+| NewHomeSource | | | |
+| MHBO | | | |
 | DeKalb Chamber Partnership | | | |
 | IMHA-RVIC | | | |
 | Yelp | present per Semrush | | |
