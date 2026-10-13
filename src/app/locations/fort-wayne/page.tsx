@@ -22,7 +22,7 @@ import { businessAreaRef } from "@/lib/business";
 // ============================================
 
 export const metadata = genMeta({
-  title: "Mobile & Manufactured Homes in Fort Wayne, IN",
+  title: "Factory Direct Mobile & Manufactured Homes, Fort Wayne IN",
   description: "Champion manufactured & modular homes delivered to Fort Wayne, Indiana. 30 miles from Auburn showroom. Serving Allen, Whitley, Noble counties. Factory-direct pricing, line-item transparency.",
   keywords: [
     "manufactured homes fort wayne",

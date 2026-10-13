@@ -15,6 +15,7 @@ import type { Metadata } from "next";
 import { jsonLdScript } from "@/lib/json-ld";
 import { businessRef } from "@/lib/business";
 import { MORE_SERVICE_AREA_LINKS, SERVICE_AREA_LINKS } from "@/lib/service-area-links";
+import { FACTORY_DIRECT_FAQ, FACTORY_DIRECT_STEPS } from "@/lib/factory-direct";
 
 // Server-rendered homepage: everything static (hero, search, featured cards,
 // FAQ, schema) ships as HTML with zero hydration cost; only the animated
@@ -29,7 +30,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: { absolute: "Factory Direct Homes Center | Manufactured Homes in Auburn, IN" },
   description:
-    "Factory-direct pricing on new Champion manufactured and modular homes. Single wides, double wides & modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN. Contact us for pricing.",
+    "Factory-direct Champion mobile & manufactured homes: an authorized dealer orders yours from Champion’s Indiana plants and it ships straight to your land.",
   keywords: [
     "factory direct homes",
     "factory direct mobile homes",
@@ -50,6 +51,7 @@ const HOME_FAQS: FaqItem[] = [
                 q: "What is the difference between manufactured and modular homes?",
                 a: "Manufactured homes are built to federal HUD standards on a permanent chassis. That makes them more affordable and faster to deliver. Modular homes are built to state IRC codes, the same codes as site-built homes. They sit on permanent foundations and qualify for conventional mortgages. Both are built in a factory with quality control that exceeds site-built construction."
               },
+              FACTORY_DIRECT_FAQ,
               {
                 q: "How much does a manufactured home cost in Indiana?",
                 a: "Pricing depends on the size, series, and options you choose. Factory Direct quotes every home line by line: the home, each option, and delivery are priced separately, with no hidden markups. Buying factory direct keeps these among the most affordable new homes in Indiana. Call (260) 308-1457 or request a quote online for current pricing on any floor plan."
@@ -127,6 +129,33 @@ export default async function Home() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* What "factory direct" means here. Champion sells only to dealers, so
+          the honest version is: we are the dealer, we buy the home from
+          Champion for the buyer, and it ships straight from the plant to their
+          land. Wording lives in src/lib/factory-direct.ts. */}
+      <section className="py-16 lg:py-20 bg-white" aria-labelledby="factory-direct">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <H2 id="factory-direct" className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+              Factory Direct Mobile &amp; Manufactured Homes
+            </H2>
+            <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
+            <p className="text-base text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
+              What factory direct means when you buy from us.
+            </p>
+          </div>
+          <ol className="grid gap-6 md:grid-cols-3">
+            {FACTORY_DIRECT_STEPS.map((step, i) => (
+              <li key={step.title} className="rounded border border-[var(--color-charcoal)]/10 bg-[var(--color-cream)] p-6">
+                <p className="text-sm font-bold text-[var(--color-teal)]">Step {i + 1}</p>
+                <h3 className="mt-1 text-lg font-bold text-[var(--color-charcoal)]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--color-charcoal)]/80">{step.body}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

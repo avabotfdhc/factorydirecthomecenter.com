@@ -1,3 +1,4 @@
+import { FACTORY_DIRECT_FAQ } from "@/lib/factory-direct";
 import Link from "next/link";
 import Image from "next/image";
 import { FAQSection } from "@/components/FAQSection";
@@ -99,8 +100,8 @@ const aboutFAQs = [
     answer: "We are a locally-owned, family business based in Auburn, Indiana. While we partner with national manufacturer Champion Homes, we operate as an independent dealership serving our local community and surrounding states. Our local ownership means decisions are made here, not at a corporate headquarters."
   },
   {
-    question: "What does 'factory-direct pricing' actually mean?",
-    answer: "Factory-direct pricing means we buy homes directly from Champion's manufacturing facility and pass those savings to you, adding only a fair dealer margin. Our transparent, itemized pricing lets you see exactly where every dollar goes."
+    question: FACTORY_DIRECT_FAQ.q,
+    answer: FACTORY_DIRECT_FAQ.a
   },
   {
     question: "Does Factory Direct Homes Center offer financing?",

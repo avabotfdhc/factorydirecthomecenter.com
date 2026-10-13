@@ -556,3 +556,38 @@ test("no page ranks Champion or quotes its market share", () => {
   walk(resolve(process.cwd(), "src"));
   assert.deepEqual(offenders, [], "Champion's rank and market share need a source");
 });
+
+// Kyle, 2026-10-13: "factory direct" is back, said honestly. Champion sells
+// only to dealers; we are the dealer, we buy the home from Champion for the
+// buyer, and it ships straight from the plant to their land
+// (src/lib/factory-direct.ts). What stays false: that the BUYER buys from the
+// factory, or that there is no dealer, dealer markup or middleman in the sale.
+// Comment lines are skipped, so the rule can be explained in code.
+test("factory-direct copy never says the buyer skips the dealer", () => {
+  const CLAIM = new RegExp(
+    [
+      String.raw`\bno (?:dealer )?middle ?m[ae]n\b`,
+      String.raw`\b(?:no|zero|without (?:a|the|any)) (?:dealer )?mark-?ups?\b`,
+      String.raw`\b(?:skip|skips|skipping|cut|cuts|cutting) (?:out )?the (?:dealer|dealership|middle ?man)`,
+      String.raw`\bwithout (?:a|the) dealer\b`,
+      String.raw`\b(?:you|buyers?|customers?) (?:can )?(?:buy|purchase|order)s? (?:it |your home |homes |a home )?(?:direct(?:ly)? )?from (?:the )?(?:factory|manufacturer|plant|champion)\b`,
+    ].join("|"),
+    "i",
+  );
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+      for (const [i, line] of readFileSync(full, "utf8").split("\n").entries()) {
+        if (/^\s*(\/\/|\*|\/\*)/.test(line)) continue;
+        // Ava's instruction names the forbidden phrases in order to forbid them.
+        if (/\bnever\b[^.]*"no dealer"/.test(line)) continue;
+        if (CLAIM.test(line)) offenders.push(`${relative(process.cwd(), full)}:${i + 1}`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(offenders, [], "we are the dealer: say we buy the home from Champion for the buyer");
+});
