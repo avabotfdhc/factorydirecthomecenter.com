@@ -115,6 +115,16 @@ export const sitePages: SitePage[] = [
     changeFrequency: "monthly",
   },
   {
+    url: "/showroom",
+    title: "Visit Our Showroom & Model Homes in Auburn, IN",
+    shortTitle: "Showroom",
+    description: "Walk through Champion model homes at our Auburn, IN showroom on State Road 8. Hours, directions and how to book a visit.",
+    topics: ["showroom", "contact", "auburn", "model-homes", "visit"],
+    cluster: "core",
+    priority: 0.8,
+    changeFrequency: "monthly",
+  },
+  {
     url: "/contact-us",
     title: "Contact Us",
     description: "Visit our Auburn showroom, call (260) 308-1457, or send a message.",

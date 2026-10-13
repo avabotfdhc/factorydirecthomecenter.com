@@ -284,3 +284,9 @@ export function ownerJsonLd(): Record<string, unknown> {
     worksFor: { "@id": BUSINESS_ID },
   };
 }
+
+/** Google Maps turn-by-turn directions to the showroom, built from the one
+ *  address above so every "Get directions" button agrees with the listing. */
+export const DIRECTIONS_URL =
+  "https://www.google.com/maps/dir/?api=1&destination=" +
+  encodeURIComponent(`${BUSINESS.name}, ${BUSINESS.streetAddress}, ${BUSINESS.city}, ${BUSINESS.region} ${BUSINESS.postalCode}`);

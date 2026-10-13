@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/floor-plans", key: "floorPlans" },
   { href: "/design-your-home", key: "designYourHome" },
   { href: "/locations", key: "locations" },
+  { href: "/showroom", key: "showroom" },
   { href: "/guides", key: "guides" },
   { href: "/blog", key: "blog" },
   { href: "/resources", key: "resources" },
@@ -114,7 +115,10 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors duration-300"
+                  // Showroom joins the desktop bar only at xl: at lg (1024px)
+                  // a tenth link wraps "Floor Plans" and pushes the phone button
+                  // off the edge. The mobile menu always lists it.
+                  className={`${link.key === "showroom" ? "hidden xl:inline " : ""}text-xs font-medium text-[var(--color-charcoal)]/80 hover:text-[var(--color-teal)] transition-colors duration-300`}
                 >
                   {t(`nav.${link.key}`)}
                 </Link>

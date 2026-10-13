@@ -115,3 +115,16 @@ test("a home's own card image gets a complete alt without naming a room", () => 
   assert.match(alt, /Champion Homes/, "the builder is named");
   assert.ok(alt.trim().length > 20, `fallback alt must be substantive, got "${alt}"`);
 });
+
+// 2026-10-13: an SEO tool reported the site's photos as "Champion modular".
+// The source was the default share-image alt in generateMetadata() — "…
+// Manufactured and Modular Homes" — inherited by every page without its own
+// image, describing a photo of a manufactured home. The default must describe
+// /images/hero-home.jpg, which is not a modular home.
+test("the default share-image alt does not call the photo modular", async () => {
+  const { generateMetadata } = await import("../src/lib/seo");
+  const meta = generateMetadata({ title: "Test", description: "Test page", url: "/test" });
+  const images = [meta.openGraph?.images, meta.twitter?.images].flat().filter(Boolean) as Array<{ alt?: string }>;
+  assert.ok(images.length > 0, "expected a default share image");
+  for (const img of images) assert.doesNotMatch(img.alt ?? "", /modular/i);
+});

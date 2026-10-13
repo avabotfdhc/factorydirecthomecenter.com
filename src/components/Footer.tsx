@@ -44,6 +44,7 @@ export function Footer() {
                 { href: "/faq", label: "FAQs" },
                 { href: "/blog", label: "Blog" },
                 { href: "/about", label: "About Us" },
+                { href: "/showroom", label: "Showroom & Model Homes" },
                 { href: "/contact-us", label: "Contact" },
               ].map((link) => (
                 <li key={link.href}>

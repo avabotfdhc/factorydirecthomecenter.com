@@ -1418,3 +1418,24 @@ Full findings and Kyle's to-do list: `docs/competitor-research-2026-10-13.md`.
   site added ~75 town posts and county pages in seven weeks, and Google's
   September 2026 spam update (from 2026-09-24) targets scaled place-name
   content. Strengthen and link what exists; reassess with Search Console data.
+
+# More calls and showroom visits (Kyle, 2026-10-13)
+
+Kyle's priority is phone calls and lot visits over raw traffic. His facts: the
+Auburn lot has **walk-through Champion model homes**, and **appointments are
+preferred** so someone is free to show the buyer around (walk-ins are not
+refused, but the site asks people to book or call ahead).
+
+- `/showroom` is the visit page: hours and address read from `BUSINESS`, the
+  consent-gated `LocationMap`, `DIRECTIONS_URL`, a four-question FAQ (FAQPage
+  schema), and `ShowroomVisitButton`. Never retype hours or the address there.
+- `ShowroomVisitButton` (`src/components/QuoteModal.tsx`) opens the same dialog
+  as the floor-plan "Schedule a Lot Visit" and posts to `/api/leads` with
+  `source: "Showroom Visit"`. Visit mode asks for a best day to visit in
+  addition to the buying timeline, and puts it in the message.
+- `DIRECTIONS_URL` (`src/lib/business.ts`) is the one Google Maps directions
+  link; the phone action bar now carries Call / Text / Directions / Quote.
+- Links to `/showroom`: header (desktop at `xl` and up only, mobile menu
+  always), footer, a homepage band, and the CTA of every location template.
+  The desktop header already overflowed at 1024px before this change (the
+  phone button sits past the viewport edge); that is a separate fix.
