@@ -18,8 +18,7 @@ const to = (source: string, destination: string): Redirect => ({ source, destina
 // same Champion model number under an "aspire-*" slug; each pair below was
 // matched on the model code and the destination read from the live sitemap —
 // never built by swapping the prefix, because the CMS drops the family name on
-// some models (see "Slugs are not a prefix swap" in AGENTS.md). The 44
-// dutch-aspire URLs that still render are deliberately not listed.
+// some models (see "Slugs are not a prefix swap" in AGENTS.md).
 export const DEAD_DUTCH_ASPIRE: ReadonlyArray<readonly [string, string]> = [
   ["dutch-aspire-1432h11214", "aspire-1432h11214"],
   ["dutch-aspire-1440h11065", "aspire-1440h11065"],
@@ -89,7 +88,59 @@ export const DEAD_DUTCH_ASPIRE: ReadonlyArray<readonly [string, string]> = [
   ["dutch-aspire1676h32259", "aspire-1676h32259"],
 ];
 
-const dutchAspire: Redirect[] = DEAD_DUTCH_ASPIRE.map(([from, dest]) =>
+// The other 44 dutch-aspire-* pages still rendered (from the repo data files)
+// but were duplicates of the CMS page for the same model: absent from the
+// sitemap and every listing, yet still crawled through old links, so Google
+// saw two pages per home. Kyle had them consolidated on 2026-10-13. Same
+// matching rule as above.
+export const LIVE_DUTCH_ASPIRE: ReadonlyArray<readonly [string, string]> = [
+  ["dutch-aspire-1444h11023", "aspire-1444h11023"],
+  ["dutch-aspire-1648h21016", "aspire-1648h21016"],
+  ["dutch-aspire-1660h22212", "aspire-1660h22212"],
+  ["dutch-aspire-1660h32206", "aspire-1660h32206"],
+  ["dutch-aspire-1666h22091", "aspire-1666h22091"],
+  ["dutch-aspire-1666h22232", "aspire-1666h22232"],
+  ["dutch-aspire-1668h22259", "aspire-1668h22259"],
+  ["dutch-aspire-1672h32087", "aspire-1672h32087"],
+  ["dutch-aspire-1672h32090", "aspire-1672h32090"],
+  ["dutch-aspire-1676h32085", "aspire-1676h32085"],
+  ["dutch-aspire-1676h32087", "aspire-1676h32087"],
+  ["dutch-aspire-bayfield-2844h32169", "aspire-bayfield-2844h32169"],
+  ["dutch-aspire-bayfield-2848h32169", "aspire-bayfield-2848h32169"],
+  ["dutch-aspire-berkley-2856h32449", "aspire-berkley-2856h32449"],
+  ["dutch-aspire-brighton-2848h32170", "aspire-brighton-2848h32170"],
+  ["dutch-aspire-brooklyn-2456h32168", "aspire-brooklyn-2456h32168"],
+  ["dutch-aspire-broomfield-2452h32160", "aspire-broomfield-2452h32160"],
+  ["dutch-aspire-broomfield-2456h32160", "aspire-broomfield-2456h32160"],
+  ["dutch-aspire-casper-2432h21166", "aspire-casper-2432h21166"],
+  ["dutch-aspire-casper-2436h21166", "aspire-casper-2436h21166"],
+  ["dutch-aspire-easton-2860h32301", "aspire-easton-2860h32301"],
+  ["dutch-aspire-fairplay-2448h32384", "aspire-fairplay-2448h32384"],
+  ["dutch-aspire-glenrock-2460h42096", "aspire-glenrock-2460h42096"],
+  ["dutch-aspire-jackson-2852h32173", "aspire-jackson-2852h32173"],
+  ["dutch-aspire-jackson-2856h32173", "aspire-jackson-2856h32173"],
+  ["dutch-aspire-lancaster-2848h32160", "aspire-lancaster-2848h32160"],
+  ["dutch-aspire-lancaster-2852h32160", "aspire-lancaster-2852h32160"],
+  ["dutch-aspire-monroe-2844h32024", "aspire-monroe-2844h32024"],
+  ["dutch-aspire-monroe-2848h32024", "aspire-monroe-2848h32024"],
+  ["dutch-aspire-odyssey-2868h32394", "aspire-odyssey-2868h32394"],
+  ["dutch-aspire-odyssey-3260h32394", "aspire-odyssey-3260h32394"],
+  ["dutch-aspire-pontiac-2856h32103", "aspire-pontiac-2856h32103"],
+  ["dutch-aspire-sheridan-2440h32382", "aspire-sheridan-2440h32382"],
+  ["dutch-aspire-sheridan-2444h32382", "aspire-sheridan-2444h32382"],
+  ["dutch-aspire-sheridan-2448h32382", "aspire-sheridan-2448h32382"],
+  ["dutch-aspire-summit-2852h32a1c", "aspire-summit-2852h32a1c"],
+  ["dutch-aspire-summit-2856h32a1c", "aspire-summit-2856h32a1c"],
+  ["dutch-aspire-sundance-2444h32167", "aspire-sundance-2444h32167"],
+  ["dutch-aspire-sundance-2448h32167", "aspire-sundance-2448h32167"],
+  ["dutch-aspire-sundance-2452h32167", "aspire-sundance-2452h32167"],
+  ["dutch-aspire-warren-2852h32172", "aspire-warren-2852h32172"],
+  ["dutch-aspire-westbrook-1676h32107", "aspire-1676h32107"],
+  ["dutch-aspire-woodward-2860h32047", "aspire-woodward-2860h32047"],
+  ["dutch-aspire-woodward-2868h32047", "aspire-woodward-2868h32047"],
+];
+
+const dutchAspire: Redirect[] = [...DEAD_DUTCH_ASPIRE, ...LIVE_DUTCH_ASPIRE].map(([from, dest]) =>
   to(`/floor-plans/${from}`, `/floor-plans/${dest}`),
 );
 

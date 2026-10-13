@@ -15,7 +15,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { searchConsoleRedirects, DEAD_DUTCH_ASPIRE } from "../src/lib/search-console-redirects";
+import { searchConsoleRedirects, DEAD_DUTCH_ASPIRE, LIVE_DUTCH_ASPIRE } from "../src/lib/search-console-redirects";
 import { legacyFloorPlanRedirects } from "../src/lib/legacy-redirects";
 import { retiredSeriesRedirects, isRetiredPlanSlug } from "../src/lib/retired-series";
 
@@ -52,7 +52,8 @@ test("no destination is itself redirected or retired (single hop)", () => {
 
 test("each dutch-aspire page lands on the aspire page for the same model code", () => {
   assert.equal(DEAD_DUTCH_ASPIRE.length, 66);
-  for (const [from, dest] of DEAD_DUTCH_ASPIRE) {
+  assert.equal(LIVE_DUTCH_ASPIRE.length, 44);
+  for (const [from, dest] of [...DEAD_DUTCH_ASPIRE, ...LIVE_DUTCH_ASPIRE]) {
     assert.match(from, /^dutch-aspire/);
     assert.match(dest, /^aspire-/);
     assert.equal(from.match(MODEL)?.[1], dest.match(MODEL)?.[1], `${from} → ${dest} changes the model`);
@@ -65,4 +66,17 @@ test("the list is spread before every other redirect in next.config.ts", () => {
   const first = body.indexOf("...searchConsoleRedirects");
   assert.ok(first > 0, "next.config.ts does not spread searchConsoleRedirects");
   assert.ok(first < body.indexOf("source:"), "searchConsoleRedirects must come before the pattern rules");
+});
+
+// 2026-10-13: every repo-published dutch-aspire-* page duplicated a CMS page.
+// A new one added to the data files must get its 301 too, or it becomes a
+// second, unlisted page for the same home again.
+test("every dutch-aspire slug in the repo data files is redirected", () => {
+  const sources = new Set(searchConsoleRedirects.map((r) => r.source));
+  const slugs = ["src/lib/aspire-floor-plans.ts", "src/lib/local-floor-plans.ts"].flatMap((f) =>
+    [...readFileSync(f, "utf8").matchAll(/slug:\s*"(dutch-aspire[^"]*)"/g)].map((m) => m[1]),
+  );
+  assert.ok(slugs.length >= 44, "expected the repo dutch-aspire plans to be found");
+  const missing = slugs.filter((s) => !sources.has(`/floor-plans/${s}`));
+  assert.deepEqual(missing, [], "redirect these to the aspire-* page with the same model code");
 });
