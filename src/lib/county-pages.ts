@@ -151,6 +151,11 @@ export const countyPages: CountyPage[] = [
     ],
     faqs: [
       {
+        question: "Which permits come first for a manufactured home in Kosciusko County?",
+        answer:
+          "Start with the septic: the Kosciusko County Health Department requires a permit for any new or repaired septic system or well. Outside the towns, the Kosciusko County Area Plan Commission in Warsaw issues the improvement location permit, and a lot in a mapped floodplain needs a flood development permit first. Inside Warsaw, the city's building department handles building permits. Your contractors pull these permits; we can tell you which office answers for your address.",
+      },
+      {
         question: "Can I put a manufactured home on a lake lot in Kosciusko County?",
         answer:
           "Often, but lake lots are where setbacks, septic placement and association covenants bite hardest. Get the lot's survey and the covenants first, then choose a home that fits them — a single-section plan solves many narrow-lot problems.",
@@ -230,6 +235,11 @@ export const countyPages: CountyPage[] = [
       { href: "/blog/manufactured-homes-goshen-indiana", label: "Manufactured homes in Goshen: how a HUD-code home differs from an RV or park model" },
     ],
     faqs: [
+      {
+        question: "Which permits come first for a manufactured home in Elkhart County?",
+        answer:
+          "Septic permits come from the Elkhart County Health Department's environmental health division. Outside the cities, Elkhart County Planning and Development in Goshen handles zoning and building permits; inside Goshen, the city requires a zoning clearance before it issues building permits, and the City of Elkhart runs its own permit center. Your contractors pull these permits; we can tell you which office answers for your address.",
+      },
       {
         question: "Is a manufactured home the same as an RV or a park model?",
         answer:
@@ -344,12 +354,17 @@ export const countyPages: CountyPage[] = [
       "A written line-item quote to take home and compare",
     ],
     zoningNote:
-      "Grant County's area plan office handles the unincorporated county, and Marion, Gas City and the towns permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+      "Grant County's Area Plan Commission in Marion issues permits for the unincorporated county and for Fairmount, Jonesboro, Matthews, Sweetser, Upland and Van Buren; the cities of Marion and Gas City issue their own. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
     relatedPosts: [
       { href: "/blog/manufactured-homes-marion-indiana", label: "Manufactured homes in Marion: making one showroom visit count" },
     ],
     faqs: [
+      {
+        question: "Which permits come first for a manufactured home in Grant County?",
+        answer:
+          "The septic comes first: the building department needs a letter from the Grant County Health Department's environmental division about the septic system before it issues a building permit. Outside Marion and Gas City, the Grant County Area Plan Commission issues the improvement location and building permits; inside Marion, the city planning department issues the improvement location permit and its building department the building permit. Your contractors pull these permits; we can tell you which office answers for your address.",
+      },
       {
         question: "What should I bring to the showroom from Grant County?",
         answer:
@@ -469,6 +484,11 @@ export const countyPages: CountyPage[] = [
       { href: "/blog/manufactured-homes-plymouth-indiana", label: "Manufactured homes in Plymouth: exterior choices and neighbourhood rules" },
     ],
     faqs: [
+      {
+        question: "How does the septic permit work in Marshall County?",
+        answer:
+          "The Marshall County Health Department's process starts with a soil evaluation by a registered soil scientist, then a scaled septic design submitted for review. Do it before you settle on the home size, because the soil result decides where the system goes and how much of the lot is left for the home. Your contractors pull the permits; we can tell you which office answers for your address.",
+      },
       {
         question: "Can covenants limit which manufactured home I put on my lot?",
         answer:
