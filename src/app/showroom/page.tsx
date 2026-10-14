@@ -69,7 +69,7 @@ const FAQS = [
   {
     question: "Where is the showroom?",
     answer:
-      "1211 State Road 8, Auburn, Indiana 46706, just off I-69 at the State Road 8 / Auburn exit, about 20 minutes north of Fort Wayne. Champion's Topeka plant, where Aspire and Redman homes are built, is 30 miles away.",
+      "1211 IN-8, Auburn, Indiana 46706, just off I-69 at the State Road 8 / Auburn exit, about 20 minutes north of Fort Wayne. Champion's Topeka plant, where Aspire and Redman homes are built, is 30 miles away.",
   },
   {
     question: "What should I bring to my visit?",

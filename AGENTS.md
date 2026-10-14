@@ -1377,9 +1377,14 @@ Two traps when filling a listing in, both easy to get wrong:
   texts go to two different lines"). `BUSINESS.telephone` is the number that is
   dialled and belongs in every phone field; `BUSINESS.smsNumber` goes **only**
   in a field that is explicitly for SMS.
-- **The address has one spelling:** `1211 State Road 8`. Not "IN SR-8", not
-  "State Rd 8", not "Indiana 8". NAP consistency is the whole point of the
-  exercise — a second spelling splits the entity.
+- **The address has one spelling:** `1211 IN-8`, the form the Google Business
+  Profile uses (Kyle, 2026-10-14; the site said `1211 State Road 8` until then).
+  Not "State Road 8", not "IN SR-8", not "State Rd 8". NAP consistency is the
+  whole point of the exercise — a second spelling splits the entity. Prose may
+  still say the showroom is "on State Road 8"; only the address itself is fixed.
+- **1211 W 7th St is not our building** (Kyle, 2026-10-14), yet MapQuest and
+  Yahoo Local list us there. Those listings are tracked in
+  `docs/local-citations.md` as fix-first.
 
 Accounts could not be created from the agent sandbox, so the registry
 submissions themselves are Kyle's to do; the generator exists so that every one

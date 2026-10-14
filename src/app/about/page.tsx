@@ -109,7 +109,7 @@ const aboutFAQs = [
   },
   {
     question: "Can I visit the Factory Direct Homes Center showroom?",
-    answer: "Absolutely! Our showroom is located at 1211 State Road 8 in Auburn, Indiana. We're open Monday through Friday 9 AM to 5 PM and Saturday 10 AM to 4 PM. You can walk through model homes, explore customization options, and speak directly with our team about your home buying journey."
+    answer: "Absolutely! Our showroom is located at 1211 IN-8 in Auburn, Indiana. We're open Monday through Friday 9 AM to 5 PM and Saturday 10 AM to 4 PM. You can walk through model homes, explore customization options, and speak directly with our team about your home buying journey."
   },
   {
     question: "What is the relationship between Factory Direct and Champion Homes?",

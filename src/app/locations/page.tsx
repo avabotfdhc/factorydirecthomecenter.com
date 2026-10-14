@@ -187,7 +187,7 @@ export default function LocationsPage() {
                 </text>
               </svg>
               <p className="text-xs text-[var(--color-gray)] text-center mt-3">
-                Zones are approximate road distance from 1211 State Road 8, Auburn, IN 46706.
+                Zones are approximate road distance from 1211 IN-8, Auburn, IN 46706.
               </p>
             </div>
 

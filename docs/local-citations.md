@@ -1,7 +1,7 @@
 # Local citations / business registries
 
 Working list for building local authority for **Factory Direct Homes Center**,
-1211 State Road 8, Auburn IN 46706.
+1211 IN-8, Auburn IN 46706.
 
 **Run `npm run citation-nap` and paste from its output.** Every field it prints
 comes from `src/lib/business.ts`. Do not retype from memory and do not copy from
@@ -23,8 +23,9 @@ Three specific traps for this business:
    a listing *only* where the form has a separate SMS/text field. Putting the
    texting line in the main phone field is the exact defect that cost real leads
    on the website in September — a buyer calls a line that doesn't answer them.
-2. **The address is `1211 State Road 8`.** Not `1211 IN SR-8`, not
-   `1211 IN-8`, not `1211 State Rd 8`. One spelling, everywhere.
+2. **The address is `1211 IN-8`** — the spelling on the Google Business
+   Profile (Kyle, 2026-10-14). Not `1211 State Road 8`, not `1211 IN SR-8`, not
+   `1211 State Rd 8`. One spelling, everywhere.
 3. **The opening date is November 2024.** The Google Business Profile said
    21 September 2024 and is being corrected. Never "fix" a new listing to match
    the old listing — the facts flow from Kyle.
@@ -110,7 +111,7 @@ shopping for a manufactured home actually looks.
 | # | Registry | Notes |
 |---|---|---|
 | 15 | **MHVillage** | The dominant manufactured-housing marketplace. It carries a dealer directory (`mhvillage.com/dealers/in` lists Indiana dealers) and state-association pages. Listing inventory here is a lead channel, not just a citation. **Highest priority in this tier.** |
-| 16 | **Champion Homes dealer locator** (`championhomes.com/retailers/in/…`) **and Dutch Housing locator** (`dutch-housing.com/retailers/in/…`) | Kyle is an authorized dealer; being on the manufacturer's own locator is a strong, highly relevant citation. **Already live (verified 2026-10-14):** [Champion](https://www.championhomes.com/retailers/in/auburn/factory-direct-homes-center-llc) and [Dutch Housing](https://www.dutch-housing.com/retailers/in/auburn/factory-direct-homes-center-llc) both list "Factory Direct Homes Center LLC". The 2026-10-13 note that we were missing was wrong. Check both show the State Road 8 address and the voice line. |
+| 16 | **Champion Homes dealer locator** (`championhomes.com/retailers/in/…`) **and Dutch Housing locator** (`dutch-housing.com/retailers/in/…`) | Kyle is an authorized dealer; being on the manufacturer's own locator is a strong, highly relevant citation. **Already live (verified 2026-10-14):** [Champion](https://www.championhomes.com/retailers/in/auburn/factory-direct-homes-center-llc) and [Dutch Housing](https://www.dutch-housing.com/retailers/in/auburn/factory-direct-homes-center-llc) both list "Factory Direct Homes Center LLC". The 2026-10-13 note that we were missing was wrong. Check both show 1211 IN-8 and the voice line. |
 | 16a | **manufacturedhomes.com / modularhomes.com / yourindianahomes.com** | One network: a single dealer record (Clayton of Garrett is retailer #3673) is syndicated to all three. Each page ranks for "[type] homes for sale [town]". Sign up once through manufacturedhomes.com's dealer program; check whether listing is free or paid before committing. |
 | 16b | **NewHomeSource** (`newhomesource.com`) | Builder/retailer community listings; Clayton of Garrett is listed. Lower priority than MHVillage. |
 | 16c | **MHBO** (`mhbo.com`) | Lists dealers alongside parks. Low effort. |

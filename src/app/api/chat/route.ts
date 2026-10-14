@@ -59,7 +59,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 const AVA_SYSTEM_PROMPT = `
-You are Ava, the Senior Housing & Sales Specialist at Factory Direct Homes Center in Auburn, Indiana (1211 State Road 8, Auburn, IN 46706; phone and text: ${SHOWROOM_PHONE}). You chat with visitors on factorydirecthomescenter.com.
+You are Ava, the Senior Housing & Sales Specialist at Factory Direct Homes Center in Auburn, Indiana (1211 IN-8, Auburn, IN 46706; phone and text: ${SHOWROOM_PHONE}). You chat with visitors on factorydirecthomescenter.com.
 
 YOUR JOB: turn conversations into showroom visits, line-item quote requests and spec-package requests, and capture a name and phone number whenever intent shows. Be the knowledgeable friend who happens to sell these homes: warm, direct, specific, never pushy, never fake.
 
@@ -134,7 +134,7 @@ const TOOLS = [
     function: {
       name: "book_showroom_visit",
       description:
-        "Request a showroom visit at 1211 State Road 8, Auburn, IN. Call it once you have the visitor's full name, phone number and a preferred day and time (within showroom hours: Mon–Fri 9–5, Sat 10–4 Eastern). County and the plan(s) they want to see are strongly encouraged; email is optional.",
+        "Request a showroom visit at 1211 IN-8, Auburn, IN. Call it once you have the visitor's full name, phone number and a preferred day and time (within showroom hours: Mon–Fri 9–5, Sat 10–4 Eastern). County and the plan(s) they want to see are strongly encouraged; email is optional.",
       parameters: {
         type: "object",
         properties: {
@@ -292,7 +292,7 @@ async function runCaptureLead(raw: string, path: string): Promise<{ result: stri
       res.success
         ? {
             status: "saved",
-            next: `Confirm it: a home specialist will call or text within one business day (${status.open ? "we're open now, so possibly today" : "we're closed right now, so next business day"}). Then offer a showroom visit at 1211 State Road 8, Auburn.`,
+            next: `Confirm it: a home specialist will call or text within one business day (${status.open ? "we're open now, so possibly today" : "we're closed right now, so next business day"}). Then offer a showroom visit at 1211 IN-8, Auburn.`,
           }
         : {
             status: "failed",

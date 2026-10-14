@@ -5,7 +5,7 @@
  *
  * Every field comes from `src/lib/business.ts`, which is the one source of the
  * dealership's identity. Citation building fails on inconsistency, not on
- * volume: a directory that says "1211 IN SR-8" while another says "1211 State
+ * volume: a directory that says "1211 IN-8" while another says "1211 State
  * Road 8" and a third carries the texting line as the main number gives Google
  * three slightly different businesses to reconcile, which is worse than having
  * two fewer listings. So nothing here is retyped — regenerate instead.

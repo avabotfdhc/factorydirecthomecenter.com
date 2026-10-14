@@ -188,7 +188,7 @@ export default function PrivacyPage() {
           <H2 className="font-serif text-2xl font-light mb-4">Contact Us</H2>
           <p className="text-[var(--color-gray)] leading-relaxed">
             Factory Direct Homes Center LLC<br />
-            1211 State Road 8, Auburn, Indiana 46706<br />
+            1211 IN-8, Auburn, Indiana 46706<br />
             Phone: <a href="tel:+12603081457" className="text-[var(--color-teal)] underline">(260) 308-1457</a><br />
             Email: <a href="mailto:info@factorydirecthomescenter.com" className="text-[var(--color-teal)] underline">info@factorydirecthomescenter.com</a>
           </p>

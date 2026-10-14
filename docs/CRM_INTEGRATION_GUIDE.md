@@ -173,7 +173,7 @@ Questions? Reply to this email or call us at (260) 308-1457.
 
 Talk soon,
 Factory Direct Homes Center Team
-1211 State Road 8, Auburn, IN
+1211 IN-8, Auburn, IN
 ```
 
 ---

@@ -64,7 +64,7 @@ const data: CityLocationData = {
     {
       question: "What's the closest showroom to Columbia City?",
       answer:
-        "Our Auburn showroom at 1211 State Road 8 is about a 40-minute drive from Columbia City. You can walk through model homes in person, then we deliver and set up your chosen home to your Whitley County site.",
+        "Our Auburn showroom at 1211 IN-8 is about a 40-minute drive from Columbia City. You can walk through model homes in person, then we deliver and set up your chosen home to your Whitley County site.",
     },
   ],
 };

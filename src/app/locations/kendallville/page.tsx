@@ -60,7 +60,7 @@ const data: CityLocationData = {
     {
       question: "What's the closest showroom to Kendallville?",
       answer:
-        "Our Auburn showroom at 1211 State Road 8 is only about a 25-minute drive from Kendallville. You can walk through model homes in person, then we deliver and set up your chosen home to your Noble County site.",
+        "Our Auburn showroom at 1211 IN-8 is only about a 25-minute drive from Kendallville. You can walk through model homes in person, then we deliver and set up your chosen home to your Noble County site.",
     },
     {
       question: "What homes can I buy near Kendallville?",

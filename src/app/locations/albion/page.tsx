@@ -63,7 +63,7 @@ const data: CityLocationData = {
     {
       question: "What's the closest showroom to Albion?",
       answer:
-        "Our Auburn showroom at 1211 State Road 8 is about a 32-minute drive from Albion. Tour model homes in person, then we deliver and set up your chosen home to your Noble County site.",
+        "Our Auburn showroom at 1211 IN-8 is about a 32-minute drive from Albion. Tour model homes in person, then we deliver and set up your chosen home to your Noble County site.",
     },
   ],
 };
