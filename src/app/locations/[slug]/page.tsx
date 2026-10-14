@@ -3,10 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
+import { countyPostLinks } from "@/lib/county-posts";
 import { countyPages, getCountyPage, type CountyPage as CountyPageData } from "@/lib/county-pages";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import { businessAreaRef } from "@/lib/business";
-import { localBlogPosts } from "@/lib/local-posts";
 import { fitTitle } from "@/lib/page-title";
 
 // Programmatic county landing pages. Data lives in src/lib/county-pages.ts.
@@ -17,25 +17,9 @@ export const dynamicParams = false;
 
 const STATIC_LOCATION_SLUGS = new Set(["dekalb-county", "noble-county", "steuben-county"]);
 
-// Every published post that links this county page, plus any listed by hand.
-// Until 2026-10-13 each county listed one post by hand, so Kosciusko linked
-// Warsaw but not Milford, Mentone or Syracuse even though all four link back.
-// Deriving it means a new town post is linked from its county the day it
-// publishes, and a scheduled post is never linked before it exists.
+// Every published town post for this county — see countyPostLinks.
 function relatedPostsFor(c: CountyPageData): { href: string; label: string }[] {
-  const seen = new Set<string>();
-  const out: { href: string; label: string }[] = [];
-  const add = (href: string, label: string) => {
-    if (seen.has(href)) return;
-    seen.add(href);
-    out.push({ href, label });
-  };
-  for (const p of c.relatedPosts ?? []) add(p.href, p.label);
-  const target = `/locations/${c.slug}"`;
-  for (const post of localBlogPosts) {
-    if (post.html.includes(target)) add(`/blog/${post.slug}`, post.title);
-  }
-  return out;
+  return countyPostLinks(c.slug, c.relatedPosts ?? []);
 }
 
 export function generateStaticParams() {

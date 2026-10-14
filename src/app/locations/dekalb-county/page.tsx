@@ -2,6 +2,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { CountyPostsList } from "@/components/CountyPostsList";
 
 export const metadata = genMeta({
   title: "Manufactured Homes in DeKalb County, IN",
@@ -174,6 +175,8 @@ export default function DeKalbCountyPage() {
           </div>
         </div>
       </section>
+
+      <CountyPostsList countySlug="dekalb-county" county="DeKalb County" />
 
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">

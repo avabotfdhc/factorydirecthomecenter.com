@@ -2749,6 +2749,252 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>See <a href="/locations/grant-county">our Grant County page</a>, or read the <a href="/guides/site-work">site work guide</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-kokomo-indiana",
+    title: "Manufactured Homes in Kokomo, Indiana: Where the Laundry Goes and How the Dryer Vents",
+    excerpt:
+      "Laundry is a chore you do every week for as long as you live in the home. How to judge washer and dryer placement in a Champion manufactured home near Kokomo, and why the dryer vent needs checking on set-up day.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 14, 2026",
+    publishAt: "2026-10-14T13:00:00Z",
+    html: `
+<p>Kokomo is the county seat of Howard County, a working city ringed by farm ground and small towns like Greentown and Russiaville. Buyers from here tend to be practical about a new <strong>manufactured home</strong>, and the laundry room is a good test of that. Nobody chooses a home for its laundry, but every floor plan puts the washer and dryer somewhere, and you will carry baskets to that spot every week for years.</p>
+
+<h2>Where the laundry sits in a floor plan</h2>
+<p>Champion plans place laundry in a few common spots. Each has a trade-off:</p>
+<ul>
+  <li><strong>Off the back or side entry.</strong> Muddy boots, work clothes and towels go straight in without crossing the house. A good fit for farm work, a shop job or kids in sports.</li>
+  <li><strong>Near the bedrooms.</strong> The shortest walk from where clothes come off to where they get washed. The noise is closer to the bedrooms, too.</li>
+  <li><strong>A closet in the hallway.</strong> Saves floor space in a smaller home, usually with no room to fold.</li>
+  <li><strong>A full room with a sink or counter.</strong> Space to sort, fold and hang, at the cost of square footage elsewhere.</li>
+</ul>
+<p>Walk the route in the floor plan drawing: from the bedrooms, from the back door and from the kitchen. Our Akron post covers reading a floor plan drawing if the symbols are new to you.</p>
+
+<h2>Hookups: check the spec sheet, then your appliances</h2>
+<p>Each plan&rsquo;s spec sheet says what the laundry area is set up for. Before you order, confirm:</p>
+<ul>
+  <li><strong>Electric or gas dryer.</strong> An electric dryer needs a 240-volt outlet; a gas dryer needs a gas line, which only makes sense if the home has gas service at all. Our Cromwell post covers heating fuel on a rural lot.</li>
+  <li><strong>Side-by-side or stacked.</strong> Measure the space against the appliances you own or plan to buy, including the door swing and the depth with hoses connected.</li>
+  <li><strong>Whether appliances are included.</strong> Some plans and options include a washer and dryer; many do not. It is a separate line on our quote either way.</li>
+</ul>
+
+<h2>The dryer vent deserves a look on set-up day</h2>
+<p>A dryer pushes warm, damp, lint-filled air. That air has to leave the home through a vent to the outside. It should never end in the crawlspace or under the skirting, where the moisture rots and the lint is a fire risk.</p>
+<p>Depending on the plan, the vent may go through a wall or down through the floor and out past the skirting. Any run that is finished on site is part of the set-up work your contractor does. After set-up, look under the home or ask your contractor to show you where the vent ends. Our Topeka post lists the other items to check on delivery day.</p>
+
+<h2>Keep it running well</h2>
+<ul>
+  <li>Clean the lint screen every load.</li>
+  <li>Check the outside vent hood a few times a year. Birds and wasps like it.</li>
+  <li>Use rigid or semi-rigid metal duct for the connector behind the dryer, not thin foil or vinyl.</li>
+  <li>Check the washer hoses each year and replace any that bulge or crack.</li>
+</ul>
+
+<h2>Common questions</h2>
+<h3>Can I move the laundry to a different spot?</h3>
+<p>Only within the options Champion offers for that plan. The plumbing and electrical are built in at the factory, so choose a plan with the laundry where you want it.</p>
+<h3>Do you install the dryer vent?</h3>
+<p>No. We sell and deliver the home. Set-up and any site connections are done by contractors you hire.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/howard-county">our Howard County page</a>, or browse <a href="/floor-plans">floor plans</a> and compare where each one puts the laundry.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-logansport-indiana",
+    title: "Manufactured Homes in Logansport, Indiana: Choosing and Caring for the Water Heater",
+    excerpt:
+      "Hot water is easy to take for granted until it runs out. What to check about the water heater in a Champion manufactured home near Logansport — fuel, capacity, where it sits, and what to know before it ever needs replacing.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 15, 2026",
+    publishAt: "2026-10-15T13:00:00Z",
+    html: `
+<p>Logansport is the county seat of Cass County, where the Eel River meets the Wabash. Buyers here are often families, and families use a lot of hot water. The water heater in a new <strong>manufactured home</strong> is one of the few appliances you rarely see and almost never think about, so it is worth a few minutes before you order.</p>
+
+<h2>Fuel: electric or gas</h2>
+<p>Each plan&rsquo;s spec sheet says what kind of water heater comes with the home. Some plans offer a choice. The fuel should match the rest of the house:</p>
+<ul>
+  <li><strong>Electric</strong> needs no gas service and no venting. It is the common choice on a rural lot with no gas line.</li>
+  <li><strong>Gas</strong> (natural gas or propane) recovers faster after a run of showers, but it needs gas service and proper venting.</li>
+</ul>
+<p>If you are still deciding how the home will be heated, settle that first. Our Cromwell post covers heating fuel on a rural lot.</p>
+
+<h2>Capacity: think about your busiest morning</h2>
+<p>A water heater&rsquo;s tank size and recovery rate decide how many showers you get back to back. Count the people who shower in the same hour, add a dishwasher or a load of laundry, and ask whether the standard heater keeps up. If the plan has a larger bathtub or a second full bath, that matters too. Our Warren post covers choosing the bathrooms.</p>
+
+<h2>Where it sits, and why that matters</h2>
+<p>In many manufactured homes the water heater is in a small closet, sometimes with an access door from outside. Find it on the floor plan drawing and ask:</p>
+<ul>
+  <li>Can someone reach it to drain it, check it, or replace it without moving furniture?</li>
+  <li>Is the floor around it protected, and is there a drain pan?</li>
+  <li>If it opens to the outside, will snow or a deck block the door?</li>
+</ul>
+
+<h2>Replacing one later</h2>
+<p>A water heater in a HUD-code home is not always a standard hardware-store unit. When yours is eventually replaced, the new one should be approved for manufactured-home installation. A plumber who works on manufactured homes will know which units fit and how the venting and combustion air work. Keep the model number with your home&rsquo;s paperwork; our Montpelier post covers what to keep.</p>
+
+<h2>Yearly care</h2>
+<ul>
+  <li>Test the pressure relief valve once a year.</li>
+  <li>Drain a few gallons from the bottom to clear sediment, especially on well water. Our Berne post covers well-water testing.</li>
+  <li>Look for rust, drips or dampness around the base.</li>
+  <li>Set the temperature no higher than you need, which saves energy and helps prevent scalds.</li>
+</ul>
+
+<h2>Common questions</h2>
+<h3>Can I add a tankless water heater?</h3>
+<p>Ask before you order. Changes to built-in plumbing and gas systems are limited to what Champion offers for that plan, and anything done later needs a licensed contractor and the right permits.</p>
+<h3>Who connects the water heater on site?</h3>
+<p>The heater ships installed. Connecting the home to water, power and any gas service is done by contractors you hire.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/cass-county">our Cass County page</a>, or read the <a href="/guides/site-work">site work guide</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-mishawaka-indiana",
+    title: "Manufactured Homes in Mishawaka, Indiana: Planning Moving Day",
+    excerpt:
+      "The home is set, the inspection is done, and now you have to move in. How to plan moving day for a new manufactured home near Mishawaka — utilities, measuring furniture, what to pack last, and the first night.",
+    image: "/images/homepage/feature-find-home.webp",
+    date: "October 16, 2026",
+    publishAt: "2026-10-16T13:00:00Z",
+    html: `
+<p>Mishawaka sits beside South Bend on the St. Joseph River, and many buyers from here are moving out of an apartment or an older house in town. By the time your new <strong>manufactured home</strong> is set and inspected, most of the decisions are behind you. Moving day is the last piece, and a little planning keeps it from turning into a long weekend of unpacking in the dark.</p>
+
+<h2>Do not book the truck before the home is ready</h2>
+<p>Delivery and set-up are not the same as move-in. Wait until your contractors have finished set-up and the utilities are connected, and until any final inspection or occupancy approval your county or city requires has been given. Ask the permit office what it requires before you choose a date; we can tell you which office answers for your address. Our Monroeville post covers working backward from move-in.</p>
+
+<h2>Transfer the utilities ahead of time</h2>
+<p>A week or two out, call each provider with your new address and the date you need service in your name:</p>
+<ul>
+  <li>Electric, and gas or propane if the home uses it.</li>
+  <li>Water and sewer, or a well and septic you already own.</li>
+  <li>Trash pickup.</li>
+  <li>Internet and phone. Our Larwill post covers checking service before you buy land.</li>
+</ul>
+<p>Set the old place&rsquo;s service to end a day or two after you leave, not before.</p>
+
+<h2>Measure the big pieces</h2>
+<p>Measure your sofa, mattress, dressers and dining table, then compare them with the doorways, hallways and rooms on the floor plan drawing. A piece that fits the room can still fail to turn the corner from the hall. Our Akron post covers reading a floor plan drawing. If something will not fit, it is better to know before it is on the truck.</p>
+
+<h2>Protect the new home on the way in</h2>
+<ul>
+  <li>Put down floor runners at each door and along the main path.</li>
+  <li>Pad door frames and corners where furniture turns.</li>
+  <li>Use the steps your contractor built, not a temporary ramp on loose ground.</li>
+  <li>Keep heavy items spread out rather than stacked in one spot.</li>
+</ul>
+
+<h2>Pack a first-night box</h2>
+<p>Label one box to open first: bedding, towels, a shower curtain and rings, toilet paper, soap, phone chargers, basic tools, a flashlight, medications, and something to eat with. Put it in the car, not the truck.</p>
+
+<h2>The first week</h2>
+<ul>
+  <li>Find the main electrical panel, the water shut-off and the water heater, and make sure everyone in the house knows where they are.</li>
+  <li>Test the smoke alarms. Our Dunkirk post covers alarms and an escape plan.</li>
+  <li>Walk the home and write down anything that is not right. Warranty items are easier to handle when they are reported early and in writing. Our Kimmell post covers first-year care.</li>
+  <li>Update your address with the post office, your bank, your employer, your insurer and the BMV.</li>
+</ul>
+
+<h2>Common questions</h2>
+<h3>Can I store my things in the home before move-in?</h3>
+<p>Ask your contractors first. Boxes in the way slow the work, and nothing should go in until the home is secure and insured. Our South Whitley post covers insuring the home.</p>
+<h3>Do you help with moving?</h3>
+<p>No. We sell and deliver the home. The move is yours to plan.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/st-joseph-county">our St. Joseph County page</a>, or browse <a href="/floor-plans">floor plans</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-muncie-indiana",
+    title: "Manufactured Homes in Muncie, Indiana: Fresh Air and Moisture Indoors",
+    excerpt:
+      "A new home is built tight, which is good for heating bills and means the air needs managing. How ventilation, bath fans, the range hood and winter humidity work in a Champion manufactured home near Muncie.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 17, 2026",
+    publishAt: "2026-10-17T13:00:00Z",
+    html: `
+<p>Muncie is the county seat of Delaware County, with Yorktown, Albany, Eaton and Selma in the country around it. Buyers moving from an older, draughty house into a new <strong>manufactured home</strong> often notice the difference in the first winter: the new home holds heat far better. It also holds moisture, cooking smells and stale air unless it is ventilated. This post covers how that works and what to do about it.</p>
+
+<h2>Every HUD-code home has whole-house ventilation</h2>
+<p>The federal HUD code that every manufactured home is built to requires a way to bring in fresh air and move stale air out. How it works varies by plan. In many homes it is tied to a fan and a control near the thermostat or in a hallway. Ask at delivery how yours works, then leave it running as designed. Turning it off to save a little energy is how windows start to sweat in January.</p>
+
+<h2>Use the fans you already have</h2>
+<ul>
+  <li><strong>Bathroom fans.</strong> Run them during every shower and for twenty minutes or so after. A bathroom without a fan running is the most common source of mildew.</li>
+  <li><strong>The range hood.</strong> Use it whenever you boil water or fry. Cooking puts a surprising amount of water into the air.</li>
+  <li><strong>The dryer vent.</strong> It must end outside the home, never in the crawlspace. Our Kokomo post covers laundry and dryer venting.</li>
+</ul>
+
+<h2>Watch the windows in winter</h2>
+<p>A little fog at the bottom of a cold window on a very cold morning is normal. Water running down the glass or pooling on the sill every day means the air inside is too humid. Signs to act on:</p>
+<ul>
+  <li>Water on windows most mornings.</li>
+  <li>Mildew in closets on outside walls or behind furniture.</li>
+  <li>A musty smell that does not clear.</li>
+</ul>
+<p>The fixes are usually simple: run the fans longer, keep furniture a few inches off outside walls, do not dry laundry indoors on racks, and do not run a humidifier in a new home without checking the humidity first. An inexpensive humidity meter tells you where you stand.</p>
+
+<h2>Keep the crawlspace dry</h2>
+<p>Moisture can rise from the ground under the home as well. A ground cover under the home, good grading and working gutters keep it out; that is site work your contractors do. Our Bremen post covers grading, gutters and a dry crawlspace.</p>
+
+<h2>Change the filters</h2>
+<p>The furnace filter is the simplest air-quality step there is. Check it monthly at first, and change it on the schedule the manufacturer gives. Homes with pets or on a dusty gravel road need it more often. Our Huntington post covers pets and a busy household.</p>
+
+<h2>Common questions</h2>
+<h3>Should I add an air purifier or dehumidifier?</h3>
+<p>Some households benefit from one. Start with the ventilation, fans and filters the home already has, measure the humidity, and decide from there.</p>
+<h3>Is condensation a warranty problem?</h3>
+<p>Usually it is a sign of household humidity rather than a defect. If water appears somewhere it should not, such as inside a wall or under a window frame, report it in writing right away.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/delaware-county">our Delaware County page</a>, or read about <a href="/guides/manufactured-vs-modular">manufactured versus modular homes</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-winchester-indiana",
+    title: "Manufactured Homes in Winchester, Indiana: Windows, Daylight and Which Way the Home Faces",
+    excerpt:
+      "Daylight changes how a home feels more than almost anything else. How to compare window placement in Champion manufactured home plans near Winchester, and how the direction the home faces affects light, heat and glare.",
+    image: "/images/homepage/feature-find-land.webp",
+    date: "October 18, 2026",
+    publishAt: "2026-10-18T13:00:00Z",
+    html: `
+<p>Winchester is the county seat of Randolph County, in open farm country near the Ohio line, with Union City, Farmland, Lynn and Parker City nearby. On flat, open ground, the sun reaches a home from every side, which makes window placement matter more than it does on a shaded town lot. When you choose a new <strong>manufactured home</strong>, the windows come with the floor plan, so it pays to look at them on purpose.</p>
+
+<h2>Read the windows on the floor plan</h2>
+<p>Windows show on the floor plan drawing as breaks in the outside wall. Look at each room and ask:</p>
+<ul>
+  <li>Does the living room have windows on more than one wall? Light from two sides makes a room feel larger and brighter all day.</li>
+  <li>Is there a window over the kitchen sink? It is where you stand most.</li>
+  <li>Do the bedrooms have the light you want, and the privacy?</li>
+  <li>Are interior rooms, like a hallway or a bath, getting any daylight at all?</li>
+</ul>
+<p>Our Akron post covers reading a floor plan drawing, and our Wabash post covers making a smaller home feel bigger.</p>
+
+<h2>Which way the home faces changes everything</h2>
+<p>The same plan feels different depending on how it is turned on the lot. In northern Indiana, roughly:</p>
+<ul>
+  <li><strong>South-facing windows</strong> get the most sun, welcome in winter and easy to shade in summer with a porch roof or overhang.</li>
+  <li><strong>East-facing windows</strong> bring morning light, which many people want in a kitchen or bedroom.</li>
+  <li><strong>West-facing windows</strong> get hot, low afternoon sun, the hardest to control in summer and the source of glare on a TV.</li>
+  <li><strong>North-facing windows</strong> give soft, even light with little heat.</li>
+</ul>
+<p>Where the home sits on the land is your decision, made with your site contractor and the county&rsquo;s setback rules. Decide it with the floor plan in hand. Our Howe post covers siting a home on acreage.</p>
+
+<h2>Wind and weather on open ground</h2>
+<p>Open farm country also means wind. Big windows facing the prevailing winter wind lose more heat. A row of trees, a porch, or simply turning the home can help. Our Decatur post covers wind and tie-downs, and our Fremont post covers insulation options for a northern winter.</p>
+
+<h2>Ask about window options before you order</h2>
+<p>Champion offers different window options on different plans. Ask what the plan you like offers. Window options are chosen at order and built in at the factory, so ask before you sign rather than after delivery. Our Shipshewana post covers which options to decide at order and which can wait.</p>
+
+<h2>Common questions</h2>
+<h3>Can I add a window after the home is delivered?</h3>
+<p>Cutting into a wall later affects its structure and insulation and needs a qualified contractor and the right permits. It is far easier to choose the right plan and options at the start.</p>
+<h3>Do you decide where the home sits on my land?</h3>
+<p>No. You decide that with your site contractor and the local permit office.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/randolph-county">our Randolph County page</a>, or browse <a href="/floor-plans">floor plans</a>.</p>
+`,
+  },
 ];
 
 /** When this build was made; outside a Next build (tests, scripts) it is now. */

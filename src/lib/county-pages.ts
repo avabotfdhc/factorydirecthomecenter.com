@@ -545,6 +545,191 @@ export const countyPages: CountyPage[] = [
       },
     ],
   },
+  {
+    slug: "howard-county",
+    seat: "Kokomo",
+    county: "Howard County",
+    state: "Indiana",
+    eyebrow: "Kokomo, Greentown & Russiaville",
+    intro:
+      "Howard County centres on Kokomo, with Greentown and Russiaville in the farm country around it. Buyers here tend to be practical about a home — how it works day to day, not just how it looks. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
+    towns: ["Kokomo", "Greentown", "Russiaville", "Jerome", "Cassville"],
+    driveNote:
+      "Everyday layout questions — where the laundry sits, how the dryer vents, how far the walk is from the back door — are settled by the floor plan you choose. Our Kokomo post covers the laundry room. " + PER_ROUTE,
+    points: [
+      "Floor plans compared for how a household actually runs",
+      "City lots in Kokomo and rural parcels across the county",
+      "Single-section and multi-section Champion plans",
+      "A line-item quote that shows each option separately",
+    ],
+    zoningNote:
+      "The county planning office handles the unincorporated county, and Kokomo and the towns permit inside their own limits. Rules for a HUD-code home differ between districts. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+    frostDepth: FOOTINGS,
+    faqs: [
+      {
+        question: "Can I put a manufactured home inside Kokomo city limits?",
+        answer:
+          "It depends on the zoning district and any subdivision rules for the lot. Check with the city's planning office before you choose a plan or order.",
+      },
+      {
+        question: "Do washer and dryer come with the home?",
+        answer:
+          "Some plans and options include them and many do not. Either way they are a separate line on our quote, and the spec sheet says how the laundry area is set up.",
+      },
+      {
+        question: "Do you deliver to Howard County?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+      },
+    ],
+  },
+  {
+    slug: "cass-county",
+    seat: "Logansport",
+    county: "Cass County",
+    state: "Indiana",
+    eyebrow: "Logansport & the Wabash",
+    intro:
+      "Cass County centres on Logansport, where the Eel River meets the Wabash, with Galveston, Walton and Royal Center in the farm country around it. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+    towns: ["Logansport", "Galveston", "Walton", "Royal Center", "Onward", "Lucerne"],
+    driveNote:
+      "The systems you rarely see — the water heater, the furnace, the plumbing — are chosen with the plan and are worth understanding before you order. Our Logansport post covers the water heater. " + PER_ROUTE,
+    points: [
+      "Plan systems explained before you order",
+      "Rural parcels on well and septic, and lots in Logansport",
+      "Single-section and multi-section Champion plans",
+      "Freight quoted per route as its own line",
+    ],
+    zoningNote:
+      "The county planning office handles the unincorporated county, and Logansport and the towns permit inside their own limits. Parcels near the Wabash and Eel rivers may carry floodplain rules. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+    frostDepth: FOOTINGS,
+    faqs: [
+      {
+        question: "Can I build near the river in Cass County?",
+        answer:
+          "Parcels near the Wabash or Eel River may sit in a mapped floodplain, which can set how high the home must be and whether it is allowed at all. Check the floodplain map and ask the permit office before you buy the land. Our Woodburn post covers floodplain elevation.",
+      },
+      {
+        question: "How does the septic permit work in Cass County?",
+        answer:
+          "Through the county health department, usually starting with a soil evaluation and then a septic design. Do it before you settle on the home size, since the soil result decides where the system goes. Your contractors pull the permits.",
+      },
+      {
+        question: "Do you deliver to Cass County?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+      },
+    ],
+  },
+  {
+    slug: "st-joseph-county",
+    seat: "South Bend",
+    county: "St. Joseph County",
+    state: "Indiana",
+    eyebrow: "South Bend, Mishawaka & the Michigan Line",
+    intro:
+      "St. Joseph County takes in South Bend and Mishawaka on the St. Joseph River and the smaller towns around them, from New Carlisle to Walkerton. Many buyers here are moving out of an apartment or an older house in town. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
+    towns: ["South Bend", "Mishawaka", "Granger", "Osceola", "New Carlisle", "North Liberty", "Walkerton", "Lakeville"],
+    driveNote:
+      "Delivery is not move-in: set-up, utility connections and any final approval come first. Our Mishawaka post covers planning moving day. " + PER_ROUTE,
+    points: [
+      "Buyers moving from renting or an older house in town",
+      "Rural parcels in the south and west of the county",
+      "Single-section and multi-section Champion plans",
+      "A line-item quote that shows the home, options and freight separately",
+    ],
+    zoningNote:
+      "Planning and permits here depend on where the parcel is — South Bend, Mishawaka, a town, or the unincorporated county each have their own rules, and subdivisions often add covenants. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+    frostDepth: FOOTINGS,
+    faqs: [
+      {
+        question: "Can I put a manufactured home in South Bend or Mishawaka?",
+        answer:
+          "It depends on the zoning district and any covenants on the lot. Many in-town districts set rules on foundation, size or exterior. Check with the city's planning office before you choose a plan.",
+      },
+      {
+        question: "When can I move in after delivery?",
+        answer:
+          "After your contractors finish set-up, the utilities are connected, and any final inspection or occupancy approval the local office requires is given. Ask that office what it requires before you choose a moving date.",
+      },
+      {
+        question: "Do you deliver to St. Joseph County?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+      },
+    ],
+  },
+  {
+    slug: "delaware-county",
+    seat: "Muncie",
+    county: "Delaware County",
+    state: "Indiana",
+    eyebrow: "Muncie, Yorktown & Albany",
+    intro:
+      "Delaware County centres on Muncie, with Yorktown, Albany, Eaton and Selma around it. Many buyers here are leaving an older, draughty house for something that is cheaper to heat. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
+    towns: ["Muncie", "Yorktown", "Albany", "Eaton", "Selma", "Daleville", "Gaston"],
+    driveNote:
+      "A new home is built tight, so ventilation, bath fans and winter humidity matter more than they did in an old house. Our Muncie post covers fresh air and moisture indoors. " + PER_ROUTE,
+    points: [
+      "Buyers moving up from older houses",
+      "City lots in Muncie and rural parcels across the county",
+      "Single-section and multi-section Champion plans",
+      "Freight quoted per route as its own line",
+    ],
+    zoningNote:
+      "Planning and permits depend on where the parcel is — Muncie, a town, or the unincorporated county. Rules for a HUD-code home differ between districts. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+    frostDepth: FOOTINGS,
+    faqs: [
+      {
+        question: "Why do new homes need ventilation running?",
+        answer:
+          "A new home lets far less air leak through than an older one. That saves heat, but moisture from showers and cooking stays inside unless the ventilation system and fans move it out. Our Muncie post explains what to run and when.",
+      },
+      {
+        question: "Can I put a manufactured home inside Muncie?",
+        answer:
+          "It depends on the zoning district and any rules on the lot. Check with the planning office before you choose a plan or order.",
+      },
+      {
+        question: "Do you deliver to Delaware County?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+      },
+    ],
+  },
+  {
+    slug: "randolph-county",
+    seat: "Winchester",
+    county: "Randolph County",
+    state: "Indiana",
+    eyebrow: "Winchester & Union City",
+    intro:
+      "Randolph County is open farm country on the Ohio line, centred on Winchester, with Union City, Farmland, Lynn and Parker City around it. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+    towns: ["Winchester", "Union City", "Farmland", "Lynn", "Parker City", "Ridgeville", "Saratoga"],
+    driveNote:
+      "On open ground the sun and the wind reach a home from every side, so window placement and which way the home faces matter. Our Winchester post covers windows and daylight. " + PER_ROUTE,
+    points: [
+      "Farm parcels and open acreage",
+      "Plans compared for windows and daylight",
+      "Single-section and multi-section Champion plans",
+      "A line-item quote that shows each option separately",
+    ],
+    zoningNote:
+      "The county planning office handles the unincorporated county, and Winchester, Union City and the towns permit inside their own limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+    frostDepth: FOOTINGS,
+    faqs: [
+      {
+        question: "Which way should my home face?",
+        answer:
+          "That is your decision, made with your site contractor within the county's setback rules. South-facing windows get the most winter sun; west-facing windows get hot afternoon sun. Our Winchester post explains the trade-offs.",
+      },
+      {
+        question: "Can I put a manufactured home on farm ground in Randolph County?",
+        answer:
+          "Often, depending on the district. Confirm with the county planning office before you buy or order.",
+      },
+      {
+        question: "Do you deliver to Randolph County?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+      },
+    ],
+  },
 ];
 
 /** "<slug>-in" aliases (allen-county-in …) resolve to the canonical county slug. */

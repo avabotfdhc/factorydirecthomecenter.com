@@ -33,9 +33,12 @@ interface LocationPageProps {
   localSections?: LocationSection[];
   faqs?: LocationFAQ[];
   nearbyTowns?: string[];
+  // Town posts for a county page, computed on the server (countyPostLinks) —
+  // this is a client component, so it must not import the posts itself.
+  relatedPosts?: { href: string; label: string }[];
 }
 
-export function LocationPageTemplate({ city, state, distance, deliveryCost, description, counties, localSections, faqs, nearbyTowns }: LocationPageProps) {
+export function LocationPageTemplate({ city, state, distance, deliveryCost, description, counties, localSections, faqs, nearbyTowns, relatedPosts }: LocationPageProps) {
   useEffect(() => {
     trackLocationView(city, state);
   }, [city, state]);
@@ -214,6 +217,26 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
           </div>
         </div>
       </section>
+
+      {/* The county's town posts */}
+      {relatedPosts && relatedPosts.length > 0 && (
+        <section className="py-20 lg:py-28 border-t border-[var(--color-charcoal)]/5">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-6">
+              Read more about <span className="italic text-[var(--color-teal)]">{city}</span>
+            </H2>
+            <ul className="space-y-3">
+              {relatedPosts.map((p) => (
+                <li key={p.href}>
+                  <Link href={p.href} className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
+                    {p.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* Location FAQ (emits FAQPage schema above) */}
       {faqs && faqs.length > 0 && (
