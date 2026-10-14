@@ -1511,3 +1511,37 @@ refused, but the site asks people to book or call ahead).
   always), footer, a homepage band, and the CTA of every location template.
   The desktop header already overflowed at 1024px before this change (the
   phone button sits past the viewport edge); that is a separate fix.
+
+# Search Console 2026-10-14: ?lang= URLs, /index and the PDF 404
+
+Kyle's developer handoff (Page indexing: 272 indexed, 608 not) asked for four
+code changes. What shipped, and the two places the handoff was adjusted:
+
+- **`?lang=` now 308s to the clean URL** in `src/proxy.ts` (this Next version
+  calls middleware `proxy.ts`; there is no `middleware.ts`). The handoff said
+  "the site has no language switcher" — it does, in the header. It keeps the
+  choice in the `NEXT_LOCALE` cookie, and `?lang=` was only ever an arrival
+  link, so the proxy **sets that cookie before redirecting**: a visitor who
+  follows `/about?lang=es` still gets Spanish. The matcher runs the proxy only
+  on requests that carry `lang` (plus `/admin`), so ordinary page loads never
+  invoke it. `tests/lang-param.test.ts` covers the redirect, the cookie, the
+  pass-through and the matcher.
+- **`/index` → `/`** (308). It served a 200 copy of the homepage. The redirect
+  matches the request path only; the homepage's ISR render, which Next names
+  `/index` internally (see the 2026-10-06 Lighthouse section), still answers
+  200 — checked on `next start`.
+- **`/special-plans/details/features/:file*` → `/resources`** (308). A rule for
+  the 2024 Aspire Sectional Standards PDF already existed, but it named the
+  file with literal spaces, so the real `%20` request never matched, and it
+  was `permanent: false`. Nothing in `src/` links the PDF any more. No
+  temporary redirect remains in `next.config.ts`; the test fails if one is
+  added.
+- **Not done: `Disallow: /*?lang=` in robots.txt.** A URL that robots blocks
+  cannot be fetched, so Google would never see its 308 and the old URLs would
+  sit in the report as "blocked by robots.txt" instead of clearing. The
+  redirect is the fix; blocking would hide it.
+- **Not code: the `www` 307.** `www.factorydirecthomescenter.com` is not a
+  domain on the production project; its CNAME points at Vercel, so it is
+  attached elsewhere — most likely the second project on the `avabotfdhcs`
+  team, which the agent's token cannot read (403). Kyle sets it to a
+  permanent redirect in that project's Settings → Domains.

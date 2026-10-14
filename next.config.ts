@@ -104,11 +104,22 @@ const nextConfig: NextConfig = {
         destination: '/floor-plans/:slug',
         permanent: true,
       },
-      // Fix 404 - PDF moved
+      // Old PDF links under /special-plans/details/features/. The previous rule
+      // named the file with literal spaces, so the real request (%20) never
+      // matched and Search Console kept a 404 (2026-10-14); it was also
+      // temporary. A pattern catches every file there, permanently.
       {
-        source: '/special-plans/details/features/2024 Aspire Sectional Standards.pdf',
+        source: '/special-plans/details/features/:file*',
         destination: '/resources',
-        permanent: false,
+        permanent: true,
+      },
+      // /index served a duplicate of the homepage with a 200 (Search Console
+      // 2026-10-14). Only the request path is matched, so the homepage's own
+      // ISR render (which Next names /index internally) is unaffected.
+      {
+        source: '/index',
+        destination: '/',
+        permanent: true,
       },
       // Sale page renamed /special-plans → /homes-on-sale (SEO-friendlier slug).
       // 301 the old paths so indexed/linked URLs keep their equity.
