@@ -1263,17 +1263,53 @@ Now: anon INSERT is `with check (false)`, and the staff pair require
   expressions. Redundant but harmless — permissive policies are ORed. Collapse
   them when `DROP POLICY` works again.
 
-**`DROP POLICY` cannot be executed through the agent's Supabase tooling.** It
-times out at 60 s every time — bare, batched, and wrapped in a `DO … execute`
-block — while `CREATE POLICY` and `ALTER POLICY` return in milliseconds. Two
-candidate causes were ruled out rather than assumed: **not lock contention**
-(`ACCESS EXCLUSIVE` on `public.leads` was acquired in **6 ms**, with no
-long-running or idle-in-transaction backends), and **not a text-level gate on
-destructive SQL** (a `DO` block containing the literal phrase "drop policy" in
-a `RAISE` ran instantly). The real cause is **still unidentified** — do not
-write down a third theory as fact. Use `ALTER POLICY`, which reaches the same
-end state, is reversible in place, and leaves the policy visible in the
-dashboard.
+**Nothing can be DROPped on the wired project. Not a policy — anything.**
+Every `DROP` times out at 60 s while `CREATE` and `ALTER` return in
+milliseconds. Use `ALTER` to reach the same end state: it is reversible in
+place and leaves the object visible in the dashboard.
+
+This entry said "cannot be executed through the agent's Supabase tooling" until
+2026-10-14. **That was wrong, and it was my inference, not a measurement.**
+Kyle ran the same `DROP POLICY` statements in the dashboard SQL editor and they
+timed out identically. Two independent clients, one failure: it is server-side
+and project-wide, and an agent-tooling story sent the next reader looking in
+the wrong place entirely.
+
+Then the scope turned out to be wider than "policies". A **`DROP TABLE` on a
+table created seconds earlier** — no dependencies, no data, no other session
+touching it, run inside `begin … rollback` so nothing persisted (verified
+afterwards: 0 probe tables left) — **also timed out at 60 s**. So it is not
+about policies, not about dependency scans, and not about contention on a busy
+table.
+
+Ruled out by measurement, so do not re-test these:
+
+- **Not lock contention.** `ACCESS EXCLUSIVE` on `public.leads` was acquired in
+  **6 ms**, with no long-running or idle-in-transaction backends.
+- **Not a text-level gate on destructive SQL.** A `DO` block containing the
+  literal phrase "drop policy" inside a `RAISE` ran instantly.
+- **Not a full async-notification queue** (the classic cause of a blocking
+  `NOTIFY`): `pg_notification_queue_usage()` returns **0**.
+
+**The one structural asymmetry, still unproven.** `DROP` is the only command
+class that fires `sql_drop` event triggers, and this project has two, both
+owned by `supabase_admin` and enabled: `pgrst_drop_watch` and
+`issue_graphql_placeholder`. `CREATE` and `ALTER` fire only `ddl_command_end`.
+That is the right shape to explain the symptom — but it does not survive
+reading the code: both function bodies are ordinary catalog work, and
+`pgrst_drop_watch`'s `object_type` list **does not contain `policy`**, so a
+`DROP POLICY` never reaches its `NOTIFY` at all. Treat this as a lead, not an
+answer. **The real cause is still unidentified — do not write down a fourth
+theory as fact.**
+
+Settling it means disabling those two event triggers and retrying a drop, which
+turns off PostgREST's schema-reload watcher on a live project. That is the
+owner's call and a Supabase support question, **not something an agent should
+do on its own**. Worth raising with support regardless: a project where no
+object can be dropped cannot have a column, a stale table or a view removed.
+Also noticed while looking, and **not** a cause — the queue is empty — but odd
+enough to write down: a PostgREST backend has held `LISTEN "pgrst"` idle for
+**46 days**.
 
 **`storage.floor-plans` allowed listing**, so its `floor-plans public read`
 policy is now `using (false)`. Why that does not break a single catalogue
