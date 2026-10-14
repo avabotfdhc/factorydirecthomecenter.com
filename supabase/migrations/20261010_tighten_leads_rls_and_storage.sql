@@ -26,13 +26,25 @@
 --     never existed there.
 --
 -- NOTE ON FORM: this narrows the offending policies with ALTER POLICY instead
--- of dropping and recreating them. DROP POLICY could not be executed through
--- the agent's Supabase tooling — it timed out at 60s every time, bare and
--- wrapped in a DO block, while CREATE and ALTER ran in milliseconds. It was
--- not lock contention: ACCESS EXCLUSIVE on public.leads was acquired in 6ms
--- and pg_stat_activity showed no long-running or idle-in-transaction backends.
--- The cause was never identified. ALTER reaches the same end state, is
+-- of dropping and recreating them, because NOTHING can be DROPped on this
+-- project — not a policy, anything. Every DROP times out at 60s while CREATE
+-- and ALTER return in milliseconds. ALTER reaches the same end state, is
 -- reversible in place, and leaves the policy visible in the dashboard.
+--
+-- This note said "could not be executed through the agent's Supabase tooling"
+-- until 2026-10-14. That was wrong — an inference, not a measurement. Kyle ran
+-- the same statements in the dashboard SQL editor and they timed out
+-- identically, so it is server-side, and the scope is wider than policies: a
+-- DROP TABLE on a table created seconds earlier, with no dependencies and no
+-- other session touching it, also timed out at 60s (run inside begin/rollback;
+-- 0 probe tables left afterwards). Ruled out by measurement: lock contention
+-- (ACCESS EXCLUSIVE on public.leads in 6ms, no long-running or
+-- idle-in-transaction backends), a text-level gate on destructive SQL (a DO
+-- block with the literal phrase "drop policy" in a RAISE ran instantly), and a
+-- full async-notification queue (pg_notification_queue_usage() = 0). The real
+-- cause is still unidentified; see AGENTS.md for the one remaining lead (the
+-- two sql_drop event triggers) and why reading their source does not confirm
+-- it. Do not write down another theory as fact.
 --
 -- Consequence worth knowing: `leads` now carries two SELECT policies and two
 -- UPDATE policies with identical admin expressions — the new "Admins may…"
