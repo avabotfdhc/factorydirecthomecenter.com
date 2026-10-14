@@ -200,7 +200,7 @@ export function PricingDisclaimer({
           agreement, the purchase agreement controls.
         </p>
         <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-200">
-          Factory Direct Homes Center LLC | 1211 State Road 8, Auburn, IN 46706 | {SALES_PHONE}
+          Factory Direct Homes Center LLC | 1211 IN-8, Auburn, IN 46706 | {SALES_PHONE}
         </p>
       </div>
     </div>

@@ -250,7 +250,7 @@ export const sitePages: SitePage[] = [
   {
     url: "/locations/auburn",
     title: "Manufactured & Modular Homes in Auburn, IN",
-    description: "Our Auburn, DeKalb County showroom at 1211 State Road 8. Factory-direct Champion homes, 30 miles from the factory.",
+    description: "Our Auburn, DeKalb County showroom at 1211 IN-8. Factory-direct Champion homes, 30 miles from the factory.",
     topics: ["locations", "auburn", "dekalb-county", "indiana", "showroom"],
     cluster: "locations",
     pillar: "/locations",

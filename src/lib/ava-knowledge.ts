@@ -31,11 +31,11 @@ import { FACTORY_DIRECT_FAQ } from "./factory-direct";
 
 export const SHOWROOM_TIME_ZONE = "America/New_York";
 export const SHOWROOM_PHONE = "(260) 308-1457";
-export const SHOWROOM_ADDRESS = "1211 State Road 8, Auburn, IN 46706";
+export const SHOWROOM_ADDRESS = "1211 IN-8, Auburn, IN 46706";
 
 const COMPANY = `
 ABOUT FACTORY DIRECT HOMES CENTER
-- Factory Direct Homes Center LLC, 1211 State Road 8 (IN-8), Auburn, Indiana 46706 — just off I-69 at the State Road 8 / Auburn exit, about 20 minutes north of Fort Wayne. Phone and text: (260) 308-1457. Web: factorydirecthomescenter.com. Contact form: /contact-us.
+- Factory Direct Homes Center LLC, 1211 IN-8 (State Road 8), Auburn, Indiana 46706 — just off I-69 at the State Road 8 / Auburn exit, about 20 minutes north of Fort Wayne. Phone and text: (260) 308-1457. Web: factorydirecthomescenter.com. Contact form: /contact-us.
 - Family-owned, authorized Champion Homes dealer. Opened November 2024 by owner Kyle Dudgeon. Small team, so visitors talk to a decision-maker, not a call center.
 - Showroom hours (Eastern time): Monday–Friday 9 AM–5 PM, Saturday 10 AM–4 PM, closed Sunday. Model homes on the lot to walk through, no appointment needed during hours; a booked visit guarantees a specialist is free for you.
 - Delivery area: Indiana, Ohio and Michigan. Home counties: DeKalb (Auburn, Garrett, Butler, Waterloo), Allen (Fort Wayne, New Haven, Huntertown), Noble (Kendallville, Ligonier, Albion), Steuben (Angola, Fremont), plus Whitley (Columbia City, Churubusco), LaGrange, Wells and Adams counties; also Toledo OH, Kalamazoo MI and Indianapolis.
@@ -185,7 +185,7 @@ Rule: after handling any objection, return to the next step (quote, spec package
 
 const APPOINTMENTS = `
 APPOINTMENT PLAYBOOK (a showroom visit is the strongest step; offer it after every value moment)
-- Pitch: "Want to walk a model this week? We're at 1211 State Road 8 in Auburn, just off I-69, about 20 minutes north of Fort Wayne — you can see the drywall, cabinets and roof pitch for yourself." Weekday mornings and Saturdays are the easiest to book.
+- Pitch: "Want to walk a model this week? We're at 1211 IN-8 in Auburn, just off I-69, about 20 minutes north of Fort Wayne — you can see the drywall, cabinets and roof pitch for yourself." Weekday mornings and Saturdays are the easiest to book.
 - Collect, one question at a time: full name, mobile number, preferred day and time (offer two windows inside showroom hours, e.g. "Saturday around 11, or Tuesday after 3?"), the county the home is going to, and which plan(s) they want to see. Email is a bonus.
 - Then call the book_showroom_visit tool right away. Confirm the request and set the expectation: the Auburn team confirms by call or text (next business day if we're closed), and suggest bringing parcel or lot details, any pre-qualification letter, and their must-have list.
 - If they can't visit yet: offer 3D tours on the plan pages and book a phone consultation instead (use capture_lead with the timeframe and note "phone consultation requested").

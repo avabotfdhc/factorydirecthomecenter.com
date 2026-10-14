@@ -166,7 +166,7 @@ Result: Priceless
 
 ### Friday, April 11
 **Theme:** Employee/Team Spotlight
-**Facebook:** 👋 Meet the team at Factory Direct Homes Center! We're a family-owned business right here in Auburn, IN. No corporate bureaucracy. No high-pressure sales. Just honest folks helping families find quality homes at fair prices. Stop by and see us at 1211 State Road 8! #FamilyOwned #LocalBusiness #AuburnIN
+**Facebook:** 👋 Meet the team at Factory Direct Homes Center! We're a family-owned business right here in Auburn, IN. No corporate bureaucracy. No high-pressure sales. Just honest folks helping families find quality homes at fair prices. Stop by and see us at 1211 IN-8! #FamilyOwned #LocalBusiness #AuburnIN
 
 ### Saturday, April 12
 **Theme:** Spring Home Buying Season

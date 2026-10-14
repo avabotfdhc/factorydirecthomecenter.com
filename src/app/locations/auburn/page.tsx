@@ -17,7 +17,7 @@ import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 export const metadata = genMeta({
   title: "Factory Direct Mobile & Manufactured Homes in Auburn, IN",
   description:
-    "Champion manufactured and modular homes in Auburn, Indiana. Visit our DeKalb County showroom at 1211 State Road 8 — factory-direct pricing, single wides, double wides & modular homes. Serving Auburn, Garrett, Waterloo, Butler & Fort Wayne.",
+    "Champion manufactured and modular homes in Auburn, Indiana. Visit our DeKalb County showroom at 1211 IN-8 — factory-direct pricing, single wides, double wides & modular homes. Serving Auburn, Garrett, Waterloo, Butler & Fort Wayne.",
   keywords: [
     "manufactured homes auburn indiana",
     "modular homes auburn in",
@@ -40,7 +40,7 @@ const locationFAQs = [
   {
     question: "Where is Factory Direct Homes Center located in Auburn?",
     answer:
-      "Our showroom is at 1211 State Road 8, Auburn, IN 46706, in DeKalb County — about 25 minutes north of Fort Wayne and just 30 miles from the Champion factory in Topeka. Stop by to walk through model homes or call (260) 308-1457.",
+      "Our showroom is at 1211 IN-8, Auburn, IN 46706, in DeKalb County — about 25 minutes north of Fort Wayne and just 30 miles from the Champion factory in Topeka. Stop by to walk through model homes or call (260) 308-1457.",
   },
   {
     question: "Can I visit a showroom to see manufactured homes in Auburn?",
@@ -157,7 +157,7 @@ export default function AuburnLocationPage() {
                 <span className="italic text-[var(--color-teal-light)]">Auburn, IN</span>
               </h1>
               <p className="text-lg text-white/60 leading-relaxed max-w-xl mb-8">
-                Our showroom is right here in Auburn, at 1211 State Road 8. Walk through Champion
+                Our showroom is right here in Auburn, at 1211 IN-8. Walk through Champion
                 single wides, double wides, and modular homes. We order every home from
                 Champion&apos;s Topeka, IN plant, about 30 miles from our lot, and quote it line by line.
               </p>
@@ -211,7 +211,7 @@ export default function AuburnLocationPage() {
             <H2 className="font-serif text-3xl font-light mb-4">Your Local Manufactured Home Dealer in Auburn</H2>
             <p className="text-[var(--color-gray)] leading-relaxed mb-4">
               Factory Direct Homes Center is based right in Auburn, Indiana — the county seat of DeKalb
-              County. Because we&rsquo;re local, you can visit our showroom at 1211 State Road 8, walk
+              County. Because we&rsquo;re local, you can visit our showroom at 1211 IN-8, walk
               through real Champion homes, and work face-to-face with a team that knows DeKalb County
               zoning, permitting, and site work.
             </p>
@@ -271,7 +271,7 @@ export default function AuburnLocationPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <H2 className="font-serif text-3xl font-light mb-4">Visit Our Auburn Showroom</H2>
           <p className="text-white/60 mb-8 max-w-2xl mx-auto">
-            1211 State Road 8, Auburn, IN 46706. Walk through model homes and get a factory-direct
+            1211 IN-8, Auburn, IN 46706. Walk through model homes and get a factory-direct
             quote from a local team that walks you through everything from floor plan to move-in —
             including referrals to licensed and insured contractors for setup.
           </p>

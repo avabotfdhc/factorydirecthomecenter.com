@@ -372,7 +372,7 @@ export const countyPages: CountyPage[] = [
       },
       {
         question: "When is the Auburn showroom open?",
-        answer: "Monday to Friday 9 to 5 and Saturday 10 to 4, at 1211 State Road 8, Auburn.",
+        answer: "Monday to Friday 9 to 5 and Saturday 10 to 4, at 1211 IN-8, Auburn.",
       },
       {
         question: "Do you deliver to Grant County?",

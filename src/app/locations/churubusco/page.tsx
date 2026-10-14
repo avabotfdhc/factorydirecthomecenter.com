@@ -57,7 +57,7 @@ const data: CityLocationData = {
     {
       question: "How far is Churubusco from your showroom?",
       answer:
-        "About a 30-minute drive. Our Auburn showroom at 1211 State Road 8 is easy to reach from Churubusco, so you can tour model homes in person before you buy.",
+        "About a 30-minute drive. Our Auburn showroom at 1211 IN-8 is easy to reach from Churubusco, so you can tour model homes in person before you buy.",
     },
     {
       question: "What kinds of homes can I buy near Churubusco?",

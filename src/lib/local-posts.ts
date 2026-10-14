@@ -180,7 +180,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>Fort Wayne's housing market has priced a lot of good people out of a new site-built home. If you're one of them, a new HUD-code manufactured home is the most realistic path to new construction in northeast Indiana — and Fort Wayne buyers have a geographic advantage most of the country doesn't: you live about 25 minutes from a factory-direct Champion dealer, and under an hour from Champion's Topeka plant. Here's what that means for you, and what to know before you buy.</p>
 
 <h2>Why Fort Wayne buyers shop in Auburn</h2>
-<p>Our showroom at 1211 State Road 8 in Auburn is about 25 minutes north of Fort Wayne, straight up I-69. That drive matters for two reasons. First, you can walk through real model homes — floor plans on a screen don't tell you how a kitchen feels. Second, the factory that builds these homes is in Topeka, Indiana, about 30 miles from us. Freight is one of the biggest hidden costs in manufactured housing, and homes that travel a short distance cost less to deliver than homes trucked in from hundreds of miles away. That saving shows up in your quote.</p>
+<p>Our showroom at 1211 IN-8 in Auburn is about 25 minutes north of Fort Wayne, straight up I-69. That drive matters for two reasons. First, you can walk through real model homes — floor plans on a screen don't tell you how a kitchen feels. Second, the factory that builds these homes is in Topeka, Indiana, about 30 miles from us. Freight is one of the biggest hidden costs in manufactured housing, and homes that travel a short distance cost less to deliver than homes trucked in from hundreds of miles away. That saving shows up in your quote.</p>
 
 <h2>Where can you put a manufactured home around Fort Wayne?</h2>
 <p>You have three main options in the Fort Wayne area:</p>
@@ -263,7 +263,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h3>What's the cheapest way to get into a new home?</h3>
 <p>A single wide on land you already own or a leased lot is usually the lowest total cost of entry for new construction in Indiana.</p>
 <h3>How do I get an exact price?</h3>
-<p>Pick a floor plan from our <a href="/floor-plans">70+ Champion floor plans</a> and <a href="/contact-us">request a quote</a>, or visit the showroom at 1211 State Road 8, Auburn, IN. You'll get current, line-item numbers for exactly the home and options you want — no pressure, no bundled mystery pricing.</p>
+<p>Pick a floor plan from our <a href="/floor-plans">70+ Champion floor plans</a> and <a href="/contact-us">request a quote</a>, or visit the showroom at 1211 IN-8, Auburn, IN. You'll get current, line-item numbers for exactly the home and options you want — no pressure, no bundled mystery pricing.</p>
 `,
   },
   {
@@ -274,7 +274,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
     image: "/images/homepage/single-wides.webp",
     date: "August 12, 2026",
     html: `
-<p>Every dealer says they serve your town. Auburn is different for us — it's our town. Our showroom sits at 1211 State Road 8, our team drives these county roads every day, and more of our homes are delivered in DeKalb County than anywhere else. If you're an Auburn-area buyer, here's what that home-field advantage means for you.</p>
+<p>Every dealer says they serve your town. Auburn is different for us — it's our town. Our showroom sits at 1211 IN-8, our team drives these county roads every day, and more of our homes are delivered in DeKalb County than anywhere else. If you're an Auburn-area buyer, here's what that home-field advantage means for you.</p>
 <h2>Tour real homes, ten minutes from anywhere in Auburn</h2>
 <p>Photos don't tell you whether a kitchen island crowds the walkway or how a primary suite actually feels. Because the showroom is local, you can stop in on a lunch break, walk through model homes, and come back with your spouse on Saturday. We're open Mon&ndash;Fri 9&ndash;5 and Saturday 10&ndash;4 — browse our <a href="/floor-plans">Champion floor plans</a> before you visit.</p>
 <h2>Placing a home in DeKalb County</h2>
@@ -366,7 +366,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h2>Rural Noble County land works in your favor</h2>
 <p>Much of Noble County outside municipal limits permits manufactured homes on private land. Rules are parcel-specific — you or your contractor verify zoning and setbacks and pull permits with Noble County. Our <a href="/guides/zoning">zoning guide</a> explains each step.</p>
 <h2>Close to the showroom, close to the factory</h2>
-<p>Our Auburn showroom at 1211 State Road 8 is about a 25-minute drive from Kendallville, and Aspire and Redman homes are built at Champion's Topeka plant, a short freight hop away (Prime comes from Champion's Decatur plant). Short distances show up as real savings on the delivery line of your quote.</p>
+<p>Our Auburn showroom at 1211 IN-8 is about a 25-minute drive from Kendallville, and Aspire and Redman homes are built at Champion's Topeka plant, a short freight hop away (Prime comes from Champion's Decatur plant). Short distances show up as real savings on the delivery line of your quote.</p>
 <h2>The numbers</h2>
 <p>Quotes are line-item — home, options, and delivery each priced separately — and site work is handled by your own licensed contractors, where most buyers save real money. Details in the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
@@ -492,7 +492,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h2>Whitley County land is the opportunity</h2>
 <p>Outside municipal limits, much of Whitley County accommodates manufactured homes on private parcels. The county seat is right there in Columbia City, which makes the permit process — handled by you or your contractor — conveniently local. Our <a href="/guides/zoning">zoning guide</a> lays out the steps.</p>
 <h2>Worth the drive to Auburn</h2>
-<p>Our showroom at 1211 State Road 8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide and double wide homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at Champion's Indiana plants in Topeka, about 30 miles from our lot, and Decatur. Every home is quoted line-item — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
+<p>Our showroom at 1211 IN-8 in Auburn is about a 40-minute drive from Columbia City. In one visit you can tour real single wide and double wide homes and get line-item pricing for any of our <a href="/floor-plans">Champion floor plans</a>, built at Champion's Indiana plants in Topeka, about 30 miles from our lot, and Decatur. Every home is quoted line-item — see the <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a>.</p>
 <h2>FAQ</h2>
 <h3>What Whitley County areas do you serve?</h3>
 <p>All of them — Columbia City, Churubusco, South Whitley, Larwill, and the surrounding townships. See <a href="/locations/columbia-city">our Columbia City page</a> and <a href="/locations/whitley-county">Whitley County page</a>.</p>

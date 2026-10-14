@@ -65,3 +65,20 @@ test("no sms: link in the site hard-codes a recipient", () => {
       "or the next time the texting line changes this one will be missed",
   );
 });
+
+// Kyle, 2026-10-14: the address is "1211 IN-8", the spelling on the Google
+// Business Profile. A second spelling of the same address on the site splits
+// the business into two entities for Google. Prose saying the showroom is "on
+// State Road 8" is fine; the address itself is not.
+test("the street address is spelled 1211 IN-8 everywhere", () => {
+  assert.equal(BUSINESS.streetAddress, "1211 IN-8");
+  const walk = (d: string): string[] =>
+    readdirSync(d).flatMap((n) => {
+      const p = join(d, n);
+      return statSync(p).isDirectory() ? walk(p) : /\.(ts|tsx)$/.test(n) ? [p] : [];
+    });
+  const offenders = walk("src").filter((f) =>
+    /1211(\s|\+)(State(\s|\+)R(oa)?d|IN(\s|\+)SR|SR)[-\s+]?8/i.test(readFileSync(f, "utf8")),
+  );
+  assert.deepEqual(offenders, [], "write the address as 1211 IN-8");
+});

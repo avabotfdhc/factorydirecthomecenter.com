@@ -84,7 +84,7 @@ export function SaleDisclaimer({ variant = "full", className = "" }: SaleDisclai
           ))}
         </ul>
         <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-200">
-          Factory Direct Homes Center LLC | 1211 State Road 8, Auburn, IN 46706 | (260) 308-1457
+          Factory Direct Homes Center LLC | 1211 IN-8, Auburn, IN 46706 | (260) 308-1457
         </p>
       </div>
     </div>

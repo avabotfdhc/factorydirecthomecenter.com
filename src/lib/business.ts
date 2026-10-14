@@ -69,7 +69,7 @@ export const BUSINESS = {
   smsNumber: "+1-260-750-1828",
   smsDisplay: "(260) 750-1828",
   email: "sales@factorydirecthomescenter.com",
-  streetAddress: "1211 State Road 8",
+  streetAddress: "1211 IN-8",
   city: "Auburn",
   region: "IN",
   postalCode: "46706",
@@ -77,7 +77,7 @@ export const BUSINESS = {
   longitude: -85.0747,
   image: `${SITE_URL}/images/hero-home.jpg`,
   logo: `${SITE_URL}/images/logo.png`,
-  hasMap: "https://www.google.com/maps/dir/?api=1&destination=1211+State+Road+8+Auburn+IN+46706",
+  hasMap: "https://www.google.com/maps/dir/?api=1&destination=1211+IN-8+Auburn+IN+46706",
   /**
    * Public profiles that identify the same business, for the `sameAs` graph.
    *

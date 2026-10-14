@@ -199,7 +199,7 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <H3 className="font-semibold mb-1">Address</H3>
-                    <address className="not-italic text-sm text-[var(--color-gray)] leading-relaxed">1211 State Road 8<br />Auburn, IN 46706</address>
+                    <address className="not-italic text-sm text-[var(--color-gray)] leading-relaxed">1211 IN-8<br />Auburn, IN 46706</address>
                   </div>
                 </div>
 
@@ -245,13 +245,13 @@ export default function ContactForm() {
               {/* Google Map — matches the Google Business Profile location */}
               <div className="rounded-lg overflow-hidden border border-[var(--color-charcoal)]/10">
                 <LocationMap
-                  title="Factory Direct Homes Center — 1211 State Road 8, Auburn, IN 46706 on Google Maps"
+                  title="Factory Direct Homes Center — 1211 IN-8, Auburn, IN 46706 on Google Maps"
                   className="w-full h-72"
                 />
               </div>
               <div className="flex flex-wrap gap-3 mt-4">
                 <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=Factory+Direct+Homes+Center,+1211+State+Road+8,+Auburn,+IN+46706"
+                  href="https://www.google.com/maps/dir/?api=1&destination=Factory+Direct+Homes+Center,+1211+IN-8,+Auburn,+IN+46706"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"

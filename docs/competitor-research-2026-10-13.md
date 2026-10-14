@@ -58,8 +58,8 @@ mobilehome.net, Yelp. Every competitor is listed on them; we are not.
      Columbia City, Warsaw, Goshen.
 2. **Directories** — see `docs/local-citations.md`, Tier 3. Start with
    **manufacturedhomes.com** (one sign-up feeds three sites), **MHVillage**,
-   and ask the Champion rep to add us to the **Champion and Dutch Housing
-   dealer locators**. Paste the NAP from `npm run citation-nap` exactly.
+   (Correction 2026-10-14: we **are** already on the Champion and Dutch Housing
+   dealer locators; just check they show the right address and phone.) Paste the NAP from `npm run citation-nap` exactly.
 3. **Search Console** — after this deploys, use URL Inspection → Request
    indexing on `/locations/fort-wayne`, `/locations/auburn`,
    `/locations/kendallville`, `/double-wide-homes`, `/single-wide-homes`.

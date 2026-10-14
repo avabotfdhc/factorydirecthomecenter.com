@@ -66,7 +66,7 @@ const checkable = [
   },
   {
     title: "A showroom you can walk into",
-    body: "We are at 1211 State Road 8 in Auburn, six days a week. Walk the homes, open the cabinets, and meet the person who will handle your order.",
+    body: "We are at 1211 IN-8 in Auburn, six days a week. Walk the homes, open the cabinets, and meet the person who will handle your order.",
     href: "/contact-us",
     cta: "Plan a visit",
   },
@@ -354,13 +354,13 @@ export function AnimatedHomeSections() {
                 options, and talk with our team about making your dream home a reality.
               </p>
               <address className="not-italic space-y-3 mb-8">
-                <p className="font-semibold">1211 State Road 8, Auburn, IN 46706</p>
+                <p className="font-semibold">1211 IN-8, Auburn, IN 46706</p>
                 <p className="text-sm text-[var(--color-gray)]">Mon–Fri: 9 AM – 5 PM &nbsp;|&nbsp; Sat: 10 AM – 4 PM</p>
               </address>
               <div className="flex flex-col sm:flex-row gap-4">
                 <MagneticButton>
                   <a 
-                    href="https://www.google.com/maps/dir/?api=1&destination=1211+State+Road+8+Auburn+IN+46706" 
+                    href="https://www.google.com/maps/dir/?api=1&destination=1211+IN-8+Auburn+IN+46706" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
