@@ -195,7 +195,7 @@ test("a post attributed to someone else is NOT given the business @id", () => {
 
 // ── Exactly one BreadcrumbList per page ────────────────────────────────────
 
-test("only PageFooter and the floor-plan detail page emit a BreadcrumbList", () => {
+test("only PageFooter and the floor-plan page graph emit a BreadcrumbList", () => {
   // Twenty-three pages used to emit their own on top of the sitewide one in
   // PageFooter, so each shipped two BreadcrumbList nodes disagreeing about the
   // labels for the same URL. A source-level guard is the only kind that
@@ -204,9 +204,9 @@ test("only PageFooter and the floor-plan detail page emit a BreadcrumbList", () 
   const allowed = new Set([
     "src/components/PageFooter.tsx",
     // Home › Floor Plans › <Series> Series › <Home> — the series crumb is not
-    // derivable from the URL, so this page builds its own and PageFooter
-    // stands down for /floor-plans/*.
-    "src/app/floor-plans/[slug]/page.tsx",
+    // derivable from the URL, so the floor-plan detail page builds its own
+    // (inside its single @graph) and PageFooter stands down for /floor-plans/*.
+    "src/lib/plan-schema.ts",
     // The generator itself.
     "src/lib/seo.ts",
   ]);

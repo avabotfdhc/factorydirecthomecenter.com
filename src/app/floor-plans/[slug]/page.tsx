@@ -3,8 +3,8 @@ import { ZoomableImage, LightboxGallery } from "@/components/ImageLightbox";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApiFloorPlanBySlug, getApiFloorPlans } from "@/lib/api-content";
-import { StructuredData, structuredData } from "@/lib/seo";
-import { SingleFamilyResidenceSchema } from "@/components/JsonLd";
+import { StructuredData } from "@/lib/seo";
+import { buildPlanGraph } from "@/lib/plan-schema";
 import { FAQSection } from "@/components/FAQSection";
 import { PlanNarrative } from "@/components/PlanNarrative";
 import { buildPlanNarrative, planTypeLabel } from "@/lib/plan-content";
@@ -14,7 +14,6 @@ import { FloorPlanActions } from "@/components/QuoteModal";
 import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
-import { businessRef } from "@/lib/business";
 import { planTitle } from "@/lib/page-title";
 
 const SITE = "https://factorydirecthomescenter.com";
@@ -87,71 +86,19 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
   const narrative = buildPlanNarrative(plan, allPlans);
   const seriesCrumb = narrative.hub ? [{ name: `${narrative.hub.name} Series`, url: `/series/${narrative.hub.slug}` }] : [];
 
-  const cleanDesc = (plan.description || plan.floorPlanHtml || "")
-    .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 300) ||
-    `${plan.name} ${plan.homeType} by ${plan.brand}.`;
-
-  // Product JSON-LD (built inline because CMS images are absolute S3 URLs).
-  // Google's product-snippet rules require offers, review, or aggregateRating
-  // on every Product — with prices hidden ("Call for pricing") we have none,
-  // and price-less Product markup gets flagged in Search Console. So the
-  // Product block is only emitted when a numeric price exists (i.e. it
-  // returns automatically if prices are ever shown again).
-  const priceNumeric = plan.price.replace(/[^0-9.]/g, "");
-  // Every photo and sheet, as absolute URLs, for structured data and the
-  // image sitemap (banner first, deduped).
-  const imageUrls = [...new Set([plan.image, ...plan.gallery].filter(Boolean).map(absoluteImageUrl))];
   const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
   const galleryImages = plan.gallery.map((src, i) => ({
     src,
     alt: planImageAlt(src, plan.name, plan.homeType, i, plan.gallery.length),
   }));
-  const productLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: plan.name,
-    description: cleanDesc,
-    ...(imageUrls.length ? { image: imageUrls } : {}),
-    ...(plan.modelNumber ? { sku: plan.modelNumber } : {}),
-    brand: { "@type": "Brand", name: plan.brand || "Champion Homes" },
-    ...(priceNumeric
-      ? {
-          offers: {
-            "@type": "Offer",
-            price: priceNumeric,
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-            url: `${SITE}/floor-plans/${plan.slug}`,
-            seller: businessRef(),
-          },
-        }
-      : {}),
-  };
 
   return (
     <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
-      {priceNumeric ? <StructuredData data={productLd} /> : null}
-      <SingleFamilyResidenceSchema
-        name={plan.name}
-        slug={plan.slug}
-        description={cleanDesc}
-        image={imageUrls.length ? imageUrls : undefined}
-        sqft={plan.sqft}
-        beds={plan.beds}
-        baths={plan.baths}
-        brand={plan.brand}
-        modelNumber={plan.modelNumber}
-        homeType={plan.homeType}
-        series={plan.series}
-      />
-      <StructuredData
-        data={structuredData.breadcrumb([
-          { name: "Home", url: "/" },
-          { name: "Floor Plans", url: "/floor-plans" },
-          ...seriesCrumb,
-          { name: plan.name, url: `/floor-plans/${plan.slug}` },
-        ])}
-      />
+      {/* One ld+json block for the whole page: the home (Product +
+          SingleFamilyResidence, with an Offer once a price is shown),
+          its breadcrumb trail, its FAQs and the WebPage tying them together.
+          src/lib/plan-schema.ts explains the price gate. */}
+      <StructuredData data={buildPlanGraph({ plan, narrative })} />
 
       {/* Breadcrumb */}
       <div className="border-b border-[var(--color-charcoal)]/5 bg-white">
@@ -325,12 +272,15 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         <PlanNarrative narrative={narrative} planName={plan.name} planSlug={plan.slug} />
       </section>
 
-      {/* FAQ (adds FAQPage schema) — questions and answers are about THIS plan,
+      {/* FAQ (FAQPage schema is in the page graph) — questions and answers are about THIS plan,
           not the six homepage questions every other page used to repeat. */}
       <FAQSection
         title={`${plan.name}: Common Questions`}
         subtitle="Size, construction, delivery, placement and pricing for this home"
         faqs={narrative.faqs}
+        // The FAQPage node is in the page graph above; a second block here
+        // would publish the same questions twice.
+        showSchema={false}
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
