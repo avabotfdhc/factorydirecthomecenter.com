@@ -116,6 +116,18 @@ export function planSchemaDescription(
   return clip(body, 500);
 }
 
+/** A box dimension as a PropertyValue in feet. The repo data files store
+ *  "28'" and the CMS stores "28"; a bare number with no unit means nothing to
+ *  a reader, so both publish as `value: 28, unitCode: "FOT"`. */
+function dimension(name: string, raw: string): Record<string, unknown> | null {
+  const text = String(raw || "").trim();
+  if (!text) return null;
+  const feet = parseInt(text, 10);
+  return Number.isFinite(feet) && feet > 0
+    ? { "@type": "PropertyValue", name, value: feet, unitCode: "FOT" }
+    : { "@type": "PropertyValue", name, value: text };
+}
+
 export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGraphInput): PlanGraph {
   const url = planUrl(plan.slug);
   const brand = plan.brand || "Champion Homes";
@@ -128,8 +140,8 @@ export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGr
   const additionalProperty = [
     plan.homeType ? { "@type": "PropertyValue", name: "Home type", value: plan.homeType } : null,
     plan.series ? { "@type": "PropertyValue", name: "Series", value: `Champion ${plan.series}` } : null,
-    plan.width ? { "@type": "PropertyValue", name: "Width", value: plan.width } : null,
-    plan.length ? { "@type": "PropertyValue", name: "Length", value: plan.length } : null,
+    dimension("Width", plan.width),
+    dimension("Length", plan.length),
     { "@type": "PropertyValue", name: "Construction", value: `Factory-built at Champion's ${plant}, Indiana plant` },
   ].filter(Boolean);
 
@@ -150,7 +162,9 @@ export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGr
   const product: Record<string, unknown> = {
     "@type": price ? ["Product", "SingleFamilyResidence"] : ["SingleFamilyResidence"],
     "@id": `${url}#product`,
-    name: mpn ? `${brand} ${plan.name} (${mpn})` : `${brand} ${plan.name}`,
+    // "<brand> <name> (<model>)" — unless the plan has no family name and IS
+    // the model number, where the parenthesis would just repeat it.
+    name: mpn && !plan.name.toUpperCase().includes(mpn.toUpperCase()) ? `${brand} ${plan.name} (${mpn})` : `${brand} ${plan.name}`,
     description: planSchemaDescription(plan, narrative),
     url,
     ...(images.length ? { image: images } : {}),

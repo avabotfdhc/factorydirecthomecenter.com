@@ -91,9 +91,12 @@ test("the home node describes the floor plan", () => {
     "https://example.supabase.co/storage/v1/object/public/floor-plans/aspire/1676H32107/photos/kitchen.jpg",
     `${SITE_URL}/images/aspire/1676h32107-opt2.webp`,
   ]);
-  const props = home.additionalProperty as Array<{ name: string; value: string }>;
+  const props = home.additionalProperty as Array<{ name: string; value: string | number; unitCode?: string }>;
   assert.deepEqual(props.map((p) => p.name), ["Home type", "Series", "Width", "Length", "Construction"]);
-  assert.match(props.at(-1)!.value, /Topeka/, "an Aspire home is built in Topeka");
+  // Dimensions publish in feet whether the source says "28'" (repo) or "28" (CMS).
+  assert.deepEqual(props[2], { "@type": "PropertyValue", name: "Width", value: 28, unitCode: "FOT" });
+  assert.deepEqual(props[3], { "@type": "PropertyValue", name: "Length", value: 44, unitCode: "FOT" });
+  assert.match(String(props.at(-1)!.value), /Topeka/, "an Aspire home is built in Topeka");
   // Description comes from the page's own opening paragraph when the CMS
   // description is empty (true for every CMS plan on 2026-09-11).
   assert.match(String(home.description), /^The Westbrook is a 1,178-square-foot multi-section manufactured home/);
@@ -103,8 +106,25 @@ test("the home node describes the floor plan", () => {
 test("Prime is built in Decatur, never Topeka", () => {
   const prime = buildPlanGraph({ plan: { ...plan, series: "Prime", slug: "prime-1676h32107" }, narrative, today });
   const props = byType(prime, "SingleFamilyResidence")!.additionalProperty as Array<{ name: string; value: string }>;
-  assert.match(props.at(-1)!.value, /Decatur/);
-  assert.doesNotMatch(props.at(-1)!.value, /Topeka/);
+  assert.match(String(props.at(-1)!.value), /Decatur/);
+  assert.doesNotMatch(String(props.at(-1)!.value), /Topeka/);
+});
+
+test("a plan named by its model number does not repeat it in parentheses", () => {
+  // Most CMS Aspire rows have no family name: name === model number.
+  const g = buildPlanGraph({ plan: { ...plan, name: "1676H32107" }, narrative, today });
+  assert.equal(byType(g, "SingleFamilyResidence")!.name, "Champion Homes 1676H32107");
+});
+
+test("CMS dimensions without a foot mark still publish in feet, and junk stays text", () => {
+  const g = buildPlanGraph({ plan: { ...plan, width: "16", length: "76" }, narrative, today });
+  const props = byType(g, "SingleFamilyResidence")!.additionalProperty as Array<{ name: string; value: unknown; unitCode?: string }>;
+  assert.deepEqual(props.find((p) => p.name === "Width"), { "@type": "PropertyValue", name: "Width", value: 16, unitCode: "FOT" });
+  assert.deepEqual(props.find((p) => p.name === "Length"), { "@type": "PropertyValue", name: "Length", value: 76, unitCode: "FOT" });
+  const odd = buildPlanGraph({ plan: { ...plan, width: "varies", length: "" }, narrative, today });
+  const oddProps = byType(odd, "SingleFamilyResidence")!.additionalProperty as Array<{ name: string; value: unknown; unitCode?: string }>;
+  assert.deepEqual(oddProps.find((p) => p.name === "Width"), { "@type": "PropertyValue", name: "Width", value: "varies" });
+  assert.equal(oddProps.find((p) => p.name === "Length"), undefined);
 });
 
 test("the breadcrumb trail is Home › Floor Plans › Series › Home, in order", () => {
