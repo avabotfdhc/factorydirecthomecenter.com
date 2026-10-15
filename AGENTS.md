@@ -1554,10 +1554,12 @@ Until 2026-10-15 `/floor-plans/[slug]` shipped four unlinked ld+json blocks — 
 plus the layout's business and website nodes. `src/lib/plan-schema.ts`
 (`buildPlanGraph`) now renders **one** block with a single `@graph`, every node
 anchored on the page URL: `#product` (the home: name as
-"<brand> <name> (<model>)", plain-text description, every image, `sku` = our
-slug, `mpn` = Champion's model number, brand, manufacturer, bedrooms,
-bathrooms, `floorSize` in FTK, width/length/series/plant as
-`additionalProperty`), `#breadcrumbs` (Home › Floor Plans › Series › Home — the
+"<brand> <name> (<model>)", or just "<brand> <model>" for the many CMS rows
+whose name *is* the model number; plain-text description — CMS `description`,
+else the hand-written `floor_plan_html`, else the generated opening paragraph;
+every image; bedrooms, bathrooms, `floorSize` in FTK; width/length in feet,
+series and plant as `additionalProperty`; `mainEntityOfPage` → `#webpage`),
+`#breadcrumbs` (Home › Floor Plans › Series › Home — the
 series crumb is why this page, not `PageFooter`, builds the trail), `#faq` (the
 plan's own questions; `FAQSection` renders with `showSchema={false}` there)
 and `#webpage` (isPartOf `#website`, breadcrumb → `#breadcrumbs`, mainEntity →
@@ -1570,11 +1572,15 @@ ld+json blocks — business, website, graph.
   (`api-content.ts`, `supabase-content.ts`), and a price in markup that the
   page does not show is a merchant-listing violation as well as a breach of
   the no-dollar-figure rule. So today the node is `["SingleFamilyResidence"]`
-  with no Offer, which is what the page published before. **Flip
-  `SHOW_PRICES` and the same node becomes `["Product", "SingleFamilyResidence"]`
-  with the full Offer** — `#offer`, USD price, `priceValidUntil` = next
-  December 31, `NewCondition`, availability, seller — and the Product rich
-  result qualifies with no further code change. That flip is Kyle's call.
+  with no Offer, which is what the page published before: the model number is
+  its `identifier` and the maker a "Manufacturer" property, because `sku`,
+  `mpn`, `brand` and `manufacturer` are Product properties and do not belong
+  on a residence. **Flip `SHOW_PRICES` and the same node becomes
+  `["Product", "SingleFamilyResidence"]`** with `sku` (our slug), `mpn`
+  (Champion's model number), `brand`, `manufacturer` **and the full Offer** —
+  `#offer`, USD price, `priceValidUntil` = next December 31, `NewCondition`,
+  availability, seller — and the Product rich result qualifies with no further
+  code change. That flip is Kyle's call.
 - **Availability is `PreOrder`**: every home is built to order. `onLot` turns
   it into `InStock` for a home standing on the Auburn lot, but nothing in the
   catalogue records which plans those are (the DealerTide feed is staged, not

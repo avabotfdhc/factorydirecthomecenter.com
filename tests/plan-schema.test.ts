@@ -78,10 +78,10 @@ test("the home node describes the floor plan", () => {
   assert.equal(home["@id"], `${URL}#product`);
   assert.equal(home.name, "Champion Homes Westbrook (1676H32107)");
   assert.equal(home.url, URL);
-  assert.equal(home.sku, "aspire-1676h32107");
-  assert.equal(home.mpn, "1676H32107");
-  assert.deepEqual(home.brand, { "@type": "Brand", name: "Champion Homes" });
-  assert.deepEqual(home.manufacturer, { "@type": "Organization", name: "Champion Homes" });
+  assert.deepEqual(home.mainEntityOfPage, { "@id": `${URL}#webpage` });
+  // Residence-only while unpriced: the model number is its identifier and the
+  // Product-only properties stay off the node (see the price-gate tests).
+  assert.equal(home.identifier, "1676H32107");
   assert.equal(home.numberOfBedrooms, 3);
   assert.equal(home.numberOfBathroomsTotal, 2);
   assert.deepEqual(home.floorSize, { "@type": "QuantitativeValue", value: 1178, unitCode: "FTK" });
@@ -92,10 +92,11 @@ test("the home node describes the floor plan", () => {
     `${SITE_URL}/images/aspire/1676h32107-opt2.webp`,
   ]);
   const props = home.additionalProperty as Array<{ name: string; value: string | number; unitCode?: string }>;
-  assert.deepEqual(props.map((p) => p.name), ["Home type", "Series", "Width", "Length", "Construction"]);
+  assert.deepEqual(props.map((p) => p.name), ["Manufacturer", "Home type", "Series", "Width", "Length", "Construction"]);
+  assert.equal(props[0].value, "Champion Homes");
   // Dimensions publish in feet whether the source says "28'" (repo) or "28" (CMS).
-  assert.deepEqual(props[2], { "@type": "PropertyValue", name: "Width", value: 28, unitCode: "FOT" });
-  assert.deepEqual(props[3], { "@type": "PropertyValue", name: "Length", value: 44, unitCode: "FOT" });
+  assert.deepEqual(props[3], { "@type": "PropertyValue", name: "Width", value: 28, unitCode: "FOT" });
+  assert.deepEqual(props[4], { "@type": "PropertyValue", name: "Length", value: 44, unitCode: "FOT" });
   assert.match(String(props.at(-1)!.value), /Topeka/, "an Aspire home is built in Topeka");
   // Description comes from the page's own opening paragraph when the CMS
   // description is empty (true for every CMS plan on 2026-09-11).
@@ -168,6 +169,9 @@ test("while prices are hidden there is no Product, no Offer and no dollar figure
   const home = byType(g, "SingleFamilyResidence")!;
   assert.deepEqual(home["@type"], ["SingleFamilyResidence"], "a Product without offers is a Search Console error on every plan page");
   assert.equal(home.offers, undefined);
+  for (const productOnly of ["sku", "mpn", "brand", "manufacturer"]) {
+    assert.equal(home[productOnly], undefined, `${productOnly} is a Product property and does not belong on a residence-only node`);
+  }
   assert.equal(byType(g, "Offer"), undefined);
   const json = jsonLdScript(g);
   assert.ok(!/"price"/.test(json), "no price key may be published while prices are hidden");
@@ -179,6 +183,13 @@ test("a numeric price turns the node into a Product with a complete Offer", () =
   const g = buildPlanGraph({ plan: { ...plan, price: "$120,800" }, narrative, today });
   const home = byType(g, "Product")!;
   assert.deepEqual(home["@type"], ["Product", "SingleFamilyResidence"]);
+  assert.equal(home.sku, "aspire-1676h32107");
+  assert.equal(home.mpn, "1676H32107");
+  assert.equal(home.identifier, undefined);
+  assert.deepEqual(home.brand, { "@type": "Brand", name: "Champion Homes" });
+  assert.deepEqual(home.manufacturer, { "@type": "Organization", name: "Champion Homes" });
+  const names = (home.additionalProperty as Array<{ name: string }>).map((p) => p.name);
+  assert.ok(!names.includes("Manufacturer"), "the Product carries `manufacturer` itself");
   const offer = home.offers as Node;
   assert.equal(offer["@type"], "Offer");
   assert.equal(offer["@id"], `${URL}#offer`);
@@ -228,6 +239,14 @@ test("the CMS description wins when there is one, and HTML is stripped", () => {
     narrative,
   );
   assert.equal(d, "Open kitchen & a big primary suite.");
+});
+
+test("hand-written /admin copy (floor_plan_html) is used before the generated paragraph", () => {
+  const d = planSchemaDescription(
+    { ...plan, description: "", floorPlanHtml: "<h2>About</h2><p>Kyle&rsquo;s pick for a first home &ndash; wide hallway.</p>" },
+    narrative,
+  );
+  assert.equal(d, "About Kyle\u2019s pick for a first home \u2013 wide hallway.");
 });
 
 test("long text is cut at a sentence end, never mid-word", () => {

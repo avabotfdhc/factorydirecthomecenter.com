@@ -82,11 +82,15 @@ export function numericPrice(price: string): string {
   return Number.isFinite(n) && n > 0 ? String(n) : "";
 }
 
+const ENTITIES: Record<string, string> = {
+  nbsp: " ", amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", "#39": "'",
+  rsquo: "\u2019", lsquo: "\u2018", rdquo: "\u201d", ldquo: "\u201c", ndash: "\u2013", mdash: "\u2014", hellip: "\u2026",
+};
+
 function stripHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
+    .replace(/&([a-z]+|#\d+);/gi, (m, e: string) => ENTITIES[e.toLowerCase()] ?? m)
     .replace(/\s+/g, " ")
     // "<strong>suite</strong>." → "suite ." without this.
     .replace(/\s+([.,;:!?])/g, "$1")
@@ -103,14 +107,16 @@ function clip(text: string, max: number): string {
   return `${head.slice(0, space > 0 ? space : max).trimEnd()}…`;
 }
 
-/** Plain-text description: the CMS copy when there is any, otherwise the
- *  page's own generated opening paragraph, so the schema always describes
- *  what the visitor reads. */
+/** Plain-text description, in the order the page itself prefers copy: the
+ *  CMS `description`, then the hand-written body from /admin
+ *  (`floor_plan_html`, rendered above the narrative), then the page's own
+ *  generated opening paragraph — so the schema always describes what the
+ *  visitor reads. */
 export function planSchemaDescription(
-  plan: Pick<ApiFloorPlanDetail, "name" | "description" | "homeType" | "brand">,
+  plan: Pick<ApiFloorPlanDetail, "name" | "description" | "floorPlanHtml" | "homeType" | "brand">,
   narrative: Pick<PlanNarrative, "sections">,
 ): string {
-  const own = stripHtml(plan.description || "");
+  const own = stripHtml(plan.description || "") || stripHtml(plan.floorPlanHtml || "");
   const opening = (narrative.sections[0]?.paragraphs ?? []).map(stripHtml).filter(Boolean).join(" ");
   const body = own || opening || `${plan.name} ${plan.homeType} by ${plan.brand || "Champion Homes"}.`;
   return clip(body, 500);
@@ -138,6 +144,9 @@ export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGr
   const plant = /prime/i.test(plan.series) ? "Decatur" : "Topeka";
 
   const additionalProperty = [
+    // `manufacturer` is a Product property; while the node is a residence
+    // only, the maker is published the way the old block did it.
+    price ? null : { "@type": "PropertyValue", name: "Manufacturer", value: brand },
     plan.homeType ? { "@type": "PropertyValue", name: "Home type", value: plan.homeType } : null,
     plan.series ? { "@type": "PropertyValue", name: "Series", value: `Champion ${plan.series}` } : null,
     dimension("Width", plan.width),
@@ -167,13 +176,24 @@ export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGr
     name: mpn && !plan.name.toUpperCase().includes(mpn.toUpperCase()) ? `${brand} ${plan.name} (${mpn})` : `${brand} ${plan.name}`,
     description: planSchemaDescription(plan, narrative),
     url,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
     ...(images.length ? { image: images } : {}),
-    // Our catalogue code for this listing; the slug is unique per page and
-    // carries the series ("aspire-1676h32107").
-    sku: plan.slug,
-    ...(mpn ? { mpn } : {}),
-    brand: { "@type": "Brand", name: brand },
-    manufacturer: { "@type": "Organization", name: brand },
+    // sku, mpn, brand and manufacturer are Product properties, so they ride
+    // with the Product type. A residence-only node carries the model number
+    // as its `identifier` (and the maker under additionalProperty), which is
+    // what validated cleanly before this graph existed.
+    ...(price
+      ? {
+          // Our catalogue code for this listing; the slug is unique per page
+          // and carries the series ("aspire-1676h32107").
+          sku: plan.slug,
+          ...(mpn ? { mpn } : {}),
+          brand: { "@type": "Brand", name: brand },
+          manufacturer: { "@type": "Organization", name: brand },
+        }
+      : mpn
+        ? { identifier: mpn }
+        : {}),
     ...(plan.beds ? { numberOfBedrooms: plan.beds } : {}),
     ...(plan.baths ? { numberOfBathroomsTotal: plan.baths } : {}),
     ...(plan.sqft ? { floorSize: { "@type": "QuantitativeValue", value: plan.sqft, unitCode: "FTK" } } : {}),
