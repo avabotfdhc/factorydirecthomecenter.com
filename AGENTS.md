@@ -1621,9 +1621,14 @@ Champion's sheet.
   sells the same line under Champion's names, and the September 2026 spam update
   targets scaled place-name content. Local rank comes from the business entity
   (listing, citations, reviews, the town and county pages), not from home names.
-- The honest improvement for these 42 is the **title ladder** in
-  `src/lib/page-title.ts`: lead with the description and end with the code
-  ("3 Bed 2 Bath 16×76 Single Wide, Model 1676H32107"). Not done; Kyle's call.
+- Their **titles lead with the description and end with the code** (Kyle,
+  2026-10-16): `planTitle()` in `src/lib/page-title.ts` takes the model number
+  and box size, and `isCodeNamed()` (name equals the model number, or is shaped
+  like one) switches the ladder to "3 Bed 2 Bath 16×76 Champion Single Wide
+  Home, Model 1676H32107" — same drop order as named plans (place, brand, then
+  the size, then the type), and the code is never dropped. The detail page also
+  stops printing "Model 1676H32107" under an H1 that already says it. Named
+  plans are untouched; `tests/page-title.test.ts` pins both ladders.
 - A name that Champion does publish (a new sales sheet with one, the DealerTide
   feed, Champion's own site) can go into the CMS `name` through `/admin`; the
   slug stays, so no URL changes.

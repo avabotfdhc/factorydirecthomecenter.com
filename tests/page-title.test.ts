@@ -7,7 +7,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { DESCRIPTION_MAX, fitDescription, fitTitle, planTitle, postTitle, titleLength, TITLE_MAX, TITLE_MIN } from "../src/lib/page-title";
+import { DESCRIPTION_MAX, fitDescription, fitTitle, isCodeNamed, planTitle, postTitle, titleLength, TITLE_MAX, TITLE_MIN } from "../src/lib/page-title";
 import { allLocalBlogPosts } from "../src/lib/local-posts";
 import { shortImageSrc, CATALOGUE_BUCKET_URL } from "../src/lib/image-src";
 
@@ -22,13 +22,47 @@ test("fitTitle returns the first candidate that fits", () => {
 test("plan titles stay within 15–65 for the longest catalogue names", () => {
   // Longest active names in the CMS on 2026-09-28 (28 characters), with the
   // longest type label and a fractional bath count.
-  for (const name of ["Prime 1676H32P07 (2x6 walls)", "Barkley Reverse Aisle", "1432H11214", "Pike"]) {
+  for (const name of ["Prime 1676H32P07 (2x6 walls)", "Barkley Reverse Aisle", "Pike"]) {
     const t = planTitle(name, 4, 2.5, "Multi-Section Home");
     assert.ok(titleLength(t) <= TITLE_MAX && titleLength(t) >= TITLE_MIN, `${t} (${t.length})`);
-    assert.ok(t.startsWith(name), "the home's name always leads");
+    assert.ok(t.startsWith(name), "a named home's name always leads");
   }
   // A short name keeps the full, most descriptive form.
   assert.equal(planTitle("Thornton", 3, 2, "Double Wide Home"), "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN");
+});
+
+// 42 Aspire singles are known only by their model code (Champion's sheets give
+// them no name — AGENTS.md, "Code-named singles stay code-named"). Their title
+// leads with what a buyer searches for and ends with the code.
+test("a code-named plan leads with the description and ends with its model code", () => {
+  const opts = { modelNumber: "1676H32107", widthFt: 16, lengthFt: 76 };
+  const t = planTitle("1676H32107", 3, 2, "Single Wide Home", opts);
+  assert.equal(t, "3 Bed 2 Bath 16\u00d776 Champion Single Wide Home, Model 1676H32107");
+  assert.ok(titleLength(t) <= TITLE_MAX);
+  // Without a box size the brand-and-code form fits; the place form is 67
+  // characters, so it goes first, as it does for named plans.
+  assert.equal(planTitle("1676H32107", 3, 2, "Single Wide Home", { modelNumber: "1676H32107" }),
+    "3 Bed 2 Bath Champion Single Wide Home, Model 1676H32107");
+  // The code is never dropped, whatever else has to go.
+  const long = planTitle("1676H32107", 4, 2.5, "Multi-Section Home", opts);
+  assert.ok(titleLength(long) <= TITLE_MAX && long.endsWith("Model 1676H32107"), long);
+  // Every real code-named Aspire single, with its widest label, fits.
+  for (const code of ["1432H11214", "1460H22215", "1668H22259", "1676H32259"]) {
+    const w = Number(code.slice(0, 2)), l = Number(code.slice(2, 4));
+    const title = planTitle(code, 3, 2, "Single Wide Home", { modelNumber: code, widthFt: w, lengthFt: l });
+    assert.ok(titleLength(title) <= TITLE_MAX && titleLength(title) >= TITLE_MIN && title.endsWith(`Model ${code}`), title);
+    assert.ok(!title.startsWith(code), "the code no longer leads");
+  }
+});
+
+test("isCodeNamed recognises a bare model code and nothing else", () => {
+  assert.equal(isCodeNamed("1676H32107"), true);
+  assert.equal(isCodeNamed("1676h32107", "1676H32107"), true);
+  assert.equal(isCodeNamed("2856H32174"), true);
+  assert.equal(isCodeNamed("Westbrook", "1676H32107"), false);
+  assert.equal(isCodeNamed("Prime 1676H32P07 (2x6 walls)", "1676H32P07"), false);
+  assert.equal(isCodeNamed("Hickman", "HICKMAN"), true, "name equal to the model number counts, whatever its shape");
+  assert.equal(isCodeNamed(""), false);
 });
 
 test("every post, scheduled ones included, has a title within 15–65", () => {

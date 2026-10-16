@@ -14,9 +14,15 @@ import { FloorPlanActions } from "@/components/QuoteModal";
 import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
-import { planTitle } from "@/lib/page-title";
+import { isCodeNamed, planTitle } from "@/lib/page-title";
 
 const SITE = "https://factorydirecthomescenter.com";
+
+/** "28'" or "28" → 28; anything else → undefined. */
+const feet = (raw: string): number | undefined => {
+  const n = parseInt(raw, 10);
+  return Number.isFinite(n) && n > 0 ? n : undefined;
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -36,7 +42,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     // because the layout's "| Factory Direct Homes" suffix pushed every plan
     // title to ~90 characters; planTitle() drops the optional words until it
     // fits in 65 (src/lib/page-title.ts).
-    title: { absolute: planTitle(plan.name, plan.beds, plan.baths, planTypeLabel(plan)) },
+    title: {
+      absolute: planTitle(plan.name, plan.beds, plan.baths, planTypeLabel(plan), {
+        modelNumber: plan.modelNumber,
+        widthFt: plan.widthFt ?? feet(plan.width),
+        lengthFt: feet(plan.length),
+      }),
+    },
     description: desc,
     alternates: { canonical: url },
     openGraph: {
@@ -142,7 +154,8 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
               {plan.brand}{plan.series ? ` · ${plan.series}` : ""}
             </p>
             <h1 className="font-serif text-3xl lg:text-5xl font-light tracking-tight mb-3">{plan.name}</h1>
-            {plan.modelNumber && (
+            {/* A code-named plan already shows its model number as the H1. */}
+            {plan.modelNumber && !isCodeNamed(plan.name, plan.modelNumber) && (
               <p className="text-sm text-[var(--color-gray)] mb-6">Model {plan.modelNumber}</p>
             )}
 

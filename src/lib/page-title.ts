@@ -29,13 +29,57 @@ export function fitTitle(candidates: string[], max = TITLE_MAX): string {
   return (space > max / 2 ? cut.slice(0, space) : cut).trim();
 }
 
+/** A Champion model code used as a name ("1676H32107", "2856H32174"). */
+const MODEL_CODE = /^\d{4}[A-Z]\d{2}[A-Z]?\d{2,3}$/i;
+
+/**
+ * True when the plan has no family name and is known only by its model code.
+ * 42 of the 172 active Aspire plans are (measured 2026-10-16), and Champion's
+ * own sales sheets give them no name either — see AGENTS.md, "Code-named
+ * singles stay code-named".
+ */
+export function isCodeNamed(name: string, modelNumber?: string): boolean {
+  const n = name.trim();
+  if (!n) return false;
+  if (modelNumber && n.toUpperCase() === modelNumber.trim().toUpperCase()) return true;
+  return MODEL_CODE.test(n);
+}
+
+export interface PlanTitleOptions {
+  modelNumber?: string;
+  widthFt?: number;
+  lengthFt?: number;
+}
+
 /**
  * A floor-plan title: "Thornton — 3 Bed 2 Bath Champion Double Wide Home,
  * Auburn IN" when it fits, then without the place, then without the brand,
  * then without the home type.
+ *
+ * A plan whose name is only its model code leads with what a buyer would
+ * search for instead, and ends with the code: "3 Bed 2 Bath 16×76 Champion
+ * Single Wide Home, Model 1676H32107" — same drop order (place, brand, then
+ * the box size, then the type), and the code is never dropped.
  */
-export function planTitle(name: string, beds: number | string, baths: number | string, typeLabel: string): string {
+export function planTitle(
+  name: string,
+  beds: number | string,
+  baths: number | string,
+  typeLabel: string,
+  opts: PlanTitleOptions = {},
+): string {
   const layout = `${beds} Bed ${baths} Bath`;
+  if (isCodeNamed(name, opts.modelNumber)) {
+    const code = `Model ${(opts.modelNumber || name).trim().toUpperCase()}`;
+    const size = opts.widthFt && opts.lengthFt ? `${opts.widthFt}\u00d7${opts.lengthFt} ` : "";
+    return fitTitle([
+      `${layout} ${size}Champion ${typeLabel}, ${code}, Auburn IN`,
+      `${layout} ${size}Champion ${typeLabel}, ${code}`,
+      `${layout} ${size}${typeLabel}, ${code}`,
+      `${layout} ${typeLabel}, ${code}`,
+      `${layout}, ${code}`,
+    ]);
+  }
   return fitTitle([
     `${name} — ${layout} Champion ${typeLabel}, Auburn IN`,
     `${name} — ${layout} Champion ${typeLabel}`,
