@@ -1598,3 +1598,32 @@ ld+json blocks — business, website, graph.
 complete Offer when a price exists), the seller rule, the Decatur/Topeka
 split, and a source guard that the page renders exactly one
 `<StructuredData>` with `FAQSection`'s schema switched off.
+
+# Code-named singles stay code-named: Champion gives them no family name
+
+Kyle asked (2026-10-16) whether naming the homes would help local SEO. Measured
+first: 42 of the 172 active Aspire plans (all single-wides) and 0 Prime plans
+have a CMS `name` that is just the model code, so their titles read
+"1676H32107 — 3 Bed 2 Bath Champion Single Wide Home, Auburn IN". Only one of
+the 42 had a family name anywhere in the repo data (the old
+`dutch-aspire-westbrook-1676h32107` slug), and nothing in the DealerTide feed
+names them.
+
+Then every one of their sales sheets was read (`docs/sheet-text-edge-function.md`
+is how): **all 41 sheets with a text layer title the home by model code, box
+size, bed/bath count and "LITERATURE PLAN", with no name**; `1432H11214` is an
+image-only PDF. Champion names its sectionals (Woodward, Warren…) and not these
+singles, so there is nothing to fill in, and "Westbrook" did not come from
+Champion's sheet.
+
+- **Do not invent names**, and never place names ("The Auburn"). Nobody searches
+  for them, Champion's sheets and the DealerTide feed say the code, Fahl Homes
+  sells the same line under Champion's names, and the September 2026 spam update
+  targets scaled place-name content. Local rank comes from the business entity
+  (listing, citations, reviews, the town and county pages), not from home names.
+- The honest improvement for these 42 is the **title ladder** in
+  `src/lib/page-title.ts`: lead with the description and end with the code
+  ("3 Bed 2 Bath 16×76 Single Wide, Model 1676H32107"). Not done; Kyle's call.
+- A name that Champion does publish (a new sales sheet with one, the DealerTide
+  feed, Champion's own site) can go into the CMS `name` through `/admin`; the
+  slug stays, so no URL changes.
