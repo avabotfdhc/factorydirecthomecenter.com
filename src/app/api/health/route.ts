@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
+import { probeDealertideKey } from "@/lib/dealertide";
 
 export const dynamic = "force-dynamic";
 
 // GET /api/health — which integrations this deployment has configured
-// (booleans only, never values) plus a live Supabase probe. Env var changes
-// on Vercel only reach deployments
-// created after the change, so check this after every redeploy.
+// (booleans only, never values) plus two live probes: Supabase, and whether
+// DealerTide ACCEPTS the lead key. `configured.dealerTide` only says a key is
+// set; `dealerTide.key.verdict` says whether it works. The difference cost
+// eight days of leads in October 2026 (see AGENTS.md). Env var changes on
+// Vercel only reach deployments created after the change, so check this after
+// every redeploy.
 
 const set = (name: string) => Boolean(process.env[name]);
 
@@ -49,19 +53,24 @@ export async function GET() {
   const supabaseKey =
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  const [supabase] = await Promise.all([
+  const [supabase, dealerTideKey] = await Promise.all([
     supabaseUrl && supabaseKey
       ? probe(`${supabaseUrl}/rest/v1/floor_plans?select=id&limit=1`, {
           apikey: supabaseKey,
           Authorization: `Bearer ${supabaseKey}`,
         })
       : Promise.resolve({ status: null, error: "not configured" }),
+    probeDealertideKey(),
   ]);
 
   return NextResponse.json({
     ok: configured.supabaseUrl && configured.supabaseAnonKey && supabase.status === 200,
     configured,
     supabase: { host: supabaseUrl ? new URL(supabaseUrl).host : null, floorPlansProbe: supabase },
+    // "ok" means website leads can reach the CRM right now. "rejected" means
+    // every lead is being refused with the key this deployment carries —
+    // the leads are still in Supabase, but someone has to fix the key.
+    dealerTide: { key: dealerTideKey, leadsReachCrm: dealerTideKey.verdict === "ok" },
     checkedAt: new Date().toISOString(),
   });
 }

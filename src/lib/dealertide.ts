@@ -91,6 +91,46 @@ export interface DealertideLead {
  */
 export const NO_EMAIL_PLACEHOLDER = "no-email@factorydirecthomescenter.com";
 
+/**
+ * Does DealerTide accept the key this deployment carries? `GET /locations` is
+ * the cheapest authenticated call on the partner API (the endpoint map above),
+ * so a 2xx proves the key and a 401/403 proves it is dead. Exists because of
+ * 2026-10-09: the key was rejected on every lead for eight days, every
+ * rejection was logged, and nothing read the logs. `/api/health` publishes
+ * this so a dead key is visible on a page. Never throws; never returns the key.
+ */
+export type DealertideKeyVerdict = "ok" | "rejected" | "unreachable" | "not-configured" | "error";
+
+export interface DealertideKeyProbe {
+  verdict: DealertideKeyVerdict;
+  /** HTTP status of the probe, or null when no response arrived. */
+  status: number | null;
+  /** Short reason, safe to publish — never includes the key. */
+  detail: string;
+}
+
+export async function probeDealertideKey(timeoutMs = 5_000): Promise<DealertideKeyProbe> {
+  const auth = authHeader();
+  if (!auth) return { verdict: "not-configured", status: null, detail: "DEALERTIDE_API_KEY not set" };
+  try {
+    const res = await fetch(`${DT_BASE}/locations`, {
+      headers: { Authorization: auth, Accept: "application/json" },
+      cache: "no-store",
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (res.ok) return { verdict: "ok", status: res.status, detail: "key accepted" };
+    const body = (await res.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 200);
+    const detail = `HTTP ${res.status}${body ? `: ${body}` : ""}`;
+    return { verdict: res.status === 401 || res.status === 403 ? "rejected" : "error", status: res.status, detail };
+  } catch (err) {
+    const detail =
+      err instanceof Error
+        ? err.name === "TimeoutError" ? `no response within ${timeoutMs}ms` : err.message
+        : String(err);
+    return { verdict: "unreachable", status: null, detail };
+  }
+}
+
 export interface DealertideResult {
   ok: boolean;
   /** HTTP status of the final attempt, or null when no response arrived. */

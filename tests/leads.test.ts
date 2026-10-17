@@ -206,3 +206,30 @@ test("leads-store prefers the service-role key over the anon key", () => {
       "is `with check (false)` — an anon-first chain stores no lead at all.",
   );
 });
+
+// ── probeDealertideKey ──────────────────────────────────────────────────────
+// `/api/health` publishes this verdict so a dead key is visible on a page.
+// Between 2026-10-09 and 2026-10-17 DealerTide answered 401 on every lead and
+// the only record was a log line nobody read.
+test("probeDealertideKey: 2xx is ok, 401 is rejected with the body, no response is unreachable", async () => {
+  const { probeDealertideKey } = await import("../src/lib/dealertide");
+  plan = [{ status: 200, body: "[]" }];
+  let r = await probeDealertideKey(2_000);
+  assert.equal(r.verdict, "ok"); assert.equal(r.status, 200);
+  assert.equal(received.at(-1)?.headers.authorization, "Bearer test-key-not-real", "the probe authenticates like a lead");
+
+  plan = [{ status: 401, body: '{"error":"Invalid or revoked API key"}' }];
+  r = await probeDealertideKey(2_000);
+  assert.equal(r.verdict, "rejected"); assert.equal(r.status, 401);
+  assert.match(r.detail, /Invalid or revoked API key/);
+  assert.ok(!r.detail.includes("test-key"), "the key never appears in the verdict");
+
+  plan = [{ status: 500, body: "boom" }];
+  r = await probeDealertideKey(2_000);
+  assert.equal(r.verdict, "error"); assert.equal(r.status, 500);
+
+  plan = ["hang"];
+  r = await probeDealertideKey(300);
+  assert.equal(r.verdict, "unreachable"); assert.equal(r.status, null);
+  assert.match(r.detail, /no response within 300ms/);
+});
