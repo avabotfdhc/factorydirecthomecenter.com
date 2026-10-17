@@ -7,6 +7,8 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { DESCRIPTION_MAX, fitDescription, fitTitle, isCodeNamed, planTitle, postTitle, titleLength, TITLE_MAX, TITLE_MIN } from "../src/lib/page-title";
 import { allLocalBlogPosts } from "../src/lib/local-posts";
 import { shortImageSrc, CATALOGUE_BUCKET_URL } from "../src/lib/image-src";
@@ -92,4 +94,22 @@ test("post meta descriptions fit in a search snippet and end on a whole sentence
   assert.equal(fitDescription("Short and complete."), "Short and complete.");
   const cut = fitDescription(`${"word ".repeat(60).trim()}.`);
   assert.ok(cut.length <= DESCRIPTION_MAX && cut.endsWith("word…"), cut);
+});
+
+test("the plan page's share cards carry the same title as the search result, plus the site name", () => {
+  // Facebook, Messenger, X and iMessage show og:title / twitter:title. Until
+  // 2026-10-17 the plan page built those as "<name> | Factory Direct Homes
+  // Center", which for the 42 code-named singles read "1676H32107 | …" and
+  // said nothing about the home. The share title is now the same descriptive
+  // string as <title>; the brand rides on og:site_name, which must be restated
+  // because a page-level openGraph block replaces the layout's.
+  const src = readFileSync(resolve(import.meta.dirname, "../src/app/floor-plans/[slug]/page.tsx"), "utf8");
+  const og = src.match(/openGraph:\s*\{([\s\S]*?)\n\s*\},/)?.[1] ?? "";
+  const tw = src.match(/twitter:\s*\{([\s\S]*?)\n\s*\},/)?.[1] ?? "";
+  assert.ok(og && tw, "plan page sets openGraph and twitter metadata");
+  for (const block of [og, tw]) {
+    assert.match(block, /^\s*title,\s*$/m, "share title is the same `title` as the search result");
+    assert.doesNotMatch(block, /\| Factory Direct Homes/, "no brand suffix typed into the share title");
+  }
+  assert.match(og, /siteName:\s*"Factory Direct Homes Center"/, "og:site_name restated on the plan page");
 });

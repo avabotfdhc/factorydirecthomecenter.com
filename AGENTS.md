@@ -1628,7 +1628,11 @@ Champion's sheet.
   Home, Model 1676H32107" — same drop order as named plans (place, brand, then
   the size, then the type), and the code is never dropped. The detail page also
   stops printing "Model 1676H32107" under an H1 that already says it. Named
-  plans are untouched; `tests/page-title.test.ts` pins both ladders.
+  plans are untouched; `tests/page-title.test.ts` pins both ladders. The share
+  card (`og:title` / `twitter:title`) carries the same descriptive title since
+  2026-10-17 — it used to be "<name> | Factory Direct Homes Center" — with the
+  brand restated as `siteName`, because a page-level `openGraph` block replaces
+  the layout's and plan pages had no `og:site_name` at all.
 - A name that Champion does publish (a new sales sheet with one, the DealerTide
   feed, Champion's own site) can go into the CMS `name` through `/admin`; the
   slug stays, so no URL changes.

@@ -36,33 +36,40 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   ).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
   const url = `${SITE}/floor-plans/${plan.slug}`;
   const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
+  // "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN": the
+  // brand, the home type as people search for it, and the place. Absolute,
+  // because the layout's "| Factory Direct Homes" suffix pushed every plan
+  // title to ~90 characters; planTitle() drops the optional words until it
+  // fits in 65 (src/lib/page-title.ts).
+  const title = planTitle(plan.name, plan.beds, plan.baths, planTypeLabel(plan), {
+    modelNumber: plan.modelNumber,
+    widthFt: plan.widthFt ?? feet(plan.width),
+    lengthFt: feet(plan.length),
+  });
+  const shareImage = plan.image ? [{ url: absoluteImageUrl(plan.image), alt: heroAlt }] : undefined;
   return {
-    // "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN": the
-    // brand, the home type as people search for it, and the place. Absolute,
-    // because the layout's "| Factory Direct Homes" suffix pushed every plan
-    // title to ~90 characters; planTitle() drops the optional words until it
-    // fits in 65 (src/lib/page-title.ts).
-    title: {
-      absolute: planTitle(plan.name, plan.beds, plan.baths, planTypeLabel(plan), {
-        modelNumber: plan.modelNumber,
-        widthFt: plan.widthFt ?? feet(plan.width),
-        lengthFt: feet(plan.length),
-      }),
-    },
+    title: { absolute: title },
     description: desc,
     alternates: { canonical: url },
+    // The share card (Facebook, Messenger, X, iMessage) carries the same
+    // descriptive title as the search result. It used to be
+    // "1676H32107 | Factory Direct Homes Center", which for the 42 code-named
+    // singles said nothing about the home. The brand rides on og:site_name —
+    // this block REPLACES the layout's openGraph rather than merging with it,
+    // so the site name has to be restated here or the card loses it.
     openGraph: {
-      title: `${plan.name} | Factory Direct Homes Center`,
+      title,
       description: desc,
       url,
+      siteName: "Factory Direct Homes Center",
       type: "website",
-      images: plan.image ? [{ url: absoluteImageUrl(plan.image), alt: heroAlt }] : undefined,
+      images: shareImage,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${plan.name} | Factory Direct Homes Center`,
+      title,
       description: desc,
-      images: plan.image ? [{ url: absoluteImageUrl(plan.image), alt: heroAlt }] : undefined,
+      images: shareImage,
     },
   };
 }
