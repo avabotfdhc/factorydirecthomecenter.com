@@ -2995,6 +2995,235 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>See <a href="/locations/randolph-county">our Randolph County page</a>, or browse <a href="/floor-plans">floor plans</a>.</p>
 `,
   },
+  {
+    slug: "manufactured-homes-millersburg-indiana",
+    title: "Manufactured Homes in Millersburg, Indiana: Choosing Between Champion’s Series",
+    excerpt:
+      "Champion builds several ranges of homes in Indiana, and buyers near Millersburg often see more than one of them on the same lot. What separates Prime, Aspire and Redman, and how to pick the one that fits your land and budget.",
+    image: "/images/homepage/double-wides.webp",
+    date: "October 19, 2026",
+    publishAt: "2026-10-19T13:00:00Z",
+    html: `
+<p>Millersburg sits in the farm country of eastern Elkhart County, not far from Champion’s Topeka plant. Buyers from here often tour more than one lot and come away with a list of series names: Prime, Aspire, Redman, Dutch. They are all Champion <strong>manufactured homes</strong>, but they are not the same home at different prices. This post explains how they differ so you can narrow the choice before you compare plans.</p>
+
+<h2>Where each series is built</h2>
+<ul>
+  <li><strong>Prime</strong> is built at Champion’s Decatur, Indiana plant.</li>
+  <li><strong>Aspire</strong>, sold under Champion’s Dutch brand as Dutch Aspire, and <strong>Redman</strong> are built at Champion’s Topeka, Indiana plant.</li>
+</ul>
+<p>Every one of them is built to order and ships from the plant to your land. Our <a href="/champion-homes">Champion homes page</a> has more on the company and its plants.</p>
+
+<h2>Prime: single-section homes built for value</h2>
+<p>Prime is Champion’s value line: 14- and 16-foot-wide single-section homes from two to four bedrooms. It suits a first home, a rental or farm house, or a lot that cannot take a wider home. See the <a href="/series/prime">Prime series page</a> for the plans.</p>
+
+<h2>Aspire: the broadest range</h2>
+<p>Aspire spans single-section and multi-section homes, with upgraded kitchens and primary suites on many plans and options such as finished drywall and a higher roof pitch. It is the series most families end up comparing, because it covers the widest spread of sizes. See the <a href="/series/aspire">Aspire series page</a>.</p>
+
+<h2>Redman: larger sectional homes</h2>
+<p>Redman is Champion’s line of larger multi-section homes, with 28- and 32-foot-wide plans, big kitchens with islands and generous primary suites. Champion’s own literature calls the range Redman Paramount, so a buyer who was shopping a Paramount plan will find its place here. See the <a href="/series/redman">Redman series page</a>.</p>
+
+<h2>How to choose</h2>
+<p>Start with the land, not the brochure:</p>
+<ol>
+  <li><strong>How wide a home can the lot take?</strong> Setbacks, the septic area and the driveway decide this. A narrow lot points to a single-section home.</li>
+  <li><strong>How many bedrooms and baths do you need?</strong> Our Gas City post covers choosing the bedroom count, and our Warren post covers the bathrooms.</li>
+  <li><strong>Which finishes matter to you?</strong> Kitchen islands, drywall and roof pitch vary by series and plan. List what you care about before you visit.</li>
+  <li><strong>Then compare plans across series.</strong> Two homes of similar size in different series can differ in layout, finishes and options. Compare line-item quotes, not series names. Our Roanoke post covers reading two quotes side by side.</li>
+</ol>
+
+<h2>Common questions</h2>
+<h3>Is one series built to a different code?</h3>
+<p>The homes in this post are HUD-code manufactured homes. Some plans are also built as modular homes to the IRC; our guide on <a href="/guides/manufactured-vs-modular">manufactured versus modular homes</a> explains the difference.</p>
+<h3>Can I see more than one series at your showroom?</h3>
+<p>Our Auburn lot has walk-through Champion model homes. Call ahead or <a href="/showroom">book a visit</a> so someone is free to show you around.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/elkhart-county">our Elkhart County page</a>, or browse all <a href="/floor-plans">floor plans</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-winona-lake-indiana",
+    title: "Manufactured Homes in Winona Lake, Indiana: What Belongs in the Purchase Agreement",
+    excerpt:
+      "The purchase agreement is the document that decides what you are actually buying. What a buyer near Winona Lake should expect to see in writing before signing for a new manufactured home, and what to ask about anything that is missing.",
+    image: "/images/homepage/feature-financing.webp",
+    date: "October 20, 2026",
+    publishAt: "2026-10-20T13:00:00Z",
+    html: `
+<p>Winona Lake sits beside Warsaw at the heart of Kosciusko County, and buyers here often visit several lots before they choose a <strong>manufactured home</strong>. By the end, the conversations blur together. The purchase agreement is what settles it: a home is what the paper says it is, not what anyone remembers being told. Read it before you sign, and ask about anything you do not understand.</p>
+
+<h2>The home itself</h2>
+<ul>
+  <li>The manufacturer, series, plan name and model number.</li>
+  <li>The size, bedroom and bathroom count.</li>
+  <li>Whether it is a HUD-code manufactured home or a modular home. Our guide on <a href="/guides/manufactured-vs-modular">manufactured versus modular homes</a> explains why that matters.</li>
+</ul>
+
+<h2>Every option, listed one by one</h2>
+<p>Each option you chose should appear as its own line: the roof pitch, the siding, the kitchen upgrades, the appliance package, anything else. A line that says only “options package” does not tell you what you are getting. Model homes often show optional features, so check that what you liked in the model is actually on your agreement. Our Shipshewana post covers which options to decide at order.</p>
+
+<h2>What is included, and what is not</h2>
+<p>The agreement should be clear about where the dealer’s part ends. At our dealership we sell and deliver the home. Site work, the foundation, set-up and utility connections are done by contractors you hire. Whatever arrangement you have with any dealer, it should be written down, so there is no gap between what you think is included and what is. Our Upland post covers hiring your own site contractors.</p>
+
+<h2>Delivery</h2>
+<ul>
+  <li>Where the home is being delivered.</li>
+  <li>The delivery charge as its own line.</li>
+  <li>What you must have ready at the site before delivery, such as access for the truck. Our Spencerville post covers delivery access on rural lanes.</li>
+</ul>
+
+<h2>Money and timing</h2>
+<ul>
+  <li>The price of the home, each option and delivery, and the total.</li>
+  <li>Any deposit, when it is due, and under what conditions it is refundable.</li>
+  <li>What happens if you need to change an option after ordering.</li>
+  <li>What happens if your financing or land purchase falls through. Our Rochester post covers checks to finish before closing on land.</li>
+</ul>
+
+<h2>Warranty and paperwork</h2>
+<p>Ask what warranty comes with the home, who you contact for a warranty claim, and which documents you will receive at delivery. Keep a copy of the agreement with them. Our Montpelier post covers the paperwork to keep.</p>
+
+<h2>Common questions</h2>
+<h3>Should I have someone else read the agreement?</h3>
+<p>If anything is unclear, yes. An attorney can review it before you sign. This post is general information, not legal advice.</p>
+<h3>Will you explain your own agreement line by line?</h3>
+<p>Yes. Ask us about any line on our quote or agreement before you sign.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/kosciusko-county">our Kosciusko County page</a>, or read <a href="/blog/how-to-read-manufactured-home-quote">how to read a manufactured home quote</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-wakarusa-indiana",
+    title: "Manufactured Homes in Wakarusa, Indiana: Single Wide or Double Wide?",
+    excerpt:
+      "The first big choice most buyers near Wakarusa make is how wide the home will be. How a single-section and a multi-section manufactured home differ on the lot, inside, on delivery day and in the site work you will hire out.",
+    image: "/images/homepage/single-wides.webp",
+    date: "October 21, 2026",
+    publishAt: "2026-10-21T13:00:00Z",
+    html: `
+<p>Wakarusa is a small town in western Elkhart County, just north of Nappanee. Buyers from here usually arrive with one question already in mind: single wide or double wide? It is the first decision that shapes all the others, from the lot you can use to the site work you will hire. Here is how the two compare for a new <strong>manufactured home</strong>.</p>
+
+<h2>What the words mean</h2>
+<ul>
+  <li>A <strong>single-section</strong> home, often called a single wide, is built and shipped as one piece. Champion’s Prime single-section plans are 14 or 16 feet wide.</li>
+  <li>A <strong>multi-section</strong> home, often called a double wide, is built as two or more pieces that are joined on site. Champion’s multi-section plans run from about 24 to 32 feet wide.</li>
+</ul>
+<p>Browse them side by side on our <a href="/single-wide-homes">single wide homes</a> and <a href="/double-wide-homes">double wide homes</a> pages.</p>
+
+<h2>On the lot</h2>
+<p>A single-section home is long and narrow, so it fits lots that cannot take a wider footprint. A multi-section home needs more width but is usually shorter for the same floor area. Measure the usable part of your lot after setbacks, the septic area and the driveway, then compare it with each plan. Our Corunna post covers fitting a single-section home on a small platted lot.</p>
+
+<h2>Inside</h2>
+<p>The extra width of a multi-section home changes the layout, not just the square footage. It allows wider living areas, kitchen islands, and bedrooms at opposite ends. A single-section home places rooms along one hallway. Neither is better on its own; it depends on how your household lives. Our Milford post compares split-bedroom and same-side layouts.</p>
+
+<h2>Delivery and set-up</h2>
+<p>A single-section home arrives as one load. A multi-section home arrives as two or more, and the pieces must be joined and sealed on site. That adds set-up work for the contractor you hire. Either way, the site needs room for the truck to get in and turn. Our Spencerville post covers delivery access.</p>
+
+<h2>Foundation and site work</h2>
+<p>A wider home needs a different pier or foundation layout. Champion’s set-up drawing for your plan shows what is needed, and your foundation contractor builds to it and to the local code. Get the site work quoted for the plan you are actually considering.</p>
+
+<h2>Common questions</h2>
+<h3>Is a double wide always more home for the money?</h3>
+<p>Not always. Compare the plans you are considering on a line-item quote, including delivery, and get your contractors’ quotes for the site work each one needs.</p>
+<h3>Can I add on to a single wide later?</h3>
+<p>Additions to a manufactured home are limited and need the right permits. A freestanding porch, deck or garage is often simpler; our Hudson post covers those.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/elkhart-county">our Elkhart County page</a>, or browse all <a href="/floor-plans">floor plans</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-altona-indiana",
+    title: "Manufactured Homes in Altona, Indiana: What to Look at When You Walk a Model Home",
+    excerpt:
+      "Model homes all look good at first glance. What a buyer near Altona and Garrett should check when walking through a manufactured home on any lot — walls, roof, windows, floors and the spec sheet — and which features are options.",
+    image: "/images/homepage/double-wide-exterior.webp",
+    date: "October 22, 2026",
+    publishAt: "2026-10-22T13:00:00Z",
+    html: `
+<p>Altona is a small town beside Garrett in DeKalb County, a short drive from our Auburn showroom. Buyers from here have several lots within reach, and many walk through more than one model home before they decide. That is a good idea, as long as you know what to look at. A model home is decorated to sell. These are the things worth checking in any <strong>manufactured home</strong>, whoever builds it.</p>
+
+<h2>Bring the spec sheet</h2>
+<p>Ask for the spec sheet for the exact plan you are standing in. It lists what is standard and what is optional. Walk the home with it in your hand, because the features you notice first are often options.</p>
+
+<h2>Walls and ceilings</h2>
+<ul>
+  <li><strong>Wall framing.</strong> The spec sheet says how the exterior walls are framed and insulated. Compare the figures between homes rather than guessing from the inside.</li>
+  <li><strong>Interior finish.</strong> Some homes have finished drywall; others use panels with battens. Look closely at the seams.</li>
+  <li><strong>Ceiling height.</strong> Stand in each room. A higher ceiling changes how big a room feels.</li>
+</ul>
+
+<h2>Roof and exterior</h2>
+<ul>
+  <li><strong>Roof pitch.</strong> A steeper pitch sheds snow and rain faster and changes how the home looks from the road. Check whether the model’s pitch is standard on the plan you want.</li>
+  <li><strong>Overhangs, siding and trim.</strong> Look at the eaves and corners from outside. Our Plymouth post covers exterior choices and subdivision covenants.</li>
+</ul>
+
+<h2>Windows and doors</h2>
+<p>Open and close a few windows and every exterior door. Check that they move smoothly and seal well. Our Winchester post covers window placement and daylight.</p>
+
+<h2>Floors and cabinets</h2>
+<ul>
+  <li>Walk the whole floor. Notice whether it feels solid at the doorways, in the kitchen and in the bathrooms.</li>
+  <li>Open the cabinets and drawers. Look at the hinges, the drawer slides and the shelves.</li>
+  <li>Look under the kitchen and bathroom sinks.</li>
+</ul>
+
+<h2>The systems you will live with</h2>
+<p>Find the water heater, the furnace and the electrical panel, and ask how each is reached for service. Our Logansport post covers the water heater, and our Muncie post covers ventilation.</p>
+
+<h2>Write it down</h2>
+<p>After each visit, write down the plan, what you liked, and what was an option. Then compare line-item quotes for the plans you are seriously considering. Our Roanoke post covers comparing quotes, and our Marion post covers making one showroom visit count.</p>
+
+<h2>Common questions</h2>
+<h3>Can I see Champion model homes near Garrett?</h3>
+<p>Our Auburn lot has walk-through Champion model homes. Call ahead or <a href="/showroom">book a visit</a> so someone is free to show you around.</p>
+<h3>Does the model home show options?</h3>
+<p>Often, yes. Model homes and renderings may show optional features that are not included in the base price, so check the spec sheet for the plan you want.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/dekalb-county">our DeKalb County page</a> and <a href="/locations/garrett">our Garrett page</a>.</p>
+`,
+  },
+  {
+    slug: "manufactured-homes-pierceton-indiana",
+    title: "Manufactured Homes in Pierceton, Indiana: The Appliances That Come With the Home",
+    excerpt:
+      "The kitchen and laundry appliances are some of the first things you use and the first things you replace. What a buyer near Pierceton should check about the appliance package in a Champion manufactured home before ordering.",
+    image: "/images/homepage/about-2.webp",
+    date: "October 23, 2026",
+    publishAt: "2026-10-23T13:00:00Z",
+    html: `
+<p>Pierceton sits on US-30 east of Warsaw in Kosciusko County. Buyers from here are often comparing homes from more than one lot, and the appliance package is one of the easiest things to overlook. It matters, because the range, refrigerator and dishwasher get used every day. Here is what to check about the appliances in a new <strong>manufactured home</strong>.</p>
+
+<h2>Read what the spec sheet says</h2>
+<p>Each plan’s spec sheet lists the appliances that come standard and the ones that are options. Look for:</p>
+<ul>
+  <li>The range: electric or gas.</li>
+  <li>The refrigerator, and its size.</li>
+  <li>A dishwasher, if the plan includes one.</li>
+  <li>A microwave or range hood.</li>
+  <li>A washer and dryer, which many plans do not include.</li>
+</ul>
+
+<h2>Match the fuel to the home</h2>
+<p>A gas range only makes sense if the home will have gas or propane service. If your lot has no gas line, an electric range avoids the need for one. Decide how the home will be heated first; our Cromwell post covers heating fuel on a rural lot.</p>
+
+<h2>Plan for the appliances you already own</h2>
+<p>If you are bringing a refrigerator, washer or dryer, measure them and compare the measurements with the spaces on the floor plan. Leave room for door swing and for hoses and vents behind. Our Kokomo post covers laundry placement and dryer venting, and our Nappanee post covers choosing a kitchen layout.</p>
+
+<h2>Know who stands behind each appliance</h2>
+<p>Appliances often carry their own manufacturer’s warranty, separate from the warranty on the home. Keep the manuals and warranty cards with your home’s paperwork, and register anything that asks to be registered. Our Montpelier post covers the paperwork to keep.</p>
+
+<h2>Upgrades: at order or later?</h2>
+<p>Appliances are one of the easier things to change after delivery, because most are freestanding. Built-in items and anything that changes the plumbing, gas or electrical work are better decided at order. Our Shipshewana post covers which options to settle at order and which can wait.</p>
+
+<h2>Common questions</h2>
+<h3>Are the appliances on your quote?</h3>
+<p>Yes. Any appliance option is its own line on our quote, separate from the home.</p>
+<h3>Can I order the home without appliances?</h3>
+<p>Ask us about the specific plan. What can be left off depends on how Champion builds it.</p>
+<h3>Where to next?</h3>
+<p>See <a href="/locations/kosciusko-county">our Kosciusko County page</a>, or browse <a href="/floor-plans">floor plans</a>.</p>
+`,
+  },
 ];
 
 /** When this build was made; outside a Next build (tests, scripts) it is now. */
