@@ -13,7 +13,8 @@
     "legacy-media": "node scripts/migrate-legacy-media.mjs",
     "lender-sheet": "tsx scripts/build-lender-sheet.ts",
     "image-audit": "tsx scripts/audit-image-alt.ts",
-    "citation-nap": "tsx scripts/citation-nap.ts"
+    "citation-nap": "tsx scripts/citation-nap.ts",
+    "dealertide-replay": "tsx scripts/replay-dealertide-leads.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.132.1",

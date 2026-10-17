@@ -1636,3 +1636,60 @@ Champion's sheet.
 - A name that Champion does publish (a new sales sheet with one, the DealerTide
   feed, Champion's own site) can go into the CMS `name` through `/admin`; the
   slug stays, so no URL changes.
+
+# DealerTide refused every website lead for eight days, and nothing said so
+
+Kyle, 2026-10-17: *"Leads are no longer coming through to DealerTide CRM. October
+9th is the last time a lead was input."* Measured the same day:
+
+- **Every `POST /leads` to DealerTide since 2026-10-10 02:24 UTC (Oct 9, 10:24 PM
+  Eastern) answered `HTTP 401: {"error":"Invalid or revoked API key"}`** — 17
+  rejections in Vercel's runtime error log through Kyle's own test at 3:32 PM on
+  the 17th. The last accepted lead was 2026-10-09 06:31 UTC. That error text is
+  DealerTide's own, so a key was set (`/api/health` → `dealerTide: true`) and
+  reaching them; they refused it.
+- **Not a code change.** `src/lib/dealertide.ts` and `/api/leads` were last
+  touched 2026-09-27; every commit after Oct 7 was SEO, posts, Supabase RLS,
+  redirects or Ava. The DealerTide *inventory* sync (2026-10-13) uses a different
+  token, on Supabase, read-only — it cannot revoke the partner key and landed
+  three days after the failure began.
+- **No lead was lost.** `leads-store.ts` did its job: 21 rows (17 distinct
+  people) in `public.leads` since the first rejection. They were in Supabase and
+  `/admin` → Leads and not in the CRM.
+- **Why nobody knew for eight days:** the route's "Lead NOT delivered to
+  DealerTide" alert needs `RESEND_API_KEY`, which production does not have, so it
+  logged `[leads] DealerTide channel failed…` on every lead and emailed nobody.
+  The Supabase row looked identical to a delivered lead. `configured.dealerTide`
+  in `/api/health` only ever said a key was *set*.
+- **Cause not proven from here.** The sandbox cannot list Vercel env vars or the
+  account activity log (403), and cannot reach DealerTide at all. Timeline: Tom
+  Schickel (Renter Insight) emailed Kyle at 20:18 UTC on Oct 9 asking for the
+  inventory feed to be re-imported, quoting a `?token=` for `api.dealertide.com`;
+  Kyle manually redeployed production from the Vercel dashboard at 21:59 UTC
+  (`source: "redeploy"`, the step Vercel prompts after an env var edit); the
+  first 401 came at 02:24 UTC. The leading theory is that the feed token was
+  pasted into `DEALERTIDE_API_KEY`; the alternative is a revocation on
+  DealerTide's side. Either way the fix is the same: a valid partner key in
+  Vercel, then redeploy, then `/api/health`.
+
+What changed so this is visible next time, and recoverable:
+
+- **`/api/health` now probes the key** (`probeDealertideKey()` in
+  `dealertide.ts`, `GET /locations` with the lead key): `dealerTide.key.verdict`
+  is `ok` / `rejected` / `unreachable` / `not-configured`, and
+  `dealerTide.leadsReachCrm` is the one boolean to look at after a redeploy.
+  `configured.dealerTide` still only means "set". The verdict never carries the
+  key. Tested against the mock in `tests/leads.test.ts`.
+- **`npm run dealertide-replay`** (`scripts/replay-dealertide-leads.ts`, run as
+  `vercel env run -- npm run dealertide-replay -- --since=<ISO> [--apply]`)
+  rebuilds each `public.leads` row into the payload `/api/leads` would have sent
+  (`src/lib/lead-replay.ts`: name split, phone/email back out of
+  `contact_info`, the attribution lines from the stored columns, and a first line
+  saying it is a replay and when the buyer really enquired) and pushes it. Dry
+  run by default; refuses to `--apply` while the key verdict is not `ok`; skips
+  rows that look like our own test submissions (`looksLikeTestLead`) unless
+  `--include-tests`; a 202 is "already in DealerTide", not a failure, so running
+  it twice is safe. `tests/lead-replay.test.ts` pins the payload.
+- **Still the owner's to do:** set `RESEND_API_KEY` on Vercel so the existing
+  rejection alert actually sends. Until then, a dead key is only visible on
+  `/api/health` and in the runtime logs, which Vercel Pro keeps for one day.

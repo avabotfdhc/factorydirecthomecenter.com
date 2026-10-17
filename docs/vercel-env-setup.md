@@ -17,7 +17,7 @@ breaks `npm run dev`. The two exceptions already in source are explained below.
 | **Google Analytics 4** | `G-6PMB9SZX4H`, committed as the default in `src/lib/analytics.tsx` |
 | **Microsoft Clarity** | `tjh2nfoq85`, committed the same way |
 | **Supabase catalogue / admin / leads** | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` all set |
-| **DealerTide CRM** | `DEALERTIDE_API_KEY` set — website leads reach the CRM |
+| **DealerTide CRM** | `DEALERTIDE_API_KEY` set — website leads reach the CRM **only if `/api/health` → `dealerTide.key.verdict` is `"ok"`**; `"rejected"` means DealerTide refuses the key and every lead is being refused (they stay in Supabase → `leads`; replay them with `npm run dealertide-replay`) |
 
 GA4 and Clarity IDs are **public values** that ship in the page source on every
 request, so committing them is safe and deliberate. An env var of the same name
