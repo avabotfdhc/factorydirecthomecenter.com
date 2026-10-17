@@ -116,9 +116,10 @@ export default function RootLayout({
         {/* Google Tag Manager NoScript (required for GTM) */}
         <GoogleTagManagerNoScript />
         
-        {/* Analytics — loads GA4, Facebook Pixel, GTM and Clarity, but only
-            after first interaction AND only if the visitor hasn't opted out
-            (see src/lib/consent.ts and <ConsentBanner /> below). */}
+        {/* Analytics — only if the visitor hasn't opted out (see
+            src/lib/consent.ts and <ConsentBanner /> below). GA4 loads at once
+            so every visit is counted; Clarity, GTM and the Meta Pixel wait for
+            the first interaction (see AnalyticsProvider in src/lib/analytics). */}
         <AnalyticsProvider />
         
         <TrackingProvider />

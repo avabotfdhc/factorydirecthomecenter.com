@@ -202,14 +202,32 @@ function published(p: { slug: string; series: string }): boolean {
 }
 
 /** All active floor plans from the CMS, mapped to the card shape the design uses. */
-export async function getApiFloorPlans(): Promise<ApiFloorPlan[]> {
+/** Whether a CMS (Supabase) backs the catalogue, or the repo copy is the site. */
+export async function catalogueCmsConfigured(): Promise<boolean> {
+  const { supabaseConfigured } = await import("./supabase-content");
+  return supabaseConfigured();
+}
+
+export async function getApiFloorPlans(
+  { requireCms = false }: {
+    /**
+     * Throw when the CMS is configured but could not be read, instead of
+     * quietly serving the repo-published copy. Pages want the fallback; the
+     * sitemap must not publish it (see src/lib/sitemap-catalogue.ts).
+     */
+    requireCms?: boolean;
+  } = {},
+): Promise<ApiFloorPlan[]> {
   // Source priority (imported lazily to avoid load-time env reads):
   //   1. Supabase — the new owned CMS, used whenever its env vars are set.
   //   2. DealerTide (Renter Insight) inventory feed.
   //   3. Legacy CMS (below) as the final fallback.
   // Repo-published local plans always merge in on top of the chosen source.
   const { supabaseConfigured, getSupabaseFloorPlans } = await import("./supabase-content");
-  if (supabaseConfigured()) return mergePlans(await getSupabaseFloorPlans(), await localPlans()).filter(published).map(decoratePlan);
+  if (supabaseConfigured()) {
+    const remote = await getSupabaseFloorPlans({ throwOnFailure: requireCms });
+    return mergePlans(remote, await localPlans()).filter(published).map(decoratePlan);
+  }
 
   const { feedConfigured, getFeedFloorPlans } = await import("./dealertide-feed");
   if (feedConfigured()) return mergePlans(await getFeedFloorPlans(), await localPlans()).filter(published).map(decoratePlan);

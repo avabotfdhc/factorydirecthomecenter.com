@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPages } from "@/lib/pages";
-import { getApiFloorPlans, getApiBlogPosts } from "@/lib/api-content";
+import { catalogueCmsConfigured, getApiFloorPlans, getApiBlogPosts, type ApiFloorPlan } from "@/lib/api-content";
+import { isBuildPhase, planEntriesForSitemap } from "@/lib/sitemap-catalogue";
 import { absoluteImageUrl } from "@/lib/image-alt";
 import { getGuide } from "@/lib/guides";
 import { getSaleStatus } from "@/lib/sale";
@@ -27,6 +28,25 @@ const isoDate = (value?: string): Date | undefined => {
 /** Pages whose headline offer comes from the running sale phase. */
 const SALE_PAGES = new Set(["/", "/homes-on-sale", "/homes-on-sale/clearance"]);
 
+/**
+ * The floor plans the sitemap may list. Strict on purpose: a CMS failure must
+ * not be papered over with the repo copy here (its slugs redirect), and a
+ * collapsed result must not be published — see src/lib/sitemap-catalogue.ts
+ * for what happens instead at runtime (throw → ISR keeps the last good file)
+ * and at build time (omit the section, log, let revalidation repair it).
+ */
+async function sitemapPlans(): Promise<ApiFloorPlan[]> {
+  const cmsConfigured = await catalogueCmsConfigured();
+  let plans: ApiFloorPlan[] = [];
+  let error: unknown;
+  try {
+    plans = await getApiFloorPlans({ requireCms: true });
+  } catch (err) {
+    error = err;
+  }
+  return planEntriesForSitemap({ plans, cmsConfigured, error }, { buildPhase: isBuildPhase() });
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static/registry pages, minus blog stubs — the real floor-plan and blog
   // detail pages are sourced live from the CMS below.
@@ -45,7 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       };
     });
 
-  const [plans, posts] = await Promise.all([getApiFloorPlans(), getApiBlogPosts()]);
+  const [plans, posts] = await Promise.all([sitemapPlans(), getApiBlogPosts()]);
 
   // Image sitemap entries: the card image plus the gallery (photos and
   // floor-plan sheets), absolute URLs, banner first, capped per page.
