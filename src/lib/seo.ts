@@ -125,6 +125,10 @@ export function publisherRef(): Record<string, unknown> {
   };
 }
 
+/** The site's own node (`structuredData.website()`), distinct from the
+ *  business; a page that wants to say it `isPartOf` the site cites this. */
+export const WEBSITE_ID = `${SITE_URL}/#website`;
+
 export const structuredData = {
   // The `#business` node itself is NOT here. It is published once, by
   // `LocalBusinessSchema` in the root layout, from `businessJsonLd()`. A
@@ -340,7 +344,7 @@ export const structuredData = {
     // The site is its own entity, distinct from the business, so it gets its
     // own @id — but named after us with no identifier at all it read as a
     // second unlinked node carrying our name on all 168 pages.
-    "@id": `${SITE_URL}/#website`,
+    "@id": WEBSITE_ID,
     name: "Factory Direct Homes Center",
     url: SITE_URL,
     publisher: businessRef(),

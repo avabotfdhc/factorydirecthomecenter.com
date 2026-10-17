@@ -1545,3 +1545,90 @@ code changes. What shipped, and the two places the handoff was adjusted:
   attached elsewhere — most likely the second project on the `avabotfdhcs`
   team, which the agent's token cannot read (403). Kyle sets it to a
   permanent redirect in that project's Settings → Domains.
+
+# Floor-plan pages publish one schema graph, and the Product waits for a price
+
+Until 2026-10-15 `/floor-plans/[slug]` shipped four unlinked ld+json blocks — a
+`Product` (only when a numeric price existed, i.e. never), a
+`SingleFamilyResidence`, a `BreadcrumbList` and the `FAQSection`'s `FAQPage` —
+plus the layout's business and website nodes. `src/lib/plan-schema.ts`
+(`buildPlanGraph`) now renders **one** block with a single `@graph`, every node
+anchored on the page URL: `#product` (the home: name as
+"<brand> <name> (<model>)", or just "<brand> <model>" for the many CMS rows
+whose name *is* the model number; plain-text description — CMS `description`,
+else the hand-written `floor_plan_html`, else the generated opening paragraph;
+every image; bedrooms, bathrooms, `floorSize` in FTK; width/length in feet,
+series and plant as `additionalProperty`; `mainEntityOfPage` → `#webpage`),
+`#breadcrumbs` (Home › Floor Plans › Series › Home — the
+series crumb is why this page, not `PageFooter`, builds the trail), `#faq` (the
+plan's own questions; `FAQSection` renders with `showSchema={false}` there)
+and `#webpage` (isPartOf `#website`, breadcrumb → `#breadcrumbs`, mainEntity →
+`#product`). Verified on `next start`: a plan page carries exactly three
+ld+json blocks — business, website, graph.
+
+- **The Product type and the Offer are gated on a numeric price.** Google
+  requires `offers`/`review`/`aggregateRating` on every Product and a `price`
+  on every Offer, prices are hidden site-wide while `SHOW_PRICES` is off
+  (`api-content.ts`, `supabase-content.ts`), and a price in markup that the
+  page does not show is a merchant-listing violation as well as a breach of
+  the no-dollar-figure rule. So today the node is `["SingleFamilyResidence"]`
+  with no Offer, which is what the page published before: the model number is
+  its `identifier` and the maker a "Manufacturer" property, because `sku`,
+  `mpn`, `brand` and `manufacturer` are Product properties and do not belong
+  on a residence. **Flip `SHOW_PRICES` and the same node becomes
+  `["Product", "SingleFamilyResidence"]`** with `sku` (our slug), `mpn`
+  (Champion's model number), `brand`, `manufacturer` **and the full Offer** —
+  `#offer`, USD price, `priceValidUntil` = next December 31, `NewCondition`,
+  availability, seller — and the Product rich result qualifies with no further
+  code change. That flip is Kyle's call.
+- **Availability is `PreOrder`**: every home is built to order. `onLot` turns
+  it into `InStock` for a home standing on the Auburn lot, but nothing in the
+  catalogue records which plans those are (the DealerTide feed is staged, not
+  imported), so the page never sets it. Feed it from data, never by hand.
+- **The seller is `businessRef()`**, the canonical `#business` node. The brief
+  for this change asked for a `LocalBusiness` stub under a new
+  `/#dealership` id; that would publish a second business with our name, the
+  defect `business.ts` exists to prevent, and `tests/structured-data.test.ts`
+  would fail it.
+- `SingleFamilyResidenceSchema` is gone from `JsonLd.tsx`; `WEBSITE_ID` in
+  `seo.ts` is the one spelling of the site node's id.
+
+`tests/plan-schema.test.ts` holds the graph shape, the price gate (no
+`price` key, no `$`, no "Call for pricing" in the markup while hidden; a
+complete Offer when a price exists), the seller rule, the Decatur/Topeka
+split, and a source guard that the page renders exactly one
+`<StructuredData>` with `FAQSection`'s schema switched off.
+
+# Code-named singles stay code-named: Champion gives them no family name
+
+Kyle asked (2026-10-16) whether naming the homes would help local SEO. Measured
+first: 42 of the 172 active Aspire plans (all single-wides) and 0 Prime plans
+have a CMS `name` that is just the model code, so their titles read
+"1676H32107 — 3 Bed 2 Bath Champion Single Wide Home, Auburn IN". Only one of
+the 42 had a family name anywhere in the repo data (the old
+`dutch-aspire-westbrook-1676h32107` slug), and nothing in the DealerTide feed
+names them.
+
+Then every one of their sales sheets was read (`docs/sheet-text-edge-function.md`
+is how): **all 41 sheets with a text layer title the home by model code, box
+size, bed/bath count and "LITERATURE PLAN", with no name**; `1432H11214` is an
+image-only PDF. Champion names its sectionals (Woodward, Warren…) and not these
+singles, so there is nothing to fill in, and "Westbrook" did not come from
+Champion's sheet.
+
+- **Do not invent names**, and never place names ("The Auburn"). Nobody searches
+  for them, Champion's sheets and the DealerTide feed say the code, Fahl Homes
+  sells the same line under Champion's names, and the September 2026 spam update
+  targets scaled place-name content. Local rank comes from the business entity
+  (listing, citations, reviews, the town and county pages), not from home names.
+- Their **titles lead with the description and end with the code** (Kyle,
+  2026-10-16): `planTitle()` in `src/lib/page-title.ts` takes the model number
+  and box size, and `isCodeNamed()` (name equals the model number, or is shaped
+  like one) switches the ladder to "3 Bed 2 Bath 16×76 Champion Single Wide
+  Home, Model 1676H32107" — same drop order as named plans (place, brand, then
+  the size, then the type), and the code is never dropped. The detail page also
+  stops printing "Model 1676H32107" under an H1 that already says it. Named
+  plans are untouched; `tests/page-title.test.ts` pins both ladders.
+- A name that Champion does publish (a new sales sheet with one, the DealerTide
+  feed, Champion's own site) can go into the CMS `name` through `/admin`; the
+  slug stays, so no URL changes.
