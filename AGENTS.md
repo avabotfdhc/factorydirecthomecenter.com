@@ -87,7 +87,19 @@ the service role, and is gated by the same vault `x-sync-key`; start it with
 `select public.dealertide_sync_start_site()`. `/api/health` →
 `configured.dealerTideInventoryToken` says whether the site has a token.
 `tests/dealertide-inventory-sync.test.ts` runs the whole sync against fakes.
-Details and the step-2 rules: `docs/dealertide-inventory-sync.md`.
+The token turned out to be on Vercel as `Dealertide_Inventory_Key` (mixed case; the
+lookup is case-insensitive since 2026-10-18), and the Meta feed URL as
+`DEALERTIDE_FEED_UR`, last letter missing, which is why `dealertide-feed.ts` never saw
+it. The feed's Champion code is its `identifier` field; the first sync (242 homes, all
+available to order) matched 169 homes to 167 catalogue plans, 0 new models.
+**Step 2 exists now:** edge function `dealertide-media-import`, started with
+`select public.dealertide_media_import('{"slugs":[…],"dry_run":true}')`, copies Champion's
+Scene7 photos for the plans you name into the bucket as appended `gallery` rows after
+checking each file's pixel size, and promotes an exterior to the card image only over a
+rendered sales sheet. First run put 16 photos on the Verona 3276 and Woodward 2864
+twins, the only photo-less plans the feed could supply; the Woodward ones are Champion's
+staged 2860 interiors (filenames say so). Details, the comparison numbers and the
+wider gap left for review: `docs/dealertide-inventory-sync.md`.
 
 # Catalogue media from Champion's Box library
 
