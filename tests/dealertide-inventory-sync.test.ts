@@ -45,6 +45,13 @@ test("modelCodeOf: Champion codes from any of the fields DealerTide might use, u
   assert.equal(modelCodeOf({ title: "2026 Champion Appleton 2842H32388 — 3BR/2.0BA" }), "2842H32388");
   assert.equal(modelCodeOf({ catalog_model: { model: "1456H22P01" } }), "1456H22P01");
   assert.equal(modelCodeOf({ title: "Prime Monte" }), null);
+  // DealerTide's real shape (2026-10-18): the code is `identifier`, and some
+  // end in a letter-digit-letter suffix.
+  assert.equal(modelCodeOf({ identifier: "2852H32A1C", model: "52' Summit", trim: "Aspire" }), "2852H32A1C");
+  assert.equal(modelCodeOf({ identifier: "2856H32392", display_name: "2026 Dutch Housing Belvidere" }), "2856H32392");
+  assert.equal(modelCodeOf({ identifier: "MH-20260306-F811B5", display_name: "2026 Champion Appleton 2842 H32388" }), "2842H32388");
+  assert.equal(modelCodeOf({ identifier: "MH-20260604-016065", display_name: "2026 Champion Chp 2868 H42 P01" }), "2868H42P01");
+  assert.equal(modelCodeOf({ identifier: "MH-20260504-AF76E5", display_name: "2026 Dutch Housing Aspire Belvidere" }), null);
 });
 
 test("urlList / sameList / homesOf: the feed's shapes", () => {
@@ -106,7 +113,7 @@ test("stages every page, flags media changes, removes only on a 410, and never l
       { id: "b", title: "Prime Monte", status: "available_to_order", image_urls: [{ url: "https://p/b1.jpg" }], floor_plan_images: ["https://p/bfp.jpg"] },
     ] },
     2: { meta: { total_pages: 2, total: 3 }, data: [
-      { id: "c", model_number: "1456H22P01", image_urls: [], floor_plan_images: [] },
+      { id: "c", identifier: "1456H22P01", display_name: "2026 Champion Monte", image_urls: [], floor_plan_images: [] },
     ] },
   };
   stored = [
@@ -134,6 +141,8 @@ test("stages every page, flags media changes, removes only on a 410, and never l
   assert.deepEqual(rows.map((r) => r.id), ["a", "b", "c"]);
   assert.equal(rows[0].model_code, "2842H32388");
   assert.equal(rows[1].model_code, null);
+  assert.equal(rows[2].model_code, "1456H22P01");
+  assert.equal(rows[2].title, "2026 Champion Monte");
   assert.deepEqual(rows[1].image_urls, ["https://p/b1.jpg"]);
   assert.ok(rows[0].media_changed_at, "a is flagged");
   assert.equal(rows[1].media_changed_at, null);
