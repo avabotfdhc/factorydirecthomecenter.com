@@ -26,8 +26,11 @@
 const DEFAULT_API = "https://api.dealertide.com/public/inventory";
 const PER_PAGE = 50;
 const MAX_PAGES = 40;
-// Champion model codes: 2852H32169, 2852M32171, 1456H22P01.
-const MODEL_RE = /\b(\d{4}[HM]\d{2}[0-9A-Z]\d{2})\b/i;
+// Champion model codes: 2852H32169, 2852M32171, 1456H22P01, 2852H32A1C.
+// DealerTide sends the code in `identifier` (measured 2026-10-18: all 242
+// homes), with the family name in `model` and the series in `trim`.
+// Two older records spell the code with spaces ("2842 H32388", "2868 H42 P01").
+const MODEL_RE = /\b(\d{4}\s?[HM]\d{2}\s?[0-9A-Z]{3})\b/i;
 
 export type Row = Record<string, unknown>;
 
@@ -113,10 +116,21 @@ export function urlList(v: unknown): string[] {
 
 export function modelCodeOf(h: Row): string | null {
   const nested = (h.catalog_model ?? h.model_info ?? {}) as Row;
-  const fields = [h.model_number, h.model, h.catalog_model_number, nested.model_number, nested.model, h.title, h.name, h.description];
+  const fields = [
+    h.identifier,
+    h.model_number,
+    h.model,
+    h.catalog_model_number,
+    nested.model_number,
+    nested.model,
+    h.display_name,
+    h.title,
+    h.name,
+    h.description,
+  ];
   for (const f of fields) {
     const m = typeof f === "string" ? f.match(MODEL_RE) : null;
-    if (m) return m[1].toUpperCase();
+    if (m) return m[1].replace(/\s/g, "").toUpperCase();
   }
   return null;
 }
@@ -270,7 +284,7 @@ export async function runInventorySync(opts: SyncOptions): Promise<{ status: num
     return {
       id,
       model_code: modelCodeOf(h),
-      title: text(h.title) ?? text(h.name),
+      title: text(h.display_name) ?? text(h.title) ?? text(h.name),
       status: text(h.status),
       image_urls: photos,
       floor_plan_images: plans,

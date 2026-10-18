@@ -73,9 +73,67 @@ select status_code, content from net._http_response order by id desc limit 1;
 Either path leaves identical rows, so the comparison view below does not care
 which one ran.
 
-## Step 2 — add to the catalogue (not built; waits on the comparison)
+## What the first real sync found (2026-10-18)
 
-Rules it must follow, from AGENTS.md:
+242 homes on 5 pages, all `available_to_order`, three makes (Champion, Champion
+Homes, Dutch Housing). The Champion model code is the feed's `identifier`
+field (`2852H32A1C`), the family name is `model` and the series is `trim`;
+the first parser read none of those, so the staged rows were patched in SQL and
+the parser fixed. Against the catalogue:
+
+| match | homes | with photos | with drawings |
+|---|---|---|---|
+| `in_catalogue` (167 distinct plans) | 169 | 97 | 136 |
+| `no_model_code` | 73 | 73 | 73 |
+| `new_model` / `retired_series_only` | 0 | — | — |
+
+- The 73 without a code are DealerTide's older May records (`identifier` is a
+  stock number such as `MH-20260504-AF76E5`) named by family only — "2026 Dutch
+  Housing Aspire Belvidere", "2027 Champion Homes Prime Somerset 043". A family
+  name maps to several lengths (Warren 2852/2856/2860), so their media cannot be
+  assigned to one plan from the feed alone. The Prime name match in the view
+  found nothing because our Prime plans are mostly code-named.
+- Image hosts: 957 URLs on Champion's Scene7 library (`s7d9.scene7.com`),
+  264 on DealerTide's staging S3 bucket, 63 on our retired
+  `factory-direct-homescenter` S3 bucket. Only Scene7 is copied.
+- Of the 19 active plans with no photo at all (13 Aspire 32'-wide twins, 6
+  Prime), the feed had photos for exactly four: Verona 3276H/M42179 (4 real
+  Verona photos, incl. an exterior) and Woodward 2864H/M32047 (Champion's 4
+  staged interiors of the **2860** Woodward, which Champion itself attaches to
+  the 2864 listing; the filenames say 2860). All 16 were imported (below).
+  Henderson and Madison get nothing; the feed has no codes for the six Prime.
+- Wider gap, **not acted on**: 51 in-catalogue plans where the feed has more
+  photos than we show (feed 583 photos total vs our 589), and 125 plans where
+  the feed has a plan drawing and our row set has no `floorplan` image (we
+  hold the sales sheets as documents instead). Both need a per-plan look,
+  because the same Scene7 asset may already be in the bucket under a Box
+  filename, and a `floorplan` row changes which drawing the page picks.
+
+## Step 2 — add to the catalogue (`dealertide-media-import`)
+
+Edge function `dealertide-media-import` (source in
+`supabase/functions/dealertide-media-import/index.ts`), started from SQL:
+
+```sql
+select public.dealertide_media_import('{"slugs":["aspire-verona-3276h42179"],"dry_run":true}'::jsonb);
+select status_code, content from net._http_response order by id desc limit 1;
+```
+
+Per named plan it finds the staged homes with the plan's own model code, fetches
+each Scene7 photo at 1800px, checks it is a JPEG and reads its pixel size from
+the file (refusing anything under 1000px wide or 30 KB), uploads it to
+`<series>/<MODEL>/photos/dealertide/<champion-filename>.jpg` and appends a
+`kind = 'gallery'` row. It never adds a `floorplan` row, never reads a host
+other than Scene7, skips a path already attached, and promotes the first
+`exterior` photo to the card image only when the current banner is a rendered
+sales sheet. `dry_run: true` reports exactly what a real run would do.
+
+First run, 2026-10-18: 16 photos onto the four plans above, all 1800×1200,
+187–436 KB; the two Verona pages now carry the exterior photo as their card
+image, the Woodward 2864 pair keep the rendered sheet (the feed has no exterior
+for them). `npm run image-audit` was run afterwards.
+
+Rules it follows, from AGENTS.md:
 
 - **Never a second page for a model we already have.** `in_catalogue` homes add nothing
   but, at most, missing media on the existing plan. `retired_series_only` homes go
