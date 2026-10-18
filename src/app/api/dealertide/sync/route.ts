@@ -44,7 +44,11 @@ export async function POST(request: Request) {
 
   // { "detail_id": "<id>" } answers with the field NAMES of one home's detail
   // record (GET /public/inventory/{id}), so the list/detail shape difference can
-  // be checked without reading the token. No values are returned.
+  // be checked without reading the token. No values are returned, except the
+  // model-code-shaped match itself. The id is the feed's numeric `id`, not the
+  // "MH-…" identifier (that answers 404), and the record comes wrapped:
+  // { branding, champion_disclaimer, company, truebuild, vehicle } with the home
+  // under `vehicle` — measured 2026-10-18 — so the walk goes into nested objects.
   const body = (await request.json().catch(() => ({}))) as { detail_id?: unknown };
   if (typeof body.detail_id === "string" && body.detail_id) {
     const res = await fetch(
@@ -53,18 +57,29 @@ export async function POST(request: Request) {
     ).catch(() => null);
     if (!res) return NextResponse.json({ ok: false, error: "detail: no response" }, { status: 502 });
     const detail = (await res.json().catch(() => null)) as Record<string, unknown> | null;
-    const home = (detail && typeof detail === "object" && "data" in detail ? detail.data : detail) as Record<string, unknown> | null;
+    const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
+    const wrapper = isObj(detail) ? detail : null;
+    const home = wrapper && isObj(wrapper.vehicle) ? wrapper.vehicle : wrapper && isObj(wrapper.data) ? wrapper.data : wrapper;
+    // Every key path whose VALUE looks like a Champion model code, with the match.
+    const codeFields: { key: string; code: string }[] = [];
+    const walk = (v: unknown, path: string, depth: number) => {
+      if (depth > 4) return;
+      if (typeof v === "string") {
+        const m = v.match(/\d{4}\s?[HM]\d{2}\s?[0-9A-Z]{3}/i);
+        if (m && !/^https?:/i.test(v)) codeFields.push({ key: path, code: m[0] });
+      } else if (Array.isArray(v)) {
+        v.forEach((x, i) => walk(x, `${path}[${i}]`, depth + 1));
+      } else if (isObj(v)) {
+        for (const [k, x] of Object.entries(v)) walk(x, path ? `${path}.${k}` : k, depth + 1);
+      }
+    };
+    if (home) walk(home, "", 0);
     return NextResponse.json({
       ok: res.ok,
       status: res.status,
-      keys: home && typeof home === "object" ? Object.keys(home).sort() : [],
-      // Only the keys whose VALUE looks like a Champion model code, with the match.
-      code_fields: home && typeof home === "object"
-        ? Object.entries(home).flatMap(([k, v]) => {
-            const m = typeof v === "string" ? v.match(/\d{4}\s?[HM]\d{2}\s?[0-9A-Z]{3}/i) : null;
-            return m ? [{ key: k, code: m[0] }] : [];
-          })
-        : [],
+      wrapper_keys: wrapper ? Object.keys(wrapper).sort() : [],
+      keys: home ? Object.keys(home).sort() : [],
+      code_fields: codeFields,
     });
   }
 
