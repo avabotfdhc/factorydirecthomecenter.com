@@ -15,7 +15,12 @@ import { getServerConsentSnapshot, getTrackingAllowedSnapshot, subscribeConsent 
 // Vercel still overrides it. (This is the one tracking ID intentionally in
 // source for that reason; keys/secrets never go here.)
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-6PMB9SZX4H";
-export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || "";
+// Meta Pixel ID — public like the two above (it is in the pixel URL on every
+// page that loads it), committed as the default from the Events Manager
+// install email Kyle forwarded on 2026-10-18; NEXT_PUBLIC_FB_PIXEL_ID
+// overrides it. Loads only after cookie consent, like everything in
+// AnalyticsProvider.
+export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || "663450999458638";
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
 // Microsoft Clarity project ID — public (ships in page source), same
 // rationale as GA4 above: committed as the default so session recordings and
@@ -140,23 +145,14 @@ export function FacebookPixel() {
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
           
-          // Initialize Pixel with Advanced Matching
-          fbq('init', '${FB_PIXEL_ID}', {
-            em: '', // Email (hashed) - populated when available
-            ph: '', // Phone (hashed) - populated when available
-            fn: '', // First name (hashed)
-            ln: '', // Last name (hashed)
-            ct: 'Auburn', // City
-            st: 'IN', // State
-            zp: '46706', // Zip
-            country: 'US'
-          });
-          
-          // Track PageView
+          // Plain init, no advanced-matching object. The old one sent the
+          // SHOWROOM's city/state/zip as every visitor's matching data and
+          // fired an InitiateCheckout conversion on every page view, which
+          // would have taught Meta's optimiser that every visitor converts.
+          // PageView here; Lead / Contact fire from trackLeadFormSubmit()
+          // when a form is actually submitted.
+          fbq('init', '${FB_PIXEL_ID}');
           fbq('track', 'PageView');
-          
-          // Enable Automatic Advanced Matching
-          fbq('track', 'InitiateCheckout');
         `}
       </Script>
       <noscript>

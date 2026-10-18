@@ -68,11 +68,15 @@ nobody gets an email when one arrives.
 With the key set, `/api/leads` also emails you when DealerTide rejects a lead,
 skips it as a duplicate, or the Supabase copy fails.
 
-### 3. `NEXT_PUBLIC_FB_PIXEL_ID` — only if you run Meta ads
+### 3. `NEXT_PUBLIC_FB_PIXEL_ID` — set in source since 2026-10-18
 
-Defaults to empty, so the Pixel does not load at all today. Add it only if you
-advertise on Facebook/Instagram; it is the Pixel ID from Meta Events Manager
-(a long number). Public value, like GA4.
+The Pixel ID from Kyle's Meta Events Manager install email (`663450999458638`)
+is committed as the default in `src/lib/analytics.tsx`, the same way as the GA4
+and Clarity IDs: it is a public value that ships in the page source. Set this
+variable only to override it. The pixel loads after cookie consent and fires
+`PageView`, then `Lead` (and `Contact` when a phone number was given) from every
+lead form via `trackLeadFormSubmit()`. Check it in Meta Events Manager → Data
+sources → Test Events after accepting the cookie banner on the live site.
 
 ### 4. `NEXT_PUBLIC_GTM_ID` — only if you actually use a GTM container
 

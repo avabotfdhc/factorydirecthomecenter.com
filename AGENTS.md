@@ -23,7 +23,15 @@ and none of the four env vars is set):
   `NEXT_PUBLIC_CLARITY_PROJECT_ID` overrides it.
 - **Google Tag Manager — NOT running.** `NEXT_PUBLIC_GTM_ID` is unset and defaults
   to `""`, so the script never loads. GA4 runs directly, so GTM is optional.
-- **Meta Pixel — NOT running.** `NEXT_PUBLIC_FB_PIXEL_ID` is unset, same as above.
+- **Meta Pixel — running since 2026-10-18**, the same way as GA4 and Clarity: the
+  ID from Kyle's Meta Events Manager install email (`663450999458638`) is the
+  committed default in `src/lib/analytics.tsx`; `NEXT_PUBLIC_FB_PIXEL_ID`
+  overrides it. The bootstrap fires `PageView` only. The earlier version also
+  fired `InitiateCheckout` on every page view and sent the showroom's own
+  city/zip as every visitor's advanced-matching data; both are gone, and
+  `tests/analytics.test.ts` fails if a conversion event comes back into the
+  bootstrap. `Lead` / `Contact` fire from `trackLeadFormSubmit()` on a real
+  submission.
 
 A GA4 or Clarity ID is a PUBLIC value that ships in the page source, which is why
 those two are deliberately committed rather than left to env vars; keys and
