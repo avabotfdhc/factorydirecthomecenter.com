@@ -43,6 +43,26 @@ select match, count(*) from public.dealertide_catalogue_match group by 1;
 The summary includes `sample_fields` (field names only) so the model-code parser can be
 adjusted to DealerTide's real record shape; `with_model_code` says how many it parsed.
 
+### Running it from the website instead (2026-10-18)
+
+The edge function's secret was never set — Kyle keeps every key on Vercel, and
+the agent session cannot read Vercel env vars to move it — so the same sync now
+also runs on the site: `POST /api/dealertide/sync`
+(`src/lib/dealertide-inventory-sync.ts`) reads the token from
+`DEALERTIDE_INVENTORY_TOKEN`, or the `token=` inside `DEALERTIDE_FEED_URL` (the
+feed URL the site has carried since August), and writes the same two tables
+with the service role. The gate is the same `x-sync-key` / vault check.
+`/api/health` → `configured.dealerTideInventoryToken` says whether a token is
+present.
+
+```sql
+select public.dealertide_sync_start_site();        -- returns a request id
+select status_code, content from net._http_response order by id desc limit 1;
+```
+
+Either path leaves identical rows, so the comparison view below does not care
+which one ran.
+
 ## Step 2 — add to the catalogue (not built; waits on the comparison)
 
 Rules it must follow, from AGENTS.md:
