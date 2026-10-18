@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { probeDealertideKey } from "@/lib/dealertide";
+import { inventoryToken } from "@/lib/dealertide-inventory-sync";
 
 export const dynamic = "force-dynamic";
 
@@ -43,6 +44,9 @@ export async function GET() {
     leadWebhookSecret: set("LEAD_WEBHOOK_SECRET"),
     googleSheets: set("GOOGLE_SHEETS_ID") && set("GOOGLE_SERVICE_ACCOUNT_KEY"),
     dealerTide: set("DEALERTIDE_API_KEY"),
+    // The inventory feed token: DEALERTIDE_INVENTORY_TOKEN, or the token inside
+    // DEALERTIDE_FEED_URL. Read by POST /api/dealertide/sync, not by any page.
+    dealerTideInventoryToken: Boolean(inventoryToken()),
     ga4: set("NEXT_PUBLIC_GA_MEASUREMENT_ID"),
     gtm: set("NEXT_PUBLIC_GTM_ID"),
     metaPixel: set("NEXT_PUBLIC_FB_PIXEL_ID"),

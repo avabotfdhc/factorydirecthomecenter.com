@@ -77,6 +77,16 @@ to `floor_plans` / `floor_plan_images` from the feed until that comparison has b
 reviewed; a model already in the catalogue never gets a second page, and a
 Paramount-only model stays retired. The token is the Supabase secret
 `DEALERTIDE_INVENTORY_TOKEN`; start a sync with `select public.dealertide_sync_start()`.
+**That secret was never set** (measured 2026-10-18: the function answered
+"DEALERTIDE_INVENTORY_TOKEN is not set" and the staging table was empty), because
+Kyle keeps every key on Vercel and this session cannot read Vercel env vars to
+move it. So the same sync also runs on the site: `POST /api/dealertide/sync`
+(`src/lib/dealertide-inventory-sync.ts`) reads `DEALERTIDE_INVENTORY_TOKEN` or the
+`token=` inside `DEALERTIDE_FEED_URL` from Vercel, writes the same tables with
+the service role, and is gated by the same vault `x-sync-key`; start it with
+`select public.dealertide_sync_start_site()`. `/api/health` →
+`configured.dealerTideInventoryToken` says whether the site has a token.
+`tests/dealertide-inventory-sync.test.ts` runs the whole sync against fakes.
 Details and the step-2 rules: `docs/dealertide-inventory-sync.md`.
 
 # Catalogue media from Champion's Box library
