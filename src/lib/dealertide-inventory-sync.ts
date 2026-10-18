@@ -23,7 +23,7 @@
 // The token rides in DealerTide's URL, so no URL is ever logged or returned,
 // and no summary field carries it.
 
-const DEFAULT_API = "https://api.dealertide.com/public/inventory";
+export const DEFAULT_API = "https://api.dealertide.com/public/inventory";
 const PER_PAGE = 50;
 const MAX_PAGES = 40;
 // Champion model codes: 2852H32169, 2852M32171, 1456H22P01, 2852H32A1C.

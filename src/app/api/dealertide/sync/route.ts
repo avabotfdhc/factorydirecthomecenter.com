@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { inventoryToken, runInventorySync } from "@/lib/dealertide-inventory-sync";
+import { DEFAULT_API, inventoryToken, runInventorySync } from "@/lib/dealertide-inventory-sync";
 
 export const dynamic = "force-dynamic";
 // Five feed pages plus a detail call per home that left the feed. Well under
@@ -40,6 +40,32 @@ export async function POST(request: Request) {
       { ok: false, error: "no feed token: set DEALERTIDE_INVENTORY_TOKEN (or DEALERTIDE_FEED_URL with ?token=) on Vercel" },
       { status: 503 },
     );
+  }
+
+  // { "detail_id": "<id>" } answers with the field NAMES of one home's detail
+  // record (GET /public/inventory/{id}), so the list/detail shape difference can
+  // be checked without reading the token. No values are returned.
+  const body = (await request.json().catch(() => ({}))) as { detail_id?: unknown };
+  if (typeof body.detail_id === "string" && body.detail_id) {
+    const res = await fetch(
+      `${DEFAULT_API}/${encodeURIComponent(body.detail_id)}?token=${encodeURIComponent(token)}`,
+      { headers: { accept: "application/json" }, cache: "no-store", signal: AbortSignal.timeout(20_000) },
+    ).catch(() => null);
+    if (!res) return NextResponse.json({ ok: false, error: "detail: no response" }, { status: 502 });
+    const detail = (await res.json().catch(() => null)) as Record<string, unknown> | null;
+    const home = (detail && typeof detail === "object" && "data" in detail ? detail.data : detail) as Record<string, unknown> | null;
+    return NextResponse.json({
+      ok: res.ok,
+      status: res.status,
+      keys: home && typeof home === "object" ? Object.keys(home).sort() : [],
+      // Only the keys whose VALUE looks like a Champion model code, with the match.
+      code_fields: home && typeof home === "object"
+        ? Object.entries(home).flatMap(([k, v]) => {
+            const m = typeof v === "string" ? v.match(/\d{4}\s?[HM]\d{2}\s?[0-9A-Z]{3}/i) : null;
+            return m ? [{ key: k, code: m[0] }] : [];
+          })
+        : [],
+    });
   }
 
   const { status, summary } = await runInventorySync({ token, supabaseUrl, serviceKey });

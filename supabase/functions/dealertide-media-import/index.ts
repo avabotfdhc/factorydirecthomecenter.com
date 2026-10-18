@@ -215,11 +215,12 @@ Deno.serve(async (req) => {
 
   // Which plans this call works on.
   let work = slugs.length ? plans.filter((p) => slugs.includes(p.slug)) : plans;
-  if (after) work = work.filter((p) => p.slug > after);
+  // Inclusive: `next` names the plan that ran out of time, so it is re-done (idempotent).
+  if (after) work = work.filter((p) => p.slug >= after);
 
   const report: Row[] = [];
   let next: string | null = null;
-  let totals = { photos: 0, drawings: 0, skipped: 0, banners: 0 };
+  const totals = { photos: 0, drawings: 0, skipped: 0, banners: 0 };
   for (const plan of work) {
     if (Date.now() - started > budget) { next = plan.slug; break; }
     const cands = candidates.get(plan.id) ?? [];
