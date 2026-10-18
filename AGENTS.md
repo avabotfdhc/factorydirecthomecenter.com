@@ -92,14 +92,19 @@ lookup is case-insensitive since 2026-10-18), and the Meta feed URL as
 `DEALERTIDE_FEED_UR`, last letter missing, which is why `dealertide-feed.ts` never saw
 it. The feed's Champion code is its `identifier` field; the first sync (242 homes, all
 available to order) matched 169 homes to 167 catalogue plans, 0 new models.
-**Step 2 exists now:** edge function `dealertide-media-import`, started with
-`select public.dealertide_media_import('{"slugs":[…],"dry_run":true}')`, copies Champion's
-Scene7 photos for the plans you name into the bucket as appended `gallery` rows after
-checking each file's pixel size, and promotes an exterior to the card image only over a
-rendered sales sheet. First run put 16 photos on the Verona 3276 and Woodward 2864
-twins, the only photo-less plans the feed could supply; the Woodward ones are Champion's
-staged 2860 interiors (filenames say so). Details, the comparison numbers and the
-wider gap left for review: `docs/dealertide-inventory-sync.md`.
+**Step 2 is done:** edge function `dealertide-media-import` (v4) maps every feed image to
+its plans by the Champion code in the **filename** (plus the H/M twin), the record's code,
+or the family name, fetches each at 1800px, checks type and pixel size, appends `gallery`
+rows (drawings as `floorplan` rows, by code only) and skips anything the plan already has
+by normalised name. `select public.dealertide_media_import('{"all":true}')` walks every
+plan under a budget and returns `next`. The full import ran 2026-10-18: 882 photos and 91
+drawings onto 144 plans, 5 card images promoted over rendered sheets, 0 new pages; a dry
+run now reports nothing left. Unresolved by design: Genesis Little Sky / Emerald Sky (no
+such series in the catalogue — Kyle's call) and the family-level records' drawings (no
+code). Details and the step-2 rules: `docs/dealertide-inventory-sync.md`. Also from the
+feed that day: a page for `1672H32184`, Champion's names for three code-named Prime
+plans (Ballard, Bardstown, Somerset) read from its drawing filenames, and Matterport
+tours on 17 plans. The feed has no video URLs — `has_video` rows carry only the tour.
 
 # Catalogue media from Champion's Box library
 

@@ -37,8 +37,18 @@ const ROOMS: [RegExp, string][] = [
   // says in words. Ranked below the named rooms so "monte-dining" still wins.
   [/\brendering\b|\brender\b/, "exterior rendering"],
   [/\bdrone\b|\baerial\b/, "aerial exterior view"],
+  [/\bhall(way)?\b/, "hallway"],
+  // DealerTide's feed (Champion's listing photos, 2026-10-18) labels furnished
+  // interior shots "staged" — "lincoln-staged-3" names the family, not a room.
+  // Below the rooms so "kitchen-staged" is still the kitchen.
+  [/\bstaged\b/, "staged interior"],
   [/\b(floor[-_ ]?plan|floorplan|plan|sales|apb|apf|lit|l-?10[12]|drawing|sheet|opt\d*)\b/, "floor plan sheet"],
   [/\bdetails?\b/, "detail view"],
+  // The listing's lead photo, "main-image" / "main". It is whatever the listing
+  // leads with — a kitchen as often as the front of the home — so it is named
+  // for what it is, never guessed to be the exterior. Last, so a drawing whose
+  // filename also carries "main" stays a floor plan sheet.
+  [/\bmain([-_ ]?image)?\b/, "main photo"],
 ];
 
 /** Human words for what a catalogue photo shows, read from its filename. */
@@ -52,7 +62,10 @@ export function describeImageFile(src: string): string {
     // Champion numbers repeat rooms: "…-bedroom2", "…-kitchen3". Every ROOMS
     // pattern ends in \b, and a digit straight after a letter is not a word
     // boundary, so those fell through to the generic alt. Split them.
-    .replace(/([a-z])(\d)/g, "$1 $2");
+    .replace(/([a-z])(\d)/g, "$1 $2")
+    // The feed also glues room words together: "exteriorfront", "livingroom",
+    // "utilityroom", "primarybedroom". Put the space back so \b can see them.
+    .replace(/\b(exterior|interior|living|dining|utility|family|great|primary|master|guest|mud)(front|rear|room|bath|bathroom|bed|bedroom|closet)\b/g, "$1 $2");
   for (const [re, label] of ROOMS) if (re.test(file)) return label;
   return "";
 }

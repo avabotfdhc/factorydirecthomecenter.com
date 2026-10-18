@@ -52,6 +52,17 @@ test("the filename patterns Champion actually uses are read correctly", () => {
     ["112-paramount-1668h22259-utilities.jpg", "utility room"],
     ["043-prime-vertex-details1.jpg", "detail view"],
     ["aspire-1660h22212-exterior.jpg", "exterior"],
+    // DealerTide feed shapes (2026-10-18): glued room words, "staged"
+    // interiors named for the family, "hallway", and the listing's lead photo.
+    ["112-aspire-1672h32184-exteriorfront-2.jpg", "exterior"],
+    ["112-aspire-1672h32184-livingroom-staged-1.jpg", "living room"],
+    ["112-aspire-1672h32184-utilityroom-2.jpg", "utility room"],
+    ["112-aspire-2852h32171-primarybedroom-staged.jpg", "primary bedroom"],
+    ["112-aspire-2852h32171-lincoln-staged-3.jpg", "staged interior"],
+    ["112-aspire-1676h32089-hallway.jpg", "hallway"],
+    ["aspire-1432h11214-main-image.jpg", "main photo"],
+    ["aspire_0020_2852h42096-main.jpg", "main photo"],
+    ["112-aspire-2852h32171-vs-living-room-main.jpg", "living room"],
   ];
   for (const [file, expected] of cases) {
     assert.equal(describeImageFile(file), expected, `describeImageFile(${file})`);
