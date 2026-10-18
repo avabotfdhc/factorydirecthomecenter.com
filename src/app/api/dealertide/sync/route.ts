@@ -49,7 +49,10 @@ export async function POST(request: Request) {
   // "MH-…" identifier (that answers 404), and the record comes wrapped:
   // { branding, champion_disclaimer, company, truebuild, vehicle } with the home
   // under `vehicle` — measured 2026-10-18 — so the walk goes into nested objects.
-  const body = (await request.json().catch(() => ({}))) as { detail_id?: unknown };
+  // With `media: true` the answer also carries the record's media URLs
+  // (video_url, matterport_url, virtual_tour_url, tour_url, design_url) — the
+  // list feed only flags has_video and never says where the video is.
+  const body = (await request.json().catch(() => ({}))) as { detail_id?: unknown; media?: unknown };
   if (typeof body.detail_id === "string" && body.detail_id) {
     const res = await fetch(
       `${DEFAULT_API}/${encodeURIComponent(body.detail_id)}?token=${encodeURIComponent(token)}`,
@@ -74,12 +77,17 @@ export async function POST(request: Request) {
       }
     };
     if (home) walk(home, "", 0);
+    const MEDIA_KEYS = ["video_url", "matterport_url", "virtual_tour_url", "tour_url", "design_url", "has_video", "has_3d_tour", "has_virtual_tour"];
+    const media = body.media === true && home
+      ? Object.fromEntries(MEDIA_KEYS.filter((k) => k in home).map((k) => [k, home[k]]))
+      : undefined;
     return NextResponse.json({
       ok: res.ok,
       status: res.status,
       wrapper_keys: wrapper ? Object.keys(wrapper).sort() : [],
       keys: home ? Object.keys(home).sort() : [],
       code_fields: codeFields,
+      ...(media ? { media } : {}),
     });
   }
 
