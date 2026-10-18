@@ -55,7 +55,23 @@ const MIN_WIDTH = 1000;
 const MIN_BYTES = 30_000;
 const DEFAULT_WIDTH = 1800;
 const DEFAULT_BUDGET_MS = 110_000;
+const FETCH_POOL = 4;
 const BUCKET = "floor-plans";
+
+/** Run fn over items with at most n in flight; results in input order. */
+async function pool<T, R>(items: T[], n: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const out: R[] = new Array(items.length);
+  let i = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(n, items.length) }, async () => {
+      while (i < items.length) {
+        const idx = i++;
+        out[idx] = await fn(items[idx]);
+      }
+    }),
+  );
+  return out;
+}
 const CODE_RE = /(\d{4}[HM]\d{2}[0-9A-Z]{3})/i;
 
 type Row = Record<string, unknown>;
@@ -220,8 +236,12 @@ Deno.serve(async (req) => {
     const imported: string[] = [];
     const skipped: Record<string, number> = {};
     const skip = (why: string) => { skipped[why] = (skipped[why] ?? 0) + 1; totals.skipped++; };
+
+    // Decide and fetch in parallel (FETCH_POOL at a time), then write in the
+    // feed's order so sort_order stays deterministic.
+    type Fetched = { c: Candidate; key: string; n: string; s: string; bytes?: Uint8Array; size?: { width: number; height: number; type: "jpeg" | "png" }; why?: string };
+    const prepared: Fetched[] = [];
     for (const c of cands) {
-      if (Date.now() - started > budget) { next = plan.slug; break; }
       if (c.drawing && !wantDrawings) continue;
       let host = "";
       try { host = new URL(c.url).host; } catch { skip("not a URL"); continue; }
@@ -233,20 +253,30 @@ Deno.serve(async (req) => {
       if (have.has(key)) { skip("already attached"); continue; }
       const n = norm(s);
       if (!c.drawing && n && haveNorm.has(n)) { skip("same photo already in gallery"); continue; }
-
+      if (prepared.some((p) => p.key === key || (!c.drawing && n && p.n === n))) { skip("duplicate in feed"); continue; }
+      prepared.push({ c, key, n, s });
+    }
+    const fetched = await pool(prepared, FETCH_POOL, async (p): Promise<Fetched> => {
+      if (Date.now() - started > budget) return { ...p, why: "out of time" };
       let res: Response;
       try {
-        res = await fetch(fetchUrl(c.url, width, c.drawing), { signal: AbortSignal.timeout(20_000) });
+        res = await fetch(fetchUrl(p.c.url, width, p.c.drawing), { signal: AbortSignal.timeout(20_000) });
       } catch (err) {
-        skip(`fetch: ${err instanceof Error ? err.message : String(err)}`);
-        continue;
+        return { ...p, why: `fetch: ${err instanceof Error ? err.message : String(err)}` };
       }
-      if (!res.ok) { skip(`HTTP ${res.status}`); continue; }
+      if (!res.ok) return { ...p, why: `HTTP ${res.status}` };
       const bytes = new Uint8Array(await res.arrayBuffer());
       const size = imageSize(bytes);
-      if (!size) { skip("not a JPEG/PNG"); continue; }
-      if (!c.drawing && size.type !== "jpeg") { skip("photo not a JPEG"); continue; }
-      if (size.width < MIN_WIDTH || bytes.length < MIN_BYTES) { skip(`too small (${size.width}×${size.height}, ${bytes.length} B)`); continue; }
+      if (!size) return { ...p, why: "not a JPEG/PNG" };
+      if (!p.c.drawing && size.type !== "jpeg") return { ...p, why: "photo not a JPEG" };
+      if (size.width < MIN_WIDTH || bytes.length < MIN_BYTES) return { ...p, why: `too small (${size.width}×${size.height}, ${bytes.length} B)` };
+      return { ...p, bytes, size };
+    });
+
+    for (const f of fetched) {
+      if (f.why === "out of time") { next = plan.slug; break; }
+      if (f.why || !f.bytes || !f.size) { skip(f.why ?? "no data"); continue; }
+      const { c, key, n, s, bytes, size } = f;
       const finalKey = c.drawing && size.type === "jpeg" ? key.replace(/\.png$/, ".jpg") : key;
       const contentType = size.type === "png" ? "image/png" : "image/jpeg";
       if (!dryRun) {
