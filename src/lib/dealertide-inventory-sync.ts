@@ -43,9 +43,46 @@ export function tokenFromFeedUrl(feedUrl: string | undefined): string {
 
 type Env = Record<string, string | undefined>;
 
-/** The feed token this deployment carries, from either env var. */
+// The names a feed token may have been pasted under, most specific first. The
+// partner (lead) key and the API base are never candidates: the lead key is a
+// different credential, and a feed token pasted over it is exactly what took
+// leads down in October 2026.
+const TOKEN_NAMES = [
+  "DEALERTIDE_INVENTORY_TOKEN",
+  "DEALERTIDE_INVENTORY_KEY",
+  "DEALERTIDE_INVENTORY_API_KEY",
+  "DEALERTIDE_FEED_TOKEN",
+  "DEALERTIDE_PUBLIC_TOKEN",
+  "DEALERTIDE_TOKEN",
+  "DEALERTIDE_INVENTORY_URL",
+  "DEALERTIDE_INVENTORY_FEED_URL",
+  "DEALERTIDE_PUBLIC_INVENTORY_URL",
+  "DEALERTIDE_FEED_URL",
+];
+
+/** A value that is either the bare token or a URL carrying it as `token=`. */
+function tokenFromValue(v: string | undefined): string {
+  const t = v?.trim() ?? "";
+  if (!t) return "";
+  if (/^https?:\/\//i.test(t)) return tokenFromFeedUrl(t);
+  if (/[\s/?&=]/.test(t)) return ""; // not a URL, not a bare token
+  return t;
+}
+
+/** The feed token this deployment carries, under whichever name it was given. */
 export function inventoryToken(env: Env = process.env): string {
-  return env.DEALERTIDE_INVENTORY_TOKEN?.trim() || tokenFromFeedUrl(env.DEALERTIDE_FEED_URL);
+  for (const name of TOKEN_NAMES) {
+    const t = tokenFromValue(env[name]);
+    if (t) return t;
+  }
+  return "";
+}
+
+/** Which DealerTide-related variable names this deployment has (names only, never values). */
+export function dealertideEnvNames(env: Env = process.env): string[] {
+  return Object.keys(env)
+    .filter((k) => /DEALER|TIDE|RENTER|INVENTORY/i.test(k))
+    .sort();
 }
 
 export function inventorySyncConfigured(env: Env = process.env): boolean {

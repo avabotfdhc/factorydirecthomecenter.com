@@ -5,6 +5,7 @@ import { test, before, after, beforeEach } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
 import {
+  dealertideEnvNames,
   homesOf,
   inventoryToken,
   modelCodeOf,
@@ -22,6 +23,15 @@ test("tokenFromFeedUrl / inventoryToken: the explicit var wins, else the token i
   assert.equal(inventoryToken({ DEALERTIDE_INVENTORY_TOKEN: " t1 ", DEALERTIDE_FEED_URL: "https://x/y?token=t2" }), "t1");
   assert.equal(inventoryToken({ DEALERTIDE_FEED_URL: "https://x/y?token=t2" }), "t2");
   assert.equal(inventoryToken({}), "");
+  // Other names it may have been pasted under, as a bare token or a URL.
+  assert.equal(inventoryToken({ DEALERTIDE_INVENTORY_KEY: "k9" }), "k9");
+  assert.equal(inventoryToken({ DEALERTIDE_FEED_TOKEN: "k8" }), "k8");
+  assert.equal(inventoryToken({ DEALERTIDE_INVENTORY_URL: "https://api.dealertide.com/public/inventory?token=k7&per_page=50" }), "k7");
+  // The partner (lead) key is never a candidate, and a value with spaces or
+  // query characters that is not a URL is not a token.
+  assert.equal(inventoryToken({ DEALERTIDE_API_KEY: "lead-key", DEALERTIDE_API_BASE: "https://x" }), "");
+  assert.equal(inventoryToken({ DEALERTIDE_TOKEN: "not a token" }), "");
+  assert.deepEqual(dealertideEnvNames({ DEALERTIDE_API_KEY: "x", PATH: "/bin", RENTERINSIGHT_X: "y", NEXT_PUBLIC_X: "z" }), ["DEALERTIDE_API_KEY", "RENTERINSIGHT_X"]);
 });
 
 test("modelCodeOf: Champion codes from any of the fields DealerTide might use, upper-cased", () => {
