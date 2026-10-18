@@ -170,3 +170,22 @@ Rules it follows, from AGENTS.md:
   `npm run image-audit` afterwards.
 - **Copy media into the `floor-plans` bucket**, don't hotlink DealerTide's URLs.
 - New-model pages get the usual title ladder, narrative, specs disclaimer and no prices.
+
+## Videos (2026-10-18)
+
+The list feed never carries a video URL — only `has_video`, true on nine
+homes. The detail endpoint does: `GET /public/inventory/{id}` (the feed's
+numeric `id`; the `MH-…` identifier answers 404) returns `{ branding,
+champion_disclaimer, company, truebuild, vehicle }` with the home under
+`vehicle`, 120 fields including `video_url`, `matterport_url`,
+`virtual_tour_url`, `vin`, `serial_number` and `stock_number`. For the 73
+family-level records none of those carries a model code either — the
+filename mapping above is the only route, and it is complete. The sync route
+probes it: `select public.dealertide_sync_start_site('{"detail_id":"385","media":true}')`.
+
+Five of the nine videos are on nine plans (`floor_plans.video_url`); two
+with a dollar figure in the YouTube title were left off, and two are Genesis
+homes with no plan. `video_published_on` is empty for all nine because the
+upload dates could not be read from here; the VideoObject schema waits for it.
+Details and the rules: AGENTS.md, "Plan videos come from DealerTide's detail
+record".

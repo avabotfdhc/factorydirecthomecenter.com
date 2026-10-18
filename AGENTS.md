@@ -106,6 +106,34 @@ feed that day: a page for `1672H32184`, Champion's names for three code-named Pr
 plans (Ballard, Bardstown, Somerset) read from its drawing filenames, and Matterport
 tours on 17 plans. The feed has no video URLs — `has_video` rows carry only the tour.
 
+# Plan videos come from DealerTide's detail record, and the schema waits for a date
+
+The list feed only flags `has_video` (nine homes); the detail record
+(`GET /public/inventory/{numeric id}`, wrapped under `vehicle`) carries
+`video_url`, which the sync route's probe reads with
+`select public.dealertide_sync_start_site('{"detail_id":"385","media":true}')`.
+All nine are Champion's own YouTube videos. Seven are on their plans in
+`floor_plans.video_url` (The Grand, Vertex, Timberlake H/M, Silverton ×4,
+1676H32090, which has no modular twin — the last by the video's own title, not the listing's photos,
+which carry 1672H32090); the plan page embeds it privacy-enhanced
+(`PlanVideo`). **Two were deliberately left off**: their YouTube titles carry a
+dollar figure ("This home starts at 88K!", "Starting at $162,000"), which the
+embed would display on our page against the no-dollar-figure rule, and they are
+Champion's national prices, not ours. The Genesis Little Sky / Emerald Sky
+videos have no catalogue plan.
+
+**The VideoObject in the page graph is emitted only when
+`floor_plans.video_published_on` is set.** Google requires `uploadDate` on every
+VideoObject, YouTube's watch page answers a bot check from the database's
+network and its channel RSS holds only the latest fifteen videos, so the dates
+are unknown and an invented one would be a fabricated date (the same rule as
+`foundingDay`). Read each date off the YouTube page and set the column; the node
+publishes on the next render. `src/lib/plan-video.ts` reads the id out of any
+YouTube URL shape; `tests/plan-schema.test.ts` holds the date gate and
+`tests/plan-video.test.ts` the URL shapes. The homepage's `HOME_VIDEO`
+(`src/lib/home-video.ts`) is still empty; any of the five would do, and that
+choice is Kyle's.
+
 # Catalogue media from Champion's Box library
 
 Champion shares its literature and photo library through two Box folders (Topeka IN, Decatur IN). On 2026-09-09 every 2026 sales sheet (APB/APF, L-101/L-102, LIT-1), WEB-size photo set and literature PDF was copied into the `floor-plans` storage bucket and attached in the CMS (`floor_plan_documents`, `floor_plan_images`, `literature`), without downloads:

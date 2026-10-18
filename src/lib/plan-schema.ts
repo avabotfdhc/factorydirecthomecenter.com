@@ -44,10 +44,11 @@
 // src/lib/business.ts exists to prevent, guarded in tests/structured-data.test.ts).
 
 import type { ApiFloorPlanDetail } from "./api-content";
+import { youtubeEmbedUrl, youtubeIdFrom, youtubeThumbnail, youtubeWatchUrl } from "./plan-video";
 import { businessRef, SITE_URL } from "./business";
 import { absoluteImageUrl } from "./image-alt";
 import type { PlanNarrative } from "./plan-content";
-import { WEBSITE_ID } from "./seo";
+import { WEBSITE_ID, publisherRef } from "./seo";
 
 export const SCHEMA_CONTEXT = "https://schema.org";
 
@@ -225,6 +226,25 @@ export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGr
       }
     : null;
 
+  // The plan's YouTube video tour — only with a known upload date, which
+  // Google requires on every VideoObject (src/lib/plan-video.ts).
+  const youtubeId = youtubeIdFrom(plan.videoUrl);
+  const video =
+    youtubeId && plan.videoPublishedOn
+      ? {
+          "@type": "VideoObject",
+          "@id": `${url}#video`,
+          name: `${plan.name}: video from ${brand}`,
+          description: planSchemaDescription(plan, narrative),
+          thumbnailUrl: youtubeThumbnail(youtubeId),
+          embedUrl: youtubeEmbedUrl(youtubeId),
+          contentUrl: youtubeWatchUrl(youtubeId),
+          uploadDate: plan.videoPublishedOn,
+          publisher: publisherRef(),
+          about: { "@id": `${url}#product` },
+        }
+      : null;
+
   const webpage: Record<string, unknown> = {
     "@type": "WebPage",
     "@id": `${url}#webpage`,
@@ -233,12 +253,13 @@ export function buildPlanGraph({ plan, narrative, onLot = false, today }: PlanGr
     isPartOf: { "@id": WEBSITE_ID },
     breadcrumb: { "@id": `${url}#breadcrumbs` },
     mainEntity: { "@id": `${url}#product` },
+    ...(video ? { video: { "@id": `${url}#video` } } : {}),
     ...(images[0] ? { primaryImageOfPage: { "@type": "ImageObject", contentUrl: images[0], url: images[0] } } : {}),
     ...(plan.updatedAt ? { dateModified: plan.updatedAt } : {}),
   };
 
   return {
     "@context": SCHEMA_CONTEXT,
-    "@graph": [product, breadcrumbs, ...(faq ? [faq] : []), webpage],
+    "@graph": [product, breadcrumbs, ...(faq ? [faq] : []), ...(video ? [video] : []), webpage],
   };
 }
