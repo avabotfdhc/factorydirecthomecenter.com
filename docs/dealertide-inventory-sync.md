@@ -53,7 +53,17 @@ also runs on the site: `POST /api/dealertide/sync`
 feed URL the site has carried since August), and writes the same two tables
 with the service role. The gate is the same `x-sync-key` / vault check.
 `/api/health` → `configured.dealerTideInventoryToken` says whether a token is
-present.
+present, and `dealerTide.envNames` lists the DealerTide-related variable
+**names** (never values) the deployment carries, so a token pasted under an
+unexpected name can be found. `inventoryToken()` accepts the usual names
+(`DEALERTIDE_INVENTORY_TOKEN`, `…_INVENTORY_KEY`, `…_FEED_TOKEN`,
+`…_TOKEN`, or any of them holding the full feed URL), **case-insensitively**,
+plus any other `DEALERTIDE*` variable whose value is a feed URL with
+`?token=`; never `DEALERTIDE_API_KEY` or anything named for leads. Measured
+on 2026-10-18, production's names are `DEALERTIDE_API_KEY`,
+`Dealertide_Inventory_Key` (the inventory token, mixed case),
+`DEALERTIDE_FEED_UR` (the feed URL, last letter missing, which is why the
+feed adapter never saw it) and `Dealertide_website_leads`.
 
 ```sql
 select public.dealertide_sync_start_site();        -- returns a request id

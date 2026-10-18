@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { probeDealertideKey } from "@/lib/dealertide";
-import { inventoryToken } from "@/lib/dealertide-inventory-sync";
+import { dealertideEnvNames, inventoryToken } from "@/lib/dealertide-inventory-sync";
 
 export const dynamic = "force-dynamic";
 
@@ -47,6 +47,7 @@ export async function GET() {
     // The inventory feed token: DEALERTIDE_INVENTORY_TOKEN, or the token inside
     // DEALERTIDE_FEED_URL. Read by POST /api/dealertide/sync, not by any page.
     dealerTideInventoryToken: Boolean(inventoryToken()),
+    dealerTideFeedUrl: set("DEALERTIDE_FEED_URL"),
     ga4: set("NEXT_PUBLIC_GA_MEASUREMENT_ID"),
     gtm: set("NEXT_PUBLIC_GTM_ID"),
     metaPixel: set("NEXT_PUBLIC_FB_PIXEL_ID"),
@@ -74,7 +75,13 @@ export async function GET() {
     // "ok" means website leads can reach the CRM right now. "rejected" means
     // every lead is being refused with the key this deployment carries —
     // the leads are still in Supabase, but someone has to fix the key.
-    dealerTide: { key: dealerTideKey, leadsReachCrm: dealerTideKey.verdict === "ok" },
+    dealerTide: {
+      key: dealerTideKey,
+      leadsReachCrm: dealerTideKey.verdict === "ok",
+      // Variable NAMES only, so a token pasted under an unexpected name can be
+      // found without anyone reading Vercel's settings. Values never appear.
+      envNames: dealertideEnvNames(),
+    },
     checkedAt: new Date().toISOString(),
   });
 }
