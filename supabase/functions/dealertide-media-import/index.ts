@@ -1,49 +1,76 @@
 // dealertide-media-import — step 2 of the DealerTide inventory sync: copy the
-// photos DealerTide's feed carries for a catalogue plan into the `floor-plans`
-// storage bucket and attach them as `kind = 'gallery'` rows, APPENDED after the
-// plan's existing images. Nothing here touches a plan that is not named in the
-// request, and nothing changes which drawing the page uses: `floorplan` rows
-// are never added, so `drawingFrom()` keeps its current pick.
+// photos and plan drawings DealerTide's feed carries for catalogue plans into
+// the `floor-plans` storage bucket and attach them as rows APPENDED after the
+// plan's existing images. v2 (2026-10-18, Kyle: "import the rest of the photos
+// and floor plans") maps every feed image to its plans instead of only the
+// record's own code, because the feed's family-level records (no model code)
+// hold the big photo sets and Champion names each file after the model.
+//
+// Which plans a feed image belongs to:
+//   - a Champion model code in the filename → that plan and its HUD/modular
+//     twin (same box, H↔M); e.g. "112-aspire-2860h32047-kitchen-staged" →
+//     2860H32047 + 2860M32047;
+//   - the record's own model code and its twin, when the record has one
+//     (Champion attaches the 2860 Woodward photos to the 2864 listing);
+//   - a family-level record with no code anywhere ("Aspire Silverton", "Prime
+//     Vertex 043") → every active plan with that family name.
+//   Drawings (`floor_plan_images` in the feed) go by code only — a drawing is
+//   length-specific — and become `kind = 'floorplan'` rows appended after the
+//   existing ones, so `drawingFrom()` keeps its current pick where one exists
+//   and gains a real drawing where the plan had none.
 //
 // Rules (AGENTS.md, "DealerTide inventory is staged, never imported straight
 // into the catalogue"; "Every catalogue image gets checked"):
-//   - only plans named in the body, matched by their own Champion model code
-//     in public.dealertide_inventory — a model already in the catalogue never
-//     gets a second page, and nothing is created for a code we do not have;
-//   - only Champion's own Scene7 library (s7d9.scene7.com). The feed also
-//     carries DealerTide's staging bucket and our retired S3 bucket; those are
-//     reported as skipped, never copied;
-//   - every file is fetched at WEB size, checked to be a real JPEG, and its
-//     pixel size is read from the file: anything under MIN_WIDTH px wide or
-//     MIN_BYTES is refused (the 600×400 banner-art lesson of 2026-09-28);
+//   - never a new page: only active, non-Paramount plans already in the CMS;
+//   - hosts: Champion's Scene7 library and DealerTide's own copy of Champion's
+//     photo sets. Our retired S3 bucket is in the feed too (sales-sheet pages
+//     and renderings the site already holds under legacy/) and is never read;
+//   - every file is fetched at WEB size, checked to be a real JPEG/PNG, and
+//     its pixel size is read from the file: anything under MIN_WIDTH px wide
+//     or MIN_BYTES is refused (the 600×400 banner-art lesson of 2026-09-28);
 //   - the storage key keeps Champion's filename, so describeImageFile() reads
-//     the room out of it ("…-vernona-kitchen-1.jpg" → "kitchen"). A file whose
-//     name carries no room is still copied; the audit script grades it;
-//   - idempotent: a row whose path already exists is skipped;
+//     the room out of it ("…-vernona-kitchen-1.jpg" → "kitchen");
+//   - never twice: a candidate whose normalised name matches a row the plan
+//     already has (a Box import "2852H32103-Kitchen-1-.jpg", a legacy
+//     "bayport-kitchen.webp", or an earlier run of this function) is skipped;
 //   - set_banner (default true) promotes the first "exterior" photo to the
-//     plan's card image ONLY when the current banner is a rendered sales sheet
-//     (…/previews/…), which is the documented way a real photo replaces it.
+//     plan's card image ONLY when the current banner is empty or a rendered
+//     sales sheet (…/previews/…), the documented way a real photo replaces it;
+//   - resumable: `all: true` walks every plan in slug order under
+//     `budget_ms` and returns `next` (the slug to resume from) when time runs
+//     out; re-running is safe because everything is skipped by name/path.
 //
 // Deployed with verify_jwt off; the gate is the x-sync-key header, checked
 // against the vault secret `dealertide_sync_key` by dealertide_sync_key_ok().
 // public.dealertide_media_import(payload) sends it from SQL:
-//   select public.dealertide_media_import('{"slugs":["aspire-verona-3276h42179"],"dry_run":true}');
-// Body: { slugs: string[], dry_run?: boolean, set_banner?: boolean, max_width?: number }
+//   select public.dealertide_media_import('{"all":true,"dry_run":true}');
+//   select public.dealertide_media_import('{"all":true,"after":"aspire-lincoln-2852h32171"}');
+// Body: { slugs?: string[], all?: boolean, after?: string, budget_ms?: number,
+//         dry_run?: boolean, set_banner?: boolean, drawings?: boolean, max_width?: number }
 
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-const ALLOWED_HOSTS = new Set(["s7d9.scene7.com"]);
+const ALLOWED_HOSTS = new Set(["s7d9.scene7.com", "renterinsight-website-assets-staging.s3.us-west-2.amazonaws.com"]);
 const MIN_WIDTH = 1000;
 const MIN_BYTES = 30_000;
 const DEFAULT_WIDTH = 1800;
+const DEFAULT_BUDGET_MS = 110_000;
 const BUCKET = "floor-plans";
+const CODE_RE = /(\d{4}[HM]\d{2}[0-9A-Z]{3})/i;
 
 type Row = Record<string, unknown>;
+type Plan = { id: string; slug: string; series: string; name: string; model_number: string; banner_image: string | null; is_active: boolean };
+type Candidate = { url: string; drawing: boolean };
+
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
-/** Width and height out of a JPEG's SOF marker, or null when it is not a JPEG. */
-function jpegSize(b: Uint8Array): { width: number; height: number } | null {
+/** Width and height out of a JPEG's SOF marker or a PNG's IHDR, or null. */
+function imageSize(b: Uint8Array): { width: number; height: number; type: "jpeg" | "png" } | null {
+  if (b.length > 24 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) {
+    const dv = new DataView(b.buffer, b.byteOffset, b.byteLength);
+    return { width: dv.getUint32(16), height: dv.getUint32(20), type: "png" };
+  }
   if (b.length < 4 || b[0] !== 0xff || b[1] !== 0xd8) return null;
   let i = 2;
   while (i + 9 < b.length) {
@@ -52,30 +79,50 @@ function jpegSize(b: Uint8Array): { width: number; height: number } | null {
     if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) { i += 2; continue; }
     const len = (b[i + 2] << 8) | b[i + 3];
     const isSof = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
-    if (isSof) return { height: (b[i + 5] << 8) | b[i + 6], width: (b[i + 7] << 8) | b[i + 8] };
-    if (marker === 0xda) break; // start of scan: no SOF before it
+    if (isSof) return { height: (b[i + 5] << 8) | b[i + 6], width: (b[i + 7] << 8) | b[i + 8], type: "jpeg" };
+    if (marker === 0xda) break;
     i += 2 + len;
   }
   return null;
 }
 
-/** Champion's filename, lower-cased, safe for a storage key, with .jpg. */
-function basenameOf(url: string): string {
-  const path = new URL(url).pathname;
+/** Champion's filename, decoded, lower-cased, safe for a storage key, no extension. */
+function stem(url: string): string {
+  let path = new URL(url).pathname;
+  try { path = decodeURIComponent(path); } catch { /* keep encoded */ }
   let name = path.slice(path.lastIndexOf("/") + 1).toLowerCase().replace(/\.(jpe?g|png|webp)$/, "");
   name = name.replace(/[^a-z0-9._-]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
-  return (name || "photo") + ".jpg";
+  return name || "photo";
 }
 
-function scene7Url(url: string, width: number): string {
+/** The name without plant prefix, model code, series word or punctuation — the dedupe key. */
+function norm(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/\.(jpe?g|png|webp)$/, "")
+    .replace(/^\d{3}[-_ ](aspire|prime|dutch|champion|genesis)[-_ ]/, "")
+    .replace(/^(aspire|prime|dutch|champion)[-_ ]/, "")
+    .replace(/\d{4}[hm]\d{2}[0-9a-z]{3}/g, "")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+const twin = (code: string) => (code[4] === "H" ? code.slice(0, 4) + "M" + code.slice(5) : code[4] === "M" ? code.slice(0, 4) + "H" + code.slice(5) : "");
+const family = (model: unknown) =>
+  String(model ?? "").toLowerCase().replace(/^(aspire|prime)\s+/, "").replace(/\s+043$/, "").replace(/^the\s+/, "").trim();
+const familyKey = (name: string) => name.toLowerCase().replace(/^the\s+/, "").trim();
+
+function fetchUrl(url: string, width: number, drawing: boolean): string {
   const u = new URL(url);
-  u.searchParams.set("wid", String(width));
-  u.searchParams.set("fmt", "jpeg");
-  u.searchParams.set("qlt", "85");
+  if (u.host === "s7d9.scene7.com") {
+    u.searchParams.set("wid", String(width));
+    u.searchParams.set("fmt", drawing ? "png" : "jpeg");
+    if (!drawing) u.searchParams.set("qlt", "85");
+  }
   return u.toString();
 }
 
 Deno.serve(async (req) => {
+  const started = Date.now();
   const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
     auth: { persistSession: false },
   });
@@ -84,92 +131,151 @@ Deno.serve(async (req) => {
 
   const body = (await req.json().catch(() => ({}))) as Row;
   const slugs = Array.isArray(body.slugs) ? body.slugs.map(String).filter(Boolean) : [];
-  if (slugs.length === 0) return json({ ok: false, error: "body.slugs is required" }, 400);
+  const all = body.all === true;
+  if (!all && slugs.length === 0) return json({ ok: false, error: "body.slugs or body.all is required" }, 400);
+  const after = typeof body.after === "string" ? body.after : "";
+  const budget = Number(body.budget_ms) > 0 ? Number(body.budget_ms) : DEFAULT_BUDGET_MS;
   const dryRun = body.dry_run === true;
   const setBanner = body.set_banner !== false;
+  const wantDrawings = body.drawings !== false;
   const width = Number(body.max_width) > 0 ? Number(body.max_width) : DEFAULT_WIDTH;
 
-  const { data: plans, error: planErr } = await db
+  // Every active plan (the index) — then the subset this call works on.
+  const { data: allPlans, error: planErr } = await db
     .from("floor_plans")
-    .select("id,slug,series,model_number,banner_image,is_active")
-    .in("slug", slugs);
+    .select("id,slug,series,name,model_number,banner_image,is_active")
+    .eq("is_active", true)
+    .order("slug");
   if (planErr) return json({ ok: false, error: `floor_plans: ${planErr.message}` }, 500);
+  const plans = ((allPlans ?? []) as Plan[]).filter((p) => String(p.series).toLowerCase() !== "paramount");
+  const byCode = new Map<string, Plan[]>();
+  const byFamily = new Map<string, Plan[]>();
+  for (const p of plans) {
+    const c = String(p.model_number ?? "").toUpperCase();
+    if (CODE_RE.test(c)) byCode.set(c, [...(byCode.get(c) ?? []), p]);
+    const f = familyKey(String(p.name ?? ""));
+    if (f && !CODE_RE.test(f)) byFamily.set(f, [...(byFamily.get(f) ?? []), p]);
+  }
+
+  // The feed, mapped to plans.
+  const { data: feed, error: feedErr } = await db
+    .from("dealertide_inventory")
+    .select("id,model_code,raw,image_urls,floor_plan_images")
+    .is("removed_at", null);
+  if (feedErr) return json({ ok: false, error: `dealertide_inventory: ${feedErr.message}` }, 500);
+  const candidates = new Map<string, Candidate[]>(); // plan id → ordered, deduped
+  const add = (p: Plan, c: Candidate) => {
+    const list = candidates.get(p.id) ?? [];
+    if (!list.some((x) => x.url === c.url)) list.push(c);
+    candidates.set(p.id, list);
+  };
+  const unresolved: Record<string, number> = {};
+  for (const r of (feed ?? []) as Row[]) {
+    const recCode = typeof r.model_code === "string" ? r.model_code.toUpperCase() : "";
+    const fam = family((r.raw as Row | null)?.model);
+    const lists: [unknown, boolean][] = [[r.image_urls, false], [r.floor_plan_images, true]];
+    for (const [urls, drawing] of lists) {
+      if (!Array.isArray(urls)) continue;
+      for (const url of urls as string[]) {
+        if (typeof url !== "string") continue;
+        const targets: Plan[] = [];
+        const m = url.match(CODE_RE);
+        const codes = new Set<string>();
+        if (m) { codes.add(m[1].toUpperCase()); codes.add(twin(m[1].toUpperCase())); }
+        if (recCode) { codes.add(recCode); codes.add(twin(recCode)); }
+        for (const c of codes) for (const p of byCode.get(c) ?? []) targets.push(p);
+        if (targets.length === 0 && !drawing && !m && !recCode && fam && !/^\d/.test(fam)) {
+          for (const p of byFamily.get(fam) ?? []) targets.push(p);
+        }
+        if (targets.length === 0) {
+          const key = m ? `code ${m[1].toUpperCase()}` : recCode ? `code ${recCode}` : `family ${fam || "?"}`;
+          unresolved[key] = (unresolved[key] ?? 0) + 1;
+          continue;
+        }
+        for (const p of targets) add(p, { url, drawing });
+      }
+    }
+  }
+
+  // Which plans this call works on.
+  let work = slugs.length ? plans.filter((p) => slugs.includes(p.slug)) : plans;
+  if (after) work = work.filter((p) => p.slug > after);
 
   const report: Row[] = [];
-  for (const slug of slugs) {
-    const plan = (plans ?? []).find((p) => p.slug === slug);
-    if (!plan) { report.push({ slug, error: "not in catalogue" }); continue; }
-    if (!plan.is_active || String(plan.series).toLowerCase() === "paramount") {
-      report.push({ slug, error: "inactive or retired series" });
-      continue;
-    }
+  let next: string | null = null;
+  let totals = { photos: 0, drawings: 0, skipped: 0, banners: 0 };
+  for (const plan of work) {
+    if (Date.now() - started > budget) { next = plan.slug; break; }
+    const cands = candidates.get(plan.id) ?? [];
+    if (cands.length === 0) continue;
     const model = String(plan.model_number).toUpperCase();
     const series = String(plan.series).toLowerCase();
 
-    const { data: staged } = await db
-      .from("dealertide_inventory")
-      .select("id,image_urls")
-      .eq("model_code", model)
-      .is("removed_at", null);
-    const urls: string[] = [];
-    for (const r of staged ?? []) for (const u of (r.image_urls as string[]) ?? []) if (!urls.includes(u)) urls.push(u);
-
-    const { data: existing } = await db
-      .from("floor_plan_images")
-      .select("path,kind,sort_order")
-      .eq("floor_plan_id", plan.id);
+    const { data: existing } = await db.from("floor_plan_images").select("path,kind,sort_order").eq("floor_plan_id", plan.id);
     const have = new Set((existing ?? []).map((r) => r.path as string));
-    let next = Math.max(-1, ...(existing ?? []).map((r) => Number(r.sort_order) || 0)) + 1;
+    const haveNorm = new Set((existing ?? []).map((r) => norm(String(r.path).split("/").pop() ?? "")));
+    let nextSort = Math.max(-1, ...(existing ?? []).map((r) => Number(r.sort_order) || 0)) + 1;
+    let banner = plan.banner_image;
 
-    const imported: Row[] = [];
-    const skipped: Row[] = [];
-    let bannerSet: string | null = null;
-    for (const url of urls) {
+    const imported: string[] = [];
+    const skipped: Record<string, number> = {};
+    const skip = (why: string) => { skipped[why] = (skipped[why] ?? 0) + 1; totals.skipped++; };
+    for (const c of cands) {
+      if (Date.now() - started > budget) { next = plan.slug; break; }
+      if (c.drawing && !wantDrawings) continue;
       let host = "";
-      try { host = new URL(url).host; } catch { skipped.push({ url, reason: "not a URL" }); continue; }
-      if (!ALLOWED_HOSTS.has(host)) { skipped.push({ url, reason: `host ${host} not allowed` }); continue; }
-      const key = `${series}/${model}/photos/dealertide/${basenameOf(url)}`;
-      if (have.has(key)) { skipped.push({ url, reason: "already attached", key }); continue; }
+      try { host = new URL(c.url).host; } catch { skip("not a URL"); continue; }
+      if (!ALLOWED_HOSTS.has(host)) { skip(`host ${host}`); continue; }
+      const s = stem(c.url);
+      const key = c.drawing
+        ? `${series}/${model}/plans/dealertide/${s}-floor-plan.png`
+        : `${series}/${model}/photos/dealertide/${s}.jpg`;
+      if (have.has(key)) { skip("already attached"); continue; }
+      const n = norm(s);
+      if (!c.drawing && n && haveNorm.has(n)) { skip("same photo already in gallery"); continue; }
 
       let res: Response;
       try {
-        res = await fetch(scene7Url(url, width), { signal: AbortSignal.timeout(20_000) });
+        res = await fetch(fetchUrl(c.url, width, c.drawing), { signal: AbortSignal.timeout(20_000) });
       } catch (err) {
-        skipped.push({ url, reason: `fetch: ${err instanceof Error ? err.message : String(err)}` });
+        skip(`fetch: ${err instanceof Error ? err.message : String(err)}`);
         continue;
       }
-      const type = res.headers.get("content-type") ?? "";
-      if (!res.ok || !type.startsWith("image/jpeg")) {
-        skipped.push({ url, reason: `HTTP ${res.status} ${type}` });
-        continue;
-      }
+      if (!res.ok) { skip(`HTTP ${res.status}`); continue; }
       const bytes = new Uint8Array(await res.arrayBuffer());
-      const size = jpegSize(bytes);
-      if (!size) { skipped.push({ url, reason: "not a JPEG" }); continue; }
-      if (size.width < MIN_WIDTH || bytes.length < MIN_BYTES) {
-        skipped.push({ url, reason: `too small: ${size.width}×${size.height}, ${bytes.length} bytes` });
-        continue;
-      }
-      const entry = { url, key, width: size.width, height: size.height, bytes: bytes.length, sort_order: next };
+      const size = imageSize(bytes);
+      if (!size) { skip("not a JPEG/PNG"); continue; }
+      if (!c.drawing && size.type !== "jpeg") { skip("photo not a JPEG"); continue; }
+      if (size.width < MIN_WIDTH || bytes.length < MIN_BYTES) { skip(`too small (${size.width}×${size.height}, ${bytes.length} B)`); continue; }
+      const finalKey = c.drawing && size.type === "jpeg" ? key.replace(/\.png$/, ".jpg") : key;
+      const contentType = size.type === "png" ? "image/png" : "image/jpeg";
       if (!dryRun) {
-        const up = await db.storage.from(BUCKET).upload(key, bytes, { contentType: "image/jpeg", upsert: true });
-        if (up.error) { skipped.push({ url, reason: `upload: ${up.error.message}` }); continue; }
-        const ins = await db.from("floor_plan_images").insert({ floor_plan_id: plan.id, path: key, kind: "gallery", sort_order: next });
-        if (ins.error) { skipped.push({ url, reason: `insert: ${ins.error.message}` }); continue; }
-        have.add(key);
+        const up = await db.storage.from(BUCKET).upload(finalKey, bytes, { contentType, upsert: true });
+        if (up.error) { skip(`upload: ${up.error.message}`); continue; }
+        const ins = await db.from("floor_plan_images").insert({
+          floor_plan_id: plan.id, path: finalKey, kind: c.drawing ? "floorplan" : "gallery", sort_order: nextSort,
+        });
+        if (ins.error) { skip(`insert: ${ins.error.message}`); continue; }
       }
-      imported.push(entry);
-      next++;
-      const isSheetBanner = /\/previews\//.test(String(plan.banner_image ?? ""));
-      if (setBanner && !bannerSet && isSheetBanner && /exterior/i.test(key)) {
+      have.add(finalKey);
+      if (n) haveNorm.add(n);
+      imported.push(finalKey);
+      nextSort++;
+      if (c.drawing) totals.drawings++; else totals.photos++;
+      const promotable = !banner || /\/previews\//.test(String(banner));
+      if (setBanner && !c.drawing && promotable && /exterior/i.test(s)) {
         if (!dryRun) {
-          const upd = await db.from("floor_plans").update({ banner_image: key }).eq("id", plan.id);
-          if (upd.error) skipped.push({ url, reason: `banner: ${upd.error.message}` });
+          const upd = await db.from("floor_plans").update({ banner_image: finalKey }).eq("id", plan.id);
+          if (upd.error) skip(`banner: ${upd.error.message}`);
         }
-        bannerSet = key;
+        banner = finalKey;
+        totals.banners++;
       }
     }
-    report.push({ slug, model, feed_urls: urls.length, imported, skipped, banner: bannerSet });
+    if (imported.length || Object.keys(skipped).length) {
+      report.push({ slug: plan.slug, candidates: cands.length, imported: imported.length, files: imported, skipped, banner: banner !== plan.banner_image ? banner : undefined });
+    }
+    if (next) break;
   }
-  return json({ ok: true, dry_run: dryRun, plans: report });
+  return json({ ok: true, dry_run: dryRun, next, totals, plans_with_candidates: candidates.size, unresolved, plans: report, elapsed_ms: Date.now() - started });
 });
