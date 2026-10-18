@@ -554,7 +554,8 @@ Kyle, 2026-09-28, after catching 14 bad rows I had added: *"You should have know
 to do this before I said anything. Please make sure you add this step to all
 images being used currently and in the future."*
 
-**`npm run image-audit`** (`scripts/audit-image-alt.ts`, run it as
+**`npm run image-audit`** (`scripts/audit-image-alt.mts` — an ES module, because its
+top-level `await` does not load under tsx's CommonJS mode in this package; run it as
 `vercel env run -- npm run image-audit`) reads every `floor_plan_images` row on
 an active, non-retired plan and exits non-zero on a real defect. Run it after
 anything that adds catalogue imagery. It exists as a *script* rather than a test
