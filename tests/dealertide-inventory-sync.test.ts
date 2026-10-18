@@ -31,6 +31,12 @@ test("tokenFromFeedUrl / inventoryToken: the explicit var wins, else the token i
   // query characters that is not a URL is not a token.
   assert.equal(inventoryToken({ DEALERTIDE_API_KEY: "lead-key", DEALERTIDE_API_BASE: "https://x" }), "");
   assert.equal(inventoryToken({ DEALERTIDE_TOKEN: "not a token" }), "");
+  // Production's real names (2026-10-18): mixed case, and a feed-URL variable
+  // whose name lost its last letter.
+  assert.equal(inventoryToken({ Dealertide_Inventory_Key: "k6" }), "k6");
+  assert.equal(inventoryToken({ DEALERTIDE_FEED_UR: "https://api.dealertide.com/public/inventory?token=k5" }), "k5");
+  assert.equal(inventoryToken({ DEALERTIDE_FEED_UR: "https://x/feed.json" }), "", "a URL with no token is not a token");
+  assert.equal(inventoryToken({ Dealertide_website_leads: "https://x/?token=no", DEALERTIDE_API_KEY: "https://x/?token=no" }), "", "lead-related names are never read");
   assert.deepEqual(dealertideEnvNames({ DEALERTIDE_API_KEY: "x", PATH: "/bin", RENTERINSIGHT_X: "y", NEXT_PUBLIC_X: "z" }), ["DEALERTIDE_API_KEY", "RENTERINSIGHT_X"]);
 });
 

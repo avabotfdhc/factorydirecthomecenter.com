@@ -43,7 +43,9 @@ export function tokenFromFeedUrl(feedUrl: string | undefined): string {
 
 type Env = Record<string, string | undefined>;
 
-// The names a feed token may have been pasted under, most specific first. The
+// The names a feed token may have been pasted under, most specific first.
+// Matched case-insensitively: production carries `Dealertide_Inventory_Key`
+// (measured 2026-10-18), and Linux `process.env` is case-sensitive. The
 // partner (lead) key and the API base are never candidates: the lead key is a
 // different credential, and a feed token pasted over it is exactly what took
 // leads down in October 2026.
@@ -59,6 +61,7 @@ const TOKEN_NAMES = [
   "DEALERTIDE_PUBLIC_INVENTORY_URL",
   "DEALERTIDE_FEED_URL",
 ];
+const NEVER_A_TOKEN = /API_KEY|API_BASE|LEAD/i;
 
 /** A value that is either the bare token or a URL carrying it as `token=`. */
 function tokenFromValue(v: string | undefined): string {
@@ -71,9 +74,20 @@ function tokenFromValue(v: string | undefined): string {
 
 /** The feed token this deployment carries, under whichever name it was given. */
 export function inventoryToken(env: Env = process.env): string {
+  const byUpper = new Map<string, string | undefined>();
+  for (const [k, v] of Object.entries(env)) byUpper.set(k.toUpperCase(), v);
   for (const name of TOKEN_NAMES) {
-    const t = tokenFromValue(env[name]);
+    const t = tokenFromValue(byUpper.get(name));
     if (t) return t;
+  }
+  // Any other DealerTide variable whose value is a feed URL with ?token=
+  // (production has one named DEALERTIDE_FEED_UR, last letter missing).
+  for (const [k, v] of byUpper) {
+    if (!k.startsWith("DEALERTIDE") || NEVER_A_TOKEN.test(k)) continue;
+    if (v && /^https?:\/\//i.test(v.trim())) {
+      const t = tokenFromFeedUrl(v);
+      if (t) return t;
+    }
   }
   return "";
 }
