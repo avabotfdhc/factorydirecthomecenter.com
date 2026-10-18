@@ -270,6 +270,31 @@ test("the plan page renders exactly one structured-data block, from the graph bu
   assert.match(page, /<FAQSection[\s\S]*?showSchema=\{false\}[\s\S]*?\/>/, "FAQSection must not publish a second FAQPage on the plan page");
 });
 
+test("a video with a known upload date is a VideoObject the page links; without the date it is embedded only", () => {
+  const dated = buildPlanGraph({
+    plan: { ...plan, videoUrl: "https://www.youtube.com/embed/GW3FQ-AqSQw?enablejsapi=1", videoPublishedOn: "2026-09-01" },
+    narrative,
+  });
+  const video = dated["@graph"].find((n) => n["@type"] === "VideoObject") as Record<string, unknown>;
+  assert.ok(video, "VideoObject node");
+  assert.equal(video["@id"], `${URL}#video`);
+  assert.equal(video.uploadDate, "2026-09-01");
+  assert.equal(video.embedUrl, "https://www.youtube-nocookie.com/embed/GW3FQ-AqSQw?rel=0");
+  assert.equal(video.thumbnailUrl, "https://i.ytimg.com/vi/GW3FQ-AqSQw/hqdefault.jpg");
+  assert.deepEqual(video.about, { "@id": `${URL}#product` });
+  assert.equal((video.publisher as Record<string, unknown>)["@id"], BUSINESS_ID);
+  const page = dated["@graph"].find((n) => n["@type"] === "WebPage") as Record<string, unknown>;
+  assert.deepEqual(page.video, { "@id": `${URL}#video` });
+
+  // Google requires uploadDate on every VideoObject; a guessed date would be
+  // a fabricated one, so no date means no node (the embed still renders).
+  const undated = buildPlanGraph({ plan: { ...plan, videoUrl: "https://youtu.be/GW3FQ-AqSQw", videoPublishedOn: "" }, narrative });
+  assert.ok(!undated["@graph"].some((n) => n["@type"] === "VideoObject"));
+  assert.ok(!JSON.stringify(undated).includes("VideoObject"));
+  const none = buildPlanGraph({ plan, narrative });
+  assert.ok(!JSON.stringify(none).includes("#video"));
+});
+
 test("the retired standalone residence block is gone", () => {
   assert.doesNotMatch(read("src/components/JsonLd.tsx"), /SingleFamilyResidence/);
 });

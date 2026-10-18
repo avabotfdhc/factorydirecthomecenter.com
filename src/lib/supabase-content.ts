@@ -82,6 +82,8 @@ interface FloorPlanRow {
   banner_image?: string | null;
   brochure_url?: string | null;
   virtual_tour?: string | null;
+  video_url?: string | null;
+  video_published_on?: string | null;
   updated_at?: string | null;
   floor_plan_images?: { path: string; kind?: string | null; sort_order?: number | null }[];
   floor_plan_documents?: { path: string; title?: string | null; kind?: string | null; sort_order?: number | null }[];
@@ -246,6 +248,8 @@ export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloor
     // sheet, which the detail page offers as the floor-plan PDF download.
     floorPlanUrl: imgUrl(r.brochure_url),
     virtualTour: String(r.virtual_tour || ""),
+    videoUrl: String(r.video_url || ""),
+    videoPublishedOn: String(r.video_published_on || ""),
     gallery,
     documents,
   };

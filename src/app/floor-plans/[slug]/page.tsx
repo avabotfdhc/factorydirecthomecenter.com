@@ -13,6 +13,7 @@ import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanActions } from "@/components/QuoteModal";
 import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { PlanVideo } from "@/components/PlanVideo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
 import { isCodeNamed, planTitle } from "@/lib/page-title";
 
@@ -272,6 +273,9 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             />
           </div>
         )}
+
+        {/* The plan's video tour, when DealerTide/Champion has one (floor_plans.video_url). */}
+        <PlanVideo videoUrl={plan.videoUrl} planName={plan.name} />
 
         {/* Hand-written description from /admin (floor_plans.floor_plan_html),
             or Champion's spec-sheet extras for the single-wides the factory
