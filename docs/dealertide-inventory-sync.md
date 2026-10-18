@@ -119,19 +119,44 @@ select public.dealertide_media_import('{"slugs":["aspire-verona-3276h42179"],"dr
 select status_code, content from net._http_response order by id desc limit 1;
 ```
 
-Per named plan it finds the staged homes with the plan's own model code, fetches
-each Scene7 photo at 1800px, checks it is a JPEG and reads its pixel size from
-the file (refusing anything under 1000px wide or 30 KB), uploads it to
-`<series>/<MODEL>/photos/dealertide/<champion-filename>.jpg` and appends a
-`kind = 'gallery'` row. It never adds a `floorplan` row, never reads a host
-other than Scene7, skips a path already attached, and promotes the first
-`exterior` photo to the card image only when the current banner is a rendered
-sales sheet. `dry_run: true` reports exactly what a real run would do.
+What it does (v2–v4, 2026-10-18, Kyle: "import the rest of the photos and
+floor plans"): every image in the staged feed is mapped to the plans it
+belongs to — the Champion model code in the **filename** and that plan's
+HUD/modular twin (Champion names each file after the model, which is how the
+73 family-level records with no code anywhere still resolve), the record's own
+code and twin, or, with no code at all, every plan carrying the family name.
+Feed drawings go by code only and become `kind = 'floorplan'` rows appended
+after the existing ones, so `drawingFrom()` keeps its pick where a plan had a
+drawing and gains one where it had none. Each file is fetched at 1800px from
+Scene7 or from DealerTide's re-hosted copy of Champion's sets (our retired S3
+bucket is in the feed too and is never read), checked to be a real JPEG/PNG,
+and refused under 1000px wide or 30 KB. A candidate whose normalised name
+matches a row the plan already has is skipped, so re-running is safe. The
+first `exterior` photo becomes the card image only when the banner was empty
+or a rendered sales sheet. `all: true` walks every plan in slug order under a
+110 s budget and returns `next` (inclusive; re-run with `after: next`).
 
-First run, 2026-10-18: 16 photos onto the four plans above, all 1800×1200,
-187–436 KB; the two Verona pages now carry the exterior photo as their card
-image, the Woodward 2864 pair keep the rendered sheet (the feed has no exterior
-for them). `npm run image-audit` was run afterwards.
+```sql
+select public.dealertide_media_import('{"all":true}'::jsonb);
+select public.dealertide_media_import('{"all":true,"after":"aspire-monroe-2840m32024"}'::jsonb);
+select status_code, content::jsonb->'totals', content::jsonb->'next' from net._http_response order by id desc limit 1;
+```
+
+**Full import, 2026-10-18, four runs:** 882 photos and 91 drawings onto 144
+plans (the only ones the feed has media for), 5 card images promoted over
+rendered sheets, 0 new pages. A dry run afterwards reports 0 to add and 1,159
+skipped, i.e. the feed is exhausted. Left unresolved on purpose: Genesis
+"Little Sky" (34 files) and "Emerald Sky" (25) — no Genesis series in the
+catalogue, Kyle's call; code 1668H32P07 (2) — not a catalogue plan; and the
+family-level records' drawings, which carry no code and are length-specific.
+`floor_plans.updated_at` was set on the 126 plans whose gallery changed so the
+sitemap's `lastmod` is honest. Alt text: the feed's filenames glue room words
+("exteriorfront", "livingroom"), label furnished shots "staged" and the lead
+photo "main-image"; `describeImageFile()` reads all three since the same day,
+so 99.0% of the imported photos name their room (the six that do not are
+"-standard"/"-hr" renderings with no room in the name). Both `npm run
+image-audit` checks that need no network — no absolute URL in `path`, no
+document filed as a photo — were run in SQL: 0 and 0.
 
 Rules it follows, from AGENTS.md:
 
