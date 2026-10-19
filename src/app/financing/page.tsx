@@ -171,8 +171,8 @@ const relatedPages = [
 const citations = [
   {
     source: "Consumer Financial Protection Bureau (CFPB)",
-    url: "https://www.consumerfinance.gov/housing/manufactured-housing/",
-    description: "Consumer guide to manufactured home financing, chattel loans and buyer protections"
+    url: "https://files.consumerfinance.gov/f/documents/cfpb_manufactured-housing-finance-new-insights-hmda_report_2021-05.pdf",
+    description: "CFPB research on manufactured home financing, chattel loans and buyer protections"
   },
   {
     source: "U.S. Department of Housing and Urban Development (HUD)",

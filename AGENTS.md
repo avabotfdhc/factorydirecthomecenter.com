@@ -1266,20 +1266,33 @@ count nodes, and correlate against the crawler's own per-URL numbers.
 
 ## The other four findings from the same export
 
-- **Broken external links (42 across 25 pages)** — still unverifiable here, but
-  arithmetic pins almost all of it. Per-page broken counts against each page's
-  actual external links solve exactly: **one of** `https://www.indianamha.org/`
-  **or** `https://www.in.gov/dhs/…/industrialized-building-systems-modularmobile-structures/`
-  (22 pages), `https://www.naco.org/resources/manufactured-housing` (15),
+- **Broken external links (42 across 25 pages)** — **fixed 2026-10-19.** The
+  arithmetic pinned it first: per-page broken counts against each page's actual
+  external links solve exactly to `https://www.indianamha.org/` (22 pages),
+  `https://www.naco.org/resources/manufactured-housing` (15),
   `https://www.consumerfinance.gov/housing/manufactured-housing/` (2),
   `https://www.planning.org/knowledgebase/manufacturedhousing/` (1), one link on
-  `/about` (likely `https://www.hud.gov/program_offices/housing/rmra/mhs`, the
-  pre-reorganisation HUD path) and one on `/financing`. 22+15+2+1+1+1 = 42,
-  exactly. `/faq` is the key: 1 broken out of 1 external link, which names
-  consumerfinance.gov outright. Every one of them lives in `src/lib/citations.ts`
-  (two are duplicated inline in `about` and `financing`), so it is one file to
-  edit — but do **not** swap a URL you cannot fetch, since replacing a working
-  link with a broken one is the same defect.
+  `/about` and one on `/financing`. 22+15+2+1+1+1 = 42. `/faq` was the key: 1
+  broken out of 1 external link, which names consumerfinance.gov outright.
+  **`WebSearch` is the way to check an outbound URL from here.** Every HTTP
+  client in the sandbox is refused — `curl` gets 403 CONNECT and `WebFetch`
+  cannot even resolve DNS — but the search tool runs server-side and returns a
+  live index of the host, which is enough to tell a retired path from a current
+  one. That is how each of the six was confirmed dead and each replacement
+  found: HUD retired its whole `/program_offices/` tree in the site rebuild
+  (`/hud-partners/manufactured-home` and `…-resources` now), CFPB and NACo have
+  no such landing page, APA moved the topic into its publications library, and
+  the Indiana association publishes at `imharvic.org`. The `in.gov/dhs` URL was
+  already the current full path and was left alone.
+  Two rules that survived the pass. **Do not swap a URL you cannot evidence** —
+  replacing a working link with a broken one is the same defect, which is why
+  `content.naic.org/consumer.htm` and `michigan.gov/lara/bureau-list/bcc` were
+  left as they are: the arithmetic never accused them, and a better-looking
+  replacement is not a reason to touch a link that works. And **a search
+  snippet's age is not a date** — it reports index age, not publication. It said
+  HUD's current page was "roughly 18 years" old. Never read `uploadDate` or
+  `foundingDay` off one.
+  `tests/citations.test.ts` fails if any of the six dead URLs returns to `src/`.
 - **Pages with only one internal link (9)** — a partial-crawl artifact. Semrush
   reached 49 of the sitemap's 216 URLs; the nine pages have 2–7 inbound internal
   links each when counted against the whole site.
@@ -1418,6 +1431,11 @@ there.
 
 **Still the owner's to do:** leaked-password protection (HaveIBeenPwned
 checking) is an Auth **dashboard toggle**, not SQL, so no migration can set it.
+Kyle set it on 2026-10-13 and **it did not take**: the advisor still returned
+`auth_leaked_password_protection` WARN when re-read on 2026-10-19. The advisor
+reflects a real change within the same session, so a persisting WARN means the
+switch is still off — almost always the **Save** button, which the toggle needs
+and a flip alone does not trigger.
 It is also **not reachable from an agent session**, and this was tested rather
 than assumed on 2026-10-12: there is no auth-config tool in the Supabase MCP
 set; the Management API (`PATCH /v1/projects/{ref}/config/auth`,
@@ -1762,6 +1780,16 @@ What changed so this is visible next time, and recoverable:
   rows that look like our own test submissions (`looksLikeTestLead`) unless
   `--include-tests`; a 202 is "already in DealerTide", not a failure, so running
   it twice is safe. `tests/lead-replay.test.ts` pins the payload.
+- **The key was replaced and works again.** Measured on production 2026-10-19:
+  `/api/health` → `dealerTide.key.verdict: "ok"`, `leadsReachCrm: true`. New
+  leads reach the CRM. **The 17 buyers stranded between 2026-10-09 and
+  2026-10-17 are still only in Supabase** — replaying them is one command, and
+  it cannot be run from an agent session: the sandbox cannot reach DealerTide
+  and cannot read Vercel env vars (`GET /v10/projects/…/env` answers 403, and
+  there is no `vercel` CLI in the container). Kyle runs
+  `vercel env run -- npm run dealertide-replay -- --since=2026-10-10T02:24:00Z`
+  to see the list, then the same line with `--apply`.
 - **Still the owner's to do:** set `RESEND_API_KEY` on Vercel so the existing
-  rejection alert actually sends. Until then, a dead key is only visible on
+  rejection alert actually sends — still unset on 2026-10-19 (`/api/health` →
+  `configured.resend: false`). Until then, a dead key is only visible on
   `/api/health` and in the runtime logs, which Vercel Pro keeps for one day.
