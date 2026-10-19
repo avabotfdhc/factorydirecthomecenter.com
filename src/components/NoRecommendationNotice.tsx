@@ -8,7 +8,7 @@ import {
 // information so the client can choose. No recommendations disclaimers are
 // important and should be present every place that matters."
 //
-// A page that names the lender sheet or the contractor referral list renders
+// A page that names the lender sheet or the contractor list renders
 // this; tests/disclaimers.test.ts fails the build when one does not. The
 // footer carries the one-line version sitewide, but a disclosure works where
 // the claim is, not three screens below it.

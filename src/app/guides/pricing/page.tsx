@@ -15,11 +15,11 @@ export const metadata = genMeta({
 const pricingFAQs = [
   {
     question: "Can I really use my own contractors?",
-    answer: "Absolutely — in fact, that's how it works here. You hire your own excavator, concrete crew, and electrician, and many of our customers save real money doing it. If you need a starting point, ask for our referral list of licensed and insured contractors past customers have used.",
+    answer: "Absolutely — in fact, that's how it works here. You hire your own excavator, concrete crew, and electrician, and many of our customers save real money doing it. If you need a starting point, ask for our list of licensed and insured contractors past customers have used.",
   },
   {
     question: "What if I don't know any contractors?",
-    answer: "No problem. Ask us for our referral list of licensed and insured contractors that past customers have used. You hire and pay them directly — and you'll still see every line item.",
+    answer: "No problem. Ask us for our list of licensed and insured contractors that past customers have used. You hire and pay them directly — and you'll still see every line item.",
   },
   {
     question: "Is the home price really factory-direct plus a fair margin?",
@@ -311,9 +311,9 @@ export default function PricingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option A: Use Our Referral List</H3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option A: Use Our Contractor List</H3>
               <p className="text-white/75 text-sm mb-6">
-                Start with our referral list of licensed and insured contractors past customers
+                Start with our list of licensed and insured contractors past customers
                 have used for setup and site work. You hire them directly.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/70">Best for: Busy families</span>
@@ -332,7 +332,7 @@ export default function PricingPage() {
               <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Option C: Mix & Match</H3>
               <p className="text-white/75 text-sm mb-6">
                 We arrange delivery — that’s our part. You pick your setup crew and site-work
-                contractors from our referral list, your own contacts, or both.
+                contractors from our contractor list, your own contacts, or both.
               </p>
               <span className="text-xs font-bold uppercase tracking-wider text-white/70">Best for: Custom needs</span>
             </div>
@@ -356,7 +356,7 @@ export default function PricingPage() {
               <p className="text-[var(--color-gray)]">
                 Absolutely — in fact, that’s how it works here. You hire your own excavator,
                 concrete crew, and electrician, and many of our customers save real money
-                doing it. If you need a starting point, ask for our referral list of licensed
+                doing it. If you need a starting point, ask for our list of licensed
                 and insured contractors past customers have used.
               </p>
             </div>
@@ -364,7 +364,7 @@ export default function PricingPage() {
             <div className="bg-white rounded-lg p-8">
               <H3 className="font-serif text-xl font-semibold mb-3">What if I don’t know any contractors?</H3>
               <p className="text-[var(--color-gray)]">
-                No problem. Ask us for our referral list of licensed and insured contractors
+                No problem. Ask us for our list of licensed and insured contractors
                 that past customers have used. You hire and pay them directly — and you’ll
                 still see every line item.
               </p>
@@ -417,7 +417,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

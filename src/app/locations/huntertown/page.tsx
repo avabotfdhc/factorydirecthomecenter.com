@@ -49,7 +49,7 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Huntertown, Indiana?",
       answer:
-        "Yes. Huntertown and northern Allen County are only about 18 miles from our Auburn showroom, making it one of our closest and lowest-cost delivery areas. We arrange delivery to private land and approved lots, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
+        "Yes. Huntertown and northern Allen County are only about 18 miles from our Auburn showroom, making it one of our closest and lowest-cost delivery areas. We arrange delivery to private land and approved lots, and you hire your own contractors for setup and installation — ask us for our list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I place a modular home on land near Huntertown?",

@@ -25,7 +25,7 @@ const data: CityLocationData = {
   lat: 41.2306,
   lng: -85.3197,
   tagline:
-    "Champion manufactured & modular homes delivered to Churubusco — factory-direct from our Auburn showroom just up the road, with local delivery and contractor referrals for setup.",
+    "Champion manufactured & modular homes delivered to Churubusco — factory-direct from our Auburn showroom just up the road, with local delivery and a list of setup contractors past customers have used.",
   intro: [
     "Churubusco — \"Turtle Town USA\" — sits right between Auburn and Fort Wayne, only about 22 miles from our showroom. Its small-town charm and quick access to Fort Wayne make it a great spot for a new home, and factory-direct pricing keeps that home affordable.",
     "We deliver Champion single wides, double wides, and modular homes throughout the Churubusco area and the surrounding Whitley and Allen County countryside. With both our showroom and the Champion factory nearby, this is one of our shortest, lowest-cost delivery zones.",
@@ -47,7 +47,7 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Churubusco, Indiana?",
       answer:
-        "Yes. Churubusco is only about 22 miles from our Auburn showroom — one of our closest delivery areas — so freight costs are low and delivery is fast. We arrange delivery to private land and approved lots, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
+        "Yes. Churubusco is only about 22 miles from our Auburn showroom — one of our closest delivery areas — so freight costs are low and delivery is fast. We arrange delivery to private land and approved lots, and you hire your own contractors for setup and installation — ask us for our list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I place a manufactured home on land near Churubusco?",

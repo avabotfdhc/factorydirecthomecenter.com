@@ -26,7 +26,7 @@ const data: CityLocationData = {
   lat: 41.07,
   lng: -85.0147,
   tagline:
-    "Champion manufactured & modular homes delivered to New Haven and eastern Allen County — factory-direct from our Auburn showroom with local delivery and contractor referrals for setup.",
+    "Champion manufactured & modular homes delivered to New Haven and eastern Allen County — factory-direct from our Auburn showroom with local delivery and a list of setup contractors past customers have used.",
   intro: [
     "New Haven sits just east of Fort Wayne in Allen County, and it's an easy drive from our Auburn showroom. For families who want to stay close to the Fort Wayne area but stretch their budget further, a factory-direct Champion home is a smart alternative to the rising cost of site-built houses.",
     "We deliver Champion single wides, double wides, and modular homes throughout New Haven and the surrounding communities of Woodburn, Monroeville, and greater Allen County. We order every home from Champion's Indiana plants (Topeka for Aspire and Redman, Decatur for Prime) and quote it line by line — the home, each option and delivery on separate lines.",
@@ -49,7 +49,7 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to New Haven, Indiana?",
       answer:
-        "Yes. New Haven and eastern Allen County are within easy reach of our Auburn showroom. We arrange delivery to private land or approved lots throughout the area, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
+        "Yes. New Haven and eastern Allen County are within easy reach of our Auburn showroom. We arrange delivery to private land or approved lots throughout the area, and you hire your own contractors for setup and installation — ask us for our list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I put a manufactured home on land near New Haven?",

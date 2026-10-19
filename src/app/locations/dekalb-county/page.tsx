@@ -168,7 +168,7 @@ export default function DeKalbCountyPage() {
               <H3 className="font-serif text-xl font-semibold mb-4">Local Dealer</H3>
               <p className="text-[var(--color-gray)]">
                 We’re right here in Auburn — no long-distance dealer to chase down. And our
-                referral list features local licensed and insured contractors, not out-of-town
+                contractor list features local licensed and insured contractors, not out-of-town
                 crews. Local support from start to finish.
               </p>
             </div>
@@ -205,7 +205,7 @@ export default function DeKalbCountyPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

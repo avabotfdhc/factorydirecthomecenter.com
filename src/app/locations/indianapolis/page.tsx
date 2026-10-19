@@ -108,7 +108,7 @@ const locationFAQs = [
   },
   {
     question: "Do you offer site work services in the Indianapolis area?",
-    answer: "No — and that's by design. You hire your own licensed contractors for land clearing, foundation installation, utility connections, and driveway preparation, which is how most buyers save money. We'll share a referral list of licensed and insured contractors past customers have used, and our line-item pricing on the home and delivery gives Indianapolis buyers full transparency on all costs."
+    answer: "No — and that's by design. You hire your own licensed contractors for land clearing, foundation installation, utility connections, and driveway preparation, which is how most buyers save money. We'll share a list of licensed and insured contractors past customers have used, and our line-item pricing on the home and delivery gives Indianapolis buyers full transparency on all costs."
   }
 ];
 
@@ -514,7 +514,7 @@ export default function IndianapolisPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

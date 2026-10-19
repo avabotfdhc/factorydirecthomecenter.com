@@ -38,7 +38,7 @@ const steps = [
     n: "2",
     title: "Site Preparation (in parallel)",
     body:
-      "While your home is being built, your site is prepared: clearing and grading, the foundation or pad, and utility connections (water, sewer or septic, and electric). You hire your own licensed contractors for this work — most buyers save money that way, and we'll share a referral list of licensed and insured contractors past customers have used.",
+      "While your home is being built, your site is prepared: clearing and grading, the foundation or pad, and utility connections (water, sewer or septic, and electric). You hire your own licensed contractors for this work — most buyers save money that way, and we'll share a list of licensed and insured contractors past customers have used.",
   },
   {
     n: "3",
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: "What site work do I need before delivery?",
     answer:
-      "You'll need a prepared site: cleared and graded land, a foundation or pad appropriate for your home, and utility connections for water, sewer or septic, and electric. You hire your own licensed contractors for this work — most buyers save money that way, and we'll share a referral list of licensed and insured contractors past customers have used.",
+      "You'll need a prepared site: cleared and graded land, a foundation or pad appropriate for your home, and utility connections for water, sewer or septic, and electric. You hire your own licensed contractors for this work — most buyers save money that way, and we'll share a list of licensed and insured contractors past customers have used.",
   },
   {
     question: "What happens on delivery day?",
@@ -90,7 +90,7 @@ const faqs = [
   {
     question: "Do you handle permits and installation, or do I?",
     answer:
-      "You do — through your own licensed contractors, and that's by design: it saves most buyers money and keeps you in control of costs. We sell the home factory-direct and arrange delivery to your site. For permits, site work, and installation, ask us for our referral list of licensed and insured contractors past customers have used.",
+      "You do — through your own licensed contractors, and that's by design: it saves most buyers money and keeps you in control of costs. We sell the home factory-direct and arrange delivery to your site. For permits, site work, and installation, ask us for our list of licensed and insured contractors past customers have used.",
   },
 ];
 
@@ -192,7 +192,7 @@ export default function DeliveryAndSetupPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

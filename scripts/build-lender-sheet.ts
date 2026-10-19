@@ -120,7 +120,7 @@ ${rows}
 
   <p class="foot">${esc(BUSINESS.name)} is not a lender and does not arrange financing. Rates, terms and
   approval are determined solely by the lender you choose. This list is provided for your convenience and
-  is not a referral, endorsement or recommendation of any lender.</p>
+  is not an endorsement or recommendation of any lender.</p>
 </body>
 </html>`;
 }

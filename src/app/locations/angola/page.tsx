@@ -26,7 +26,7 @@ const data: CityLocationData = {
   lat: 41.635,
   lng: -84.9994,
   tagline:
-    "Champion manufactured & modular homes delivered to Angola and Steuben County — from our Auburn showroom just up I-69, with factory-direct pricing and contractor referrals for setup.",
+    "Champion manufactured & modular homes delivered to Angola and Steuben County — from our Auburn showroom just up I-69, with factory-direct pricing and a list of setup contractors past customers have used.",
   intro: [
     "Angola is the heart of Indiana's northeast lake country, and it's an easy 25-mile run up I-69 from our Auburn showroom. That proximity keeps delivery times short and freight costs low for Steuben County buyers — whether your home is going on a lake lot near Lake James and Pokagon State Park, in town, or out on rural acreage.",
     "We carry Champion single wides, double wides, and IRC-code modular homes to fit a range of budgets and lots. Because Champion's Topeka factory is only about 40 miles away, Angola sits in one of the tightest delivery zones we serve.",
@@ -50,7 +50,7 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Angola, Indiana?",
       answer:
-        "Yes. Angola and Steuben County are about 25 miles from our Auburn showroom, straight up I-69, so it's one of our closest delivery areas. We arrange delivery to lake lots, in-town lots, or rural land, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
+        "Yes. Angola and Steuben County are about 25 miles from our Auburn showroom, straight up I-69, so it's one of our closest delivery areas. We arrange delivery to lake lots, in-town lots, or rural land, and you hire your own contractors for setup and installation — ask us for our list of licensed and insured crews past customers have used.",
     },
     {
       question: "Can I put a manufactured home on a lake lot near Angola?",

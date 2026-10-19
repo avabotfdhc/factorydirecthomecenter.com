@@ -694,6 +694,8 @@ any of the fifteen pages that offered it — same exposure, opposite treatment.
 An unqualified "our referral list of licensed and insured contractors" reads as
 a vouch for crews we do not hire, supervise, schedule or warrant.
 
+**No "referral" in the copy (Kyle, 2026-10-19):** *"We do not make referrals but we can provide a list of contractors to help you but in no way are we referring or making recommendations on who you should use."* Every "referral list" became "a list of licensed and insured contractors past customers have used" (or "contractor list"), "contractor referrals for setup" became "a list of setup contractors past customers have used", the footer label reads "Lender and contractor lists", and Ava is told never to use the word. `tests/disclaimers.test.ts` fails on "referral(s)" in any non-comment line under `src/` (code names such as `referrals.ts` and analytics' "referral" medium are exempt). The buyer's signed lender authorization still says "not referred or suggested" — that is the document's own negation and stays verbatim.
+
 `src/lib/referrals.ts` is the single source for all three wordings —
 `LENDER_NO_RECOMMENDATION`, `CONTRACTOR_NO_RECOMMENDATION` and the one-line
 `REFERRAL_NO_RECOMMENDATION`. Nothing retypes them.

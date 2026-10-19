@@ -127,7 +127,7 @@ export default function SiteWorkPage() {
                 <p>
                   This is where you have the most control over your total project cost. You hire
                   your own licensed contractors — and can even do some work yourself — which is
-                  how most buyers keep the total project cost down. Ask us for our referral list
+                  how most buyers keep the total project cost down. Ask us for our list
                   of licensed and insured contractors past customers have used.
                 </p>
               </div>
@@ -270,13 +270,13 @@ export default function SiteWorkPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 rounded-lg p-8 border border-white/10">
-              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Use Our Referral List</H3>
+              <H3 className="font-serif text-xl font-semibold mb-4 text-[var(--color-lime-on-dark)]">Use Our Contractor List</H3>
               <p className="text-white/75 text-sm mb-6">
-                Ask for our referral list of licensed and insured contractors that past
+                Ask for our list of licensed and insured contractors that past
                 customers have used. You hire and pay them directly.
               </p>
               <ul className="space-y-2 text-sm text-white/60">
-                <li>✓ Licensed &amp; insured referrals</li>
+                <li>✓ Licensed &amp; insured contractors</li>
                 <li>✓ Used by past customers</li>
                 <li>✓ You negotiate directly</li>
                 <li>✓ A head start on your search</li>
@@ -321,7 +321,7 @@ export default function SiteWorkPage() {
             Need Help With <span className="italic text-[var(--color-teal)]">Site Work?</span>
           </H2>
           <p className="text-lg text-[var(--color-gray)] leading-relaxed mb-10 max-w-2xl mx-auto">
-            Ask us for our referral list of licensed and insured contractors past customers
+            Ask us for our list of licensed and insured contractors past customers
             have used — a solid head start on gathering bids for your site work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -329,7 +329,7 @@ export default function SiteWorkPage() {
               href="/contact-us"
               className="btn-primary inline-flex items-center justify-center bg-[var(--color-teal)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-teal-dark)] transition-colors duration-300"
             >
-              Request Referral List
+              Request Contractor List
             </Link>
             <Link
               href="/guides"
@@ -341,7 +341,7 @@ export default function SiteWorkPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

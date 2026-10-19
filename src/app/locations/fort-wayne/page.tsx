@@ -113,7 +113,7 @@ const locationFAQs = [
   },
   {
     question: "Do you offer site work and foundation services in Fort Wayne?",
-    answer: "No — and that's by design. You hire your own licensed contractors for land clearing, foundation installation, utility connections, and driveway preparation, which is how most buyers save money. We'll share a referral list of licensed and insured local contractors past customers have used, and our line-item pricing on the home and delivery means you know exactly what you're paying for."
+    answer: "No — and that's by design. You hire your own licensed contractors for land clearing, foundation installation, utility connections, and driveway preparation, which is how most buyers save money. We'll share a list of licensed and insured local contractors past customers have used, and our line-item pricing on the home and delivery means you know exactly what you're paying for."
   },
   {
     question: "How do I get started buying a manufactured home in Fort Wayne?",
@@ -592,7 +592,7 @@ export default function FortWaynePage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

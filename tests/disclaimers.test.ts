@@ -366,7 +366,7 @@ test("no Service schema names us as the provider of financing", () => {
 test("every page that offers the lender or contractor list says it is not a recommendation", () => {
   // Naming a list is the trigger. A page that merely says the buyer hires
   // their own contractors is stating the model, not offering a referral.
-  const OFFERS_A_LIST = /referral list|referrals to licensed|lender list|\bLENDERS\b/;
+  const OFFERS_A_LIST = /[Cc]ontractor [Ll]ist|list of licensed and insured|list of setup contractors|lender list|\bLENDERS\b/;
   const RENDERS_NOTICE = /<NoRecommendationNotice/;
 
   const sources: [string, string][] = [];
@@ -377,6 +377,8 @@ test("every page that offers the lender or contractor list says it is not a reco
       if (!entry.name.endsWith(".tsx")) continue;
       const rel = relative(process.cwd(), full).split(sep).join("/");
       if (rel === "src/components/NoRecommendationNotice.tsx") continue;
+      // The sitewide disclaimer itself names both lists; it is the notice, not an offer.
+      if (rel === "src/components/ComplianceDisclaimer.tsx") continue;
       sources.push([rel, readFileSync(full, "utf8")]);
     }
   };
@@ -399,7 +401,37 @@ test("every page that offers the lender or contractor list says it is not a reco
       !carriers.some((c) => new RegExp(`<${c}[\\s/>]`).test(src)))
     .map(([rel]) => rel);
 
-  assert.deepEqual(missing, [], "these pages offer a referral or lender list with no no-recommendation notice");
+  assert.deepEqual(missing, [], "these pages offer the contractor or lender list with no no-recommendation notice");
+});
+
+// Kyle, 2026-10-19: "We do not make referrals but we can provide a list of
+// contractors to help you but in no way are we referring or making
+// recommendations on who you should use." So the word is gone from what a
+// visitor or Ava can say: the list is "a list of licensed and insured
+// contractors past customers have used", never a "referral list". Code names
+// (referrals.ts, REFERRAL_NO_RECOMMENDATION) and comments are not copy and are
+// left alone; attribution's "referral" medium is analytics jargon for a
+// referring website and never reaches a page.
+test("the site never calls the contractor or lender list a referral", () => {
+  const bad: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!/\.(ts|tsx)$/.test(entry.name)) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      if (/src\/lib\/(attribution|lead-replay)\.ts$/.test(rel)) continue;
+      readFileSync(full, "utf8").split("\n").forEach((line, i) => {
+        const t = line.trim();
+        if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*") || t.startsWith("{/*")) return;
+        // A quoted "referral" is Ava being told never to say it.
+        const code = line.replace(/@\/lib\/referrals/g, "").replace(/"referrals?"/g, "");
+        if (/\breferrals?\b|\bReferrals?\b(?=\s)/.test(code)) bad.push(`${rel}:${i + 1}`);
+      });
+    }
+  };
+  walk(resolve(process.cwd(), "src"));
+  assert.deepEqual(bad, [], "use \"a list of licensed and insured contractors\" — we do not make referrals");
 });
 
 // The sitewide half of the same promise. Footer -> ComplianceDisclaimers is

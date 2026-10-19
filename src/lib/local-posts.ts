@@ -55,7 +55,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>This is where the two models really differ.</p>
 <ul>
   <li><strong>The lender.</strong> When the same company owns the store and an affiliated lender, the store&rsquo;s own financing is usually what&rsquo;s offered first. We don&rsquo;t offer financing at all: we hand you the list of lenders our customers have used, recommend none of them, and you apply to as many as you like. Wherever you buy, compare rates from more than one lender.</li>
-  <li><strong>Site work and setup.</strong> At our dealership you hire and pay your own licensed contractors for site work, the foundation and setup, and we give you a referral list to start from. Other retailers may package some of that into their price. Neither is wrong, but you need to know which you&rsquo;re looking at, or two quotes won&rsquo;t compare.</li>
+  <li><strong>Site work and setup.</strong> At our dealership you hire and pay your own licensed contractors for site work, the foundation and setup, and we give you a contractor list to start from. Other retailers may package some of that into their price. Neither is wrong, but you need to know which you&rsquo;re looking at, or two quotes won&rsquo;t compare.</li>
   <li><strong>The quote itself.</strong> We list the home, each option and delivery as separate lines. Ask every dealer for the same, in writing.</li>
 </ul>
 
@@ -151,7 +151,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h2>How Factory Direct Homes Center fits in</h2>
 <p>We're an authorized Champion Homes dealer in Auburn, Indiana, about 30 miles from Champion's Topeka plant. That means short freight distances, direct access to the full Aspire, Prime, and Redman lineups, and factory-direct pricing quoted line by line, so you see exactly what you're paying for with no hidden markups.</p>
 <p>On financing, we do not lend, broker or pull credit — buyers apply directly to the lender of their choice, across chattel (home-only) loans, land-home packages and conventional mortgages. As the Act's expanded FHA options take shape, they will be available through the same lenders on the list we hand you. Our <a href="/financing">financing page</a> walks through how each loan type works.</p>
-<p>And as always, site work — foundation or pad, utilities, and driveway — is handled by <strong>your own licensed contractors</strong>, which is where many buyers save real money versus dealer-bundled site work. We're glad to share a referral list of licensed and insured contractors past customers have used.</p>
+<p>And as always, site work — foundation or pad, utilities, and driveway — is handled by <strong>your own licensed contractors</strong>, which is where many buyers save real money versus dealer-bundled site work. We're glad to share a list of licensed and insured contractors past customers have used.</p>
 
 <h2>The bottom line</h2>
 <p>The 21st Century ROAD to Housing Act is a clear signal from Washington that factory-built housing is a serious answer to the affordability crisis — not a fallback. For buyers across northeast Indiana, northwest Ohio, and southern Michigan, it means more financing options and, in time, more home styles to choose from. If you've been wondering whether a new manufactured or modular home is the right move, this is a good moment to start the conversation.</p>
@@ -192,7 +192,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 
 <h2>What it costs</h2>
 <p>What you'll pay depends on the size, series, and options you choose — single wides are the most affordable path and double wides the mid-range. Compare factory-direct pricing with what new site-built construction runs in Allen County and the math explains why factory-built housing is the fastest-growing path to homeownership in the region. For a deeper cost breakdown, read our <a href="/blog/manufactured-home-cost-indiana">Indiana cost guide</a> — and remember our quotes are line-item: the home, the options, the delivery, each priced separately so you can compare honestly against any other dealer.</p>
-<p>Site work — foundation or pad, utilities, driveway — is separate, and in our model <strong>you hire your own licensed contractors</strong> for it. Most buyers save money that way versus dealer-bundled site work, and we can share a referral list of licensed and insured contractors past customers around Fort Wayne have used.</p>
+<p>Site work — foundation or pad, utilities, driveway — is separate, and in our model <strong>you hire your own licensed contractors</strong> for it. Most buyers save money that way versus dealer-bundled site work, and we can share a list of licensed and insured contractors past customers around Fort Wayne have used.</p>
 
 <h2>How delivery works from here</h2>
 <p>Once your home is built at Champion's Indiana plant (Topeka for Aspire and Redman, Decatur for Prime), it's transported to your site — a short, low-cost trip anywhere in the Fort Wayne area, including New Haven, Huntertown, Churubusco, Columbia City, and the surrounding counties. From order to move-in typically runs 8&ndash;12 weeks: 6&ndash;8 weeks of factory build time, plus site preparation and permitting that your contractor can run in parallel.</p>
@@ -244,7 +244,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>Any honest cost guide has to mention these, because they surprise buyers everywhere:</p>
 <ul>
   <li><strong>Land</strong> — owned, purchased, or a leased community lot.</li>
-  <li><strong>Site work</strong> — foundation or pad, utility connections, driveway, and grading. In our model, <strong>you hire your own licensed contractors</strong> for site work and setup. Most buyers save money this way compared to dealer-bundled site work, and we can share a referral list of licensed and insured contractors past customers have used.</li>
+  <li><strong>Site work</strong> — foundation or pad, utility connections, driveway, and grading. In our model, <strong>you hire your own licensed contractors</strong> for site work and setup. Most buyers save money this way compared to dealer-bundled site work, and we can share a list of licensed and insured contractors past customers have used.</li>
   <li><strong>Permits</strong> — pulled by you or your contractor; county requirements vary across Indiana.</li>
   <li><strong>Taxes and title/registration fees.</strong></li>
 </ul>
@@ -329,7 +329,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h3>Can I see homes in person?</h3>
 <p>Yes — model homes are open at our Auburn showroom, Mon&ndash;Fri 9&ndash;5 and Saturday 10&ndash;4, a few minutes' drive from Waterloo. See <a href="/locations/waterloo">our Waterloo page</a> for more.</p>
 <h3>Who does the site work?</h3>
-<p>You hire your own licensed contractors for foundation, utilities, and setup — most buyers save money that way, and we can share a referral list of licensed and insured contractors past customers have used.</p>
+<p>You hire your own licensed contractors for foundation, utilities, and setup — most buyers save money that way, and we can share a list of licensed and insured contractors past customers have used.</p>
 `,
   },
   {
@@ -497,7 +497,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <h3>What Whitley County areas do you serve?</h3>
 <p>All of them — Columbia City, Churubusco, South Whitley, Larwill, and the surrounding townships. See <a href="/locations/columbia-city">our Columbia City page</a> and <a href="/locations/whitley-county">Whitley County page</a>.</p>
 <h3>Who handles site work?</h3>
-<p>Your own licensed contractors handle foundation, utilities, and setup — most buyers save money that way, and we can share a referral list of licensed and insured contractors past customers have used.</p>
+<p>Your own licensed contractors handle foundation, utilities, and setup — most buyers save money that way, and we can share a list of licensed and insured contractors past customers have used.</p>
 `,
   },
   {
@@ -591,7 +591,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>With land you are not squeezed by setbacks, so the multi-section lineup opens up &mdash; <a href="/series/redman">Redman</a> and multi-section <a href="/series/aspire">Aspire</a> homes run to five bedrooms with kitchen islands and full primary suites. All HUD-code manufactured homes, built indoors and delivered finished. Browse the <a href="/floor-plans">floor plans</a> and note two or three before you visit.</p>
 
 <h2>You hire your own crews</h2>
-<p>We sell the home and arrange delivery. Site work, foundation, well, septic, utility hookups and setup are yours to contract. We keep a referral list of licensed and insured crews previous customers have used. Delivery, set-up and site-work ranges are published in the <a href="/guides/pricing">pricing guide</a> so you can budget before you commit.</p>
+<p>We sell the home and arrange delivery. Site work, foundation, well, septic, utility hookups and setup are yours to contract. We keep a list of licensed and insured crews previous customers have used. Delivery, set-up and site-work ranges are published in the <a href="/guides/pricing">pricing guide</a> so you can budget before you commit.</p>
 
 <h2>Common questions</h2>
 <h3>Can I put a manufactured home on my own land here?</h3>
@@ -759,7 +759,7 @@ export const allLocalBlogPosts: LocalBlogPost[] = [
 <p>These go on the order sheet as <a href="/options">factory options</a>, get built into the home on the line, and show up as their own lines on your quote. Spending here is the difference between a home that is comfortable in February and one that is merely legal in February.</p>
 
 <h2>Skirting, water lines and the freeze question</h2>
-<p>The other half of winter performance is under the home, and that part belongs to your site contractor, not to us. Properly insulated skirting, protected and heat-taped water lines where required, and drainage that moves water away from the perimeter rather than into it. It is unglamorous work that decides whether you spend a January weekend under the house with a heat gun. Our <a href="/guides/site-work">site work guide</a> covers what to specify; we keep a referral list of licensed and insured crews previous buyers have used.</p>
+<p>The other half of winter performance is under the home, and that part belongs to your site contractor, not to us. Properly insulated skirting, protected and heat-taped water lines where required, and drainage that moves water away from the perimeter rather than into it. It is unglamorous work that decides whether you spend a January weekend under the house with a heat gun. Our <a href="/guides/site-work">site work guide</a> covers what to specify; we keep a list of licensed and insured crews previous buyers have used.</p>
 
 <h2>Distance and delivery</h2>
 <p>Fremont is a straight run up I-69 from our Auburn showroom, and Champion&rsquo;s Topeka plant is about 30 miles west of us &mdash; an easy northeast Indiana freight route, quoted as its own line at the rates published in our <a href="/guides/pricing">pricing guide</a>. Come walk homes on a weekday or Saturday morning; browse <a href="/floor-plans">floor plans</a> first so the trip is productive.</p>
