@@ -1375,6 +1375,12 @@ turns off PostgREST's schema-reload watcher on a live project. That is the
 owner's call and a Supabase support question, **not something an agent should
 do on its own**. Worth raising with support regardless: a project where no
 object can be dropped cannot have a column, a stale table or a view removed.
+**The ticket is written and waiting for Kyle to submit** —
+`docs/supabase-drop-ticket.md` holds the paste-ready body with every
+measurement; an agent session cannot file it, because `supabase.com` and
+`api.supabase.com` are both refused by the sandbox network policy and the
+Supabase MCP has no support-ticket tool. Re-verify before sending (the probe is
+in that file): still reproducing 2026-10-19.
 Also noticed while looking, and **not** a cause — the queue is empty — but odd
 enough to write down: a PostgREST backend has held `LISTEN "pgrst"` idle for
 **46 days**.
