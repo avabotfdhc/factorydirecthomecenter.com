@@ -139,7 +139,7 @@ const citations = [
   },
   {
     source: "HUD Manufactured Home Standards",
-    url: "https://www.hud.gov/program_offices/housing/rmra/mhs",
+    url: "https://www.hud.gov/hud-partners/manufactured-home",
     description: "Federal construction and safety standards for manufactured homes"
   }
 ];

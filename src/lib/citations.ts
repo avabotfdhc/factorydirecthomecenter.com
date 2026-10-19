@@ -12,13 +12,13 @@ const citationsBank: Citation[] = [
   // HUD & Federal Standards
   {
     source: "U.S. Department of Housing and Urban Development (HUD)",
-    url: "https://www.hud.gov/program_offices/housing/mhs/mhshome",
+    url: "https://www.hud.gov/hud-partners/manufactured-home",
     description: "Federal manufactured housing construction and safety standards",
     topics: ["manufactured-homes", "hud-standards", "modular"],
   },
   {
-    source: "HUD Manufactured Housing Program",
-    url: "https://www.hud.gov/hud-partners/manufactured-home",
+    source: "HUD Manufactured Housing Homeowner Resources",
+    url: "https://www.hud.gov/hud-partners/manufactured-home-resources",
     description: "Overview of manufactured housing regulations and consumer protections",
     topics: ["manufactured-homes", "buying-process", "first-time-buyers"],
   },
@@ -26,8 +26,8 @@ const citationsBank: Citation[] = [
   // Financing & Loans
   {
     source: "Consumer Financial Protection Bureau (CFPB)",
-    url: "https://www.consumerfinance.gov/housing/manufactured-housing/",
-    description: "Consumer guide to manufactured home financing and buyer protections",
+    url: "https://files.consumerfinance.gov/f/documents/cfpb_manufactured-housing-finance-new-insights-hmda_report_2021-05.pdf",
+    description: "CFPB research on manufactured home financing, chattel loans and buyer protections",
     topics: ["financing", "chattel-loans", "first-time-buyers", "buying-process"],
   },
 
@@ -55,8 +55,8 @@ const citationsBank: Citation[] = [
 
   // Indiana Specific
   {
-    source: "Indiana Manufactured Housing Association (IMHA)",
-    url: "https://www.indianamha.org/",
+    source: "Indiana Manufactured Housing Association (IMHA-RVIC)",
+    url: "https://www.imharvic.org/",
     description: "Indiana state association for manufactured housing resources and regulations",
     topics: ["indiana", "zoning", "permits", "manufactured-homes"],
   },
@@ -70,8 +70,8 @@ const citationsBank: Citation[] = [
   // Zoning & Land Use
   {
     source: "American Planning Association",
-    url: "https://www.planning.org/knowledgebase/manufacturedhousing/",
-    description: "Zoning best practices and model ordinances for manufactured housing",
+    url: "https://www.planning.org/publications/document/9287254/",
+    description: "Equitable zoning for manufactured housing — code practices and model approaches",
     topics: ["zoning", "permits", "land-preparation"],
   },
 
@@ -100,8 +100,8 @@ const citationsBank: Citation[] = [
   // Rural & County
   {
     source: "National Association of Counties (NACo)",
-    url: "https://www.naco.org/resources/manufactured-housing",
-    description: "County-level manufactured housing policy and zoning resources",
+    url: "https://www.naco.org/resource/housing-americas-residents-regulations-codes-and-fees",
+    description: "County perspectives on the regulations, codes and fees that shape housing supply",
     topics: ["rural", "noble-county", "dekalb-county", "zoning"],
   },
 
