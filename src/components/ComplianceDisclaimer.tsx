@@ -45,7 +45,7 @@ export function HudDisclaimer({ className = "" }: { className?: string }) {
 export function ReferralDisclaimer({ className = "" }: { className?: string }) {
   return (
     <p className={`text-xs leading-relaxed text-[var(--color-charcoal)]/70 ${className}`}>
-      <strong>Lender and contractor referrals.</strong> {REFERRAL_NO_RECOMMENDATION}
+      <strong>Lender and contractor lists.</strong> {REFERRAL_NO_RECOMMENDATION}
     </p>
   );
 }

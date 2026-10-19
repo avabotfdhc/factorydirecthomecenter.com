@@ -334,7 +334,7 @@ export default function ZoningPage() {
                 </li>
               </ul>
               <p className="text-white/70 mt-8">
-                That is why your quote is not padded with any of it. Ask us for the referral list
+                That is why your quote is not padded with any of it. Ask us for the contractor list
                 of licensed and insured contractors past customers have used, and we will point
                 you to the right office for your county.
               </p>
@@ -351,7 +351,7 @@ export default function ZoningPage() {
           </H2>
           <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
             Tell us the county and we will point you to the office that answers for your parcel,
-            and send the referral list of licensed and insured contractors past customers have used
+            and send the list of licensed and insured contractors past customers have used
             for site work, foundations and setup.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -371,7 +371,7 @@ export default function ZoningPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

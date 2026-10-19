@@ -40,7 +40,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "What is included in the price of a manufactured home?",
-      answer: "Our line-item pricing shows exactly what you're paying for: the home itself and delivery from the factory. Setup, installation, and site work are separate — you hire your own contractors for those, and unlike dealers who bundle everything, that's how most of our buyers save thousands. Ask us for our referral list of licensed and insured contractors.",
+      answer: "Our line-item pricing shows exactly what you're paying for: the home itself and delivery from the factory. Setup, installation, and site work are separate — you hire your own contractors for those, and unlike dealers who bundle everything, that's how most of our buyers save thousands. Ask us for our list of licensed and insured contractors.",
     },
   ],
 
@@ -70,7 +70,7 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
     },
     {
       question: "Do I need to prepare my land before the home arrives?",
-      answer: "Yes, site preparation includes clearing, grading, foundation, and utility connections. This happens while your home is being built (6-8 weeks). You hire your own contractors for this work — ask us for our referral list of licensed and insured crews past customers have used. Proper site prep is essential for a smooth installation.",
+      answer: "Yes, site preparation includes clearing, grading, foundation, and utility connections. This happens while your home is being built (6-8 weeks). You hire your own contractors for this work — ask us for our list of licensed and insured crews past customers have used. Proper site prep is essential for a smooth installation.",
     },
     {
       question: "What happens on delivery day?",

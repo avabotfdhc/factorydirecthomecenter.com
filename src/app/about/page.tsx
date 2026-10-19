@@ -56,7 +56,7 @@ const aeoContent = [
     directAnswer: "We offer true factory-direct pricing with line-item transparency, meaning you see exactly what you're paying for.",
     supportingDetails: [
       "Unlike dealers who bundle costs, we quote the home and delivery separately, so you see exactly what each costs.",
-      "You hire your own licensed contractors for site work and setup — most buyers save thousands this way, and we'll share a referral list of licensed and insured contractors past customers have used."
+      "You hire your own licensed contractors for site work and setup — most buyers save thousands this way, and we'll share a list of licensed and insured contractors past customers have used."
     ],
     wordCount: 46
   },
@@ -93,7 +93,7 @@ const aeoContent = [
 const aboutFAQs = [
   {
     question: "How long has Factory Direct Homes Center been in business?",
-    answer: "Factory Direct Homes Center was founded with a vision to provide quality homes at fair prices through factory-direct partnerships. As a family-owned, authorized Champion dealer, we serve buyers across Indiana, Ohio, and Michigan, building our reputation through referrals and repeat customers who appreciate our transparent, line-item approach."
+    answer: "Factory Direct Homes Center was founded with a vision to provide quality homes at fair prices through factory-direct partnerships. As a family-owned, authorized Champion dealer, we serve buyers across Indiana, Ohio, and Michigan, building our reputation through word of mouth and repeat customers who appreciate our transparent, line-item approach."
   },
   {
     question: "Is Factory Direct Homes Center a local or national company?",
@@ -117,7 +117,7 @@ const aboutFAQs = [
   },
   {
     question: "Does Factory Direct Homes Center handle delivery and installation?",
-    answer: "We arrange delivery of your home from the factory to your site. Setup, site work, foundations, and utility connections are handled by your own licensed contractors — most buyers save money this way, and it keeps you in control of costs. On request, we'll share a referral list of licensed and insured contractors our past customers have used."
+    answer: "We arrange delivery of your home from the factory to your site. Setup, site work, foundations, and utility connections are handled by your own licensed contractors — most buyers save money this way, and it keeps you in control of costs. On request, we'll share a list of licensed and insured contractors our past customers have used."
   },
   {
     question: "What kind of warranty comes with homes from Factory Direct?",
@@ -354,7 +354,7 @@ export default function AboutPage() {
                   {[
                     { label: "The Vision", text: "Founded with a simple idea: everyone deserves a quality home at a fair price. Partnered with Champion Home Builders to bring factory-direct pricing to the region." },
                     { label: "The Partnership", text: "Our homes come from Champion's Indiana plants: Aspire, Redman and Dutch series homes from Topeka, just 30 miles away, and Prime from Decatur." },
-                    { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through referrals and repeat customers." },
+                    { label: "The Community", text: "Families across Indiana, Ohio, and Michigan now call a Factory Direct home their own. Growth through word of mouth and repeat customers." },
                   ].map((item) => (
                     <div key={item.label} className="relative">
                       <div className="absolute -left-[41px] top-1 w-5 h-5 bg-[var(--color-teal)] border-4 border-[var(--color-cream)] rounded-full" />
@@ -398,7 +398,7 @@ export default function AboutPage() {
               },
               {
                 title: "With You Every Step",
-                description: "Buying a home is one of the biggest decisions you'll make. We walk beside you from first visit through move-in day: selection, customization, financing guidance, delivery, and contractor referrals for setup — and we're still here after you move in.",
+                description: "Buying a home is one of the biggest decisions you'll make. We walk beside you from first visit through move-in day: selection, customization, financing guidance, delivery, and a list of setup contractors past customers have used — and we're still here after you move in.",
                 icon: "🤝"
               },
               {
@@ -588,7 +588,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

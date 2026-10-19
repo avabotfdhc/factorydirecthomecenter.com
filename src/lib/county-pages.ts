@@ -73,7 +73,7 @@ export const countyPages: CountyPage[] = [
     points: [
       "Local delivery: the lowest freight and set-up cost of any county we serve",
       "We know the county's permit office, inspectors and site contractors by name",
-      "Rural lots with wells and septic are the norm, and our referral list covers both",
+      "Rural lots with wells and septic are the norm, and our contractor list covers both",
       "Same factory-direct pricing whether the home goes on a farm or a town lot",
     ],
     milesFromTopeka: "about 30 miles",

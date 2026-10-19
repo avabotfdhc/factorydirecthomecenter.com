@@ -134,7 +134,7 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
                   As a family-owned business, we believe in partnership and treat every
                   buyer like a neighbor. Every contract shows line-item pricing
                   for the home and delivery, and you hire your own contractors for setup and
-                  site work — most buyers save thousands that way. Ask us for our referral list
+                  site work — most buyers save thousands that way. Ask us for our list
                   of licensed and insured contractors past customers have used.
                 </p>
               </div>
@@ -291,7 +291,7 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

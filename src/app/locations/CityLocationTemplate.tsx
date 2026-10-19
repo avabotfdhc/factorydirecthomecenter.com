@@ -220,7 +220,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
           <H2 className="font-serif text-3xl font-light mb-4">Get a Factory-Direct Quote for {data.city}</H2>
           <p className="text-white/60 mb-8 max-w-2xl mx-auto">
             We deliver Champion manufactured and modular homes throughout {data.county} from our Auburn
-            showroom — with transparent, line-item pricing and a referral list of licensed
+            showroom — with transparent, line-item pricing and a list of licensed
             and insured local contractors for setup.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
@@ -246,7 +246,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

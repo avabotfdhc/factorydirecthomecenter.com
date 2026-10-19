@@ -273,7 +273,7 @@ export default function AuburnLocationPage() {
           <p className="text-white/60 mb-8 max-w-2xl mx-auto">
             1211 IN-8, Auburn, IN 46706. Walk through model homes and get a factory-direct
             quote from a local team that walks you through everything from floor plan to move-in —
-            including referrals to licensed and insured contractors for setup.
+            including a list of licensed and insured setup contractors past customers have used.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -292,7 +292,7 @@ export default function AuburnLocationPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

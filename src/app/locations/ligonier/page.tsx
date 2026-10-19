@@ -48,7 +48,7 @@ const data: CityLocationData = {
     {
       question: "Do you deliver manufactured homes to Ligonier, Indiana?",
       answer:
-        "Yes. Ligonier and western Noble County are about 32 miles from our Auburn showroom. We arrange delivery to rural land, farms, or in-town lots throughout the area, and you hire your own contractors for setup and installation — ask us for our referral list of licensed and insured crews past customers have used.",
+        "Yes. Ligonier and western Noble County are about 32 miles from our Auburn showroom. We arrange delivery to rural land, farms, or in-town lots throughout the area, and you hire your own contractors for setup and installation — ask us for our list of licensed and insured crews past customers have used.",
     },
     {
       question: "Is it easy to place a home on rural land near Ligonier?",

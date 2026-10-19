@@ -122,7 +122,7 @@ export default function NobleCountyPage() {
             <p className="text-[var(--color-gray)]">
               We specialize in delivering to rural Noble County properties. Whether you have
               1 acre or 40, we arrange delivery of your home, and your own contractors handle
-              the foundation and setup — ask us for our referral list of licensed and insured
+              the foundation and setup — ask us for our list of licensed and insured
               crews past customers have used. Agricultural zoning typically allows manufactured
               homes with minimal restrictions.
             </p>
@@ -224,7 +224,7 @@ export default function NobleCountyPage() {
         </div>
       </section>
 
-      {/* The referral list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <NoRecommendationNotice subject="contractors" />

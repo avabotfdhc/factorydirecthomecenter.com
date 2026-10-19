@@ -6,7 +6,7 @@
 // that matters."
 //
 // Two lists leave this dealership: the lender sheet (src/lib/lenders.ts) and
-// the contractor referral list. Both are information, and neither is a
+// the contractor list. Both are information, and neither is a
 // recommendation — that distinction is the whole reason the buyer's own
 // authorization can say "this selection was not referred or suggested", and
 // the reason we carry no liability for a crew we did not hire and no referral
@@ -24,7 +24,7 @@ export const LENDER_NO_RECOMMENDATION =
 
 /** Contractors. The same rule, for the list that goes out with every land purchase. */
 export const CONTRACTOR_NO_RECOMMENDATION =
-  "Site work, foundations, utilities and setup are yours to arrange. Our referral list names " +
+  "Site work, foundations, utilities and setup are yours to arrange. Our contractor list names " +
   "licensed and insured contractors past customers have used — it is information, not a " +
   "recommendation or an endorsement. We do not hire, supervise, schedule or warrant them, we " +
   "receive nothing for naming them, and you are free to use anyone you choose.";
