@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
 import { generateMetadata as genMeta, StructuredData, structuredData } from "@/lib/seo";
-import { countyPostLinks } from "@/lib/county-posts";
 import { countyPages, getCountyPage, type CountyPage as CountyPageData } from "@/lib/county-pages";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import { businessAreaRef } from "@/lib/business";
@@ -17,9 +16,8 @@ export const dynamicParams = false;
 
 const STATIC_LOCATION_SLUGS = new Set(["dekalb-county", "noble-county", "steuben-county"]);
 
-// Every published town post for this county — see countyPostLinks.
 function relatedPostsFor(c: CountyPageData): { href: string; label: string }[] {
-  return countyPostLinks(c.slug, c.relatedPosts ?? []);
+  return c.relatedPosts ?? [];
 }
 
 export function generateStaticParams() {

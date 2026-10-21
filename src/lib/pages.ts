@@ -784,13 +784,6 @@ function topicsForPost(slug: string): string[] {
   if (curated?.length) return curated;
 
   const topics = new Set<string>(["manufactured-homes"]);
-  // "manufactured-homes-<town>-indiana" and the "-guide" posts are the town
-  // series; relating them to the /locations pages is the whole point.
-  if (/^manufactured-homes-.+-(indiana|guide)$/.test(slug) || slug.endsWith("-buyers-guide")) {
-    topics.add("locations");
-    topics.add("service-area");
-    topics.add("delivery");
-  }
   if (/financ|loan|credit|mortgage/.test(slug)) topics.add("financing");
   if (/cost|pricing|price|quote/.test(slug)) topics.add("pricing");
   if (/modular/.test(slug)) topics.add("modular");

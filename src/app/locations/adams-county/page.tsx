@@ -1,6 +1,5 @@
 import { generateLocationMetadata } from "../locationMetadata";
 import { LocationPageTemplate } from "../LocationPageTemplate";
-import { countyPostLinks } from "@/lib/county-posts";
 
 const locationData = {
   city: "Adams County",
@@ -15,5 +14,5 @@ const locationData = {
 export const metadata = generateLocationMetadata({ city: locationData.city, state: locationData.state });
 
 export default function AdamsCountyPage() {
-  return <LocationPageTemplate {...locationData} relatedPosts={countyPostLinks("adams-county")} />;
+  return <LocationPageTemplate {...locationData} />;
 }
