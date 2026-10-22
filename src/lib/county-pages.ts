@@ -146,9 +146,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "The Kosciusko County Area Plan Commission in Warsaw handles zoning and permits outside the incorporated towns; Warsaw, Winona Lake, Syracuse and the other towns permit inside their limits. Lake associations can carry covenants that go further than zoning. Confirm your parcel with the office and read any covenants before you order — we can tell you which office to call.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-warsaw-indiana", label: "Manufactured homes in Warsaw: new or used — what to weigh" },
-    ],
     faqs: [
       {
         question: "Which permits come first for a manufactured home in Kosciusko County?",
@@ -191,9 +188,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Huntington County's planning office in Huntington handles the unincorporated county, and the city and towns permit inside their own limits. Most agricultural and rural residential districts allow a HUD-code home with the right foundation and skirting. Confirm your parcel's zoning with the office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-huntington-indiana", label: "Manufactured homes in Huntington: planning for pets and a busy household" },
-    ],
     faqs: [
       {
         question: "Which floor plans suit a busy household in Huntington County?",
@@ -231,9 +225,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Elkhart County Planning and Development in Goshen handles zoning outside the cities and towns; Goshen, Elkhart and Nappanee each permit inside their limits. Rules for a HUD-code home differ from the rules for an RV or a park model, so ask about the home type specifically. Confirm your parcel with the right office before you order — we can tell you which one that is.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-goshen-indiana", label: "Manufactured homes in Goshen: how a HUD-code home differs from an RV or park model" },
-    ],
     faqs: [
       {
         question: "Which permits come first for a manufactured home in Elkhart County?",
@@ -276,9 +267,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Wabash County's planning office handles the unincorporated county, and the city of Wabash and the towns permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-wabash-indiana", label: "Manufactured homes in Wabash: making a smaller home feel bigger" },
-    ],
     faqs: [
       {
         question: "How do I make a single-section home feel bigger?",
@@ -316,9 +304,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Jay County's planning office in Portland handles the unincorporated county, and Portland, Dunkirk and the towns permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-portland-indiana", label: "Manufactured homes in Portland: moving from renting to owning" },
-    ],
     faqs: [
       {
         question: "What should a renter plan for before buying a manufactured home?",
@@ -356,9 +341,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Grant County's Area Plan Commission in Marion issues permits for the unincorporated county and for Fairmount, Jonesboro, Matthews, Sweetser, Upland and Van Buren; the cities of Marion and Gas City issue their own. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-marion-indiana", label: "Manufactured homes in Marion: making one showroom visit count" },
-    ],
     faqs: [
       {
         question: "Which permits come first for a manufactured home in Grant County?",
@@ -400,9 +382,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Blackford County's planning office in Hartford City handles the unincorporated county, and Hartford City and Montpelier permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-hartford-city-indiana", label: "Manufactured homes in Hartford City: how the process differs from stick-built" },
-    ],
     faqs: [
       {
         question: "How is buying a manufactured home different from building a house?",
@@ -440,9 +419,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Miami County's planning office in Peru handles the unincorporated county, and Peru and the towns permit inside their limits. Many districts require skirting or a perimeter enclosure on a manufactured home, so ask what material they accept. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-peru-indiana", label: "Manufactured homes in Peru: choosing and caring for skirting" },
-    ],
     faqs: [
       {
         question: "What kind of skirting works best in Miami County?",
@@ -480,9 +456,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "The Marshall County Plan Commission in Plymouth handles the unincorporated county, and Plymouth, Bremen, Culver and the towns permit inside their limits. Subdivision covenants can go further than zoning. Confirm your parcel with the right office and read any covenants before you order — we can tell you which office to call.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-plymouth-indiana", label: "Manufactured homes in Plymouth: exterior choices and neighbourhood rules" },
-    ],
     faqs: [
       {
         question: "How does the septic permit work in Marshall County?",
@@ -525,9 +498,6 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "Fulton County's planning office in Rochester handles the unincorporated county, and Rochester and the towns permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you close — we can tell you which one answers for your address.",
     frostDepth: FOOTINGS,
-    relatedPosts: [
-      { href: "/blog/manufactured-homes-rochester-indiana", label: "Manufactured homes in Rochester: what to check before you close on land" },
-    ],
     faqs: [
       {
         question: "What should I check before buying land in Fulton County?",

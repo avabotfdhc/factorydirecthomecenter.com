@@ -3,6 +3,7 @@ import { HTML_LIMITED_BOT_UA_RE } from "next/dist/shared/lib/router/utils/html-b
 import { legacyFloorPlanRedirects } from "./src/lib/legacy-redirects";
 import { retiredSeriesRedirects } from "./src/lib/retired-series";
 import { searchConsoleRedirects } from "./src/lib/search-console-redirects";
+import { townPostRedirects } from "./src/lib/town-post-redirects";
 import { CATALOGUE_BUCKET_URL, SHORT_IMAGE_PREFIX } from "./src/lib/image-src";
 
 // Crawlers that must get <title>/<meta> in <head>. Next.js streams metadata
@@ -58,6 +59,9 @@ const nextConfig: NextConfig = {
       // some would otherwise match the /brands and /special-plans pattern
       // rules below and be sent on to a URL that does not exist.
       ...searchConsoleRedirects,
+      // The retired "Manufactured Homes in <Town>, Indiana" posts, each sent to
+      // its town or county /locations page (2026-10-21; see the module).
+      ...townPostRedirects,
       {
         source: '/contact',
         destination: '/contact-us',
