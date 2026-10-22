@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getServerConsentSnapshot, getTrackingAllowedSnapshot, subscribeConsent } from "./consent";
+import { gaBootstrapScript, revokeTracking } from "./ga-consent";
 
 // ============================================
 // CONFIGURATION - Environment Variables
@@ -44,6 +45,7 @@ declare global {
   interface Window {
     gtag?: (command: string, ...args: unknown[]) => void;
     fbq?: (command: string, ...args: unknown[]) => void;
+    clarity?: (command: string, ...args: unknown[]) => void;
     dataLayer?: unknown[];
   }
 }
@@ -92,34 +94,21 @@ export interface LeadData {
 export function GoogleAnalytics() {
   if (!GA_MEASUREMENT_ID) return null;
 
+  // `afterInteractive`, not `lazyOnload`: this is the one tag whose job is to
+  // count the visit, so it loads as soon as hydration allows. `lazyOnload`
+  // waits for window.load plus idle time, which on a phone added seconds on top
+  // of the interaction gate that used to sit in front of it (see ga-consent.ts).
+  // gtag.js is async and off the critical path either way; what it costs is a
+  // little main-thread time after hydration, which is the right trade for not
+  // losing every short visit from the numbers.
   return (
     <React.Fragment>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="lazyOnload"
+        strategy="afterInteractive"
       />
-      <Script id="google-analytics" strategy="lazyOnload">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_MEASUREMENT_ID}', {
-            page_title: document.title,
-            page_location: window.location.href,
-            send_page_view: true,
-            cookie_flags: 'SameSite=None;Secure',
-            custom_map: {
-              'custom_parameter_1': 'page_type',
-              'custom_parameter_2': 'user_type',
-              'custom_parameter_3': 'content_group'
-            }
-          });
-          
-          // Enhanced Ecommerce Configuration
-          gtag('config', '${GA_MEASUREMENT_ID}', {
-            'allow_enhanced_conversions': true
-          });
-        `}
+      <Script id="google-analytics" strategy="afterInteractive">
+        {gaBootstrapScript(GA_MEASUREMENT_ID)}
       </Script>
     </React.Fragment>
   );
@@ -722,10 +711,14 @@ export function trackVideoComplete(videoName: string) {
 // COMPLETE TRACKING COMPONENT
 // ============================================
 
-// Defer loading the (heavy) third-party tracking scripts until the first real
-// user interaction, or an idle fallback (~6s) so non-interacting visits still
-// get counted. This keeps GA4/GTM/Meta Pixel/Clarity off the critical path,
-// which is the single biggest lever for mobile TBT/INP/Lighthouse score.
+// Defer the heavier third-party scripts (Clarity's session recorder, and GTM
+// and the Meta Pixel when their IDs are set) until the first real user
+// interaction, or an idle fallback, to keep them off the critical path for
+// mobile TBT/INP. GA4 is deliberately NOT behind this gate any more: between
+// 2026-08-18 and 2026-10-17 it was, and every visit shorter than the fallback
+// with no scroll or tap went uncounted — which is what a "traffic drop" in GA4
+// looked like while the site was fine. Clarity losing those visits costs a few
+// session recordings, not the traffic figure.
 function useDeferUntilInteraction(timeoutMs = 6000): boolean {
   const [ready, setReady] = React.useState(false);
   useEffect(() => {
@@ -755,18 +748,41 @@ function useDeferUntilInteraction(timeoutMs = 6000): boolean {
   return ready;
 }
 
+/**
+ * Tells tags that are already running to stop when the visitor declines
+ * mid-visit (see revokeTracking in ga-consent.ts). Only fires on a true →
+ * false transition: a visitor who arrives already opted out never had a tag
+ * to stop, and the first client render of an allowed visitor is not a decline.
+ */
+function useRevokeOnDecline(allowed: boolean) {
+  const wasAllowed = React.useRef(false);
+  useEffect(() => {
+    if (allowed) {
+      wasAllowed.current = true;
+      return;
+    }
+    if (wasAllowed.current && GA_MEASUREMENT_ID) revokeTracking(window, GA_MEASUREMENT_ID);
+  }, [allowed]);
+}
+
 export function AnalyticsProvider() {
-  const ready = useDeferUntilInteraction();
   const allowed = useTrackingAllowed();
-  // Both gates must pass: `ready` defers the scripts past first interaction for
-  // performance, `allowed` is the visitor's privacy choice (see src/lib/consent).
-  if (!ready || !allowed) return null;
+  const ready = useDeferUntilInteraction();
+  useRevokeOnDecline(allowed);
+  // `allowed` is the visitor's privacy choice (src/lib/consent.ts): a decline
+  // or a Global Privacy Control signal and nothing below renders. GA4 then
+  // loads immediately; the heavier tags wait for `ready` (first interaction).
+  if (!allowed) return null;
   return (
     <React.Fragment>
-      <GoogleTagManager />
       <GoogleAnalytics />
-      <FacebookPixel />
-      <MicrosoftClarity />
+      {ready && (
+        <React.Fragment>
+          <GoogleTagManager />
+          <FacebookPixel />
+          <MicrosoftClarity />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 }
@@ -777,9 +793,10 @@ export function AnalyticsProvider() {
  * be read in the browser); resolves right after mount and again whenever the
  * visitor changes their choice from the banner or the footer link.
  *
- * A visitor who declines after tags have already loaded keeps those tags for
- * the current page — scripts can't be unloaded — but they never load again on
- * any subsequent navigation or visit.
+ * A visitor who declines after tags have already loaded is handled by
+ * useRevokeOnDecline above — the scripts stay in the page (they can't be
+ * unloaded) but are told to stop — and they never load again on any subsequent
+ * navigation or visit.
  */
 function useTrackingAllowed(): boolean {
   return React.useSyncExternalStore(

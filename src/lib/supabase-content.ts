@@ -170,7 +170,9 @@ function drawingFrom(images: FloorPlanRow["floor_plan_images"]): string {
 }
 
 /** All active floor plans, mapped to the card shape the design uses. */
-export async function getSupabaseFloorPlans(): Promise<ApiFloorPlan[]> {
+export async function getSupabaseFloorPlans(
+  { throwOnFailure = false }: { throwOnFailure?: boolean } = {},
+): Promise<ApiFloorPlan[]> {
   const select = [
     "slug", "name", "title", "price", "sqft", "beds", "baths",
     "home_type", "series", "brand", "model_number", "width", "banner_image", "updated_at",
@@ -182,9 +184,13 @@ export async function getSupabaseFloorPlans(): Promise<ApiFloorPlan[]> {
       `floor_plans?is_active=eq.true&order=sort_order.asc,created_at.desc&select=${select}`,
     )) as FloorPlanRow[];
   } catch (err) {
-    // Never throw from here. The only caller merges this list with the
+    // A caller that would rather know than be served a substitute — the
+    // sitemap, which must not publish the repo copy's redirecting slugs as
+    // the catalogue (src/lib/sitemap-catalogue.ts) — asks for the throw.
+    if (throwOnFailure) throw err;
+    // Otherwise never throw from here. The caller merges this list with the
     // repo-published catalogue (getApiFloorPlans in api-content.ts), so
-    // returning [] serves the 193 plans the repo already holds instead of
+    // returning [] serves the plans the repo already holds instead of
     // 500-ing the page.
     //
     // The original intent — rethrow so ISR keeps serving the last good page —

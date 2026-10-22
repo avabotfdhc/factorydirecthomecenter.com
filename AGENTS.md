@@ -1813,3 +1813,81 @@ What changed so this is visible next time, and recoverable:
   rejection alert actually sends — still unset on 2026-10-19 (`/api/health` →
   `configured.resend: false`). Until then, a dead key is only visible on
   `/api/health` and in the runtime logs, which Vercel Pro keeps for one day.
+
+# GA4 counts the visit from the first second, and the sitemap refuses the degraded catalogue
+
+Kyle, 2026-10-17: *"Traffic tanked all of a sudden and it should be going up not
+down."* Ava's investigation (`TRAFFIC-DROP-HANDOFF.md`) found the site healthy —
+200s, indexable, clean sitemap, not blocklisted — and the drop to be a GA4
+**measurement** cliff dated to two August changes. Confirmed in Chromium against
+the dev server before touching anything:
+
+- Every tag sat behind BOTH the first-interaction gate (`useDeferUntilInteraction`,
+  6 s idle fallback, PR #60/#61, 2026-08-18) AND next/script's `lazyOnload`. On an
+  idle mobile visit **gtag.js was not even requested until 6.3 s** after
+  navigation; a visitor who read for five seconds and left was never a user, a
+  session or a page_view. After the interaction it loaded at 1.2 s.
+- The consent banner (PR #75, 2026-08-30) was *not* the main loss. `consent.ts` is
+  notice-and-**opt-out**: an unanswered visitor is `allowed`. It withholds tags only
+  from decliners and Global Privacy Control browsers, and it still must.
+- The old inline script called `gtag('config')` twice; measured, that sent **one**
+  page_view, so consolidating it does not move the numbers.
+
+What changed (`src/lib/analytics.tsx`, `src/lib/ga-consent.ts`):
+
+- **GA4 is outside the interaction gate** and `afterInteractive`: it loads as soon
+  as `useTrackingAllowed()` says yes. Measured after: gtag.js at **273 ms**, one
+  page_view, on an idle visit; client navigation sends one more (`gcs=G111`).
+  Clarity, GTM and the Meta Pixel still wait for `ready` — a lost session
+  recording is not a lost visit. Cost: gtag's main-thread time now lands after
+  hydration instead of after 6 s; Lighthouse TBT may read a little higher. That
+  is the right trade; do not put GA4 back behind the gate to win a lab score.
+- **Consent Mode v2 is declared** (`gaBootstrapScript`: one `config` call, consent
+  default queued first, the UA-era `custom_map` dropped). Defaults are `granted`
+  because that is what the opt-out model honestly does.
+- **Decline mid-visit now stops the tags.** Before, a visitor who clicked Decline
+  after GA had loaded kept every tag running until the next navigation.
+  `revokeTracking()` sends `consent update` all-denied, sets
+  `window['ga-disable-<ID>']` (Google's documented switch — no further hit at
+  all, not even cookieless pings) and tells Clarity to stop. Measured: zero hits
+  after Decline. The `_ga` cookies already written stay in the jar — gtag does
+  not delete them — but nothing reads them again.
+- **Untouched, on purpose:** the banner, its wording, GPC handling, the
+  pre-paint script, `resolveConsent()`. `tests/analytics-gates.test.ts` holds GA
+  outside the gate, the bootstrap shape, the revoke handshake and the consent
+  gate's two refusals.
+
+**The sitemap no longer publishes the degraded catalogue** (`src/app/sitemap.ts`,
+`src/lib/sitemap-catalogue.ts`). `getSupabaseFloorPlans()` swallows a CMS failure
+and pages fall back to the repo copy — right for a page, wrong for the sitemap:
+the repo copy is 77 plans, 44 of them `dutch-aspire-*` slugs that 301, and the
+~214 live pages would vanish from the file for the ISR hour. The sitemap now
+reads with `getApiFloorPlans({ requireCms: true })` (the strict path rethrows;
+pages keep the lenient default) and `planEntriesForSitemap()` decides: a failed
+read, or fewer than `MIN_CMS_SITEMAP_PLANS` (120, between repo-only 77 and live
+~214) merged plans, **throws at runtime** so ISR keeps serving the last good
+file (an error is never cached; the next request after recovery repairs it) and
+**omits the floor-plan section at build time** so a CMS blip cannot block a
+deploy. `tests/sitemap-guard.test.ts` pins all of it, including that the
+repo-only count stays below the floor. Blog posts are repo-authored and were
+never at risk.
+
+**Verified, not changed:** the Aug 4 audit's hero CTA to `http://3.216.190.16`
+came from the retired AWS CMS `content` table; the hero is static in
+`src/app/page.tsx` and points at `/floor-plans`, and production HTML carries no
+bare IP (checked 2026-10-17).
+
+**What only Kyle can check:** Search Console → Performance → Clicks for
+July–October. GSC counts Google-referred visits independently of any tag or
+consent, so steady clicks beside a falling GA4 line is the proof. Also Pages →
+indexed count, to rule out a September indexing regression. **Vercel Web
+Analytics is not enabled** on the production project (`aggregate_pageviews`
+→ 404 "Web Analytics not found", 2026-10-17); enabling it would give a
+cookieless, first-party, consent-independent traffic series and settle this
+class of question permanently — but it adds a script the privacy policy does
+not yet name, so it is Kyle's call, not an agent's.
+
+A stale `.env.local` dated 2026-06-23 with `NEXT_PUBLIC_GA_MEASUREMENT_ID="G-PLACEHOLDER"`
+and empty Clarity/GTM/Pixel IDs was found in this working tree and moved to
+`/tmp/fdhc-stale-env-local.bak`; it never reached production (`.vercelignore`)
+but would have made any local dev server load GA under a placeholder ID.
