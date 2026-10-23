@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { generateMetadata as genMeta } from "@/lib/seo";
 
-export function generateLocationMetadata({ city, state }: { city: string; state: string }): Metadata {
+export function generateLocationMetadata({ city, state, description }: { city: string; state: string; description?: string }): Metadata {
   // Title only — the root layout metadata template wraps this with
   // " | Factory Direct Homes Center" automatically, so avoid duplicating the brand here.
   const stateAbbr = state === "Indiana" ? "IN" : state === "Ohio" ? "OH" : state === "Michigan" ? "MI" : state;
@@ -10,7 +10,9 @@ export function generateLocationMetadata({ city, state }: { city: string; state:
   // alt) and the image-preview robots directive for the page's own URL.
   return genMeta({
     title: `Manufactured Homes in ${city}, ${stateAbbr}`,
-    description: `Champion manufactured and modular homes delivered to ${city}, ${state}. Factory-direct pricing, line-item transparency, serving Indiana, Ohio, and Michigan from Auburn, IN.`,
+    // A page-specific description wins; the shared sentence is only the fallback
+    // for pages not yet rewritten — identical snippets are a duplicate signal.
+    description: description ?? `Champion manufactured and modular homes delivered to ${city}, ${state}. Factory-direct pricing, line-item transparency, serving Indiana, Ohio, and Michigan from Auburn, IN.`,
     url: path,
     imageAlt: `Champion manufactured homes delivered to ${city}, ${state} by Factory Direct Homes Center`,
   });
