@@ -28,6 +28,18 @@ export interface CountyPage {
   relatedPosts?: { href: string; label: string }[];
   /** County-specific questions; rendered with FAQPage schema. */
   faqs?: { question: string; answer: string }[];
+  /**
+   * Hand-written local sections built from public sources (named in a comment
+   * on the entry). These are what make a county page worth its URL — pages that
+   * differ only by place name are doorway pages under Google's spam policies.
+   */
+  sections?: { heading: string; paragraphs: string[] }[];
+  /** "At a glance" rows — sourced facts only. */
+  facts?: { label: string; value: string }[];
+  /** Public offices the buyer deals with. We name who answers; we never answer for them. */
+  contacts?: { name: string; role: string; href?: string }[];
+  /** Page-specific meta description; the shared sentence is only a fallback. */
+  metaDescription?: string;
 }
 
 // Shared wording for counties outside the vetted distance table: no mileage is
@@ -160,7 +172,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "Should I buy a new or a used manufactured home near Warsaw?",
         answer:
-          "Our Warsaw post walks through it: a new HUD-code home comes with Champion's warranty, current energy standards and a known history. Read it before you shop the used market.",
+          "A new HUD-code home comes with Champion's warranty, current energy standards and a known history; a used one may not have any of those. Compare them on the same terms before you shop the used market.",
       },
       {
         question: "Do you deliver to Kosciusko County?",
@@ -192,7 +204,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "Which floor plans suit a busy household in Huntington County?",
         answer:
-          "Look for a separate entry with a utility room beside it, a second full bath, and bedrooms split from the main living space. Our Huntington post covers the layout features that matter most with kids and pets.",
+          "Look for a separate entry with a utility room beside it, a second full bath, and bedrooms split from the main living space.",
       },
       {
         question: "Are manufactured homes allowed outside Huntington city limits?",
@@ -215,7 +227,7 @@ export const countyPages: CountyPage[] = [
       "Elkhart County builds more recreational vehicles than anywhere else in the country, so buyers here know factory building well — and often ask how a HUD-code home differs from an RV or a park model. We order Champion HUD-code manufactured homes for buyers in Goshen, Elkhart, Nappanee, Middlebury and the farm country between them.",
     towns: ["Goshen", "Elkhart", "Nappanee", "Middlebury", "Bristol", "Millersburg", "Wakarusa"],
     driveNote:
-      "A HUD-code home is a permanent residence built to the federal manufactured housing code, not a vehicle — it is titled, financed, insured and zoned differently from an RV. Our Goshen post explains the difference before you shop. " + PER_ROUTE,
+      "A HUD-code home is a permanent residence built to the federal manufactured housing code, not a vehicle — it is titled, financed, insured and zoned differently from an RV. " + PER_ROUTE,
     points: [
       "Year-round homes, not seasonal units: built to the HUD code and anchored on a foundation",
       "Rural parcels around Middlebury and Millersburg and town lots in Goshen and Nappanee",
@@ -257,7 +269,7 @@ export const countyPages: CountyPage[] = [
       "Wabash County centres on the city of Wabash and the college town of North Manchester, with small towns and farm ground along the Wabash and Eel rivers. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
     towns: ["Wabash", "North Manchester", "Lagro", "LaFontaine", "Roann", "Urbana"],
     driveNote:
-      "Smaller lots in Wabash and North Manchester reward a plan that lives larger than its footprint — an open kitchen and living area, vaulted ceilings, and windows on more than one wall. Our Wabash post covers how to choose one. " + PER_ROUTE,
+      "Smaller lots in Wabash and North Manchester reward a plan that lives larger than its footprint — an open kitchen and living area, vaulted ceilings, and windows on more than one wall. " + PER_ROUTE,
     points: [
       "Open-plan single-section homes for town lots",
       "Multi-section homes for farm parcels with room to spread out",
@@ -271,7 +283,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "How do I make a single-section home feel bigger?",
         answer:
-          "Choose an open kitchen and living area, raise the ceiling where the plan allows, add windows, and keep storage built in. Our Wabash post goes through each choice.",
+          "Choose an open kitchen and living area, raise the ceiling where the plan allows, add windows, and keep storage built in.",
       },
       {
         question: "Can a manufactured home go on a town lot in North Manchester or Wabash?",
@@ -294,7 +306,7 @@ export const countyPages: CountyPage[] = [
       "Jay County sits on the Ohio line, with Portland at its centre and Dunkirk, Redkey and Pennville around it. Many buyers here are moving from renting to owning. We order Champion HUD-code manufactured homes for them and quote every line so the numbers are clear from the start.",
     towns: ["Portland", "Dunkirk", "Redkey", "Pennville", "Bryant", "Salamonia"],
     driveNote:
-      "Moving from a rental means planning more than a monthly payment: land or a lot, the site work you will contract, utilities, insurance and taxes. Our Portland post walks through the steps in order. " + PER_ROUTE,
+      "Moving from a rental means planning more than a monthly payment: land or a lot, the site work you will contract, utilities, insurance and taxes. " + PER_ROUTE,
     points: [
       "First-time owners moving from a rental",
       "Farm parcels and small-town lots across the county",
@@ -308,7 +320,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "What should a renter plan for before buying a manufactured home?",
         answer:
-          "Where the home will sit, the site work you will hire out, utilities, insurance and property taxes, alongside the home itself. Our Portland post lays out the order to work through them.",
+          "Where the home will sit, the site work you will hire out, utilities, insurance and property taxes, alongside the home itself.",
       },
       {
         question: "Do you arrange financing?",
@@ -331,7 +343,7 @@ export const countyPages: CountyPage[] = [
       "Grant County stretches along I-69 from Marion and Gas City to Fairmount, Upland and Jonesboro. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line from our Auburn showroom.",
     towns: ["Marion", "Gas City", "Jonesboro", "Fairmount", "Upland", "Swayzee", "Van Buren"],
     driveNote:
-      "The drive to Auburn is worth one well-planned trip. Shortlist plans online, bring your lot details and must-haves, and walk the homes on display with a list — our Marion post explains how to make one visit count. " + PER_ROUTE,
+      "The drive to Auburn is worth one well-planned trip. Shortlist plans online, bring your lot details and must-haves, and walk the homes on display with a list so one trip answers your questions. " + PER_ROUTE,
     points: [
       "Shortlist floor plans online before the drive",
       "Showroom open Monday–Friday 9–5 and Saturday 10–4",
@@ -350,7 +362,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "What should I bring to the showroom from Grant County?",
         answer:
-          "Your parcel details or lot survey, a shortlist of plans, your must-have rooms, and questions about options. Our Marion post has the full checklist.",
+          "Your parcel details or lot survey, a shortlist of plans, your must-have rooms, and questions about options.",
       },
       {
         question: "When is the Auburn showroom open?",
@@ -372,7 +384,7 @@ export const countyPages: CountyPage[] = [
       "Blackford County is one of Indiana's smallest counties, with Hartford City and Montpelier at its heart and farm ground all around. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
     towns: ["Hartford City", "Montpelier", "Shamrock Lakes", "Roll"],
     driveNote:
-      "If you have only ever bought or built a stick-built house, a HUD-code home follows a different order: choose the plan, order it, prepare the site while it is built, then delivery and set-up by the crews you hire. Our Hartford City post compares the two step by step. " + PER_ROUTE,
+      "If you have only ever bought or built a stick-built house, a HUD-code home follows a different order: choose the plan, order it, prepare the site while it is built, then delivery and set-up by the crews you hire. " + PER_ROUTE,
     points: [
       "A factory build that runs while your site is being prepared",
       "Federal HUD-code construction and inspection, not a local framing inspection",
@@ -386,7 +398,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "How is buying a manufactured home different from building a house?",
         answer:
-          "The home is built in Champion's plant to the federal HUD code while your contractors prepare the site, then it is delivered and set. Our Hartford City post compares each step.",
+          "The home is built in Champion's plant to the federal HUD code while your contractors prepare the site, then it is delivered and set.",
       },
       {
         question: "Who does the site work and set-up?",
@@ -409,7 +421,7 @@ export const countyPages: CountyPage[] = [
       "Miami County runs along US-31 from Peru to Bunker Hill and Grissom Air Reserve Base, with Converse, Denver and Macy in the farm country around them. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
     towns: ["Peru", "Bunker Hill", "Converse", "Denver", "Macy", "Amboy"],
     driveNote:
-      "Skirting is the part of a manufactured home people see first and think about last. Vinyl, insulated panels and masonry each behave differently through a northern Indiana winter — our Peru post compares them. " + PER_ROUTE,
+      "Skirting is the part of a manufactured home people see first and think about last. Vinyl, insulated panels and masonry each behave differently through a northern Indiana winter, so choose with the climate in mind. " + PER_ROUTE,
     points: [
       "Skirting choices that suit open, windy farm ground",
       "Rural parcels and town lots around Peru",
@@ -423,7 +435,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "What kind of skirting works best in Miami County?",
         answer:
-          "It depends on exposure and budget. Vinyl is common, insulated panels help with cold floors, and masonry lasts longest. Every option needs ventilation and an access panel. Our Peru post covers the trade-offs.",
+          "It depends on exposure and budget. Vinyl is common, insulated panels help with cold floors, and masonry lasts longest. Every option needs ventilation and an access panel.",
       },
       {
         question: "Does the county require skirting?",
@@ -446,7 +458,7 @@ export const countyPages: CountyPage[] = [
       "Marshall County centres on Plymouth, where US-30 crosses US-31, and takes in Bremen, Argos, Bourbon and Culver on Lake Maxinkuckee. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
     towns: ["Plymouth", "Bremen", "Culver", "Argos", "Bourbon", "La Paz"],
     driveNote:
-      "Subdivisions and lake neighbourhoods here often have covenants on roof pitch, siding, garages and porches. Read them before you choose the home's exterior — our Plymouth post explains which choices to settle at order. " + PER_ROUTE,
+      "Subdivisions and lake neighbourhoods here often have covenants on roof pitch, siding, garages and porches. Read them before you choose the home's exterior — some exterior choices can only be made when the home is ordered. " + PER_ROUTE,
     points: [
       "Exterior options — siding, roof pitch, porches — chosen to suit covenants",
       "Lake lots near Culver and rural parcels around Argos and Bourbon",
@@ -465,7 +477,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "Can covenants limit which manufactured home I put on my lot?",
         answer:
-          "Yes. Covenants can set roof pitch, siding, a minimum size or a garage. Read them before you choose the plan and exterior options. Our Plymouth post covers the common ones.",
+          "Yes. Covenants can set roof pitch, siding, a minimum size or a garage. Read them before you choose the plan and exterior options.",
       },
       {
         question: "Can I put a manufactured home near Lake Maxinkuckee?",
@@ -488,7 +500,7 @@ export const countyPages: CountyPage[] = [
       "Fulton County centres on Rochester and Lake Manitou, with Akron, Fulton and Kewanna in the farm country around them. Many buyers here are buying land and a home together. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
     towns: ["Rochester", "Akron", "Fulton", "Kewanna", "Leiters Ford"],
     driveNote:
-      "Before you close on a parcel, settle zoning, road access for a delivery truck, the well and septic, utilities and any floodplain on it. Our Rochester post lists what to check and in what order. " + PER_ROUTE,
+      "Before you close on a parcel, settle zoning, road access for a delivery truck, the well and septic, utilities and any floodplain on it. " + PER_ROUTE,
     points: [
       "Land checks to finish before you close",
       "Farm parcels and lots near Lake Manitou",
@@ -502,7 +514,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "What should I check before buying land in Fulton County?",
         answer:
-          "Zoning for a manufactured home, road access for delivery, well and septic feasibility, utility hook-ups, and any floodplain on the parcel. Our Rochester post walks through each one.",
+          "Zoning for a manufactured home, road access for delivery, well and septic feasibility, utility hook-ups, and any floodplain on the parcel.",
       },
       {
         question: "Can I put a manufactured home on farm ground?",
@@ -525,7 +537,7 @@ export const countyPages: CountyPage[] = [
       "Howard County centres on Kokomo, with Greentown and Russiaville in the farm country around it. Buyers here tend to be practical about a home — how it works day to day, not just how it looks. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
     towns: ["Kokomo", "Greentown", "Russiaville", "Jerome", "Cassville"],
     driveNote:
-      "Everyday layout questions — where the laundry sits, how the dryer vents, how far the walk is from the back door — are settled by the floor plan you choose. Our Kokomo post covers the laundry room. " + PER_ROUTE,
+      "Everyday layout questions — where the laundry sits, how the dryer vents, how far the walk is from the back door — are settled by the floor plan you choose. " + PER_ROUTE,
     points: [
       "Floor plans compared for how a household actually runs",
       "City lots in Kokomo and rural parcels across the county",
@@ -562,7 +574,7 @@ export const countyPages: CountyPage[] = [
       "Cass County centres on Logansport, where the Eel River meets the Wabash, with Galveston, Walton and Royal Center in the farm country around it. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
     towns: ["Logansport", "Galveston", "Walton", "Royal Center", "Onward", "Lucerne"],
     driveNote:
-      "The systems you rarely see — the water heater, the furnace, the plumbing — are chosen with the plan and are worth understanding before you order. Our Logansport post covers the water heater. " + PER_ROUTE,
+      "The systems you rarely see — the water heater, the furnace, the plumbing — are chosen with the plan and are worth understanding before you order. " + PER_ROUTE,
     points: [
       "Plan systems explained before you order",
       "Rural parcels on well and septic, and lots in Logansport",
@@ -576,7 +588,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "Can I build near the river in Cass County?",
         answer:
-          "Parcels near the Wabash or Eel River may sit in a mapped floodplain, which can set how high the home must be and whether it is allowed at all. Check the floodplain map and ask the permit office before you buy the land. Our Woodburn post covers floodplain elevation.",
+          "Parcels near the Wabash or Eel River may sit in a mapped floodplain, which can set how high the home must be and whether it is allowed at all. Check the floodplain map and ask the permit office before you buy the land.",
       },
       {
         question: "How does the septic permit work in Cass County?",
@@ -599,7 +611,7 @@ export const countyPages: CountyPage[] = [
       "St. Joseph County takes in South Bend and Mishawaka on the St. Joseph River and the smaller towns around them, from New Carlisle to Walkerton. Many buyers here are moving out of an apartment or an older house in town. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
     towns: ["South Bend", "Mishawaka", "Granger", "Osceola", "New Carlisle", "North Liberty", "Walkerton", "Lakeville"],
     driveNote:
-      "Delivery is not move-in: set-up, utility connections and any final approval come first. Our Mishawaka post covers planning moving day. " + PER_ROUTE,
+      "Delivery is not move-in: set-up, utility connections and any final approval come first. " + PER_ROUTE,
     points: [
       "Buyers moving from renting or an older house in town",
       "Rural parcels in the south and west of the county",
@@ -636,7 +648,7 @@ export const countyPages: CountyPage[] = [
       "Delaware County centres on Muncie, with Yorktown, Albany, Eaton and Selma around it. Many buyers here are leaving an older, draughty house for something that is cheaper to heat. We order Champion HUD-code manufactured homes for them and quote each one line by line.",
     towns: ["Muncie", "Yorktown", "Albany", "Eaton", "Selma", "Daleville", "Gaston"],
     driveNote:
-      "A new home is built tight, so ventilation, bath fans and winter humidity matter more than they did in an old house. Our Muncie post covers fresh air and moisture indoors. " + PER_ROUTE,
+      "A new home is built tight, so ventilation, bath fans and winter humidity matter more than they did in an old house. " + PER_ROUTE,
     points: [
       "Buyers moving up from older houses",
       "City lots in Muncie and rural parcels across the county",
@@ -650,7 +662,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "Why do new homes need ventilation running?",
         answer:
-          "A new home lets far less air leak through than an older one. That saves heat, but moisture from showers and cooking stays inside unless the ventilation system and fans move it out. Our Muncie post explains what to run and when.",
+          "A new home lets far less air leak through than an older one. That saves heat, but moisture from showers and cooking stays inside unless the ventilation system and fans move it out.",
       },
       {
         question: "Can I put a manufactured home inside Muncie?",
@@ -673,7 +685,7 @@ export const countyPages: CountyPage[] = [
       "Randolph County is open farm country on the Ohio line, centred on Winchester, with Union City, Farmland, Lynn and Parker City around it. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
     towns: ["Winchester", "Union City", "Farmland", "Lynn", "Parker City", "Ridgeville", "Saratoga"],
     driveNote:
-      "On open ground the sun and the wind reach a home from every side, so window placement and which way the home faces matter. Our Winchester post covers windows and daylight. " + PER_ROUTE,
+      "On open ground the sun and the wind reach a home from every side, so window placement and which way the home faces matter. " + PER_ROUTE,
     points: [
       "Farm parcels and open acreage",
       "Plans compared for windows and daylight",
@@ -687,7 +699,7 @@ export const countyPages: CountyPage[] = [
       {
         question: "Which way should my home face?",
         answer:
-          "That is your decision, made with your site contractor within the county's setback rules. South-facing windows get the most winter sun; west-facing windows get hot afternoon sun. Our Winchester post explains the trade-offs.",
+          "That is your decision, made with your site contractor within the county's setback rules. South-facing windows get the most winter sun; west-facing windows get hot afternoon sun.",
       },
       {
         question: "Can I put a manufactured home on farm ground in Randolph County?",

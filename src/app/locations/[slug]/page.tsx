@@ -38,7 +38,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           `Manufactured Homes in ${c.seat} & ${c.county}, IN`,
         ])
       : fitTitle([`Mobile & Manufactured Homes in ${c.county}, IN`, `Manufactured Homes in ${c.county}, IN`]),
-    description: `Champion manufactured homes delivered to ${c.seat ? `${c.seat} and ` : ""}${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
+    description:
+      c.metaDescription ??
+      `Champion manufactured homes delivered to ${c.seat ? `${c.seat} and ` : ""}${c.county}, Indiana. Serving ${c.towns.slice(0, 4).join(", ")} with line-item quotes from our Auburn, IN showroom.`,
     url: `/locations/${c.slug}`,
     type: "article",
   });
@@ -121,6 +123,16 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
                   </li>
                 ))}
               </ul>
+              {c.facts && c.facts.length > 0 && (
+                <dl className="space-y-3 mb-8 text-sm">
+                  {c.facts.map((f) => (
+                    <div key={f.label} className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-6 pb-3 border-b border-[var(--color-charcoal)]/8">
+                      <dt className="text-[var(--color-gray)]">{f.label}</dt>
+                      <dd className="font-semibold text-[var(--color-charcoal)] sm:text-right">{f.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
               {c.milesFromAuburn && (
                 <p className="text-sm text-[var(--color-gray)] mb-2">
                   <strong className="text-[var(--color-charcoal)]">Distance from our Auburn lot:</strong> {c.milesFromAuburn}
@@ -163,6 +175,52 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
           </p>
         </div>
       </section>
+
+      {c.sections && c.sections.length > 0 && (
+        <section className="py-20 lg:py-24">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8 space-y-12">
+            {c.sections.map((sec) => (
+              <div key={sec.heading}>
+                <H2 className="font-serif text-3xl font-light mb-5">{sec.heading}</H2>
+                <div className="space-y-4 text-[var(--color-charcoal)]/80 leading-relaxed">
+                  {sec.paragraphs.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {c.contacts && c.contacts.length > 0 && (
+        <section className="py-20 lg:py-24 bg-[var(--color-cream-dark)]">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-4">
+              Who to call <span className="italic text-[var(--color-teal)]">in {c.county}</span>
+            </H2>
+            <p className="text-[var(--color-gray)] mb-8">
+              These offices set the rules and issue the permits. Check with them about your parcel before you buy land or order a home.
+            </p>
+            <ul className="space-y-4">
+              {c.contacts.map((ct) => (
+                <li key={ct.name} className="bg-white rounded-lg px-6 py-4 border border-[var(--color-charcoal)]/5">
+                  <div className="font-semibold">
+                    {ct.href ? (
+                      <a href={ct.href} rel="noopener" className="text-[var(--color-teal)] underline underline-offset-4">
+                        {ct.name}
+                      </a>
+                    ) : (
+                      ct.name
+                    )}
+                  </div>
+                  <div className="text-sm text-[var(--color-gray)] mt-1">{ct.role}</div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {(relatedPosts.length || c.faqs?.length) ? (
         <section className="py-20">
