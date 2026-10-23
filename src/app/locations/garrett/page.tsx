@@ -6,7 +6,6 @@ const locationData = {
   state: "Indiana",
   stateAbbr: "IN",
   distance: "5 miles",
-  deliveryCost: "$1,800",
   description:
     "Garrett sits just five miles from our Auburn showroom — about as close as a Champion Homes dealer gets. We deliver factory-direct manufactured and modular homes throughout Garrett and rural DeKalb County, with short freight and fast timelines.",
   counties: ["DeKalb"],
@@ -41,7 +40,7 @@ const locationData = {
     {
       question: "What makes Factory Direct Homes Center different from other Garrett-area dealers?",
       answer:
-        "We're an independent, family-owned Champion dealer. We quote line-item (home, options, and delivery priced separately), work with multiple lenders so you can compare financing, and let you hire your own contractors for site work to save money. You get a local partner 5 miles away who answers the phone after the sale.",
+        "We're an independent, family-owned Champion dealer. We quote line-item (home, options, and delivery priced separately), hand you the list of lenders past customers have used without ranking any of them, and leave the site work to contractors you hire yourself. You get a local partner 5 miles away who answers the phone after the sale.",
     },
   ],
 };

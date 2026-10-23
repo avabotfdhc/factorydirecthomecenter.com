@@ -19,29 +19,45 @@ interface LocationSection {
   paragraphs: string[];
 }
 
+// One row of the "At a glance" box. Page-specific and sourced: a value that
+// cannot be checked against a public source does not go in.
+interface LocationFact {
+  label: string;
+  value: string;
+}
+
+// A public office or utility a buyer deals with directly. Links go to the
+// office's own site; we name who answers, we never answer for them.
+interface LocationContact {
+  name: string;
+  role: string;
+  href?: string;
+}
+
 interface LocationPageProps {
   city: string;
   state: string;
   stateAbbr: string;
   distance: string;
-  deliveryCost: string;
   description: string;
   counties: string[];
-  // Optional unique, hand-written local content — the SEO moat against thin
-  // national-chain templates. When present, renders a distinct local section
-  // and an FAQ block (with FAQPage schema), and richer LocalBusiness schema.
+  // The hand-written local content is what makes each page worth its URL —
+  // Google's spam policies treat pages that differ only by place name as
+  // doorway pages. Every page on this template must carry its own sections
+  // and FAQs; the shared copy below is kept to a few sentences on purpose.
   localSections?: LocationSection[];
   faqs?: LocationFAQ[];
   nearbyTowns?: string[];
-  // Town posts for a county page, computed on the server (countyPostLinks) —
-  // this is a client component, so it must not import the posts itself.
-  relatedPosts?: { href: string; label: string }[];
+  facts?: LocationFact[];
+  contacts?: LocationContact[];
 }
 
-export function LocationPageTemplate({ city, state, distance, deliveryCost, description, counties, localSections, faqs, nearbyTowns, relatedPosts }: LocationPageProps) {
+export function LocationPageTemplate({ city, state, distance, description, counties, localSections, faqs, nearbyTowns, facts, contacts }: LocationPageProps) {
   useEffect(() => {
     trackLocationView(city, state);
   }, [city, state]);
+
+  const slug = city.toLowerCase().replace(/\s+/g, "_");
 
   // A patch on the `#business` node the root layout already published, not a
   // copy of it: spreading `businessJsonLd()` here gave this page a second full
@@ -71,6 +87,13 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
       : []),
   ];
 
+  const glance: LocationFact[] = [
+    { label: "From our Auburn showroom", value: distance },
+    ...(facts ?? []),
+    { label: "Freight", value: "Quoted per route, as its own line" },
+    { label: "Order to move-in", value: "Typically 8–12 weeks" },
+  ];
+
   return (
     <>
       <script
@@ -91,20 +114,20 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
               Manufactured Homes<br />
               <span className="italic text-[var(--color-teal-light)]">Delivered to {city}</span>
             </h1>
-            <p className="text-lg text-white/60 leading-relaxed max-w-xl mb-8">
+            <p className="text-lg text-white/70 leading-relaxed max-w-xl mb-8">
               {description}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/floor-plans"
-                onClick={() => trackCTAClick("browse_floor_plans", `location_${city.toLowerCase().replace(/\s+/g, '_')}`)}
+                onClick={() => trackCTAClick("browse_floor_plans", `location_${slug}`)}
                 className="btn-primary inline-flex items-center justify-center bg-[var(--color-lime)] text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-[var(--color-lime-dark)] transition-colors duration-300"
               >
                 Browse Floor Plans
               </Link>
               <Link
                 href="/contact-us"
-                onClick={() => trackCTAClick("get_custom_quote", `location_${city.toLowerCase().replace(/\s+/g, '_')}`)}
+                onClick={() => trackCTAClick("get_custom_quote", `location_${slug}`)}
                 className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-sm font-bold tracking-widest uppercase hover:bg-white/5 transition-colors duration-300"
               >
                 Get a Custom Quote
@@ -114,61 +137,45 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-24 lg:py-32">
+      {/* At a glance */}
+      <section className="py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
               <div className="decorative-line mb-6" />
               <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-8">
-                Why {city} Homeowners<br />
-                <span className="italic text-[var(--color-teal)]">Choose Factory Direct</span>
+                {city} <span className="italic text-[var(--color-teal)]">at a glance</span>
               </H2>
-              <div className="space-y-6 text-base text-[var(--color-gray)] leading-relaxed">
+              <div className="space-y-5 text-base text-[var(--color-gray)] leading-relaxed">
                 <p>
-                  We&apos;re located just {distance} from {city}, making us one of the closest 
-                  Champion Homes dealers serving {state}. Shorter delivery distances mean 
-                  lower costs and faster move-in dates.
-                </p>
-                <p>
-                  As a family-owned business, we believe in partnership and treat every
-                  buyer like a neighbor. Every contract shows line-item pricing
-                  for the home and delivery, and you hire your own contractors for setup and
-                  site work — most buyers save thousands that way. Ask us for our list
-                  of licensed and insured contractors past customers have used.
+                  We sell Champion homes, quote each one line by line and arrange delivery
+                  from the plant. You own the land side: you hire your own licensed
+                  contractors for the site, foundation and set-up, and you pull the
+                  permits with the offices listed on this page.
                 </p>
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-12">
-              <H3 className="font-serif text-2xl font-semibold mb-8">Delivery to {city}</H3>
-              <div className="space-y-6">
-                <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
-                  <span className="text-[var(--color-gray)]">Distance from Auburn, IN</span>
-                  <span className="font-semibold text-lg">{distance}</span>
-                </div>
-                <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
-                  <span className="text-[var(--color-gray)]">Estimated Delivery</span>
-                  <span className="font-semibold text-lg">{deliveryCost}</span>
-                </div>
-                <div className="flex justify-between items-center pb-4 border-b border-[var(--color-charcoal)]/10">
-                  <span className="text-[var(--color-gray)]">Typical Timeline</span>
-                  <span className="font-semibold text-lg">8-12 weeks</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[var(--color-gray)]">Service Area</span>
-                  <span className="font-semibold text-lg">{counties.length} Counties</span>
-                </div>
-              </div>
+            <div className="bg-[var(--color-cream-dark)] rounded-lg p-8 lg:p-10">
+              <dl className="space-y-5">
+                {glance.map((f, i) => (
+                  <div
+                    key={f.label}
+                    className={`flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-6 ${i < glance.length - 1 ? "pb-4 border-b border-[var(--color-charcoal)]/10" : ""}`}
+                  >
+                    <dt className="text-[var(--color-gray)]">{f.label}</dt>
+                    <dd className="font-semibold sm:text-right">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Unique local content — the SEO moat vs. thin national templates */}
+      {/* The page's own local content */}
       {localSections && localSections.length > 0 && (
-        <section className="py-20 lg:py-28 border-t border-[var(--color-charcoal)]/5">
+        <section className="py-20 lg:py-24 border-t border-[var(--color-charcoal)]/5">
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
             <div className="space-y-12">
               {localSections.map((sec) => (
@@ -182,55 +189,39 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
                 </div>
               ))}
             </div>
+            {nearbyTowns && nearbyTowns.length > 0 && (
+              <p className="text-sm text-[var(--color-gray)] mt-12">
+                Also nearby: {nearbyTowns.join(", ")}.
+              </p>
+            )}
           </div>
         </section>
       )}
 
-      {/* Counties */}
-      <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="decorative-line mx-auto mb-6" />
-            <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight">
-              We Serve <span className="italic text-[var(--color-teal)]">All of {state}</span>
-            </H2>
-            <p className="text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-              From {city} to every corner of {state}, we deliver Champion manufactured
-              and modular homes with factory-direct pricing.
-            </p>
-            {nearbyTowns && nearbyTowns.length > 0 && (
-              <p className="text-sm text-[var(--color-gray)] mt-4 max-w-3xl mx-auto">
-                Serving {city} and nearby communities including {nearbyTowns.join(", ")}.
-              </p>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {counties.map((county) => (
-              <div
-                key={county}
-                className="bg-white rounded-lg px-6 py-4 text-center border border-[var(--color-charcoal)]/5"
-              >
-                <span className="font-medium">{county} County</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* The county's town posts */}
-      {relatedPosts && relatedPosts.length > 0 && (
-        <section className="py-20 lg:py-28 border-t border-[var(--color-charcoal)]/5">
+      {/* Who answers for what — public offices, linked to their own sites */}
+      {contacts && contacts.length > 0 && (
+        <section className="py-20 lg:py-24 bg-[var(--color-cream-dark)]">
           <div className="max-w-4xl mx-auto px-6 lg:px-8">
-            <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-6">
-              Read more about <span className="italic text-[var(--color-teal)]">{city}</span>
+            <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-4">
+              Who to call <span className="italic text-[var(--color-teal)]">in {city}</span>
             </H2>
-            <ul className="space-y-3">
-              {relatedPosts.map((p) => (
-                <li key={p.href}>
-                  <Link href={p.href} className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
-                    {p.label}
-                  </Link>
+            <p className="text-[var(--color-gray)] mb-8">
+              These offices set the rules and issue the permits. Check with them about your
+              parcel before you buy land or order a home.
+            </p>
+            <ul className="space-y-4">
+              {contacts.map((c) => (
+                <li key={c.name} className="bg-white rounded-lg px-6 py-4 border border-[var(--color-charcoal)]/5">
+                  <div className="font-semibold">
+                    {c.href ? (
+                      <a href={c.href} rel="noopener" className="text-[var(--color-teal)] underline underline-offset-4">
+                        {c.name}
+                      </a>
+                    ) : (
+                      c.name
+                    )}
+                  </div>
+                  <div className="text-sm text-[var(--color-gray)] mt-1">{c.role}</div>
                 </li>
               ))}
             </ul>
@@ -240,7 +231,7 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
 
       {/* Location FAQ (emits FAQPage schema above) */}
       {faqs && faqs.length > 0 && (
-        <section className="py-20 lg:py-28">
+        <section className="py-20 lg:py-24">
           <div className="max-w-3xl mx-auto px-6 lg:px-8">
             <H2 className="font-serif text-3xl lg:text-4xl font-light tracking-tight mb-10 text-center">
               {city} Manufactured Homes — <span className="italic text-[var(--color-teal)]">Common Questions</span>
@@ -263,10 +254,8 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Ready to Find <span className="italic text-[var(--color-teal-light)]">Your Home?</span>
           </H2>
-          <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-2xl mx-auto">
-            Browse our floor plans online, visit our Auburn showroom, or give us a call. 
-            We&apos;ll create a custom quote for delivery to {city} — with every cost itemized 
-            so you know exactly what you&apos;re paying for.
+          <p className="text-lg text-white/70 leading-relaxed mb-10 max-w-2xl mx-auto">
+            Walk the model homes on our Auburn lot, or ask for a quote with delivery to {city} priced as its own line.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -291,10 +280,10 @@ export function LocationPageTemplate({ city, state, distance, deliveryCost, desc
         </div>
       </section>
 
-      {/* The contractor list is information, never a recommendation — see src/lib/referrals.ts */}
+      {/* The contractor and lender lists are information, never a recommendation — see src/lib/referrals.ts */}
       <section className="pb-16 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <NoRecommendationNotice subject="contractors" />
+          <NoRecommendationNotice subject="both" />
         </div>
       </section>
     </>

@@ -279,6 +279,34 @@ Rules from here:
   same — a subject a buyer searches for, not a place name.
 - Retiring a page later: add it to the redirect list that fits, never delete a
   URL without a 301.
+
+**Location pages are being rewritten to be genuinely different (Kyle, 2026-10-23),
+in batches, from public sources only.** Measured on the built site (5-word
+shingles of each page's `<main>` text): the seven pages on `LocationPageTemplate`
+were ~290 words with 25–28% of their text unique to them and 57% overlap with
+their nearest neighbour. Batch 1 (Butler, Waterloo, Whitley, Wells, Adams,
+Steuben, LaGrange) took them to ~1,000–1,250 words, 71–76% unique, 13–15%
+overlap. Rules for the remaining batches:
+
+- Each page is built around what is actually different about the place — who
+  issues the permit there, septic/sewer, utilities, water and flood ground,
+  roads — and every fact comes from a public source named in a comment at the
+  top of the page file. A fact that cannot be confirmed (a gas provider, a
+  town's manufactured-home rule) is left out, not guessed. Kyle supplies no
+  local data (no delivered-home list, no photos), so do not imply any.
+- `LocationPageTemplate` no longer has `deliveryCost`: it printed an unsourced
+  per-town price ($1,800–$4,400), several under the pricing guide's own
+  $2,500–$8,000 range. Freight reads "Quoted per route". Pages pass `facts`
+  (the "At a glance" rows), `contacts` (public offices, linked to their own
+  sites) and their own meta `description` via `generateLocationMetadata`.
+- We name who answers; we never answer for them. "Ask the plan commission" is
+  the shape — never "we check/verify zoning".
+- `tests/location-pages.test.ts` fails on a dollar figure or `deliveryCost` on
+  any template page, and on a template page without its own sections and FAQs.
+- Next batches, by measured overlap: the county pages in `county-pages.ts`
+  (Randolph, Howard, Delaware, Fulton, Cass, St. Joseph — 34–40% unique), then
+  the `CityLocationTemplate` towns (Kendallville, New Haven, Columbia City,
+  Albion, Churubusco, Huntertown, Ligonier, Angola — 44–55%).
 - **Scheduling a post:** give it `publishAt` (an ISO instant; 13:00Z = 9 am Eastern) and set `date` to that day. Scheduled posts live in `allLocalBlogPosts`; everything that lists or serves posts reads `localBlogPosts`, which drops any post whose `publishAt` is after `SITE_BUILT_AT` — the **build** time, inlined by `next.config.ts` into server and client alike, so a deployment publishes a post everywhere (index, route, sitemap, registry, related cards) or nowhere. Consequence: **a post only appears after a production build made at or after its `publishAt`** — merge or redeploy on the day; the clock passing is not enough. `tests/scheduled-posts.test.ts` holds the cut-off, the date/`publishAt` match and the registry agreement; `tests/page-title.test.ts` checks scheduled titles too.
 - `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
 - The usual claim rules apply: no home dollar figures, contractor ranges only from `/guides/pricing`, and never say FDHC performs site work or setup.
