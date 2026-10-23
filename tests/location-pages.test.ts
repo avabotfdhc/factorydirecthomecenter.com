@@ -45,3 +45,32 @@ for (const name of REWRITTEN) {
     assert.ok(/generateLocationMetadata\(\{[\s\S]*?description:/.test(src), "missing page-specific meta description");
   });
 }
+
+// Programmatic county pages (src/lib/county-pages.ts). Batch 2 (2026-10-23)
+// rewrote six of them from public sources; the rest follow in later batches.
+import { countyPages } from "../src/lib/county-pages";
+
+const COUNTY_REWRITTEN = ["howard-county", "cass-county", "delaware-county", "randolph-county", "fulton-county", "st-joseph-county"];
+for (const slug of COUNTY_REWRITTEN) {
+  test(`${slug}: has sections, facts, contacts, FAQs and its own meta description`, () => {
+    const c = countyPages.find((p) => p.slug === slug);
+    assert.ok(c, `${slug} missing from county-pages.ts`);
+    assert.ok((c.sections?.length ?? 0) >= 3, "needs at least three local sections");
+    assert.ok((c.facts?.length ?? 0) >= 3, "needs facts");
+    assert.ok((c.contacts?.length ?? 0) >= 2, "needs public contacts");
+    assert.ok((c.faqs?.length ?? 0) >= 3, "needs FAQs");
+    assert.ok(c.metaDescription && c.metaDescription.length <= 160, "meta description missing or over 160 characters");
+  });
+}
+
+test("county pages never point readers at a retired town post", () => {
+  // The town posts were retired on 2026-10-21 and 301 to the county page
+  // itself, so "our Muncie post covers…" sends a reader back where they are.
+  const src = readFileSync(join(__dirname, "..", "src", "lib", "county-pages.ts"), "utf8");
+  assert.ok(!/\b[Oo]ur [A-Z][A-Za-z.\- ]* post\b/.test(src), "county-pages.ts still mentions a town post");
+});
+
+test("county pages carry no dollar figures", () => {
+  const src = readFileSync(join(__dirname, "..", "src", "lib", "county-pages.ts"), "utf8");
+  assert.ok(!/\$\s?\d/.test(src));
+});
