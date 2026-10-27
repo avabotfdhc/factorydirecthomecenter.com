@@ -304,17 +304,22 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
     if (selectedHome.widthFt) q.set("width", String(selectedHome.widthFt));
     if (selectedHome.beds) q.set("beds", String(selectedHome.beds));
     const ctrl = new AbortController();
+    // the previous home's drawing and porch choice never carry over, whether
+    // the new fetch succeeds, 404s or fails on the network
+    setElevation(null);
+    setAddonPorch(false);
+    setView("front");
     setElevationState("loading");
     fetch(`/api/plan-elevation?${q.toString()}`, { signal: ctrl.signal })
       .then((r) => (r.ok ? r.json() : null))
       .then((data: PlanElevation | null) => {
         setElevation(data);
         setElevationState(data ? "ready" : "none");
-        setView("front");
-        setAddonPorch(false);
       })
       .catch(() => {
-        if (!ctrl.signal.aborted) setElevationState("none");
+        if (ctrl.signal.aborted) return;
+        setElevation(null);
+        setElevationState("none");
       });
     return () => ctrl.abort();
   }, [selectedHome]);

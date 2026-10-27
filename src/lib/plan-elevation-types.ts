@@ -87,14 +87,16 @@ export function representativeElevation(
   { lengthFt, widthFt, beds }: { lengthFt: number; widthFt: number; beds?: number },
   model?: string,
 ): PlanElevation {
-  const L = Math.max(lengthFt, 28);
-  const W = Math.max(widthFt, 12);
+  // clamped to what Champion builds: the route is public, and the loop below
+  // draws one window per bedroom
+  const L = Math.min(Math.max(lengthFt, 28), 120);
+  const W = Math.min(Math.max(widthFt, 12), 40);
   const single = W < 20;
   const front: Opening[] = [];
   const rear: Opening[] = [];
   // bedrooms at one end, living at the other: a 46" egress window per bedroom,
   // 30" windows along the living side, a 36" entry door about a third in
-  const bedrooms = Math.max(beds || 3, 2);
+  const bedrooms = Math.min(Math.max(Math.floor(beds || 3), 2), 6);
   const bedBay = Math.min(10, (L * 0.45) / bedrooms);
   for (let i = 0; i < bedrooms; i++) {
     const x = L - bedBay * (i + 0.5);

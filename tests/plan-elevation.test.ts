@@ -87,6 +87,14 @@ test("representative layouts keep every opening on the wall for the sizes we sel
   }
 });
 
+test("absurd sizes from the public endpoint are clamped, never looped over", () => {
+  const p = representativeElevation({ lengthFt: 1e9, widthFt: 1e9, beds: 1e9 });
+  assert.ok(p.L <= 120 && p.W <= 40, `${p.L}x${p.W}`);
+  assert.ok(p.views.front.filter((o) => o[0] === "w").length <= 8, "bedroom windows are bounded");
+  const tiny = representativeElevation({ lengthFt: 1, widthFt: 1, beds: 0.5 });
+  assert.ok(tiny.L >= 28 && tiny.W >= 12 && tiny.views.front.length >= 3);
+});
+
 test("window codes read as inches, with a floor on transom height", () => {
   assert.deepEqual(windowSize("3061", 2.5), { w: 2.5, h: 61 / 12 });
   assert.deepEqual(windowSize("4661", 3.8), { w: 46 / 12, h: 61 / 12 });

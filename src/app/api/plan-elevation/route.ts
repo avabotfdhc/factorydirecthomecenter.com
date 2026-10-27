@@ -14,15 +14,18 @@ export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const model = url.searchParams.get("model") || "";
-  const num = (k: string) => {
+  // The size fields only shape the representative fallback. They are clamped
+  // to the range Champion builds, because this is a public endpoint and the
+  // fallback draws one window per bedroom — an unbounded `beds` would loop.
+  const num = (k: string, min: number, max: number) => {
     const v = Number(url.searchParams.get(k));
-    return Number.isFinite(v) && v > 0 ? v : undefined;
+    return Number.isFinite(v) && v > 0 ? Math.min(Math.max(v, min), max) : undefined;
   };
   const plan = planElevation({
-    modelNumber: model,
-    lengthFt: num("length"),
-    widthFt: num("width"),
-    beds: num("beds"),
+    modelNumber: model.slice(0, 32),
+    lengthFt: num("length", 20, 120),
+    widthFt: num("width", 10, 40),
+    beds: num("beds", 1, 6),
   });
   if (!plan) {
     return NextResponse.json({ error: "no elevation for this plan" }, { status: 404 });
