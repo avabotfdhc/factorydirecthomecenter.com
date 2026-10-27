@@ -31,6 +31,10 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "no elevation for this plan" }, { status: 404 });
   }
   return NextResponse.json(plan, {
-    headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
+    headers: {
+      "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+      // data for the page, never a page
+      "X-Robots-Tag": "noindex",
+    },
   });
 }

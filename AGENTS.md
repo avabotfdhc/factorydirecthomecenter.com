@@ -1946,3 +1946,32 @@ standard siding colour; the designer used to call it an upgrade and no longer do
 
 To add or correct a plan's elevation, fix the extractor or the sheet and rerun
 — do not hand-edit `plan-elevations.json`.
+
+**What may be picked is per series and section type**, in
+`src/lib/exterior-options.ts`, every list transcribed from a Champion document
+the site holds (the 2026 Aspire board, the Perfect Options 2026 brochure, the
+Aspire Singles/Sectional standards, the 2026 HUD and Modular Exterior Upgrades
+sheets, the 2026 Prime Decatur Decor board and Standards sheet). Aspire
+(Topeka: Aspire, Dutch, Redman) gets the nine siding colours, two shingles, five
+shutters or lineals, the four Perfect Options doors (6-panel is standard), a
+patio or atrium door to add, the Black Exterior package, three shake gable
+accents, and the dormer and bay/bump-out lists for its section (S-series for
+singles, D/X-series for doubles, the modular sheet's for modular). **Prime
+(Decatur) is the value series with a fixed feature set** (Kyle, 2026-10-27):
+its own five siding colours, five shutters, black 3-tab shingles only, 6-panel
+doors, no-grid windows, its own cabinets/counters/flooring, and **no optional
+upgrades** — the upgrade checklist, lineals, doors, gable accent, black package
+and dormers are all hidden. Switching homes drops any pick the new catalogue
+does not offer. `tests/exterior-options.test.ts` holds all of it. Dormers, bays
+and added doors are quote preferences and are not drawn.
+
+The funnel is measured: every step fires a GA4 `designer_step` event with
+`step` (`plan_selected`, `preview_loaded`, `exterior_pick` with `field`/`value`,
+`view`, `submitted`) next to the existing `lead_form_start` / `lead_form_submit`
+events, so the path from plan to quote can be read in Analytics. The page also
+carries server-rendered "how it works" copy and a three-question FAQ (FAQPage
+schema) so a crawler sees what the tool is; the elevation API answers with
+`X-Robots-Tag: noindex`. Measured before merging (2026-10-27, Lighthouse
+mobile, three runs each): production 78/84/78 vs the branch 76/85/77 on
+performance, 100 on SEO, accessibility and best practices on both; the page's
+compressed JavaScript went 229 → 235 KB and no other route changed.

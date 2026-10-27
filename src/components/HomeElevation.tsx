@@ -8,30 +8,30 @@
 
 import type { ReactNode } from "react";
 import { windowSize, type Opening, type PlanElevation, type ViewName } from "@/lib/plan-elevation-types";
+import type { Swatch } from "@/lib/exterior-options";
+
+export type DoorStyle = "6-panel" | "9-lite" | "craftsman" | "craftsman-black";
 
 export interface ExteriorChoices {
-  siding: string;
-  shingles: string;
-  /** shutters beside each window, or white lineal trim around every opening */
+  /** colours come from the series' catalogue (src/lib/exterior-options.ts) */
+  siding: Swatch;
+  shingles: Swatch;
+  /** shutters beside each window, or lineal trim around every opening */
   trim: "shutters" | "lineals";
-  shutterColor: string;
-  /** shake accent in the end gables; "" keeps the gables in siding */
-  gableAccent: string;
+  shutter: Swatch;
+  /** shake accent in the end gables; null keeps the gables in siding */
+  gableAccent: Swatch | null;
   foundation: "block" | "skirting";
   /** include Champion's optional add-on porch when the plan draws one */
   addonPorch: boolean;
+  /** style of every swing door */
+  door: DoorStyle;
+  /** Aspire's Black Exterior package: black fascia, soffit, drip edge and
+   *  lineals, a Black Craftsman door, non-gridded windows */
+  blackPackage: boolean;
+  /** standard windows carry grids (Aspire) or not (Prime) */
+  windowGrids: boolean;
 }
-
-// Champion's 2026 Aspire board, approximated for screen (the /options page shows the board).
-export const SIDING_HEX: Record<string, string> = {
-  Pearl: "#E6E2C3", Clay: "#8C877C", Flint: "#8F9694", White: "#F6F6F2", Cypress: "#7E8A6B",
-  Wedgewood: "#566978", Shadow: "#3D3832", Brunswick: "#1D2C37", Dublin: "#3F4B43",
-};
-export const SHINGLE_HEX: Record<string, string> = { Black: "#2A2C2E", Weatherwood: "#5E574E" };
-export const SHUTTER_HEX: Record<string, string> = {
-  Black: "#151515", White: "#F2F2EF", Blue: "#3E5470", Wine: "#4B1C2B", Clay: "#A6A68D",
-};
-export const GABLE_HEX: Record<string, string> = { "Dover White": "#ECECE6", Pewter: "#7B8083", "Cabin Cedar": "#8E7965" };
 
 const TRIM = "#F5F5F1";
 const GLASS_TOP = "#a9bccb";
@@ -42,10 +42,6 @@ const HEAD = 80 / 12; // window and door head height above the floor
 const PITCH = 3 / 12;
 const OVERHANG = 1;
 const FASCIA = 0.45;
-
-function hex(map: Record<string, string>, key: string, fallback: string): string {
-  return map[key] || map[key.replace(/\s*\(.*\)$/, "")] || fallback;
-}
 
 function shade(color: string, p: number): string {
   const n = parseInt(color.slice(1), 16);
@@ -64,6 +60,10 @@ interface Ctx {
   lineals: boolean;
   gable: string | null;
   foundation: "block" | "skirting";
+  /** fascia, lineals and window frames: white, or black with the Black Exterior package */
+  trim: string;
+  door: DoorStyle;
+  grids: boolean;
 }
 
 /* ---------- pieces ---------- */
@@ -139,36 +139,67 @@ function Window({ c, cx, floorY, code, wFt }: { c: Ctx; cx: number; floorY: numb
       out.push(<rect key={`sp2${sx}`} x={sx + sw * 0.18} y={y - tr + (H + 2 * tr) / 2 + sw * 0.09} width={sw * 0.64} height={(H + 2 * tr) / 2 - sw * 0.27} fill="rgba(0,0,0,.08)" stroke="rgba(0,0,0,.22)" />);
     }
   }
-  out.push(<rect key="frame" x={x - tr} y={y - tr} width={W + 2 * tr} height={H + 2 * tr} fill={TRIM} stroke="rgba(0,0,0,.2)" />);
-  if (c.lineals) out.push(<rect key="head" x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={TRIM} stroke="rgba(0,0,0,.22)" />);
-  out.push(<rect key="sill" x={x - tr - 0.1 * s} y={y + H + tr - 0.06 * s} width={W + 2 * tr + 0.2 * s} height={0.16 * s} fill={TRIM} stroke="rgba(0,0,0,.2)" />);
+  out.push(<rect key="frame" x={x - tr} y={y - tr} width={W + 2 * tr} height={H + 2 * tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+  if (c.lineals) out.push(<rect key="head" x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={c.trim} stroke="rgba(0,0,0,.22)" />);
+  out.push(<rect key="sill" x={x - tr - 0.1 * s} y={y + H + tr - 0.06 * s} width={W + 2 * tr + 0.2 * s} height={0.16 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
   out.push(<rect key="glass" x={x} y={y} width={W} height={H} fill={`url(#${c.id}-glass)`} stroke="#fbfbf8" strokeWidth={sash} />);
   if (h > 2) out.push(<rect key="mid" x={x} y={y + H / 2 - sash / 2} width={W} height={sash * 1.2} fill="#fbfbf8" />);
+  if (c.grids && h > 2 && w > 1.5) {
+    // colonial grids: each sash divided into thirds across and halves down
+    const g = Math.max(1, sash * 0.6);
+    for (const fx of [1 / 3, 2 / 3]) out.push(<rect key={`gv${fx}`} x={x + W * fx - g / 2} y={y} width={g} height={H} fill="#fbfbf8" opacity={0.9} />);
+    for (const fy of [0.25, 0.75]) out.push(<rect key={`gh${fy}`} x={x} y={y + H * fy - g / 2} width={W} height={g} fill="#fbfbf8" opacity={0.9} />);
+  }
   return <g>{out}</g>;
 }
 
-/** A 36" entry door with a nine-lite upper glass, with steps below it to the ground. */
+/** A 36" swing door in the chosen style, with steps below it to the ground. */
 function Door({ c, cx, floorY, groundY, steps = true }: { c: Ctx; cx: number; floorY: number; groundY: number; steps?: boolean }) {
   const { s } = c;
   const W = 3 * s, H = HEAD * s, x = cx - W / 2, y = floorY - H, tr = (c.lineals ? 0.42 : 0.3) * s;
-  const gx = x + 0.3 * s, gy = y + 0.3 * s, gw = W - 0.6 * s, gh = H * 0.42;
   const m = Math.max(1.5, 0.07 * s);
+  const black = c.door === "craftsman-black";
+  const slab = black ? "#1c1c1c" : "#f3f3ee";
+  const edge = black ? "rgba(255,255,255,.18)" : "rgba(0,0,0,.15)";
+  const panel = (px: number, py: number, pw: number, ph: number, key: string) => (
+    <rect key={key} x={px} y={py} width={pw} height={ph} fill={black ? "rgba(255,255,255,.05)" : "rgba(0,0,0,.03)"} stroke={edge} />
+  );
+  const inner: ReactNode[] = [];
+  const gx = x + 0.3 * s, gw = W - 0.6 * s;
+  if (c.door === "9-lite") {
+    const gy = y + 0.3 * s, gh = H * 0.42;
+    inner.push(<rect key="g" x={gx} y={gy} width={gw} height={gh} fill={`url(#${c.id}-glass)`} stroke="rgba(0,0,0,.25)" />);
+    for (const i of [1, 2]) {
+      inner.push(<rect key={`v${i}`} x={gx + (gw * i) / 3 - m / 2} y={gy} width={m} height={gh} fill="#fbfbf8" />);
+      inner.push(<rect key={`h${i}`} x={gx} y={gy + (gh * i) / 3 - m / 2} width={gw} height={m} fill="#fbfbf8" />);
+    }
+    const py = gy + gh + 0.35 * s, pw = (gw - 0.25 * s) / 2, ph = y + H - py - 0.35 * s;
+    inner.push(panel(gx, py, pw, ph, "p1"), panel(gx + pw + 0.25 * s, py, pw, ph, "p2"));
+  } else if (c.door === "craftsman" || c.door === "craftsman-black") {
+    // three small lites across the top, a shelf rail, two tall panels below
+    const gy = y + 0.3 * s, gh = H * 0.17, lw = (gw - 0.2 * s) / 3;
+    for (let i = 0; i < 3; i++) {
+      inner.push(<rect key={`l${i}`} x={gx + i * (lw + 0.1 * s)} y={gy} width={lw} height={gh} fill={`url(#${c.id}-glass)`} stroke={black ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.25)"} />);
+    }
+    inner.push(<rect key="shelf" x={x + 0.2 * s} y={gy + gh + 0.12 * s} width={W - 0.4 * s} height={0.12 * s} fill={black ? "#2a2a2a" : "#e2e2dc"} stroke={edge} />);
+    const py = gy + gh + 0.5 * s, pw = (gw - 0.25 * s) / 2, ph = y + H - py - 0.35 * s;
+    inner.push(panel(gx, py, pw, ph, "p1"), panel(gx + pw + 0.25 * s, py, pw, ph, "p2"));
+  } else {
+    // 6-panel: two columns, a short top row, a tall middle, a medium bottom
+    const pw = (gw - 0.25 * s) / 2, top = y + 0.3 * s, avail = H - 0.65 * s;
+    const rows = [[0, 0.18], [0.24, 0.42], [0.72, 0.28]];
+    for (const [i, [fy, fh]] of rows.entries()) {
+      inner.push(panel(gx, top + avail * fy, pw, avail * fh, `a${i}`), panel(gx + pw + 0.25 * s, top + avail * fy, pw, avail * fh, `b${i}`));
+    }
+  }
   return (
     <g>
       {steps && <Steps c={c} cx={cx} w={4} floorY={floorY} groundY={groundY} />}
-      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={TRIM} stroke="rgba(0,0,0,.2)" />
-      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={TRIM} stroke="rgba(0,0,0,.22)" />}
-      <rect x={x} y={y} width={W} height={H} fill="#f3f3ee" stroke="rgba(0,0,0,.12)" />
-      <rect x={gx} y={gy} width={gw} height={gh} fill={`url(#${c.id}-glass)`} stroke="rgba(0,0,0,.25)" />
-      {[1, 2].map((i) => (
-        <g key={i}>
-          <rect x={gx + (gw * i) / 3 - m / 2} y={gy} width={m} height={gh} fill="#fbfbf8" />
-          <rect x={gx} y={gy + (gh * i) / 3 - m / 2} width={gw} height={m} fill="#fbfbf8" />
-        </g>
-      ))}
-      <rect x={gx} y={gy + gh + 0.35 * s} width={(gw - 0.25 * s) / 2} height={H - gh - 1.0 * s} fill="rgba(0,0,0,.03)" stroke="rgba(0,0,0,.15)" />
-      <rect x={gx + (gw + 0.25 * s) / 2} y={gy + gh + 0.35 * s} width={(gw - 0.25 * s) / 2} height={H - gh - 1.0 * s} fill="rgba(0,0,0,.03)" stroke="rgba(0,0,0,.15)" />
-      <circle cx={x + W - 0.42 * s} cy={y + H * 0.53} r={Math.max(1.5, 0.11 * s)} fill="#2b2b2b" />
+      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={c.trim} stroke="rgba(0,0,0,.22)" />}
+      <rect x={x} y={y} width={W} height={H} fill={slab} stroke="rgba(0,0,0,.12)" />
+      {inner}
+      <circle cx={x + W - 0.42 * s} cy={y + H * 0.53} r={Math.max(1.5, 0.11 * s)} fill={black ? "#c9c9c9" : "#2b2b2b"} />
     </g>
   );
 }
@@ -181,8 +212,8 @@ function Patio({ c, cx, floorY, groundY, steps = true }: { c: Ctx; cx: number; f
   return (
     <g>
       {steps && <Steps c={c} cx={cx} w={7} floorY={floorY} groundY={groundY} />}
-      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={TRIM} stroke="rgba(0,0,0,.2)" />
-      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={TRIM} stroke="rgba(0,0,0,.22)" />}
+      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={c.trim} stroke="rgba(0,0,0,.22)" />}
       <rect x={x} y={y} width={W} height={H} fill="#f7f7f4" />
       <rect x={x + fw} y={y + fw} width={pw} height={H - 2 * fw} fill={`url(#${c.id}-glass)`} stroke="rgba(0,0,0,.2)" />
       <rect x={x + 2 * fw + pw} y={y + fw} width={pw} height={H - 2 * fw} fill={`url(#${c.id}-glass)`} stroke="rgba(0,0,0,.2)" />
@@ -390,9 +421,9 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
       <rect x={roofX} y={f.eave} width={roofW} height={0.35 * s} fill="rgba(0,0,0,.38)" />
       <rect x={roofX} y={ridgeY} width={roofW} height={rise * s} fill={`url(#${c.id}-shg)`} />
       <rect x={roofX} y={ridgeY - 0.2 * s} width={roofW} height={0.3 * s} fill={shade(c.sh, -0.25)} />
-      <rect x={roofX} y={f.eave - FASCIA * s} width={roofW} height={FASCIA * s} fill={TRIM} stroke="rgba(0,0,0,.2)" />
-      <rect x={roofX - 0.05 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={TRIM} />
-      <rect x={roofX + roofW - 0.17 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={TRIM} />
+      <rect x={roofX} y={f.eave - FASCIA * s} width={roofW} height={FASCIA * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      <rect x={roofX - 0.05 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={c.trim} />
+      <rect x={roofX + roofW - 0.17 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={c.trim} />
     </svg>
   );
 }
@@ -477,9 +508,9 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
       {items}
       {/* gable: shingle edge, white rake, then the gable face in siding or shake accent */}
       <polygon points={tri(0, peak - 0.3 * s)} fill={shade(c.sh, -0.1)} />
-      <polygon points={tri(0.1 * s, peak)} fill={TRIM} />
+      <polygon points={tri(0.1 * s, peak)} fill={c.trim} />
       <polygon points={tri(OVERHANG * s + 0.5 * s, peak + (OVERHANG * PITCH + 0.5 * PITCH) * s + 0.45 * s)} fill={`url(#${c.id}-${c.gable ? "shk" : "sid"})`} />
-      <rect x={gx} y={f.eave - FASCIA * s} width={gw} height={FASCIA * s} fill={TRIM} stroke="rgba(0,0,0,.2)" />
+      <rect x={gx} y={f.eave - FASCIA * s} width={gw} height={FASCIA * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
     </svg>
   );
 }
@@ -501,15 +532,19 @@ export function HomeElevation({
   /** unique prefix for pattern ids when several elevations share a page */
   id?: string;
 }) {
+  const black = choices.blackPackage;
   const c: Ctx = {
     s: scale,
     id: `${id}-${view}`,
-    sid: hex(SIDING_HEX, choices.siding, SIDING_HEX.Dublin),
-    sh: hex(SHINGLE_HEX, choices.shingles, SHINGLE_HEX.Black),
-    shut: choices.trim === "shutters" ? hex(SHUTTER_HEX, choices.shutterColor, SHUTTER_HEX.Black) : null,
-    lineals: choices.trim === "lineals",
-    gable: choices.gableAccent ? hex(GABLE_HEX, choices.gableAccent, "") || null : null,
+    sid: choices.siding.hex,
+    sh: choices.shingles.hex,
+    shut: !black && choices.trim === "shutters" ? choices.shutter.hex : null,
+    lineals: black || choices.trim === "lineals",
+    gable: choices.gableAccent ? choices.gableAccent.hex : null,
     foundation: choices.foundation,
+    trim: black ? "#1c1c1c" : TRIM,
+    door: black ? "craftsman-black" : choices.door,
+    grids: choices.windowGrids && !black,
   };
   if (view === "front" || view === "rear") return <LongView c={c} plan={plan} view={view} choices={choices} />;
   return <EndView c={c} plan={plan} view={view} choices={choices} />;
