@@ -108,7 +108,7 @@ export const sitePages: SitePage[] = [
   {
     url: "/design-your-home",
     title: "Design Your Home",
-    description: "Pick a Champion floor plan, choose layout options, colors and upgrades, and request a line-item quote.",
+    description: "Pick a Champion floor plan, see it drawn in your siding, shingle, shutter and door choices, and request a line-item quote.",
     topics: ["design", "options", "floor-plans", "quote"],
     cluster: "products",
     priority: 0.6,

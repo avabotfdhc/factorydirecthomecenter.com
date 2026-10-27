@@ -1919,3 +1919,59 @@ A stale `.env.local` dated 2026-06-23 with `NEXT_PUBLIC_GA_MEASUREMENT_ID="G-PLA
 and empty Clarity/GTM/Pixel IDs was found in this working tree and moved to
 `/tmp/fdhc-stale-env-local.bak`; it never reached production (`.vercelignore`)
 but would have made any local dev server load GA under a placeholder ID.
+
+# Design Your Home draws the exterior from Champion's sales sheets
+
+`/design-your-home` shows the chosen plan as an SVG elevation — front, rear and
+both ends — redrawn live in the siding, shingles, shutters or lineals, gable
+accent and foundation the buyer picks (`src/components/HomeElevation.tsx`, fed
+by `HomeDesigner`). Window and door placement is not invented: it is read off
+each model's L-101 literature sheet by `scripts/elevations/extract_elevations.py`
+(see the README there) into `src/lib/plan-elevations.json`, keyed by model
+number, so the HUD/modular and Aspire/Paramount twins share one entry. 191 of
+the 202 models with a sheet read cleanly; the rest, and any plan with no sheet,
+get a *representative* layout from their size, and the caption says so. The
+data file is ~70 KB and stays on the server: the designer fetches one plan at a
+time from `GET /api/plan-elevation?model=…` (`src/lib/plan-elevation.ts`), and
+`tests/plan-elevation.test.ts` fails if a client component ever imports it.
+
+The picture is an illustration and is labelled as one, under the specs
+disclaimer the page already carries (`HomeElevation` is in the disclaimer
+test's marker list). Foundation, steps, skirting and landscaping are site work
+the buyer contracts separately (see "We sell and deliver the home" above), and
+the caption says that too. No prices anywhere in it. The lead message gains the
+exterior choices and which drawing the buyer saw ("drawn from sales sheet
+2856H32103" or "representative layout"). Champion's board lists Cypress as a
+standard siding colour; the designer used to call it an upgrade and no longer does.
+
+To add or correct a plan's elevation, fix the extractor or the sheet and rerun
+— do not hand-edit `plan-elevations.json`.
+
+**What may be picked is per series and section type**, in
+`src/lib/exterior-options.ts`, every list transcribed from a Champion document
+the site holds (the 2026 Aspire board, the Perfect Options 2026 brochure, the
+Aspire Singles/Sectional standards, the 2026 HUD and Modular Exterior Upgrades
+sheets, the 2026 Prime Decatur Decor board and Standards sheet). Aspire
+(Topeka: Aspire, Dutch, Redman) gets the nine siding colours, two shingles, five
+shutters or lineals, the four Perfect Options doors (6-panel is standard), a
+patio or atrium door to add, the Black Exterior package, three shake gable
+accents, and the dormer and bay/bump-out lists for its section (S-series for
+singles, D/X-series for doubles, the modular sheet's for modular). **Prime
+(Decatur) is the value series with a fixed feature set** (Kyle, 2026-10-27):
+its own five siding colours, five shutters, black 3-tab shingles only, 6-panel
+doors, no-grid windows, its own cabinets/counters/flooring, and **no optional
+upgrades** — the upgrade checklist, lineals, doors, gable accent, black package
+and dormers are all hidden. Switching homes drops any pick the new catalogue
+does not offer. `tests/exterior-options.test.ts` holds all of it. Dormers, bays
+and added doors are quote preferences and are not drawn.
+
+The funnel is measured: every step fires a GA4 `designer_step` event with
+`step` (`plan_selected`, `preview_loaded`, `exterior_pick` with `field`/`value`,
+`view`, `submitted`) next to the existing `lead_form_start` / `lead_form_submit`
+events, so the path from plan to quote can be read in Analytics. The page also
+carries server-rendered "how it works" copy and a three-question FAQ (FAQPage
+schema) so a crawler sees what the tool is; the elevation API answers with
+`X-Robots-Tag: noindex`. Measured before merging (2026-10-27, Lighthouse
+mobile, three runs each): production 78/84/78 vs the branch 76/85/77 on
+performance, 100 on SEO, accessibility and best practices on both; the page's
+compressed JavaScript went 229 → 235 KB and no other route changed.
