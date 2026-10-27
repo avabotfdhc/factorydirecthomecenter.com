@@ -34,6 +34,10 @@ async function getDesignerPlans(): Promise<DesignerPlan[]> {
         name: p.name,
         series: p.series || "",
         homeType: p.homeType || "Home",
+        ...(p.modelNumber ? { modelNumber: p.modelNumber } : {}),
+        ...(p.lengthFt ? { lengthFt: p.lengthFt } : {}),
+        ...(p.widthFt ? { widthFt: p.widthFt } : {}),
+        ...(p.beds ? { beds: p.beds } : {}),
       }));
     }
   } catch {
@@ -47,6 +51,10 @@ async function getDesignerPlans(): Promise<DesignerPlan[]> {
       name: p.name,
       series: p.series || PRIME_SERIES,
       homeType: p.homeType || PRIME_HOME_TYPE,
+      modelNumber: p.modelNumber,
+      lengthFt: parseInt(p.length, 10) || undefined,
+      widthFt: parseInt(p.width, 10) || undefined,
+      beds: p.beds,
     }));
 }
 
@@ -69,9 +77,9 @@ export default async function DesignYourHomePage({
             Build it your way, then <span className="italic text-[var(--color-teal-light)]">get a quote</span>
           </h1>
           <p className="text-lg text-white/60 leading-relaxed max-w-2xl">
-            Choose a Champion floor plan, pick your layout options, colors, and upgrades, and answer a
-            couple quick questions. We&rsquo;ll follow up with a personalized, line-item factory-direct
-            quote — no obligation.
+            Choose a Champion floor plan, pick your layout options, colors, and upgrades, and watch the
+            exterior redraw in your colors as you go. Answer a couple quick questions and we&rsquo;ll follow
+            up with a personalized, line-item factory-direct quote — no obligation.
           </p>
         </div>
       </section>

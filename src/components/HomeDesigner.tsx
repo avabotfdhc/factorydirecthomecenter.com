@@ -2,9 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useAntiSpam } from "@/lib/use-anti-spam";
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import Link from "next/link";
 import { trackLeadFormStart, trackLeadFormError, trackLeadFormSubmit } from "@/lib/analytics";
+import { HomeElevation, type ExteriorChoices } from "@/components/HomeElevation";
+import type { PlanElevation, ViewName } from "@/lib/plan-elevation-types";
 
 // A lightweight "design your home" configurator. It does NOT price anything or
 // claim an exact build — it captures a buyer's preferences (home, floor-plan
@@ -13,12 +15,23 @@ import { trackLeadFormStart, trackLeadFormError, trackLeadFormSubmit } from "@/l
 // team gets a warm, specific starting point for a line-item quote. Colors and
 // options are shown as preferences; the team confirms exact Champion
 // availability per model.
+//
+// The exterior picture: once a home is chosen, the designer fetches that
+// plan's elevation from /api/plan-elevation (window and door placement read
+// off Champion's sales sheet, src/lib/plan-elevations.json) and HomeElevation
+// redraws it in the chosen siding, shingles, trim and foundation as the buyer
+// clicks. It is an illustration, labelled as one, and when a plan's sheet
+// could not be read the fallback is a representative layout that says so.
 
 export interface DesignerPlan {
   slug: string;
   name: string;
   series: string;
   homeType: string;
+  modelNumber?: string;
+  lengthFt?: number;
+  widthFt?: number;
+  beds?: number;
 }
 
 type Swatch = { label: string; hex: string };
@@ -28,13 +41,13 @@ type Swatch = { label: string; hex: string };
 // exact color is confirmed against physical samples — /options shows the full
 // board.
 const SIDING_COLORS: Swatch[] = [
-  // Standard vinyl siding
+  // Standard vinyl siding (Cypress is in the standard row on the 2026 board)
   { label: "Pearl", hex: "#e7e2cf" },
   { label: "Clay", hex: "#8f867b" },
   { label: "Flint", hex: "#8a9092" },
   { label: "White", hex: "#f6f5f2" },
+  { label: "Cypress", hex: "#7f8a68" },
   // Upgrade vinyl siding
-  { label: "Cypress (upgrade)", hex: "#7f8a68" },
   { label: "Wedgewood (upgrade)", hex: "#54707f" },
   { label: "Shadow (upgrade)", hex: "#4a3f37" },
   { label: "Brunswick (upgrade)", hex: "#232f3b" },
@@ -50,6 +63,11 @@ const SHUTTER_COLORS: Swatch[] = [
   { label: "Blue", hex: "#3a4c60" },
   { label: "White", hex: "#eeece6" },
   { label: "Black", hex: "#1d1d1f" },
+];
+const GABLE_ACCENTS: Swatch[] = [
+  { label: "Dover White", hex: "#ececE6" },
+  { label: "Pewter", hex: "#7b8083" },
+  { label: "Cabin Cedar", hex: "#8e7965" },
 ];
 const CABINET_COLORS: Swatch[] = [
   { label: "Urban Oak", hex: "#c8a97c" },
@@ -132,6 +150,103 @@ function SwatchPicker({
   );
 }
 
+const VIEWS: { key: ViewName; label: string }[] = [
+  { key: "front", label: "Front" },
+  { key: "rear", label: "Rear" },
+  { key: "left", label: "Left end" },
+  { key: "right", label: "Right end" },
+];
+
+function previewCaption(home: DesignerPlan, elevation: PlanElevation, choices: ExteriorChoices): ReactNode {
+  const summary = [
+    `${choices.siding} siding`,
+    `${choices.shingles} shingles`,
+    choices.trim === "lineals" ? "lineals" : `${choices.shutterColor} shutters`,
+    choices.gableAccent ? `${choices.gableAccent} gables` : null,
+    choices.foundation === "block" ? "block foundation" : "vinyl skirting",
+  ].filter(Boolean).join(" · ");
+  return (
+    <>
+      <strong className="font-semibold">{home.name}</strong>
+      {elevation.sqft ? ` · ${elevation.sqft.toLocaleString("en-US")} sq ft` : ""} · {summary}.{" "}
+      {elevation.src === "sheet"
+        ? "Window and door placement follows Champion's floor plan sheet for this model."
+        : "Representative layout — we don't have this model's drawing on file, so window placement is typical for a home this size, not exact."}{" "}
+      Artist&rsquo;s illustration; colors are approximate, and porch, steps, foundation and landscaping are site-built and shown for illustration only.
+    </>
+  );
+}
+
+interface PreviewProps {
+  home?: DesignerPlan;
+  elevation: PlanElevation | null;
+  state: "idle" | "loading" | "ready" | "none";
+  choices: ExteriorChoices;
+  view: ViewName;
+  onView: (v: ViewName) => void;
+}
+
+/**
+ * The picture and its view tabs. A grid item that comes first on a phone and
+ * sticks under the header there while the swatches scroll past; on desktop
+ * the column sits beside the swatches and sticks as a whole. The caption is
+ * part of this block on desktop and rendered separately below the swatches
+ * on a phone (ElevationCaption), so the stuck block stays short.
+ */
+function ElevationPreview({ home, elevation, state, choices, view, onView }: PreviewProps) {
+  const frame = "rounded-xl border border-[var(--color-charcoal)]/10 bg-[#eaf1f5] overflow-hidden";
+  const column = "order-first lg:order-none sticky top-[72px] lg:top-24 self-start z-10 bg-white lg:bg-transparent space-y-3";
+  if (!home || state === "idle") {
+    return (
+      <div className={`${column} ${frame} flex items-center justify-center min-h-[120px] lg:min-h-[220px] p-6 text-center text-sm text-[var(--color-gray)]`}>
+        Choose a floor plan above and your home appears here in the colors you pick.
+      </div>
+    );
+  }
+  if (state === "loading") {
+    return <div className={`${column} ${frame} min-h-[120px] lg:min-h-[220px] animate-pulse`} aria-busy="true" aria-label="Loading the exterior preview" />;
+  }
+  if (!elevation) {
+    return (
+      <div className={`${column} ${frame} flex items-center justify-center min-h-[120px] lg:min-h-[220px] p-6 text-center text-sm text-[var(--color-gray)]`}>
+        We don&rsquo;t have an exterior drawing for the {home.name} yet — your color choices are still saved with your design.
+      </div>
+    );
+  }
+  return (
+    <div className={column}>
+      <div className={frame}>
+        <HomeElevation plan={elevation} choices={choices} view={view} id={`dyh-${home.slug}`} />
+      </div>
+      <div className="flex flex-wrap items-center gap-1.5 lg:gap-2 pb-2 lg:pb-0" role="tablist" aria-label="Elevation view">
+        {VIEWS.map((v) => (
+          <button
+            type="button"
+            key={v.key}
+            role="tab"
+            aria-selected={view === v.key}
+            onClick={() => onView(v.key)}
+            className={`px-2.5 lg:px-3 py-1.5 rounded-full border text-[11px] lg:text-xs font-semibold tracking-wide uppercase transition-colors ${
+              view === v.key
+                ? "border-[var(--color-teal)] bg-[var(--color-teal)] text-white"
+                : "border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/40"
+            }`}
+          >
+            {v.label}
+          </button>
+        ))}
+      </div>
+      <p className="hidden lg:block text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices)}</p>
+    </div>
+  );
+}
+
+/** The preview's caption for phones, where it follows the swatches instead of the stuck picture. */
+function ElevationCaption({ home, elevation, choices }: { home?: DesignerPlan; elevation: PlanElevation | null; choices: ExteriorChoices }) {
+  if (!home || !elevation) return null;
+  return <p className="lg:hidden text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices)}</p>;
+}
+
 export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; initialHome?: string }) {
   const [homeSlug, setHomeSlug] = useState(initialHome || "");
   const [bedroomLayout, setBedroomLayout] = useState("");
@@ -140,6 +255,13 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
   const [siding, setSiding] = useState("");
   const [shingle, setShingle] = useState("");
   const [shutter, setShutter] = useState("");
+  const [trim, setTrim] = useState<"shutters" | "lineals">("shutters");
+  const [gableAccent, setGableAccent] = useState("");
+  const [foundation, setFoundation] = useState<"block" | "skirting">("block");
+  const [addonPorch, setAddonPorch] = useState(false);
+  const [elevation, setElevation] = useState<PlanElevation | null>(null);
+  const [elevationState, setElevationState] = useState<"idle" | "loading" | "ready" | "none">("idle");
+  const [view, setView] = useState<ViewName>("front");
   const [cabinet, setCabinet] = useState("");
   const [flooring, setFlooring] = useState("");
   const [countertop, setCountertop] = useState("");
@@ -168,6 +290,46 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
   }, [plans]);
 
   const selectedHome = plans.find((p) => p.slug === homeSlug);
+
+  // Fetch the chosen plan's elevation; the picture below the swatches redraws from it.
+  useEffect(() => {
+    if (!selectedHome) {
+      setElevation(null);
+      setElevationState("idle");
+      return;
+    }
+    const q = new URLSearchParams();
+    if (selectedHome.modelNumber) q.set("model", selectedHome.modelNumber);
+    if (selectedHome.lengthFt) q.set("length", String(selectedHome.lengthFt));
+    if (selectedHome.widthFt) q.set("width", String(selectedHome.widthFt));
+    if (selectedHome.beds) q.set("beds", String(selectedHome.beds));
+    const ctrl = new AbortController();
+    setElevationState("loading");
+    fetch(`/api/plan-elevation?${q.toString()}`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: PlanElevation | null) => {
+        setElevation(data);
+        setElevationState(data ? "ready" : "none");
+        setView("front");
+        setAddonPorch(false);
+      })
+      .catch(() => {
+        if (!ctrl.signal.aborted) setElevationState("none");
+      });
+    return () => ctrl.abort();
+  }, [selectedHome]);
+
+  // What the picture is drawn in: the buyer's picks, with the board's first
+  // standard colours standing in until they choose.
+  const choices: ExteriorChoices = {
+    siding: siding || "Pearl",
+    shingles: shingle || "Black",
+    trim,
+    shutterColor: shutter || "Black",
+    gableAccent,
+    foundation,
+    addonPorch,
+  };
 
   function toggleUpgrade(u: string) {
     setUpgrades((prev) => (prev.includes(u) ? prev.filter((x) => x !== u) : [...prev, u]));
@@ -212,7 +374,11 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
       primaryBath && `Primary bath: ${primaryBath}`,
       siding && `Siding color: ${siding}`,
       shingle && `Shingle color: ${shingle}`,
-      shutter && `Shutter color: ${shutter}`,
+      trim === "lineals" ? "Window trim: lineals (no shutters)" : shutter && `Shutter color: ${shutter}`,
+      gableAccent && `Gable shake accent: ${gableAccent}`,
+      `Foundation shown: ${foundation === "block" ? "block perimeter wall" : "vinyl skirting"}`,
+      addonPorch && "Add Champion's optional porch",
+      elevation && `Exterior preview: ${elevation.src === "sheet" ? `drawn from sales sheet ${elevation.model || ""}` : "representative layout (no sheet on file)"}`,
       cabinet && `Cabinet finish: ${cabinet}`,
       flooring && `Flooring: ${flooring}`,
       countertop && `Countertop: ${countertop}`,
@@ -369,10 +535,75 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
         <div className="space-y-6">
           <div>
             <p className="text-xs font-bold tracking-[0.15em] uppercase text-[var(--color-lime-dark)] mb-3">Exterior</p>
-            <div className="space-y-4">
-              <div><span className="block text-sm font-medium mb-2">Siding color</span><SwatchPicker name="Siding color" options={SIDING_COLORS} value={siding} onChange={setSiding} /></div>
-              <div><span className="block text-sm font-medium mb-2">Shingles</span><SwatchPicker name="Shingles" options={SHINGLE_COLORS} value={shingle} onChange={setShingle} /></div>
-              <div><span className="block text-sm font-medium mb-2">Shutters</span><SwatchPicker name="Shutters" options={SHUTTER_COLORS} value={shutter} onChange={setShutter} /></div>
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-6 lg:gap-8">
+              <div className="space-y-4">
+                <div><span className="block text-sm font-medium mb-2">Siding color</span><SwatchPicker name="Siding color" options={SIDING_COLORS} value={siding} onChange={setSiding} /></div>
+                <div><span className="block text-sm font-medium mb-2">Shingles</span><SwatchPicker name="Shingles" options={SHINGLE_COLORS} value={shingle} onChange={setShingle} /></div>
+                <div>
+                  <span className="block text-sm font-medium mb-2">Window trim</span>
+                  <div className="flex flex-wrap gap-2 mb-3" role="radiogroup" aria-label="Window trim">
+                    {([["shutters", "Shutters"], ["lineals", "Lineals (trim around windows and doors)"]] as const).map(([val, label]) => (
+                      <button
+                        type="button"
+                        key={val}
+                        role="radio"
+                        aria-checked={trim === val}
+                        onClick={() => setTrim(val)}
+                        className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${
+                          trim === val
+                            ? "border-[var(--color-teal)] bg-[var(--color-teal)]/8 font-semibold"
+                            : "border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/40"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  {trim === "shutters" && <SwatchPicker name="Shutter color" options={SHUTTER_COLORS} value={shutter} onChange={setShutter} />}
+                </div>
+                <div>
+                  <span className="block text-sm font-medium mb-2">Gable shake accent <span className="font-normal text-[var(--color-gray)]">(optional)</span></span>
+                  <SwatchPicker name="Gable shake accent" options={GABLE_ACCENTS} value={gableAccent} onChange={(v) => setGableAccent(v === gableAccent ? "" : v)} />
+                </div>
+                <div>
+                  <span className="block text-sm font-medium mb-2">Foundation shown in the picture</span>
+                  <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Foundation">
+                    {([["block", "Block perimeter wall"], ["skirting", "Vinyl skirting"]] as const).map(([val, label]) => (
+                      <button
+                        type="button"
+                        key={val}
+                        role="radio"
+                        aria-checked={foundation === val}
+                        onClick={() => setFoundation(val)}
+                        className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${
+                          foundation === val
+                            ? "border-[var(--color-teal)] bg-[var(--color-teal)]/8 font-semibold"
+                            : "border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/40"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-[var(--color-gray)] mt-2">Foundation, steps and skirting are site work by your contractor, not part of the home.</p>
+                </div>
+                {elevation?.porch?.kind === "addon" && (
+                  <label className="flex items-center gap-3 cursor-pointer text-sm">
+                    <input type="checkbox" checked={addonPorch} onChange={(e) => setAddonPorch(e.target.checked)} className="w-4 h-4 accent-[var(--color-teal)]" />
+                    Show Champion&rsquo;s optional {elevation.porch.len}&rsquo; porch on this plan
+                  </label>
+                )}
+                <ElevationCaption home={selectedHome} elevation={elevation} choices={choices} />
+              </div>
+
+              <ElevationPreview
+                home={selectedHome}
+                elevation={elevation}
+                state={elevationState}
+                choices={choices}
+                view={view}
+                onView={setView}
+              />
             </div>
           </div>
           <div className="border-t border-[var(--color-charcoal)]/8 pt-6">

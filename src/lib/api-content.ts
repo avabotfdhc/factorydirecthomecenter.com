@@ -25,6 +25,8 @@ export interface ApiFloorPlan {
   priceFrom?: string;  // range-level anchor ("From $80,000") when exact prices are hidden
   virtualTour?: string; // Matterport URL when a 3D tour exists (cards show a badge)
   widthFt?: number;    // home width in feet (14/16/24/28/32), when derivable
+  lengthFt?: number;   // home length in feet, when the source records it (Design Your Home preview)
+  modelNumber?: string; // Champion model code (2452H32167); keys the exterior elevation data
   bedsMin?: number;    // set when the plan can be optioned with fewer bedrooms
   bedsMax?: number;    // set when the plan can be optioned with more bedrooms
   flexNote?: string;   // human-readable explanation of the factory option
@@ -150,6 +152,8 @@ async function localPlans(): Promise<ApiFloorPlan[]> {
     series: p.series || PRIME_SERIES,
     virtualTour: p.virtualTour || "",
     widthFt: parseInt(p.width, 10) || undefined,
+    lengthFt: parseInt(p.length, 10) || undefined,
+    modelNumber: p.modelNumber,
     floorPlanImage: pickDrawing([...(p.gallery || []), p.image]),
   }));
 }

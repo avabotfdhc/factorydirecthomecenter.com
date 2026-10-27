@@ -1919,3 +1919,30 @@ A stale `.env.local` dated 2026-06-23 with `NEXT_PUBLIC_GA_MEASUREMENT_ID="G-PLA
 and empty Clarity/GTM/Pixel IDs was found in this working tree and moved to
 `/tmp/fdhc-stale-env-local.bak`; it never reached production (`.vercelignore`)
 but would have made any local dev server load GA under a placeholder ID.
+
+# Design Your Home draws the exterior from Champion's sales sheets
+
+`/design-your-home` shows the chosen plan as an SVG elevation — front, rear and
+both ends — redrawn live in the siding, shingles, shutters or lineals, gable
+accent and foundation the buyer picks (`src/components/HomeElevation.tsx`, fed
+by `HomeDesigner`). Window and door placement is not invented: it is read off
+each model's L-101 literature sheet by `scripts/elevations/extract_elevations.py`
+(see the README there) into `src/lib/plan-elevations.json`, keyed by model
+number, so the HUD/modular and Aspire/Paramount twins share one entry. 191 of
+the 202 models with a sheet read cleanly; the rest, and any plan with no sheet,
+get a *representative* layout from their size, and the caption says so. The
+data file is ~70 KB and stays on the server: the designer fetches one plan at a
+time from `GET /api/plan-elevation?model=…` (`src/lib/plan-elevation.ts`), and
+`tests/plan-elevation.test.ts` fails if a client component ever imports it.
+
+The picture is an illustration and is labelled as one, under the specs
+disclaimer the page already carries (`HomeElevation` is in the disclaimer
+test's marker list). Foundation, steps, skirting and landscaping are site work
+the buyer contracts separately (see "We sell and deliver the home" above), and
+the caption says that too. No prices anywhere in it. The lead message gains the
+exterior choices and which drawing the buyer saw ("drawn from sales sheet
+2856H32103" or "representative layout"). Champion's board lists Cypress as a
+standard siding colour; the designer used to call it an upgrade and no longer does.
+
+To add or correct a plan's elevation, fix the extractor or the sheet and rerun
+— do not hand-edit `plan-elevations.json`.

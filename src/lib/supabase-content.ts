@@ -157,6 +157,8 @@ function toFloorPlan(r: FloorPlanRow): ApiFloorPlan {
     homeType: String(r.home_type || ""),
     series: String(r.series || ""),
     widthFt: widthFtFrom(r.width, `${r.slug} ${r.title || ""} ${r.model_number || ""}`),
+    ...(parseInt(String(r.length || ""), 10) > 0 ? { lengthFt: parseInt(String(r.length), 10) } : {}),
+    ...(r.model_number ? { modelNumber: String(r.model_number) } : {}),
     floorPlanImage: drawingFrom(r.floor_plan_images),
     ...(r.updated_at ? { updatedAt: String(r.updated_at) } : {}),
   };
@@ -175,7 +177,7 @@ export async function getSupabaseFloorPlans(
 ): Promise<ApiFloorPlan[]> {
   const select = [
     "slug", "name", "title", "price", "sqft", "beds", "baths",
-    "home_type", "series", "brand", "model_number", "width", "banner_image", "updated_at",
+    "home_type", "series", "brand", "model_number", "width", "length", "banner_image", "updated_at",
     "floor_plan_images(path,kind,sort_order)",
   ].join(",");
   let rows: FloorPlanRow[];

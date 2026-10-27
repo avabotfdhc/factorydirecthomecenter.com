@@ -47,6 +47,7 @@ const PLAN_MARKERS = [
   "FloorPlanCard",
   "FloorPlansGrid",
   "HomeDesigner",
+  "HomeElevation",
   "SaleHomesGrid",
   "AllSaleHomesTable",
   "PriceTriple",
