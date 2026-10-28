@@ -1,8 +1,11 @@
 // Server-side lookup of a plan's exterior elevation (see plan-elevation-types.ts).
 //
-// plan-elevations.json is ~70 KB and is keyed by Champion model number, which
+// plan-elevations.json is ~80 KB and is keyed by Champion model number, which
 // the HUD/modular twins (2852H32103 / 2852M32103) and the Aspire/Paramount
 // twins share, so one entry serves every page that describes the same box.
+// Topeka plans come from their L-101 sales sheets, Prime (Decatur) plans from
+// their LIT-1 colour floor plans, and Prime's Reverse Aisle plans carry their
+// base plan's drawing with `basedOn` set (scripts/elevations/README.md).
 // Import this only from server code — the /api/plan-elevation route hands the
 // browser one plan at a time.
 import data from "./plan-elevations.json";

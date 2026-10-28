@@ -122,8 +122,19 @@ function Defs({ c }: { c: Ctx }) {
   );
 }
 
-/** A window centred at cx (px) with its sill at `floorY - sillFt`; sizes from the code. */
-function Window({ c, cx, floorY, code, wFt }: { c: Ctx; cx: number; floorY: number; code?: string; wFt: number }) {
+/** Feet of wall a shutter needs beside the glass: trim, a gap and the panel. */
+export function shutterReachFt(windowWidthFt: number, lineals = false): number {
+  return (lineals ? 0.42 : 0.3) + 0.08 + (windowWidthFt >= 3.5 ? 15 : 12) / 12;
+}
+
+/**
+ * A window centred at cx (px) with its sill at `floorY - sillFt`; sizes from
+ * the code. `clearL`/`clearR` are the feet of bare wall to the next opening on
+ * each side: a shutter is drawn only where it fits, so a mulled pair (two
+ * windows a few inches apart, as Champion draws twin living-room windows) gets
+ * shutters on its outer edges and none jammed between the panes.
+ */
+function Window({ c, cx, floorY, code, wFt, clearL = Infinity, clearR = Infinity }: { c: Ctx; cx: number; floorY: number; code?: string; wFt: number; clearL?: number; clearR?: number }) {
   const { s } = c;
   const { w, h } = windowSize(code, wFt);
   const W = w * s, H = h * s;
@@ -133,8 +144,10 @@ function Window({ c, cx, floorY, code, wFt }: { c: Ctx; cx: number; floorY: numb
   const out: ReactNode[] = [];
   if (c.shut) {
     const sw = (w >= 3.5 ? 15 : 12) / 12 * s, g = 0.08 * s;
-    for (const sx of [x - tr - g - sw, x + W + tr + g]) {
-      out.push(<rect key={`sh${sx}`} x={sx} y={y - tr} width={sw} height={H + 2 * tr} fill={c.shut} stroke="rgba(0,0,0,.28)" />);
+    const need = shutterReachFt(w, c.lineals) + 0.1;
+    const sides = [clearL >= need ? x - tr - g - sw : null, clearR >= need ? x + W + tr + g : null].filter((v): v is number => v !== null);
+    for (const sx of sides) {
+      out.push(<rect key={`sh${sx}`} data-shutter="" x={sx} y={y - tr} width={sw} height={H + 2 * tr} fill={c.shut} stroke="rgba(0,0,0,.28)" />);
       out.push(<rect key={`sp1${sx}`} x={sx + sw * 0.18} y={y - tr + sw * 0.18} width={sw * 0.64} height={(H + 2 * tr) / 2 - sw * 0.27} fill="rgba(0,0,0,.08)" stroke="rgba(0,0,0,.22)" />);
       out.push(<rect key={`sp2${sx}`} x={sx + sw * 0.18} y={y - tr + (H + 2 * tr) / 2 + sw * 0.09} width={sw * 0.64} height={(H + 2 * tr) / 2 - sw * 0.27} fill="rgba(0,0,0,.08)" stroke="rgba(0,0,0,.22)" />);
     }
@@ -320,9 +333,31 @@ function Sky({ c, f }: { c: Ctx; f: Frame }) {
   );
 }
 
-function Opening_({ c, o, x0, floorY, groundY, steps }: { c: Ctx; o: Opening; x0: number; floorY: number; groundY: number; steps: boolean }) {
+/**
+ * Bare wall between an opening and its nearest neighbour on each side, in
+ * feet. A neighbouring window needs room for its own shutter too, so the
+ * clearance a window's shutter is judged against is halved on that side.
+ */
+export function shutterClearance(o: Opening, wall: readonly Opening[]): { left: number; right: number } {
+  const lo = o[1] - o[2] / 2, hi = o[1] + o[2] / 2;
+  let left = Infinity, right = Infinity;
+  for (const n of wall) {
+    if (n === o) continue;
+    const nlo = n[1] - n[2] / 2, nhi = n[1] + n[2] / 2;
+    const share = n[0] === "w" ? 2 : 1;
+    if (nhi <= lo + 0.05) left = Math.min(left, (lo - nhi) / share);
+    else if (nlo >= hi - 0.05) right = Math.min(right, (nlo - hi) / share);
+    else { left = 0; right = 0; }
+  }
+  return { left, right };
+}
+
+function Opening_({ c, o, x0, floorY, groundY, steps, wall = [] }: { c: Ctx; o: Opening; x0: number; floorY: number; groundY: number; steps: boolean; wall?: readonly Opening[] }) {
   const cx = x0 + o[1] * c.s;
-  if (o[0] === "w") return <Window c={c} cx={cx} floorY={floorY} code={o[3]} wFt={o[2]} />;
+  if (o[0] === "w") {
+    const clear = shutterClearance(o, wall);
+    return <Window c={c} cx={cx} floorY={floorY} code={o[3]} wFt={o[2]} clearL={clear.left} clearR={clear.right} />;
+  }
   if (o[0] === "d") {
     return (
       <g>
@@ -391,7 +426,7 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
   for (const o of openings) {
     if (recess && o[1] > recess.x - 0.3 && o[1] < recess.x + recess.w + 0.3) continue;
     if (mid && Math.abs(o[1] - mid.x) < mid.w / 2 + 0.3) continue;
-    items.push(<Opening_ key={`o${o[1]}`} c={c} o={o} x0={houseX} floorY={f.floor} groundY={f.ground} steps />);
+    items.push(<Opening_ key={`o${o[1]}`} c={c} o={o} x0={houseX} floorY={f.floor} groundY={f.ground} steps wall={openings} />);
   }
   // add-on porch: open, under the main roof, with posts and railing
   if (addon) {
@@ -463,7 +498,7 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
   }
   for (const o of plan.views[view]) {
     if (porchSpan && o[1] > porchSpan.x - 0.3 && o[1] < porchSpan.x + porchSpan.w + 0.3) continue;
-    items.push(<Opening_ key={`o${o[1]}`} c={c} o={o} x0={x0} floorY={f.floor} groundY={f.ground} steps />);
+    items.push(<Opening_ key={`o${o[1]}`} c={c} o={o} x0={x0} floorY={f.floor} groundY={f.ground} steps wall={plan.views[view]} />);
   }
   if (endPorch && porchSpan) {
     const px = x0 + porchSpan.x * s, pw = porchSpan.w * s;
@@ -473,7 +508,7 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
       if (o[1] < porchSpan.x || o[1] > porchSpan.x + porchSpan.w) continue;
       items.push(
         <g key={`b${o[1]}`} opacity={0.92}>
-          <Opening_ c={c} o={o} x0={x0} floorY={f.floor} groundY={f.ground} steps={false} />
+          <Opening_ c={c} o={o} x0={x0} floorY={f.floor} groundY={f.ground} steps={false} wall={endPorch.back} />
         </g>,
       );
     }
