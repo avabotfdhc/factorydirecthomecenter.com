@@ -311,11 +311,14 @@ overlap. Rules for the remaining batches:
   sources for each entry are in a comment above it. The same pass removed 22
   sentences sending readers to "our <Town> post" — those posts 301 back to the
   county page itself — and `tests/location-pages.test.ts` fails if one returns.
-- Next batches, by measured overlap: the remaining `county-pages.ts` counties
-  (Blackford, Wabash, Miami, Jay, Huntington, Grant, Marshall — 41–47% unique;
-  Elkhart and Kosciusko ~53%), then the `CityLocationTemplate` towns
+- **Batch 3 (2026-10-28):** Blackford, Jay, Grant, Wabash, Miami, Huntington,
+  Marshall, Elkhart and Kosciusko — 41–53% unique → 59–67%, overlap 30–40% →
+  18–21%. Every programmatic county page except Allen now carries sections,
+  facts, contacts and its own meta description; the residual overlap is the
+  route's shared copy (`FOOTINGS`, `PER_ROUTE`, the zoning-guide line, the CTA).
+- Next batch, by measured overlap: the `CityLocationTemplate` towns
   (Kendallville, New Haven, Columbia City, Albion, Churubusco, Huntertown,
-  Ligonier, Angola — 44–55%).
+  Ligonier, Angola — 44–55% unique, ~25% overlap with each other).
 - **Scheduling a post:** give it `publishAt` (an ISO instant; 13:00Z = 9 am Eastern) and set `date` to that day. Scheduled posts live in `allLocalBlogPosts`; everything that lists or serves posts reads `localBlogPosts`, which drops any post whose `publishAt` is after `SITE_BUILT_AT` — the **build** time, inlined by `next.config.ts` into server and client alike, so a deployment publishes a post everywhere (index, route, sitemap, registry, related cards) or nowhere. Consequence: **a post only appears after a production build made at or after its `publishAt`** — merge or redeploy on the day; the clock passing is not enough. `tests/scheduled-posts.test.ts` holds the cut-off, the date/`publishAt` match and the registry agreement; `tests/page-title.test.ts` checks scheduled titles too.
 - `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
 - The usual claim rules apply: no home dollar figures, contractor ranges only from `/guides/pricing`, and never say FDHC performs site work or setup.

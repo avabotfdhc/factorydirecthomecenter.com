@@ -138,6 +138,14 @@ export const countyPages: CountyPage[] = [
     zoningNote:
       "The Steuben County Plan Commission in Angola issues permits for the unincorporated county; Angola and Fremont permit within their limits. Manufactured homes are allowed in most residential and agricultural districts on a permanent foundation. Some lake associations have covenants beyond zoning, so we check those too.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (80,240); the Kosciusko County
+  // Area Plan Commission page and county permit checklist (building permit only
+  // after other approvals, including a driveway entrance permit; Syracuse issues
+  // its own), the Purdue-hosted county zoning ordinance (participating towns;
+  // Etna Green 2007, Burket 2014); the county health department's septic and
+  // well page and vacant-lot checklist; DNR's 2022 Lake Wawasee survey; SBOA on
+  // the Lakeland Regional Sewer District (North Webster); DNR's Lake
+  // Preservation Act guidance; Kosciusko REMC; the county's school list.
   {
     slug: "kosciusko-county",
     seat: "Warsaw",
@@ -145,41 +153,105 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Warsaw & the Lakes",
     intro:
-      "Kosciusko County mixes Warsaw's year-round neighbourhoods with lake country around Wawasee, Syracuse and North Webster. We order Champion HUD-code manufactured homes for buyers here, quote each one line by line from our Auburn showroom, and arrange delivery to the lot.",
+      "Kosciusko County will not issue a building permit until the other approvals are in hand — down to the driveway entrance permit — and it is home to Lake Wawasee, Indiana's largest natural lake. Here is the order things happen in when you place a Champion home here.",
     towns: ["Warsaw", "Winona Lake", "Syracuse", "North Webster", "Pierceton", "Milford", "Mentone", "Leesburg"],
     driveNote:
-      "Lake Wawasee is the largest natural lake wholly inside Indiana, and lots near it and the county's other lakes come with tighter setbacks and narrower lanes than a farm parcel. Walk your plan through the county before you choose a home size. " + PER_ROUTE,
+      "US 30 crosses the county through Warsaw and State Road 15 runs north and south, so the highway part of a delivery is direct; narrow lake roads are what we ask about. " + PER_ROUTE,
     points: [
-      "Lake lots and in-town Warsaw lots call for very different home sizes — pick the lot first",
-      "Single-section homes fit narrow lake parcels that a double-wide cannot",
-      "Year-round buyers working in Warsaw's orthopedic industry, and seasonal owners replacing a cottage",
-      "Every home quoted line by line, with freight on its own row",
+      "Every other approval before the building permit",
+      "A driveway entrance permit from the road authority",
+      "Lake Wawasee and the county's other lakes under DNR rules",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "The Kosciusko County Area Plan Commission in Warsaw handles zoning and permits outside the incorporated towns; Warsaw, Winona Lake, Syracuse and the other towns permit inside their limits. Lake associations can carry covenants that go further than zoning. Confirm your parcel with the office and read any covenants before you order — we can tell you which office to call.",
+      "The Kosciusko County Area Plan Commission, at the Area Planning Office on West Center Street in Warsaw, administers a zoning ordinance covering the unincorporated county and the towns that take part — Etna Green joined in 2007 and Burket in 2014. Syracuse issues its own building permits. Ask which applies to your parcel first.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Warsaw" },
+      { label: "Zoning and permits", value: "Kosciusko County Area Plan Commission" },
+      { label: "Septic and wells", value: "Kosciusko County Health Dept." },
+      { label: "Rural electric co-op", value: "Kosciusko REMC (Warsaw)" },
+    ],
+    sections: [
       {
-        question: "Which permits come first for a manufactured home in Kosciusko County?",
-        answer:
-          "Start with the septic: the Kosciusko County Health Department requires a permit for any new or repaired septic system or well. Outside the towns, the Kosciusko County Area Plan Commission in Warsaw issues the improvement location permit, and a lot in a mapped floodplain needs a flood development permit first. Inside Warsaw, the city's building department handles building permits. Your contractors pull these permits; we can tell you which office answers for your address.",
+        heading: "Every approval first, then the building permit",
+        paragraphs: [
+          "The Area Plan Commission will not issue a building permit until the other approvals are in hand — including a driveway entrance permit from the county or state highway department, depending on which road your lot is on. That last one surprises people. Apply for the driveway permit as soon as you know where the entrance will go, because the delivery truck needs that entrance too.",
+        ],
       },
       {
-        question: "Can I put a manufactured home on a lake lot in Kosciusko County?",
-        answer:
-          "Often, but lake lots are where setbacks, septic placement and association covenants bite hardest. Get the lot's survey and the covenants first, then choose a home that fits them — a single-section plan solves many narrow-lot problems.",
+        heading: "Septic and well on a vacant lot",
+        paragraphs: [
+          "For a vacant lot, the Kosciusko County Health Department's checklist is short: fill out the septic and well applications, get a soil scientist's report, and the department issues a specification sheet for the system. Do it before you finalise the floor plan, because the bedroom count sizes the system and the soil decides where it goes.",
+        ],
       },
       {
-        question: "Should I buy a new or a used manufactured home near Warsaw?",
-        answer:
-          "A new HUD-code home comes with Champion's warranty, current energy standards and a known history; a used one may not have any of those. Compare them on the same terms before you shop the used market.",
+        heading: "Lake Wawasee and the lake country",
+        paragraphs: [
+          "Lake Wawasee, by Syracuse, is Indiana's largest natural lake — about 3,410 acres in the DNR's 2022 survey — and the county has many more. Work at or lakeward of a public lake's shoreline, from a seawall to regrading at the water, needs Indiana DNR approval under the Lake Preservation Act, with a 30-day public notice. Around several lakes, sewer service comes from the Lakeland Regional Sewer District based in North Webster; ask whether your lot is on it before you plan a septic system.",
+          "Lake lots are often narrow. Measure the buildable width after setbacks before choosing a plan; a single-section home often fits where a wider one does not.",
+        ],
       },
       {
-        question: "Do you deliver to Kosciusko County?",
-        answer: "Yes. We deliver across Indiana, and freight is quoted per route as its own line on your estimate.",
+        heading: "Power and schools",
+        paragraphs: [
+          "Kosciusko REMC, headquartered in Warsaw, serves much of the countryside; ask the provider for your parcel what service to the building site will take, and confirm whether natural gas reaches it. The county's schools include Warsaw Community, Wawasee, Tippecanoe Valley, Whitko and Triton, several of which cross county lines — confirm the district for your address.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Kosciusko County Area Plan Commission",
+        role: "Zoning and building permits for the unincorporated county and participating towns; issued after other approvals are in hand.",
+        href: "https://www.kosciusko.in.gov/department/board.php?fDD=2-46",
+      },
+      {
+        name: "Kosciusko County Health Department",
+        role: "Septic and well applications, soil scientist report and specification sheet.",
+        href: "https://www.in.gov/localhealth/kosciuskocounty/environmental-health-services/septic-and-well-systems",
+      },
+      {
+        name: "County or state highway department",
+        role: "Driveway entrance permit for your lot, required before the building permit.",
+      },
+      {
+        name: "Indiana DNR, Division of Water",
+        role: "Approvals for work at or lakeward of a public lake's shoreline.",
+        href: "https://www.in.gov/dnr/water/",
+      },
+    ],
+    faqs: [
+      {
+        question: "Why do I need a driveway permit before my building permit in Kosciusko County?",
+        answer:
+          "The Area Plan Commission issues the building permit only after the other approvals are in hand, including a driveway entrance permit from the county or state highway department for your road.",
+      },
+      {
+        question: "What does the health department need for a vacant lot?",
+        answer:
+          "Septic and well applications and a soil scientist's report; the department then issues a specification sheet for the septic system.",
+      },
+      {
+        question: "Can I put a home on Lake Wawasee or another lake?",
+        answer:
+          "The home is a county or town permit question, but shoreline work needs Indiana DNR approval. Ask the Lakeland Regional Sewer District whether your lot has sewer before planning a septic system.",
+      },
+      {
+        question: "Do you deliver to Warsaw and the lakes?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Warsaw & Kosciusko County, IN: every approval before the building permit, the driveway permit, septic and well steps, and Lake Wawasee.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (36,662); the Huntington
+  // County Department of Community Development page (permits for the
+  // unincorporated county and Andrews, Markle, Mount Etna, Roanoke, Warren) and
+  // the 2024 draft Unified Development Ordinance; the City of Huntington's plan
+  // commission, BZA and historic review board; the county health department's
+  // septic permit process; Huntington County Community School Corporation;
+  // NIPSCO's gas town index; Heartland REMC. Reservoir facts are general (Army
+  // Corps / DNR roles) and not tied to a parcel.
   {
     slug: "huntington-county",
     seat: "Huntington",
@@ -187,36 +259,101 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Huntington, Roanoke & Andrews",
     intro:
-      "Huntington County runs from Roanoke on the edge of the Fort Wayne area to farm country around Warren and Andrews, with the Salamonie and J. Edward Roush reservoirs in between. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+      "Huntington County issues permits for the countryside and five of its towns from one department, has a single school district for the whole county, and lays out its septic permit in five plain steps. Here is how placing a Champion home works here.",
     towns: ["Huntington", "Roanoke", "Andrews", "Warren", "Markle", "Mount Etna"],
     driveNote:
-      "Many Huntington County buyers commute toward Fort Wayne and want a busy-household layout — a mudroom-style entry, a second bath, room for pets. Bring your list to the Auburn showroom and walk plans against it. " + PER_ROUTE,
+      "US 24 runs through Huntington toward Fort Wayne and Wabash, so the highway part of a delivery is direct; the county road and lane to your lot are what we ask about. " + PER_ROUTE,
     points: [
-      "Commuter lots near Roanoke and rural acreage near Warren and Andrews",
-      "Plans with a back-door entry, utility room and second bath for busy families",
-      "Champion's HUD-code homes are built for Indiana's wind and snow loads",
-      "Line-item quote: the home, the options and the freight on separate lines",
+      "One county department for the countryside and five towns",
+      "A five-step septic permit process",
+      "One school district for the whole county",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Huntington County's planning office in Huntington handles the unincorporated county, and the city and towns permit inside their own limits. Most agricultural and rural residential districts allow a HUD-code home with the right foundation and skirting. Confirm your parcel's zoning with the office before you order — we can tell you which one answers for your address.",
+      "The Huntington County Department of Community Development reviews and issues building permits for the unincorporated county and the towns of Andrews, Markle, Mount Etna, Roanoke and Warren. The City of Huntington has its own plan commission, board of zoning appeals and historic review board. In 2024 the county was drafting a new Unified Development Ordinance, so ask for the rules currently in force.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Huntington" },
+      { label: "Permits (county and five towns)", value: "Dept. of Community Development" },
+      { label: "Septic", value: "Huntington County Health Dept." },
+      { label: "School district", value: "Huntington County Community Schools" },
+    ],
+    sections: [
       {
-        question: "Which floor plans suit a busy household in Huntington County?",
-        answer:
-          "Look for a separate entry with a utility room beside it, a second full bath, and bedrooms split from the main living space.",
+        heading: "Five steps to a septic permit",
+        paragraphs: [
+          "The Huntington County Health Department sets the order out plainly. First, hire a soil scientist from the Indiana Registry of Soil Scientists — the county keeps a list. Second, file the application with the soil report, and the department issues the minimum specifications for the system. Third, your designer or installer submits construction plans, which the department reviews within 30 days. Fourth, the permit is issued once the plans are approved. Fifth, call the department before construction starts and at each inspection.",
+          "Choose the floor plan before step two, because the bedroom count sizes the system.",
+        ],
       },
       {
-        question: "Are manufactured homes allowed outside Huntington city limits?",
-        answer:
-          "In many rural and agricultural districts, yes, usually with foundation and skirting standards. The county planning office gives the answer for your specific parcel.",
+        heading: "The city is its own jurisdiction",
+        paragraphs: [
+          "Inside the City of Huntington, zoning and appeals go through the city's own plan commission and board of zoning appeals, and older parts of the city have a historic review board. If you are looking at a city lot, ask the city what applies before you choose a plan and exterior, and whether the lot sits in a historic area.",
+        ],
       },
       {
-        question: "Do you deliver to Huntington County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Reservoirs and the upper Wabash",
+        paragraphs: [
+          "J. Edward Roush Lake (long known as Huntington Lake) and Salamonie Lake were built for flood control on the upper Wabash. The Army Corps of Engineers runs the dams and water levels and the Indiana DNR manages much of the surrounding land, so that land is not for sale for homes. For private parcels near the Wabash or Little Wabash rivers or their creeks, have your surveyor check the flood maps before you buy.",
+        ],
+      },
+      {
+        heading: "Schools and utilities",
+        paragraphs: [
+          "One school corporation, Huntington County Community Schools, serves the whole county, with Huntington North as its high school — so the district question is simpler here than almost anywhere else we deliver. NIPSCO supplies natural gas in Huntington, and Heartland REMC serves part of the countryside. Ask the providers for your parcel what service to the building site will take.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Huntington County Department of Community Development",
+        role: "Building permits for the unincorporated county and Andrews, Markle, Mount Etna, Roanoke and Warren.",
+        href: "https://www.huntington.in.us/county/department/?fDD=35-0",
+      },
+      {
+        name: "Huntington County Health Department",
+        role: "Septic permits: IRSS soil scientist, specifications, plan review, permit and inspections.",
+        href: "https://secure.in.gov/localhealth/huntingtoncounty/environmental-sanitarian/septic",
+      },
+      {
+        name: "City of Huntington — Plan Commission and BZA",
+        role: "Zoning and appeals inside the city.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Who issues the permit for a manufactured home in Roanoke or Andrews?",
+        answer:
+          "The Huntington County Department of Community Development, which issues building permits for the unincorporated county and the towns of Andrews, Markle, Mount Etna, Roanoke and Warren.",
+      },
+      {
+        question: "How long does the septic permit take in Huntington County?",
+        answer:
+          "It follows five steps, starting with a registered soil scientist. Once your designer submits construction plans, the health department reviews them within 30 days, and the permit follows approval.",
+      },
+      {
+        question: "Which school district would my home be in?",
+        answer:
+          "Huntington County Community Schools covers the whole county, with Huntington North as its high school.",
+      },
+      {
+        question: "Do you deliver to Huntington?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Huntington County, IN: one permit office for the county and five towns, a five-step septic permit, one school district and the reservoirs.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (207,047); Elkhart County
+  // Planning & Development's ILP brochure and the 6/1/2024 Development
+  // Ordinance (replacing the 2015 zoning ordinance); county permit logs (a
+  // separate residential mobile-home permit type naming the installer); the City
+  // of Elkhart zoning ordinance; the county health department's septic page
+  // (Ordinance 2012-153; registered installers) and well page (permit before
+  // construction; drillers and pump installers register; 2017 ordinance);
+  // in.gov's list of seven school corporations; Visit Elkhart County on the
+  // RV and manufactured-housing industry.
   {
     slug: "elkhart-county",
     seat: "Goshen",
@@ -224,41 +361,101 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Goshen, Elkhart & Nappanee",
     intro:
-      "Elkhart County builds more recreational vehicles than anywhere else in the country, so buyers here know factory building well — and often ask how a HUD-code home differs from an RV or a park model. We order Champion HUD-code manufactured homes for buyers in Goshen, Elkhart, Nappanee, Middlebury and the farm country between them.",
+      "Elkhart County is the heart of the RV and manufactured housing industry, and it permits a new home in a set order: zoning first through an Improvement Location Permit, then a building permit reviewed by health, highway and soil and water. Here is how placing a Champion home works here.",
     towns: ["Goshen", "Elkhart", "Nappanee", "Middlebury", "Bristol", "Millersburg", "Wakarusa"],
     driveNote:
-      "A HUD-code home is a permanent residence built to the federal manufactured housing code, not a vehicle — it is titled, financed, insured and zoned differently from an RV. " + PER_ROUTE,
+      "US 20, US 33 and the Indiana Toll Road cross the county, so the highway part of a delivery is direct; the county road and lane to your lot are what we ask about. " + PER_ROUTE,
     points: [
-      "Year-round homes, not seasonal units: built to the HUD code and anchored on a foundation",
-      "Rural parcels around Middlebury and Millersburg and town lots in Goshen and Nappanee",
-      "Single-section and multi-section Champion plans for different lot sizes",
-      "Every quote itemised, freight included as its own line",
+      "Zoning first, through an Improvement Location Permit",
+      "A 2024 Development Ordinance replaced the old zoning code",
+      "Registered well drillers and septic installers",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Elkhart County Planning and Development in Goshen handles zoning outside the cities and towns; Goshen, Elkhart and Nappanee each permit inside their limits. Rules for a HUD-code home differ from the rules for an RV or a park model, so ask about the home type specifically. Confirm your parcel with the right office before you order — we can tell you which one that is.",
+      "Elkhart County Planning & Development, in the Public Services Building on Elkhart Road in Goshen, administers the Elkhart County Development Ordinance, which took effect in June 2024 and replaced the 2015 zoning ordinance. The cities of Elkhart, Goshen and Nappanee run their own zoning. Ask which office has your parcel, and ask for the current ordinance rather than an older copy.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Goshen" },
+      { label: "Zoning and permits", value: "Elkhart County Planning & Development" },
+      { label: "Septic and wells", value: "Elkhart County Health Dept." },
+      { label: "School corporations", value: "Seven, from Baugo to Wa-Nee" },
+    ],
+    sections: [
       {
-        question: "Which permits come first for a manufactured home in Elkhart County?",
-        answer:
-          "Septic permits come from the Elkhart County Health Department's environmental health division. Outside the cities, Elkhart County Planning and Development in Goshen handles zoning and building permits; inside Goshen, the city requires a zoning clearance before it issues building permits, and the City of Elkhart runs its own permit center. Your contractors pull these permits; we can tell you which office answers for your address.",
+        heading: "Zoning first, then the building permit",
+        paragraphs: [
+          "In the unincorporated county the first step is zoning review, through an Improvement Location Permit. The building permit application comes after, with buildable plans, and is routed to the health department, the highway department and the Soil & Water Conservation District. The county's permit records carry a separate residential permit type for a mobile or manufactured home that names the installer, so have your set-up contractor lined up before you apply.",
+          "The rules sit in the Development Ordinance adopted in 2024. Ask the planning office what it requires for a manufactured home in your parcel's district — foundation, skirting and placement — and give that to your contractor.",
+        ],
       },
       {
-        question: "Is a manufactured home the same as an RV or a park model?",
-        answer:
-          "No. A manufactured home is built to the federal HUD code as a permanent dwelling; RVs and most park models are built to different standards for recreational or seasonal use. That difference changes zoning, titling, insurance and financing.",
+        heading: "Registered drillers and installers",
+        paragraphs: [
+          "Every new private well needs a permit from the Elkhart County Health Department before it is built, and well drillers and pump installers must register with the department first. Septic systems fall under the county's Private Sewage System Ordinance, and the department keeps the list of registered installers. Ask anyone you hire to confirm their registration before work starts.",
+        ],
       },
       {
-        question: "Can I place a manufactured home in rural Elkhart County?",
-        answer:
-          "Many agricultural and rural residential districts allow one with the right foundation and skirting. Confirm your parcel with Elkhart County Planning and Development, or the city or town office if you are inside limits.",
+        heading: "The RV and manufactured housing capital",
+        paragraphs: [
+          "Elkhart County calls itself the RV capital of the world, and the RV/MH Hall of Fame in Elkhart covers both recreational vehicles and manufactured housing. That makes it a place where buyers often already know the difference between an RV, a park model and a HUD-code home — a HUD-code manufactured home is a permanent residence built to the federal code, titled and financed as a home.",
+        ],
       },
       {
-        question: "Do you deliver to Elkhart County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Schools",
+        paragraphs: [
+          "The county has seven school corporations — Baugo, Concord, Elkhart, Fairfield, Goshen, Middlebury and Wa-Nee — so the district can change from one road to the next. Confirm it for the exact address before you buy land.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Elkhart County Planning & Development",
+        role: "Improvement Location Permits and building permits for the unincorporated county under the 2024 Development Ordinance.",
+      },
+      {
+        name: "Elkhart County Health Department — Environmental Health",
+        role: "Septic permits and registered installers; well permits and driller registration.",
+        href: "https://health.elkhartcounty.com/en/environmental-health/about-environmental-health/septic-permits/",
+      },
+      {
+        name: "City of Elkhart, Goshen or Nappanee planning offices",
+        role: "Zoning inside each city.",
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the first permit for a manufactured home in Elkhart County?",
+        answer:
+          "In the unincorporated county, an Improvement Location Permit for zoning review. The building permit follows and is routed to health, highway and the Soil & Water Conservation District.",
+      },
+      {
+        question: "Which zoning rules apply now?",
+        answer:
+          "The Elkhart County Development Ordinance, in effect since June 2024, which replaced the 2015 zoning ordinance. Inside Elkhart, Goshen or Nappanee, the city's own zoning applies.",
+      },
+      {
+        question: "Does my well driller need to be registered?",
+        answer:
+          "Yes. Well drillers and pump installers must register with the Elkhart County Health Department, and every new well needs a permit before construction.",
+      },
+      {
+        question: "Do you deliver to Goshen, Elkhart and Nappanee?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Goshen & Elkhart County, IN: the ILP-first permit order, the 2024 Development Ordinance, registered drillers and installers, and schools.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (30,976); the Wabash County
+  // Advisory Plan Commission page (jurisdiction: unincorporated county, Lagro,
+  // LaFontaine, Roann; not Wabash or North Manchester or their fringe areas),
+  // its FAQ and 2024 minutes (tax-status and drainage checks before a building
+  // permit; special exceptions to the BZA; Chapter 7 of the 2023 ordinance on
+  // manufactured homes); the county health department's septic handout; the
+  // county Flood Damage Prevention Ordinance; NIPSCO's gas tariff index of towns;
+  // Heartland and Miami-Cass REMC; the three school corporations. The county
+  // FAQ is inconsistent on where manufactured homes are allowed, so the page
+  // sends buyers to the plan commission rather than stating a rule.
   {
     slug: "wabash-county",
     seat: "Wabash",
@@ -266,36 +463,99 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Wabash & North Manchester",
     intro:
-      "Wabash County centres on the city of Wabash and the college town of North Manchester, with small towns and farm ground along the Wabash and Eel rivers. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+      "In Wabash County the county plans for the countryside and three small towns, while the City of Wabash and North Manchester zone themselves and the land around them. A manufactured home can need a special exception, and a building permit waits on a tax and drainage check. Here is the order things happen in.",
     towns: ["Wabash", "North Manchester", "Lagro", "LaFontaine", "Roann", "Urbana"],
     driveNote:
-      "Smaller lots in Wabash and North Manchester reward a plan that lives larger than its footprint — an open kitchen and living area, vaulted ceilings, and windows on more than one wall. " + PER_ROUTE,
+      "US 24 crosses the county east to west through Wabash, so most of a delivery is on a four-lane route; the county road and the lane to your lot are what we ask about. " + PER_ROUTE,
     points: [
-      "Open-plan single-section homes for town lots",
-      "Multi-section homes for farm parcels with room to spread out",
-      "Options like vaulted ceilings and extra windows chosen at order",
-      "Freight on its own line, never folded into the home price",
+      "County zoning for the countryside, Lagro, LaFontaine and Roann",
+      "Wabash and North Manchester zone their own fringe areas",
+      "A special exception may be needed for a manufactured home",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Wabash County's planning office handles the unincorporated county, and the city of Wabash and the towns permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+      "The Wabash County Planning & Zoning Department and Advisory Plan Commission, on West Hill Street in Wabash, cover the unincorporated county and the towns of Lagro, LaFontaine and Roann. The City of Wabash and the Town of North Manchester zone themselves and the land just outside their limits. Find out which applies to your parcel first.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Wabash" },
+      { label: "County zoning", value: "Wabash County Planning & Zoning" },
+      { label: "Septic", value: "Wabash County Health Dept." },
+      { label: "Natural gas (in the towns)", value: "NIPSCO" },
+    ],
+    sections: [
       {
-        question: "How do I make a single-section home feel bigger?",
-        answer:
-          "Choose an open kitchen and living area, raise the ceiling where the plan allows, add windows, and keep storage built in.",
+        heading: "Manufactured homes and special exceptions",
+        paragraphs: [
+          "Chapter 7 of the county's zoning ordinance, in force since January 2023, deals with mobile and manufactured homes and defines a manufactured home as one built to the HUD code after June 15, 1976. In some residential districts a manufactured home is allowed only by special exception, which is heard by the Board of Zoning Appeals — the plan commission itself does not issue permits or grant variances. Ask the planning department what your parcel's district allows before you buy, and allow time for a hearing if one is needed.",
+        ],
       },
       {
-        question: "Can a manufactured home go on a town lot in North Manchester or Wabash?",
-        answer:
-          "That is a question for the town or city office, since each permits inside its own limits. Ask about lot size, setbacks and foundation rules before you choose a home width.",
+        heading: "Tax status and drainage, before the building permit",
+        paragraphs: [
+          "The plan commission's 2024 minutes record a county ordinance that requires the treasurer's office to confirm the parcel's tax status, and requires drainage approval, before a building permit is issued. If you are buying land, make sure the taxes are current at closing and ask about any county drain on the parcel early — either can hold up the permit after the home is already ordered.",
+        ],
       },
       {
-        question: "Do you deliver to Wabash County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Septic comes before anything else",
+        paragraphs: [
+          "The Wabash County Health Department needs a site evaluation from a state-certified soil scientist, sent to the department, and a plot design map from your contractor; the septic permit is not issued until that map is accepted. Under the state rule, neither the house nor the septic system may be started until the septic permit is in hand, so this step sets your whole schedule.",
+        ],
+      },
+      {
+        heading: "Floodplains and utilities",
+        paragraphs: [
+          "The county's Flood Damage Prevention Ordinance covers the unincorporated county and LaFontaine, Lagro and Roann, and requires a floodplain development permit for building in a mapped floodplain. Where a site is in a regulatory floodway, the Indiana DNR has to issue its own floodway permit too. Check the flood maps for any parcel near the Wabash or Eel River or their creeks.",
+          "NIPSCO supplies natural gas in Wabash, North Manchester, Lagro, Roann, Urbana and other communities in the county; out in the countryside, confirm whether gas reaches your parcel. Electric service varies, with Heartland REMC and Miami-Cass REMC each serving part of the county.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Wabash County Planning & Zoning / Advisory Plan Commission",
+        role: "Zoning and permits for the unincorporated county, Lagro, LaFontaine and Roann; special exceptions go to the BZA.",
+        href: "https://secure.in.gov/counties/wabash/departments/advisory-plan-commission",
+      },
+      {
+        name: "Wabash County Health Department",
+        role: "Septic permits: certified soil scientist's site evaluation and the contractor's plot design map.",
+      },
+      {
+        name: "City of Wabash Building Department",
+        role: "Improvement location and building permits inside the city and its fringe area.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I put a manufactured home on land in Wabash County?",
+        answer:
+          "It depends on the district. The county ordinance has a chapter on manufactured homes, and in some residential districts one needs a special exception from the Board of Zoning Appeals. Ask the county planning department about your parcel before you buy.",
+      },
+      {
+        question: "Who handles zoning near North Manchester or the City of Wabash?",
+        answer:
+          "Those two zone themselves and the land just outside their limits. The county handles the rest of the countryside plus Lagro, LaFontaine and Roann.",
+      },
+      {
+        question: "Why is my building permit waiting on the county treasurer?",
+        answer:
+          "A county ordinance requires the parcel's tax status to be confirmed, and drainage to be approved, before a building permit is issued. Make sure taxes are current when you buy.",
+      },
+      {
+        question: "Do you deliver to Wabash and North Manchester?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Wabash County, IN: who zones Wabash and North Manchester, special exceptions for manufactured homes, septic first and floodplain permits.",
   },
+  // Sources checked 2026-10-28: in.gov's Jay County places list; the Jay/Portland
+  // Building & Planning Department page (city and county permits, inspections,
+  // rezonings, both plan commissions); the joint plan commission agenda of
+  // 2026-02-12; The Commercial Review on Bitter Ridge and Bluff Point wind
+  // farms, the proposed 2025 wind-ordinance review and Millers Branch /
+  // Salamonie River flooding in Portland; Jay County REMC (Portland); INDOT
+  // county map; the Jay School Corporation. The health department's septic
+  // process and the gas provider were not confirmed and are not described.
   {
     slug: "jay-county",
     seat: "Portland",
@@ -303,36 +563,95 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Portland & the Ohio Line",
     intro:
-      "Jay County sits on the Ohio line, with Portland at its centre and Dunkirk, Redkey and Pennville around it. Many buyers here are moving from renting to owning. We order Champion HUD-code manufactured homes for them and quote every line so the numbers are clear from the start.",
+      "In Jay County one office issues building and zoning permits for both Portland and the county, wind turbines already stand on farm ground, and downtown Portland has a long flooding history. Here is what that means for placing a Champion home here.",
     towns: ["Portland", "Dunkirk", "Redkey", "Pennville", "Bryant", "Salamonia"],
     driveNote:
-      "Moving from a rental means planning more than a monthly payment: land or a lot, the site work you will contract, utilities, insurance and taxes. " + PER_ROUTE,
+      "US 27, State Road 67 and State Road 26 meet at Portland, with State Roads 1 and 18 crossing the county, so most of a delivery is on through routes; the farm lane at the end is what we ask about. " + PER_ROUTE,
     points: [
-      "First-time owners moving from a rental",
-      "Farm parcels and small-town lots across the county",
-      "A line-item quote that shows the home, options and freight separately",
-      "A lender list of companies past customers have used, if you need one — you choose your own lender",
+      "One building and planning office for Portland and the county",
+      "Wind farms on farm ground, and setback rules under review",
+      "Flood ground along Millers Branch and the Salamonie",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Jay County's planning office in Portland handles the unincorporated county, and Portland, Dunkirk and the towns permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+      "The Jay/Portland Building & Planning Department issues building and zoning permits for both the City of Portland and Jay County, carries out the inspections, handles rezonings and staffs both plan commissions. Whether your land is in the city or out on a county road, start there and ask which plan commission and district your parcel falls under.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Portland" },
+      { label: "Permits (city and county)", value: "Jay/Portland Building & Planning" },
+      { label: "Towns", value: "Bryant, Dunkirk, Pennville, Portland, Redkey, Salamonia" },
+      { label: "Rural electric co-op", value: "Jay County REMC (Portland)" },
+    ],
+    sections: [
       {
-        question: "What should a renter plan for before buying a manufactured home?",
-        answer:
-          "Where the home will sit, the site work you will hire out, utilities, insurance and property taxes, alongside the home itself.",
+        heading: "One counter for city and county",
+        paragraphs: [
+          "Most counties send you to one office in town and another in the countryside. Jay County does not: the Jay/Portland Building & Planning Department handles building and zoning permits, inspections and rezonings for both, and staffs both the city and county plan commissions, which have also met jointly. That makes it easy to find the right person — ask them for the district your parcel is in and what a manufactured home needs there.",
+        ],
       },
       {
-        question: "Do you arrange financing?",
-        answer:
-          "No. You choose your own lender. We can hand you a list of lenders our past customers have used; we recommend none of them and we do not pull credit.",
+        heading: "Wind turbines on the horizon",
+        paragraphs: [
+          "Two wind farms already operate in the county, Bitter Ridge and Bluff Point, and a third, a 200-megawatt project from RWE, is targeted for 2031. In 2025 county planning staff proposed pausing new wind projects to review the wind ordinance, including turbine setbacks. If you are buying farm ground, ask the planning department where turbines stand or are proposed near the parcel, and visit at different times of day before you commit.",
+        ],
       },
       {
-        question: "Do you deliver to Jay County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Millers Branch, the Salamonie and Portland",
+        paragraphs: [
+          "Downtown Portland has flooded repeatedly from Millers Branch and the Salamonie River, enough that the Army Corps of Engineers came to look at the problem in 2018. If you are considering a lot in or near Portland, or any parcel beside the river or a branch, have your surveyor check the flood maps for the building site before you buy. A home in a flood zone may need to sit higher, which changes the foundation and the steps.",
+        ],
+      },
+      {
+        heading: "Power and schools",
+        paragraphs: [
+          "Jay County REMC is headquartered in Portland. Ask the electric provider for your parcel what it costs to bring service to the building site, and confirm whether natural gas reaches it before you choose a furnace. The county's schools are run by the Jay School Corporation, with Jay County Junior-Senior High School and elementaries including East Jay, West Jay and Redkey.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Jay/Portland Building & Planning Department",
+        role: "Building and zoning permits, inspections and rezonings for Portland and Jay County; staffs both plan commissions.",
+        href: "https://www.in.gov/counties/jay/departments/building-and-planning/",
+      },
+      {
+        name: "Jay County Health Department",
+        role: "Septic questions for parcels off a town sewer.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Who issues the permit for a manufactured home in Jay County?",
+        answer:
+          "The Jay/Portland Building & Planning Department, which issues building and zoning permits for both the City of Portland and the county and handles the inspections.",
+      },
+      {
+        question: "Are there wind turbines near land for sale in Jay County?",
+        answer:
+          "Possibly. Bitter Ridge and Bluff Point wind farms already operate in the county and another is planned. Ask the planning department about the parcel and visit before you buy.",
+      },
+      {
+        question: "Does Portland flood?",
+        answer:
+          "Parts of it have, repeatedly, from Millers Branch and the Salamonie River. Have your surveyor check the flood maps for any lot in or near Portland before you buy.",
+      },
+      {
+        question: "Do you deliver to Portland and Dunkirk?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Portland & Jay County, IN: one permit office for city and county, wind farms and setback review, and Millers Branch flooding.",
   },
+  // Sources checked 2026-10-28: Grant County Area Plan Commission page
+  // (jurisdiction: unincorporated county plus Van Buren, Upland, Matthews,
+  // Jonesboro, Fairmount, Sweetser), its contractor-registration notice and
+  // residential permit form (manufactured home setup section); the City of
+  // Marion ILP procedures; the Grant County Health Department septic FAQ,
+  // homebuyer brochure and registered-installer page; USGS SIR 2014-5060
+  // (Mississinewa flood-inundation maps at Marion), the county's 2017 hazard
+  // mitigation flood exhibit and the NWS Marion gauge. Electric providers are
+  // described only where sourced; gas was not confirmed.
   {
     slug: "grant-county",
     seat: "Marion",
@@ -340,40 +659,102 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Marion, Gas City & Upland",
     intro:
-      "Grant County stretches along I-69 from Marion and Gas City to Fairmount, Upland and Jonesboro. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line from our Auburn showroom.",
-    towns: ["Marion", "Gas City", "Jonesboro", "Fairmount", "Upland", "Swayzee", "Van Buren"],
+      "Grant County splits permits three ways — Marion, the county's area plan commission, and Gas City — and its permit form has a section just for manufactured home set-up. Septic starts with a certified soil scientist, and the Mississinewa runs through Marion. Here is the order things happen in.",
+    towns: ["Marion", "Gas City", "Jonesboro", "Fairmount", "Upland", "Swayzee", "Van Buren", "Sweetser", "Matthews"],
     driveNote:
-      "The drive to Auburn is worth one well-planned trip. Shortlist plans online, bring your lot details and must-haves, and walk the homes on display with a list so one trip answers your questions. " + PER_ROUTE,
+      "I-69 crosses the county, with US 35 and State Roads 9, 13, 18 and 5 reaching Marion and the towns, so most of a delivery is on through routes. " + PER_ROUTE,
     points: [
-      "Shortlist floor plans online before the drive",
-      "Showroom open Monday–Friday 9–5 and Saturday 10–4",
-      "Town lots in Marion and Gas City and rural parcels across the county",
-      "A written line-item quote to take home and compare",
+      "A permit form with its own manufactured-home set-up section",
+      "Contractors registered with the area plan commission",
+      "Certified soil scientist first for any septic permit",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Grant County's Area Plan Commission in Marion issues permits for the unincorporated county and for Fairmount, Jonesboro, Matthews, Sweetser, Upland and Van Buren; the cities of Marion and Gas City issue their own. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+      "The Grant County Area Plan Commission, on South Adams Street in Marion, covers the unincorporated county and the towns of Van Buren, Upland, Matthews, Jonesboro, Fairmount and Sweetser. Marion runs its own planning and building departments, and Gas City is outside the area plan commission's list. Ask first which office has your parcel.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Marion" },
+      { label: "County and towns", value: "Grant County Area Plan Commission" },
+      { label: "Inside Marion", value: "City Planning, then Building" },
+      { label: "Septic", value: "Grant County Health Dept." },
+    ],
+    sections: [
       {
-        question: "Which permits come first for a manufactured home in Grant County?",
-        answer:
-          "The septic comes first: the building department needs a letter from the Grant County Health Department's environmental division about the septic system before it issues a building permit. Outside Marion and Gas City, the Grant County Area Plan Commission issues the improvement location and building permits; inside Marion, the city planning department issues the improvement location permit and its building department the building permit. Your contractors pull these permits; we can tell you which office answers for your address.",
+        heading: "A permit form written with manufactured homes in mind",
+        paragraphs: [
+          "The area plan commission's residential permit form has its own section for manufactured home set-up and asks for the foundation contractor's state licence. Nothing can be occupied until every inspection has passed and a certificate of occupancy is issued. Contractors working in the commission's jurisdiction must also register with it — registration moved online in 2024 — so ask your foundation, set-up and utility crews whether theirs is current.",
+          "Inside Marion the order is different: an Improvement Location Permit from the City Planning Department comes first, then the city's Building Department handles contractor registration, inspections and the certificate of occupancy.",
+        ],
       },
       {
-        question: "What should I bring to the showroom from Grant County?",
-        answer:
-          "Your parcel details or lot survey, a shortlist of plans, your must-have rooms, and questions about options.",
+        heading: "Septic: soil scientist, installer, then the permit",
+        paragraphs: [
+          "A septic permit from the Grant County Health Department is required before a system is built, repaired or altered. The health department's own order is: hire an ARCPACS-certified soil scientist for the soil analysis (a partial list comes with the application), choose a county-registered installer, submit the application, then plan review, then the permit. Installers must hold IOWPA certification or pass the county's exam.",
+          "Size the system to the bedroom count of the plan you choose, and start the soil work as soon as you own the land.",
+        ],
       },
       {
-        question: "When is the Auburn showroom open?",
-        answer: "Monday to Friday 9 to 5 and Saturday 10 to 4, at 1211 IN-8, Auburn.",
+        heading: "The Mississinewa through Marion",
+        paragraphs: [
+          "The Mississinewa River runs through Marion. The U.S. Geological Survey has published flood-inundation maps for a nine-mile reach there, and the county's hazard mitigation plan maps the floodplain. The National Weather Service notes that most county roads near the river flood in a major flood — which matters for getting to the home, not only for the home itself. Check the flood maps for any parcel near the river before you buy.",
+        ],
       },
       {
-        question: "Do you deliver to Grant County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Utilities",
+        paragraphs: [
+          "Indiana Michigan Power serves Marion, and Gas City runs its own municipal electric utility. In the countryside, ask the electric provider for your parcel what service to the building site will take, and confirm whether natural gas reaches it before you choose a furnace.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Grant County Area Plan Commission",
+        role: "Permits and zoning for the unincorporated county and Van Buren, Upland, Matthews, Jonesboro, Fairmount and Sweetser; contractor registration.",
+        href: "https://www.in.gov/counties/grant/county-offices/area-plan/",
+      },
+      {
+        name: "City of Marion — Planning and Building Departments",
+        role: "Improvement Location Permit first, then building permits, inspections and occupancy inside Marion.",
+        href: "https://cityofmarion.in.gov/government/departments/building-department/ilp-procedures",
+      },
+      {
+        name: "Grant County Health Department — Environmental Division",
+        role: "Septic permits: certified soil scientist, registered installer, application, plan review.",
+        href: "https://www.in.gov/localhealth/grantcounty/environmental-division/faqs",
+      },
+    ],
+    faqs: [
+      {
+        question: "Who issues the permit for a manufactured home in Grant County?",
+        answer:
+          "In the unincorporated county and six of its towns, the Grant County Area Plan Commission, whose permit form has a manufactured-home set-up section. Inside Marion, the city's Planning Department issues the location permit and its Building Department the rest.",
+      },
+      {
+        question: "Do my contractors need to register?",
+        answer:
+          "Yes, with the Grant County Area Plan Commission for work in its jurisdiction, and with the city in Marion. Ask each contractor before you hire them.",
+      },
+      {
+        question: "How does the septic permit work in Grant County?",
+        answer:
+          "Certified soil scientist first, then a county-registered installer, then the application, plan review and the permit — in that order, before any work begins.",
+      },
+      {
+        question: "Do you deliver to Marion and Gas City?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Marion & Grant County, IN: who issues permits, the manufactured-home set-up permit, contractor registration, septic and the Mississinewa.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (12,112); the Blackford County
+  // joint zoning ordinance (county, Hartford City, Montpelier, Shamrock Lakes;
+  // revised through 2021); the Blackford County Health Department's septic page,
+  // installer-licence reminder and pre-1985 point-of-sale inspection rule; I&M's
+  // tariff listing Hartford City; USGS gauge on Big Lick Creek near Hartford
+  // City; EDP Renewables on Teays River Wind Farm; Inside Indiana Business on
+  // Prairie Creek wind and I&M's purchase agreement; INDOT county map. Gas
+  // provider and the ordinance's manufactured-home text were not confirmed.
   {
     slug: "blackford-county",
     seat: "Hartford City",
@@ -381,36 +762,97 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Hartford City & Montpelier",
     intro:
-      "Blackford County is one of Indiana's smallest counties, with Hartford City and Montpelier at its heart and farm ground all around. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+      "Blackford County is one of Indiana's smallest, with one zoning ordinance for the county and its towns, septic installers who must hold a county licence every year, and a point-of-sale septic inspection that matters if you are replacing an older home. Here is how placing a Champion home works here.",
     towns: ["Hartford City", "Montpelier", "Shamrock Lakes", "Roll"],
     driveNote:
-      "If you have only ever bought or built a stick-built house, a HUD-code home follows a different order: choose the plan, order it, prepare the site while it is built, then delivery and set-up by the crews you hire. " + PER_ROUTE,
+      "State Road 26 crosses the county east to west through Hartford City, with State Roads 3 and 18 north and south, so the highway part of a delivery is short; the lane to your lot is what we ask about. " + PER_ROUTE,
     points: [
-      "A factory build that runs while your site is being prepared",
-      "Federal HUD-code construction and inspection, not a local framing inspection",
-      "Farm parcels and town lots in Hartford City and Montpelier",
-      "Line-item quote with freight as its own line",
+      "One zoning ordinance for the county and its towns",
+      "Septic installers licensed by the county every year",
+      "Older septic systems inspected when a property sells",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Blackford County's planning office in Hartford City handles the unincorporated county, and Hartford City and Montpelier permit inside their limits. Many rural districts allow a HUD-code home on a permanent foundation with skirting. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+      "The Blackford County Area Plan Commission administers one joint zoning ordinance covering the unincorporated county, Hartford City, Montpelier and Shamrock Lakes, revised most recently in 2021. Ask the plan commission which district your parcel is in and what it requires for a manufactured home before you buy the land.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Hartford City" },
+      { label: "Zoning", value: "Blackford County Area Plan Commission" },
+      { label: "Septic", value: "Blackford County Health Dept." },
+      { label: "Electric in Hartford City", value: "Indiana Michigan Power" },
+    ],
+    sections: [
       {
-        question: "How is buying a manufactured home different from building a house?",
-        answer:
-          "The home is built in Champion's plant to the federal HUD code while your contractors prepare the site, then it is delivered and set.",
+        heading: "One ordinance, one plan commission",
+        paragraphs: [
+          "Blackford County, home to about 12,100 people, keeps its zoning in one ordinance shared by the county, Hartford City, Montpelier and the town of Shamrock Lakes. Wherever your land is, the rules come from the same document and the same plan commission — though the district your parcel sits in still sets what is allowed on it.",
+        ],
       },
       {
-        question: "Who does the site work and set-up?",
-        answer:
-          "You hire your own licensed contractors for site work, the foundation and set-up. We sell the home and arrange its delivery.",
+        heading: "Replacing an older home? Check the septic first",
+        paragraphs: [
+          "Blackford County requires residential septic systems built before 1985 to be inspected when the property is offered for sale. If you are buying a lot with an old home or an old trailer on it to replace with a new Champion home, find out when the existing system went in and what its inspection found — a failing system may need replacing before anything else can happen.",
+          "For a new system, the health department's septic page lists soil scientists who work in the county, and every septic installer must hold a Blackford County septic contractor licence, renewed each year. Ask yours to show it before you sign. Size the system to the bedroom count of the plan you choose.",
+        ],
       },
       {
-        question: "Do you deliver to Blackford County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Big Lick Creek and the low ground",
+        paragraphs: [
+          "Big Lick Creek runs through Licking Township, where Hartford City sits, and the U.S. Geological Survey keeps a stream gauge on it near the city. If a parcel borders the creek or one of its ditches, have your surveyor check the flood maps for the building site before you buy, and plan the grading so water runs away from the foundation.",
+        ],
+      },
+      {
+        heading: "Wind farms coming to the county",
+        paragraphs: [
+          "Two wind projects are planned here: EDP Renewables' Teays River Wind Farm just east of Hartford City, and RWE's Prairie Creek project, expected online in 2028 with Indiana Michigan Power buying its output. If you are looking at farm ground in the east or south of the county, ask the plan commission whether the parcel is near a project area, and visit at different times before you buy.",
+          "Indiana Michigan Power serves Hartford City; for a rural parcel, ask the electric provider for your address what it takes to bring service to the building site.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Blackford County Area Plan Commission",
+        role: "Zoning under the joint ordinance for the county, Hartford City, Montpelier and Shamrock Lakes.",
+      },
+      {
+        name: "Blackford County Health Department",
+        role: "Septic permits, the county soil scientist list, installer licensing and pre-1985 system inspections at sale.",
+        href: "https://www.in.gov/localhealth/blackfordcounty/environmental-health/septic",
+      },
+    ],
+    faqs: [
+      {
+        question: "Who handles zoning for a manufactured home in Hartford City?",
+        answer:
+          "The Blackford County Area Plan Commission. One zoning ordinance covers the county, Hartford City, Montpelier and Shamrock Lakes, so the same office answers wherever your land is.",
+      },
+      {
+        question: "I'm replacing an old home on my lot. What about the septic?",
+        answer:
+          "If the system was built before 1985, Blackford County requires an inspection when the property is offered for sale. Find out its age and condition before you plan the new home; it may need replacing.",
+      },
+      {
+        question: "Does my septic installer need a licence?",
+        answer:
+          "Yes. Every septic installer working in Blackford County needs a county septic contractor licence, renewed each year. Ask to see it before you hire.",
+      },
+      {
+        question: "Do you deliver to Hartford City and Montpelier?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Hartford City & Blackford County, IN: one joint zoning ordinance, licensed septic installers, pre-1985 septic checks and planned wind farms.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (35,962); in.gov's Miami
+  // County places list; the county Planning Department/Building Commission
+  // directory (unincorporated areas only) and Plan Commission page; the 2024
+  // county notice on the Peru, Bunker Hill and Converse fringe jurisdiction
+  // (adoption not confirmed); Peru's code (own Building & Zoning); the county
+  // health department's septic page (county ordinance; site visit to verify an
+  // existing system's diagrams); SBOA on Peru Utilities; Miami-Cass REMC;
+  // NIPSCO's gas town index; Grissom ARB on its land-use studies; the county
+  // EDA's school list.
   {
     slug: "miami-county",
     seat: "Peru",
@@ -418,36 +860,101 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Peru, Bunker Hill & Converse",
     intro:
-      "Miami County runs along US-31 from Peru to Bunker Hill and Grissom Air Reserve Base, with Converse, Denver and Macy in the farm country around them. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+      "Miami County is home to Grissom Air Reserve Base and to Peru's own city utility, and who zones the land just outside Peru, Bunker Hill and Converse was under review in 2024. Here is who to ask, and in what order, before you place a Champion home here.",
     towns: ["Peru", "Bunker Hill", "Converse", "Denver", "Macy", "Amboy"],
     driveNote:
-      "Skirting is the part of a manufactured home people see first and think about last. Vinyl, insulated panels and masonry each behave differently through a northern Indiana winter, so choose with the climate in mind. " + PER_ROUTE,
+      "US 24 and US 31 meet near Peru, so the highway part of a delivery is direct; the county road and lane to your site are what we ask about. " + PER_ROUTE,
     points: [
-      "Skirting choices that suit open, windy farm ground",
-      "Rural parcels and town lots around Peru",
-      "Champion homes built for Indiana's wind and snow loads",
-      "Every line itemised, including freight",
+      "County permits for the unincorporated areas; Peru has its own office",
+      "Fringe-area zoning around three towns under review",
+      "Grissom Air Reserve Base land-use studies",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "Miami County's planning office in Peru handles the unincorporated county, and Peru and the towns permit inside their limits. Many districts require skirting or a perimeter enclosure on a manufactured home, so ask what material they accept. Confirm your parcel with the right office before you order — we can tell you which one answers for your address.",
+      "The Miami County Planning Department and Building Commission, on North Broadway in Peru, issue building permits for the unincorporated county only, and the county plan commission meets on the second Wednesday of each month. The City of Peru runs its own Building and Zoning Department with its own plan commission. Ask first which office has your parcel.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Peru" },
+      { label: "County permits", value: "Planning Dept. & Building Commission" },
+      { label: "Electric in Peru", value: "Peru Utilities (city-owned)" },
+      { label: "Septic", value: "Miami County Health Dept." },
+    ],
+    sections: [
       {
-        question: "What kind of skirting works best in Miami County?",
-        answer:
-          "It depends on exposure and budget. Vinyl is common, insulated panels help with cold floors, and masonry lasts longest. Every option needs ventilation and an access panel.",
+        heading: "Just outside town? Ask who zones it",
+        paragraphs: [
+          "Peru, Bunker Hill and Converse have each zoned some of the land around their limits. In 2024 the county gave notice of a proposal to end those three plan commissions' jurisdiction over that adjoining land, and we could not confirm the outcome. If your parcel is near any of the three, ask the county planning department which body zones it today, because that decides whose ordinance, permit and appeals board apply.",
+        ],
       },
       {
-        question: "Does the county require skirting?",
-        answer:
-          "Many Indiana jurisdictions do. Ask the planning office in Peru, or your town office, what they require for your parcel.",
+        heading: "Grissom Air Reserve Base",
+        paragraphs: [
+          "Grissom Air Reserve Base sits in the west of the county near the Cass County line. It has had noise and land-use compatibility studies since 1978, and it takes part in a joint land use study with the surrounding communities. We found no adopted county overlay zone around the base, but if you are looking at land near it, ask the planning department whether the parcel falls in a studied noise or accident-potential area, and visit to hear the aircraft before you buy.",
+        ],
       },
       {
-        question: "Do you deliver to Miami County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Septic, especially when you replace a home",
+        paragraphs: [
+          "Septic systems are permitted by the Miami County Health Department under a county ordinance as well as the state rule. If you are replacing an older home and want to use the existing system, the department requires a site visit to verify the system's diagrams before you hook up to it — find out early whether the old system can be reused or must be replaced.",
+        ],
+      },
+      {
+        heading: "City utility, co-op and gas",
+        paragraphs: [
+          "Peru Utilities, owned by the city, supplies electricity, water and wastewater in Peru and also serves the Grissom Aeroplex. Miami-Cass REMC, headquartered in Peru, serves rural Miami and Cass counties. NIPSCO supplies natural gas in Peru. Ask the provider for your parcel what service to the building site will take.",
+          "The county's schools are Peru Community, Maconaquah, North Miami and Oak Hill United, which reaches into Grant County. Confirm the district for your exact address.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Miami County Planning Department & Building Commission",
+        role: "Building permits for the unincorporated county; the plan commission meets on the second Wednesday.",
+        href: "https://www.miamicountyin.gov/Directory.aspx?did=38",
+      },
+      {
+        name: "City of Peru — Building and Zoning Department",
+        role: "Permits and zoning inside Peru.",
+      },
+      {
+        name: "Miami County Health Department — Environmental Division",
+        role: "Septic permits under the county ordinance; site visits to verify an existing system.",
+        href: "https://www.in.gov/localhealth/miamicounty/environmental-health/septic/",
+      },
+    ],
+    faqs: [
+      {
+        question: "Who issues the permit for a manufactured home in Miami County?",
+        answer:
+          "In the unincorporated county, the Miami County Planning Department and Building Commission. Inside Peru, the city's Building and Zoning Department. Near Peru, Bunker Hill or Converse, ask the county which body zones the parcel today.",
+      },
+      {
+        question: "Is land near Grissom Air Reserve Base a problem?",
+        answer:
+          "Not automatically, but the base has noise and land-use compatibility studies. Ask the planning department whether the parcel is in a studied area, and visit before you buy.",
+      },
+      {
+        question: "Can I reuse the septic system from the home I'm replacing?",
+        answer:
+          "Possibly. The Miami County Health Department requires a site visit to verify the existing system's diagrams before a new home is connected to it.",
+      },
+      {
+        question: "Do you deliver to Peru and Bunker Hill?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Peru & Miami County, IN: county vs. city permits, fringe zoning near three towns, Grissom land-use studies, septic reuse and Peru Utilities.",
   },
+  // Sources checked 2026-10-28: Census QuickFacts (46,095); the Town of Culver's
+  // building-permit page (county online permit system; Beacon GIS); Plymouth's
+  // building and plan commission page; the Marshall County Health Department's
+  // onsite sewage page and 2022 permit-procedure guidance (registered soil
+  // scientist; operating permits for some newer technologies) and its well
+  // permitting guidance (septic located before well design; two-year permit;
+  // 2017 ordinance); Marshall County REMC; the state's school-district map;
+  // USGS SIR 2016-5117 (Yellow River flood-inundation maps at Plymouth);
+  // DNR's Lake Preservation Act guidance.
   {
     slug: "marshall-county",
     seat: "Plymouth",
@@ -455,40 +962,95 @@ export const countyPages: CountyPage[] = [
     state: "Indiana",
     eyebrow: "Plymouth, Bremen & Culver",
     intro:
-      "Marshall County centres on Plymouth, where US-30 crosses US-31, and takes in Bremen, Argos, Bourbon and Culver on Lake Maxinkuckee. We order Champion HUD-code manufactured homes for buyers here and quote each one line by line.",
+      "Marshall County ties the well to the septic — the septic system has to be located before a well design is approved — and some newer septic systems need an operating permit kept up for as long as you own them. Add Lake Maxinkuckee and the Yellow River, and here is what to plan for with a Champion home here.",
     towns: ["Plymouth", "Bremen", "Culver", "Argos", "Bourbon", "La Paz"],
     driveNote:
-      "Subdivisions and lake neighbourhoods here often have covenants on roof pitch, siding, garages and porches. Read them before you choose the home's exterior — some exterior choices can only be made when the home is ordered. " + PER_ROUTE,
+      "US 30 and US 31 cross near Plymouth, so the highway part of a delivery is direct; lake roads around Culver and the lane to your lot are what we ask about. " + PER_ROUTE,
     points: [
-      "Exterior options — siding, roof pitch, porches — chosen to suit covenants",
-      "Lake lots near Culver and rural parcels around Argos and Bourbon",
-      "Single-section and multi-section Champion plans",
-      "A line-item quote that shows each option separately",
+      "Well design approved only after the septic is located",
+      "Operating permits for some newer septic systems",
+      "Lake Maxinkuckee shoreline under DNR rules",
+      "Freight quoted per route as its own line",
     ],
     zoningNote:
-      "The Marshall County Plan Commission in Plymouth handles the unincorporated county, and Plymouth, Bremen, Culver and the towns permit inside their limits. Subdivision covenants can go further than zoning. Confirm your parcel with the right office and read any covenants before you order — we can tell you which office to call.",
+      "The Marshall County Plan Commission and Board of Zoning Appeals handle zoning in the unincorporated county, and building permits go through the county's online permit system — the Town of Culver points its residents there too, with zoning districts on the county's Beacon GIS map. The City of Plymouth runs its own building department and plan commission. Ask which applies to your parcel first.",
     frostDepth: FOOTINGS,
-    faqs: [
+    facts: [
+      { label: "County seat", value: "Plymouth" },
+      { label: "Zoning", value: "Marshall County Plan Commission" },
+      { label: "Septic and wells", value: "Marshall County Health Dept." },
+      { label: "Rural electric co-op", value: "Marshall County REMC (Plymouth)" },
+    ],
+    sections: [
       {
-        question: "How does the septic permit work in Marshall County?",
-        answer:
-          "The Marshall County Health Department's process starts with a soil evaluation by a registered soil scientist, then a scaled septic design submitted for review. Do it before you settle on the home size, because the soil result decides where the system goes and how much of the lot is left for the home. Your contractors pull the permits; we can tell you which office answers for your address.",
+        heading: "The septic decides where the well goes",
+        paragraphs: [
+          "The Marshall County Health Department will not approve a well design until the septic system has been located — from past permit records or by a septic inspector. A new septic system starts with a soil evaluation by a certified, registered soil scientist. So the order on a rural lot is: soil evaluation, septic design, then the well. A well permit is good for two years under the county's 2017 well ordinance, and although emergency drilling can happen before a permit, the water cannot be used for drinking until the well is permitted and inspected.",
+        ],
       },
       {
-        question: "Can covenants limit which manufactured home I put on my lot?",
-        answer:
-          "Yes. Covenants can set roof pitch, siding, a minimum size or a garage. Read them before you choose the plan and exterior options.",
+        heading: "Some septic systems need a permit to keep running",
+        paragraphs: [
+          "Some newer septic technologies — the kind used where the soil is poor for a standard field — need an operating permit from the health department that has to be kept current. If the soil scientist's report points you toward one of those systems, ask what the operating permit requires before you choose it, because it is an ongoing obligation, not a one-time fee.",
+        ],
       },
       {
-        question: "Can I put a manufactured home near Lake Maxinkuckee?",
-        answer:
-          "Check with Culver or the county plan commission, depending on where the lot is, and read any association rules before you order.",
+        heading: "Lake Maxinkuckee and the Yellow River",
+        paragraphs: [
+          "Lake Maxinkuckee at Culver is one of Indiana's largest natural lakes. Like other public freshwater lakes, work at or lakeward of its shoreline — a seawall, a pier footing, regrading at the water — needs Indiana DNR approval, and applications go through a 30-day public notice. Plan lakefront work early.",
+          "The Yellow River runs through Plymouth. The U.S. Geological Survey published flood-inundation maps for a 4.9-mile reach there in 2016, built on the county's flood insurance study. Check those maps for any lot near the river before you buy.",
+        ],
       },
       {
-        question: "Do you deliver to Marshall County?",
-        answer: "Yes. We deliver across Indiana, with freight quoted per route.",
+        heading: "Power and schools",
+        paragraphs: [
+          "Marshall County REMC, based in Plymouth and serving members since 1935, supplies much of the countryside. Ask the electric provider for your parcel what service to the building site will take, and confirm whether natural gas reaches it. The county's school corporations are Plymouth, Bremen, Culver, Argos, Triton and Union-North United; Triton and Union-North reach into neighbouring counties, so confirm the district for your address.",
+        ],
       },
     ],
+    contacts: [
+      {
+        name: "Marshall County Plan Commission",
+        role: "Zoning and the online building-permit system for the unincorporated county; Culver residents use it too.",
+      },
+      {
+        name: "Marshall County Health Department — Environmental",
+        role: "Septic permits (registered soil scientist; operating permits for some systems) and well permits.",
+        href: "https://www.in.gov/localhealth/marshallcounty/environmental/onsite-sewage-systems-septic-system",
+      },
+      {
+        name: "City of Plymouth — Building Department and Plan Commission",
+        role: "Permits and zoning inside Plymouth.",
+      },
+      {
+        name: "Indiana DNR, Division of Water",
+        role: "Approvals for work at or lakeward of the shoreline of Lake Maxinkuckee and other public lakes.",
+        href: "https://www.in.gov/dnr/water/",
+      },
+    ],
+    faqs: [
+      {
+        question: "Why does my well have to wait for the septic in Marshall County?",
+        answer:
+          "The health department will not approve a well design until the septic system is located, so the two stay a safe distance apart. Do the soil evaluation and septic design first.",
+      },
+      {
+        question: "What is a septic operating permit?",
+        answer:
+          "Some newer septic technologies in Marshall County need an operating permit from the health department that has to be kept up. Ask what it involves if your soil report points you to one.",
+      },
+      {
+        question: "Can I build on Lake Maxinkuckee?",
+        answer:
+          "The home is a zoning and permit question for the county or town, but any work at or lakeward of the shoreline needs Indiana DNR approval, with a 30-day public notice.",
+      },
+      {
+        question: "Do you deliver to Plymouth and Culver?",
+        answer: "Yes. We deliver across Indiana, with freight quoted per route as its own line on your quote.",
+      },
+    ],
+    metaDescription:
+      "A Champion home in Plymouth & Marshall County, IN: septic before well, septic operating permits, Lake Maxinkuckee shoreline rules and Yellow River flood maps.",
   },
   // Sources checked 2026-10-23: the Rochester Sentinel legal notice and the
   // Purdue-hosted Fulton County Zone Ordinance (one ordinance for the county,
