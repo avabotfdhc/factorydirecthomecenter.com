@@ -50,7 +50,13 @@ for (const name of REWRITTEN) {
 // rewrote six of them from public sources; the rest follow in later batches.
 import { countyPages } from "../src/lib/county-pages";
 
-const COUNTY_REWRITTEN = ["howard-county", "cass-county", "delaware-county", "randolph-county", "fulton-county", "st-joseph-county"];
+const COUNTY_REWRITTEN = [
+  // batch 2
+  "howard-county", "cass-county", "delaware-county", "randolph-county", "fulton-county", "st-joseph-county",
+  // batch 3 (2026-10-28)
+  "blackford-county", "jay-county", "grant-county", "wabash-county", "miami-county", "huntington-county",
+  "marshall-county", "elkhart-county", "kosciusko-county",
+];
 for (const slug of COUNTY_REWRITTEN) {
   test(`${slug}: has sections, facts, contacts, FAQs and its own meta description`, () => {
     const c = countyPages.find((p) => p.slug === slug);
