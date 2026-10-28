@@ -2,9 +2,15 @@
 
 `src/lib/plan-elevations.json` — the window, door and porch layout of every
 plan the Design Your Home preview can draw — is generated from Champion's own
-L-101 literature sheets (`floor_plan_documents` rows of kind `sales-sheet`,
-page 1 of the APB/AP PDF in the `floor-plans` storage bucket). Nothing in it is
-hand-drawn: if the sheet changes, rerun this and the picture follows.
+sheets (`floor_plan_documents` rows of kind `sales-sheet`, page 1 of the PDF in
+the `floor-plans` storage bucket). Nothing in it is hand-drawn: if the sheet
+changes, rerun this and the picture follows. Three kinds of sheet are read:
+
+| mode | sheet | plans | how the box and openings are found |
+|---|---|---|---|
+| `l101` | Topeka L-101 (APB/AP) with a text layer | Aspire, Dutch, Redman | printed dimension labels give the scale; window codes (`3061`, `4661E`…) sit in the text layer |
+| `l101-ocr` | L-101 whose text is outlined (no text layer) | 10 Aspire plans | box from the dimension line and the wall fill, scale from the catalogue length; each opening's code is OCR'd (`pytesseract`) from a strip beside it; a door is a break whose band is not a hollow window box |
+| `lit1` | Decatur LIT-1 colour floor plan | Prime | no codes at all: a window is the striped thin box set into the wall band, a door a clean break with its leaf swung outside, `OPT` labels mark options; the scale comes from the catalogue length |
 
 ## What the extractor reads
 
@@ -34,30 +40,43 @@ Always look at a sample after a rerun.
 
 ## Rerunning
 
-Needs Python 3 with `numpy`, `pillow`, `scipy`, and poppler's `pdftoppm` /
+Needs Python 3 with `numpy`, `pillow`, `scipy`, `pytesseract` (plus the
+`tesseract` binary, for the OCR mode only), and poppler's `pdftoppm` /
 `pdftotext` on the PATH.
 
 ```sh
-# 1. the sheets: one per model number, APB first, then 112AP, then anything else
-#    (the SQL in the first commit's PR description lists them; download into ./pdf as <MODEL>.pdf)
-# 2. extract
+# 1. the sheets, one per model number, as <MODEL>.pdf:
+#      ./pdf        Topeka L-101 sheets (APB first, then 112AP, then anything else)
+#      ./prime      Prime LIT-1 sheets
+#      ./ocr        the L-101 sheets with no text layer (listed below)
+#    sizes.json for the last two: {model: {"L": 76, "W": 16, "sqft": 1152}} from floor_plans
+# 2. extract — three runs, three raw files
 python3 scripts/elevations/extract_elevations.py pdf all.json
-# 3. build the site file
-python3 scripts/elevations/build_elevations_json.py all.json src/lib/plan-elevations.json
+python3 scripts/elevations/extract_elevations.py --lit prime-sizes.json prime prime.json
+python3 scripts/elevations/extract_elevations.py --sizes ocr-sizes.json ocr ocr.json
+# 3. build the site file (comma-separated; a later file wins on a model)
+python3 scripts/elevations/build_elevations_json.py all.json,prime.json,ocr.json src/lib/plan-elevations.json
 # 4. eyeball a few
 python3 scripts/elevations/overlay.py all.json pdf overlays 2452H32167 2856H32103
+python3 scripts/elevations/overlay.py prime.json prime overlays 1676H32P01
 npm test   # tests/plan-elevation.test.ts holds the data to the renderer's assumptions
 ```
 
-## Known gaps (October 2026 run: 191 of 202 sheets read)
+Reverse Aisle plans (`BARKLEY-RA`, `CREST-RA`, `PEAK-RA`, `RIDGE-RA`,
+`SPIRE-RA`, `VERTEX-RA`, `ZENITH-RA`) have no sheet of their own; `BASED_ON`
+in `build_elevations_json.py` copies the base plan's entry under the alias
+with `basedOn` set, and the page says the layout is the base plan's. They are
+**not mirrored**, because which axis "reverse aisle" flips is not recorded
+anywhere we hold; when that is known, mirror the views there.
 
-- 11 sheets have no text layer (outlined text), so nothing can be read from
-  them: 1432H11214, 1660H22P02, 2432H21166, 2436H21166, 2452H32160,
-  2456H32160, 2852H32173, 2852H32393, 2852H42096, 2856H32173, 2856M32173.
-  Those plans get a *representative* layout from their size, and the page says
-  so. OCR would close this.
-- Plans whose model number has no sales sheet at all (the Prime "-RA" reverse
-  aisles, for instance) also get the representative layout.
+## Known gaps (October 2026: 231 entries — 191 L-101, 10 OCR, 23 LIT-1, 7 aliases)
+
+- `2856M32173`'s sheet is the one OCR read the extractor still rejects (scale
+  error 3%); its HUD twin `2856H32173` reads cleanly and the lookup's H↔M
+  fallback serves it, so the page draws the same box.
+- Three Prime plans have no drawing in the catalogue at all — `HICKMAN`,
+  `MONTE`, `MONTE-RA` — and get the *representative* layout from their size,
+  which the page says.
 - The front wall of a mid-wall entry porch is read; the porch's depth usually
   is not (the foyer door is in the way), so it is drawn 5 ft deep.
 - Add-on porches drawn without their own length label are assumed 8 ft, which

@@ -5,11 +5,11 @@ sys.path.insert(0, os.path.dirname(__file__))
 import extract_elevations as ex
 from PIL import ImageDraw
 
-COLORS = {"window": (0, 120, 255), "door": (230, 60, 0), "open": (160, 0, 200), "gap": (255, 170, 0)}
+COLORS = {"window": (0, 120, 255), "door": (230, 60, 0), "patio": (200, 0, 120), "open": (160, 0, 200), "gap": (255, 170, 0)}
 
 
 def overlay(pdf, rec, out):
-    img = ex.render(pdf).convert("RGB")
+    img = ex.render(pdf, ex.LIT_DPI if rec.get("lit1") else ex.DPI).convert("RGB")
     d = ImageDraw.Draw(img)
     x0, y0, x1, y1, t = rec["boxPx"]
     ppf = rec["pxPerFt"]

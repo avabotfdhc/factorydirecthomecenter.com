@@ -9,8 +9,28 @@ most glass. End views are named left/right as seen from the front.
 """
 import json, sys, collections
 
+# usage: build_elevations_json.py raw.json[,raw2.json,...] out.json
+# The L-101 extraction (Topeka sheets) and the LIT-1 extraction (Prime,
+# Decatur) are separate raw files; later files win on a repeated model.
 src, out = sys.argv[1], sys.argv[2]
-raw = json.load(open(src))
+raw = {}
+for path in src.split(","):
+    raw.update(json.load(open(path)))
+
+# Prime's "Reverse Aisle" plans have no sheet of their own: each is its base
+# plan flipped. Which axis Champion flips is not stated on anything we hold,
+# so these draw from the base plan's sheet un-mirrored and say so (basedOn);
+# the designer's caption tells the buyer the layout is the mirror image.
+# Kyle can settle the axis, and then this becomes a mirror instead.
+BASED_ON = {
+    "BARKLEY-RA": "1656H22P01",  # Barkley
+    "CREST-RA": "1460H22P01",    # Crest
+    "PEAK-RA": "1456H22P01",     # Peak
+    "RIDGE-RA": "1676H32P01",    # Ridge
+    "SPIRE-RA": "1660H32P05",    # Spire (3 bed)
+    "VERTEX-RA": "1666H32P01",   # Vertex
+    "ZENITH-RA": "1466H32P01",   # Zenith
+}
 
 
 def glass(items):
@@ -103,6 +123,11 @@ for model, r in sorted(raw.items()):
         for o in v:
             stats["kind=" + o[0]] += 1
     plans[model] = {"L": L, "W": W, "sqft": r.get("sqft"), "views": views, "porch": p, "src": "sheet"}
+
+for alias, base in BASED_ON.items():
+    if base in plans and alias not in plans:
+        plans[alias] = {**plans[base], "basedOn": base}
+        stats["basedOn"] += 1
 
 json.dump(plans, open(out, "w"), separators=(",", ":"))
 print(len(plans), "plans written;", dict(stats))
