@@ -1926,14 +1926,36 @@ but would have made any local dev server load GA under a placeholder ID.
 both ends — redrawn live in the siding, shingles, shutters or lineals, gable
 accent and foundation the buyer picks (`src/components/HomeElevation.tsx`, fed
 by `HomeDesigner`). Window and door placement is not invented: it is read off
-each model's L-101 literature sheet by `scripts/elevations/extract_elevations.py`
-(see the README there) into `src/lib/plan-elevations.json`, keyed by model
-number, so the HUD/modular and Aspire/Paramount twins share one entry. 191 of
-the 202 models with a sheet read cleanly; the rest, and any plan with no sheet,
-get a *representative* layout from their size, and the caption says so. The
-data file is ~70 KB and stays on the server: the designer fetches one plan at a
-time from `GET /api/plan-elevation?model=…` (`src/lib/plan-elevation.ts`), and
-`tests/plan-elevation.test.ts` fails if a client component ever imports it.
+each model's sales sheet by `scripts/elevations/extract_elevations.py` (see the
+README there) into `src/lib/plan-elevations.json`, keyed by model number, so
+the HUD/modular and Aspire/Paramount twins share one entry. Any plan with no
+sheet gets a *representative* layout from its size, and the caption says so.
+The data file is ~80 KB and stays on the server: the designer fetches one plan
+at a time from `GET /api/plan-elevation?model=…` (`src/lib/plan-elevation.ts`),
+and `tests/plan-elevation.test.ts` fails if a client component ever imports it.
+
+**"Every model pulls up the same home design with overlapping windows" (Kyle,
+2026-10-27)** was two defects, both measured before fixing. First, the launch
+read only Topeka's L-101 sheets, so **34 of the 41 Prime models** and 11 Aspire
+sheets with no text layer all fell back to the one representative layout — a
+buyer clicking through Prime saw the same house every time. The extractor now
+reads Decatur's LIT-1 colour floor plans (no window codes: a window is the
+striped thin box in the wall band, a door a clean break with its leaf swung
+out) and OCRs the image-only L-101s, and the seven Prime Reverse Aisle plans
+carry their base plan's drawing with `basedOn` set (not mirrored — which axis
+"reverse aisle" flips is not recorded anywhere we hold). 231 entries now; only
+`HICKMAN`, `MONTE` and `MONTE-RA` (no drawing in the catalogue) stay
+representative, and `2856M32173` draws through its H twin. Second, the
+representative layout itself placed a living-room window into a bedroom
+window's shutters on short singles; `spaceOpenings()` now pushes openings apart
+by their trim and drops what runs off the end, and the property test in
+`tests/plan-elevation.test.ts` walks every size and bedroom count. Also fixed
+there: Champion draws twin living-room windows a few inches apart (a mulled
+pair), and the renderer put a shutter on both sides of each, so two panels
+landed on top of each other between the panes — `shutterClearance()` now draws
+a shutter only where it fits. When a Prime sheet changes, rerun with `--lit`;
+`tests/plan-elevation.test.ts` fails if an active Prime model other than those
+three loses its sheet-read entry.
 
 The picture is an illustration and is labelled as one, under the specs
 disclaimer the page already carries (`HomeElevation` is in the disclaimer

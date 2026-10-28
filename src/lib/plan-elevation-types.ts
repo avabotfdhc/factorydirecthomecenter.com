@@ -62,6 +62,9 @@ export interface PlanElevation {
    *  the UI must say so. */
   src: "sheet" | "representative";
   model?: string;
+  /** a plan drawn from another model's sheet (Prime's Reverse Aisle plans are
+   *  their base plan flipped; the base is drawn and the caption says so) */
+  basedOn?: string;
 }
 
 /** Champion window codes are WWHH in inches: 3061 = 30" × 61", 4661E = egress. */
@@ -78,10 +81,38 @@ export function sizeFromModel(model: string | undefined): { widthFt?: number; le
   return { widthFt: Number(m[1]), lengthFt: Number(m[2]) };
 }
 
+/** Clearance an opening needs on each side: a window's shutters, a door's trim. */
+function sidePad(o: Opening): number {
+  return o[0] === "w" ? 1.7 : 0.5;
+}
+
+/**
+ * Spread openings along a wall of `length` feet so none overlaps a
+ * neighbour's shutters or runs off the wall: sort by x, push each one right
+ * of the one before it as needed, then drop from the far end whatever no
+ * longer fits. The door (or the first opening) keeps its place.
+ */
+export function spaceOpenings(list: Opening[], length: number, margin = 1.5): Opening[] {
+  const out = sortByX(list).map((o) => [...o] as Opening);
+  for (let i = 1; i < out.length; i++) {
+    const a = out[i - 1], b = out[i];
+    const need = a[2] / 2 + sidePad(a) + b[2] / 2 + sidePad(b) + 0.2;
+    if (b[1] - a[1] < need) b[1] = round(a[1] + need);
+  }
+  // clamp the start, then drop anything pushed past the end
+  if (out.length && out[0][1] - out[0][2] / 2 - sidePad(out[0]) < margin) {
+    const shift = margin + out[0][2] / 2 + sidePad(out[0]) - out[0][1];
+    for (const o of out) o[1] = round(o[1] + shift);
+  }
+  return out.filter((o) => o[1] + o[2] / 2 + sidePad(o) <= length - margin);
+}
+
 /**
  * A plausible layout for a home we have no readable sheet for: windows at
  * sensible intervals, an entry door on the front, a utility door on the rear,
  * one window per end. Never passed off as the plan — the preview labels it.
+ * Every wall goes through spaceOpenings, so a short home gets fewer windows
+ * rather than windows drawn over each other.
  */
 export function representativeElevation(
   { lengthFt, widthFt, beds }: { lengthFt: number; widthFt: number; beds?: number },
@@ -95,17 +126,22 @@ export function representativeElevation(
   const front: Opening[] = [];
   const rear: Opening[] = [];
   // bedrooms at one end, living at the other: a 46" egress window per bedroom,
-  // 30" windows along the living side, a 36" entry door about a third in
-  const bedrooms = Math.min(Math.max(Math.floor(beds || 3), 2), 6);
-  const bedBay = Math.min(10, (L * 0.45) / bedrooms);
+  // 30" windows along the living side, a 36" entry door about a third in.
+  // The bedroom end gets one window per 8 ft at most; the spacer trims the rest.
+  const doorX = L * 0.36;
+  const bedrooms = Math.min(Math.max(Math.floor(beds || 3), 1), 6, Math.max(1, Math.floor((L - doorX - 6) / 8)));
+  const bedBay = (L - doorX - 6) / bedrooms;
   for (let i = 0; i < bedrooms; i++) {
-    const x = L - bedBay * (i + 0.5);
+    const x = L - 1.5 - bedBay * (i + 0.5);
     front.push(["w", round(x), 46 / 12, "4661", 1]);
   }
-  const doorX = L * 0.36;
   front.push(["d", round(doorX), 3]);
-  front.push(["w", round(doorX - 5), 30 / 12, "3061"]);
-  front.push(["w", round(doorX + 6), 30 / 12, "3061"]);
+  front.push(["w", round(doorX - 5.5), 30 / 12, "3061"]);
+  // a second living-room window past the door, only when the first bedroom
+  // window leaves it a full bay of wall (otherwise the spacer would jam the
+  // two together and they would read as one odd twin window)
+  const firstBedX = L - 1.5 - bedBay * (bedrooms - 0.5);
+  if (firstBedX - (doorX + 6) >= 7.5) front.push(["w", round(doorX + 6), 30 / 12, "3061"]);
   rear.push(["d", round(L * 0.12), 3]);
   rear.push(["w", round(L * 0.3), 30 / 12, "3036"]);
   rear.push(["w", round(L * 0.5), 30 / 12, "3061"]);
@@ -117,7 +153,12 @@ export function representativeElevation(
     L,
     W,
     sqft: null,
-    views: { front: sortByX(front), rear: sortByX(rear), left, right },
+    views: {
+      front: spaceOpenings(front, L),
+      rear: spaceOpenings(rear, L),
+      left: spaceOpenings(left, W, 0.8),
+      right: spaceOpenings(right, W, 0.8),
+    },
     porch: null,
     src: "representative",
     model,

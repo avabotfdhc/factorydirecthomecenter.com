@@ -204,9 +204,11 @@ function previewCaption(home: DesignerPlan, elevation: PlanElevation, choices: E
     <>
       <strong className="font-semibold">{home.name}</strong>
       {elevation.sqft ? ` · ${elevation.sqft.toLocaleString("en-US")} sq ft` : ""} · {summary}.{" "}
-      {elevation.src === "sheet"
-        ? "Window and door placement follows Champion's floor plan sheet for this model."
-        : "Representative layout — we don't have this model's drawing on file, so window placement is typical for a home this size, not exact."}{" "}
+      {elevation.src !== "sheet"
+        ? "Representative layout — we don't have this model's drawing on file, so window placement is typical for a home this size, not exact."
+        : elevation.basedOn
+          ? `Window and door placement follows Champion's sheet for the base plan (model ${elevation.basedOn}); this Reverse Aisle layout is its mirror image, so the door side and ends may be reversed.`
+          : "Window and door placement follows Champion's floor plan sheet for this model."}{" "}
       {placed ? "Dormer, bay and added-door placement is drawn where Champion's option sheet shows it; the plant sets the final position at order. " : ""}
       Artist&rsquo;s illustration; colors are approximate, and porch, steps, foundation and landscaping are site-built and shown for illustration only.
     </>
@@ -505,7 +507,14 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
       elevationLabel && `Elevation option: ${elevationLabel}${endNote}`,
       addonPorch && "Add Champion's optional porch",
       `Foundation shown: ${foundation === "block" ? "block perimeter wall" : "vinyl skirting"}`,
-      elevation && `Exterior preview: ${elevation.src === "sheet" ? `drawn from sales sheet ${elevation.model || ""}` : "representative layout (no sheet on file)"}`,
+      elevation &&
+        `Exterior preview: ${
+          elevation.src !== "sheet"
+            ? "representative layout (no sheet on file)"
+            : elevation.basedOn
+              ? `drawn from the ${elevation.basedOn} sheet (base plan of this reverse-aisle model, not mirrored)`
+              : `drawn from sales sheet ${elevation.model || ""}`
+        }`,
       cabinet && `Cabinet finish: ${cabinet}`,
       flooring && `Flooring: ${flooring}`,
       countertop && `Countertop: ${countertop}`,
