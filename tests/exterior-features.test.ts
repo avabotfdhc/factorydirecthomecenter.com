@@ -152,6 +152,63 @@ test("an added door takes the widest free stretch of the rear wall, then the fro
   assert.equal(addedDoorSlot(tiny, 6), null);
 });
 
+test("on every sheet-drawn plan, added doors clear the shutters and bump-outs stay on flat wall", () => {
+  // Vercel's review found both on real plans (2842H32388: the second door over a
+  // shutter; 2856M32301: the bump-out painted behind the recessed porch).
+  const data = JSON.parse(readFileSync("src/lib/plan-elevations.json", "utf8")) as Record<string, PlanElevation>;
+  const models = Object.keys(data);
+  assert.ok(models.length > 150);
+  const SHUTTER = 1.7, TRIM = 0.5;
+  const overlaps = (a: [number, number], b: [number, number]) => a[0] < b[1] && a[1] > b[0];
+  const recessesOf = (p: PlanElevation, view: "front" | "rear"): [number, number][] => {
+    const out: [number, number][] = [];
+    if (p.porch?.kind === "end" && (p.porch.depth === "full" || p.porch.depth === view)) {
+      const onLeft = view === "front" ? p.porch.side === "left" : p.porch.side === "right";
+      out.push(onLeft ? [0, p.porch.len] : [p.L - p.porch.len, p.L]);
+    }
+    if (p.porch?.kind === "mid" && view === "front") out.push([p.porch.x - p.porch.w / 2, p.porch.x + p.porch.w / 2]);
+    return out;
+  };
+  let doorsPlaced = 0, bumpOuts = 0;
+  for (const m of models) {
+    const p = { ...data[m], model: m };
+    const slots = addedDoorSlots(p, ["patio", "atrium"]);
+    const placed = Object.values(slots);
+    for (const slot of placed) {
+      doorsPlaced++;
+      const door: [number, number] = [slot.x - 3, slot.x + 3];
+      for (const o of p.views[slot.view]) {
+        const pad = o[0] === "w" ? SHUTTER : TRIM;
+        assert.ok(!overlaps(door, [o[1] - o[2] / 2 - pad, o[1] + o[2] / 2 + pad]), `${m} ${slot.view}: door at ${slot.x} overlaps ${o[0]} at ${o[1]}`);
+      }
+      for (const r of recessesOf(p, slot.view)) assert.ok(!overlaps(door, r), `${m} ${slot.view}: door at ${slot.x} is inside the porch recess`);
+      assert.ok(door[0] >= 0.9 && door[1] <= p.L - 0.9, `${m}: door at ${slot.x} runs off the ${slot.view} wall`);
+    }
+    if (placed.length === 2) assert.ok(!overlaps([placed[0].x - 3, placed[0].x + 3], [placed[1].x - 3, placed[1].x + 3]) || placed[0].view !== placed[1].view, `${m}: both doors in one stretch`);
+    for (const w of [7, 8, 10, 12]) {
+      const cx = frontCentre(p, w, "bumpOut");
+      bumpOuts++;
+      const zone: [number, number] = [cx - w / 2, cx + w / 2];
+      for (const r of recessesOf(p, "front")) {
+        if (w + 2 >= p.L) continue; // wider than the home: nothing to do but centre it
+        assert.ok(!overlaps(zone, r), `${m}: ${w}' bump-out at ${cx} crosses the porch recess ${r}`);
+      }
+      assert.ok(zone[0] >= 0.9 && zone[1] <= p.L - 0.9, `${m}: ${w}' bump-out at ${cx} runs off the wall`);
+    }
+  }
+  assert.ok(doorsPlaced > models.length, "most plans take both doors somewhere");
+  assert.equal(bumpOuts, models.length * 4);
+  // the two plans from the review, pinned
+  const a = { ...data["2842H32388"], model: "2842H32388" };
+  const aSlots = addedDoorSlots(a, ["patio", "atrium"]);
+  assert.equal(aSlots.patio?.view, "rear");
+  assert.equal(aSlots.atrium?.view, "front", "the rear stretch between the door and the 46\" window is too short once its shutters count");
+  const b = { ...data["2856M32301"], model: "2856M32301" };
+  assert.equal(b.porch?.kind, "mid");
+  assert.equal(frontCentre(b, 8, "bumpOut"), 25.06, "frames the window beside the recessed porch, not the porch");
+  assert.equal(frontCentre(b, 10, "dormer"), 35.56, "a dormer alone still goes over the porch entry");
+});
+
 test("the elevation draws each feature on its own view and nothing when none is picked", () => {
   const render = (c: ExteriorChoices, view: "front" | "rear" | "left" | "right", p = plan) => renderToStaticMarkup(createElement(HomeElevation, { plan: p, choices: c, view }));
   assert.ok(!/data-feature=/.test(render(choices(), "front")), "no features, no markers");

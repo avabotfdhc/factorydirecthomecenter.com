@@ -531,10 +531,12 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
     recess = { x: onLeft ? 0 : L - porch.len, w: porch.len };
   }
   const mid = porch?.kind === "mid" && view === "front" ? porch : null;
-  // the dormer and bump-out are front-wall options; they share one centre
+  // the dormer and bump-out are front options. A bump-out must sit on flat
+  // wall; when there is one, the dormer sits over it so the pair (S7, D2)
+  // reads as one feature, otherwise the dormer goes over the entry
   const feat = view === "front" ? choices.features : {};
-  const featW = Math.max(feat.dormer?.widthFt ?? 0, feat.bumpOut?.widthFt ?? 0);
-  const featCx = featW ? houseX + frontCentre(plan, featW) * s : 0;
+  const bumpCx = feat.bumpOut ? houseX + frontCentre(plan, feat.bumpOut.widthFt, "bumpOut") * s : 0;
+  const dormerCx = feat.dormer ? (feat.bumpOut ? bumpCx : houseX + frontCentre(plan, feat.dormer.widthFt, "dormer") * s) : 0;
 
   // walls
   const wallSegs: { x: number; w: number }[] = [];
@@ -546,7 +548,6 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
     items.push(<rect key={`ct${seg.x}`} x={houseX + seg.x * s} y={f.eave} width={0.35 * s} height={WALL_H * s} fill={TRIM} />);
     items.push(<rect key={`ct2${seg.x}`} x={houseX + (seg.x + seg.w) * s - 0.35 * s} y={f.eave} width={0.35 * s} height={WALL_H * s} fill={TRIM} />);
   }
-  if (feat.bumpOut) items.push(<BumpOut key="bump" c={c} b={feat.bumpOut} cx={featCx} top={f.eave} floorY={f.floor} />);
   // recessed bay interior, posts and railing
   if (recess) {
     const rx = houseX + recess.x * s, rw = recess.w * s;
@@ -567,6 +568,8 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
     items.push(<Post key="mp1" c={c} x={mx} top={f.eave} bottom={f.floor} />);
     items.push(<Post key="mp2" c={c} x={mx + mw - 0.5 * s} top={f.eave} bottom={f.floor} />);
   }
+  // the bump-out sits on flat wall, over the recess and porch backgrounds, under the openings
+  if (feat.bumpOut) items.push(<BumpOut key="bump" c={c} b={feat.bumpOut} cx={bumpCx} top={f.eave} floorY={f.floor} />);
   // openings on the wall (skip any inside a recess or the mid porch)
   for (const o of openings) {
     if (recess && o[1] > recess.x - 0.3 && o[1] < recess.x + recess.w + 0.3) continue;
@@ -615,7 +618,7 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
       <rect x={roofX} y={f.eave - FASCIA * s} width={roofW} height={FASCIA * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
       <rect x={roofX - 0.05 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={c.trim} />
       <rect x={roofX + roofW - 0.17 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={c.trim} />
-      {feat.dormer && <Dormer c={c} d={feat.dormer} cx={featCx} eaveLine={f.eave - FASCIA * s} ridgeY={ridgeY} rise={rise} />}
+      {feat.dormer && <Dormer c={c} d={feat.dormer} cx={dormerCx} eaveLine={f.eave - FASCIA * s} ridgeY={ridgeY} rise={rise} />}
     </svg>
   );
 }

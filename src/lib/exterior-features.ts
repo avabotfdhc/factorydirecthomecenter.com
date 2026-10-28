@@ -118,25 +118,59 @@ export function mergeFeatures(dormerId: string, elevationId: string): FeatureSpe
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(Math.max(v, lo), hi);
 
+/** How far a window's shutters (or a door's trim) reach past the opening
+ *  itself, so nothing is placed over them: 15" shutter + trim + gap. */
+const WINDOW_PAD = 1.7;
+const DOOR_PAD = 0.5;
+
+/** Parts of a long wall that are not flat wall: a recessed end porch when it
+ *  shows on this side, and the mid porch on the front. */
+function recesses(plan: PlanElevation, view: "front" | "rear"): [number, number][] {
+  const out: [number, number][] = [];
+  const { porch, L } = plan;
+  if (porch?.kind === "end" && (porch.depth === "full" || porch.depth === view)) {
+    const onLeft = view === "front" ? porch.side === "left" : porch.side === "right";
+    out.push(onLeft ? [0, porch.len] : [L - porch.len, L]);
+  }
+  if (porch?.kind === "mid" && view === "front") out.push([porch.x - porch.w / 2, porch.x + porch.w / 2]);
+  return out;
+}
+
+const inside = (x: number, ivs: [number, number][]) => ivs.some(([a, b]) => x > a && x < b);
+
 /** The centre (feet along the front wall, viewer's left to right) for a
- *  front feature of the given width: over the front door when the plan has
- *  one, else over the mid porch, else the middle of the wall; kept a foot
- *  inside the ends. */
-export function frontCentre(plan: PlanElevation, widthFt: number): number {
+ *  front feature of the given width. A dormer goes over the entry — the
+ *  front door, else the mid porch, else the door inside an end porch, else
+ *  the window nearest the middle. A bump-out is a wall feature, so it goes
+ *  over the front door only when that door stands on flat wall, and
+ *  otherwise frames the window nearest the middle, as the modular sheet
+ *  does; it is never placed across a porch recess. Both stay a foot inside
+ *  the ends. */
+export function frontCentre(plan: PlanElevation, widthFt: number, kind: "dormer" | "bumpOut" = "dormer"): number {
   const { L, porch } = plan;
   const front = plan.views.front;
-  const door = front.find((o) => o[0] === "d") ?? front.find((o) => o[0] === "p");
+  const rec = recesses(plan, "front");
+  const flatDoor = front.find((o) => (o[0] === "d" || o[0] === "p") && !inside(o[1], rec));
+  const anyDoor = front.find((o) => o[0] === "d" || o[0] === "p");
+  const flatWindow = front.filter((o) => o[0] === "w" && !inside(o[1], rec)).sort((a, b) => Math.abs(a[1] - L / 2) - Math.abs(b[1] - L / 2))[0];
   let cx: number;
-  if (door) cx = door[1];
-  else if (porch?.kind === "mid") cx = porch.x;
-  else {
-    // no entry on this side: the window nearest the middle, as the modular
-    // sheet frames its bump-outs around a window
-    const win = front.filter((o) => o[0] === "w").sort((a, b) => Math.abs(a[1] - L / 2) - Math.abs(b[1] - L / 2))[0];
-    cx = win ? win[1] : L / 2;
-  }
+  if (flatDoor) cx = flatDoor[1];
+  else if (kind === "dormer" && porch?.kind === "mid") cx = porch.x;
+  else if (kind === "dormer" && anyDoor) cx = anyDoor[1];
+  else cx = flatWindow ? flatWindow[1] : L / 2;
   if (widthFt + 2 >= L) return L / 2;
-  return clamp(cx, widthFt / 2 + 1, L - widthFt / 2 - 1);
+  cx = clamp(cx, widthFt / 2 + 1, L - widthFt / 2 - 1);
+  if (kind === "bumpOut") {
+    // keep the whole zone on flat wall: slide it off any recess it overlaps
+    for (const [a, b] of rec) {
+      if (cx + widthFt / 2 > a && cx - widthFt / 2 < b) {
+        const roomLeft = a - 1, roomRight = L - 1 - b;
+        cx = roomLeft >= widthFt && (roomLeft >= roomRight || roomRight < widthFt) ? a - widthFt / 2 - 0.25 : b + widthFt / 2 + 0.25;
+        cx = clamp(cx, widthFt / 2 + 1, L - widthFt / 2 - 1);
+      }
+    }
+  }
+  return cx;
 }
 
 function widestWindow(openings: Opening[]): Opening | null {
@@ -174,17 +208,14 @@ export interface DoorSlot {
   x: number;
 }
 
-/** Occupied intervals [a, b] along a wall: its openings, and a recessed end
- *  porch when that porch shows on this side. */
+/** Occupied intervals [a, b] along a wall: its openings with their shutters
+ *  or trim, and the porch recesses on this side. */
 function occupied(plan: PlanElevation, view: "front" | "rear"): [number, number][] {
-  const out: [number, number][] = plan.views[view].map((o) => [o[1] - o[2] / 2, o[1] + o[2] / 2]);
-  const { porch, L } = plan;
-  if (porch?.kind === "end" && (porch.depth === "full" || porch.depth === view)) {
-    const onLeft = view === "front" ? porch.side === "left" : porch.side === "right";
-    out.push(onLeft ? [0, porch.len] : [L - porch.len, L]);
-  }
-  if (porch?.kind === "mid" && view === "front") out.push([porch.x - porch.w / 2, porch.x + porch.w / 2]);
-  return out;
+  const out: [number, number][] = plan.views[view].map((o) => {
+    const pad = o[0] === "w" ? WINDOW_PAD : DOOR_PAD;
+    return [o[1] - o[2] / 2 - pad, o[1] + o[2] / 2 + pad];
+  });
+  return out.concat(recesses(plan, view));
 }
 
 /** The widest free stretch of a wall that fits a door of `widthFt` with a
