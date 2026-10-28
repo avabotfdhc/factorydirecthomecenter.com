@@ -191,7 +191,7 @@ test("a mulled pair of windows gets shutters on its outer edges only", () => {
   const cat = exteriorCatalog("Prime", "HUD");
   const choices: ExteriorChoices = {
     siding: cat.siding[0], shingles: cat.shingles[0], trim: "shutters", shutter: cat.shutters[0], gableAccent: null,
-    foundation: "block", addonPorch: false, door: "6-panel", blackPackage: false, windowGrids: false,
+    foundation: "block", addonPorch: false, door: "6-panel", blackPackage: false, windowGrids: false, features: {}, addedDoors: [],
   };
   const html = renderToStaticMarkup(createElement(HomeElevation, { plan: pair, choices, view: "front" }));
   const shutters = (html.match(/data-shutter=""/g) || []).length;

@@ -5,10 +5,27 @@
 //
 // Everything is laid out in feet and scaled once. Views are viewer-oriented:
 // x runs left to right as you stand outside facing that wall.
+//
+// Champion's dormer, bump-out and bay options are drawn too, from the specs in
+// src/lib/exterior-features.ts: a dormer and bump-out over the front door, an
+// end-wall option on the end with the widest window, an added patio or atrium
+// door in the widest free stretch of the rear wall. Each carries a
+// data-feature attribute so tests can find it in the markup.
 
 import type { ReactNode } from "react";
 import { windowSize, type Opening, type PlanElevation, type ViewName } from "@/lib/plan-elevation-types";
 import type { Swatch } from "@/lib/exterior-options";
+import {
+  addedDoorSlots,
+  endCentre,
+  featureEnd,
+  frontCentre,
+  type AddedDoor,
+  type BumpOutSpec,
+  type DormerSpec,
+  type EndSpec,
+  type FeatureSpec,
+} from "@/lib/exterior-features";
 
 export type DoorStyle = "6-panel" | "9-lite" | "craftsman" | "craftsman-black";
 
@@ -31,6 +48,12 @@ export interface ExteriorChoices {
   blackPackage: boolean;
   /** standard windows carry grids (Aspire) or not (Prime) */
   windowGrids: boolean;
+  /** the dormer, bump-out or end-wall option, as drawing parts
+   *  (src/lib/exterior-features.ts); {} draws none */
+  features: FeatureSpec;
+  /** patio or atrium doors the buyer is adding; each is drawn in the widest
+   *  free stretch of the rear wall, then the front */
+  addedDoors: AddedDoor[];
 }
 
 const TRIM = "#F5F5F1";
@@ -170,6 +193,19 @@ function Window({ c, cx, floorY, code, wFt, clearL = Infinity, clearR = Infinity
 function Door({ c, cx, floorY, groundY, steps = true }: { c: Ctx; cx: number; floorY: number; groundY: number; steps?: boolean }) {
   const { s } = c;
   const W = 3 * s, H = HEAD * s, x = cx - W / 2, y = floorY - H, tr = (c.lineals ? 0.42 : 0.3) * s;
+  return (
+    <g>
+      {steps && <Steps c={c} cx={cx} w={4} floorY={floorY} groundY={groundY} />}
+      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={c.trim} stroke="rgba(0,0,0,.22)" />}
+      <DoorLeaf c={c} x={x} y={y} W={W} H={H} />
+    </g>
+  );
+}
+
+/** The slab itself — panels, lites, shelf rail and knob — in the chosen style. */
+function DoorLeaf({ c, x, y, W, H }: { c: Ctx; x: number; y: number; W: number; H: number }) {
+  const { s } = c;
   const m = Math.max(1.5, 0.07 * s);
   const black = c.door === "craftsman-black";
   const slab = black ? "#1c1c1c" : "#f3f3ee";
@@ -207,14 +243,153 @@ function Door({ c, cx, floorY, groundY, steps = true }: { c: Ctx; cx: number; fl
   }
   return (
     <g>
-      {steps && <Steps c={c} cx={cx} w={4} floorY={floorY} groundY={groundY} />}
-      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />
-      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={c.trim} stroke="rgba(0,0,0,.22)" />}
       <rect x={x} y={y} width={W} height={H} fill={slab} stroke="rgba(0,0,0,.12)" />
       {inner}
       <circle cx={x + W - 0.42 * s} cy={y + H * 0.53} r={Math.max(1.5, 0.11 * s)} fill={black ? "#c9c9c9" : "#2b2b2b"} />
     </g>
   );
+}
+
+/** A 72" atrium door: two hinged 36" leaves, glass nearly full height, with
+ *  the home's grids when it has them. */
+function Atrium({ c, cx, floorY, groundY, steps = true }: { c: Ctx; cx: number; floorY: number; groundY: number; steps?: boolean }) {
+  const { s } = c;
+  const W = 6 * s, H = HEAD * s, x = cx - W / 2, y = floorY - H, tr = (c.lineals ? 0.42 : 0.3) * s;
+  const rail = Math.max(2, 0.22 * s), stile = Math.max(2, 0.2 * s), m = Math.max(1, 0.06 * s);
+  const leaves: ReactNode[] = [];
+  for (const i of [0, 1]) {
+    const lx = x + i * (W / 2), lw = W / 2;
+    const gx = lx + stile, gy = y + stile, gw = lw - 2 * stile, gh = H - stile - rail * 2.2;
+    leaves.push(<rect key={`l${i}`} x={lx} y={y} width={lw} height={H} fill="#f3f3ee" stroke="rgba(0,0,0,.15)" />);
+    leaves.push(<rect key={`g${i}`} x={gx} y={gy} width={gw} height={gh} fill={`url(#${c.id}-glass)`} stroke="rgba(0,0,0,.25)" />);
+    if (c.grids) {
+      for (const fx of [1 / 2]) leaves.push(<rect key={`v${i}${fx}`} x={gx + gw * fx - m / 2} y={gy} width={m} height={gh} fill="#fbfbf8" opacity={0.9} />);
+      for (const fy of [0.25, 0.5, 0.75]) leaves.push(<rect key={`h${i}${fy}`} x={gx} y={gy + gh * fy - m / 2} width={gw} height={m} fill="#fbfbf8" opacity={0.9} />);
+    }
+  }
+  return (
+    <g data-feature="atrium">
+      {steps && <Steps c={c} cx={cx} w={7} floorY={floorY} groundY={groundY} />}
+      <rect x={x - tr} y={y - tr} width={W + 2 * tr} height={H + tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      {c.lineals && <rect x={x - tr - 0.12 * s} y={y - tr - 0.14 * s} width={W + 2 * tr + 0.24 * s} height={0.18 * s} fill={c.trim} stroke="rgba(0,0,0,.22)" />}
+      {leaves}
+      <rect x={cx - 0.04 * s} y={y} width={0.08 * s} height={H} fill="rgba(0,0,0,.25)" />
+      <rect x={cx - 0.42 * s} y={y + H * 0.5} width={0.3 * s} height={Math.max(1.5, 0.08 * s)} fill="#2b2b2b" rx={1} />
+      <rect x={cx + 0.12 * s} y={y + H * 0.5} width={0.3 * s} height={Math.max(1.5, 0.08 * s)} fill="#2b2b2b" rx={1} />
+    </g>
+  );
+}
+
+/** points for a triangle with its base at `by` from cx-hw to cx+hw and its apex at (cx, ay) */
+const tri3 = (cx: number, hw: number, by: number, ay: number) => `${cx - hw},${by} ${cx + hw},${by} ${cx},${ay}`;
+
+/** A decorative dormer on the front roof plane: the gable face with rake
+ *  trim and its own shingle edge, and for a drop-eave dormer the face that
+ *  continues below the main eave. Pitch is capped so the apex stays under
+ *  the ridge cap — the sheets say every size is nominal. */
+function Dormer({ c, d, cx, eaveLine, ridgeY, rise }: { c: Ctx; d: DormerSpec; cx: number; eaveLine: number; ridgeY: number; rise: number }) {
+  const { s } = c;
+  const half = (d.widthFt / 2) * s;
+  const drop = d.style === "dropEave" ? 0.9 * s : 0;
+  const lift = d.setback ? Math.min(1.0 * s, rise * s * 0.4) : 0;
+  const baseY = eaveLine + drop - lift;
+  const avail = baseY - ridgeY - 0.35 * s;
+  const maxPitch = d.style === "eyebrow" ? 1.6 / 12 : 7 / 12;
+  const minPitch = d.style === "eyebrow" ? 1.1 / 12 : 2.2 / 12;
+  const pitch = Math.max(minPitch, Math.min(maxPitch, avail / half));
+  const apexY = baseY - pitch * half;
+  const face = `url(#${c.id}-${d.shake ? "shk" : "sid"})`;
+  const ov = 0.45 * s;
+  return (
+    <g data-feature="dormer">
+      {/* its shadow on the main roof, its shingle edge, the rake trim, then the face */}
+      <rect x={cx - half - ov} y={baseY} width={2 * (half + ov)} height={0.3 * s} fill="rgba(0,0,0,.22)" />
+      <polygon points={tri3(cx, half + ov, baseY, apexY - ov * pitch - 0.3 * s)} fill={shade(c.sh, -0.12)} />
+      <polygon points={tri3(cx, half + ov * 0.55, baseY, apexY - ov * 0.55 * pitch - 0.12 * s)} fill={c.trim} />
+      <polygon points={tri3(cx, half, baseY, apexY)} fill={face} />
+      {drop > 0 && (
+        <>
+          <rect x={cx - half} y={eaveLine - 0.05 * s} width={2 * half} height={drop + 0.05 * s} fill={face} />
+          <rect x={cx - half - 0.08 * s} y={eaveLine - 0.05 * s} width={0.16 * s} height={drop + 0.05 * s} fill={c.trim} />
+          <rect x={cx + half - 0.08 * s} y={eaveLine - 0.05 * s} width={0.16 * s} height={drop + 0.05 * s} fill={c.trim} />
+        </>
+      )}
+      <rect x={cx - half - ov * 0.55} y={baseY - 0.14 * s} width={2 * (half + ov * 0.55)} height={0.28 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+    </g>
+  );
+}
+
+/** A trim-framed section of the front wall around the entry: Azek bands at
+ *  the edges, a head band under the eave, shake columns for S7, corbels
+ *  where the sheet shows them. */
+function BumpOut({ c, b, cx, top, floorY }: { c: Ctx; b: BumpOutSpec; cx: number; top: number; floorY: number }) {
+  const { s } = c;
+  const half = (b.widthFt / 2) * s, band = 0.45 * s;
+  return (
+    <g data-feature="bump-out">
+      {b.shake && <rect x={cx - half} y={top} width={2 * half} height={floorY - top} fill={`url(#${c.id}-shk)`} />}
+      <rect x={cx - half} y={top} width={band} height={floorY - top} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      <rect x={cx + half - band} y={top} width={band} height={floorY - top} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      <rect x={cx - half} y={top} width={2 * half} height={0.3 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      {b.corbels &&
+        [cx - half + band / 2, cx + half - band / 2].map((x) => (
+          <polygon key={x} points={`${x - 0.3 * s},${top + 0.3 * s} ${x + 0.3 * s},${top + 0.3 * s} ${x},${top + 0.85 * s}`} fill={c.trim} stroke="rgba(0,0,0,.25)" />
+        ))}
+      <rect x={cx + half} y={top} width={0.22 * s} height={floorY - top} fill="rgba(0,0,0,.16)" />
+      <rect x={cx - half} y={top} width={2 * half} height={1.1 * s} fill="rgba(0,0,0,.16)" />
+    </g>
+  );
+}
+
+/** The end-wall options Champion draws around the gable end's window: box-out
+ *  bay, Azek bands, lineals, eyebrow or shed roof, and the S1 corbel at the
+ *  peak. `below` draws what sits on the wall (before the openings); `above`
+ *  what sits over the gable (after it). */
+function EndFeature({ c, e, cx, win, f, peakX, peakY, part }: { c: Ctx; e: EndSpec; cx: number; win: Opening | null; f: Frame; peakX: number; peakY: number; part: "below" | "above" }) {
+  const { s } = c;
+  const half = (e.widthFt / 2) * s, band = 0.45 * s;
+  const top = f.eave, floorY = f.floor;
+  if (part === "below") {
+    const out: ReactNode[] = [];
+    if (e.box) {
+      out.push(<rect key="box" x={cx - half} y={top} width={2 * half} height={floorY - top} fill={`url(#${c.id}-sid)`} />);
+      out.push(<rect key="box-lite" x={cx - half} y={top} width={2 * half} height={floorY - top} fill="rgba(255,255,255,.07)" />);
+      out.push(<rect key="box-cap" x={cx - half - 0.1 * s} y={top} width={2 * half + 0.2 * s} height={0.32 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+      out.push(<rect key="box-edge" x={cx + half} y={top} width={0.3 * s} height={floorY - top} fill="rgba(0,0,0,.22)" />);
+      out.push(<rect key="box-edge2" x={cx - half - 0.08 * s} y={top} width={0.08 * s} height={floorY - top} fill="rgba(255,255,255,.35)" />);
+    }
+    if (e.trim === "azek") {
+      out.push(<rect key="az1" x={cx - half} y={top} width={band} height={floorY - top} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+      out.push(<rect key="az2" x={cx + half - band} y={top} width={band} height={floorY - top} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+    }
+    if (e.lineals && win) {
+      const { w, h } = windowSize(win[3], win[2]);
+      const W = w * s, H = h * s, x = f.x0 + win[1] * s - W / 2, y = floorY - HEAD * s, t = 0.5 * s;
+      out.push(<rect key="lin" x={x - t} y={y - t - 0.14 * s} width={W + 2 * t} height={H + 2 * t + 0.14 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+    }
+    out.push(<rect key="esh" x={cx - half - 0.1 * s} y={top} width={2 * half + 0.2 * s} height={1.1 * s} fill="rgba(0,0,0,.16)" />);
+    return <g data-feature="end">{out}</g>;
+  }
+  const eaveLine = f.eave - FASCIA * s;
+  const out: ReactNode[] = [];
+  if (e.eyebrow) {
+    const hw = half + 0.5 * s, pitch = 1.6 / 12, apex = eaveLine - pitch * hw;
+    out.push(<polygon key="eb-sh" points={tri3(cx, hw + 0.3 * s, eaveLine, apex - 0.3 * s * pitch - 0.28 * s)} fill={shade(c.sh, -0.12)} />);
+    out.push(<polygon key="eb-tr" points={tri3(cx, hw + 0.1 * s, eaveLine, apex - 0.1 * s * pitch - 0.1 * s)} fill={c.trim} />);
+    out.push(<polygon key="eb-face" points={tri3(cx, hw - 0.12 * s, eaveLine, apex + 0.12 * s)} fill={`url(#${c.id}-${c.gable ? "shk" : "sid"})`} />);
+    out.push(<rect key="eb-fas" x={cx - hw - 0.1 * s} y={eaveLine - 0.12 * s} width={2 * (hw + 0.1 * s)} height={0.26 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+  }
+  if (e.shedRoof) {
+    const x = cx - half - 0.4 * s, w = 2 * (half + 0.4 * s), y = f.eave + 0.08 * s;
+    out.push(<rect key="shed" x={x} y={y} width={w} height={0.5 * s} fill={`url(#${c.id}-shg)`} />);
+    out.push(<rect key="shed-fas" x={x} y={y + 0.5 * s} width={w} height={0.26 * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+    out.push(<rect key="shed-sh" x={x} y={y + 0.76 * s} width={w} height={0.3 * s} fill="rgba(0,0,0,.2)" />);
+  }
+  if (e.corbel) {
+    out.push(<rect key="cb-line" x={peakX - 0.15 * s} y={peakY} width={0.3 * s} height={eaveLine - peakY} fill={c.trim} stroke="rgba(0,0,0,.2)" />);
+    out.push(<rect key="cb-block" x={peakX - 0.32 * s} y={peakY + 0.2 * s} width={0.64 * s} height={0.9 * s} fill={c.trim} stroke="rgba(0,0,0,.25)" />);
+  }
+  return <g data-feature="end-roof">{out}</g>;
 }
 
 /** A 72" sliding patio door. */
@@ -391,6 +566,12 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
     recess = { x: onLeft ? 0 : L - porch.len, w: porch.len };
   }
   const mid = porch?.kind === "mid" && view === "front" ? porch : null;
+  // the dormer and bump-out are front options. A bump-out must sit on flat
+  // wall; when there is one, the dormer sits over it so the pair (S7, D2)
+  // reads as one feature, otherwise the dormer goes over the entry
+  const feat = view === "front" ? choices.features : {};
+  const bumpCx = feat.bumpOut ? houseX + frontCentre(plan, feat.bumpOut.widthFt, "bumpOut") * s : 0;
+  const dormerCx = feat.dormer ? (feat.bumpOut ? bumpCx : houseX + frontCentre(plan, feat.dormer.widthFt, "dormer") * s) : 0;
 
   // walls
   const wallSegs: { x: number; w: number }[] = [];
@@ -422,11 +603,24 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
     items.push(<Post key="mp1" c={c} x={mx} top={f.eave} bottom={f.floor} />);
     items.push(<Post key="mp2" c={c} x={mx + mw - 0.5 * s} top={f.eave} bottom={f.floor} />);
   }
+  // the bump-out sits on flat wall, over the recess and porch backgrounds, under the openings
+  if (feat.bumpOut) items.push(<BumpOut key="bump" c={c} b={feat.bumpOut} cx={bumpCx} top={f.eave} floorY={f.floor} />);
   // openings on the wall (skip any inside a recess or the mid porch)
   for (const o of openings) {
     if (recess && o[1] > recess.x - 0.3 && o[1] < recess.x + recess.w + 0.3) continue;
     if (mid && Math.abs(o[1] - mid.x) < mid.w / 2 + 0.3) continue;
     items.push(<Opening_ key={`o${o[1]}`} c={c} o={o} x0={houseX} floorY={f.floor} groundY={f.ground} steps wall={openings} />);
+  }
+  // added patio / atrium doors, each in the widest free stretch of wall
+  const slots = addedDoorSlots(plan, choices.addedDoors);
+  for (const [kind, slot] of Object.entries(slots)) {
+    if (slot.view !== view) continue;
+    const cx = houseX + slot.x * s;
+    items.push(
+      <g key={`added-${kind}`} data-feature="added-door" data-door={kind}>
+        {kind === "atrium" ? <Atrium c={c} cx={cx} floorY={f.floor} groundY={f.ground} /> : <Patio c={c} cx={cx} floorY={f.floor} groundY={f.ground} />}
+      </g>,
+    );
   }
   // add-on porch: open, under the main roof, with posts and railing
   if (addon) {
@@ -459,6 +653,7 @@ function LongView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; vie
       <rect x={roofX} y={f.eave - FASCIA * s} width={roofW} height={FASCIA * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
       <rect x={roofX - 0.05 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={c.trim} />
       <rect x={roofX + roofW - 0.17 * s} y={ridgeY - 0.2 * s} width={0.22 * s} height={rise * s + 0.2 * s} fill={c.trim} />
+      {feat.dormer && <Dormer c={c} d={feat.dormer} cx={dormerCx} eaveLine={f.eave - FASCIA * s} ridgeY={ridgeY} rise={rise} />}
     </svg>
   );
 }
@@ -488,6 +683,14 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
     porchBack = plan.views[view];
   }
   const endPorch = porchSpan ? { back: porchBack } : null;
+  // an end-wall option (S-series, bays) on the end Champion would put it on
+  const endSpec = choices.features.end && !porchSpan && featureEnd(plan, choices.addonPorch) === view ? choices.features.end : null;
+  const endCx = endSpec ? x0 + endCentre(plan, view, endSpec.widthFt) * s : 0;
+  const endWin = endSpec ? plan.views[view].reduce<Opening | null>((b, o) => (o[0] === "w" && (!b || o[2] > b[2]) ? o : b), null) : null;
+  const gx = x0 - OVERHANG * s, gw = W * s + 2 * OVERHANG * s;
+  const peak = f.eave - FASCIA * s - rise * s - OVERHANG * PITCH * s;
+  const tri = (inset: number, y: number) => `${gx + inset},${y + (rise + OVERHANG * PITCH) * s} ${gx + gw - inset},${y + (rise + OVERHANG * PITCH) * s} ${gx + gw / 2},${y}`;
+  const facePeakY = peak + (OVERHANG * PITCH + 0.5 * PITCH) * s + 0.45 * s;
 
   // the house wall: full, or the part beside the porch (set back behind the porch, shaded)
   items.push(<rect key="wall" x={x0} y={f.eave} width={W * s} height={WALL_H * s} fill={`url(#${c.id}-sid)`} />);
@@ -496,6 +699,7 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
     items.push(<rect key="ct" x={x0} y={f.eave} width={0.35 * s} height={WALL_H * s} fill={TRIM} />);
     items.push(<rect key="ct2" x={x0 + W * s - 0.35 * s} y={f.eave} width={0.35 * s} height={WALL_H * s} fill={TRIM} />);
   }
+  if (endSpec) items.push(<EndFeature key="endf" c={c} e={endSpec} cx={endCx} win={endWin} f={f} peakX={gx + gw / 2} peakY={facePeakY} part="below" />);
   for (const o of plan.views[view]) {
     if (porchSpan && o[1] > porchSpan.x - 0.3 && o[1] < porchSpan.x + porchSpan.w + 0.3) continue;
     items.push(<Opening_ key={`o${o[1]}`} c={c} o={o} x0={x0} floorY={f.floor} groundY={f.ground} steps wall={plan.views[view]} />);
@@ -532,9 +736,6 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
     items.push(<rect key="pbeam" x={px - 0.1 * s} y={f.eave} width={pw + 0.2 * s} height={0.7 * s} fill={TRIM} stroke="rgba(0,0,0,.2)" />);
   }
 
-  const gx = x0 - OVERHANG * s, gw = W * s + 2 * OVERHANG * s;
-  const peak = f.eave - FASCIA * s - rise * s - OVERHANG * PITCH * s;
-  const tri = (inset: number, y: number) => `${gx + inset},${y + (rise + OVERHANG * PITCH) * s} ${gx + gw - inset},${y + (rise + OVERHANG * PITCH) * s} ${gx + gw / 2},${y}`;
   return (
     <svg viewBox={`0 0 ${f.width} ${f.height}`} width="100%" role="img" aria-label={`${view === "left" ? "Left" : "Right"} end elevation`}>
       <Defs c={c} />
@@ -544,8 +745,9 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
       {/* gable: shingle edge, white rake, then the gable face in siding or shake accent */}
       <polygon points={tri(0, peak - 0.3 * s)} fill={shade(c.sh, -0.1)} />
       <polygon points={tri(0.1 * s, peak)} fill={c.trim} />
-      <polygon points={tri(OVERHANG * s + 0.5 * s, peak + (OVERHANG * PITCH + 0.5 * PITCH) * s + 0.45 * s)} fill={`url(#${c.id}-${c.gable ? "shk" : "sid"})`} />
+      <polygon points={tri(OVERHANG * s + 0.5 * s, facePeakY)} fill={`url(#${c.id}-${c.gable ? "shk" : "sid"})`} />
       <rect x={gx} y={f.eave - FASCIA * s} width={gw} height={FASCIA * s} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      {endSpec && <EndFeature c={c} e={endSpec} cx={endCx} win={endWin} f={f} peakX={gx + gw / 2} peakY={facePeakY} part="above" />}
     </svg>
   );
 }
@@ -583,4 +785,23 @@ export function HomeElevation({
   };
   if (view === "front" || view === "rear") return <LongView c={c} plan={plan} view={view} choices={choices} />;
   return <EndView c={c} plan={plan} view={view} choices={choices} />;
+}
+
+/** A small picture of one door style for a picker chip: the same leaf the
+ *  elevation draws, on a patch of siding. */
+export function DoorSwatch({ style, grids = true, id = "dsw", className }: { style: DoorStyle; grids?: boolean; id?: string; className?: string }) {
+  const s = 6;
+  const black = style === "craftsman-black";
+  const c: Ctx = { s, id: `${id}-${style}`, sid: "#d9d6cc", sh: "#333333", shut: null, lineals: false, gable: null, foundation: "skirting", trim: black ? "#1c1c1c" : TRIM, door: style, grids: grids && !black };
+  const W = 3 * s, H = HEAD * s, tr = 0.3 * s, pad = 0.5 * s;
+  const vw = W + 2 * tr + 2 * pad, vh = H + tr + pad * 1.6;
+  return (
+    <svg viewBox={`0 0 ${vw} ${vh}`} width={Math.round(vw * 1.1)} height={Math.round(vh * 1.1)} aria-hidden="true" className={className}>
+      <Defs c={c} />
+      <rect width={vw} height={vh} fill={`url(#${c.id}-sid)`} />
+      <rect x={pad} y={pad * 0.6} width={W + 2 * tr} height={H + tr} fill={c.trim} stroke="rgba(0,0,0,.2)" />
+      <DoorLeaf c={c} x={pad + tr} y={pad * 0.6 + tr} W={W} H={H} />
+      <rect y={vh - pad} width={vw} height={pad} fill="#a39784" />
+    </svg>
+  );
 }
