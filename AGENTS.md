@@ -1962,8 +1962,36 @@ its own five siding colours, five shutters, black 3-tab shingles only, 6-panel
 doors, no-grid windows, its own cabinets/counters/flooring, and **no optional
 upgrades** — the upgrade checklist, lineals, doors, gable accent, black package
 and dormers are all hidden. Switching homes drops any pick the new catalogue
-does not offer. `tests/exterior-options.test.ts` holds all of it. Dormers, bays
-and added doors are quote preferences and are not drawn.
+does not offer. `tests/exterior-options.test.ts` holds all of it.
+
+**The dormers, bump-outs, bays and added doors are drawn too** (Kyle,
+2026-10-27: "add the exterior elevations look to the rendering"; then the door
+images and anything else a buyer judges by eye). `src/lib/exterior-features.ts`
+holds one drawing spec per option id — read off the same HUD SGL 1 / DBL 1 and
+MD-01..04 sheets the lists came from, rasterised and looked at, not guessed:
+the double-wide and modular dormers are shallow gables on the front roof plane
+(plain, shake-faced "drop eave", or "setback"); the single-wide S-series
+"elevations" (S1 Azek trim and corbel, S2 box-out bay, S10 eyebrow, S5 eyebrow
+with lineals) and the double-wide bays (D4, X16) sit on the **gable end around
+its window**; the bump-outs are trim-framed zones on the front wall. Placement
+rules, all in that file and pinned by `tests/exterior-features.test.ts`: a
+dormer and bump-out centre over the front door (else the mid porch, else the
+window nearest the middle); an end feature goes on the end without a porch
+that has the widest window, and **is not drawn at all when no end qualifies**
+(a blank end wall framed in Azek trim is wrong, and 1676H32089 and the 32-wides
+showed exactly that before the rule); an added patio or atrium door takes the
+widest free stretch of the rear wall, then the front, and two added doors never
+share a stretch. A dormer picked from the dormer list wins over the one D2
+brings with it, so two gables are never stacked. Each drawn part carries a
+`data-feature` attribute, which is how the tests find it in the markup.
+Picking a feature turns the preview to the view that shows it; the caption,
+the option note and the lead message all say where it was drawn ("shown on
+the right end", "on the rear wall", or "not drawn: this plan has no end-wall
+window for it"), and that the plant sets the real placement at order — every
+sheet says the sizes are nominal. The front-door chips carry a small picture
+of each leaf (`DoorSwatch`, the same drawing the elevation uses), because a
+buyer choosing between 9-lite and Craftsman wants to see them, not read them.
+Interior picks (cabinets, flooring, counters) are still text only.
 
 The funnel is measured: every step fires a GA4 `designer_step` event with
 `step` (`plan_selected`, `preview_loaded`, `exterior_pick` with `field`/`value`,

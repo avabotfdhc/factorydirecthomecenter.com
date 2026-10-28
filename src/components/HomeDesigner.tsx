@@ -5,8 +5,9 @@ import { useAntiSpam } from "@/lib/use-anti-spam";
 import type { FormEvent, ReactNode } from "react";
 import Link from "next/link";
 import { trackGA4Event, trackLeadFormStart, trackLeadFormError, trackLeadFormSubmit } from "@/lib/analytics";
-import { HomeElevation, type DoorStyle, type ExteriorChoices } from "@/components/HomeElevation";
+import { DoorSwatch, HomeElevation, type DoorStyle, type ExteriorChoices } from "@/components/HomeElevation";
 import { exteriorCatalog, swatchLabel, type ExteriorCatalog, type Swatch } from "@/lib/exterior-options";
+import { addedDoorSlots, featureEnd, featureFor, mergeFeatures, viewForFeature, type AddedDoor } from "@/lib/exterior-features";
 import type { PlanElevation, ViewName } from "@/lib/plan-elevation-types";
 
 // A lightweight "design your home" configurator. It does NOT price anything or
@@ -30,7 +31,11 @@ import type { PlanElevation, ViewName } from "@/lib/plan-elevation-types";
 // redraws it in the chosen siding, shingles, trim, door and foundation as the
 // buyer clicks. It is an illustration, labelled as one, and when a plan's
 // sheet could not be read the fallback is a representative layout that says
-// so. Dormers, bays and added doors are quote preferences and are not drawn.
+// so. Dormers, bump-outs, bays and added doors are drawn too, from the specs
+// in src/lib/exterior-features.ts, at the place Champion's sheet shows them
+// (over the entry, on the end with the window, on the rear wall); the plant
+// sets the real placement at order and the caption says so. Picking one
+// switches the preview to the view that shows it.
 //
 // Funnel: every step fires a GA4 `designer_step` event (plan chosen, each
 // exterior or interior pick, view change) so the path from plan to quote can
@@ -138,6 +143,35 @@ function ChipGroup<T extends string>({
   );
 }
 
+/** Door styles as picture chips, so a buyer sees the 9-lite or Craftsman look before choosing it. */
+function DoorPicker({ options, value, grids, onChange }: { options: { id: string; label: string; standard?: boolean }[]; value: DoorStyle; grids: boolean; onChange: (v: DoorStyle) => void }) {
+  return (
+    <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Front door">
+      {options.map((o) => {
+        const selected = value === o.id;
+        return (
+          <button
+            type="button"
+            key={o.id}
+            role="radio"
+            aria-checked={selected}
+            onClick={() => onChange(o.id as DoorStyle)}
+            className={`flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-xl border text-sm text-left transition-colors ${
+              selected ? "border-[var(--color-teal)] bg-[var(--color-teal)]/8 font-semibold" : "border-[var(--color-charcoal)]/15 hover:border-[var(--color-teal)]/40"
+            }`}
+          >
+            <DoorSwatch style={o.id as DoorStyle} grids={grids} className="rounded-md border border-black/10 flex-shrink-0" />
+            <span>
+              {o.label}
+              {o.standard && <span className="block text-xs font-normal text-[var(--color-gray)]">standard</span>}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 const VIEWS: { key: ViewName; label: string }[] = [
   { key: "front", label: "Front" },
   { key: "rear", label: "Rear" },
@@ -145,15 +179,27 @@ const VIEWS: { key: ViewName; label: string }[] = [
   { key: "right", label: "Right end" },
 ];
 
-function previewCaption(home: DesignerPlan, elevation: PlanElevation, choices: ExteriorChoices, catalog: ExteriorCatalog): ReactNode {
+/** Where an end-wall option landed on this plan, for captions and the lead message. */
+function endWhere(elevation: PlanElevation, addonPorch: boolean): string {
+  const end = featureEnd(elevation, addonPorch);
+  return end ? ` (shown on the ${end} end)` : " (not drawn: this plan has no end-wall window for it; it stays on your quote)";
+}
+
+function previewCaption(home: DesignerPlan, elevation: PlanElevation, choices: ExteriorChoices, catalog: ExteriorCatalog, picks: { dormer: string; elevation: string }): ReactNode {
+  const { features, addedDoors } = choices;
+  const slots = addedDoorSlots(elevation, addedDoors);
   const summary = [
     `${choices.siding.label} siding`,
     `${choices.shingles.label} shingles`,
     choices.blackPackage ? "Black Exterior package" : choices.trim === "lineals" ? "lineals" : `${choices.shutter.label} shutters`,
     !choices.blackPackage && choices.door !== "6-panel" ? `${catalog.doors.find((d) => d.id === choices.door)?.label || choices.door} door` : null,
     choices.gableAccent ? `${choices.gableAccent.label} gables` : null,
+    picks.dormer ? catalog.dormers.find((d) => d.id === picks.dormer)?.label : null,
+    picks.elevation ? `${catalog.elevations.find((d) => d.id === picks.elevation)?.label}${features.end ? endWhere(elevation, choices.addonPorch) : ""}` : null,
+    ...addedDoors.map((d) => `${d} door${slots[d] ? ` on the ${slots[d]!.view} wall` : ""}`),
     choices.foundation === "block" ? "block foundation" : "vinyl skirting",
   ].filter(Boolean).join(" · ");
+  const placed = features.dormer || features.bumpOut || features.end || addedDoors.length > 0;
   return (
     <>
       <strong className="font-semibold">{home.name}</strong>
@@ -161,6 +207,7 @@ function previewCaption(home: DesignerPlan, elevation: PlanElevation, choices: E
       {elevation.src === "sheet"
         ? "Window and door placement follows Champion's floor plan sheet for this model."
         : "Representative layout — we don't have this model's drawing on file, so window placement is typical for a home this size, not exact."}{" "}
+      {placed ? "Dormer, bay and added-door placement is drawn where Champion's option sheet shows it; the plant sets the final position at order. " : ""}
       Artist&rsquo;s illustration; colors are approximate, and porch, steps, foundation and landscaping are site-built and shown for illustration only.
     </>
   );
@@ -172,6 +219,8 @@ interface PreviewProps {
   state: "idle" | "loading" | "ready" | "none";
   choices: ExteriorChoices;
   catalog: ExteriorCatalog;
+  /** the dormer and elevation option ids, for the caption */
+  picks: { dormer: string; elevation: string };
   view: ViewName;
   onView: (v: ViewName) => void;
 }
@@ -183,7 +232,7 @@ interface PreviewProps {
  * part of this block on desktop and rendered separately below the swatches
  * on a phone (ElevationCaption), so the stuck block stays short.
  */
-function ElevationPreview({ home, elevation, state, choices, catalog, view, onView }: PreviewProps) {
+function ElevationPreview({ home, elevation, state, choices, catalog, picks, view, onView }: PreviewProps) {
   const frame = "rounded-xl border border-[var(--color-charcoal)]/10 bg-[#eaf1f5] overflow-hidden";
   const column = "order-first lg:order-none sticky top-[72px] lg:top-24 self-start z-10 bg-white lg:bg-transparent space-y-3";
   if (!home || state === "idle") {
@@ -226,15 +275,15 @@ function ElevationPreview({ home, elevation, state, choices, catalog, view, onVi
           </button>
         ))}
       </div>
-      <p className="hidden lg:block text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices, catalog)}</p>
+      <p className="hidden lg:block text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices, catalog, picks)}</p>
     </div>
   );
 }
 
 /** The preview's caption for phones, where it follows the swatches instead of the stuck picture. */
-function ElevationCaption({ home, elevation, choices, catalog }: { home?: DesignerPlan; elevation: PlanElevation | null; choices: ExteriorChoices; catalog: ExteriorCatalog }) {
+function ElevationCaption({ home, elevation, choices, catalog, picks }: { home?: DesignerPlan; elevation: PlanElevation | null; choices: ExteriorChoices; catalog: ExteriorCatalog; picks: { dormer: string; elevation: string } }) {
   if (!home || !elevation) return null;
-  return <p className="lg:hidden text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices, catalog)}</p>;
+  return <p className="lg:hidden text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices, catalog, picks)}</p>;
 }
 
 export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; initialHome?: string }) {
@@ -346,6 +395,8 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
   // What the picture is drawn in: the buyer's picks, with the board's first
   // colour standing in until they choose.
   const pick = (list: Swatch[], label: string): Swatch => list.find((s) => s.label === label) || list[0];
+  const features = mergeFeatures(dormer, elevationOption);
+  const addedDoors = extraDoors.filter((id): id is AddedDoor => id === "patio" || id === "atrium");
   const choices: ExteriorChoices = {
     siding: pick(catalog.siding, siding),
     shingles: pick(catalog.shingles, shingle),
@@ -357,7 +408,11 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
     door,
     blackPackage,
     windowGrids: catalog.windowGrids,
+    features,
+    addedDoors,
   };
+  // where each added door landed, for the checkbox hint and the lead message
+  const doorSlots = elevation ? addedDoorSlots(elevation, addedDoors) : {};
 
   // one place for every pick, so the GA4 funnel sees each of them
   const change = <T,>(setter: (v: T) => void, fieldName: string) => (v: T) => {
@@ -368,13 +423,26 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
     setView(v);
     step("view", { plan: selectedHome?.slug, view: v });
   };
+  // a dormer or bay pick also turns the preview to the side it is drawn on
+  const pickFeature = (setter: (v: string) => void, fieldName: string, id: string) => {
+    change(setter, fieldName)(id);
+    const spec = featureFor(id);
+    const v = spec && elevation ? viewForFeature(spec, elevation, addonPorch) : null;
+    if (v) setView(v);
+  };
 
   function toggleUpgrade(u: string) {
     setUpgrades((prev) => (prev.includes(u) ? prev.filter((x) => x !== u) : [...prev, u]));
   }
   function toggleExtraDoor(id: string) {
+    const adding = !extraDoors.includes(id);
     setExtraDoors((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
     step("exterior_pick", { plan: selectedHome?.slug, field: "extra_door", value: id });
+    if (adding && elevation && (id === "patio" || id === "atrium")) {
+      const next = [...addedDoors, id as AddedDoor];
+      const slot = addedDoorSlots(elevation, next)[id as AddedDoor];
+      if (slot) setView(slot.view);
+    }
   }
 
   function markStarted() {
@@ -411,7 +479,12 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
     const doorLabel = catalog.doors.find((d) => d.id === door)?.label;
     const dormerLabel = catalog.dormers.find((d) => d.id === dormer)?.label;
     const elevationLabel = catalog.elevations.find((d) => d.id === elevationOption)?.label;
-    const extraDoorLabels = extraDoors.map((id) => catalog.extraDoors.find((d) => d.id === id)?.label || id);
+    const extraDoorLabels = extraDoors.map((id) => {
+      const label = catalog.extraDoors.find((d) => d.id === id)?.label || id;
+      const slot = doorSlots[id as AddedDoor];
+      return slot ? `${label} (shown on the ${slot.view} wall; placement to confirm)` : label;
+    });
+    const endNote = features.end && elevation ? endWhere(elevation, addonPorch) : "";
     // Pack every design choice into a readable summary for the sales team.
     const lines = [
       `Home: ${selectedHome ? `${selectedHome.name}${selectedHome.series ? ` (${selectedHome.series} Series, ${selectedHome.homeType})` : ""}` : homeSlug}`,
@@ -428,8 +501,8 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
       !blackPackage && door !== "6-panel" && doorLabel && `Front door: ${doorLabel}`,
       extraDoorLabels.length && `Add: ${extraDoorLabels.join(", ")}`,
       gableAccent && `Gable shake accent: ${gableAccent}`,
-      dormerLabel && `Dormer: ${dormerLabel}`,
-      elevationLabel && `Elevation option: ${elevationLabel}`,
+      dormerLabel && `Dormer: ${dormerLabel} (shown over the entry; placement to confirm)`,
+      elevationLabel && `Elevation option: ${elevationLabel}${endNote}`,
       addonPorch && "Add Champion's optional porch",
       `Foundation shown: ${foundation === "block" ? "block perimeter wall" : "vinyl skirting"}`,
       elevation && `Exterior preview: ${elevation.src === "sheet" ? `drawn from sales sheet ${elevation.model || ""}` : "representative layout (no sheet on file)"}`,
@@ -645,22 +718,26 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
                 {catalog.doors.length > 1 && !blackPackage && (
                   <div>
                     <span className="block text-sm font-medium mb-2">Front door</span>
-                    <ChipGroup
-                      name="Front door"
-                      options={catalog.doors.map((d) => ({ value: d.id as DoorStyle, label: d.standard ? `${d.label} (standard)` : d.label }))}
-                      value={door}
-                      onChange={change(setDoor, "door")}
-                    />
+                    <DoorPicker options={catalog.doors} value={door} grids={catalog.windowGrids} onChange={change(setDoor, "door")} />
                   </div>
                 )}
                 {catalog.extraDoors.length > 0 && (
                   <div className="space-y-2">
-                    {catalog.extraDoors.map((d) => (
-                      <label key={d.id} className="flex items-center gap-3 cursor-pointer text-sm">
-                        <input type="checkbox" checked={extraDoors.includes(d.id)} onChange={() => toggleExtraDoor(d.id)} className="w-4 h-4 accent-[var(--color-teal)]" />
-                        Add a {d.label.toLowerCase()} <span className="text-xs text-[var(--color-gray)]">(placement set at order; not drawn)</span>
-                      </label>
-                    ))}
+                    {catalog.extraDoors.map((d) => {
+                      const slot = elevation ? doorSlots[d.id as AddedDoor] : undefined;
+                      const on = extraDoors.includes(d.id);
+                      return (
+                        <label key={d.id} className="flex items-center gap-3 cursor-pointer text-sm">
+                          <input type="checkbox" checked={on} onChange={() => toggleExtraDoor(d.id)} className="w-4 h-4 accent-[var(--color-teal)]" />
+                          <span>
+                            Add a {d.label.toLowerCase()}{" "}
+                            <span className="text-xs text-[var(--color-gray)]">
+                              {on && slot ? `(shown on the ${slot.view} wall; placement set at order)` : "(placement set at order)"}
+                            </span>
+                          </span>
+                        </label>
+                      );
+                    })}
                   </div>
                 )}
 
@@ -675,8 +752,8 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {catalog.dormers.length > 0 && (
                       <label className="block">
-                        <span className="block text-sm font-medium mb-2">Dormer <span className="font-normal text-[var(--color-gray)]">(not drawn)</span></span>
-                        <select className={field} value={dormer} onChange={(e) => change(setDormer, "dormer")(e.target.value)}>
+                        <span className="block text-sm font-medium mb-2">Dormer</span>
+                        <select className={field} value={dormer} onChange={(e) => pickFeature(setDormer, "dormer", e.target.value)}>
                           <option value="">None</option>
                           {catalog.dormers.map((d) => <option key={d.id} value={d.id}>{d.label}</option>)}
                         </select>
@@ -684,14 +761,17 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
                     )}
                     {catalog.elevations.length > 0 && (
                       <label className="block">
-                        <span className="block text-sm font-medium mb-2">Bay, bump-out or eyebrow <span className="font-normal text-[var(--color-gray)]">(not drawn)</span></span>
-                        <select className={field} value={elevationOption} onChange={(e) => change(setElevationOption, "elevation")(e.target.value)}>
+                        <span className="block text-sm font-medium mb-2">Bay, bump-out or eyebrow</span>
+                        <select className={field} value={elevationOption} onChange={(e) => pickFeature(setElevationOption, "elevation", e.target.value)}>
                           <option value="">None</option>
                           {catalog.elevations.map((d) => <option key={d.id} value={d.id}>{d.label}</option>)}
                         </select>
                       </label>
                     )}
-                    <p className="sm:col-span-2 text-xs text-[var(--color-gray)] -mt-2">Champion&rsquo;s {sectionLabel} elevation options. They go on your quote; the preview does not draw them.</p>
+                    <p className="sm:col-span-2 text-xs text-[var(--color-gray)] -mt-2">
+                      Champion&rsquo;s {sectionLabel} elevation options, drawn on the preview where the factory sheet shows them
+                      {features.end && elevation ? endWhere(elevation, addonPorch) : ""}. Sizes are nominal; the plant sets the final placement at order.
+                    </p>
                   </div>
                 )}
 
@@ -711,7 +791,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
                     Show Champion&rsquo;s optional {elevation.porch.len}&rsquo; porch on this plan
                   </label>
                 )}
-                <ElevationCaption home={selectedHome} elevation={elevation} choices={choices} catalog={catalog} />
+                <ElevationCaption home={selectedHome} elevation={elevation} choices={choices} catalog={catalog} picks={{ dormer, elevation: elevationOption }} />
               </div>
 
               <ElevationPreview
@@ -720,6 +800,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
                 state={elevationState}
                 choices={choices}
                 catalog={catalog}
+                picks={{ dormer, elevation: elevationOption }}
                 view={view}
                 onView={changeView}
               />
