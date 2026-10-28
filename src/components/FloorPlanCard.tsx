@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
+import { DesignerCta } from "@/components/DesignerCta";
 
 // One home in the /floor-plans grid.
 //
@@ -137,6 +138,10 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
             {t("viewPlan")}
           </Link>
         </div>
+        <DesignerCta slug={p.slug} src="plan_card" location="floor_plan_card" className="fp-card-design" ariaLabel={`Design the ${p.name} in your colors`}>
+          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 20.5l4-1 11-11-3-3-11 11-1 4zM14.5 6.5l3 3" /></svg>
+          {t("designIt")}
+        </DesignerCta>
         {compareSlot && <div className="mt-3">{compareSlot}</div>}
       </div>
 

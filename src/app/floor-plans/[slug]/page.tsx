@@ -11,6 +11,7 @@ import { buildPlanNarrative, planTypeLabel } from "@/lib/plan-content";
 import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanActions } from "@/components/QuoteModal";
+import { DesignThisHome } from "@/components/DesignThisHome";
 import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { PlanVideo } from "@/components/PlanVideo";
@@ -260,6 +261,22 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
             />
           </div>
         </div>
+
+        {/* This home, drawn from its sheet, in the buyer's colours — the way into
+            Design Your Home from every plan page (src/components/DesignThisHome.tsx). */}
+        <DesignThisHome
+          className="mt-14"
+          plan={{
+            slug: plan.slug,
+            name: plan.name,
+            series: plan.series,
+            homeType: plan.homeType,
+            modelNumber: plan.modelNumber,
+            widthFt: plan.widthFt,
+            lengthFt: plan.lengthFt,
+            beds: plan.beds,
+          }}
+        />
 
         {/* Gallery */}
         {plan.gallery.length > 1 && (

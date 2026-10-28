@@ -754,6 +754,20 @@ function EndView({ c, plan, view, choices }: { c: Ctx; plan: PlanElevation; view
 
 /* ---------- public component ---------- */
 
+/**
+ * The pixel size of a view's SVG at a given scale — the same arithmetic as
+ * `frameFor`, exposed so a page can give an `<img>` of the elevation its
+ * width and height before the picture arrives (no layout shift).
+ */
+export function elevationSize(plan: PlanElevation, view: ViewName, opts: { scale?: number; addonPorch?: boolean } = {}): { width: number; height: number } {
+  const s = opts.scale ?? 18;
+  const rise = (plan.W / 2) * PITCH;
+  const addon = plan.porch?.kind === "addon" && opts.addonPorch ? plan.porch.len : 0;
+  const span = view === "front" || view === "rear" ? plan.L + addon : plan.W;
+  const f = frameFor({ s } as Ctx, span, rise);
+  return { width: Math.round(f.width), height: Math.round(f.height) };
+}
+
 export function HomeElevation({
   plan,
   choices,

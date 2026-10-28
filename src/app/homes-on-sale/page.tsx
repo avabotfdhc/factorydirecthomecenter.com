@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { shortImageSrc } from "@/lib/image-src";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { DesignerPromo, pickDesignerExample } from "@/components/DesignerPromo";
 import Image from "next/image";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { FadeIn } from "@/components/VisualEffects";
@@ -231,6 +232,31 @@ export default function HomesOnSalePage() {
             listings={saleListings.map((l) => ({ ...l, image: l.image && shortImageSrc(l.image) }))}
             discountPercent={sale.discountPercent}
             saleActive={sale.active}
+          />
+
+          {/* Every sale home can be drawn in the buyer's colours before they ask for its price. */}
+          <DesignerPromo
+            example={pickDesignerExample(
+              saleHomes
+                .filter((h) => h.slug)
+                .map((h) => {
+                  // the price sheet's "14'x32'" → width and length in feet
+                  const m = /^(\d+)'?\s*[x×]\s*(\d+)/i.exec(h.size);
+                  return {
+                    slug: h.slug as string,
+                    name: h.name,
+                    series: h.series,
+                    homeType: h.homeType,
+                    modelNumber: h.modelNo,
+                    widthFt: m ? Number(m[1]) : undefined,
+                    lengthFt: m ? Number(m[2]) : undefined,
+                    beds: h.beds,
+                  };
+                }),
+            )}
+            location="homes_on_sale"
+            heading="See a sale home in your colors before you ask for its price"
+            className="mt-12"
           />
 
           <SpecsDisclaimer className="mt-10" />

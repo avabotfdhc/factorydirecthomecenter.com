@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback, type FormEvent } from "react"
 import { useAntiSpam } from "@/lib/use-anti-spam";
 import { LeadConsent, LeadUrgency } from "./LeadConsent";
 import Link from "next/link";
+import { designerHref } from "@/lib/designer-link";
 import { trackCTAClick, trackLeadFormStart, trackLeadFormSubmit, trackPhoneClick } from "@/lib/analytics";
 
 type Mode = "quote" | "visit";
@@ -98,8 +99,8 @@ export function FloorPlanActions({
           Schedule a Lot Visit
         </button>
         <Link
-          href={`/design-your-home?home=${encodeURIComponent(slug)}`}
-          onClick={() => trackCTAClick("design_this_home", "floor_plan_detail", "/design-your-home")}
+          href={designerHref(slug, { src: "plan_page" })}
+          onClick={() => trackCTAClick("design_this_home", "floor_plan_detail", designerHref(slug, { src: "plan_page" }))}
           className="inline-flex items-center justify-center border-2 border-[var(--color-charcoal)]/15 px-7 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors"
         >
           Design This Home

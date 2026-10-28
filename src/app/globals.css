@@ -536,4 +536,8 @@ button {
   .fp-card-cta-outline {
     @apply flex items-center justify-center rounded-lg border border-[var(--color-charcoal)]/15 py-2.5 text-xs font-bold tracking-wider uppercase text-[var(--color-charcoal)] hover:border-[var(--color-teal)]/50 hover:text-[var(--color-teal)] transition-colors;
   }
+  /* the card's way into Design Your Home: one short line under the buttons */
+  .fp-card-design {
+    @apply mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-teal)] hover:underline underline-offset-4;
+  }
 }

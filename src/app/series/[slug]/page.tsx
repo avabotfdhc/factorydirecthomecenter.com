@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { DesignerPromo, pickDesignerExample } from "@/components/DesignerPromo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
@@ -184,6 +185,14 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
                 Request a {hub.name} quote
               </Link>
             </div>
+          )}
+          {plans.length > 0 && (
+            <DesignerPromo
+              example={pickDesignerExample(plans)}
+              location="series_hub"
+              heading={`See a ${hub.name} home in your colors`}
+              className="mt-14"
+            />
           )}
         </div>
       </section>

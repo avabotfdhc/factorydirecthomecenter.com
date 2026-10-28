@@ -4,6 +4,9 @@ import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { getApiFloorPlans } from "@/lib/api-content";
 import { HomeDesigner, type DesignerPlan } from "@/components/HomeDesigner";
 import { generateMetadata as genMeta } from "@/lib/seo";
+import { exteriorCatalog } from "@/lib/exterior-options";
+import { sidingByLabel } from "@/lib/elevation-defaults";
+import type { DesignerSource } from "@/lib/designer-link";
 
 export const metadata: Metadata = genMeta({
   title: "Design Your Manufactured Home Online",
@@ -96,13 +99,23 @@ const DESIGNER_FAQS = [
   },
 ];
 
+const SOURCES: DesignerSource[] = ["plan_page", "plan_page_swatch", "plan_card", "promo_band", "quote_modal", "header", "footer", "home"];
+
 export default async function DesignYourHomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ home?: string }>;
+  searchParams: Promise<{ home?: string; siding?: string; src?: string }>;
 }) {
-  const { home } = await searchParams;
+  const { home, siding, src } = await searchParams;
   const designerPlans = await getDesignerPlans();
+  // `home`, `siding` and `src` arrive from the plan pages' teasers and the
+  // other entry points (src/lib/designer-link.ts). The siding label is only
+  // honoured when the chosen plan's catalogue actually carries it, and the
+  // source only when it is one of ours, so the URL cannot put anything in
+  // the designer that the boards do not offer.
+  const chosen = home ? designerPlans.find((p) => p.slug === home) : undefined;
+  const initialSiding = chosen && siding ? sidingByLabel(exteriorCatalog(chosen.series, chosen.homeType, chosen.widthFt), siding)?.label : undefined;
+  const source = (SOURCES as string[]).includes(src || "") ? (src as DesignerSource) : undefined;
 
   return (
     <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
@@ -123,7 +136,7 @@ export default async function DesignYourHomePage({
       </section>
 
       <section className="max-w-4xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
-        <HomeDesigner plans={designerPlans} initialHome={home} />
+        <HomeDesigner plans={designerPlans} initialHome={chosen?.slug} initialSiding={initialSiding} source={source} />
 
         {/* Server-rendered copy a crawler can read: what the tool does and where its colors come from. */}
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">

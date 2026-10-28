@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { designerHref } from "@/lib/designer-link";
 import Image from "next/image";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import type { PlanNarrative as Narrative } from "@/lib/plan-content";
@@ -69,7 +70,7 @@ export function PlanNarrative({ narrative, planName, planSlug }: { narrative: Na
             )}
             {s.heading === "Options and finishes" && (
               <p className={p}>
-                <Link href={`/design-your-home?home=${encodeURIComponent(planSlug)}`} className={link}>
+                <Link href={designerHref(planSlug, { src: "plan_page" })} className={link}>
                   Design the {planName} online
                 </Link>
                 {" · "}

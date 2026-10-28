@@ -6,6 +6,7 @@ import { commonFAQs } from "@/lib/faqs";
 import { FloorPlansGrid } from "./FloorPlansGrid";
 import { SiteSearch } from "@/components/SiteSearch";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { DesignerPromo, pickDesignerExample } from "@/components/DesignerPromo";
 import { PricingDisclaimer } from "@/components/Pricing";
 
 const SITE = "https://factorydirecthomescenter.com";
@@ -101,6 +102,13 @@ export default async function FloorPlansPage() {
           </p>
         </div>
       </section>
+
+      {/* Design Your Home, with one of these plans drawn as the example */}
+      {plans.length > 0 && (
+        <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-12 lg:pt-16">
+          <DesignerPromo example={pickDesignerExample(plans)} location="floor_plans_index" heading="See any of these homes in your colors" />
+        </section>
+      )}
 
       {/* Grid */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
