@@ -3,6 +3,7 @@ import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import Image from "next/image";
 import { getFeaturedHomes, type ApiFloorPlan } from "@/lib/api-content";
 import { FeaturedHomes } from "@/components/FeaturedHomes";
+import { DesignerPromo, pickDesignerExample } from "@/components/DesignerPromo";
 import { HomeSearchBar } from "@/components/HomeSearchBar";
 import { H2 } from "@/components/Heading";
 import { AnimatedHomeSections, TrustAndProcess } from "./HomeSections";
@@ -123,6 +124,14 @@ export default async function Home() {
               photograph in grey — unreadable, which is the one thing a
               required notice may not be. */}
           <SpecsDisclaimer className="mt-14 max-w-3xl mx-auto text-center" />
+
+          {/* Design Your Home, with one of the featured homes drawn as the
+              example (src/components/DesignerPromo.tsx). The picture is a
+              lazy, CDN-cached SVG, so it costs the homepage nothing above
+              the fold. */}
+          {featuredHomes.length > 0 && (
+            <DesignerPromo example={pickDesignerExample(featuredHomes)} location="home_featured" heading="See any of these homes in your colors" className="mt-12" />
+          )}
 
           <div className="text-center mt-10">
             <Link href="/floor-plans" className="btn-primary inline-flex items-center gap-2 bg-[var(--color-lime)] text-white px-8 py-3.5 text-sm font-bold tracking-wider uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors duration-300">

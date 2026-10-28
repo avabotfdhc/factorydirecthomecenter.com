@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useAntiSpam } from "@/lib/use-anti-spam";
 import type { FormEvent, ReactNode } from "react";
 import Link from "next/link";
 import { trackGA4Event, trackLeadFormStart, trackLeadFormError, trackLeadFormSubmit } from "@/lib/analytics";
+import { ShowroomVisitButton } from "@/components/QuoteModal";
+import { CurrentHome } from "@/lib/current-home";
+import type { DesignerSource } from "@/lib/designer-link";
 import { DoorSwatch, HomeElevation, type DoorStyle, type ExteriorChoices } from "@/components/HomeElevation";
 import { exteriorCatalog, swatchLabel, type ExteriorCatalog, type Swatch } from "@/lib/exterior-options";
 import { addedDoorSlots, featureEnd, featureFor, mergeFeatures, viewForFeature, type AddedDoor } from "@/lib/exterior-features";
@@ -39,7 +42,16 @@ import type { PlanElevation, ViewName } from "@/lib/plan-elevation-types";
 //
 // Funnel: every step fires a GA4 `designer_step` event (plan chosen, each
 // exterior or interior pick, view change) so the path from plan to quote can
-// be read in Analytics alongside the existing lead_form_* events.
+// be read in Analytics alongside the existing lead_form_* events. `source`
+// (the `src` query param, src/lib/designer-link.ts) rides on plan_selected so
+// a design that started from a plan page's teaser can be told from one that
+// started in the header.
+//
+// Getting to the quote: the contact section is step 6, so once a home is
+// chosen a slim bar at the bottom of the viewport ("Get my line-item quote")
+// and a button under the desktop preview both jump to it. The bar hides
+// while the contact section is on screen and after submit; on a phone it
+// sits above the site's mobile action bar (--mobile-bar-h) rather than over it.
 
 export interface DesignerPlan {
   slug: string;
@@ -225,6 +237,7 @@ interface PreviewProps {
   picks: { dormer: string; elevation: string };
   view: ViewName;
   onView: (v: ViewName) => void;
+  onQuote: () => void;
 }
 
 /**
@@ -234,7 +247,7 @@ interface PreviewProps {
  * part of this block on desktop and rendered separately below the swatches
  * on a phone (ElevationCaption), so the stuck block stays short.
  */
-function ElevationPreview({ home, elevation, state, choices, catalog, picks, view, onView }: PreviewProps) {
+function ElevationPreview({ home, elevation, state, choices, catalog, picks, view, onView, onQuote }: PreviewProps) {
   const frame = "rounded-xl border border-[var(--color-charcoal)]/10 bg-[#eaf1f5] overflow-hidden";
   const column = "order-first lg:order-none sticky top-[72px] lg:top-24 self-start z-10 bg-white lg:bg-transparent space-y-3";
   if (!home || state === "idle") {
@@ -278,6 +291,47 @@ function ElevationPreview({ home, elevation, state, choices, catalog, picks, vie
         ))}
       </div>
       <p className="hidden lg:block text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices, catalog, picks)}</p>
+      {/* The desktop column is stuck beside the pickers all the way down, so
+          the ask lives with the picture; on a phone the bottom bar does this. */}
+      <button
+        type="button"
+        onClick={onQuote}
+        className="hidden lg:inline-flex w-full items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-5 py-3 text-xs font-bold tracking-widest uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
+      >
+        Get a quote for this design
+        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+      </button>
+    </div>
+  );
+}
+
+/**
+ * The bottom-of-viewport ask once a home is chosen. Hidden while the contact
+ * section is on screen (nothing to jump to) and after submit. Stacks above the
+ * mobile action bar and the consent banner via the CSS variables they publish.
+ */
+function QuoteBar({ homeName, show, onClick }: { homeName: string; show: boolean; onClick: () => void }) {
+  if (!show) return null;
+  return (
+    <div
+      data-designer-quote-bar=""
+      style={{ bottom: "calc(var(--consent-h, 0px) + var(--mobile-bar-h, 0px))" }}
+      className="fixed left-0 right-0 z-40 px-3 pb-2 pointer-events-none"
+    >
+      {/* below md the chat launcher sits at the right edge on the same line, so the bar stops short of it */}
+      <div className="pointer-events-auto mr-[4.75rem] md:mx-auto max-w-3xl flex items-center justify-between gap-3 rounded-xl border border-[var(--color-teal)]/30 bg-white/95 backdrop-blur-md shadow-[0_10px_30px_-12px_rgba(0,0,0,.35)] px-4 py-2.5">
+        <p className="hidden sm:block min-w-0 text-sm text-[var(--color-charcoal)] truncate">
+          Your <span className="font-semibold">{homeName}</span> design is ready to price.
+        </p>
+        <button
+          type="button"
+          onClick={onClick}
+          className="flex-1 sm:flex-none shrink-0 inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-4 py-2.5 text-xs font-bold tracking-widest uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
+        >
+          Get my line-item quote
+          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+      </div>
     </div>
   );
 }
@@ -288,13 +342,26 @@ function ElevationCaption({ home, elevation, choices, catalog, picks }: { home?:
   return <p className="lg:hidden text-xs text-[var(--color-charcoal)]/70 leading-relaxed">{previewCaption(home, elevation, choices, catalog, picks)}</p>;
 }
 
-export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; initialHome?: string }) {
+export function HomeDesigner({
+  plans,
+  initialHome,
+  initialSiding,
+  source,
+}: {
+  plans: DesignerPlan[];
+  /** a plan slug to preselect (?home=) */
+  initialHome?: string;
+  /** a board label to start the siding on (?siding=), already checked against the plan's catalogue by the page */
+  initialSiding?: string;
+  /** which entry point sent the visitor (?src=), for the funnel events */
+  source?: DesignerSource;
+}) {
   const [homeSlug, setHomeSlug] = useState(initialHome || "");
   const [bedroomLayout, setBedroomLayout] = useState("");
   const [kitchen, setKitchen] = useState("");
   const [primaryBath, setPrimaryBath] = useState("");
   // exterior picks are the board labels; hex comes from the series' catalogue
-  const [siding, setSiding] = useState("");
+  const [siding, setSiding] = useState(initialSiding || "");
   const [shingle, setShingle] = useState("");
   const [shutter, setShutter] = useState("");
   const [trim, setTrim] = useState<"shutters" | "lineals">("shutters");
@@ -320,6 +387,25 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
   const [errors, setErrors] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
+  // the contact section: the bottom bar hides while it is on screen, and the
+  // "get a quote" buttons scroll to it
+  const contactRef = useRef<HTMLFieldSetElement>(null);
+  const [contactInView, setContactInView] = useState(false);
+  useEffect(() => {
+    const el = contactRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setContactInView(entry.isIntersecting), { rootMargin: "0px 0px -15% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [submitted]);
+  const goToQuote = (from: "bar" | "preview") => {
+    step("cta_quote", { plan: selectedHome?.slug, from });
+    const el = contactRef.current;
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const first = el.querySelector<HTMLInputElement>("input[name='firstName']");
+    window.setTimeout(() => first?.focus({ preventScroll: true }), 450);
+  };
 
   useEffect(() => {
     if (initialHome) setHomeSlug(initialHome);
@@ -366,7 +452,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
       setElevationState("idle");
       return;
     }
-    step("plan_selected", { plan: selectedHome.slug, model: selectedHome.modelNumber, series: catalog.series, section: catalog.section });
+    step("plan_selected", { plan: selectedHome.slug, model: selectedHome.modelNumber, series: catalog.series, section: catalog.section, source });
     const q = new URLSearchParams();
     if (selectedHome.modelNumber) q.set("model", selectedHome.modelNumber);
     if (selectedHome.lengthFt) q.set("length", String(selectedHome.lengthFt));
@@ -392,7 +478,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
         setElevationState("none");
       });
     return () => ctrl.abort();
-  }, [selectedHome, catalog]);
+  }, [selectedHome, catalog, source]);
 
   // What the picture is drawn in: the buyer's picks, with the board's first
   // colour standing in until they choose.
@@ -579,13 +665,21 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
           Thanks{selectedHome ? ` for designing your ${selectedHome.name}` : ""}. Our team will review your
           selections and follow up — usually within one business day — with next steps and a line-item quote.
         </p>
+        <p className="text-[var(--color-gray)] mb-6">
+          Want to walk through one in person? Our Auburn lot has Champion model homes you can tour &mdash; book a time so someone is free to show you around.
+        </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link href="/floor-plans" className="bg-[var(--color-teal)] text-white px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors">
-            Browse more homes
-          </Link>
+          <ShowroomVisitButton
+            location="designer_success"
+            label="Book a lot visit"
+            className="bg-[var(--color-teal)] text-white px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors"
+          />
           <a href="tel:+12603081457" className="border-2 border-[var(--color-charcoal)]/15 px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors">
             Call (260) 308-1457
           </a>
+          <Link href="/floor-plans" className="border-2 border-[var(--color-charcoal)]/15 px-6 py-3 text-sm font-bold tracking-wider uppercase rounded-lg hover:bg-[var(--color-charcoal)]/5 transition-colors">
+            Browse more homes
+          </Link>
         </div>
       </div>
     );
@@ -812,6 +906,7 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
                 picks={{ dormer, elevation: elevationOption }}
                 view={view}
                 onView={changeView}
+                onQuote={() => goToQuote("preview")}
               />
             </div>
           </div>
@@ -886,8 +981,11 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
       </fieldset>
 
       {/* 6. Contact */}
-      <fieldset className={sectionCls}>
+      <fieldset ref={contactRef} id="design-quote" className={`${sectionCls} scroll-mt-24`}>
         <legend className={legendCls}><span className="text-[var(--color-lime-dark)] font-bold">6.</span> Where should we send your quote?</legend>
+        <p className="text-sm text-[var(--color-gray)] mb-4">
+          Your design goes to our Auburn, Indiana showroom and we price it line by line &mdash; the home, the options you picked and delivery. No obligation, and we don&rsquo;t pull credit.
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <label className="block"><span className="block text-sm font-medium mb-2">First name <span className="text-red-500" aria-hidden="true">*</span></span><input name="firstName" className={field} /></label>
           <label className="block"><span className="block text-sm font-medium mb-2">Last name <span className="text-red-500" aria-hidden="true">*</span></span><input name="lastName" className={field} /></label>
@@ -912,6 +1010,14 @@ export function HomeDesigner({ plans, initialHome }: { plans: DesignerPlan[]; in
         </button>
         <p className="text-xs text-[var(--color-gray)]">No obligation. We&rsquo;ll follow up with a line-item quote — you see exactly what you pay for.</p>
       </div>
+
+      {/* The layout's mobile bar quotes "this home" once one is chosen. */}
+      {selectedHome && <CurrentHome name={selectedHome.name} series={selectedHome.series} />}
+      <QuoteBar
+        homeName={selectedHome?.name || ""}
+        show={Boolean(selectedHome) && elevationState !== "loading" && !contactInView}
+        onClick={() => goToQuote("bar")}
+      />
     </form>
   );
 }

@@ -9,6 +9,7 @@ import { gridPlan } from "@/lib/grid-plan";
 import { FloorPlansGrid } from "@/app/floor-plans/FloorPlansGrid";
 import { FAQSection } from "@/components/FAQSection";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
+import { DesignerPromo, pickDesignerExample } from "@/components/DesignerPromo";
 import { PricingDisclaimer } from "@/components/Pricing";
 
 export interface HomeTypeLandingProps {
@@ -80,6 +81,7 @@ export function HomeTypeLanding({ eyebrow, heading, headingAccent, intro, plans,
         ) : (
           <FloorPlansGrid plans={plans.map(gridPlan)} />
         )}
+        {plans.length > 0 && <DesignerPromo example={pickDesignerExample(plans)} location="home_type_landing" className="mt-12" />}
         <SpecsDisclaimer className="mt-12" />
         <PricingDisclaimer variant="short" className="mt-6 max-w-3xl" />
       </section>

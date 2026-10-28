@@ -2024,10 +2024,62 @@ of each leaf (`DoorSwatch`, the same drawing the elevation uses), because a
 buyer choosing between 9-lite and Craftsman wants to see them, not read them.
 Interior picks (cabinets, flooring, counters) are still text only.
 
+**Every plan is offered the designer, and every door into it is measured
+(Kyle, 2026-10-28: "make sure you offer this feature on all floor-plans … and
+a great call to action to capture leads").** The entry points, all built from
+`src/lib/designer-link.ts` (`designerHref(slug, { siding, src })`) and the
+tracked `DesignerCta` link (GA4 `cta_click`, `cta_name = design_this_home`,
+`cta_location` = the placement):
+
+- **Every plan page** renders `DesignThisHome` under the hero: *this* home
+  drawn from its sheet in a starting colour, three more standard colours
+  beside it (each a link that opens the designer with that siding picked),
+  and "Design This Home". The pictures are `<img>`s from
+  `GET /api/plan-elevation/image?model=…&series=…&type=…&width=…&length=…&beds=…&siding=…&view=…`
+  — a standalone SVG rendered by `src/lib/elevation-svg.ts` from the same
+  `HomeElevation` the designer draws with, `defaultChoices()` from
+  `src/lib/elevation-defaults.ts` (standard door, first shingle, black
+  shutters, a mid-tone standard siding — never an option), cached a day at
+  the CDN, `noindex`, ~9 KB (1.6 KB gzipped). Drawn as an image rather than
+  inlined so a plan page's HTML and RSC payload do not each grow by four
+  SVGs; `elevationSize()` gives the `<img>` its box so nothing shifts.
+- **Every catalogue card** (`FloorPlanCard`) carries "Design it in your
+  colors →" (`messages/*.json` `card.designIt`).
+- **`DesignerPromo`** — the band with one of the page's own homes drawn as the
+  example (`pickDesignerExample`: a named, sheet-drawn multi-section first) —
+  sits under the homepage's featured homes, above the `/floor-plans` grid,
+  under each series hub's plans, on the single/double-wide pages and under
+  the sale table.
+- **In the designer:** `?home=` preselects the plan, `?siding=` the colour
+  (honoured only when the plan's catalogue carries the label — the page
+  checks with `sidingByLabel()`), `?src=` names the placement and rides on
+  the `plan_selected` event. Once a home is chosen a bottom bar ("Get my
+  line-item quote") and a button under the desktop preview jump to the
+  contact section (`cta_quote` step, `from: bar|preview`); the bar hides while
+  that section is on screen, stacks above the mobile action bar and consent
+  banner via their CSS variables, and stops short of the chat launcher below
+  `md`. The designer registers `CurrentHome`, so the layout's mobile Quote
+  button quotes the chosen plan, and the success state offers a lot visit
+  (`ShowroomVisitButton`, Kyle's priority) before "browse more".
+
+Two things learned building it. **Next refuses `react-dom/server` in a route
+handler** (build error E394), and `react-dom/server.browser` renders fine
+there but keeps a Node process alive afterwards — `node --test` never exits —
+so `elevation-svg.ts` uses `react-dom/server.edge`'s `renderToReadableStream`
+(Next's alias keeps that export real in the RSC layer) and reads the stream;
+the markup is byte-identical. And **Turbopack's dev cache can serve a stale
+`globals.css`**: a class added under `@layer components` was in the file and
+in Tailwind's own output but not in the served chunk until `.next/dev` was
+deleted. Check the served CSS before concluding a class "does not apply".
+`tests/designer-entry-points.test.ts` holds the link shape, the defaults, the
+SVG document, the route's headers and fallbacks, and a source scan that every
+page above still carries its entry point.
+
 The funnel is measured: every step fires a GA4 `designer_step` event with
-`step` (`plan_selected`, `preview_loaded`, `exterior_pick` with `field`/`value`,
-`view`, `submitted`) next to the existing `lead_form_start` / `lead_form_submit`
-events, so the path from plan to quote can be read in Analytics. The page also
+`step` (`plan_selected` with `source`, `preview_loaded`, `exterior_pick` with
+`field`/`value`, `view`, `cta_quote`, `submitted`) next to the existing
+`lead_form_start` / `lead_form_submit` events, so the path from plan to quote
+can be read in Analytics. The page also
 carries server-rendered "how it works" copy and a three-question FAQ (FAQPage
 schema) so a crawler sees what the tool is; the elevation API answers with
 `X-Robots-Tag: noindex`. Measured before merging (2026-10-27, Lighthouse
