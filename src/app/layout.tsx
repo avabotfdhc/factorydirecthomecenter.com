@@ -48,8 +48,10 @@ export const metadata: Metadata = {
     icon: "/favicon.png",
     shortcut: "/favicon.ico",
   },
+  // No `canonical` here: a page that sets none of its own would otherwise
+  // canonicalise to the homepage (the 404 page and /design-system did until
+  // 2026-10-29). Every public page sets its own through genMeta()/metadata.
   alternates: {
-    canonical: "/",
     types: {
       "application/rss+xml": [
         { url: "/blog/feed.xml", title: "The Manufactured Home Blog — Factory Direct Homes Center" },
@@ -72,9 +74,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Factory Direct Homes Center | New Champion Homes in Auburn, IN",
+    title: "Factory Direct Homes Center | Manufactured Homes in Auburn, IN",
     description:
-      "Factory-direct pricing on new Champion manufactured and modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN.",
+      "Factory-direct Champion mobile & manufactured homes: an authorized dealer orders yours from Champion’s Indiana plants and it ships straight to your land.",
     images: [
       {
         url: "/images/hero-home.jpg",

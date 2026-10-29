@@ -56,20 +56,11 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
         })}
       />
       <StructuredData
-        data={structuredData.article({
-          headline: `Manufactured & Modular Homes in ${data.city}, IN`,
+        data={structuredData.webPage({
+          url: `/locations/${data.slug}`,
+          name: `Manufactured & Modular Homes in ${data.city}, IN`,
           description: `Champion manufactured and modular homes delivered to ${data.city} and ${data.county}, Indiana from Factory Direct Homes Center in Auburn.`,
           image: data.heroImage || "/images/hero-home.jpg",
-          datePublished: "2024-01-01",
-          // NO `new Date()` here. It used to send dateModified: "now" on every
-          // single request, which is the same freshness-gaming signal the
-          // sitemap was cleaned of on 2026-09-11 — and it made the rendered
-          // HTML non-deterministic, so every response differed and nothing
-          // downstream could cache-validate it. A page's modified date is only
-          // honest if something actually changed; with no per-city `updated`
-          // field to read, the right answer is to send nothing.
-          author: "Factory Direct Homes Center",
-          url: `/locations/${data.slug}`,
         })}
       />
       <StructuredData
@@ -212,7 +203,7 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
       </section>
 
       {/* ===== FAQ (FAQPage schema) ===== */}
-      <FAQSection title={`${data.city} Manufactured Home FAQs`} subtitle="Delivery, land, and local questions" faqs={data.faqs} />
+      <FAQSection title={`${data.city} Manufactured Home FAQs`} subtitle="Delivery, land, and local questions" faqs={data.faqs} showSchema={false} />
 
       {/* ===== CTA ===== */}
       <section className="py-16 bg-[var(--color-charcoal)] text-white">

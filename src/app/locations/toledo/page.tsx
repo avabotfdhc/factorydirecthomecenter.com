@@ -32,7 +32,7 @@ const relatedPages = [{ title: "Floor Plans", url: "/floor-plans", description: 
 export default function ToledoPage() {
   return (
     <>
-      <StructuredData data={structuredData.article({ headline: "Manufactured Homes Toledo OH", description: "Champion homes delivered to Toledo, Ohio", image: "/images/paramount/timberlake-exterior-2.webp", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/toledo" })} />
+      <StructuredData data={structuredData.webPage({ url: "/locations/toledo", name: "Manufactured Homes Toledo OH", description: "Champion homes delivered to Toledo, Ohio", image: "/images/paramount/timberlake-exterior-2.webp" })} />
       <StructuredData data={structuredData.service({ name: "Manufactured Home Delivery Toledo", description: "Manufactured home delivery to Toledo and northwest Ohio", provider: "Factory Direct Homes Center", areaServed: "Toledo, Ohio" })} />
       <StructuredData data={structuredData.faqPage(locationFAQs)} />
 
@@ -135,7 +135,7 @@ export default function ToledoPage() {
         </div>
       </section>
 
-      <FAQSection title="Toledo Ohio FAQs" subtitle="Common questions about manufactured homes in Toledo and northwest Ohio" faqs={locationFAQs} showSchema={true} />
+      <FAQSection title="Toledo Ohio FAQs" subtitle="Common questions about manufactured homes in Toledo and northwest Ohio" faqs={locationFAQs} showSchema={false} />
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

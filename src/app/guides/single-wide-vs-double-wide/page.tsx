@@ -149,7 +149,7 @@ export default function SingleVsDoubleWidePage() {
       </section>
 
       {/* FAQ */}
-      <FAQSection title="Common Questions" subtitle="Single wide vs. double wide" faqs={faqs} />
+      <FAQSection title="Common Questions" subtitle="Single wide vs. double wide" faqs={faqs} showSchema={false} />
 
       {/* CTA */}
       <section className="py-16 bg-[var(--color-charcoal)] text-white">

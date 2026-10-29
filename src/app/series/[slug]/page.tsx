@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { H2, H3 } from "@/components/Heading";
 import { FloorPlanCard } from "@/components/FloorPlanCard";
-import { generateMetadata as genMeta, StructuredData } from "@/lib/seo";
+import { generateMetadata as genMeta, StructuredData, WEBSITE_ID } from "@/lib/seo";
 import { getApiFloorPlans, type ApiFloorPlan } from "@/lib/api-content";
 import { seriesHubs, getSeriesHub } from "@/lib/series-hubs";
 
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ? ` Champion\u2019s ${hub.formerly.name} plans are ordered here.`
     : "";
   return genMeta({
-    title: `${hub.fullName} Floor Plans & Pricing`,
+    title: `${hub.fullName} Floor Plans`,
     description: `${hub.tagline} Browse ${hub.name} series manufactured homes from Factory Direct Homes Center in Auburn, IN, with factory-direct, line-item pricing.${formerly}`,
     url: `/series/${hub.slug}`,
   });
@@ -60,7 +60,7 @@ export default async function SeriesHubPage({ params }: { params: Promise<{ slug
           name: `${hub.fullName} — Champion Homes`,
           description: hub.intro,
           url: `https://factorydirecthomescenter.com/series/${hub.slug}`,
-          isPartOf: { "@id": "https://factorydirecthomescenter.com/#business" },
+          isPartOf: { "@id": WEBSITE_ID },
           mainEntity: {
             "@type": "ItemList",
             numberOfItems: plans.length,

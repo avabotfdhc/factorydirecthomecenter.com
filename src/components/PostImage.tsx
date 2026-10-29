@@ -11,11 +11,15 @@ export function PostImage({
   alt,
   className = "",
   sizes = "(max-width: 768px) 100vw, 896px",
+  eager = false,
 }: {
   src?: string;
   alt: string;
   className?: string;
   sizes?: string;
+  /** The first card on /blog is the page's LCP element; lazy-loading it cost
+   *  ~0.7 s of LCP (Lighthouse, 2026-10-19). Only the first card sets this. */
+  eager?: boolean;
 }) {
   if (src) {
     return (
@@ -25,6 +29,7 @@ export function PostImage({
         fill
         className={`object-cover ${className}`}
         sizes={sizes}
+        {...(eager ? { loading: "eager" as const, fetchPriority: "high" as const } : {})}
       />
     );
   }

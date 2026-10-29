@@ -23,18 +23,21 @@ export const metadata = genMeta({
 const series = [
   {
     name: "Aspire",
+    slug: "aspire",
     plant: "Topeka, Indiana",
     tag: "The value leader — our most popular line",
     body: "Aspire is the heart of our lineup and the broadest selection we carry — single wides for first-time buyers and downsizers, and multi-section homes with full family layouts. Built to the federal HUD code at Champion's Topeka, Indiana plant just 30 miles from our showroom, Aspire pairs smart, livable floor plans with genuine factory-direct value. Many plans offer factory layout options — 2-bedroom conversions, added studies, optional kitchens and islands.",
   },
   {
     name: "Redman",
+    slug: "redman",
     plant: "Topeka, Indiana",
     tag: "Expansive sectionals, ordered to spec",
     body: "Redman is Champion's expansive sectional range out of the same Topeka plant — 28' and 32' wide homes with island kitchens, generous great rooms and luxury primary suites, in HUD code or as IRC modular on the plans Champion builds both ways. Champion's own factory literature calls the range \"Redman Paramount\", so this is where the plans we once listed as Paramount belong. We order these to spec: name the plan, or the width, size and bedrooms you need, and you get Champion's spec sheet and a line-item quote.",
   },
   {
     name: "Prime",
+    slug: "prime",
     plant: "Decatur, Indiana",
     tag: "Champion quality from a second Indiana plant",
     body: "Prime is Champion's series built at the Decatur, Indiana facility — a well-rounded range of efficient single-section and family floor plans. It rounds out our catalog with additional layouts and price points so more buyers find the right fit.",
@@ -125,10 +128,10 @@ export default function ChampionHomesPage() {
                 <p className="text-xs tracking-wider uppercase text-[var(--color-gray)] mb-4">Built in {s.plant}</p>
                 <p className="text-[var(--color-charcoal)]/80 leading-relaxed mb-5">{s.body}</p>
                 <Link
-                  href="/floor-plans"
+                  href={`/series/${s.slug}`}
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-teal)] hover:underline underline-offset-4"
                 >
-                  Browse floor plans &amp; filter by {s.name} Series
+                  Browse the {s.name} Series floor plans
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                 </Link>
               </div>

@@ -43,7 +43,7 @@
   "quote": {
     "badge": "Precio directo de fábrica",
     "title": "Cotización detallada — {model}",
-    "intro": "Precio directo de fábrica, hojas de opciones y costo estimado de entrega a su condado. Sin recargo por el trabajo en el terreno.",
+    "intro": "Precio directo de fábrica, hojas de opciones y costo estimado de entrega a su condado. Usted contrata y paga a sus propios contratistas para el terreno.",
     "name": "Nombre completo",
     "contact": "Teléfono o correo electrónico",
     "county": "Condado y estado de entrega",

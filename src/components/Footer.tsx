@@ -69,6 +69,12 @@ export function Footer() {
                 { href: "/single-wide-homes", label: "Single Wide Homes" },
                 { href: "/double-wide-homes", label: "Double Wide Homes" },
                 { href: "/guides/manufactured-vs-modular", label: "Modular Homes" },
+                // The series hubs are the 301 targets for 186 retired
+                // Paramount URLs and were linked only from plan-page prose.
+                { href: "/series/aspire", label: "Aspire Series" },
+                { href: "/series/prime", label: "Prime Series" },
+                { href: "/series/redman", label: "Redman Series" },
+                { href: "/series/dutch", label: "Dutch Series" },
               ].map((type) => (
                 <li key={type.href}>
                   <Link

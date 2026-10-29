@@ -59,6 +59,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         : "Call for pricing."
     }`,
     url: `/homes-on-sale/details/${home.id}`,
+    // Thirty of these pages described the same homes as their /floor-plans
+    // pages, each self-canonical and indexable (2026-10-29). The plan page is
+    // the one Google should rank; this one points at it and stays out of the
+    // index when the plan is known.
+    ...(home.slug && { canonical: `/floor-plans/${home.slug}`, noindex: true }),
     image: home.image || undefined,
     imageAlt: `${home.name} — ${home.sqft} sq ft Champion ${home.homeType.toLowerCase()}`,
   });

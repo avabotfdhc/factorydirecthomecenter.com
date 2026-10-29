@@ -39,7 +39,8 @@ test("no page publishes hreflang alternates", () => {
 
 // Routes that are deliberately not in the sitemap: noindex or disallowed in
 // robots.txt.
-const NOT_INDEXED = new Set(["/search", "/design-system"]);
+// /homes-on-sale/clearance is noindex while it lists no homes (2026-10-29).
+const NOT_INDEXED = new Set(["/search", "/design-system", "/homes-on-sale/clearance"]);
 
 test("every static, indexable page route is in the page registry (and so the sitemap)", () => {
   const registered = new Set(getAllPages().map((p) => p.url));
