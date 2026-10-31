@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllPages } from "@/lib/pages";
 import { catalogueCmsConfigured, getApiFloorPlans, getApiBlogPosts, type ApiFloorPlan } from "@/lib/api-content";
 import { isBuildPhase, planEntriesForSitemap } from "@/lib/sitemap-catalogue";
+import { canonicalPlans } from "@/lib/plan-canonical";
 import { absoluteImageUrl } from "@/lib/image-alt";
 import { getGuide } from "@/lib/guides";
 import { getSaleStatus } from "@/lib/sale";
@@ -44,7 +45,13 @@ async function sitemapPlans(): Promise<ApiFloorPlan[]> {
   } catch (err) {
     error = err;
   }
-  return planEntriesForSitemap({ plans, cmsConfigured, error }, { buildPhase: isBuildPhase() });
+  const trusted = planEntriesForSitemap({ plans, cmsConfigured, error }, { buildPhase: isBuildPhase() });
+  // Only self-canonical pages: a modular plan whose page points rel=canonical
+  // at its HUD twin is left out, so the file never lists a URL the page
+  // itself says is not the one to index (src/lib/plan-canonical.ts). The
+  // degraded-catalogue floor above is checked on the full set first, because
+  // the live catalogue is ~215 plans of which ~58 are such twins.
+  return canonicalPlans(trusted);
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

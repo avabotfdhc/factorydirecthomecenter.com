@@ -17,6 +17,7 @@ import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import { PlanVideo } from "@/components/PlanVideo";
 import { absoluteImageUrl, planImageAlt } from "@/lib/image-alt";
 import { isCodeNamed, planTitle } from "@/lib/page-title";
+import { canonicalPlanSlug } from "@/lib/plan-canonical";
 
 const SITE = "https://factorydirecthomescenter.com";
 
@@ -36,7 +37,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     plan.description ||
     `${plan.name}: ${plan.beds} bed, ${plan.baths} bath, ${plan.sqft.toLocaleString()} sq ft ${plan.homeType || "manufactured home"} from Factory Direct Homes Center in Auburn, IN.`
   ).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
-  const url = `${SITE}/floor-plans/${plan.slug}`;
+  // A modular (M) plan with an active HUD (H) twin in its series keeps this
+  // URL and this content but declares the twin as canonical, so Google folds
+  // the near-identical pair onto one page (src/lib/plan-canonical.ts). The
+  // catalogue read is the same 5-minute cache the page body uses; if it
+  // fails, the page is simply self-canonical for that window.
+  const allPlans = await getApiFloorPlans().catch(() => []);
+  const canonical = `${SITE}/floor-plans/${canonicalPlanSlug(plan, allPlans)}`;
   const heroAlt = planImageAlt(plan.image, plan.name, plan.homeType, 0, 1);
   // "Thornton — 3 Bed 2 Bath Champion Double Wide Home, Auburn IN": the
   // brand, the home type as people search for it, and the place. Absolute,
@@ -52,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: { absolute: title },
     description: desc,
-    alternates: { canonical: url },
+    alternates: { canonical },
     // The share card (Facebook, Messenger, X, iMessage) carries the same
     // descriptive title as the search result. It used to be
     // "1676H32107 | Factory Direct Homes Center", which for the 42 code-named
@@ -62,7 +69,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description: desc,
-      url,
+      url: canonical,
       siteName: "Factory Direct Homes Center",
       type: "website",
       images: shareImage,

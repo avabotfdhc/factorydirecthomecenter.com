@@ -172,7 +172,7 @@ As of 2026-09-11 nothing on the site depends on AWS. The Express/MySQL CMS on EC
 - Floor-plan detail pages generate their editorial body from `src/lib/plan-content.ts` (`buildPlanNarrative`): plan-specific sections (size, HUD vs IRC construction and what it means for the site, plant and delivery, series, options), the HUD/modular twin and same-box-other-series callouts, four comparable homes, guide and delivery-area links, and six plan-specific FAQs (which feed the FAQPage schema). This exists because all 400 CMS plans had empty `description`/`floor_plan_html` on 2026-09-11, so every page was one templated sentence plus the six homepage FAQs. Hand-written copy entered in `/admin` renders above the generated narrative — write it for the featured sale homes first. Keep the no-dollar-figure rule in that file.
 - `<title>` on plan pages is `{name} — {beds} Bed {baths} Bath Champion {Single Wide|Double Wide|Multi-Section|Modular} Home, Auburn IN`.
 - `sitemap.xml` only sends `lastmod` when the date is real: a guide's `updated`, a post's date, or the CMS row's `updated_at` (`ApiFloorPlan.updatedAt`). Do not put `new Date()` back.
-- Known catalogue shape: 240 of the 400 active plans have a HUD/modular twin (same box, `H`/`M` model letter) and 328 share a model number with another series (Aspire ⇄ Paramount), so up to four pages describe one physical plan. The narrative cross-links them; consolidating or canonicalising variants is a product decision, not a code one.
+- Known catalogue shape: 240 of the 400 active plans have a HUD/modular twin (same box, `H`/`M` model letter) and 328 share a model number with another series (Aspire ⇄ Paramount), so up to four pages describe one physical plan. The narrative cross-links them. Consolidating or canonicalising variants was a product decision, not a code one — Paramount was retired on 2026-09-26 and **the HUD/modular twins were canonicalised on 2026-10-31** (see "Modular twins canonicalise to their HUD page" below).
 
 # Supabase reads retry, and never fake a 404
 
@@ -2147,3 +2147,37 @@ wrong was in the markup and in the two files written for answer engines.
   LCP element); the instant-quote intro in `messages/*.json` lost "No retail
   markup on site work" (removed from every page on 2026-09-28 but the bundles
   sit outside `src/`), and `tests/disclaimers.test.ts` now scans `messages/`.
+
+# Modular twins canonicalise to their HUD page (Kyle, 2026-10-31, option A)
+
+The Oct 31 developer handoff measured the floor-plan duplication: 215 plan URLs
+in the sitemap, 96.7–98% text overlap between near-twins, 85.7% between a
+HUD/modular pair, and ~104 plan URLs "Discovered – currently not indexed" in
+Search Console. Kyle chose option A over consolidating URLs (B) or writing ~200
+unique descriptions (C): **a modular (`M`) plan page keeps its URL and its
+content but declares its HUD (`H`) twin in the same series as `rel=canonical`,
+and `sitemap.xml` lists only self-canonical pages.** No redirects, nothing a
+visitor sees, nothing in Supabase. Measured on the live catalogue that day: 215
+active plans, **58** modular plans with an active HUD twin, one without
+(`aspire-odyssey-3268m32394`, which stays self-canonical). The sitemap drops to
+~157 plan URLs, above `MIN_CMS_SITEMAP_PLANS` (120); the floor is checked on the
+full set before the canonical filter.
+
+- `src/lib/plan-canonical.ts` is the whole rule: `planModelCode()` reads the
+  code from the CMS `modelNumber` first (25 HUD plans — Prime's named ones —
+  carry no code in the slug), `hudTwinOf()` matches `2856M…` to `2856H…` **in
+  the same series only** (the Aspire ⇄ Prime same-box siblings are different
+  products and are not canonicalised), `canonicalPlanSlug()` /
+  `canonicalPlans()` are what the page and the sitemap call.
+- `/floor-plans/[slug]` `generateMetadata` reads the catalogue (same 5-minute
+  cache as the body) and sets `alternates.canonical` and `og:url` to the
+  canonical URL. HUD pages and orphan modular pages are unchanged.
+- Prices (1.2 in the same handoff): Kyle chose to **keep prices hidden**, so
+  `SHOW_PRICES` / `SHOW_SALE_PRICES` stay off and the Product/Offer gate in
+  `plan-schema.ts` stays closed.
+- `tests/plan-canonical.test.ts` pins the twin rule, the series boundary, the
+  orphan case, the sitemap set and the page/sitemap wiring.
+- Done when Search Console shows the remaining plan URLs indexed and
+  "Discovered – not indexed" under `/floor-plans/` below 10; the 58 modular
+  URLs will move to "Alternate page with proper canonical tag", which is the
+  intended state, not an error.
