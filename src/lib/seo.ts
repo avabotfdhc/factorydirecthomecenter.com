@@ -16,7 +16,23 @@ interface SEOConfig {
   modifiedTime?: string;
   author?: string;
   locale?: string;
+  /** Site-relative path to canonicalise to when this URL is a deliberate
+   *  duplicate of another page (the sale-detail pages point at their
+   *  /floor-plans twin). Defaults to `url`. */
+  canonical?: string;
+  /** Keep the page out of the index while still letting crawlers follow its
+   *  links (a duplicate, or a page with nothing to list yet). */
+  noindex?: boolean;
 }
+
+/** The blog feed, advertised from every page. A page-level `alternates`
+ *  replaces the layout's whole object, so until 2026-10-29 the RSS link only
+ *  appeared on the handful of pages that set no canonical of their own. */
+export const RSS_ALTERNATE = {
+  "application/rss+xml": [
+    { url: `${SITE_URL}/blog/feed.xml`, title: "The Manufactured Home Blog — Factory Direct Homes Center" },
+  ],
+};
 
 /** Absolute URL for a site-relative path; absolute URLs (S3, Supabase) pass through. */
 function absUrl(path: string): string {
@@ -40,9 +56,12 @@ export function generateMetadata(config: SEOConfig): Metadata {
     modifiedTime,
     author,
     locale = "en_US",
+    canonical,
+    noindex = false,
   } = config;
 
   const fullUrl = `https://factorydirecthomescenter.com${url}`;
+  const canonicalUrl = canonical ? `https://factorydirecthomescenter.com${canonical}` : fullUrl;
   const fullImage = absUrl(image);
   // Only the shared hero has known dimensions (1920×1071); per-page photos
   // vary, and a wrong declared size is worse than none.
@@ -82,13 +101,14 @@ export function generateMetadata(config: SEOConfig): Metadata {
       images: [{ url: fullImage, alt: imageAlt }],
     },
     alternates: {
-      canonical: fullUrl,
+      canonical: canonicalUrl,
+      types: RSS_ALTERNATE,
     },
     robots: {
-      index: true,
+      index: !noindex,
       follow: true,
       googleBot: {
-        index: true,
+        index: !noindex,
         follow: true,
         "max-video-preview": -1,
         "max-image-preview": "large",
@@ -335,6 +355,32 @@ export const structuredData = {
       "@type": "WebPage",
       "@id": `https://factorydirecthomescenter.com${article.url}`,
     },
+  }),
+
+  // A plain page node for landing pages that are not articles: a service-area
+  // page, the about page, a hub. Until 2026-10-29 the location pages and
+  // /about published `Article` nodes with an invented `datePublished`
+  // ("2024-01-01", before the dealership existed) and `dateModified: now` on
+  // every render. A WebPage carries no date it would have to make up, and
+  // links the page to the one site node instead of the business.
+  webPage: (page: {
+    url: string;
+    name: string;
+    description: string;
+    image?: string;
+    type?: "WebPage" | "AboutPage" | "CollectionPage" | "ContactPage";
+    /** Set when the page is about the dealership itself (/about). */
+    aboutBusiness?: boolean;
+  }) => ({
+    "@context": "https://schema.org",
+    "@type": page.type || "WebPage",
+    "@id": `${SITE_URL}${page.url}#webpage`,
+    url: `${SITE_URL}${page.url}`,
+    name: page.name,
+    description: page.description,
+    ...(page.image && { primaryImageOfPage: { "@type": "ImageObject", contentUrl: absUrl(page.image) } }),
+    isPartOf: { "@id": WEBSITE_ID },
+    ...(page.aboutBusiness && { about: businessRef() }),
   }),
 
   // WebSite Schema

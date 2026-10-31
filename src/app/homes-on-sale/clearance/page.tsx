@@ -16,6 +16,10 @@ export const metadata = genMeta({
   title: "Clearance Homes",
   description: "Shop clearance manufactured homes at Factory Direct Homes Center. Last chance pricing on select inventory. Single wide, double wide, and modular homes.",
   url: "/homes-on-sale/clearance",
+  // The page lists no homes yet ("No Clearance Inventory at This Time"), so it
+  // stays out of the index and the sitemap until it does. Drop `noindex` and
+  // re-register it in src/lib/pages.ts when inventory exists.
+  noindex: true,
 });
 
 export default function ClearancePage() {

@@ -214,14 +214,11 @@ export default function FortWaynePage() {
       {/* WebSite schema comes from the root layout */}
       
       {/* 4. Article */}
-      <StructuredData data={structuredData.article({
-        headline: "Manufactured Homes Fort Wayne IN | Champion Homes Dealer",
+      <StructuredData data={structuredData.webPage({
+        url: "/locations/fort-wayne",
+        name: "Manufactured Homes Fort Wayne IN | Champion Homes Dealer",
         description: "Champion manufactured and modular homes delivered to Fort Wayne, Indiana. 30 miles from Auburn showroom.",
         image: "/images/homepage/double-wide-exterior.webp",
-        datePublished: "2024-01-01",
-        dateModified: new Date().toISOString(),
-        author: "Factory Direct Homes Center",
-        url: "/locations/fort-wayne"
       })} />
       
       {/* 5. Service for Fort Wayne area */}
@@ -532,7 +529,7 @@ export default function FortWaynePage() {
         title="Fort Wayne Area FAQs"
         subtitle="Common questions about manufactured homes in Fort Wayne and Allen County"
         faqs={locationFAQs}
-        showSchema={true}
+        showSchema={false}
       />
 
       {/* ============================================

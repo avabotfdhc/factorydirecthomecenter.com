@@ -87,18 +87,12 @@ export default function AuburnLocationPage() {
           },
         })}
       />
-      <StructuredData
-        data={structuredData.article({
-          headline: "Manufactured & Modular Homes in Auburn, IN",
-          description:
-            "Champion manufactured and modular homes at our Auburn, DeKalb County showroom. Factory-direct pricing, local service.",
-          image: "/images/paramount/odyssey-exterior.webp",
-          datePublished: "2024-01-01",
-          dateModified: new Date().toISOString(),
-          author: "Factory Direct Homes Center",
-          url: "/locations/auburn",
-        })}
-      />
+      <StructuredData data={structuredData.webPage({
+        url: "/locations/auburn",
+        name: "Manufactured & Modular Homes in Auburn, IN",
+        description: "Champion manufactured and modular homes at our Auburn, DeKalb County showroom. Factory-direct pricing, local service.",
+        image: "/images/paramount/odyssey-exterior.webp",
+      })} />
       <StructuredData
         data={structuredData.service({
           name: "Manufactured Home Sales & Delivery — Auburn, IN",
@@ -264,6 +258,7 @@ export default function AuburnLocationPage() {
         title="Auburn Manufactured Home FAQs"
         subtitle="Showroom, delivery, land, and DeKalb County questions"
         faqs={locationFAQs}
+      showSchema={false}
       />
 
       {/* ===== CTA ===== */}

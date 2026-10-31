@@ -55,14 +55,14 @@ export default async function BlogPage() {
           <p className="text-center text-[var(--color-gray)]">New articles are on the way — check back soon.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((p) => (
+            {posts.map((p, i) => (
               <Link
                 key={p.slug}
                 href={`/blog/${p.slug}`}
                 className="group flex flex-col border border-[var(--color-charcoal)]/8 hover:border-[var(--color-teal)]/30 bg-white rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
               >
                 <div className="aspect-[16/10] bg-[var(--color-cream-dark)] relative overflow-hidden">
-                  <PostImage src={p.image} alt={p.title} className="group-hover:scale-105 transition-transform duration-700" />
+                  <PostImage src={p.image} alt={p.title} eager={i === 0} className="group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   {p.date && (

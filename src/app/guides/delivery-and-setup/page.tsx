@@ -171,7 +171,7 @@ export default function DeliveryAndSetupPage() {
       </section>
 
       {/* FAQ */}
-      <FAQSection title="Delivery & Setup FAQs" subtitle="Timeline, site work, and installation" faqs={faqs} />
+      <FAQSection title="Delivery & Setup FAQs" subtitle="Timeline, site work, and installation" faqs={faqs} showSchema={false} />
 
       {/* CTA */}
       <section className="py-16 bg-[var(--color-charcoal)] text-white">

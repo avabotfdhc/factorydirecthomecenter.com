@@ -1,5 +1,5 @@
 // Central Page Registry — single source of truth for all site pages
-// Used by: sitemap.ts, PageFooter (related pages, breadcrumbs), llms.txt
+// Used by: sitemap.ts, PageFooter (related pages, breadcrumbs), /llms.txt (src/app/llms.txt/route.ts)
 
 export interface SitePage {
   url: string;
@@ -65,16 +65,6 @@ export const sitePages: SitePage[] = [
     topics: ["sale", "homes-on-sale", "manufactured-homes", "champion-homes"],
     cluster: "products",
     priority: 0.9,
-    changeFrequency: "weekly",
-  },
-  {
-    url: "/homes-on-sale/clearance",
-    title: "Clearance Homes",
-    description: "Clearance and last-chance manufactured homes at factory-direct prices.",
-    topics: ["clearance", "homes-on-sale", "manufactured-homes"],
-    cluster: "products",
-    pillar: "/homes-on-sale",
-    priority: 0.7,
     changeFrequency: "weekly",
   },
   {
@@ -848,9 +838,15 @@ export function getBreadcrumbs(currentUrl: string): Array<{ name: string; url: s
   const segments = currentUrl.split("/").filter(Boolean);
   let path = "";
 
-  for (const segment of segments) {
+  for (const [i, segment] of segments.entries()) {
     path += `/${segment}`;
     const page = allPages.find((p) => p.url === path);
+    // An intermediate segment with no page of its own ("/series" under
+    // /series/prime, "/homes-on-sale/details" under a sale home) is a 301,
+    // not a page: a crumb for it links a redirect and the BreadcrumbList
+    // names a URL that does not exist. Skip it; the last segment always
+    // stands for the current page.
+    if (!page && i < segments.length - 1) continue;
     crumbs.push({
       // A registered page names itself; only an unregistered segment falls
       // back to title-casing the slug (which produced "Champion Vs Clayton

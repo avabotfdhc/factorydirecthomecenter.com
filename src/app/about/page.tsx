@@ -11,7 +11,7 @@ import {
 import { generateAltText } from "@/lib/images";
 import { H2, H3, H4 } from "@/components/Heading";
 import { OwnerIntro } from "@/components/OwnerIntro";
-import { BUSINESS, ownerJsonLd } from "@/lib/business";
+import { ownerJsonLd } from "@/lib/business";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 
 // ============================================
@@ -178,15 +178,16 @@ export default function AboutPage() {
       
       {/* LocalBusiness + WebSite schema come from the root layout; the
           BreadcrumbList comes from PageFooter (one per page — see AGENTS.md). */}
-      {/* Article */}
-      <StructuredData data={structuredData.article({
-        headline: "About Factory Direct Homes Center | Champion Homes Dealer",
+      {/* The page node. An Article used to sit here with datePublished set to
+          an invented day (BUSINESS.foundingDay is empty for exactly that
+          reason) and dateModified: now on every render. */}
+      <StructuredData data={structuredData.webPage({
+        type: "AboutPage",
+        url: "/about",
+        name: "About Factory Direct Homes Center | Champion Homes Dealer",
         description: "Family-owned Champion Homes dealer in Auburn, Indiana serving Indiana, Ohio, and Michigan with factory-direct pricing.",
         image: "/images/hero-home.jpg",
-        datePublished: `${BUSINESS.foundingDate}-01`,
-        dateModified: new Date().toISOString(),
-        authorIsOwner: true,
-        url: "/about"
+        aboutBusiness: true,
       })} />
 
       {/* The owner, published once here. Bylines elsewhere cite this @id. */}
@@ -196,12 +197,15 @@ export default function AboutPage() {
       <StructuredData data={structuredData.faqPage(aboutFAQs)} />
       
       {/* 6. ImageObject */}
+      {/* hero-home.jpg is 1920×1071 and shows a new manufactured home with a
+          front porch — not the showroom, which it was captioned as until
+          2026-10-29. */}
       <StructuredData data={structuredData.imageObject({
         url: "/images/hero-home.jpg",
-        name: "Factory Direct Homes Center Showroom",
-        description: "Family-owned Champion Homes dealership in Auburn, Indiana with model homes on display",
-        width: 1200,
-        height: 630
+        name: "New manufactured home with a front porch",
+        description: "A new Champion manufactured home with a front porch — the share image for Factory Direct Homes Center, Auburn, Indiana",
+        width: 1920,
+        height: 1071
       })} />
 
       {/* AggregateRating schema intentionally omitted — add back only with a
@@ -503,7 +507,7 @@ export default function AboutPage() {
         title="Frequently Asked Questions"
         subtitle="Common questions about Factory Direct Homes Center and our approach to manufactured homes."
         faqs={aboutFAQs}
-        showSchema={true}
+        showSchema={false}
       />
 
       {/* ============================================

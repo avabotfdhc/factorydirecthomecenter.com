@@ -43,7 +43,7 @@
   "quote": {
     "badge": "Direct Factory Pricing",
     "title": "Line-item quote — {model}",
-    "intro": "Factory-direct pricing, option sheets and estimated delivery cost for your county. No retail markup on site work.",
+    "intro": "Factory-direct pricing, option sheets and estimated delivery cost for your county. You hire and pay your own site contractors.",
     "name": "Full name",
     "contact": "Phone or email",
     "county": "Delivery county & state",

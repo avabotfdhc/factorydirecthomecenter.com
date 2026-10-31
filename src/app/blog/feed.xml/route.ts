@@ -1,4 +1,5 @@
 import { getApiBlogPosts } from "@/lib/api-content";
+import { BUSINESS } from "@/lib/business";
 
 const BASE_URL = "https://factorydirecthomescenter.com";
 
@@ -19,10 +20,18 @@ export async function GET() {
       <guid isPermaLink="true">${url}</guid>
       <description><![CDATA[${post.excerpt}]]></description>
       <pubDate>${pubDate}</pubDate>
-      <author>info@factorydirecthomescenter.com (Factory Direct Homes Center)</author>
+      <author>${BUSINESS.email} (Factory Direct Homes Center)</author>
     </item>`;
     })
     .join("");
+
+  // The newest post's date, so the feed only claims to have changed when it
+  // has (it said "now" on every request until 2026-10-29).
+  const newest = posts
+    .map((p) => (p.date ? new Date(p.date) : null))
+    .filter((d): d is Date => !!d && !Number.isNaN(d.getTime()))
+    .sort((a, b) => b.getTime() - a.getTime())[0];
+  const lastBuildDate = (newest ?? new Date()).toUTCString();
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -31,7 +40,7 @@ export async function GET() {
     <link>${BASE_URL}/blog</link>
     <description>Expert guides, buyer tips, financing advice, and industry news for manufactured and modular home buyers.</description>
     <language>en-us</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <lastBuildDate>${lastBuildDate}</lastBuildDate>
     <atom:link href="${BASE_URL}/blog/feed.xml" rel="self" type="application/rss+xml" />
     <image>
       <url>${BASE_URL}/images/hero-home.jpg</url>

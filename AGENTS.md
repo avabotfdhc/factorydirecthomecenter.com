@@ -2089,3 +2089,61 @@ schema) so a crawler sees what the tool is; the elevation API answers with
 mobile, three runs each): production 78/84/78 vs the branch 76/85/77 on
 performance, 100 on SEO, accessibility and best practices on both; the page's
 compressed JavaScript went 229 → 235 KB and no other route changed.
+
+# SEO sweep 2026-10-29: schema says only what is true, and /llms.txt is generated
+
+A page-by-page pass after the 2026-10-19 audit. Every public page already had
+metadata, a canonical, an og:image and alt text on every static image; the
+catalogue's 1,742 image rows on active plans passed the alt/kind/URL audit
+(the known exceptions in "Catalogue alt text" above are unchanged). What was
+wrong was in the markup and in the two files written for answer engines.
+
+- **`/llms.txt` is a route** (`src/app/llms.txt/route.ts` → `src/lib/llms-text.ts`),
+  built from `business.ts`, `series-hubs.ts`, `lenders.ts`, `referrals.ts`,
+  `factory-direct.ts`, `guides.ts` and the page registry. The static
+  `public/llms.txt` (last touched 2026-09-29) still said "State Road 8", "20
+  miles from Champion's largest factory", listed Paramount as the live 2026
+  lineup, named four "Financing Partners", and promised "No dealership markup";
+  `public/.well-known/mcp.json` added "serving 6 states", Wisconsin/Illinois/
+  Kentucky, and three dollar price floors. Both are deleted and
+  `tests/llms-text.test.ts` fails if either comes back or the generated text
+  breaks a rule (dollar figures, lender subsets, the address spelling, states
+  outside `BUSINESS.states`). Prose may still say the showroom is "on State Road
+  8"; the test checks the address line only.
+- **No invented dates in schema.** Thirteen location pages published `Article`
+  nodes with `datePublished: "2024-01-01"` (the dealership opened November
+  2024) and `dateModified: new Date()` on every render; `/about` dated itself to
+  an invented day. They are `structuredData.webPage()` nodes now (`WebPage` /
+  `AboutPage`, anchored on `<url>#webpage`, `isPartOf` the site node), which
+  carry no date. `tests/structured-data.test.ts` fails on a `datePublished`
+  before `BUSINESS.foundingDate` or any `date*: new Date(` under `src/app`.
+- **One FAQPage per page.** ~19 pages emitted `structuredData.faqPage(x)` and
+  rendered `<FAQSection faqs={x}>` with its own schema on. The test now
+  requires `showSchema={false}` wherever the page emits the node itself.
+- **Dropped:** the `/financing` `HowTo` (retired rich result; asserted a lender's
+  "3–7 business days"). **Corrected:** the `/about` and `/financing`
+  `ImageObject` declared `hero-home.jpg` as 1200×630 (it is 1920×1071) and
+  captioned it as the showroom (it is a stock exterior).
+- **Canonicals.** The root layout no longer sets `canonical: "/"` — a page with
+  no `alternates` of its own (the 404 page, `/design-system`) inherited the
+  homepage's canonical. `genMeta` now emits the RSS `<link rel="alternate">` on
+  every page (a page-level `alternates` replaces the layout's whole object, so
+  it had only appeared on the pages that set none). `genMeta` takes `canonical`
+  and `noindex`: the 30 `/homes-on-sale/details/*` pages canonicalise to their
+  `/floor-plans/*` twin and are `noindex`; `/homes-on-sale/clearance` is
+  `noindex` and out of the registry until it lists a home; `/design-system`
+  has a `layout.tsx` with `noindex`.
+- **Breadcrumbs skip redirects.** `getBreadcrumbs` no longer emits a crumb for
+  an intermediate segment with no page (`/series` under `/series/prime`,
+  `/homes-on-sale/details`): both are 301s, and the BreadcrumbList named URLs
+  that do not exist.
+- **Series hubs are linked** from the footer "Home Types" column and from each
+  series card on `/champion-homes`; until now only plan-page prose linked
+  them, though they are the 301 targets for 186 retired Paramount URLs.
+- **Also:** series titles no longer promise "& Pricing" while prices are
+  hidden; the series `CollectionPage` is part of the site node, not the
+  business; the RSS feed uses `BUSINESS.email` and dates itself to the newest
+  post rather than "now"; the first card on `/blog` loads eagerly (it is the
+  LCP element); the instant-quote intro in `messages/*.json` lost "No retail
+  markup on site work" (removed from every page on 2026-09-28 but the bundles
+  sit outside `src/`), and `tests/disclaimers.test.ts` now scans `messages/`.

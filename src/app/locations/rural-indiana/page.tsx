@@ -47,7 +47,7 @@ const relatedPages = [{ title: "Noble County", url: "/locations/noble-county", d
 export default function RuralIndianaPage() {
   return (
     <>
-      <StructuredData data={structuredData.article({ headline: "Manufactured Homes Rural Indiana", description: "Champion homes for rural Indiana counties", image: "/images/doublewide-exterior.webp", datePublished: "2024-01-01", dateModified: new Date().toISOString(), author: "Factory Direct Homes Center", url: "/locations/rural-indiana" })} />
+      <StructuredData data={structuredData.webPage({ url: "/locations/rural-indiana", name: "Manufactured Homes Rural Indiana", description: "Champion homes for rural Indiana counties", image: "/images/doublewide-exterior.webp" })} />
       <StructuredData data={structuredData.service({ name: "Rural Indiana Manufactured Home Delivery", description: "Manufactured home delivery to rural counties in northeast Indiana", provider: "Factory Direct Homes Center", areaServed: "Rural Indiana" })} />
       <StructuredData data={structuredData.faqPage(locationFAQs)} />
 
@@ -172,7 +172,7 @@ export default function RuralIndianaPage() {
         </div>
       </section>
 
-      <FAQSection title="Rural Indiana FAQs" subtitle="Common questions about manufactured homes in rural Indiana counties" faqs={locationFAQs} showSchema={true} />
+      <FAQSection title="Rural Indiana FAQs" subtitle="Common questions about manufactured homes in rural Indiana counties" faqs={locationFAQs} showSchema={false} />
 
       <section className="py-16 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

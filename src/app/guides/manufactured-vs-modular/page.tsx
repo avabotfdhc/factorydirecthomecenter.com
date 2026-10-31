@@ -155,7 +155,7 @@ export default function ManufacturedVsModularPage() {
       </section>
 
       {/* FAQ (FAQPage schema) */}
-      <FAQSection title="Common Questions" subtitle="Manufactured, modular, and mobile homes" faqs={faqs} />
+      <FAQSection title="Common Questions" subtitle="Manufactured, modular, and mobile homes" faqs={faqs} showSchema={false} />
 
       {/* CTA */}
       <section className="py-16 bg-[var(--color-charcoal)] text-white">

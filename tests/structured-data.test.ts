@@ -489,3 +489,57 @@ test("the business node carries no Product that Google would reject as a product
   walk(businessRef(), "businessRef");
   assert.deepEqual(bad, [], `Product without offers/review/aggregateRating at: ${bad.join(", ")}`);
 });
+
+// 2026-10-29: ~19 pages emitted `structuredData.faqPage(x)` AND rendered
+// `<FAQSection faqs={x}>` with its own schema on — two FAQPage nodes with the
+// same questions on one page. Google's guideline is one FAQPage per page.
+test("a page that emits faqPage() renders FAQSection with its schema off", () => {
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith(".tsx")) continue;
+      const src = stripComments(readFileSync(full, "utf8"));
+      if (!src.includes("structuredData.faqPage(") || !src.includes("<FAQSection")) continue;
+      if (!src.includes("showSchema={false}") || src.includes("showSchema={true}")) {
+        offenders.push(relative(process.cwd(), full).split(sep).join("/"));
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src/app"));
+  assert.deepEqual(offenders, [], "pass showSchema={false} to FAQSection where the page already emits the FAQPage node");
+});
+
+// The location pages and /about used to publish Article nodes dated
+// "2024-01-01" (before the dealership opened, November 2024) with
+// `dateModified: new Date()` on every render. A date in markup is a claim.
+test("no page hand-writes a publication date before the dealership opened, or a modified date of 'now'", () => {
+  const offenders: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!/\.(ts|tsx)$/.test(entry.name)) continue;
+      const rel = relative(process.cwd(), full).split(sep).join("/");
+      const lines = stripComments(readFileSync(full, "utf8")).split("\n");
+      for (const [i, line] of lines.entries()) {
+        if (/date(Published|Modified|Created)\s*:\s*new Date\(/.test(line)) offenders.push(`${rel}:${i + 1} dates the page 'now'`);
+        const m = line.match(/datePublished\s*:\s*["'`](\d{4})-(\d{2})/);
+        if (m && `${m[1]}-${m[2]}` < BUSINESS.foundingDate) offenders.push(`${rel}:${i + 1} is dated before the dealership opened`);
+      }
+    }
+  };
+  walk(resolve(process.cwd(), "src/app"));
+  assert.deepEqual(offenders, []);
+});
+
+test("webPage() nodes are anchored on the page URL and part of the site node", () => {
+  const node = structuredData.webPage({ url: "/locations/auburn", name: "Auburn", description: "d", image: "/images/hero-home.jpg", type: "WebPage" });
+  assert.equal(node["@id"], "https://factorydirecthomescenter.com/locations/auburn#webpage");
+  assert.deepEqual(node.isPartOf, { "@id": "https://factorydirecthomescenter.com/#website" });
+  assert.ok(!("datePublished" in node) && !("dateModified" in node), "a WebPage carries no date it would have to invent");
+  const about = structuredData.webPage({ url: "/about", name: "About", description: "d", type: "AboutPage", aboutBusiness: true });
+  assert.equal(about["@type"], "AboutPage");
+  assert.equal((about.about as Record<string, unknown>)["@id"], "https://factorydirecthomescenter.com/#business");
+});

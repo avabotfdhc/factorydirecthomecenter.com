@@ -173,14 +173,11 @@ export default function IndianapolisPage() {
   
   return (
     <>
-      <StructuredData data={structuredData.article({
-        headline: "Manufactured Homes Indianapolis IN | Champion Dealer",
+      <StructuredData data={structuredData.webPage({
+        url: "/locations/indianapolis",
+        name: "Manufactured Homes Indianapolis IN | Champion Dealer",
         description: "Champion manufactured and modular homes delivered to Indianapolis, Indiana.",
         image: "/images/paramount/silverton-exterior.webp",
-        datePublished: "2024-01-01",
-        dateModified: new Date().toISOString(),
-        author: "Factory Direct Homes Center",
-        url: "/locations/indianapolis"
       })} />
       <StructuredData data={structuredData.service({
         name: "Manufactured Home Delivery Indianapolis",
@@ -460,7 +457,7 @@ export default function IndianapolisPage() {
         title="Indianapolis Area FAQs"
         subtitle="Common questions about manufactured homes in Indianapolis and central Indiana"
         faqs={locationFAQs}
-        showSchema={true}
+        showSchema={false}
       />
 
       <section className="py-16 bg-[var(--color-cream-dark)]">

@@ -20,7 +20,7 @@ import {
 // ============================================
 // AEO content with 40-60 word answers
 // FAQ schema
-// HowTo schema for process
+// (The HowTo that sat here was removed 2026-10-29; see the comment in the JSX.)
 // ============================================
 
 export const metadata = genMeta({
@@ -194,59 +194,17 @@ export default function FinancingPage() {
       {/* 5. FAQPage */}
       <StructuredData data={structuredData.faqPage(financingFAQs)} />
       
-      {/* 6. HowTo - Financing Process */}
-      <StructuredData data={{
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        name: "How to Finance a Manufactured Home",
-        description: "Step-by-step guide to financing your manufactured home purchase",
-        totalTime: "P7D",
-        step: [
-          {
-            "@type": "HowToStep",
-            position: 1,
-            name: "Get Pre-Qualified",
-            text: "Get pre-qualified directly with a lender you choose, so you know your budget before you pick a home.",
-            url: "https://factorydirecthomescenter.com/financing"
-          },
-          {
-            "@type": "HowToStep",
-            position: 2,
-            name: "Choose Your Home",
-            text: "Select your floor plan and customization options based on your pre-qualified budget.",
-            url: "https://factorydirecthomescenter.com/floor-plans"
-          },
-          {
-            "@type": "HowToStep",
-            position: 3,
-            name: "Submit Loan Application",
-            text: "Complete full loan application with required documentation.",
-            url: "https://factorydirecthomescenter.com/financing"
-          },
-          {
-            "@type": "HowToStep",
-            position: 4,
-            name: "Loan Approval",
-            text: "Lender reviews application and issues approval, typically within 3-7 business days.",
-            url: "https://factorydirecthomescenter.com/financing"
-          },
-          {
-            "@type": "HowToStep",
-            position: 5,
-            name: "Close and Build",
-            text: "Sign final paperwork and Champion begins building your home.",
-            url: "https://factorydirecthomescenter.com/financing"
-          }
-        ]
-      }} />
-      
+      {/* No HowTo here. One used to describe a five-step loan process with
+          "approval typically within 3-7 business days" — a lender's timeline,
+          not ours, and HowTo rich results were retired in 2023. */}
+
       {/* 7. ImageObject */}
       <StructuredData data={structuredData.imageObject({
         url: "/images/hero-home.jpg",
-        name: "Manufactured Home Financing Options",
-        description: "Multiple financing options available including chattel loans, land-home packages, and conventional financing",
-        width: 1200,
-        height: 630
+        name: "New manufactured home with a front porch",
+        description: "A new Champion manufactured home with a front porch — the share image for the financing guide at Factory Direct Homes Center, Auburn, Indiana",
+        width: 1920,
+        height: 1071
       })} />
 
       {/* ============================================
@@ -547,7 +505,7 @@ export default function FinancingPage() {
         title="Financing FAQs"
         subtitle="Common questions about manufactured home financing and loan options"
         faqs={financingFAQs}
-        showSchema={true}
+        showSchema={false}
       />
 
       {/* ============================================

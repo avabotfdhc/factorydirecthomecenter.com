@@ -647,3 +647,25 @@ test("Prime is never placed in Topeka, and 'every home' never comes from Topeka 
   walk(resolve(process.cwd(), "src"));
   assert.deepEqual(offenders, [], "name Decatur for Prime, or say which series Topeka builds");
 });
+
+// 2026-10-29: the instant-quote intro in messages/*.json still said "No retail
+// markup on site work" a month after Kyle had the claim removed from every
+// page — the message bundles sit outside src/, so no scan above saw them. The
+// translated UI strings are public copy like any other.
+test("the translation bundles carry none of the banned claims", () => {
+  const BANNED: Array<[RegExp, string]> = [
+    [/no (retail |dealer(ship)? |hidden )?markup/i, "a 'no markup' claim"],
+    [/sin recargo|sin margen/i, "a 'no markup' claim (Spanish)"],
+    [/referral/i, "'referral' — it is a contractor list"],
+    [/\b20[ -]?mi(les?)?\b/i, "the plant is 30 miles away"],
+    [/largest[^.\n]{0,40}(plant|factory)/i, "'largest plant'"],
+    [/financing partners|lending partners/i, "'partners'"],
+  ];
+  const offenders: string[] = [];
+  for (const entry of readdirSync(resolve(process.cwd(), "messages"))) {
+    if (!entry.endsWith(".json")) continue;
+    const text = readFileSync(resolve(process.cwd(), "messages", entry), "utf8");
+    for (const [re, why] of BANNED) if (re.test(text)) offenders.push(`messages/${entry} — ${why}`);
+  }
+  assert.deepEqual(offenders, []);
+});
