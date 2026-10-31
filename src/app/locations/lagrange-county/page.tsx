@@ -101,5 +101,5 @@ export const metadata = generateLocationMetadata({
 });
 
 export default function LaGrangeCountyPage() {
-  return <LocationPageTemplate {...locationData} />;
+  return <LocationPageTemplate countySlug="lagrange-county" {...locationData} />;
 }

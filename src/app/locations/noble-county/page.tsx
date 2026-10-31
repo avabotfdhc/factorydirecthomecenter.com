@@ -2,6 +2,7 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import Link from "next/link";
 import { H2, H3 } from "@/components/Heading";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
+import { NeighborCounties } from "@/components/NeighborCounties";
 
 export const metadata = genMeta({
   title: "Manufactured Homes in Noble County, IN",
@@ -228,6 +229,7 @@ export default function NobleCountyPage() {
           <NoRecommendationNotice subject="contractors" />
         </div>
       </section>
+      <NeighborCounties slug="noble-county" />
     </>
   );
 }
