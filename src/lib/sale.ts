@@ -93,6 +93,18 @@ export const SALE_PHASES: SalePhase[] = [
     productionMonth: "October 2026",
     allHomes: true,
   },
+  // Kyle, 2026-10-31: November runs on the same terms as October — 25% off
+  // MSRP base price on every new Champion home, purchase agreement signed and
+  // deposited by November 30 with the order authorized for November 2026
+  // production.
+  {
+    name: "Fall into Savings Sales Event",
+    discountPercent: 25,
+    startDate: "2026-11-01",
+    endDate: "2026-11-30",
+    productionMonth: "November 2026",
+    allHomes: true,
+  },
 ];
 
 // Auburn, Indiana keeps Eastern time, and the offers are written as calendar
@@ -215,7 +227,11 @@ export function saleStatusForDay(today: string): SaleStatus {
   // the identical discount carried on to the 30th.
   const runEnd = phase ? endOfSameRateRun(phase) : reference;
   const daysLeft = phase ? daysBetween(today, runEnd.endDate) + 1 : 0;
-  const nextPhase = phase ? phaseAfter(runEnd) : null;
+  // Announced only when the rate changes ("20% through Sept 15, then 15%");
+  // a following month at the same rate is simply the next offer, which the
+  // pages pick up on its own start date.
+  const following = phase ? phaseAfter(runEnd) : null;
+  const nextPhase = following && following.discountPercent !== runEnd.discountPercent ? following : null;
 
   return {
     active: Boolean(phase),
@@ -237,14 +253,31 @@ function phaseAfter(phase: SalePhase): SalePhase | null {
 }
 
 /**
- * The last phase in the unbroken run of same-name, same-discount phases that
- * starts at `phase`. Returns `phase` itself when the next one differs.
+ * True when two back-to-back phases are one offer to a shopper: the same
+ * event, the same discount, the same scope and the same production month.
+ * A new production month is a new offer even at the same rate — its
+ * deadline moves — so October's "deposit by October 31, October production"
+ * must never merge into November's row and read "deposit by November 30,
+ * October production".
+ */
+function sameOffer(a: SalePhase, b: SalePhase): boolean {
+  return (
+    a.name === b.name &&
+    a.discountPercent === b.discountPercent &&
+    Boolean(a.allHomes) === Boolean(b.allHomes) &&
+    a.productionMonth === b.productionMonth
+  );
+}
+
+/**
+ * The last phase in the unbroken run of same-offer phases that starts at
+ * `phase`. Returns `phase` itself when the next one differs.
  */
 function endOfSameRateRun(phase: SalePhase): SalePhase {
   let last = phase;
   for (;;) {
     const next = phaseAfter(last);
-    if (!next || next.discountPercent !== last.discountPercent || next.name !== last.name) return last;
+    if (!next || !sameOffer(last, next)) return last;
     last = next;
   }
 }
