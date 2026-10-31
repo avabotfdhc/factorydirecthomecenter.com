@@ -108,5 +108,5 @@ export const metadata = generateLocationMetadata({
 });
 
 export default function AdamsCountyPage() {
-  return <LocationPageTemplate {...locationData} />;
+  return <LocationPageTemplate countySlug="adams-county" {...locationData} />;
 }

@@ -7,6 +7,7 @@ import { countyPages, getCountyPage, type CountyPage as CountyPageData } from "@
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import { businessAreaRef } from "@/lib/business";
 import { fitTitle } from "@/lib/page-title";
+import { NeighborCounties } from "@/components/NeighborCounties";
 
 // Programmatic county landing pages. Data lives in src/lib/county-pages.ts.
 // A county that also has its own folder under src/app/locations/ is served by
@@ -294,6 +295,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
           </div>
         </div>
       </section>
+      <NeighborCounties slug={c.slug} />
     </>
   );
 }

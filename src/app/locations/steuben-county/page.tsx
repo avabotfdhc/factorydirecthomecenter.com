@@ -109,5 +109,5 @@ export const metadata = generateLocationMetadata({
 });
 
 export default function SteubenCountyPage() {
-  return <LocationPageTemplate {...locationData} />;
+  return <LocationPageTemplate countySlug="steuben-county" {...locationData} />;
 }

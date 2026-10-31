@@ -109,5 +109,5 @@ export const metadata = generateLocationMetadata({
 });
 
 export default function WellsCountyPage() {
-  return <LocationPageTemplate {...locationData} />;
+  return <LocationPageTemplate countySlug="wells-county" {...locationData} />;
 }

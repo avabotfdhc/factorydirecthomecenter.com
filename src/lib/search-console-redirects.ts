@@ -186,6 +186,14 @@ const oneOffs: Redirect[] = [
   to("/homes-on-sale/details/brighton-2852", "/floor-plans/aspire-brighton-2852h32170"),
   to("/homes-on-sale/details/fillmore-2864", "/floor-plans/aspire-fillmore-2864h32060"),
   to("/special-plans/details/silverton", "/floor-plans/aspire-silverton-2856h32174"),
+
+  // Still answering 404 on 2026-10-31 (Search Console "Not found" report).
+  to("/homes-on-sale/details/bay-port-2860", "/floor-plans/aspire-bay-port-2860h32168"),
+  to("/homes-on-sale/details/silverton-2856", "/floor-plans/aspire-silverton-2856h32174"),
+  to("/homes-on-sale/details/dutch-aspire-1652h21151", "/floor-plans/aspire-1652h21151"),
+  to("/floor-plans/livingston", "/floor-plans/aspire-livingston-2852h42096"),
+  to("/floor-plans/3268h32052-dutch-aspire-madison", "/floor-plans/aspire-madison-3268h32052"),
+  to("/blog/the-step-by-step-guide-to-buying-your-manufactured-home-from-selection-to-move-in-day", "/guides/buyers-guide"),
   to("/homes-on-sale/details", "/homes-on-sale"),
   to("/special-plans/used", "/homes-on-sale"),
 

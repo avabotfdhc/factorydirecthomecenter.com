@@ -112,5 +112,5 @@ export const metadata = generateLocationMetadata({
 });
 
 export default function WhitleyCountyPage() {
-  return <LocationPageTemplate {...locationData} />;
+  return <LocationPageTemplate countySlug="whitley-county" {...locationData} />;
 }

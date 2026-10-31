@@ -7,6 +7,7 @@ import { trackLocationView, trackCTAClick } from "@/lib/analytics";
 import { businessAreaRef } from "@/lib/business";
 import { NoRecommendationNotice } from "@/components/NoRecommendationNotice";
 import { jsonLdScript } from "@/lib/json-ld";
+import { NeighborCounties } from "@/components/NeighborCounties";
 
 interface LocationFAQ {
   question: string;
@@ -48,11 +49,13 @@ interface LocationPageProps {
   localSections?: LocationSection[];
   faqs?: LocationFAQ[];
   nearbyTowns?: string[];
+  /** County pages only: their slug, to link the neighbouring county pages. */
+  countySlug?: string;
   facts?: LocationFact[];
   contacts?: LocationContact[];
 }
 
-export function LocationPageTemplate({ city, state, distance, description, counties, localSections, faqs, nearbyTowns, facts, contacts }: LocationPageProps) {
+export function LocationPageTemplate({ city, state, distance, description, counties, localSections, faqs, nearbyTowns, facts, contacts, countySlug }: LocationPageProps) {
   useEffect(() => {
     trackLocationView(city, state);
   }, [city, state]);
@@ -286,6 +289,7 @@ export function LocationPageTemplate({ city, state, distance, description, count
           <NoRecommendationNotice subject="both" />
         </div>
       </section>
+      {countySlug && <NeighborCounties slug={countySlug} />}
     </>
   );
 }

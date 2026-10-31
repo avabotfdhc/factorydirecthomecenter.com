@@ -90,12 +90,18 @@ export default function HomesOnSalePage() {
                   </div>
 
                   <p className="text-lg md:text-xl text-white font-semibold mb-1">{sale.name}</p>
-                  <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight">
-                    {saleAmount(sale).toUpperCase()} OFF
+                  {/* One H1 for the offer and what it covers, so the page's heading reads
+                      "25% Off Every New Champion Floor Plan in Auburn, Indiana" rather than
+                      just "25% OFF". The two visible lines keep their original sizes. */}
+                  <h1 className="mb-2">
+                    <span className="block text-4xl md:text-6xl font-bold text-white tracking-tight mb-2">
+                      {saleAmount(sale).toUpperCase()} OFF
+                    </span>
+                    <span className="block text-xl md:text-2xl text-white/90 font-semibold">
+                      {sale.allHomes ? "Every New Champion Floor Plan" : "Select New Champion Floor Plans"}
+                      <span className="sr-only"> in Auburn, Indiana</span>
+                    </span>
                   </h1>
-                  <p className="text-xl md:text-2xl text-white/90 font-semibold mb-2">
-                    {sale.allHomes ? "Every New Champion Floor Plan" : "Select New Champion Floor Plans"}
-                  </p>
                   <p className="text-base text-white/80 max-w-xl mx-auto mb-3">
                     Save thousands on your new Champion manufactured home. Factory-direct pricing
                     just got better.
