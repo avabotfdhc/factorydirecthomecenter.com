@@ -32,7 +32,7 @@ export const seriesHubs: SeriesHub[] = [
     eyebrow: "Best value single-wides",
     tagline: "Modern kitchens and efficient layouts at the lowest factory-direct price.",
     intro:
-      "PRIME is Champion's value line out of the Decatur, Indiana plant: 14- and 16-foot-wide single-section homes with the finishes buyers actually ask for, built on an 8–12 week schedule. It is the series we recommend first for a budget-conscious first home, a rental, or a lot with limited width.",
+      "Prime is Champion's value line, built in Decatur, Indiana. Every Prime home is a single-section home, 14 or 16 feet wide, with the finishes buyers ask for most. Build time is 8 to 12 weeks. It is the series we suggest first for a first home on a budget, a rental, or a narrow lot.",
     bestFor: ["First-time buyers", "Rental and farm housing", "Narrow or rural lots", "Fast turnaround"],
     highlights: [
       "14' and 16' wide single-section plans from 2 to 4 bedrooms",
@@ -50,13 +50,13 @@ export const seriesHubs: SeriesHub[] = [
     eyebrow: "Mid-range single & multi-section",
     tagline: "Step-up finishes and sectional layouts without a step-up price.",
     intro:
-      "Aspire, built in Topeka under Champion's Dutch brand as \"Dutch Aspire\", spans single-wides and multi-section homes with upgraded kitchens, primary suites and optional drywall. It is the broadest series we sell and the sweet spot for most families.",
+      "Aspire is Champion's mid-range line, built in Topeka, Indiana. Champion's Dutch brand sells it as \"Dutch Aspire\". It covers single-wides and multi-section homes. Most plans add a bigger kitchen, a real primary suite and the option of drywall walls. It is the widest range we sell, and the right fit for most families.",
     bestFor: ["Growing families", "Land-home buyers", "Buyers who want a sectional at a single-wide budget"],
     highlights: [
       "Single-section and 24'–32' wide multi-section plans",
-      "Kitchen islands, walk-in pantries and spa-style primary baths on many plans",
-      "Optional finished drywall and higher roof pitch",
-      "Flexible bedroom counts on select models",
+      "Many plans have a kitchen island, a walk-in pantry and a large primary bath",
+      "Drywall walls and a steeper roof are options",
+      "Some models let you pick the bedroom count",
     ],
     catalogSeries: ["Aspire"],
     code: "HUD",
@@ -68,7 +68,7 @@ export const seriesHubs: SeriesHub[] = [
     eyebrow: "Expansive sectional homes, built to order",
     tagline: "Kitchen islands, luxury primary suites and wide-open floor plans.",
     intro:
-      "Redman is Champion's expansive sectional line out of the Topeka plant — big kitchens with islands, luxury primary suites and generous living areas. Champion's own factory literature calls the range \"Redman Paramount\", so Redman is where the Paramount plans belong. We order these homes to spec: tell us the plan, or the width, size and bedroom count you need, and you get Champion's spec sheet and a line-item quote.",
+      "Redman is Champion's largest sectional line, built in Topeka. Think big kitchens with islands, luxury primary suites and wide living areas. Champion's own literature calls the range \"Redman Paramount\", so the Paramount plans live here. We order these homes to spec. Tell us the plan, or the width, size and bedroom count you need. You get Champion's spec sheet and a line-item quote.",
     bestFor: ["Buyers who want the most home per dollar", "Entertaining kitchens", "Acreage and land-home packages", "Anyone who was shopping a Paramount plan"],
     highlights: [
       "28' and 32' wide sectionals up to 2,305 sq ft and 4 bedrooms",
@@ -82,7 +82,7 @@ export const seriesHubs: SeriesHub[] = [
     formerly: {
       name: "Paramount",
       note:
-        "We no longer publish a Paramount series. Most Paramount plans were the same Champion model as an Aspire plan — identical model number, one home — so those pages now point at the Aspire listing for that home, and nothing about the home itself has changed. The plans that only ever came as Paramount are the sectionals listed below, and we still order every one of them.",
+        "We no longer publish a Paramount series. Most Paramount plans were the same Champion model as an Aspire plan: the same model number, one home. Those pages now point to the Aspire listing for that home. The home itself has not changed. The plans that only ever came as Paramount are the sectionals listed below. We still order every one of them.",
     },
     quoteOnRequest: [
       { name: "Stafford", detail: "28' wide, 1,813N—2,027 sq ft, 3N—4 bed / 2N—3 bath" },
@@ -100,7 +100,7 @@ export const seriesHubs: SeriesHub[] = [
     eyebrow: "Premium finishes & modular",
     tagline: "Finished drywall, higher roof pitch and IRC modular compliance.",
     intro:
-      "Dutch is Champion's premium brand from the Topeka plant. Dutch-branded homes carry finished drywall, steeper roof pitches and residential trim, and many plans are available as IRC-code modular homes that appraise and finance like a site-built house. The Dutch Aspire homes we publish are listed below.",
+      "Dutch is Champion's premium brand, built in Topeka. Dutch homes come with drywall walls, a steeper roof and house-style trim. Many plans can be built as IRC modular homes. A modular home is appraised and financed like a site-built house. The Dutch Aspire homes we publish are listed below.",
     bestFor: ["Buyers who want a site-built look and appraisal", "Conventional or FHA/VA land-home financing", "Subdivisions that require IRC modular"],
     highlights: [
       "Finished drywall interiors and residential roof pitch",

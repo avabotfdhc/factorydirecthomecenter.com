@@ -12,35 +12,35 @@ export const commonFAQs: Record<"homepage" | "financing" | "process", FAQ[]> = {
   homepage: [
     {
       question: "What is the difference between manufactured and modular homes?",
-      answer: "Manufactured homes are built to federal HUD standards on a permanent chassis, making them more affordable and faster to deliver. Modular homes are built to state IRC codes like site-built homes, placed on permanent foundations, and qualify for conventional mortgages. Both are built in factories with quality control that exceeds site-built construction.",
+      answer: "A manufactured home is built to the federal HUD code on a steel frame. That keeps the price lower and delivery faster. A modular home is built to the same state building code (the IRC) as a site-built house. It sits on a permanent foundation and can use a conventional mortgage. Both are built indoors in a factory, with inspections at every step.",
     },
     {
       question: "How much does a manufactured home cost in Indiana?",
-      answer: "Pricing depends on the size, series, and options you choose, so Factory Direct quotes every home line by line — the home, each option, and delivery priced separately with no hidden markups. Factory-direct buying keeps these among the most affordable new homes in Indiana. Call (260) 308-1457 or request a quote online for current pricing on any floor plan.",
+      answer: "The price depends on the size, the series and the options you choose. So we quote every home line by line: the home, each option and delivery, each as its own number. Nothing is hidden. Buying factory direct keeps these among the most affordable new homes in Indiana. Call (260) 308-1457 or request a quote online for current pricing on any floor plan.",
     },
     {
       question: "Do you offer financing for manufactured homes?",
-      answer: "No. We are not a lender, we do not arrange or broker financing, and we do not pull credit. You choose your own lender. What we hand you is the list of lenders our customers have used before, with no recommendation attached — chattel loans for home-only purchases, land-home packages and conventional mortgages are all routes buyers take. Cash buyers receive preferred pricing discounts.",
+      answer: "No. We are not a lender. We do not arrange or broker financing, and we do not pull credit. You choose your own lender. We hand you a list of lenders our customers have used before, with no recommendation attached. Buyers use chattel loans for the home only, land-home packages, or conventional mortgages. Cash buyers receive preferred pricing discounts.",
     },
     {
       question: "How long does it take to get a manufactured home delivered?",
-      answer: "From order to move-in typically takes 8-12 weeks. Manufacturing takes 6-8 weeks at our Topeka, IN factory just 30 miles away. Site preparation and permitting add 2-4 weeks. Because we're local, our delivery times are faster than dealers located farther from the factory.",
+      answer: "Order to move-in usually takes 8 to 12 weeks. The factory build takes 6 to 8 weeks at Champion's Indiana plants (Topeka for Aspire, Dutch and Redman; Decatur for Prime). Site prep and permits add 2 to 4 weeks. Topeka is 30 miles from our Auburn showroom, so delivery is quick.",
     },
     {
       question: "Can I put a manufactured home on my own land?",
-      answer: "Yes, manufactured homes can be placed on private land in most areas of Indiana, Ohio, and Michigan. Rural counties like Noble, DeKalb, and Whitley have zoning-friendly regulations. You or your contractor verify zoning compliance for your specific property and pull the permits — we can point you to the right county offices.",
+      answer: "Yes. In most of Indiana, Ohio and Michigan you can place a manufactured home on your own land. Rural counties such as Noble, DeKalb and Whitley are friendly to them. You or your contractor check the zoning for your parcel and pull the permits. We can point you to the right county office.",
     },
     {
       question: "What areas do you serve?",
-      answer: "We deliver manufactured and modular homes throughout Indiana, Ohio, and Michigan. Our Auburn, Indiana location is centrally located just 30 miles from the Champion factory, allowing us to serve the entire region with lower delivery costs.",
+      answer: "We deliver manufactured and modular homes across Indiana, Ohio and Michigan. Our showroom is in Auburn, Indiana, 30 miles from Champion's Topeka plant. That short trip keeps delivery costs down for the whole region.",
     },
     {
       question: "Do manufactured homes hold their value?",
-      answer: "Modern manufactured homes built to HUD or IRC codes hold value well, especially when placed on permanent foundations. Modular homes appreciate similarly to site-built homes. Key factors include location, foundation type, and home quality. Champion homes come with comprehensive warranties.",
+      answer: "Yes. A modern manufactured home holds its value well, and best on a permanent foundation. A modular home gains value much like a site-built house. Location, foundation type and the home's quality matter most. Every Champion home comes with a factory warranty.",
     },
     {
       question: "What is included in the price of a manufactured home?",
-      answer: "Our line-item pricing shows exactly what you're paying for: the home itself and delivery from the factory. Setup, installation, and site work are separate — you hire your own contractors for those, and unlike dealers who bundle everything, that's how most of our buyers save thousands. Ask us for our list of licensed and insured contractors.",
+      answer: "Our quote lists each item: the home itself and delivery from the factory. Setup, installation and site work are separate. You hire your own contractors for those, and that is how most of our buyers save money. Ask us for our list of licensed and insured contractors past customers have used.",
     },
   ],
 

@@ -56,12 +56,13 @@ export default async function FloorPlansPage() {
             Manufactured &amp; Modular <span className="italic text-[var(--color-teal-light)]">Home Floor Plans</span>
           </h1>
           <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
-            Explore {plans.length}{" "}Champion single wide, double wide, and modular floor plans
-            {" "}— factory-direct pricing from Auburn, Indiana, serving IN, OH &amp; MI. Every home
-            is built to order:{" "}
+            Browse {plans.length} Champion floor plans: single wide, double wide and modular. We sell
+            factory direct from Auburn, Indiana, and deliver across Indiana, Ohio and Michigan. Every
+            home is built to order, so you can{" "}
             <a href="/options" className="text-[var(--color-lime-on-dark)] underline underline-offset-4">
-              browse factory options &amp; selections
-            </a>.
+              pick the factory options and finishes
+            </a>{" "}
+            you want.
           </p>
         </div>
       </section>
@@ -74,10 +75,10 @@ export default async function FloorPlansPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
           <h2 className="font-serif text-2xl font-light mb-3">What a home costs</h2>
           <p className="text-[var(--color-charcoal)]/70 max-w-3xl mb-5">
-            We quote line by line — the home, delivery, setup, and site work as separate numbers,
-            so you can see every one and hire your own contractors where it saves you money. That
-            means the price depends on the plan and options you choose and on your property, which
-            is why you won&apos;t find a single headline figure on these cards.
+            We quote every home line by line. The home, delivery, setup and site work are separate
+            numbers. You see each one, and you hire your own contractors where that saves you money.
+            The price depends on the plan, the options you choose and your property. That is why
+            these cards show no single headline price.
           </p>
           <p className="text-sm text-[var(--color-charcoal)]/80">
 <a href="/single-wide-homes" className="text-[var(--color-teal)] font-semibold underline underline-offset-4">
