@@ -90,9 +90,9 @@ export function DesignerPromo({
             {heading}
           </h2>
           <p className="text-sm text-[var(--color-gray)] leading-relaxed mb-5">
-            Pick any Champion plan we sell, watch it redraw in your siding, shingle, shutter and door choices from
-            Champion&rsquo;s 2026 selection boards, and send us the design for a line-item quote. No obligation, and we
-            don&rsquo;t pull credit.
+            Pick any Champion plan we sell. Watch it redraw in the siding, shingles, shutters and door you choose
+            from Champion&rsquo;s 2026 selection boards. Then send us the design for a line-item quote. No
+            obligation, and we don&rsquo;t pull credit.
           </p>
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <DesignerCta
