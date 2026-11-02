@@ -2181,3 +2181,57 @@ full set before the canonical filter.
   "Discovered – not indexed" under `/floor-plans/` below 10; the 58 modular
   URLs will move to "Alternate page with proper canonical tag", which is the
   intended state, not an error.
+
+# AWS archive: everything the retired stack still held, copied before the account closes
+
+Kyle, 2026-11-02: *"get all data off Amazon so we don't lose anything before
+deleting the service."* The site stopped using AWS on 2026-09-11 (see "AWS is
+retired"), but the account (913524904651, us-east-1) was still running the EC2
+CMS, an RDS MySQL instance and the S3 bucket, and still billing (~$107 for
+October). Measured that day: `api.factorydirecthomescenter.com` answered 200
+and the bucket's objects were publicly readable one by one, but the bucket
+refuses listing (403 on `?list-type=2`) and the backend repo
+`kmdudgeon/fdhc-next-backend` is gone from GitHub (404).
+
+**What was archived, and where.** Supabase edge function `aws-archive`
+(verify_jwt off; gated by the `x-sync-key` header against the vault secret
+`dealertide_sync_key`, driven by `select public.aws_archive('{"step":…}')`)
+writes to the **private** storage bucket `aws-archive` and records every object
+in `public.aws_archive_files` (key, source URL, bytes, status, error):
+
+- `cms/` — the CMS's public API as JSON: `floor-plan/get-active` (72 active
+  plans, 387 KB), one `floor-plan/get-details/<slug>` per plan, `blog/get-all`
+  (8 posts) plus each post's detail, `series/get-active`, `brand/get-active`,
+  `enquiry/get-enquiry-options`. 85 files. `category/get-active` is a 404 on
+  that API, recorded as such.
+- `s3/<original key>` — every object any archived JSON, `media_migrations`
+  or the DealerTide feed (`dealertide_inventory`) points at in the bucket:
+  104 files, 21 MB (71 banners, 1 brochure PDF, the rest sales-sheet pages
+  and drawings). Keys keep their path; characters Supabase storage rejects are
+  replaced with `_` and the exact source URL is in the table.
+
+**What could NOT be reached without the account, and still needs it:**
+
+- Roughly 17 `floorplans/*.png` objects the DealerTide feed names answer 403
+  from S3 (not public, or already deleted). The failures are the `status =
+  'error'` rows in `aws_archive_files`. (Rows whose key ends in `}` are a
+  regex slip when the feed's JSON was scanned, not real objects; delete them.)
+- Any S3 object nothing ever linked to (orphans): the bucket cannot be
+  listed anonymously.
+- The MySQL database itself: inactive and deleted plans, users, settings and
+  **the enquiries (website leads) taken before 2026-09-11**. The public API
+  only serves active records; the enquiry endpoints need the CMS admin login.
+  `aws-archive` accepts `cms_user` + `cms_pass` (or a `cms_token` from a
+  previous run, to stay under the CMS's 5-logins-per-15-minutes limiter) and
+  then saves `cms/admin/*.json` for every enquiry endpoint the old site used.
+- Files on the EC2 disk (uploads, logs, the deployed app) and the RDS
+  snapshot: only an IAM key or the console can take those.
+
+Run order to finish the job once credentials exist: `select
+public.aws_archive('{"step":"cms","cms_user":"…","cms_pass":"…"}')`, read
+`net._http_response` for the report, then `'{"step":"s3"}'` again so any S3
+key the admin JSON reveals is fetched too. Both steps are idempotent and
+resumable (`next` names where a batch ran out of its 110 s budget; pass it
+back as `after`). Downloading the archive: Supabase dashboard → Storage →
+`aws-archive`, or `storage.objects where bucket_id = 'aws-archive'`.
+
