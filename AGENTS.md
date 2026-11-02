@@ -2244,8 +2244,10 @@ name — so it is code-named, like the other 42 Aspire singles, and
 `planTitle()` writes "1 Bed 1 Bath 16×36 Champion Single Wide Home, Model
 1636C11CHC1". Its model letter is `C`, not `H`/`M`: `plan-canonical.ts`,
 `plan-content.ts` and `plan-elevations.json` all key on `\d{4}[HM]…`, so a
-`C` plan has no twin, is self-canonical, and draws the representative
-elevation until the extractor is run on its sheet. Do not invent a name.
+`C` plan has no twin and is self-canonical. Its elevation was read from the
+sheet with `scripts/elevations/extract_elevations.py` (mode `l101`, scale
+error 0.4%: five 3061 windows, two doors, no porch) and merged into
+`plan-elevations.json` as its own entry. Do not invent a name.
 
 The catalogue is Supabase, so adding a plan is data, not code:
 
