@@ -2235,3 +2235,39 @@ resumable (`next` names where a batch ran out of its 110 s budget; pass it
 back as `after`). Downloading the archive: Supabase dashboard → Storage →
 `aws-archive`, or `storage.objects where bucket_id = 'aws-archive'`.
 
+# Adding a plan from a sales sheet Kyle hands over (first done 2026-11-02: Aspire 1636C11CHC1)
+
+Kyle uploaded Champion's L-101 sheet `112AP-1636C11CHC1.pdf` and asked for it on
+the site as an Aspire single-wide. The sheet is the only source: **1 bed / 1
+bath, 36'-0" x 15'-2" (a 16-wide box), 546 sq ft**, dated 09-28-23, no family
+name — so it is code-named, like the other 42 Aspire singles, and
+`planTitle()` writes "1 Bed 1 Bath 16×36 Champion Single Wide Home, Model
+1636C11CHC1". Its model letter is `C`, not `H`/`M`: `plan-canonical.ts`,
+`plan-content.ts` and `plan-elevations.json` all key on `\d{4}[HM]…`, so a
+`C` plan has no twin, is self-canonical, and draws the representative
+elevation until the extractor is run on its sheet. Do not invent a name.
+
+The catalogue is Supabase, so adding a plan is data, not code:
+
+1. **The sheet into the bucket** at `<series>/<MODEL>/plans/112AP-<MODEL>-SALES.pdf`,
+   plus its page-1 render at `<series>/<MODEL>/previews/112AP-<MODEL>-SALES.jpg`
+   (1600 px, JPEG q82 — the same picture `render-sheet-previews.mjs` would
+   make on the next build). An agent session has no network path to storage
+   except pg_net, and pasting a 400 KB base64 through SQL is not workable, so
+   the files ride through the repo: commit them under `public/seed/sheets/`,
+   merge, and once Vercel serves them call the edge function `storage-put`
+   (gated like the other sync functions) from SQL:
+   `select public.storage_put('{"bucket":"floor-plans","key":"aspire/1636C11CHC1/plans/112AP-1636C11CHC1-SALES.pdf","url":"https://factorydirecthomescenter.com/seed/sheets/112AP-1636C11CHC1-SALES.pdf"}')`.
+   It fetches only from our own host and never deletes.
+2. **Rows:** `floor_plans` (slug `aspire-<model lower>`, name = model, title
+   "<MODEL> - 1 Bed 1 Bath Single Wide | Champion Aspire", series, model_number,
+   sqft, beds, baths, width/length as plain feet strings, home_type "Single
+   Wide", brand "Champion Homes", `brochure_url` = the sheet key,
+   `banner_image` = the preview key, is_active true), one
+   `floor_plan_documents` row (`kind = 'sales-sheet'`, title "Sales sheet") and
+   one `floor_plan_images` row (`kind = 'floorplan'`, the preview). Every
+   catalogue read is cached ≤ 10 minutes, so the page, grid, sitemap and Ava
+   pick it up on their own.
+3. Run `npm run image-audit` on the next build (see "Every catalogue image gets
+   checked"), and the elevation extractor on the sheet when convenient.
+
