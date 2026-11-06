@@ -9,8 +9,18 @@ import { getSaleStatus } from "@/lib/sale";
 
 const BASE_URL = "https://factorydirecthomescenter.com";
 
-// Refresh periodically so newly-published CMS homes/posts enter the sitemap.
-export const revalidate = 3600;
+// Rendered on every request, not ISR. The route carried `revalidate = 3600`
+// until 2026-11-06, and Vercel never honoured it for this prerendered route
+// handler: the build-time copy was served as a CDN HIT for four days (age
+// 107,000 s against a 300 s window — the catalogue fetch's own `revalidate`
+// had lowered the route's), with no function invocation, while page routes
+// under the same setting went STALE and regenerated on schedule. A plan added
+// to the CMS on 2026-11-02 reached /floor-plans in 15 minutes and the sitemap
+// only on the next deploy. On demand, the file is always what the catalogue
+// says; the cost is bounded by the catalogue fetch's own 5-minute data cache
+// (`rest()` in supabase-content.ts), and crawlers fetch a sitemap a few times
+// a day at most.
+export const dynamic = "force-dynamic";
 
 // `lastModified` is only sent when we actually know when the content changed:
 // a guide's `updated` date, a post's publish date, or the CMS row's
@@ -33,8 +43,9 @@ const SALE_PAGES = new Set(["/", "/homes-on-sale", "/homes-on-sale/clearance"]);
  * The floor plans the sitemap may list. Strict on purpose: a CMS failure must
  * not be papered over with the repo copy here (its slugs redirect), and a
  * collapsed result must not be published — see src/lib/sitemap-catalogue.ts
- * for what happens instead at runtime (throw → ISR keeps the last good file)
- * and at build time (omit the section, log, let revalidation repair it).
+ * for what happens instead: throw, so the request answers 500 ("couldn't
+ * fetch", which a crawler retries) rather than a wrong file. The build-time
+ * branch there only matters if this route is ever prerendered again.
  */
 async function sitemapPlans(): Promise<ApiFloorPlan[]> {
   const cmsConfigured = await catalogueCmsConfigured();

@@ -12,15 +12,18 @@
 // So the sitemap asks for the catalogue strictly (`requireCms`) and this
 // helper decides what to do when the answer is not trustworthy:
 //
-//   - at runtime, THROW. A metadata route that throws during revalidation
-//     keeps serving the last good copy (ISR stale-on-error); with no copy at
-//     all it answers 500, which Google records as "couldn't fetch" and retries
-//     — nothing is de-indexed and nothing misleading is published. An error is
-//     not cached, so the next request after the CMS recovers repairs it.
+//   - at runtime, THROW. The route renders on demand (src/app/sitemap.ts says
+//     why ISR was abandoned on 2026-11-06), so a throw answers that request
+//     500, which Google records as "couldn't fetch" and retries — nothing is
+//     de-indexed and nothing misleading is published. Transient blips rarely
+//     get this far: `rest()` retries, Next's data cache keeps the last fetch
+//     for five minutes, and `recallGood` serves the instance's last good
+//     response for up to six hours.
 //   - during `next build`, publish the sitemap WITHOUT the floor-plan section.
 //     Failing the build on a CMS blip would block every deploy (Supabase
-//     answered 404 for two days in September 2026); the hourly revalidation
-//     restores the section as soon as the CMS answers. Logged loudly.
+//     answered 404 for two days in September 2026). The route is no longer
+//     prerendered, so this branch is dormant; it stays so a future prerender
+//     cannot block a deploy either. Logged loudly.
 //
 // A CMS that answers 200 with far too few rows (an RLS change, a bulk
 // deactivation, a wrong project) is treated the same as a failure, via the

@@ -3,10 +3,15 @@
 // When the CMS cannot be read, pages fall back to the repo-published copy —
 // 77 plans, 44 of them `dutch-aspire-*` slugs that now 301. For a page that
 // is a graceful substitute; in the sitemap it is a lie: two hundred live URLs
-// gone and forty redirects listed, cached for the ISR hour. The sitemap reads
-// the catalogue strictly and, when the read fails or collapses, throws at
-// runtime (ISR keeps the last good file) or omits the section at build time
-// (so a CMS blip cannot block a deploy). See src/lib/sitemap-catalogue.ts.
+// gone and forty redirects listed. The sitemap reads the catalogue strictly
+// and, when the read fails or collapses, throws at runtime (a 500 a crawler
+// retries, never a wrong file) or omits the section at build time (so a CMS
+// blip cannot block a deploy). See src/lib/sitemap-catalogue.ts.
+//
+// The route also renders on demand rather than under ISR: Vercel served the
+// prerendered route handler as a CDN HIT for four days past its revalidate
+// window with no function call (2026-11-06), so a plan added to the CMS was
+// on /floor-plans in minutes and in the sitemap only after the next deploy.
 //
 //   npm test
 
@@ -34,7 +39,7 @@ test("a repo-only site (no CMS configured) is never 'degraded'", () => {
   assert.equal(out, degraded);
 });
 
-test("a failed CMS read throws at runtime so ISR keeps the last good sitemap", () => {
+test("a failed CMS read throws at runtime so no wrong sitemap is published", () => {
   assert.throws(
     () =>
       planEntriesForSitemap(
@@ -95,6 +100,12 @@ test("sitemap.ts reads the catalogue strictly and routes it through the guard", 
   assert.ok(src.includes("getApiFloorPlans({ requireCms: true })"), "sitemap asks for a strict CMS read");
   assert.ok(src.includes("planEntriesForSitemap("), "sitemap routes plans through the guard");
   assert.ok(!/\bgetApiFloorPlans\(\)/.test(src), "no lenient catalogue read remains in sitemap.ts");
+});
+
+test("sitemap.ts renders on demand: Vercel never revalidated the prerendered route handler", () => {
+  const src = readFileSync("src/app/sitemap.ts", "utf8").replace(/\/\/.*$/gm, "");
+  assert.match(src, /export const dynamic = "force-dynamic";/, "the sitemap is rendered per request");
+  assert.doesNotMatch(src, /export const revalidate\b/, "no ISR window: Vercel served the build-time copy for days past it");
 });
 
 test("getApiFloorPlans still falls back silently for pages (requireCms defaults off)", () => {
