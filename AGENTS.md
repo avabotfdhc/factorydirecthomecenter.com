@@ -1901,16 +1901,17 @@ What changed (`src/lib/analytics.tsx`, `src/lib/ga-consent.ts`):
 `src/lib/sitemap-catalogue.ts`). `getSupabaseFloorPlans()` swallows a CMS failure
 and pages fall back to the repo copy — right for a page, wrong for the sitemap:
 the repo copy is 77 plans, 44 of them `dutch-aspire-*` slugs that 301, and the
-~214 live pages would vanish from the file for the ISR hour. The sitemap now
+~214 live pages would vanish from the file. The sitemap now
 reads with `getApiFloorPlans({ requireCms: true })` (the strict path rethrows;
 pages keep the lenient default) and `planEntriesForSitemap()` decides: a failed
 read, or fewer than `MIN_CMS_SITEMAP_PLANS` (120, between repo-only 77 and live
-~214) merged plans, **throws at runtime** so ISR keeps serving the last good
-file (an error is never cached; the next request after recovery repairs it) and
-**omits the floor-plan section at build time** so a CMS blip cannot block a
-deploy. `tests/sitemap-guard.test.ts` pins all of it, including that the
-repo-only count stays below the floor. Blog posts are repo-authored and were
-never at risk.
+~214) merged plans, **throws at runtime** (a 500 that a crawler retries, never
+a wrong file) and **omits the floor-plan section at build time** so a CMS blip
+cannot block a deploy. `tests/sitemap-guard.test.ts` pins all of it, including
+that the repo-only count stays below the floor. Blog posts are repo-authored
+and were never at risk. (This entry used to say the throw let "ISR keep serving
+the last good file"; the route is rendered on demand since 2026-11-06 — see
+"The sitemap renders on demand" below for why.)
 
 **Verified, not changed:** the Aug 4 audit's hero CTA to `http://3.216.190.16`
 came from the retired AWS CMS `content` table; the hero is static in
@@ -2269,7 +2270,46 @@ The catalogue is Supabase, so adding a plan is data, not code:
    `floor_plan_documents` row (`kind = 'sales-sheet'`, title "Sales sheet") and
    one `floor_plan_images` row (`kind = 'floorplan'`, the preview). Every
    catalogue read is cached ≤ 10 minutes, so the page, grid, sitemap and Ava
-   pick it up on their own.
+   pick it up on their own (the sitemap only since 2026-11-06 — see the next
+   section; before that it needed a deploy).
 3. Run `npm run image-audit` on the next build (see "Every catalogue image gets
    checked"), and the elevation extractor on the sheet when convenient.
 
+# The sitemap renders on demand: Vercel never revalidated it (2026-11-06)
+
+The 1636C11CHC1 rows went into Supabase on 2026-11-02 at 18:28 UTC, four
+minutes after that day's production build. `/floor-plans` (ISR, 5 min) listed
+the home within fifteen minutes. `sitemap.xml` still did not list it on
+2026-11-06 — four days, against a route that declared `revalidate = 3600` and
+that Vercel's build table showed as `○ /sitemap.xml 5m 1y` (the catalogue
+fetch's `next: { revalidate: 300 }` lowers the route's window to five minutes).
+
+Measured before touching anything:
+
+- `x-vercel-cache: HIT`, `age: 107093` (29.7 h) on the sitemap, three fetches
+  ten minutes apart, a `?probe=1` query string included — none reached the
+  function. `/series/dutch`, the same 5-minute ISR, answered `STALE` at
+  `age: 746` and regenerated, as ISR should.
+- A redeploy of the same commit (build-time render reads the database) put
+  the plan in the file at once: 158 plan URLs. Seven minutes later the sitemap
+  was again `HIT` at `age: 419`, past the window, with no regeneration.
+- No runtime error on the route, so this is not the guard throwing and ISR
+  keeping a stale copy; the CDN simply never revalidates this prerendered
+  route handler. Next itself emits it correctly (`.next/prerender-manifest.json`
+  carries `initialRevalidateSeconds` for `/sitemap.xml`); the difference is
+  on Vercel's side, and only for the metadata route — pages regenerate.
+- Vercel's runtime-log tool does not attribute route-handler invocations to a
+  `requestPath` (the one certain invocation, the post-deploy MISS, is absent
+  too), so "no logs for /sitemap.xml" proves nothing either way. The cache
+  headers are the measurement.
+
+`src/app/sitemap.ts` is therefore `dynamic = "force-dynamic"`: every fetch
+renders from the catalogue, which `rest()` caches for five minutes and
+`recallGood` backs for six hours, so the database sees at most one read per
+five minutes however often crawlers ask. The degraded-catalogue guard is
+unchanged except in consequence: a throw now answers that request 500 (Google
+records "couldn't fetch" and retries) instead of leaving a stale copy in place
+— there is no copy to leave. `tests/sitemap-guard.test.ts` pins the setting
+and fails if `revalidate` returns to the route. If the sitemap ever needs to
+be cached again, verify on production with the headers above — a `STALE`
+past the window — before trusting the build table.
