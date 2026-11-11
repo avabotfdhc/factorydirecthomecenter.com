@@ -79,7 +79,7 @@ export function DesignerPromo({
               loading="lazy"
               className="w-full h-auto block rounded-lg border border-[var(--color-charcoal)]/10 bg-white"
             />
-            <span className="block mt-2 text-[11px] text-[var(--color-charcoal)]/65">
+            <span className="block mt-2 text-[11px] text-[var(--color-charcoal)]/80">
               {capital(homeLabel(example))}, drawn in {siding.label}. Illustration; colors approximate.
             </span>
           </DesignerCta>

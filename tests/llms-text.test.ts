@@ -55,3 +55,17 @@ test("every linked page is a site URL", () => {
   const foreign = links.filter((l) => !l.startsWith("https://factorydirecthomescenter.com") && !l.startsWith("https://www.google.com/maps") && !l.startsWith("https://g.co") && !l.startsWith("https://maps.app.goo.gl") && !l.startsWith("https://www.google.com/"));
   assert.deepEqual(foreign, [], "only our own pages and the Google listing/directions");
 });
+
+test("pages are Markdown links, the format llms.txt readers and Lighthouse expect", () => {
+  // Lighthouse 2026-11-11: "File does not appear to contain any links" while
+  // every URL was bare text in parentheses.
+  const links = [...text.matchAll(/\[[^\]\n]+\]\((https:\/\/[^\s)]+)\)/g)].map((m) => m[1]);
+  assert.ok(links.length >= 15, `only ${links.length} Markdown links`);
+  for (const section of ["## Key pages", "## Guides"]) {
+    const body = text.split(section)[1].split("\n## ")[0];
+    const items = body.split("\n").filter((l) => l.startsWith("- "));
+    assert.ok(items.length > 0, `${section} lists nothing`);
+    for (const l of items) assert.match(l, /^- \[[^\]]+\]\(https:\/\/factorydirecthomescenter\.com\/[^)]*\)/, l);
+  }
+  assert.ok(text.startsWith("# "), "one H1 first");
+});

@@ -101,7 +101,7 @@ export function DesignThisHome({ plan, className = "" }: { plan: DesignerPlanRef
           )}
 
           {elevation && (
-            <p className="text-[11px] leading-relaxed text-[var(--color-charcoal)]/65">
+            <p className="text-[11px] leading-relaxed text-[var(--color-charcoal)]/80">
               {elevation.src === "sheet"
                 ? "Illustration drawn from Champion’s floor plan sheet for this model: windows and doors sit where the plan puts them."
                 : "Illustration: we don’t have this model’s drawing on file, so window placement is typical for a home this size."}{" "}
