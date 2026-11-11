@@ -16,7 +16,10 @@
 //   - lenders are named all or none (none here; /financing names all ten);
 //   - the address is spelled exactly as business.ts spells it;
 //   - the service area is BUSINESS.states, nothing wider;
-//   - "factory direct" is explained in factory-direct.ts's words only.
+//   - "factory direct" is explained in factory-direct.ts's words only;
+//   - every page is a Markdown link, `[title](url)`, the llms.txt format.
+//     Lighthouse (2026-11-11) failed the file with "does not appear to
+//     contain any links" while the URLs were bare text in parentheses.
 
 import { BUSINESS, SITE_URL, DIRECTIONS_URL, GOOGLE_LISTING_URL } from "./business";
 import { seriesHubs } from "./series-hubs";
@@ -63,9 +66,9 @@ export function buildLlmsText(): string {
     .map((url) => pages.find((p) => p.url === url))
     .filter((p): p is NonNullable<typeof p> => !!p);
 
-  const series = seriesHubs.map((h) => `- ${h.fullName} (${SITE_URL}/series/${h.slug}): ${h.tagline}`);
+  const series = seriesHubs.map((h) => `- [${h.fullName}](${SITE_URL}/series/${h.slug}): ${h.tagline}`);
 
-  const guideLines = guides.map((g) => `- ${g.title} (${SITE_URL}${g.href})`);
+  const guideLines = guides.map((g) => `- [${g.title}](${SITE_URL}${g.href})`);
 
   return [
     `# ${BUSINESS.name}`,
@@ -106,17 +109,17 @@ export function buildLlmsText(): string {
     "## Pricing",
     "",
     "Prices are quoted per home and configuration, line by line. We do not publish home prices on the site; request a quote on any floor plan " +
-      `or call ${BUSINESS.phoneDisplay}. The pricing guide (${SITE_URL}/guides/pricing) explains what a quote includes.`,
+      `or call ${BUSINESS.phoneDisplay}. The [pricing guide](${SITE_URL}/guides/pricing) explains what a quote includes.`,
     "",
     "## Site work, setup and financing",
     "",
     CONTRACTOR_NO_RECOMMENDATION,
     "",
-    LENDER_NO_RECOMMENDATION + ` The full list of ${LENDERS.length} lenders is at ${SITE_URL}/financing.`,
+    LENDER_NO_RECOMMENDATION + ` The full list of ${LENDERS.length} lenders is on the [financing page](${SITE_URL}/financing).`,
     "",
     "## Key pages",
     "",
-    ...keyPages.map((p) => `- ${p.title} (${SITE_URL}${p.url}): ${p.description}`),
+    ...keyPages.map((p) => `- [${p.title}](${SITE_URL}${p.url}): ${p.description}`),
     "",
     "## Guides",
     "",
@@ -124,8 +127,8 @@ export function buildLlmsText(): string {
     "",
     "## Also",
     "",
-    `- Sitemap: ${SITE_URL}/sitemap.xml`,
-    `- Blog feed: ${SITE_URL}/blog/feed.xml`,
+    `- [Sitemap](${SITE_URL}/sitemap.xml)`,
+    `- [Blog feed](${SITE_URL}/blog/feed.xml)`,
     `- Site search: ${SITE_URL}/search?q=`,
     "",
   ].join("\n");
