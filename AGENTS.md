@@ -2313,3 +2313,30 @@ records "couldn't fetch" and retries) instead of leaving a stale copy in place
 and fails if `revalidate` returns to the route. If the sitemap ever needs to
 be cached again, verify on production with the headers above — a `STALE`
 past the window — before trusting the build table.
+
+# Vercel missed two merges, and a watchdog now says so (2026-11-12)
+
+From 2026-11-07 to 2026-11-12 Vercel created **no deployment at all** for two
+merges to `main` (#209 on 11-11, #210 on 11-12) or for their PR branches: no
+build, no error, no status on the commit, on **both** Vercel projects, which sit
+on different teams. Production stayed on #208 for five days and nothing said so.
+A manual production deployment of `main` (Vercel MCP `create_deployment` with a
+`gitSource`) brought it current on 11-12; its first attempt failed in the build
+fetching Google Fonts ("Can't resolve '@vercel/turbopack-next/internal/font/
+google/font'") and a plain retry passed. Minutes later the integration built
+#211's preview by itself. **Cause not identified**: both projects missing the
+same pushes points at the GitHub App or Vercel's side rather than a project
+setting, and two public reports describe the same symptom in the same weeks,
+unresolved. Do not write a cause down as fact.
+
+- `.github/workflows/deploy-watchdog.yml` runs on every push to `main`, waits
+  for the `Vercel – factorydirecthomescenter` status on that commit, and goes
+  red when it never appears or ends in failure. With the repo secret
+  `VERCEL_DEPLOY_HOOK_URL` set (Vercel → Settings → Git → Deploy Hooks, branch
+  `main`) it also POSTs the hook once, which rebuilds `main` without the
+  GitHub integration. The hook URL is a credential; never commit it.
+- **After merging, check the live site, not the merge.** `robots.txt`, a
+  changed title, `/api/health`: a merged PR proved nothing for five days.
+- The second project (`factorydirecthomescenter-com`) is not watched: it
+  serves no domain.
+
