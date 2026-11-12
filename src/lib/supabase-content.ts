@@ -159,6 +159,10 @@ function toFloorPlan(r: FloorPlanRow): ApiFloorPlan {
     widthFt: widthFtFrom(r.width, `${r.slug} ${r.title || ""} ${r.model_number || ""}`),
     ...(parseInt(String(r.length || ""), 10) > 0 ? { lengthFt: parseInt(String(r.length), 10) } : {}),
     ...(r.model_number ? { modelNumber: String(r.model_number) } : {}),
+    // The list read carries the tour too: without it only the repo-published
+    // plans (all Prime) looked like they had one, so the homepage's featured
+    // set was four Prime homes and no Aspire card showed its 3D-tour badge.
+    ...(r.virtual_tour ? { virtualTour: String(r.virtual_tour) } : {}),
     floorPlanImage: drawingFrom(r.floor_plan_images),
     ...(r.updated_at ? { updatedAt: String(r.updated_at) } : {}),
   };
@@ -178,6 +182,7 @@ export async function getSupabaseFloorPlans(
   const select = [
     "slug", "name", "title", "price", "sqft", "beds", "baths",
     "home_type", "series", "brand", "model_number", "width", "length", "banner_image", "updated_at",
+    "virtual_tour",
     "floor_plan_images(path,kind,sort_order)",
   ].join(",");
   let rows: FloorPlanRow[];
