@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
 import Image from "next/image";
-import { getFeaturedHomes, type ApiFloorPlan } from "@/lib/api-content";
+import { getApiFloorPlans, getFeaturedHomes, type ApiFloorPlan } from "@/lib/api-content";
 import { FeaturedHomes } from "@/components/FeaturedHomes";
 import { DesignerPromo, pickDesignerExample } from "@/components/DesignerPromo";
 import { HomeSearchBar } from "@/components/HomeSearchBar";
@@ -90,6 +90,7 @@ const HOME_FAQS: FaqItem[] = [
 
 export default async function Home() {
   const featuredHomes: ApiFloorPlan[] = await getFeaturedHomes();
+  const planCount = (await getApiFloorPlans()).length;
 
   return (
     <>
@@ -112,8 +113,8 @@ export default async function Home() {
             </H2>
             <div className="w-16 h-1 bg-[var(--color-lime)] mx-auto" />
             <p className="text-base text-[var(--color-gray)] mt-4 max-w-2xl mx-auto">
-              These are our factory select homes: Champion floor plans we hand-pick from the Topeka plant for
-              layout, value, and popularity with Indiana buyers. Every home ships factory direct with line-item pricing.
+              Our factory select homes: Champion floor plans with full photo sets and, where Champion offers one,
+              a 3D walk-through tour. Every home is built to order, ships factory direct and is quoted line by line.
             </p>
           </div>
 
@@ -206,7 +207,7 @@ export default async function Home() {
       {/* Options & upgrades: what a base price includes vs. what the photos show */}
       <OptionsAndUpgradesSection />
 
-      <AnimatedHomeSections />
+      <AnimatedHomeSections planCount={planCount} />
 
       {/* Areas we serve: the homepage is the strongest page on the site and,
           until 2026-10-13, linked none of the town pages. See

@@ -6,7 +6,7 @@ const SITE = "https://factorydirecthomescenter.com";
 export const metadata: Metadata = {
   title: "Champion Factory Options & Selections",
   description:
-    "Browse Champion's factory options for your new manufactured or modular home: interior and exterior selections, fireplaces, kitchen islands, optional cabinets, exterior styles, and full series brochures — from Factory Direct Homes Center in Auburn, Indiana.",
+    "Champion's 2026 factory options: interior and exterior selections, fireplaces, kitchen islands, cabinets and exterior styles, plus series brochures to download.",
   alternates: { canonical: `${SITE}/options` },
   openGraph: {
     title: "Factory Options & Selections — Champion Homes | Factory Direct Homes Center",
