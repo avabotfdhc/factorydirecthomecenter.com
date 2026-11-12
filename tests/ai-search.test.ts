@@ -129,3 +129,11 @@ test("an abbreviation's full stop does not end a description", () => {
   });
   assert.ok(!/\bvs\.$/.test(String(meta.description)), String(meta.description));
 });
+
+test("the catalogue list read carries each plan's 3D tour to the featured picker", () => {
+  const src = readFileSync(resolve(root, "src/lib/supabase-content.ts"), "utf8");
+  const list = src.slice(src.indexOf("export async function getSupabaseFloorPlans"));
+  assert.ok(/"virtual_tour"/.test(list.slice(0, 700)), "the list query selects virtual_tour");
+  const mapper = src.slice(src.indexOf("function toFloorPlan"), src.indexOf("function drawingFrom"));
+  assert.ok(/virtualTour: String\(r\.virtual_tour\)/.test(mapper), "toFloorPlan maps it");
+});
