@@ -14,6 +14,7 @@
     "lender-sheet": "tsx scripts/build-lender-sheet.ts",
     "image-audit": "tsx scripts/audit-image-alt.mts",
     "citation-nap": "tsx scripts/citation-nap.ts",
+    "indexnow": "node scripts/indexnow.mjs",
     "dealertide-replay": "tsx scripts/replay-dealertide-leads.ts"
   },
   "dependencies": {

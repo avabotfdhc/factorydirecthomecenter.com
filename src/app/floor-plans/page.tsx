@@ -14,7 +14,7 @@ const SITE = "https://factorydirecthomescenter.com";
 export const metadata: Metadata = {
   title: "Champion Floor Plans & Home Models",
   description:
-    "Browse Champion single wide, double wide, and modular home floor plans with factory-direct pricing from Factory Direct Homes Center in Auburn, Indiana. Serving Indiana, Ohio, and Michigan.",
+    "Every Champion single wide, double wide and modular floor plan we sell, with sizes, photos and drawings. Auburn, IN showroom serving Indiana, Ohio and Michigan.",
   alternates: { canonical: `${SITE}/floor-plans` },
   openGraph: {
     title: "Champion Floor Plans & Home Models | Factory Direct Homes Center",

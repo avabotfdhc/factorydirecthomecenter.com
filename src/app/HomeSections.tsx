@@ -74,7 +74,14 @@ const checkable = [
 
 // Client islands for the homepage: only the sections that animate or track
 // interactions hydrate. Everything else is server-rendered in app/page.tsx.
-export function AnimatedHomeSections() {
+export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
+  // The "Floor Plans" stat read a hard-coded "260+" until 2026-11-11 while the
+  // sale page said 147 and the catalogue held ~215: three answers to "how many
+  // homes do they sell", which is exactly the kind of fact an answer engine
+  // repeats. It is counted from the live catalogue now and rounded down to the
+  // ten; a degraded read (under 120, see sitemap-catalogue.ts) falls back to
+  // the price sheet's 147 models, rounded the same way.
+  const shownPlans = planCount && planCount >= 120 ? Math.floor(planCount / 10) * 10 : 140;
   // Which home type's pricing modal is open ("" = none).
 
   return (
@@ -186,7 +193,7 @@ export function AnimatedHomeSections() {
           <StaggerContainer staggerDelay={150} className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
             <FadeIn direction="up" delay={0}>
               <div className="font-serif text-3xl lg:text-4xl font-bold">
-                <AnimatedCounter end={260} suffix="+" />
+                <AnimatedCounter end={shownPlans} suffix="+" />
               </div>
               <div className="text-sm text-white/70 mt-1">Floor Plans</div>
             </FadeIn>

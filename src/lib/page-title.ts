@@ -80,7 +80,21 @@ export function planTitle(
       `${layout}, ${code}`,
     ]);
   }
+  // A family comes in several lengths (Woodward 28×60, 28×64, 28×68), and 22
+  // families shared one title across them until 2026-11-11 — measured on the
+  // live site, 62 plan pages with a title another page also had. The box size
+  // is what tells them apart, so it rides next to the name and is the last
+  // thing dropped.
+  const size = opts.widthFt && opts.lengthFt ? ` ${opts.widthFt}\u00d7${opts.lengthFt}` : "";
   return fitTitle([
+    ...(size
+      ? [
+          `${name}${size} — ${layout} Champion ${typeLabel}, Auburn IN`,
+          `${name}${size} — ${layout} Champion ${typeLabel}`,
+          `${name}${size} — ${layout} ${typeLabel}`,
+          `${name}${size} — ${layout}`,
+        ]
+      : []),
     `${name} — ${layout} Champion ${typeLabel}, Auburn IN`,
     `${name} — ${layout} Champion ${typeLabel}`,
     `${name} — ${layout} ${typeLabel}`,
@@ -121,7 +135,8 @@ export function fitDescription(text: string, max = DESCRIPTION_MAX): string {
   const clean = text.replace(/\s+/g, " ").trim();
   if (clean.length <= max) return clean;
   let whole = "";
-  for (const sentence of clean.split(/(?<=[.!?])\s+/)) {
+  // "HUD vs. IRC" is one sentence: an abbreviation's full stop is not an end.
+  for (const sentence of clean.split(/(?<!\b(?:vs|etc|approx|St|Mt|Dr|Inc|Co)\.)(?<=[.!?])\s+/)) {
     const next = whole ? `${whole} ${sentence}` : sentence;
     if (next.length > max) break;
     whole = next;

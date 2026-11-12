@@ -1,0 +1,102 @@
+name: deploy-watchdog
+
+# Every push to main is supposed to produce a Vercel production deployment.
+# From 2026-11-07 to 2026-11-12 it did not: two merges (#209, #210) reached
+# main and Vercel created no deployment for either. No error, no failed build,
+# no status on the commit, so nothing said the live site was five days behind.
+# Then, on the first manual deploy, the build failed once fetching Google Fonts
+# and passed on a plain retry.
+#
+# This job watches for both. After a push to main it waits for Vercel's own
+# status on that commit ("Vercel – factorydirecthomescenter"):
+#   - success                -> nothing to do
+#   - never appears, or ends in failure/error
+#       -> POST the project's Deploy Hook once (repo secret
+#          VERCEL_DEPLOY_HOOK_URL), which builds the head of main without the
+#          GitHub integration, and FAIL the job so the miss is visible
+#   - same, and the secret is not set -> fail with the steps to add it
+# A red run here means "Vercel did not deploy this commit on its own".
+# GitHub emails the repo owner on a failed workflow run.
+#
+# The hook URL is a credential (anyone holding it can trigger a build), which
+# is why it is a secret and never in the repo. Create it in Vercel: project
+# factorydirecthomescenter -> Settings -> Git -> Deploy Hooks -> branch main.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  statuses: read
+
+concurrency:
+  group: deploy-watchdog
+  cancel-in-progress: true
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SHA: ${{ github.sha }}
+      REPO: ${{ github.repository }}
+      HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+      # The production project's status context. The second Vercel project
+      # (factorydirecthomescenter-com) serves no domain and is not watched.
+      CONTEXT_RE: "^Vercel . factorydirecthomescenter$"
+    steps:
+      - name: Wait for Vercel's status on this commit
+        id: wait
+        run: |
+          state() {
+            gh api "repos/$REPO/commits/$SHA/status" \
+              --jq "[.statuses[] | select(.context | test(\"$CONTEXT_RE\"))][0].state // \"missing\""
+          }
+          # Vercel posts "pending" within seconds of a push it has seen.
+          # Four minutes with no status at all means it never saw the push.
+          s=missing
+          for i in $(seq 1 16); do
+            s=$(state); [ "$s" != "missing" ] && break; sleep 15
+          done
+          # A build runs two to six minutes; allow fifteen.
+          if [ "$s" = "pending" ]; then
+            for i in $(seq 1 60); do
+              s=$(state); [ "$s" != "pending" ] && break; sleep 15
+            done
+          fi
+          echo "Vercel status for $SHA: $s"
+          echo "state=$s" >> "$GITHUB_OUTPUT"
+
+      - name: Deployed
+        if: steps.wait.outputs.state == 'success'
+        run: echo "Vercel deployed ${SHA::7} on its own." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Vercel did not deploy this commit
+        if: steps.wait.outputs.state != 'success'
+        run: |
+          {
+            echo "### Vercel did not deploy ${SHA::7} on its own"
+            echo
+            echo "Status on the commit: \`${{ steps.wait.outputs.state }}\`"
+            echo "(\`missing\` = Vercel never saw the push; \`failure\`/\`error\` = the build broke; \`pending\` = still building after 15 minutes)."
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -z "$HOOK" ]; then
+            {
+              echo "No deploy hook is configured, so nothing was retried. **The live site is behind main.**"
+              echo
+              echo "1. Vercel -> factorydirecthomescenter -> Deployments -> Create Deployment -> \`main\`."
+              echo "2. To let this job retry by itself next time: Vercel -> Settings -> Git -> Deploy Hooks, create one for \`main\`, and save its URL as the repo secret \`VERCEL_DEPLOY_HOOK_URL\`."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          code=$(curl -sS -o /tmp/hook.json -w "%{http_code}" -X POST "$HOOK")
+          if [ "$code" = "200" ] || [ "$code" = "201" ]; then
+            echo "Triggered a production build of main through the deploy hook (HTTP $code). Check Vercel -> Deployments in a few minutes." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "The deploy hook answered HTTP $code, so no build was started. **The live site is behind main.** Deploy by hand from Vercel -> Deployments." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          # Red either way: the integration missed a push and someone should know.
+          exit 1
