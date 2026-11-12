@@ -73,7 +73,7 @@ const lineItems = [
   },
   {
     title: "Delivery",
-    description: "Transporting your home from Decatur, IN to your site. Depends on distance, home size, and route complexity.",
+    description: "Transporting your home from the Champion plant that builds it (Topeka, IN for Aspire and Redman; Decatur, IN for Prime) to your site. Depends on distance, home size, and route complexity.",
     example: "$2,500 - $8,000",
     details: ["Distance-based pricing", "Oversize load permits included", "Escort vehicles if required", "Insurance during transport"],
   },

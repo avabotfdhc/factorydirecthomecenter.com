@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { businessRef, SITE_URL, ownerJsonLd } from "./business";
 import { jsonLdScript } from "@/lib/json-ld";
-import { fitTitle } from "@/lib/page-title";
+import { fitDescription, fitTitle } from "@/lib/page-title";
 
 interface SEOConfig {
   title: string;
@@ -42,7 +42,7 @@ function absUrl(path: string): string {
 export function generateMetadata(config: SEOConfig): Metadata {
   const {
     title,
-    description,
+    description: fullDescription,
     keywords = [],
     image = "/images/hero-home.jpg",
     // Describes /images/hero-home.jpg, the default share image: a new
@@ -60,6 +60,11 @@ export function generateMetadata(config: SEOConfig): Metadata {
     noindex = false,
   } = config;
 
+  // Search engines and answer engines show ~160 characters of a description.
+  // 75 pages ran 161–256 on 2026-11-11 (every series hub, /financing, /about,
+  // most location pages), so the snippet ended mid-sentence. Fitted here, once,
+  // for the meta, Open Graph and Twitter descriptions alike.
+  const description = fitDescription(fullDescription);
   const fullUrl = `https://factorydirecthomescenter.com${url}`;
   const canonicalUrl = canonical ? `https://factorydirecthomescenter.com${canonical}` : fullUrl;
   const fullImage = absUrl(image);

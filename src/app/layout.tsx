@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | Factory Direct Homes",
   },
   description:
-    "Factory-direct pricing on new Champion manufactured and modular homes. Single wides, double wides & modular homes. Serving Indiana, Michigan & Ohio from Auburn, IN. Contact us for pricing.",
+    "Authorized Champion Homes dealer in Auburn, Indiana. New manufactured, mobile and modular homes, quoted line by line, for Indiana, Ohio and Michigan.",
   keywords: [
     "manufactured homes",
     "modular homes",

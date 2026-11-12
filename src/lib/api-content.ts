@@ -244,10 +244,8 @@ export async function getApiFloorPlans(
  * with a real photo and plausible price first. Shared by the server-rendered
  * homepage and the /api/homes/featured route. */
 export async function getFeaturedHomes(): Promise<ApiFloorPlan[]> {
-  const priceValue = (raw: string) => Number(String(raw).replace(/[^0-9.]/g, "")) || 0;
-  const all = await getApiFloorPlans();
-  const complete = all.filter((h) => h.image && priceValue(h.price) >= 10000);
-  return (complete.length >= 4 ? complete : all.filter((h) => h.image)).slice(0, 4);
+  const { pickFeaturedHomes } = await import("./featured-pick");
+  return pickFeaturedHomes(await getApiFloorPlans());
 }
 
 export interface ApiFloorPlanDetail extends ApiFloorPlan {

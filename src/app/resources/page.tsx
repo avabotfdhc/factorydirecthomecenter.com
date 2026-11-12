@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Floor Plans & Buyer Guide Downloads",
   description:
-    "Download 2026 Champion Homes floor plans, sales options, decor guide, Aspire literature, and installation manuals. All resources from Factory Direct Homes Center in Auburn, IN.",
+    "Download Champion's 2026 floor plans, sales options, decor guide, Aspire literature and installation manuals from Factory Direct Homes Center in Auburn, IN.",
   alternates: {
     canonical: "/resources",
   },
