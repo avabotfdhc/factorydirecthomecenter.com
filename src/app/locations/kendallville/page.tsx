@@ -1,11 +1,22 @@
-import Link from "next/link";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
+
+// Facts checked against public sources on 2026-11-17: Noble County Building
+// Department (Albion, Avilla, Kendallville, Ligonier and Rome City issue their
+// own building permits) and Plan Commission zoning-enforcement page (towns are
+// outside the county ordinance), City of Kendallville Building, Planning &
+// Zoning (services: improvement location and building permits, plan review,
+// inspections, Plan Commission and BZA), the city's Water Department, 2024
+// drinking water report (groundwater from nine wells) and Wellhead Protection
+// Rule page, its CSO page and IDEM permit IN0020656 (combined sewers), Indiana
+// Code 36-7-4-1106 (Justia), Northeast Indiana Regional Partnership (US 6 and
+// SR 3), Census 2020 (QuickFacts). Electric provider deliberately omitted: no
+// official source settles it. Distance is from the vetted table in ../page.tsx.
 
 export const metadata = genMeta({
   title: "Factory Direct Mobile & Manufactured Homes, Kendallville IN",
   description:
-    "Champion manufactured and modular homes delivered to Kendallville and Noble County, Indiana. Factory-direct pricing from our Auburn showroom — single wides, double wides & modular homes with zoning-friendly rural placement.",
+    "Placing a Champion home in Kendallville, IN: the city's own permits, city water from nine wells, combined sewers, and what Indiana law says about zoning.",
   keywords: [
     "manufactured homes kendallville indiana",
     "modular homes kendallville in",
@@ -26,46 +37,91 @@ const data: CityLocationData = {
   lat: 41.4414,
   lng: -85.2655,
   tagline:
-    "Champion manufactured & modular homes delivered to Kendallville and Noble County — factory-direct from our Auburn showroom about 20 miles east.",
+    "Kendallville is Noble County's largest city, west of our Auburn showroom, and it issues its own permits and runs its own water. Here is who answers for a lot in town.",
   intro: [
-    "Kendallville is the largest city in Noble County and just a 20-mile drive west from our Auburn showroom. Noble County is known for zoning-friendly, rural placement rules, which makes it one of the easier areas in northeast Indiana to put a manufactured or modular home on your own land.",
-    "We deliver Champion single wides, double wides, and modular homes throughout the Kendallville area. You hire your own licensed contractors for setup and site work — most buyers save money that way — and we'll share a list of licensed and insured contractors past customers have used.",
-    <>
-      Browse our <Link href="/floor-plans" className="text-[var(--color-teal)] underline">floor plans</Link>, learn about{" "}
-      <Link href="/financing" className="text-[var(--color-teal)] underline">financing</Link>, or{" "}
-      <Link href="/contact-us" className="text-[var(--color-teal)] underline">contact us</Link> for a
-      factory-direct quote for your Kendallville or Noble County property.
-    </>,
+    "Kendallville, about 10,300 people where US 6 crosses State Road 3, is the largest city in Noble County, though Albion is the county seat. It is one of five Noble County towns that issue their own building permits, and inside its limits the county's zoning ordinance does not apply at all. We sell the home, quote it line by line and arrange delivery; the permits, the hook-ups and the site work are yours, and the offices below are the ones that answer.",
+  ],
+  facts: [
+    { label: "Population (2020 census)", value: "10,271" },
+    { label: "Zoning and building permits", value: "City Building, Planning & Zoning" },
+    { label: "Water", value: "City water, from nine wells" },
+    { label: "Sewer", value: "City wastewater (combined system)" },
+    { label: "Schools", value: "East Noble School Corporation" },
+  ],
+  sections: [
+    {
+      heading: "City hall, not the county, issues your permits",
+      paragraphs: [
+        "Inside the limits, Kendallville's Building, Planning & Zoning department on South Main Street issues improvement location and building permits, reviews plans, inspects the work, and takes applications to the city Plan Commission and Board of Zoning Appeals. Noble County's own building department lists Kendallville among the towns with their own jurisdiction, so a lot in the city does not go to Albion.",
+        "If your plan needs a variance or special exception, note that the city's zoning code voids one when no permit follows within six months of approval. Line the order up with the permit, not the other way round.",
+      ],
+    },
+    {
+      heading: "What Indiana law says about manufactured homes and zoning",
+      paragraphs: [
+        "Indiana Code 36-7-4-1106 limits how far a local zoning ordinance can keep out a manufactured home that meets the state's size and foundation standards, on a lot where another kind of home is allowed. It does not settle whether a particular home and lot qualify; that is the plan commission's call, under the city's own ordinance. Ask the department which rules apply to your home and your lot before you order.",
+      ],
+    },
+    {
+      heading: "City water from nine wells",
+      paragraphs: [
+        "Kendallville's water is groundwater pumped from nine city wells, and the city keeps a wellhead protection plan under Indiana's wellhead protection rule, which maps the area around those wells. Building near a well field can bring its own conditions, so if your lot is close to one, ask the water department what applies.",
+        "The city's wastewater system is a combined sewer, carrying storm water and sewage together, with an overflow control programme. Ask the wastewater department what a connection for a new home needs and where storm water from the lot may go.",
+      ],
+    },
+    {
+      heading: "Around Bixler Lake and on US 6",
+      paragraphs: [
+        "US 6 and State Road 3 meet in Kendallville and share North Street for a stretch, so most deliveries come in on one of the two. East Noble School Corporation, the county's largest, has its high school on Garden Street near Bixler Lake and its city park. Tell us your street and how the lot is reached when we quote, and have your site contractor grade a firm, wide approach.",
+      ],
+    },
+  ],
+  contacts: [
+    {
+      name: "City of Kendallville Building, Planning & Zoning",
+      role: "Improvement location and building permits, inspections, Plan Commission and BZA applications.",
+      href: "https://www.kendallvillein.gov/departments/BuildingPlanningandZoning/Functions/Services",
+    },
+    {
+      name: "Kendallville Water Department",
+      role: "Water taps and the city's wellhead protection area.",
+      href: "https://www.kendallvillein.gov/directory/Water",
+    },
+    {
+      name: "Kendallville Wastewater Department",
+      role: "Sewer connections on the city's combined system.",
+      href: "https://www.kendallvillein.gov/directory/Wastewater",
+    },
   ],
   nearby: [
     { name: "Noble County", href: "/locations/noble-county" },
+    { name: "Albion", href: "/locations/albion" },
+    { name: "Ligonier", href: "/locations/ligonier" },
     { name: "Auburn", href: "/locations/auburn" },
     { name: "Garrett", href: "/locations/garrett" },
     { name: "Avilla" },
     { name: "Rome City" },
-    { name: "Albion" },
-    { name: "Ligonier" },
   ],
   faqs: [
     {
-      question: "Do you deliver manufactured homes to Kendallville, Indiana?",
+      question: "Who issues the building permit for a home in Kendallville?",
       answer:
-        "Yes. Kendallville and Noble County are about 20 miles west of our Auburn showroom, so it's a close, low-cost delivery area. We arrange delivery to private land, rural acreage, or in-town lots, and you hire your own contractors for setup — ask us for our list of licensed and insured crews past customers have used.",
+        "Inside the city limits, Kendallville's Building, Planning & Zoning department. Noble County lists Kendallville among the towns with their own building jurisdiction, and the county's zoning ordinance does not apply inside the city.",
     },
     {
-      question: "Is it easy to place a manufactured home on land in Noble County?",
+      question: "Can Kendallville's zoning keep out a manufactured home?",
       answer:
-        "Noble County — including areas around Kendallville, Albion, and Ligonier — generally has zoning-friendly rules for manufactured and modular homes on private land. You or your contractor verify the specific requirements for your parcel and pull permits before installation — we can point you to the right county offices.",
+        "Indiana Code 36-7-4-1106 limits how far local zoning can exclude a manufactured home that meets the state's size and foundation standards. Whether a given home and lot qualify is the plan commission's decision; ask the city's planning department.",
     },
     {
-      question: "What's the closest showroom to Kendallville?",
+      question: "Where does Kendallville's water come from?",
       answer:
-        "Our Auburn showroom at 1211 IN-8 is only about a 25-minute drive from Kendallville. You can walk through model homes in person, then we deliver and set up your chosen home to your Noble County site.",
+        "Groundwater from nine city wells, protected under a wellhead protection plan. Ask the water department about a tap for a new home.",
     },
     {
-      question: "What homes can I buy near Kendallville?",
+      question: "Do you deliver to Kendallville?",
       answer:
-        "We carry Champion single wides, double wides, and IRC-code modular homes — from efficient starter homes to larger 3–4 bedroom family layouts. Modular homes on permanent foundations are popular for rural Noble County properties.",
+        "Yes. Freight is quoted per route as its own line on your quote. You hire your own licensed contractors for the foundation, set-up and utility connections.",
     },
   ],
 };

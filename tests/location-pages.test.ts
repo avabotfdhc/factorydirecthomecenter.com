@@ -69,6 +69,28 @@ for (const slug of COUNTY_REWRITTEN) {
   });
 }
 
+// Batch 4 (2026-11-17): the eight CityLocationTemplate town pages.
+const CITY_REWRITTEN = ["kendallville", "new-haven", "columbia-city", "albion", "churubusco", "huntertown", "ligonier", "angola"];
+for (const name of CITY_REWRITTEN) {
+  const src = readFileSync(join(DIR, name, "page.tsx"), "utf8");
+  test(`${name}: sourced town page with facts, sections, contacts and its own description`, () => {
+    assert.ok(/<CityLocationTemplate/.test(src), "not on CityLocationTemplate");
+    assert.ok(/\/\/ Facts checked against public sources/.test(src), "missing the sources comment");
+    assert.ok(/facts:\s*\[/.test(src), "missing facts");
+    assert.ok((src.match(/heading:/g) ?? []).length >= 3, "needs at least three local sections");
+    assert.ok(/contacts:\s*\[/.test(src), "missing contacts");
+    assert.ok((src.match(/question:/g) ?? []).length >= 3, "needs FAQs");
+    const desc = src.match(/description:\s*"([^"]+)"/);
+    assert.ok(desc && desc[1].length <= 160, "meta description missing or over 160 characters");
+  });
+  test(`${name}: no dollar figure, no set-up claim, no unsourced zoning-friendly claim`, () => {
+    assert.ok(!/\$\s?\d/.test(src));
+    assert.ok(!/we (?:deliver and )?set up/i.test(src), "we never set up the home");
+    assert.ok(!/zoning-friendly/i.test(src), "unsourced claim about local zoning");
+    assert.ok(!/lowest[- ]cost|freight costs? (?:are|is) low/i.test(src), "unsourced freight-price claim");
+  });
+}
+
 test("county pages never point readers at a retired town post", () => {
   // The town posts were retired on 2026-10-21 and 301 to the county page
   // itself, so "our Muncie post covers…" sends a reader back where they are.

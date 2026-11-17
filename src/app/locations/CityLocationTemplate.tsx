@@ -29,6 +29,16 @@ export interface CityLocationData {
   intro: React.ReactNode[];
   nearby: { name: string; href?: string }[];
   faqs: { question: string; answer: string }[];
+  /** "At a glance" rows. Sourced, town-specific facts only: a value that
+   *  cannot be checked against a public source does not go in. */
+  facts?: { label: string; value: string }[];
+  /** The page's own local sections. These, not the shared copy, are what make
+   *  each town page worth its URL (pages that differ only by place name are
+   *  doorway pages under Google's spam policies). */
+  sections?: { heading: string; paragraphs: string[] }[];
+  /** Public offices and utilities, linked to their own sites. We name who
+   *  answers; we never answer for them. */
+  contacts?: { name: string; role: string; href?: string }[];
 }
 
 export function CityLocationTemplate({ data }: { data: CityLocationData }) {
@@ -153,11 +163,11 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
             </FadeIn>
             <FadeIn direction="up" delay={300}>
               <div className="font-serif text-3xl font-bold"><AnimatedCounter end={8} suffix="-12" /></div>
-              <div className="text-sm text-white/90">Weeks Delivery</div>
+              <div className="text-sm text-white/90">Weeks, Order to Move-in</div>
             </FadeIn>
             <FadeIn direction="up" delay={450}>
-              <div className="font-serif text-3xl font-bold">Direct</div>
-              <div className="text-sm text-white/90">Factory Pricing</div>
+              <div className="font-serif text-3xl font-bold">Line-Item</div>
+              <div className="text-sm text-white/90">Quotes on Every Home</div>
             </FadeIn>
           </StaggerContainer>
         </div>
@@ -176,6 +186,58 @@ export function CityLocationTemplate({ data }: { data: CityLocationData }) {
               </p>
             ))}
           </FadeIn>
+
+          {data.facts && data.facts.length > 0 && (
+            <dl className="mt-8 rounded-xl border border-[var(--color-charcoal)]/10 divide-y divide-[var(--color-charcoal)]/10">
+              {[
+                { label: "From our Auburn showroom", value: `${data.distanceMi} miles` },
+                ...data.facts,
+                { label: "Freight", value: "Quoted per route, as its own line" },
+              ].map((f) => (
+                <div key={f.label} className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-6 px-5 py-3">
+                  <dt className="text-[var(--color-gray)]">{f.label}</dt>
+                  <dd className="font-semibold text-[var(--color-charcoal)] sm:text-right">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {data.sections?.map((sec) => (
+            <div key={sec.heading} className="mt-12">
+              <H2 className="font-serif text-2xl lg:text-3xl font-light mb-4">{sec.heading}</H2>
+              {sec.paragraphs.map((p, i) => (
+                <p key={i} className="text-[var(--color-gray)] leading-relaxed mb-4">
+                  {p}
+                </p>
+              ))}
+            </div>
+          ))}
+
+          {data.contacts && data.contacts.length > 0 && (
+            <div className="mt-12">
+              <H2 className="font-serif text-2xl lg:text-3xl font-light mb-3">Who to call in {data.city}</H2>
+              <p className="text-[var(--color-gray)] mb-6">
+                These offices set the rules and issue the permits. Check with them about your parcel
+                before you buy land or order a home.
+              </p>
+              <ul className="space-y-3">
+                {data.contacts.map((c) => (
+                  <li key={c.name} className="rounded-lg px-5 py-4 border border-[var(--color-charcoal)]/10">
+                    <div className="font-semibold">
+                      {c.href ? (
+                        <a href={c.href} rel="noopener" className="text-[var(--color-teal)] underline underline-offset-4">
+                          {c.name}
+                        </a>
+                      ) : (
+                        c.name
+                      )}
+                    </div>
+                    <div className="text-sm text-[var(--color-gray)] mt-1">{c.role}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <FadeIn direction="up">
             <div className="mt-10 p-6 rounded-xl bg-[var(--color-cream-dark)]">
