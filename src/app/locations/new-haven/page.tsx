@@ -1,16 +1,26 @@
-import Link from "next/link";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { CityLocationTemplate, type CityLocationData } from "../CityLocationTemplate";
 
+// Facts checked against public sources on 2026-11-17: City of New Haven
+// Planning Department (Residential and Commercial Permits; Plan Commission and
+// BZA; Ordinances & Plans; FAQ: covenants, Zoning and Floodplain Map Viewer),
+// City of New Haven Utilities (Water/Sewer/Stormwater; Water Quality Report:
+// water bought from Fort Wayne), the city's Utility Providers page (Indiana
+// Michigan Power) and Truck Routes map, IDEM NPDES notice for INM020346
+// (combined sewers treated at Fort Wayne's P.L. Brunner plant), FEMA's 2021
+// preliminary Allen County flood maps (community 180004), Census 2020
+// (QuickFacts). The Maumee and I-469 from the city's own maps. Distance is
+// from the vetted table in ../page.tsx.
+
 export const metadata = genMeta({
-  title: "Manufactured Homes in New Haven, IN",
+  title: "Mobile & Manufactured Homes in New Haven, IN",
   description:
-    "Champion manufactured and modular homes delivered to New Haven and eastern Allen County, Indiana. Factory-direct pricing from our nearby Auburn showroom — single wides, double wides & modular homes.",
+    "Placing a Champion home in New Haven, IN: the city's own location permit, Maumee River flood maps, city water and sewer, and truck routes in.",
   keywords: [
     "manufactured homes new haven indiana",
     "modular homes new haven in",
     "mobile homes allen county",
-    "manufactured homes east fort wayne",
+    "manufactured homes allen county indiana",
     "champion homes new haven",
   ],
   url: "/locations/new-haven",
@@ -26,45 +36,90 @@ const data: CityLocationData = {
   lat: 41.07,
   lng: -85.0147,
   tagline:
-    "Champion manufactured & modular homes delivered to New Haven and eastern Allen County — factory-direct from our Auburn showroom with local delivery and a list of setup contractors past customers have used.",
+    "New Haven issues its own permits, runs its own utilities and sits on the Maumee. Here is who to ask, and what to check, before a Champion home goes on a New Haven lot.",
   intro: [
-    "New Haven sits just east of Fort Wayne in Allen County, and it's an easy drive from our Auburn showroom. For families who want to stay close to the Fort Wayne area but stretch their budget further, a factory-direct Champion home is a smart alternative to the rising cost of site-built houses.",
-    "We deliver Champion single wides, double wides, and modular homes throughout New Haven and the surrounding communities of Woodburn, Monroeville, and greater Allen County. We order every home from Champion's Indiana plants (Topeka for Aspire and Redman, Decatur for Prime) and quote it line by line — the home, each option and delivery on separate lines.",
-    <>
-      See our <Link href="/floor-plans" className="text-[var(--color-teal)] underline">floor plans</Link>, explore{" "}
-      <Link href="/financing" className="text-[var(--color-teal)] underline">financing options</Link>, or{" "}
-      <Link href="/contact-us" className="text-[var(--color-teal)] underline">contact us</Link> for a
-      factory-direct quote for your New Haven or Allen County property.
-    </>,
+    "New Haven is a city of about 15,600 on Fort Wayne's east side, and it does much of its own government: its own planning department, plan commission, zoning board and development ordinance, and its own water, sewer and stormwater utility. A lot inside the city limits answers to City Hall on Lincoln Highway East, not to the county. We sell the home, quote it line by line and arrange delivery; the permits and the site work are yours, and the offices below are the ones that answer.",
+  ],
+  facts: [
+    { label: "Population (2020 census)", value: "15,583" },
+    { label: "Zoning and location permits", value: "City of New Haven Planning Dept." },
+    { label: "Water, sewer and stormwater", value: "City of New Haven Utilities" },
+    { label: "Electric (city's provider list)", value: "Indiana Michigan Power" },
+    { label: "Schools", value: "East Allen County Schools" },
+  ],
+  sections: [
+    {
+      heading: "The city, not the county, issues your location permit",
+      paragraphs: [
+        "Inside the limits, a new home needs an Improvement Location Permit from the New Haven Planning Department, which also issues Certificates of Compliance. The city has its own Plan Commission, Board of Zoning Appeals and Unified Development Ordinance, so the rules that apply are New Haven's. Land just outside the city is Allen County's, through the county's Department of Planning Services.",
+        "The planning department says plainly that it does not enforce private covenants. Many subdivisions carry deed restrictions on home type, size or foundation, so read the plat and any HOA rules for your lot yourself before you order.",
+      ],
+    },
+    {
+      heading: "On the Maumee: look at the flood map first",
+      paragraphs: [
+        "Most of New Haven lies along the south bank of the Maumee River, and the river's floodplain reaches into parts of the city. New Haven publishes a Zoning and Floodplain Map Viewer for looking up a parcel, and FEMA's preliminary flood maps for Allen County, issued in 2021, cover the city. A lot in a mapped flood zone can change where the home may sit and how high it must be set, so check the map before you buy the land, and ask the planning department about anything the map shows.",
+      ],
+    },
+    {
+      heading: "City water and sewer, treated in Fort Wayne",
+      paragraphs: [
+        "New Haven's utilities department runs water, sewer and stormwater for the city. The water itself is bought from Fort Wayne, and New Haven's wastewater flows to Fort Wayne's P.L. Brunner treatment plant; the city has none of its own. For a buyer that means one office to ask about a tap and a sewer connection, and the city's rules for connecting. Outside the limits, ask whether the lot can be served at all before you plan a septic system or well.",
+        "The city's list of utility providers names Indiana Michigan Power for electricity. Ask the provider for your address what it takes to bring service to the building site.",
+      ],
+    },
+    {
+      heading: "Getting a home in: I-469 and the truck routes",
+      paragraphs: [
+        "I-469 runs north and south through New Haven and ties into US 24 and US 30, so most deliveries reach the city on the interstate. Inside the city, New Haven publishes a truck route map, and an oversize load follows it as far as it can. Tell us the street, any tight turns or low wires, and how the lot is reached when we quote, and have your site contractor grade a firm, wide approach.",
+      ],
+    },
+  ],
+  contacts: [
+    {
+      name: "City of New Haven Planning Department",
+      role: "Improvement Location Permits, zoning and the floodplain map viewer for lots inside the city.",
+      href: "https://www.newhaven.in.gov/619/Residential-and-Commercial-Permits",
+    },
+    {
+      name: "City of New Haven Utilities",
+      role: "Water, sewer and stormwater connections inside the city.",
+      href: "https://www.newhaven.in.gov/612/Water-Sewer-Stormwater",
+    },
+    {
+      name: "Allen County Department of Planning Services",
+      role: "Zoning and permits for land outside the city limits.",
+      href: "https://www.allencounty.in.gov/281/Department-of-Planning-Services",
+    },
   ],
   nearby: [
     { name: "Fort Wayne", href: "/locations/fort-wayne" },
+    { name: "Huntertown", href: "/locations/huntertown" },
     { name: "Auburn", href: "/locations/auburn" },
     { name: "Woodburn" },
     { name: "Monroeville" },
     { name: "Harlan" },
-    { name: "Grabill" },
   ],
   faqs: [
     {
-      question: "Do you deliver manufactured homes to New Haven, Indiana?",
+      question: "Who issues the permit for a home in New Haven, Indiana?",
       answer:
-        "Yes. New Haven and eastern Allen County are within easy reach of our Auburn showroom. We arrange delivery to private land or approved lots throughout the area, and you hire your own contractors for setup and installation — ask us for our list of licensed and insured crews past customers have used.",
+        "Inside the city limits, the New Haven Planning Department issues the Improvement Location Permit under the city's own development ordinance. Outside the limits, Allen County's Department of Planning Services does.",
     },
     {
-      question: "Can I put a manufactured home on land near New Haven?",
+      question: "Is my New Haven lot in the Maumee River floodplain?",
       answer:
-        "In many parts of Allen County, yes — though placement rules near Fort Wayne and New Haven vary by zoning district. You or your contractor should verify the requirements for your specific parcel and pull permits so your home is installed to code — we can point you to the right county offices.",
+        "Look it up in the city's Zoning and Floodplain Map Viewer, and check FEMA's flood maps for Allen County. If the lot is in a mapped flood zone, ask the planning department what that means for placing a home there before you buy.",
     },
     {
-      question: "How is buying factory-direct different near Fort Wayne?",
+      question: "Does the city check my subdivision's covenants?",
       answer:
-        "We order your home from Champion's Indiana plants and quote it line by line — you see exactly what you're paying for the home and delivery, and you hire your own contractor for setup — and short delivery times because the Champion factory is close by.",
+        "No. The planning department says it does not enforce private covenants, so read your plat and any HOA rules yourself before you order a home.",
     },
     {
-      question: "What homes can I buy near New Haven?",
+      question: "Do you deliver to New Haven?",
       answer:
-        "We carry Champion single wides, double wides, and IRC-code modular homes in a range of sizes and layouts. Modular homes on permanent foundations are a popular option for buyers who want site-built quality at factory-direct pricing.",
+        "Yes. Freight is quoted per route as its own line on your quote. You hire your own licensed contractors for the foundation, set-up and utility hook-ups.",
     },
   ],
 };

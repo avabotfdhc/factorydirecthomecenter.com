@@ -316,9 +316,31 @@ overlap. Rules for the remaining batches:
   18–21%. Every programmatic county page except Allen now carries sections,
   facts, contacts and its own meta description; the residual overlap is the
   route's shared copy (`FOOTINGS`, `PER_ROUTE`, the zoning-guide line, the CTA).
-- Next batch, by measured overlap: the `CityLocationTemplate` towns
-  (Kendallville, New Haven, Columbia City, Albion, Churubusco, Huntertown,
-  Ligonier, Angola — 44–55% unique, ~25% overlap with each other).
+- **Batch 4 (2026-11-17):** the eight `CityLocationTemplate` towns —
+  Kendallville, New Haven, Columbia City, Albion, Churubusco, Huntertown,
+  Ligonier, Angola — 44–55% unique → 65–71%, overlap ~25% → 13–16%. The
+  template now takes `facts`, `sections` and `contacts` like the other two,
+  and its info bar says "Line-Item / Quotes on Every Home" instead of
+  "Direct / Factory Pricing" (which read as no dealer margin). The rewrite
+  removed what the old copy got wrong: "we deliver and set up your home"
+  (four pages), "Noble County's zoning-friendly rules" (unsourced, and the
+  county ordinance does not even apply inside its towns), "lowest-cost
+  delivery" claims, an unvetted Topeka mileage on Angola, and Kendallville's
+  "20 miles east" (it is west of Auburn). Facts worth knowing for the next
+  edit: Albion, Avilla, Kendallville, Ligonier and Rome City issue their own
+  permits (Noble County Building Dept.); Allen County DPS staffs Huntertown's
+  planning while New Haven has its own; the Whitley joint department staffs
+  both Columbia City and Churubusco; Ligonier's code is being revised (Plan
+  Commission minutes, January 2026), so re-check its R5 rule before quoting
+  it again. Electric providers in Kendallville, Albion, Angola, Huntertown and
+  Churubusco are left out on purpose: no official source settles them.
+  `tests/location-pages.test.ts` holds the sources comment, sections, facts,
+  contacts, FAQs and description length for all eight, and fails on a dollar
+  figure, "we set up", "zoning-friendly" or a low-freight claim.
+- Not touched by batches 1–4: `/locations/allen-county` and the hand-built
+  pages (Auburn, Fort Wayne, Garrett, DeKalb County, Noble County,
+  Indianapolis, Rural Indiana, Toledo, Kalamazoo). Measure them before
+  deciding they need a batch of their own.
 - **Scheduling a post:** give it `publishAt` (an ISO instant; 13:00Z = 9 am Eastern) and set `date` to that day. Scheduled posts live in `allLocalBlogPosts`; everything that lists or serves posts reads `localBlogPosts`, which drops any post whose `publishAt` is after `SITE_BUILT_AT` — the **build** time, inlined by `next.config.ts` into server and client alike, so a deployment publishes a post everywhere (index, route, sitemap, registry, related cards) or nowhere. Consequence: **a post only appears after a production build made at or after its `publishAt`** — merge or redeploy on the day; the clock passing is not enough. `tests/scheduled-posts.test.ts` holds the cut-off, the date/`publishAt` match and the registry agreement; `tests/page-title.test.ts` checks scheduled titles too.
 - `title` and `excerpt` are rendered as **text, not HTML** — put real Unicode characters in them (’ – —), never `&rsquo;`-style entities, which render literally. Entities are fine inside `html`.
 - The usual claim rules apply: no home dollar figures, contractor ranges only from `/guides/pricing`, and never say FDHC performs site work or setup.
