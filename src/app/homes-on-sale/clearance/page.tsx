@@ -21,7 +21,7 @@ const HAS_HOMES = OVERSTOCK_HOMES.length > 0;
 export const metadata = genMeta({
   title: HAS_HOMES ? "Overstock & Clearance Homes" : "Clearance Homes",
   description: HAS_HOMES
-    ? "Overstock Champion homes at Factory Direct Homes Center in Auburn, IN: already built at the plant with options included, ready for delivery in Indiana, Ohio and Michigan."
+    ? "Overstock Champion homes at Factory Direct Homes Center in Auburn, IN: on the line at the plant with options included and no build wait, delivered in Indiana, Ohio and Michigan."
     : "Shop clearance manufactured homes at Factory Direct Homes Center. Last chance pricing on select inventory. Single wide, double wide, and modular homes.",
   url: "/homes-on-sale/clearance",
   // With no home listed the page says "No Clearance Inventory at This Time",
@@ -79,7 +79,7 @@ function OverstockCard({ home }: { home: OverstockHome }) {
           <p className="text-gray-700 mb-4">{home.summary}</p>
           <p className="text-gray-700 mb-6">
             This home is being built at {home.plant} and is scheduled to come off the line{" "}
-            {formatOverstockDate(home.factoryCompleteDate)}. Its options are already built in and cannot be changed,
+            {formatOverstockDate(home.factoryCompleteDate)}. Its options are set and cannot be changed,
             which is why there is no build wait.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
@@ -120,7 +120,7 @@ function OverstockCard({ home }: { home: OverstockHome }) {
 
       <div className="border-t border-gray-200 p-6 sm:p-8 bg-gray-50">
         <h3 className="text-xl font-bold text-gray-900 mb-1">Colors on this home</h3>
-        <p className="text-sm text-gray-700 mb-4">Already chosen and built. They cannot be changed.</p>
+        <p className="text-sm text-gray-700 mb-4">Already chosen for this home. They cannot be changed.</p>
         <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {home.colors.map((c) => (
             <div key={c.label} className="bg-white border border-gray-200 rounded-lg p-3">
@@ -134,7 +134,7 @@ function OverstockCard({ home }: { home: OverstockHome }) {
       <div className="border-t border-gray-200 p-6 sm:p-8">
         <h3 className="text-xl font-bold text-gray-900 mb-1">Options added to this home</h3>
         <p className="text-sm text-gray-700 mb-4">
-          These are upgrades on top of the {home.series} standard features, already included.
+          These are upgrades on top of the {home.series} standard features, included in this home.
         </p>
         <div className="grid lg:grid-cols-2 gap-6">
           <ul className="space-y-3">
@@ -193,7 +193,7 @@ export default function ClearancePage() {
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               {HAS_HOMES
-                ? "Already built at the plant, options included, and ready to deliver. No build wait."
+                ? "Homes already on the line at the plant with their options included. No build wait."
                 : "Last chance pricing on select homes. Once they’re gone, they’re gone!"}
             </p>
           </FadeIn>

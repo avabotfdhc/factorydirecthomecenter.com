@@ -78,7 +78,7 @@ export const sitePages: SitePage[] = [
           title: "Overstock & Clearance Homes",
           shortTitle: "Overstock",
           description:
-            "Champion homes already built at the plant with their options included, ready for delivery in Indiana, Ohio and Michigan.",
+            "Champion homes already on the line at the plant with their options included, delivered in Indiana, Ohio and Michigan.",
           topics: ["sale", "homes-on-sale", "overstock", "manufactured-homes", "champion-homes"],
           cluster: "products" as const,
           priority: 0.8,
