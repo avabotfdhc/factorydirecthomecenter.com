@@ -1,3 +1,4 @@
+import { OVERSTOCK_HOMES } from "@/lib/overstock-homes";
 import Link from "next/link";
 import { shortImageSrc } from "@/lib/image-src";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
@@ -185,7 +186,7 @@ export default function HomesOnSalePage() {
             href="/homes-on-sale/clearance"
             className="px-6 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50"
           >
-            Clearance
+            {OVERSTOCK_HOMES.length > 0 ? `Overstock: ${OVERSTOCK_HOMES.length} ready to deliver` : "Clearance"}
           </Link>
         </div>
       </section>

@@ -16,6 +16,7 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { getAllPages } from "../src/lib/pages";
+import { OVERSTOCK_HOMES } from "../src/lib/overstock-homes";
 import { MORE_SERVICE_AREA_LINKS, SERVICE_AREA_LINKS } from "../src/lib/service-area-links";
 
 const APP = "src/app";
@@ -39,8 +40,13 @@ test("no page publishes hreflang alternates", () => {
 
 // Routes that are deliberately not in the sitemap: noindex or disallowed in
 // robots.txt.
-// /homes-on-sale/clearance is noindex while it lists no homes (2026-10-29).
-const NOT_INDEXED = new Set(["/search", "/design-system", "/homes-on-sale/clearance"]);
+// /homes-on-sale/clearance is noindex while it lists no homes (2026-10-29),
+// and indexable and registered while src/lib/overstock-homes.ts has an entry.
+const NOT_INDEXED = new Set([
+  "/search",
+  "/design-system",
+  ...(OVERSTOCK_HOMES.length === 0 ? ["/homes-on-sale/clearance"] : []),
+]);
 
 test("every static, indexable page route is in the page registry (and so the sitemap)", () => {
   const registered = new Set(getAllPages().map((p) => p.url));

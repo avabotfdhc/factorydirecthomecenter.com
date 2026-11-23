@@ -1,6 +1,8 @@
 // Central Page Registry — single source of truth for all site pages
 // Used by: sitemap.ts, PageFooter (related pages, breadcrumbs), /llms.txt (src/app/llms.txt/route.ts)
 
+import { OVERSTOCK_HOMES } from "./overstock-homes";
+
 export interface SitePage {
   url: string;
   title: string;
@@ -67,6 +69,23 @@ export const sitePages: SitePage[] = [
     priority: 0.9,
     changeFrequency: "weekly",
   },
+  // Registered only while an overstock home is listed; the page is noindex
+  // and tests/indexing.test.ts exempts it when the list is empty.
+  ...(OVERSTOCK_HOMES.length > 0
+    ? [
+        {
+          url: "/homes-on-sale/clearance",
+          title: "Overstock & Clearance Homes",
+          shortTitle: "Overstock",
+          description:
+            "Champion homes already built at the plant with their options included, ready for delivery in Indiana, Ohio and Michigan.",
+          topics: ["sale", "homes-on-sale", "overstock", "manufactured-homes", "champion-homes"],
+          cluster: "products" as const,
+          priority: 0.8,
+          changeFrequency: "weekly" as const,
+        },
+      ]
+    : []),
   {
     url: "/financing",
     title: "Manufactured Home Financing",
