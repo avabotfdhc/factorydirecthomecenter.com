@@ -237,7 +237,7 @@ export default async function Home() {
       </section>
 
       {/* FAQ Section with Schema */}
-      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
+      <section className="py-10 lg:py-28 bg-[var(--color-cream-dark)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
             <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
@@ -365,7 +365,7 @@ function OptionsAndUpgradesSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-white" aria-labelledby="options-and-upgrades">
+    <section className="py-10 lg:py-28 bg-white" aria-labelledby="options-and-upgrades">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-14">
           <H2 id="options-and-upgrades" className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">

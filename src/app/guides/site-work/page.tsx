@@ -110,7 +110,7 @@ export default function SiteWorkPage() {
       </section>
 
       {/* Overview */}
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -158,7 +158,7 @@ export default function SiteWorkPage() {
       </section>
 
       {/* Site Work Categories */}
-      <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
+      <section className="py-12 lg:py-32 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
@@ -199,7 +199,7 @@ export default function SiteWorkPage() {
       </section>
 
       {/* Foundation Types */}
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
@@ -259,7 +259,7 @@ export default function SiteWorkPage() {
       </section>
 
       {/* DIY vs Contractor */}
-      <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
+      <section className="py-12 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="decorative-line mx-auto mb-6" />
@@ -315,7 +315,7 @@ export default function SiteWorkPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Need Help With <span className="italic text-[var(--color-teal)]">Site Work?</span>

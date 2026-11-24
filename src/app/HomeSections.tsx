@@ -87,7 +87,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
   return (
     <>
       {/* Why Factory Direct */}
-      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
+      <section className="py-10 lg:py-28 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
             <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
@@ -121,7 +121,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
       </section>
 
       {/* Home Types */}
-      <section className="py-20 lg:py-28 bg-[var(--color-charcoal)] grain-overlay relative text-white">
+      <section className="py-10 lg:py-28 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-14">
             <H2 className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
@@ -217,7 +217,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
 
       {/* What a buyer can verify. Real reviews replace this block the moment
           src/lib/reviews.ts has any — see REVIEWS there. */}
-      <section className="py-20 lg:py-28">
+      <section className="py-10 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-14">
@@ -306,7 +306,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
       </section>
 
       {/* Financing CTA */}
-      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)] relative overflow-hidden">
+      <section className="py-10 lg:py-28 bg-[var(--color-cream-dark)] relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.07]">
           <Image
             src="/images/homepage/about-2.webp"
@@ -348,7 +348,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
       </section>
 
       {/* Location */}
-      <section className="py-20 lg:py-28">
+      <section className="py-10 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -433,7 +433,7 @@ export function TrustAndProcess() {
       </section>
 
       {/* Process Steps Section */}
-      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]">
+      <section className="py-10 lg:py-28 bg-[var(--color-cream-dark)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-14">

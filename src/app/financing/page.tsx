@@ -328,7 +328,7 @@ export default function FinancingPage() {
       {/* ============================================
           LENDER DIRECTORY
           ============================================ */}
-      <section id="lenders" className="py-24 lg:py-32 scroll-mt-24">
+      <section id="lenders" className="py-12 lg:py-32 scroll-mt-24">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-10">
@@ -403,7 +403,7 @@ export default function FinancingPage() {
       {/* ============================================
           LOAN TYPES COMPARISON
           ============================================ */}
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <FadeIn direction="up">
             <div className="text-center mb-16">
@@ -558,7 +558,7 @@ export default function FinancingPage() {
       {/* ============================================
           CTA SECTION
           ============================================ */}
-      <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
+      <section className="py-12 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <FadeIn direction="up">
             <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">

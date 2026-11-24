@@ -104,7 +104,7 @@ const brochures: Array<{ name: string; desc: string; href: string; external?: bo
 export default function OptionsPage() {
   return (
     <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      {/* Hero */}
-      <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-20 lg:py-28">
+      <section className="bg-[var(--color-charcoal)] text-[var(--color-cream)] py-10 lg:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-[var(--color-lime-on-dark)] mb-4">
             Built to Your Order

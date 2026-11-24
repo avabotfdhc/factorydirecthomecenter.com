@@ -20,7 +20,7 @@ export function FAQSection({ title, subtitle, faqs, showSchema = true }: FAQSect
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-[var(--color-cream-dark)]" aria-labelledby="faq-heading">
+      <section className="py-10 lg:py-28 bg-[var(--color-cream-dark)]" aria-labelledby="faq-heading">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <header className="text-center mb-14">
             <h2 id="faq-heading" className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">

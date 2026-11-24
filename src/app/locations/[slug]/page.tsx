@@ -93,7 +93,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
         </div>
       </section>
 
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div>
@@ -264,7 +264,7 @@ export default async function CountyPage({ params }: { params: Promise<{ slug: s
         </section>
       ) : null}
 
-      <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay text-white">
+      <section className="py-12 lg:py-32 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Get a line-item quote for<br />

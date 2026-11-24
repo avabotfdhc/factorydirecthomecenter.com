@@ -25,7 +25,7 @@ const PARAGRAPHS = [
 export function OwnerIntro() {
   const { owner, phoneDisplay, telephone } = BUSINESS;
   return (
-    <section className="py-20 lg:py-28 bg-white">
+    <section className="py-10 lg:py-28 bg-white">
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-[minmax(0,260px)_1fr] gap-10 items-start">
           <div>

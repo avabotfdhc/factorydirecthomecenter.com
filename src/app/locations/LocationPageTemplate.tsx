@@ -252,7 +252,7 @@ export function LocationPageTemplate({ city, state, distance, description, count
       )}
 
       {/* CTA */}
-      <section className="py-24 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
+      <section className="py-12 lg:py-32 bg-[var(--color-charcoal)] grain-overlay relative text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Ready to Find <span className="italic text-[var(--color-teal-light)]">Your Home?</span>

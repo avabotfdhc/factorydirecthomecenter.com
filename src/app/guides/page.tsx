@@ -34,7 +34,7 @@ export default function GuidesPage() {
       </section>
 
       {/* Guides Grid */}
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {guides.map((guide) => (
@@ -67,7 +67,7 @@ export default function GuidesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 lg:py-32 bg-[var(--color-cream-dark)]">
+      <section className="py-12 lg:py-32 bg-[var(--color-cream-dark)]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <H2 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-6">
             Have a <span className="italic text-[var(--color-teal)]">Specific Question?</span>

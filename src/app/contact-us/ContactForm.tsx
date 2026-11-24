@@ -185,7 +185,7 @@ export default function ContactForm() {
         </div>
       </section>
 
-      <section className="py-24 lg:py-32">
+      <section className="py-12 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
