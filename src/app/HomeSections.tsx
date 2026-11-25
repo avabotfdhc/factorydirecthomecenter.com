@@ -359,7 +359,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
                 options, and talk with our team about making your dream home a reality.
               </p>
               <address className="not-italic mb-8 border-t border-[var(--color-charcoal)]/15 pt-5 space-y-2">
-                <p className="font-serif text-2xl font-medium">1211 IN-8, Auburn, IN 46706</p>
+                <p className="font-serif text-2xl font-medium lining-nums">1211 IN-8, Auburn, IN 46706</p>
                 <p className="text-sm text-[var(--color-gray)]">Mon–Fri: 9 AM – 5 PM &nbsp;|&nbsp; Sat: 10 AM – 4 PM</p>
               </address>
               <div className="flex flex-col sm:flex-row gap-3">

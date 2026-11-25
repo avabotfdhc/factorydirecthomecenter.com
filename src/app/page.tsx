@@ -340,10 +340,10 @@ function ParallaxHeroSection() {
                 previously hardcoded the discount and "Ends August 31", so it kept
                 promoting the offer after it expired. */}
             {sale.active && (
-              <Link href="/homes-on-sale" className="mb-7 inline-flex flex-wrap items-center gap-x-3 gap-y-1 rounded-full bg-[var(--color-orange-light)] px-4 py-2 text-sm font-semibold text-[var(--color-evergreen)] hover:bg-white transition-colors">
+              <Link href="/homes-on-sale" className="mb-7 inline-flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl sm:rounded-full bg-[var(--color-orange-light)] px-4 py-2 text-[0.8125rem] sm:text-sm font-semibold text-[var(--color-evergreen)] hover:bg-white transition-colors">
                 <span>{sale.name}: save {saleAmount(sale)} off {saleScope(sale)}!</span>
                 <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider opacity-80">{saleDeadlineLabel(sale)}</span>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <svg className="hidden sm:block w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>

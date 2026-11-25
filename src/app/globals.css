@@ -569,6 +569,11 @@ button {
   text-transform: uppercase;
   color: var(--color-orange-text);
 }
+@media (max-width: 639px) {
+  .lux-eyebrow {
+    letter-spacing: 0.14em;
+  }
+}
 .lux-eyebrow::before {
   content: "";
   width: 2rem;
@@ -622,6 +627,12 @@ button {
 }
 .lux-link:hover {
   text-decoration-thickness: 2px;
+}
+/* The arrow sits outside the underline (an inline-block takes no
+   propagated text decoration). */
+.lux-link > [aria-hidden="true"] {
+  display: inline-block;
+  text-decoration: none;
 }
 .lux-dark .lux-link {
   color: #fff;
@@ -714,6 +725,14 @@ button {
   line-height: 1.02;
   letter-spacing: -0.015em;
   text-wrap: balance;
+}
+
+/* Cormorant defaults to old-style figures, which set "1" like a small-cap
+   I and let numbers dip below the line; titles and numerals use lining. */
+.lux-title,
+.lux-hero-title,
+.lux-numeral {
+  font-variant-numeric: lining-nums;
 }
 
 /* Large serif numerals for steps and stats. */

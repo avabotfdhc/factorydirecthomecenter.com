@@ -62,7 +62,7 @@ export function FeaturedHomes({ homes }: { homes: ApiFloorPlan[] }) {
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-[var(--color-charcoal)]/10">
-              <span className="font-serif text-lg font-medium text-[var(--color-teal-dark)]">{plan.priceFrom || plan.price}</span>
+              <span className="font-serif text-lg font-medium lining-nums text-[var(--color-teal-dark)]">{plan.priceFrom || plan.price}</span>
               <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-orange-text)] transition-colors">
                 View Plan →
               </span>
