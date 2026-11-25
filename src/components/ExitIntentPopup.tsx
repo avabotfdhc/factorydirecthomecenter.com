@@ -3,7 +3,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
-import { trackFormSubmit } from "@/lib/analytics";
+import { trackLeadFormStart, trackLeadFormSubmit } from "@/lib/analytics";
+import { useAntiSpam } from "@/lib/use-anti-spam";
+import { BUSINESS, dialable } from "@/lib/business";
 import { getSaleStatus, saleAmount, saleDeadlineLabel, saleScope } from "@/lib/sale";
 
 interface ExitIntentPopupProps {
@@ -21,8 +23,12 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
       ? `${sale.name}: save ${saleAmount(sale)} off ${saleScope(sale)}!`
       : "Get a free, line-item factory-direct quote");
   const [isVisible, setIsVisible] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const isSubmitted = status === "done";
+  const antiSpam = useAntiSpam();
+  const started = useRef(false);
 
   // "Already shown" is a ref, not state: nothing renders from it, only the
   // mouseleave handler reads it. As state it forced a re-render nobody saw,
@@ -67,20 +73,48 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
     };
   }, [delay, handleMouseLeave]);
 
+  // Until 2026-11-25 this handler waited one second, showed "You're In! A home
+  // specialist will contact you within 24 hours" and sent the address NOWHERE:
+  // no request, no lead, nothing in DealerTide, Supabase or anyone's inbox.
+  // Every visitor who used this popup was promised a call that could not
+  // happen. It now posts to /api/leads like every other form, and the success
+  // screen (and the conversion events) appear only after the lead is accepted.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    trackFormSubmit("exit_intent", { source: "popup", type: "email_capture" });
-    
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    setIsSubmitted(true);
-    
-    // Close after showing success
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 3000);
+    const fullName = name.trim();
+    const address = email.trim();
+    if (!fullName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address)) {
+      setStatus("error");
+      return;
+    }
+    // /api/leads needs a first and a last name; a one-word name fills both.
+    const [firstName, ...rest] = fullName.split(/\s+/);
+    const lastName = rest.join(" ") || firstName;
+
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...antiSpam.payload(),
+          firstName,
+          lastName,
+          email: address,
+          interest: sale.active ? `${sale.name} savings` : "Line-item quote",
+          message: `Asked for ${sale.active ? "the current sale details" : "a line-item quote"} from the exit pop-up.`,
+          source: "Exit Pop-up",
+          pageUrl: window.location.href,
+        }),
+      });
+      if (!res.ok) throw new Error(`lead post failed: ${res.status}`);
+      trackLeadFormSubmit("exit_intent", { name: fullName, email: address });
+      setStatus("done");
+      // Close after showing success
+      setTimeout(() => setIsVisible(false), 4000);
+    } catch {
+      setStatus("error");
+    }
   };
 
   const handleClose = () => {
@@ -156,19 +190,49 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {antiSpam.fields}
                   <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email address"
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onFocus={() => {
+                      if (started.current) return;
+                      started.current = true;
+                      trackLeadFormStart("exit_intent");
+                    }}
+                    placeholder="Your name"
+                    aria-label="Your name"
                     className="w-full px-4 py-3 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)] focus:border-transparent"
                     required
                   />
+                  <input
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address"
+                    aria-label="Email address"
+                    className="w-full px-4 py-3 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)] focus:border-transparent"
+                    required
+                  />
+                  {status === "error" && (
+                    <p role="alert" className="text-sm text-red-700">
+                      That did not go through. Check your name and email and try again, or call{" "}
+                      <a href={`tel:${dialable(BUSINESS.telephone)}`} data-track-location="exit_intent" className="underline font-semibold">
+                        {BUSINESS.phoneDisplay}
+                      </a>
+                      .
+                    </p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full py-3 bg-[var(--color-lime)] text-white font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
+                    disabled={status === "submitting"}
+                    className="w-full py-3 bg-[var(--color-lime)] text-white font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors disabled:opacity-60"
                   >
-                    {sale.active ? "Claim My Savings" : "Get My Quote"}
+                    {status === "submitting" ? "Sending…" : sale.active ? "Claim My Savings" : "Get My Quote"}
                   </button>
                 </form>
 

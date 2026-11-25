@@ -2362,3 +2362,47 @@ unresolved. Do not write a cause down as fact.
 - The second project (`factorydirecthomescenter-com`) is not watched: it
   serves no domain.
 
+
+# Conversion events: every phone link, Ava's leads, and an exit pop-up that used to discard its leads (2026-11-25)
+
+GA4 (property 477174469) was collecting `generate_lead` and `phone_call_click`
+but neither was marked a key event, and three lead paths were unmeasured — one
+of them was not a lead path at all:
+
+- **`ExitIntentPopup` never sent anything.** Its submit handler waited one
+  second ("Simulate API call"), showed "You're In! A home specialist will
+  contact you within 24 hours" and discarded the address: no request, no row in
+  `leads`, nothing in DealerTide. It now posts to `/api/leads` (source
+  "Exit Pop-up") with `useAntiSpam()`, asks for a name because the route
+  rejects a lead without one, and shows success and fires
+  `trackLeadFormSubmit("exit_intent")` only after the route accepts it.
+- **A lead or visit Ava saved in chat fired no event.** `AvaChatWidget` now
+  calls `trackLeadFormSubmit("ava_chat" | "ava_visit")` once per session each
+  (a ref, not state, guards it), plus `chat_open` (once per page load) and
+  `chat_message`.
+- **Only hand-labelled `tel:` links counted.** `usePhoneClickTracking()` (in
+  `useTracking`, so site-wide) listens on `document` in the **bubble** phase.
+  React delegates onClick to the root, so a component's own
+  `trackPhoneClick("header_nav")` runs first and marks the gate in
+  `src/lib/phone-click.ts`; the listener then stands down. One tap, one event,
+  and the specific label wins. A capture-phase listener would invert that. A
+  phone click also sends Meta's standard `Contact` next to the custom
+  `PhoneCall`. Label a link with `data-track-location` if the landmark default
+  (header / footer / dialog / aside / page_body) is not enough.
+- **Page views:** the landing view comes from the bootstrap
+  (`send_page_view:true`); `usePageTracking` skips its first run and reports
+  navigations only. It used to fire on mount as well and was a no-op only
+  because gtag.js had not loaded yet. **Do not set `send_page_view:false`** (an
+  outside suggestion that day): the hook cannot send the landing view, so every
+  landing page view would disappear. **Do not commit `debug_mode: true`** either;
+  test with Tag Assistant, which turns DebugView on for one session.
+
+Measured in Chromium on the dev server with Google and Meta stubbed, reading
+`window.dataLayer`: one `config` on load, one more per client navigation; one
+`phone_call_click` per tap for a labelled and an unlabelled link; Ava's lead
+and visit once each across two replies that both carried the flags; the pop-up
+posted first/last name, email and source and only then showed success.
+`tests/conversion-tracking.test.ts` holds all of it.
+
+**Kyle's to do in GA4** (no agent tool can): Admin → Data display → Key events →
+New key event, for `generate_lead` and `phone_call_click`.

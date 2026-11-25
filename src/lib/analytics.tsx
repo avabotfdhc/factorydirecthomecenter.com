@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getServerConsentSnapshot, getTrackingAllowedSnapshot, subscribeConsent } from "./consent";
 import { gaBootstrapScript, revokeTracking } from "./ga-consent";
+import { createPhoneClickGate, pageTypeFromPath, phoneClickLocation } from "./phone-click";
 
 // ============================================
 // CONFIGURATION - Environment Variables
@@ -223,18 +224,34 @@ export function MicrosoftClarity() {
 // ============================================
 
 // Hook for page view tracking
+//
+// The LANDING page view belongs to the GA4 bootstrap (`send_page_view:true` in
+// ga-consent.ts) and the pixel's own `fbq('track','PageView')`; this hook
+// reports client-side navigations only. It used to fire on mount too and was
+// saved from double-counting only by a race: gtag.js had not loaded yet, so the
+// call was a no-op. A visitor whose consent resolved early, or a remount after
+// the tags were up, would have sent the landing page twice. Do NOT "fix"
+// double counting by setting `send_page_view:false` instead: this hook cannot
+// send the landing view (the tag is not loaded when it first runs), so every
+// landing page view on the site would vanish from GA4.
 export function usePageTracking() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const lastUrl = useRef<string | null>(null);
 
   useEffect(() => {
     if (!pathname) return;
 
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
-    
+    const previous = lastUrl.current;
+    lastUrl.current = url;
+    // First run = the landing page (the bootstraps count it). Same URL again =
+    // a re-run of this effect, not a navigation.
+    if (previous === null || previous === url) return;
+
     // GA4 Page View
     trackGA4PageView(url);
-    
+
     // Facebook Page View
     trackFBEvent("PageView");
   }, [pathname, searchParams]);
@@ -468,9 +485,38 @@ export function trackEvent(eventName: string, params?: TagParams) {
 // USER INTERACTION TRACKING
 // ============================================
 
-export function trackPhoneClick(location: string, pageType = "unknown") {
+const phoneClickGate = createPhoneClickGate();
+
+function reportPhoneClick(location: string, pageType: string) {
   trackGA4Event("phone_call_click", { location, page_type: pageType });
+  // Meta: the custom event (kept so existing audiences keep filling) plus the
+  // standard `Contact`, which is the one Meta can optimise ads toward.
   FacebookEvents.phoneCall(location, pageType);
+  FacebookEvents.contact(`phone_${location}`);
+}
+
+export function trackPhoneClick(location: string, pageType = "unknown") {
+  // Tell the site-wide listener (usePhoneClickTracking) this tap is counted.
+  phoneClickGate.mark();
+  reportPhoneClick(location, pageType);
+}
+
+/**
+ * Counts a tap on ANY `tel:` link, including ones no component labelled. A
+ * bubble-phase listener on `document` runs after React's own onClick, so a
+ * link that already called trackPhoneClick() is not counted twice.
+ */
+export function usePhoneClickTracking() {
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as Element | null;
+      const link = target?.closest?.('a[href^="tel:"]');
+      if (!link || !phoneClickGate.shouldReport()) return;
+      reportPhoneClick(phoneClickLocation(link), pageTypeFromPath(window.location.pathname));
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 }
 
 export function trackEmailClick(location: string, pageType = "unknown") {
@@ -809,6 +855,7 @@ function useTrackingAllowed(): boolean {
 // Hook that combines all tracking
 export function useTracking() {
   usePageTracking();
+  usePhoneClickTracking();
   useScrollTracking();
   useTimeOnPageTracking();
 }
