@@ -73,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((page) => !page.url.startsWith("/blog/"))
     .map((page) => {
       const lastModified = isoDate(
-        getGuide(page.url)?.updated ?? (SALE_PAGES.has(page.url) ? sale.phase?.startDate : undefined),
+        getGuide(page.url)?.updated ?? page.updated ?? (SALE_PAGES.has(page.url) ? sale.phase?.startDate : undefined),
       );
       return {
         url: `${BASE_URL}${page.url === "/" ? "" : page.url}`,

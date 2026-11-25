@@ -8,12 +8,19 @@ import { generateMetadata as genMeta } from "@/lib/seo";
 import { exteriorCatalog } from "@/lib/exterior-options";
 import { sidingByLabel } from "@/lib/elevation-defaults";
 import type { DesignerSource } from "@/lib/designer-link";
+import { SITE_URL, businessRef } from "@/lib/business";
+import { jsonLdScript } from "@/lib/json-ld";
+
+const DESIGN_PAGE_DESCRIPTION =
+  "Design a Champion manufactured home online: pick a floor plan, see it full screen in your siding, shingle and shutter colors, and get a line-item quote.";
 
 export const metadata: Metadata = genMeta({
   title: "Design Your Manufactured Home Online",
-  description:
-    "Pick a Champion floor plan, see it drawn in your siding, shingle, shutter and door choices, and request a line-item factory-direct quote. Auburn, IN.",
+  description: DESIGN_PAGE_DESCRIPTION,
   keywords: [
+    "build your own manufactured home online",
+    "mobile home design tool",
+    "manufactured home floor plan designer",
     "design a manufactured home online",
     "manufactured home exterior color visualizer",
     "mobile home siding colors",
@@ -41,7 +48,7 @@ const HOW_IT_WORKS = [
   {
     title: "Get a line-item quote",
     body:
-      "Your choices go to our Auburn, Indiana showroom as one design. We price it line by line — the home, the options you picked and delivery — with no pressure and nothing hidden. Site work, foundation and setup are quoted by your own contractor. Ask for a copy and we email or text you your design, its floor plan and every choice you made.",
+      "Your choices go to our Auburn, Indiana showroom as one design. We price it line by line — the home, the options you picked and delivery — with no pressure and nothing hidden. Site work, foundation and setup are quoted by your own contractor.",
   },
 ];
 
@@ -63,6 +70,23 @@ const DESIGNER_FAQS = [
   },
 ];
 
+// Always true of the tool, so always asked.
+const FULL_SCREEN_FAQ = {
+  question: "Can I use the designer full screen?",
+  answer:
+    "Yes. Tap the picture of your home or the Open full screen button and the whole designer fills your screen, on a phone or a computer. Close it, press Escape or use your Back button to return to the page — every choice you made stays as you left it.",
+};
+
+// Asked only where this deployment can actually send a copy, so the page and
+// its FAQPage schema never promise an email or a text the site cannot send.
+function copyFaq(channels: { email: boolean; sms: boolean }) {
+  const how = channels.email && channels.sms ? "by email, by text, or both" : channels.email ? "by email" : "by text";
+  return {
+    question: "Can I get a copy of my design?",
+    answer: `Yes. In the last step, choose to have your design sent to you ${how}. Once every question is answered and you submit, we send the picture of your home, its floor plan and every choice you made, with our address and phone number, so you can share it or bring it to the lot. Texts are sent only if you tick the text consent box.`,
+  };
+}
+
 const SOURCES: DesignerSource[] = ["plan_page", "plan_page_swatch", "plan_card", "promo_band", "quote_modal", "header", "footer", "home"];
 
 export default async function DesignYourHomePage({
@@ -77,6 +101,8 @@ export default async function DesignYourHomePage({
   const canSend = designCopyConfigured();
   const preview = process.env.VERCEL_ENV !== "production";
   const copyChannels = { email: canSend.email || preview, sms: canSend.sms || preview };
+  const offersCopy = copyChannels.email || copyChannels.sms;
+  const faqs = [...DESIGNER_FAQS, FULL_SCREEN_FAQ, ...(offersCopy ? [copyFaq(copyChannels)] : [])];
   // `home`, `siding` and `src` arrive from the plan pages' teasers and the
   // other entry points (src/lib/designer-link.ts). The siding label is only
   // honoured when the chosen plan's catalogue actually carries it, and the
@@ -87,7 +113,35 @@ export default async function DesignYourHomePage({
   const source = (SOURCES as string[]).includes(src || "") ? (src as DesignerSource) : undefined;
 
   return (
-    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+      {/* The designer itself, as a free web app the dealership provides. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "@id": `${SITE_URL}/design-your-home#designer`,
+            name: "Design Your Home — Champion manufactured home designer",
+            url: `${SITE_URL}/design-your-home`,
+            description: DESIGN_PAGE_DESCRIPTION,
+            applicationCategory: "DesignApplication",
+            operatingSystem: "Any",
+            browserRequirements: "Requires JavaScript",
+            isAccessibleForFree: true,
+            featureList: [
+              "Every Champion floor plan we sell",
+              "Exterior drawn from Champion's floor plan sheets in your siding, shingle, shutter and door choices",
+              "Front, rear and end views",
+              "Full-screen view",
+              "Line-item factory-direct quote request",
+              ...(offersCopy ? ["A copy of your design, with its floor plan, by email or text"] : []),
+            ],
+            provider: businessRef(),
+          }),
+        }}
+      />
+      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-5">
             <div className="decorative-line" />
@@ -124,7 +178,7 @@ export default async function DesignYourHomePage({
       <FAQSection
         title="Designing your home online"
         subtitle="Straight answers about the picture, the colors and what happens after you submit."
-        faqs={DESIGNER_FAQS}
+        faqs={faqs}
       />
     </div>
   );

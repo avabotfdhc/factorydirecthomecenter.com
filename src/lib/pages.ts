@@ -16,6 +16,11 @@ export interface SitePage {
   pillar?: string;
   priority: number;
   changeFrequency: "weekly" | "monthly" | "yearly";
+  /**
+   * The day the page's own content last changed (YYYY-MM-DD), when we know
+   * it. The sitemap publishes it as lastmod; leave it out rather than guess.
+   */
+  updated?: string;
 }
 
 export const sitePages: SitePage[] = [
@@ -117,11 +122,13 @@ export const sitePages: SitePage[] = [
   {
     url: "/design-your-home",
     title: "Design Your Home",
-    description: "Pick a Champion floor plan, see it drawn in your siding, shingle, shutter and door choices, and request a line-item quote.",
+    description: "Pick a Champion floor plan, see it full screen in your siding, shingle, shutter and door choices, and request a line-item quote.",
     topics: ["design", "options", "floor-plans", "quote"],
     cluster: "products",
     priority: 0.6,
     changeFrequency: "monthly",
+    // full-screen view and the emailed/texted design copy
+    updated: "2026-11-25",
   },
   {
     url: "/showroom",

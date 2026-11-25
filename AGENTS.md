@@ -2104,7 +2104,9 @@ page above still carries its entry point.
 
 The funnel is measured: every step fires a GA4 `designer_step` event with
 `step` (`plan_selected` with `source`, `preview_loaded`, `exterior_pick` with
-`field`/`value`, `view`, `cta_quote`, `submitted`) next to the existing
+`field`/`value`, `view`, `cta_quote`, `submitted`, and since 2026-11-25
+`full_screen` with `from` (`button`/`picture`) and `design_copy` with the
+`email`/`sms` result) next to the existing
 `lead_form_start` / `lead_form_submit` events, so the path from plan to quote
 can be read in Analytics. The page also
 carries server-rendered "how it works" copy and a three-question FAQ (FAQPage
@@ -2399,6 +2401,11 @@ community, time frame — all now required in the designer).
   be reviewed. Production shows nothing until `RESEND_API_KEY` (email; the
   sender `DESIGN_COPY_FROM` defaults to sales@ and must be on a Resend-verified
   domain) and the Twilio variables (text; needs A2P 10DLC registration) are set.
+- SEO: the page publishes a `WebApplication` node (provider `businessRef()`),
+  a full-screen FAQ, and a "copy of my design" FAQ only where a channel is
+  offered, so neither the copy nor its FAQPage schema promises a send the
+  deployment cannot make. Its registry entry carries `updated`, which the
+  sitemap now publishes as lastmod for any registry page that sets it.
 - Tests: `tests/design-summary.test.ts` and the "Home Designer copy" cases in
   `tests/leads.test.ts`.
 
