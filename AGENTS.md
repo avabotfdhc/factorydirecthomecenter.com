@@ -2384,5 +2384,5 @@ only; every other page is untouched.
   ways in sit inside the first screen: Browse Floor Plans, Book a Showroom
   Visit (same dialog, location `hero`), and a tracked phone link
   (`trackPhoneClick("hero")`).
-- **Cost:** no new fonts, images, packages or client components; ~4 KB of
-  CSS. The emoji trust badges became inline SVG line icons.
+- **Cost:** no new fonts, images, packages or client components; about 5 KB of
+  CSS (1.8 KB gzipped). The emoji trust badges became inline SVG line icons.
