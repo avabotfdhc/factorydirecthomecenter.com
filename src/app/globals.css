@@ -685,9 +685,11 @@ button {
 }
 
 /* Hero: the home edge to edge, text set low over a film-style scrim. */
+/* No `isolation`/z-index on the section itself: the showroom dialog opens
+   from a button in here as a fixed z-[100] overlay, and a stacking context
+   on the hero would trap it under the z-50 header and the consent banner. */
 .lux-hero {
   position: relative;
-  isolation: isolate;
   display: flex;
   align-items: flex-end;
   min-height: clamp(560px, 86svh, 860px);
