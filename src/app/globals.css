@@ -685,9 +685,6 @@ button {
 }
 
 /* Hero: the home edge to edge, text set low over a film-style scrim. */
-/* No `isolation`/z-index on the section itself: the showroom dialog opens
-   from a button in here as a fixed z-[100] overlay, and a stacking context
-   on the hero would trap it under the z-50 header and the consent banner. */
 .lux-hero {
   position: relative;
   display: flex;
@@ -697,11 +694,14 @@ button {
   color: #fff;
   overflow: hidden;
 }
-.lux-hero::after {
-  content: "";
+/* The scrim lives inside .lux-hero-media (after the photo), not on a z-indexed
+   layer: nothing in the hero may carry a z-index, because any stacking
+   context there would trap the showroom dialog (a fixed z-[100] overlay that
+   opens from the hero button) under the z-50 header. DOM order does the
+   layering instead: photo, scrim, then the content. */
+.lux-hero-scrim {
   position: absolute;
   inset: 0;
-  z-index: 1;
   pointer-events: none;
   background:
     linear-gradient(to top, rgba(9, 26, 20, 0.93) 0%, rgba(9, 26, 20, 0.72) 26%, rgba(9, 26, 20, 0.3) 54%, rgba(9, 26, 20, 0.12) 74%, rgba(9, 26, 20, 0.42) 100%),
@@ -712,7 +712,6 @@ button {
 .lux-hero-media {
   position: absolute;
   inset: 0;
-  z-index: 0;
   transform-origin: 62% 55%;
   animation: lux-settle 22s ease-out both;
 }

@@ -330,10 +330,12 @@ function ParallaxHeroSection() {
           className="object-cover object-[62%_60%]"
           sizes="100vw"
         />
+        <div className="lux-hero-scrim" />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-[2] w-full px-6 lg:px-8 pt-28 pb-24 sm:pb-28">
+      {/* Hero Content. No z-index here (see .lux-hero-scrim in globals.css):
+          the showroom dialog opens from inside this block. */}
+      <div className="relative w-full px-6 lg:px-8 pt-28 pb-24 sm:pb-28">
         <div className="max-w-7xl mx-auto w-full">
           <div className="max-w-3xl">
             {/* Sale badge — only while the campaign is live (src/lib/sale.ts). It
