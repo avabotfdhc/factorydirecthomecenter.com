@@ -8,7 +8,7 @@ import { useState } from "react";
 // to pre-apply filters, so the homepage search actually filters the catalog
 // instead of just linking to it.
 const selectCls =
-  "flex-1 px-3 py-2 bg-[var(--color-cream-dark)] border-0 rounded text-sm text-[var(--color-charcoal)]";
+  "flex-1 min-h-12 px-4 py-2 bg-[var(--color-cream)] border border-[var(--color-charcoal)]/10 rounded-md text-sm text-[var(--color-charcoal)]";
 
 export function HomeSearchBar() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export function HomeSearchBar() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-2 flex flex-col sm:flex-row gap-2">
+    <div className="bg-white rounded-[10px] shadow-[0_30px_60px_-30px_rgba(14,42,33,0.55)] border border-[var(--color-charcoal)]/5 p-3 flex flex-col sm:flex-row gap-2">
       <select aria-label="Home type" className={selectCls} value={type} onChange={(e) => setType(e.target.value)}>
         <option value="">All Types</option>
         <option value="single">Single Wide</option>
@@ -66,7 +66,7 @@ export function HomeSearchBar() {
       <button
         type="button"
         onClick={search}
-        className="bg-[var(--color-lime)] text-white px-6 py-2 text-sm font-bold uppercase rounded hover:bg-[var(--color-lime-dark)] transition-colors flex items-center justify-center"
+        className="lux-btn bg-[var(--color-lime)] text-white px-7 hover:bg-[var(--color-lime-dark)] transition-colors"
       >
         Search
       </button>

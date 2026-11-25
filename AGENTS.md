@@ -2362,3 +2362,27 @@ unresolved. Do not write a cause down as fact.
 - The second project (`factorydirecthomescenter-com`) is not watched: it
   serves no domain.
 
+
+# Homepage, elegant edition (preview, 2026-11-25)
+
+Kyle asked for the homepage to look as polished as the Cabins on the Green
+site without costing speed, SEO or leads. This branch restyles the homepage
+only; every other page is untouched.
+
+- **What changed is type and spacing, not content.** Section titles are serif
+  (`.lux-title`, the Cormorant the layout already loads) in sentence case with
+  a letter-spaced eyebrow (`.lux-eyebrow`) instead of uppercase bold plus a
+  green bar; cards became hairlines; the dark bands are one deep evergreen
+  (`--color-evergreen`). `SectionHeading` renders the eyebrow, H2 and lede.
+  Every H2/H3 keeps its exact text, so the slugged ids and anchors are the same.
+- **Brand rules kept:** green buttons still wear the orange ring (the
+  `bg-[var(--color-teal|lime)]` selectors), the phone number, showroom
+  button, sale badge, FAQ schema and ImageObject schema are where they were.
+- **Hero:** taller, text set low over a scrim, H1 large in the serif. The
+  photo is still the preloaded, high-priority LCP image; its slow "settle" is
+  a transform animation only (composited), and reduced motion stops it. Three
+  ways in sit inside the first screen: Browse Floor Plans, Book a Showroom
+  Visit (same dialog, location `hero`), and a tracked phone link
+  (`trackPhoneClick("hero")`).
+- **Cost:** no new fonts, images, packages or client components; about 5 KB of
+  CSS (1.8 KB gzipped). The emoji trust badges became inline SVG line icons.
