@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
-import { trackPhoneClick } from "@/lib/analytics";
 
 // The only interactive parts of the homepage's middle sections. HomeSections
 // itself is a server component, so its ~400 lines of static markup ship as
@@ -23,19 +22,22 @@ export function GetPricingButton({ modelName, className }: { modelName: string; 
   );
 }
 
+// Phone taps are tracked site-wide by the single delegated `tel:` listener in
+// usePhoneClickTracking (src/lib/analytics.tsx), so this is now a plain anchor
+// — the `location` prop is kept for call-site compatibility but no longer wires
+// its own onClick (which would have double-counted against the site-wide one).
 export function TrackedPhoneLink({
   href,
-  location,
   className,
   children,
 }: {
   href: string;
-  location: string;
+  location?: string;
   className: string;
   children: React.ReactNode;
 }) {
   return (
-    <a href={href} onClick={() => trackPhoneClick(location)} className={className}>
+    <a href={href} className={className}>
       {children}
     </a>
   );

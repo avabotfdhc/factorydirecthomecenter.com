@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "@/i18n/LocaleProvider";
-import { trackPhoneClick } from "@/lib/analytics";
 import { AnnouncementBar } from "./AnnouncementBar";
 import { GlobalSearchModal, useGlobalSearch } from "./GlobalSearchModal";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -142,7 +141,6 @@ export function Header() {
               <LanguageSwitcher />
               <a
                 href="tel:2603081457"
-                onClick={() => trackPhoneClick("header_nav", "desktop")}
                 className="btn-primary inline-flex items-center gap-1.5 bg-[var(--color-teal)] text-white px-4 py-2.5 text-xs font-bold tracking-wide rounded-full hover:bg-[var(--color-teal-dark)] transition-colors duration-300 whitespace-nowrap"
               >
                 <PhoneIcon />
@@ -161,7 +159,6 @@ export function Header() {
               </button>
               <a
                 href="tel:2603081457"
-                onClick={() => trackPhoneClick("header_mobile", "mobile")}
                 className="inline-flex items-center gap-1.5 bg-[var(--color-teal)] text-white px-3.5 py-2.5 text-xs font-bold tracking-wide rounded-full hover:bg-[var(--color-teal-dark)] transition-colors duration-300 whitespace-nowrap"
                 aria-label={t("callFull")}
               >
@@ -210,7 +207,6 @@ export function Header() {
               <LanguageSwitcher className="mt-2" />
               <a
                 href="tel:2603081457"
-                onClick={() => trackPhoneClick("header_mobile_menu", "mobile")}
                 className="mt-2 inline-flex items-center justify-center gap-2 bg-[var(--color-teal)] text-white px-6 py-3 text-sm font-bold rounded-lg"
               >
                 <PhoneIcon />

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { trackPhoneClick, trackEvent, trackCTAClick } from "@/lib/analytics";
+import { trackEvent, trackCTAClick } from "@/lib/analytics";
 import { useBottomBarHeight } from "@/lib/bottom-bars";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
 import { useCurrentHome } from "@/lib/current-home";
@@ -61,7 +61,6 @@ export function MobileActionBar() {
           <div className="flex items-center justify-around p-2">
             <a
               href={TEL_HREF}
-              onClick={() => trackPhoneClick("mobile_action_bar", "call")}
               className="flex flex-col items-center gap-1 px-3 py-2 text-[var(--color-charcoal)] hover:text-[var(--color-teal)] transition-colors"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

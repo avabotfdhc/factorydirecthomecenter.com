@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, type ReactNode } from "react";
 import { H4 } from "./Heading";
 import PriceQuoteModal from "./PriceQuoteModal";
 import { getSaleStatus } from "@/lib/sale";
+import { trackGA4Event, trackLeadFormSubmit } from "@/lib/analytics";
 
 // Ava — the site's sales copilot. Replies come from /api/chat (Claude Haiku
 // 5.5, or OpenAI as the fallback, with Ava's sales persona, the running sale, the live catalogue and her sales
@@ -109,6 +110,13 @@ export function AvaChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   // Once the API answers 503 (not configured) we stop asking it.
   const apiAvailable = useRef(true);
+  // GA4: fire the chat_open event only on the first open of this session, and
+  // the generate_lead (via trackLeadFormSubmit) only the first time the route
+  // reports a captured lead / requested visit — so one visitor's chat is one
+  // lead in the numbers, not one per message after the flag flips.
+  const chatOpenTracked = useRef(false);
+  const leadTracked = useRef(false);
+  const visitTracked = useRef(false);
   // Monotonic message ids (the greeting is "1").
   const nextId = useRef(2);
   const newId = () => String(nextId.current++);
@@ -129,8 +137,28 @@ export function AvaChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // A quote request (leadCaptured) or a showroom visit (visitRequested)
+  // reported by /api/chat is a real lead — the chat route already saved it
+  // through the same pipeline as the quote form. Mirror it into GA4/Meta once
+  // per visitor session as the matching form name, so chat leads show up in
+  // generate_lead / Meta Lead alongside the on-page forms.
+  const trackChatLead = (form: "ava_chat" | "ava_visit") => {
+    const ref = form === "ava_chat" ? leadTracked : visitTracked;
+    if (ref.current) return;
+    ref.current = true;
+    trackLeadFormSubmit(form, {
+      interest: form === "ava_visit" ? "Showroom visit" : "Chat quote request",
+      location: typeof window !== "undefined" ? window.location.pathname : undefined,
+    });
+  };
+
   const handleSend = async (text: string = inputText) => {
     if (!text.trim()) return;
+
+    // chat_message: the visitor sent a message.
+    trackGA4Event("chat_message", {
+      location: typeof window !== "undefined" ? window.location.pathname : undefined,
+    });
 
     const userMessage: Message = {
       id: newId(),
@@ -184,8 +212,14 @@ export function AvaChatWidget() {
       }
       if (!res.ok) return null;
       const json = (await res.json()) as { reply?: string; leadCaptured?: boolean; visitRequested?: boolean };
-      if (json.leadCaptured) setLeadCaptured(true);
-      if (json.visitRequested) setVisitRequested(true);
+      if (json.leadCaptured) {
+        setLeadCaptured(true);
+        trackChatLead("ava_chat");
+      }
+      if (json.visitRequested) {
+        setVisitRequested(true);
+        trackChatLead("ava_visit");
+      }
       return json.reply?.trim() || null;
     } catch {
       return null;
@@ -238,8 +272,16 @@ export function AvaChatWidget() {
       {/* Chat Button */}
       <button
         onClick={() => {
-          setIsOpen(!isOpen);
+          const opening = !isOpen;
+          setIsOpen(opening);
           setHasNotification(false);
+          // chat_open: first time the widget is opened this session.
+          if (opening && !chatOpenTracked.current) {
+            chatOpenTracked.current = true;
+            trackGA4Event("chat_open", {
+              location: typeof window !== "undefined" ? window.location.pathname : undefined,
+            });
+          }
         }}
         style={{ marginBottom: "var(--consent-h, 0px)" }}
         className="fixed bottom-[4.75rem] right-4 lg:bottom-8 z-50 w-14 h-14 bg-[var(--color-teal)] text-white rounded-full shadow-lg hover:bg-[var(--color-teal-dark)] transition-all hover:scale-110 flex items-center justify-center"
