@@ -96,7 +96,7 @@ export function AnimatedHomeSections({ planCount }: { planCount?: number }) {
           <SectionHeading
             eyebrow="Why buy from us"
             title="Why Choose Factory Direct?"
-            lede={<>We&rsquo;re a family-owned dealer. We believe everyone deserves a quality home at an honest price.</>}
+            lede="We’re a family-owned dealer. We believe everyone deserves a quality home at an honest price."
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
