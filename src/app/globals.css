@@ -37,6 +37,11 @@
   --color-gray: #586579;
   --color-gray-light: #94a3b8;
   --color-white: #FFFFFF;
+  /* Deep evergreen for the homepage's dark bands (2026-11 elegant redesign).
+     The emerald brand green taken almost to black, so the dark sections read
+     as the same family as the buttons. White on it is 15.3:1,
+     --color-orange-light 7.4:1, --color-lime-on-dark 8.0:1. */
+  --color-evergreen: #0e2a21;
   
   /* Enhanced shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -540,4 +545,192 @@ button {
   .fp-card-design {
     @apply mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-teal)] hover:underline underline-offset-4;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Homepage, elegant edition (2026-11). The same restraint as the Cabins on the
+   Green build, carried over to the dealership's own brand: serif display
+   headings in the Cormorant the layout already loads, letter-spaced eyebrows
+   in the logo orange, hairlines instead of boxes and bars, and one deep
+   evergreen for the dark bands. No new fonts, images or scripts — everything
+   here is a few hundred bytes of CSS on the page that already ships.
+
+   Contrast (measured): eyebrows use --color-orange-text on light surfaces
+   (5.29:1 on cream-dark, the lowest it sits on) and --color-orange-light on
+   evergreen (7.41:1).
+   --------------------------------------------------------------------------- */
+.lux-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-orange-text);
+}
+.lux-eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.8;
+}
+.lux-dark .lux-eyebrow,
+.lux-hero .lux-eyebrow {
+  color: var(--color-orange-light);
+}
+
+/* Section titles: sentence case, serif, generous — no uppercase, no bars. */
+.lux-title {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 1.35rem + 2.3vw, 3.15rem);
+  line-height: 1.06;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+  color: var(--color-charcoal);
+}
+.lux-dark .lux-title {
+  color: #fff;
+}
+.lux-lede {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-gray);
+  text-wrap: pretty;
+}
+.lux-dark .lux-lede {
+  color: rgba(255, 255, 255, 0.82);
+}
+.lux-dark {
+  background: var(--color-evergreen);
+  color: #fff;
+}
+
+/* Quiet text link with an orange rule that thickens on hover. */
+.lux-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--color-teal-dark);
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+.lux-link:hover {
+  text-decoration-thickness: 2px;
+}
+.lux-dark .lux-link {
+  color: #fff;
+  text-decoration-color: var(--color-orange-light);
+}
+
+/* Pill buttons. The green fill still wears the orange brand ring through the
+   bg-[var(--color-teal)] selectors above; these only set shape and type. */
+.lux-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.lux-btn-glass {
+  color: #fff;
+  background: rgba(14, 42, 33, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.lux-btn-glass:hover {
+  background: #fff;
+  color: var(--color-evergreen);
+}
+.lux-btn-quiet {
+  color: var(--color-charcoal);
+  box-shadow: inset 0 0 0 1px rgba(30, 41, 59, 0.25);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.lux-btn-quiet:hover {
+  background: var(--color-charcoal);
+  color: #fff;
+}
+.lux-dark .lux-btn-quiet {
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+.lux-dark .lux-btn-quiet:hover {
+  background: #fff;
+  color: var(--color-evergreen);
+}
+
+/* Hero: the home edge to edge, text set low over a film-style scrim. */
+.lux-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(560px, 86svh, 860px);
+  background: var(--color-evergreen);
+  color: #fff;
+  overflow: hidden;
+}
+.lux-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(9, 26, 20, 0.93) 0%, rgba(9, 26, 20, 0.72) 26%, rgba(9, 26, 20, 0.3) 54%, rgba(9, 26, 20, 0.12) 74%, rgba(9, 26, 20, 0.42) 100%),
+    linear-gradient(to right, rgba(9, 26, 20, 0.6) 0%, rgba(9, 26, 20, 0.15) 45%, rgba(9, 26, 20, 0) 70%);
+}
+/* A slow settle on the photograph. Transform only, so it is composited and
+   costs no layout or paint; reduced-motion users get it at rest. */
+.lux-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform-origin: 62% 55%;
+  animation: lux-settle 22s ease-out both;
+}
+@keyframes lux-settle {
+  from { transform: scale(1.07); }
+  to { transform: scale(1); }
+}
+.lux-hero-title {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.35rem, 1.3rem + 4.2vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Large serif numerals for steps and stats. */
+.lux-numeral {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-teal);
+}
+
+/* FAQ rows: hairlines, no boxes. */
+.lux-faq > summary::-webkit-details-marker {
+  display: none;
+}
+.lux-faq[open] .lux-faq-icon {
+  transform: rotate(45deg);
+}
+.lux-faq-icon {
+  transition: transform 200ms ease;
 }

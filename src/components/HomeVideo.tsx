@@ -30,20 +30,20 @@ export function HomeVideo({ video = HOME_VIDEO }: { video?: HomeVideoConfig }) {
   };
 
   return (
-    <section className="py-16 lg:py-20 bg-[var(--color-charcoal)] text-white" aria-labelledby="see-a-champion-home">
+    <section className="lux-dark py-16 lg:py-24" aria-labelledby="see-a-champion-home">
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <H2 id="see-a-champion-home" className="text-2xl lg:text-3xl font-bold tracking-tight uppercase mb-3">
+        <div className="text-center mb-10 lg:mb-12">
+          <p className="lux-eyebrow">Video tour</p>
+          <H2 id="see-a-champion-home" className="lux-title mt-4">
             See a Champion Home
           </H2>
-          <div className="w-16 h-1 bg-[var(--color-lime-light)] mx-auto mb-4" />
-          <p className="text-base text-slate-200 max-w-2xl mx-auto">
+                    <p className="lux-lede mt-5 max-w-2xl mx-auto">
             Take a video tour of a new manufactured home built 30 miles from our lot. Then visit Auburn to walk
             through one in person.
           </p>
         </div>
 
-        <div className="aspect-video rounded-lg overflow-hidden bg-black border border-white/10">
+        <div className="aspect-video rounded-[6px] overflow-hidden bg-black border border-white/10">
           {video.youtubeId ? (
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0`}
@@ -74,7 +74,7 @@ export function HomeVideo({ video = HOME_VIDEO }: { video?: HomeVideoConfig }) {
         </div>
 
         <p className="text-center mt-8">
-          <Link href="/floor-plans" className="inline-flex items-center gap-2 text-[var(--color-lime-light)] font-semibold hover:underline">
+          <Link href="/floor-plans" className="lux-link">
             Browse every floor plan
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </Link>
