@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { FAQSection } from "@/components/FAQSection";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
-import { getApiFloorPlans } from "@/lib/api-content";
-import { HomeDesigner, type DesignerPlan } from "@/components/HomeDesigner";
+import { forBrowser, getDesignerPlans } from "@/lib/designer-plans";
+import { designCopyConfigured } from "@/lib/design-summary-send";
+import { HomeDesigner } from "@/components/HomeDesigner";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { exteriorCatalog } from "@/lib/exterior-options";
 import { sidingByLabel } from "@/lib/elevation-defaults";
@@ -26,43 +27,6 @@ export const metadata: Metadata = genMeta({
 // ISR: the home list comes from the live catalog; refresh every 5 min.
 export const revalidate = 300;
 
-// The picker must never take down the page. getApiFloorPlans throws on a CMS
-// network failure (by design, to protect ISR elsewhere) — here we'd rather
-// render the designer with the repo-published catalog than 500, so we fall
-// back to the local floor plans if the live fetch fails.
-async function getDesignerPlans(): Promise<DesignerPlan[]> {
-  try {
-    const plans = await getApiFloorPlans();
-    if (plans.length) {
-      return plans.map((p) => ({
-        slug: p.slug,
-        name: p.name,
-        series: p.series || "",
-        homeType: p.homeType || "Home",
-        ...(p.modelNumber ? { modelNumber: p.modelNumber } : {}),
-        ...(p.lengthFt ? { lengthFt: p.lengthFt } : {}),
-        ...(p.widthFt ? { widthFt: p.widthFt } : {}),
-        ...(p.beds ? { beds: p.beds } : {}),
-      }));
-    }
-  } catch {
-    /* fall through to the repo catalog */
-  }
-  const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE } = await import("@/lib/local-floor-plans");
-  return localFloorPlans
-    .filter((p) => !p.hidden)
-    .map((p) => ({
-      slug: p.slug,
-      name: p.name,
-      series: p.series || PRIME_SERIES,
-      homeType: p.homeType || PRIME_HOME_TYPE,
-      modelNumber: p.modelNumber,
-      lengthFt: parseInt(p.length, 10) || undefined,
-      widthFt: parseInt(p.width, 10) || undefined,
-      beds: p.beds,
-    }));
-}
-
 const HOW_IT_WORKS = [
   {
     title: "Choose a Champion floor plan",
@@ -77,7 +41,7 @@ const HOW_IT_WORKS = [
   {
     title: "Get a line-item quote",
     body:
-      "Your choices go to our Auburn, Indiana showroom as one design. We price it line by line — the home, the options you picked and delivery — with no pressure and nothing hidden. Site work, foundation and setup are quoted by your own contractor.",
+      "Your choices go to our Auburn, Indiana showroom as one design. We price it line by line — the home, the options you picked and delivery — with no pressure and nothing hidden. Site work, foundation and setup are quoted by your own contractor. Ask for a copy and we email or text you your design, its floor plan and every choice you made.",
   },
 ];
 
@@ -107,7 +71,12 @@ export default async function DesignYourHomePage({
   searchParams: Promise<{ home?: string; siding?: string; src?: string }>;
 }) {
   const { home, siding, src } = await searchParams;
-  const designerPlans = await getDesignerPlans();
+  const designerPlans = forBrowser(await getDesignerPlans());
+  // Offer only the copies this deployment can send. Preview deployments show
+  // both so the form can be reviewed before email and texting are set up.
+  const canSend = designCopyConfigured();
+  const preview = process.env.VERCEL_ENV !== "production";
+  const copyChannels = { email: canSend.email || preview, sms: canSend.sms || preview };
   // `home`, `siding` and `src` arrive from the plan pages' teasers and the
   // other entry points (src/lib/designer-link.ts). The siding label is only
   // honoured when the chosen plan's catalogue actually carries it, and the
@@ -136,7 +105,7 @@ export default async function DesignYourHomePage({
       </section>
 
       <section className="max-w-4xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
-        <HomeDesigner plans={designerPlans} initialHome={chosen?.slug} initialSiding={initialSiding} source={source} />
+        <HomeDesigner plans={designerPlans} initialHome={chosen?.slug} initialSiding={initialSiding} source={source} copyChannels={copyChannels} />
 
         {/* Server-rendered copy a crawler can read: what the tool does and where its colors come from. */}
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
