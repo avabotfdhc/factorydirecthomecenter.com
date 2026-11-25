@@ -441,6 +441,12 @@ export function HomeDesigner({
     } catch {
       /* a sandboxed frame can refuse; Close and Escape still work */
     }
+    // from the picture, land on the picture, not back at step 1
+    if (from === "picture") {
+      window.requestAnimationFrame(() =>
+        window.requestAnimationFrame(() => document.getElementById("design-colors")?.scrollIntoView({ block: "start" })),
+      );
+    }
   };
   const closeFull = () => {
     if (window.history.state?.dyhFull) window.history.back();
@@ -877,7 +883,7 @@ export function HomeDesigner({
       </fieldset>
 
       {/* 3. Colors & finishes — the chosen home's own Champion selections */}
-      <fieldset className={sectionCls}>
+      <fieldset id="design-colors" className={`${sectionCls} scroll-mt-20`}>
         <legend className={legendCls}><span className="text-[var(--color-lime-dark)] font-bold">3.</span> Colors &amp; finishes</legend>
         <p className="text-sm text-[var(--color-gray)] mb-5">
           {isPrime
