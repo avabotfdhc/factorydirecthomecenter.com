@@ -5,7 +5,7 @@ import { useAntiSpam } from "@/lib/use-anti-spam";
 import { LeadConsent, LeadUrgency } from "./LeadConsent";
 import Link from "next/link";
 import { designerHref } from "@/lib/designer-link";
-import { trackCTAClick, trackLeadFormStart, trackLeadFormSubmit, trackPhoneClick } from "@/lib/analytics";
+import { trackCTAClick, trackLeadFormStart, trackLeadFormSubmit } from "@/lib/analytics";
 
 type Mode = "quote" | "visit";
 
@@ -112,7 +112,6 @@ export function FloorPlanActions({
         Prefer to talk?{" "}
         <a
           href="tel:+12603081457"
-          onClick={() => trackPhoneClick("floor_plan_detail", "floor_plan")}
           className="font-semibold text-[var(--color-teal)] underline underline-offset-4"
         >
           Call (260) 308-1457

@@ -12,7 +12,6 @@ import {
   trackLeadFormStart,
   trackLeadFormError, 
   trackLeadFormSubmit,
-  trackPhoneClick,
   trackEmailClick,
   FacebookEvents
 } from "@/lib/analytics";
@@ -211,7 +210,6 @@ export default function ContactForm() {
                     <H3 className="font-semibold mb-1">Phone</H3>
                     <a 
                       href="tel:+12603081457"
-                      onClick={() => trackPhoneClick("contact_page_showroom", "contact")}
                       className="inline-flex min-h-12 items-center text-sm text-[var(--color-teal)] hover:underline"
                     >(260) 308-1457</a>
                   </div>

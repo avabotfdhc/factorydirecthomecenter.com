@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ComplianceDisclaimers } from "@/components/ComplianceDisclaimer";
-import { trackPhoneClick, trackEmailClick } from "@/lib/analytics";
+import { trackEmailClick } from "@/lib/analytics";
 import { CookiePreferencesLink } from "./CookiePreferencesLink";
 import { SERVICE_AREA_LINKS } from "@/lib/service-area-links";
 
@@ -117,7 +117,6 @@ export function Footer() {
               <p>
                 <a
                   href="tel:+12603081457"
-                  onClick={() => trackPhoneClick("footer_contact", "desktop")}
                   className="inline-flex min-h-12 items-center hover:text-[var(--color-lime-light)] transition-colors"
                 >
                   (260) 308-1457

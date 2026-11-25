@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { trackPhoneClick } from "@/lib/analytics";
 
 // Chattel vs land-home payment estimator for /financing.
 //
@@ -141,7 +140,6 @@ export function FinancingCalculator() {
           </dl>
           <a
             href="tel:2603081457"
-            onClick={() => trackPhoneClick("financing_calculator")}
             className="mt-auto pt-6 block"
           >
             <span className="flex items-center justify-center gap-2 w-full bg-[var(--color-teal)] hover:bg-[var(--color-teal-dark)] text-white rounded-lg py-3.5 text-sm font-bold tracking-widest uppercase transition-colors">

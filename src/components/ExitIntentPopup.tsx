@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { H3, H4 } from "./Heading";
 import { FadeIn } from "./VisualEffects";
-import { trackFormSubmit } from "@/lib/analytics";
+import { trackLeadFormSubmit } from "@/lib/analytics";
+import { useAntiSpam } from "@/lib/use-anti-spam";
 import { getSaleStatus, saleAmount, saleDeadlineLabel, saleScope } from "@/lib/sale";
 
 interface ExitIntentPopupProps {
@@ -23,6 +24,9 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const antiSpam = useAntiSpam();
 
   // "Already shown" is a ref, not state: nothing renders from it, only the
   // mouseleave handler reads it. As state it forced a re-render nobody saw,
@@ -69,18 +73,56 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    trackFormSubmit("exit_intent", { source: "popup", type: "email_capture" });
-    
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    setIsSubmitted(true);
-    
-    // Close after showing success
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 3000);
+
+    const address = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address)) {
+      setErrorMsg("Please enter a valid email address.");
+      return;
+    }
+
+    setErrorMsg("");
+    setIsSubmitting(true);
+    try {
+      // Real email-only lead to the same pipeline as every other form
+      // (Supabase + email/CRM fan-out). /api/leads accepts a lead with just an
+      // email as long as a name is present, so the popup sends a clear
+      // placeholder name that tells the sales team this came in email-only from
+      // the exit-intent offer — the follow-up collects the rest.
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...antiSpam.payload(),
+          firstName: "Exit-intent",
+          lastName: "lead (email only)",
+          email: address,
+          interest: sale.active ? sale.name : "Factory-direct quote",
+          message:
+            "Email captured by the exit-intent offer popup. Email only — follow up to collect name, phone and home interest.",
+          source: "Exit-Intent Popup",
+          pageUrl: window.location.href,
+        }),
+      });
+      if (!res.ok) throw new Error(`lead post failed: ${res.status}`);
+
+      // Track only after the save actually succeeds — a failed/discarded submit
+      // must not report a lead.
+      trackLeadFormSubmit("exit_intent", {
+        email: address,
+        interest: sale.active ? sale.name : "Factory-direct quote",
+        location: window.location.pathname,
+      });
+
+      setIsSubmitted(true);
+      // Close after showing success
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 3000);
+    } catch {
+      setErrorMsg("Something went wrong. Please try again, or call (260) 308-1457.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {
@@ -156,20 +198,28 @@ export function ExitIntentPopup({ offer, delay = 5000 }: ExitIntentPopupProps) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {antiSpam.fields}
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
+                    autoComplete="email"
                     className="w-full px-4 py-3 bg-[var(--color-cream-dark)] border border-[var(--color-charcoal)]/10 rounded-lg text-[var(--color-charcoal)] focus:ring-2 focus:ring-[var(--color-teal)] focus:border-transparent"
                     required
                   />
                   <button
                     type="submit"
-                    className="w-full py-3 bg-[var(--color-lime)] text-white font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors"
+                    disabled={isSubmitting}
+                    className="w-full py-3 bg-[var(--color-lime)] text-white font-bold rounded-lg hover:bg-[var(--color-lime-dark)] transition-colors disabled:opacity-60"
                   >
-                    {sale.active ? "Claim My Savings" : "Get My Quote"}
+                    {isSubmitting ? "Sending…" : sale.active ? "Claim My Savings" : "Get My Quote"}
                   </button>
+                  {errorMsg && (
+                    <p role="alert" className="text-sm text-red-600">
+                      {errorMsg}
+                    </p>
+                  )}
                 </form>
 
                 {sale.active && (

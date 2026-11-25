@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { getServerConsentSnapshot, getTrackingAllowedSnapshot, subscribeConsent } from "./consent";
@@ -222,20 +222,37 @@ export function MicrosoftClarity() {
 // TRACKING HOOKS & UTILITIES
 // ============================================
 
-// Hook for page view tracking
+// Hook for page view tracking.
+//
+// The GA4 bootstrap (ga-consent.ts) already configures the tag with
+// `send_page_view:true`, so gtag.js counts the FIRST page itself the moment
+// it loads. The Meta Pixel bootstrap likewise fires its own `PageView` on
+// load. If this hook also fired on its initial run, that first page would be
+// counted twice in both GA4 and Meta. So it skips its own first run and only
+// sends on subsequent client-side route changes (Next.js soft navigations),
+// which the bootstraps never see.
 export function usePageTracking() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  // The first effect run corresponds to the page the bootstrap already counted.
+  const bootstrapCounted = useRef(false);
 
   useEffect(() => {
     if (!pathname) return;
 
+    if (!bootstrapCounted.current) {
+      // Initial load: gtag `send_page_view` and the pixel bootstrap already
+      // counted this page. Record that we've seen it and send nothing.
+      bootstrapCounted.current = true;
+      return;
+    }
+
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : "");
-    
-    // GA4 Page View
+
+    // GA4 Page View (route change only)
     trackGA4PageView(url);
-    
-    // Facebook Page View
+
+    // Facebook Page View (route change only)
     trackFBEvent("PageView");
   }, [pathname, searchParams]);
 }
@@ -468,9 +485,18 @@ export function trackEvent(eventName: string, params?: TagParams) {
 // USER INTERACTION TRACKING
 // ============================================
 
-export function trackPhoneClick(location: string, pageType = "unknown") {
-  trackGA4Event("phone_call_click", { location, page_type: pageType });
+export function trackPhoneClick(location: string, pageType = "unknown", linkText?: string) {
+  trackGA4Event("phone_call_click", {
+    location,
+    page_type: pageType,
+    ...(linkText ? { link_text: linkText.slice(0, 120) } : {}),
+  });
+  // Meta gets BOTH: the custom PhoneCall (kept for continuity with any
+  // existing custom-conversion/audience set up on it) and the standard
+  // Contact event, which is the one Meta's optimiser and the Events Manager
+  // recognise as a contact action out of the box.
   FacebookEvents.phoneCall(location, pageType);
+  FacebookEvents.contact(location);
 }
 
 export function trackEmailClick(location: string, pageType = "unknown") {
@@ -489,6 +515,42 @@ export function trackScrollDepth(depth: number) {
 
 export function trackTimeOnPage(minutes: number) {
   trackGA4Event("time_on_page", { minutes });
+}
+
+// ============================================
+// SITE-WIDE PHONE-CLICK TRACKING HOOK
+// ============================================
+
+// One delegated listener for every `tel:` link on the site, instead of a
+// per-link onClick on each phone number. A single capture-phase listener on
+// document catches clicks on any current OR future `a[href^="tel:"]` (links
+// rendered after mount, inside modals, the mobile action bar, etc.) without
+// each call site having to remember to wire tracking — and, crucially, without
+// two handlers ever both firing for the same tap, which is what the old
+// per-link calls risked when a link sat inside another tracked element.
+//
+// `location` is the page path the tap happened on; `linkText` is the visible
+// label (falling back to the dialled number) so the report shows which CTA was
+// used. page_type stays "tel_link" to distinguish these delegated hits from any
+// bespoke call tracking elsewhere.
+export function usePhoneClickTracking() {
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as Element | null;
+      const link = target?.closest?.('a[href^="tel:"]') as HTMLAnchorElement | null;
+      if (!link) return;
+      const label = (link.textContent || link.getAttribute("aria-label") || link.href.replace(/^tel:/, "")).trim();
+      // Page path as the location, the visible label as the link text.
+      trackPhoneClick(window.location.pathname, "tel_link", label);
+    };
+
+    // Capture phase so the hit is recorded even if a nested handler calls
+    // stopPropagation, and `true` passive-free so it runs for every tap.
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, []);
 }
 
 // ============================================
@@ -811,6 +873,9 @@ export function useTracking() {
   usePageTracking();
   useScrollTracking();
   useTimeOnPageTracking();
+  // One delegated `tel:` listener for the whole site (replaces the per-link
+  // onClick calls that used to live on each phone number).
+  usePhoneClickTracking();
 }
 
 // ============================================

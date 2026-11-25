@@ -289,11 +289,6 @@ export function trackOutboundLink(url: string, label: string) {
   events.outboundLink(url, label);
 }
 
-// Track phone number clicks
-export function trackPhoneClick(location: string) {
-  events.phoneCallClick(location);
-}
-
 // Track email clicks  
 export function trackEmailClick(location: string) {
   events.emailClick(location);
