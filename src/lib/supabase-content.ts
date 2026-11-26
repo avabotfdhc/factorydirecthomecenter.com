@@ -216,6 +216,34 @@ export async function getSupabaseFloorPlans(
   return plans;
 }
 
+/**
+ * Every active plan's gallery photos (kind = gallery, drawings excluded), keyed
+ * by slug, in each plan's own order. One read for the whole catalogue — the
+ * /photos pages would otherwise need a detail read per plan. Returns {} when
+ * the read fails: the gallery then shows nothing rather than 500-ing.
+ */
+export async function getSupabasePlanPhotos(): Promise<Record<string, string[]>> {
+  let rows: Pick<FloorPlanRow, "slug" | "floor_plan_images">[];
+  try {
+    rows = (await rest(
+      `floor_plans?is_active=eq.true&select=slug,floor_plan_images(path,kind,sort_order)`,
+    )) as Pick<FloorPlanRow, "slug" | "floor_plan_images">[];
+  } catch (err) {
+    console.error(`[supabase] plan photos read failed: ${err instanceof Error ? err.message : err}`);
+    return {};
+  }
+  const out: Record<string, string[]> = {};
+  for (const r of Array.isArray(rows) ? rows : []) {
+    if (!r?.slug) continue;
+    out[String(r.slug)] = [...(r.floor_plan_images || [])]
+      .filter((i) => String(i.kind || "gallery").toLowerCase() === "gallery")
+      .sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0))
+      .map((i) => imgUrl(i.path))
+      .filter(Boolean);
+  }
+  return out;
+}
+
 /** One floor plan by slug, with full detail + gallery, from Supabase. */
 export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloorPlanDetail | null> {
   let rows: FloorPlanRow[];

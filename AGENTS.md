@@ -2409,3 +2409,30 @@ community, time frame — all now required in the designer).
 - Tests: `tests/design-summary.test.ts` and the "Home Designer copy" cases in
   `tests/leads.test.ts`.
 
+
+# Photo gallery: /photos and one page per room (2026-11-26)
+
+From the competitor review of 2026-11-26: Champion Homes Center
+(factorydirectmobilehomes.com) ranks 2nd–5th for "mobile home pictures",
+"mobile home photos", "mobile homes images" and three more variants (~1,000 US
+searches a month each) with a single gallery page. We held about 1,500 unique
+room photos on the plan pages and no page that gathered them.
+
+- `src/lib/gallery-rooms.ts` is the fixed room list (kitchens, living rooms,
+  primary bedrooms, bathrooms, bedrooms, dining, exteriors, laundry & entry). It
+  has no imports on purpose: `pages.ts` reads it to register `/photos/<room>`, and
+  the registry reaches client bundles.
+- `src/lib/photo-gallery.ts` groups photos with `describeImageFile()` — the same
+  reader that writes plan alt text. Drawings, renderings, cutaways, "main photo",
+  "staged interior" and anything it cannot name stay out. A file shared by a
+  HUD/modular twin is shown once, under the canonical (HUD) plan; rooms interleave
+  homes so the top of a page shows many homes.
+- `src/lib/photo-gallery-data.ts` loads it: the published catalogue
+  (`getApiFloorPlans`, so retired series never appear), `canonicalPlans`, and one
+  Supabase read for every plan's `kind = gallery` images (`getSupabasePlanPhotos`).
+- Page weight: the room page server-renders 24 tiles and holds the rest as data
+  until "Show more"; tiles use `CatalogueImage` (three-width srcset, lazy).
+- Every photo links to its plan page. The page says these are Champion's photos
+  of the models we sell — never call them photos of delivered customer homes.
+- `tests/photo-gallery.test.ts` pins the grouping, the twin dedupe and that every
+  room page is in the registry.
