@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { probeDealertideKey } from "@/lib/dealertide";
 import { dealertideEnvNames, inventoryToken } from "@/lib/dealertide-inventory-sync";
+import { isAdminRequest } from "@/lib/admin-auth";
+import { safeEqual } from "@/lib/request-guard";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,12 @@ export const dynamic = "force-dynamic";
 // eight days of leads in October 2026 (see AGENTS.md). Env var changes on
 // Vercel only reach deployments created after the change, so check this after
 // every redeploy.
+//
+// Who sees what (security fixes, 2026-11-26): anyone gets the two verdicts —
+// `ok` and `leadsReachCrm` — so an uptime monitor can watch them. The full
+// report (variable names, the Supabase host, upstream response bodies) is
+// shown only to a signed-in admin, or to a request carrying
+// `x-health-key: <HEALTH_CHECK_SECRET>` when that env var is set.
 
 const set = (name: string) => Boolean(process.env[name]);
 
@@ -33,7 +41,7 @@ async function probe(
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const configured = {
     supabaseUrl: set("NEXT_PUBLIC_SUPABASE_URL"),
     supabaseAnonKey: set("NEXT_PUBLIC_SUPABASE_ANON_KEY") || set("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
@@ -70,8 +78,22 @@ export async function GET() {
     probeDealertideKey(),
   ]);
 
+  const ok = configured.supabaseUrl && configured.supabaseAnonKey && supabase.status === 200;
+  const healthKey = process.env.HEALTH_CHECK_SECRET;
+  const full =
+    (healthKey ? safeEqual(request.headers.get("x-health-key"), healthKey) : false) ||
+    (await isAdminRequest());
+  if (!full) {
+    return NextResponse.json({
+      ok,
+      leadsReachCrm: dealerTideKey.verdict === "ok",
+      checkedAt: new Date().toISOString(),
+      detail: "Sign in at /admin to see the full report.",
+    });
+  }
+
   return NextResponse.json({
-    ok: configured.supabaseUrl && configured.supabaseAnonKey && supabase.status === 200,
+    ok,
     configured,
     supabase: { host: supabaseUrl ? new URL(supabaseUrl).host : null, floorPlansProbe: supabase },
     // "ok" means website leads can reach the CRM right now. "rejected" means

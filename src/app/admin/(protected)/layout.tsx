@@ -20,8 +20,23 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   const { status, user } = await verifyAdmin(token);
   if (status === "expired") redirect(refresh ? "/api/admin/refresh?next=/admin" : "/admin/login");
-  // status "error" (Supabase unreachable) keeps the session rather than
-  // bouncing a validly signed-in operator into a redirect loop.
+  // status "error" (Supabase unreachable or answering 5xx) fails CLOSED: the
+  // pages below read every lead with the service role, so an unverified
+  // session must never render them. A retry page (not a redirect) avoids
+  // bouncing a validly signed-in operator into a login loop.
+  if (status !== "ok") {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-[var(--color-cream)] px-6">
+        <div className="max-w-md text-center space-y-4">
+          <h1 className="font-serif text-2xl">Can&apos;t confirm your sign-in right now</h1>
+          <p>The sign-in service did not answer. Your session is kept; try again in a minute.</p>
+          <p>
+            <Link href="/admin" className="underline">Try again</Link>
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   const userName = user?.name || "Admin";
 

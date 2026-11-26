@@ -17,6 +17,21 @@ import { CATALOGUE_BUCKET_URL, SHORT_IMAGE_PREFIX } from "./src/lib/image-src";
 const SEO_AUDIT_BOT_UA_RE = /SemrushBot|SiteAuditBot|SplitSignalBot|AhrefsBot|AhrefsSiteAudit|Screaming Frog|MJ12bot|DotBot|rogerbot|SeznamBot|PetalBot/;
 const htmlLimitedBots = new RegExp(`${HTML_LIMITED_BOT_UA_RE.source}|${SEO_AUDIT_BOT_UA_RE.source}`, "i");
 
+const CSP_REPORT_ONLY = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://www.clarity.ms https://*.clarity.ms https://challenges.cloudflare.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data:",
+  "media-src 'self' blob: https:",
+  "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://www.facebook.com https://connect.facebook.net https://challenges.cloudflare.com",
+  "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://my.matterport.com https://www.google.com https://challenges.cloudflare.com https://*.supabase.co",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join('; ');
+
 const nextConfig: NextConfig = {
   htmlLimitedBots,
   // Native image library for the design-copy pictures
@@ -183,6 +198,13 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(self), payment=()',
           },
+          // Content-Security-Policy in REPORT-ONLY mode (security fixes,
+          // 2026-11-26): browsers log what the policy would block in the
+          // console and block nothing, so it cannot break a page. Once a
+          // week of browsing shows no violations from our own pages, rename
+          // the key to Content-Security-Policy to enforce it. Add a source
+          // here whenever a new third-party script, frame or API is added.
+          { key: 'Content-Security-Policy-Report-Only', value: CSP_REPORT_ONLY },
         ],
       },
     ];

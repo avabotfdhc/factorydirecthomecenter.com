@@ -8,6 +8,15 @@ import {
   setLiteraturePath,
   insertLiterature,
 } from "@/lib/supabase-admin";
+import { requireAdmin } from "@/lib/admin-auth";
+
+// Storage keys the import page builds (ImportClient.tsx): "<slug>/sales-<x>.pdf",
+// "<slug>/gallery-<name>" and "literature/<name>". Anything else — "..", a
+// leading slash, another folder depth — is refused before a URL is signed.
+const SAFE_KEY = /^[a-z0-9][a-z0-9-]*\/[A-Za-z0-9._-]+$/;
+function assertSafeKey(path: string): void {
+  if (!SAFE_KEY.test(path) || path.includes("..")) throw new Error(`Refused storage path: ${path}`);
+}
 
 /** One file the browser wants to upload, already classified client-side. */
 export interface PlannedUpload {
@@ -23,6 +32,8 @@ export interface PlannedUpload {
 
 /** Step 1: return a signed direct-upload URL for each planned file. */
 export async function prepareImport(items: PlannedUpload[]): Promise<Record<string, string>> {
+  await requireAdmin();
+  for (const it of items) assertSafeKey(it.path);
   const out: Record<string, string> = {};
   for (const it of items) {
     out[it.path] = await createSignedUploadUrl(it.path);
@@ -32,6 +43,8 @@ export async function prepareImport(items: PlannedUpload[]): Promise<Record<stri
 
 /** Step 2: after the browser has uploaded the bytes, record them in the DB. */
 export async function finalizeImport(items: PlannedUpload[]): Promise<{ ok: number; failed: string[] }> {
+  await requireAdmin();
+  for (const it of items) assertSafeKey(it.path);
   let ok = 0;
   const failed: string[] = [];
   const touchedSlugs = new Set<string>();
