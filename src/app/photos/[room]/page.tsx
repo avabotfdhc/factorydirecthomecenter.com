@@ -19,24 +19,15 @@ export function generateStaticParams() {
   return GALLERY_ROOMS.map((r) => ({ room: r.slug }));
 }
 
-/** "Primary bedrooms" → "Primary Bedrooms", for titles and the H1. */
-function titleCase(label: string): string {
-  return label.replace(/\b[a-z]/g, (c) => c.toUpperCase());
-}
-
-/** "Kitchens" → "kitchen", for "Mobile home kitchen pictures". */
-function singular(label: string): string {
-  return label.toLowerCase().replace(/ & /g, " and ").replace(/s$/, "");
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ room: string }> }): Promise<Metadata> {
   const { room: slug } = await params;
   const room = galleryRoom(slug);
   if (!room) return {};
   const count = (await getGallery()).get(room.slug)?.length ?? 0;
-  const what = singular(room.label);
+  const what = room.heading.toLowerCase().replace(/ & /g, " and ");
   return genMeta({
-    title: `Mobile Home ${titleCase(room.label)} Pictures${count ? ` (${count} Photos)` : ""}`,
+    title: `Mobile Home ${room.heading} Pictures${count ? ` (${count} Photos)` : ""}`,
     description: `${count ? `${count} photos` : "Photos"} of ${room.label.toLowerCase()} in Champion single wide, double wide and modular homes. ${room.blurb} Each photo links to its floor plan.`,
     keywords: [
       `mobile home ${what} pictures`,
@@ -66,7 +57,7 @@ export default async function RoomPhotosPage({ params }: { params: Promise<{ roo
             </Link>
           </p>
           <h1 className="font-serif text-4xl lg:text-5xl font-light tracking-tight mb-4">
-            Mobile Home {titleCase(room.label)} <span className="italic text-[var(--color-teal-light)]">Pictures</span>
+            Mobile Home {room.heading} <span className="italic text-[var(--color-teal-light)]">Pictures</span>
           </h1>
           <p className="text-lg text-white/70 max-w-2xl leading-relaxed">
             {photos.length > 0 ? `${photos.length} photos. ` : ""}

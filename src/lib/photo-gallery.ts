@@ -4,7 +4,7 @@
 // (factorydirectmobilehomes.com) ranks 2nd to 5th for "mobile home pictures",
 // "mobile home photos", "mobile homes images" and three more variants — about
 // 1,000 US searches a month each — with one photo-gallery page. We held
-// ~1,500 unique room photos on the plan pages and had no page that gathered
+// ~650 unique room photos (Aspire and Prime) on the plan pages and had no page that gathered
 // them, so none of those searches could land on us.
 //
 // What a photo shows comes from describeImageFile() (src/lib/image-alt.ts),

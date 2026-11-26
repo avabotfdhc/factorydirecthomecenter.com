@@ -147,7 +147,7 @@ export const sitePages: SitePage[] = [
   },
   ...GALLERY_ROOMS.map((r): SitePage => ({
     url: `/photos/${r.slug}`,
-    title: `Mobile Home ${r.label.replace(/\b[a-z]/g, (c) => c.toUpperCase())} Pictures`,
+    title: `Mobile Home ${r.heading} Pictures`,
     shortTitle: r.label,
     description: r.blurb,
     topics: ["photos", r.slug],

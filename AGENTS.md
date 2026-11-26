@@ -2415,8 +2415,8 @@ community, time frame — all now required in the designer).
 From the competitor review of 2026-11-26: Champion Homes Center
 (factorydirectmobilehomes.com) ranks 2nd–5th for "mobile home pictures",
 "mobile home photos", "mobile homes images" and three more variants (~1,000 US
-searches a month each) with a single gallery page. We held about 1,500 unique
-room photos on the plan pages and no page that gathered them.
+searches a month each) with a single gallery page. We held about 650 unique
+room photos (Aspire and Prime) on the plan pages and no page that gathered them.
 
 - `src/lib/gallery-rooms.ts` is the fixed room list (kitchens, living rooms,
   primary bedrooms, bathrooms, bedrooms, dining, exteriors, laundry & entry). It
