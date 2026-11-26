@@ -41,6 +41,8 @@ export async function GET() {
     anthropic: set("ANTHROPIC_API_KEY"),
     openai: set("OPENAI_API_KEY"),
     resend: set("RESEND_API_KEY"),
+    // the Home Designer's texted design copy (src/lib/design-summary-send.ts)
+    twilio: set("TWILIO_ACCOUNT_SID") && set("TWILIO_AUTH_TOKEN") && (set("TWILIO_MESSAGING_SERVICE_SID") || set("TWILIO_FROM_NUMBER")),
     leadWebhookSecret: set("LEAD_WEBHOOK_SECRET"),
     googleSheets: set("GOOGLE_SHEETS_ID") && set("GOOGLE_SERVICE_ACCOUNT_KEY"),
     dealerTide: set("DEALERTIDE_API_KEY"),

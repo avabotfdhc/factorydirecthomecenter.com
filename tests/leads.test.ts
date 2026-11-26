@@ -233,3 +233,44 @@ test("probeDealertideKey: 2xx is ok, 401 is rejected with the body, no response 
   assert.equal(r.verdict, "unreachable"); assert.equal(r.status, null);
   assert.match(r.detail, /no response within 300ms/);
 });
+
+// ── Home Designer: a copy of the design for the buyer ────────────────────────
+// The copy goes out only once every lead question is answered, only for the
+// Home Designer, and never changes what DealerTide gets. RESEND_API_KEY is
+// unset in this file, so a complete request reports "not-configured" rather
+// than reaching Resend.
+async function designerBody(overrides: Record<string, unknown> = {}) {
+  const { localFloorPlans } = await import("../src/lib/local-floor-plans");
+  const { encodeDesign, emptyPicks } = await import("../src/lib/design-summary");
+  const home = localFloorPlans.find((p) => !p.hidden)!.slug;
+  return {
+    firstName: "Dana", lastName: "Buyer", email: "dana@example.com", phone: "260-555-0101",
+    financingStatus: "Financing", landStatus: "I own my land", timeframe: "1–3 months",
+    source: "Home Designer", pageUrl: "/design-your-home", fillMs: 9000,
+    design: encodeDesign(emptyPicks(home)), sendCopy: { email: true, sms: true }, smsConsent: true,
+    ...overrides,
+  };
+}
+test("Home Designer copy: refused while a lead question is unanswered; the lead still goes through", async () => {
+  plan = [{ status: 201 }];
+  const res = await post(await designerBody({ timeframe: "" }));
+  assert.equal(res.status, 200);
+  const json = await res.json();
+  assert.deepEqual(json.designCopy, { email: "incomplete", sms: "incomplete" });
+  assert.equal(received.length, 1, "DealerTide still gets the lead");
+});
+test("Home Designer copy: a complete request is attempted, and reports a sender that is not set up", async () => {
+  plan = [{ status: 201 }];
+  const json = await (await post(await designerBody())).json();
+  assert.deepEqual(json.designCopy, { email: "not-configured", sms: "not-configured" });
+});
+test("Home Designer copy: a text needs its consent box", async () => {
+  plan = [{ status: 201 }];
+  const json = await (await post(await designerBody({ smsConsent: false, sendCopy: { email: false, sms: true } }))).json();
+  assert.deepEqual(json.designCopy, { email: "not-requested", sms: "incomplete" });
+});
+test("only the Home Designer can ask for a copy", async () => {
+  plan = [{ status: 201 }];
+  const json = await (await post(await designerBody({ source: "Contact Form" }))).json();
+  assert.ok(!("designCopy" in json));
+});
