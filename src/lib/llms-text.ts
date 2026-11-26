@@ -60,7 +60,7 @@ export function buildLlmsText(): string {
 
   const pages = getAllPages();
   const keyPages = [
-    "/floor-plans", "/single-wide-homes", "/double-wide-homes", "/design-your-home", "/homes-on-sale",
+    "/floor-plans", "/single-wide-homes", "/double-wide-homes", "/design-your-home", "/photos", "/homes-on-sale",
     "/champion-homes", "/options", "/showroom", "/locations", "/financing", "/faq", "/about", "/contact-us", "/blog",
   ]
     .map((url) => pages.find((p) => p.url === url))

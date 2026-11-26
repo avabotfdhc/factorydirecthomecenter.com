@@ -36,6 +36,7 @@ export function Footer() {
               {[
                 { href: "/floor-plans", label: "Floor Plans" },
                 { href: "/design-your-home", label: "Design Your Home" },
+                { href: "/photos", label: "Home Photos" },
                 { href: "/champion-homes", label: "Champion Homes" },
                 { href: "/homes-on-sale", label: "Homes on Sale" },
                 { href: "/financing", label: "Financing" },

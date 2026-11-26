@@ -288,7 +288,12 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
         {/* Gallery */}
         {plan.gallery.length > 1 && (
           <div className="mt-14">
-            <h2 className="font-serif text-2xl font-light mb-6">Gallery &amp; Floor Plan</h2>
+            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-6">
+              <h2 className="font-serif text-2xl font-light">Gallery &amp; Floor Plan</h2>
+              <Link href="/photos" className="text-sm font-medium text-[var(--color-teal)] hover:underline">
+                Compare rooms across every home →
+              </Link>
+            </div>
             <LightboxGallery
               images={galleryImages}
               gridClassName="grid grid-cols-2 md:grid-cols-3 gap-4"

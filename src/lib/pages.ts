@@ -2,6 +2,7 @@
 // Used by: sitemap.ts, PageFooter (related pages, breadcrumbs), /llms.txt (src/app/llms.txt/route.ts)
 
 import { OVERSTOCK_HOMES } from "./overstock-homes";
+import { GALLERY_ROOMS } from "./gallery-rooms";
 
 export interface SitePage {
   url: string;
@@ -130,6 +131,31 @@ export const sitePages: SitePage[] = [
     // full-screen view and the emailed/texted design copy
     updated: "2026-11-25",
   },
+  // Photo gallery (competitor review 2026-11-26): one hub and one page per
+  // room in GALLERY_ROOMS (src/lib/photo-gallery.ts). Keep the two in step:
+  // tests/photo-gallery.test.ts fails if a room page is missing here.
+  {
+    url: "/photos",
+    title: "Mobile & Manufactured Home Pictures",
+    shortTitle: "Photos",
+    description: "Photos of Champion single wide, double wide and modular homes, room by room. Every photo links to its floor plan.",
+    topics: ["photos", "floor-plans", "single-wide", "double-wide", "modular"],
+    cluster: "products",
+    priority: 0.7,
+    changeFrequency: "weekly",
+    updated: "2026-11-26",
+  },
+  ...GALLERY_ROOMS.map((r): SitePage => ({
+    url: `/photos/${r.slug}`,
+    title: `Mobile Home ${r.heading} Pictures`,
+    shortTitle: r.label,
+    description: r.blurb,
+    topics: ["photos", r.slug],
+    cluster: "products",
+    priority: 0.5,
+    changeFrequency: "weekly",
+    updated: "2026-11-26",
+  })),
   {
     url: "/showroom",
     title: "Visit Our Showroom & Model Homes in Auburn, IN",
