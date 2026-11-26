@@ -11,6 +11,8 @@ import { buildPlanNarrative, planTypeLabel } from "@/lib/plan-content";
 import { ShareListing } from "@/components/ShareListing";
 import { EmailBrochureForm } from "@/components/EmailBrochureForm";
 import { FloorPlanActions } from "@/components/QuoteModal";
+import { SaveHomeButton } from "@/components/SaveHomeButton";
+import { toSavedHome } from "@/lib/saved-homes-core";
 import { DesignThisHome } from "@/components/DesignThisHome";
 import { CurrentHome } from "@/lib/current-home";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
@@ -227,6 +229,10 @@ export default async function FloorPlanDetail({ params }: { params: Promise<{ sl
                 about, so its quote carries the plan instead of "Direct
                 Inquiry". */}
             <CurrentHome name={plan.name} series={plan.series} />
+
+            <div className="mb-5">
+              <SaveHomeButton home={toSavedHome(plan)} variant="full" location="floor_plan_detail" />
+            </div>
 
             <FloorPlanActions
               homeName={plan.name}

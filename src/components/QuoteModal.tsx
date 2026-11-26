@@ -190,6 +190,46 @@ export function ShowroomVisitButton({
   );
 }
 
+/**
+ * "Get prices on my saved homes" on /saved. The same quote dialog and lead
+ * path as a floor-plan page, with every saved home named in the interest and
+ * the message, and its own source so the CRM shows where it came from.
+ */
+export function SavedHomesQuoteButton({
+  homeNames,
+  className = "",
+}: {
+  homeNames: string[];
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  if (homeNames.length === 0) return null;
+  const list = homeNames.join(", ");
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          trackCTAClick("saved_homes_quote", "saved_homes", "quote_modal");
+          setOpen(true);
+        }}
+        className={className}
+      >
+        Get prices on my saved homes
+      </button>
+      {open && (
+        <QuoteDialog
+          homeName={homeNames.length === 1 ? list : `my saved homes (${list})`}
+          heading="Get prices on your saved homes"
+          source="Saved Homes"
+          mode="quote"
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
+  );
+}
+
 function QuoteDialog({
   homeName,
   mode,

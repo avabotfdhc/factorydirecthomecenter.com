@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useLocationSearch } from "@/lib/use-browser-value";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import { CompareTray, MAX_COMPARE } from "./CompareTray";
+import { SavedHomesLink } from "@/components/SaveHomeButton";
 import { FloorPlanCard } from "@/components/FloorPlanCard";
 import { jsonLdScript } from "@/lib/json-ld";
 
@@ -265,6 +266,7 @@ export function FloorPlansGrid({ plans }: { plans: ApiFloorPlan[] }) {
             </option>
           ))}
         </select>
+        <SavedHomesLink />
         <span className="text-sm text-[var(--color-gray)]" aria-live="polite">
           {visible.length} of {plans.length} homes
         </span>

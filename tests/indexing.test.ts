@@ -44,6 +44,8 @@ test("no page publishes hreflang alternates", () => {
 // and indexable and registered while src/lib/overstock-homes.ts has an entry.
 const NOT_INDEXED = new Set([
   "/search",
+  // the shopper's own saved-homes list, held in their browser (2026-11-26)
+  "/saved",
   "/design-system",
   ...(OVERSTOCK_HOMES.length === 0 ? ["/homes-on-sale/clearance"] : []),
 ]);
