@@ -19,6 +19,10 @@ const htmlLimitedBots = new RegExp(`${HTML_LIMITED_BOT_UA_RE.source}|${SEO_AUDIT
 
 const nextConfig: NextConfig = {
   htmlLimitedBots,
+  // Native image library for the design-copy pictures
+  // (/api/design-summary/*): loaded from node_modules at run time rather than
+  // bundled, so its platform binary ships with the function.
+  serverExternalPackages: ["@napi-rs/canvas"],
   // Inlined into server and client bundles alike, so a scheduled blog post
   // (\`publishAt\` in src/lib/local-posts.ts) is in or out of a deployment
   // consistently everywhere — never decided per request.

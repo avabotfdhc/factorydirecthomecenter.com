@@ -4,6 +4,8 @@ import { leadsStoreConfigured, storeLead } from "@/lib/leads-store";
 import { spamVerdict } from "@/lib/anti-spam";
 import { attributionSummaryLines, readAttributionCookie } from "@/lib/attribution";
 import { verifyTurnstile } from "@/lib/turnstile";
+import { decodeDesign } from "@/lib/design-summary";
+import { sendDesignCopy, type CopyResult } from "@/lib/design-summary-send";
 
 // DealerTide is tried twice with a 6s timeout each (see lib/dealertide.ts) and
 // the other channels run alongside it. Give the function room so a slow CRM
@@ -132,6 +134,25 @@ export async function POST(request: Request) {
     .filter(Boolean)
     .join("\n");
 
+  // The Home Designer can ask for a copy of the buyer's design by email and/or
+  // text (src/lib/design-summary-send.ts). Only reached past the spam and
+  // Turnstile checks above, only to this submission's own email and phone,
+  // and only when every lead question is answered; it never affects the lead.
+  const copyAsk = body.sendCopy && typeof body.sendCopy === "object" ? (body.sendCopy as Record<string, unknown>) : null;
+  const wantsCopy = lead.source === "Home Designer" && copyAsk !== null && (copyAsk.email === true || copyAsk.sms === true);
+  const copyJob: Promise<CopyResult | null> = wantsCopy
+    ? sendDesignCopy({
+        contact: lead,
+        rawDesign: decodeDesign(str(body.design)),
+        request: { email: copyAsk?.email === true, sms: copyAsk?.sms === true },
+        smsConsent: body.smsConsent === true,
+        origin: new URL(request.url).origin,
+      }).catch((err) => {
+        console.error("[leads] Design copy threw:", err instanceof Error ? err.message : err);
+        return null;
+      })
+    : Promise.resolve(null);
+
   // Run all channels concurrently; no single failure blocks the response
   const [storeResult, emailResult, sheetsResult, dtResult] = await Promise.allSettled([
     // Durable copy first, so nothing downstream can lose the lead.
@@ -197,7 +218,8 @@ export async function POST(request: Request) {
     await notifyLeadProblem(lead, "store-failed", String(storeResult.reason));
   }
 
-  return NextResponse.json({ success: true, message: "Lead received" });
+  const designCopy = await copyJob;
+  return NextResponse.json({ success: true, message: "Lead received", ...(designCopy ? { designCopy } : {}) });
 }
 
 

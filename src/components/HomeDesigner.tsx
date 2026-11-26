@@ -10,7 +10,22 @@ import { CurrentHome } from "@/lib/current-home";
 import type { DesignerSource } from "@/lib/designer-link";
 import { DoorSwatch, HomeElevation, type DoorStyle, type ExteriorChoices } from "@/components/HomeElevation";
 import { exteriorCatalog, swatchLabel, type ExteriorCatalog, type Swatch } from "@/lib/exterior-options";
-import { addedDoorSlots, featureEnd, featureFor, mergeFeatures, viewForFeature, type AddedDoor } from "@/lib/exterior-features";
+import { addedDoorSlots, featureFor, viewForFeature, type AddedDoor } from "@/lib/exterior-features";
+import {
+  BEDROOM_LAYOUTS,
+  KITCHENS,
+  LAND_OPTIONS,
+  PAYMENT_OPTIONS,
+  PRIMARY_BATHS,
+  SMS_CONSENT_TEXT,
+  TIMEFRAME_OPTIONS,
+  UPGRADES,
+  choicesFromPicks,
+  designLines,
+  encodeDesign,
+  endWhere,
+  type DesignPicks,
+} from "@/lib/design-summary";
 import type { PlanElevation, ViewName } from "@/lib/plan-elevation-types";
 
 // A lightweight "design your home" configurator. It does NOT price anything or
@@ -52,6 +67,19 @@ import type { PlanElevation, ViewName } from "@/lib/plan-elevation-types";
 // and a button under the desktop preview both jump to it. The bar hides
 // while the contact section is on screen and after submit; on a phone it
 // sits above the site's mobile action bar (--mobile-bar-h) rather than over it.
+//
+// Full screen: "Open full screen" above step 1, or a click on the picture,
+// lays the whole designer over the page (above the header, the mobile bar and
+// the chat, below the consent banner and the lot-visit dialog) with a Close
+// button. Escape and the browser's Back button close it too. It is the same
+// form in a different frame, so nothing the buyer picked is lost either way.
+//
+// A copy of the design: step 6 offers to email and/or text the buyer their
+// design (picture, floor plan, every pick, and the dealership's details).
+// /api/leads sends it with the lead (src/lib/design-summary-send.ts), and
+// only once every lead question is answered: name, email, phone, cash or
+// finance, land or community, and time frame. The text needs its own consent
+// box (SMS_CONSENT_TEXT), never pre-ticked.
 
 export interface DesignerPlan {
   slug: string;
@@ -63,21 +91,6 @@ export interface DesignerPlan {
   widthFt?: number;
   beds?: number;
 }
-
-// General upgrades on the Aspire quote checklist. Exterior items that now
-// have their own picker (porch, dormer, doors) are not repeated here.
-const UPGRADES = [
-  "Electric fireplace",
-  "Kitchen island",
-  "Stainless steel appliance package",
-  "Upgraded (overlay) cabinets",
-  "Farmhouse sink",
-  "Extra windows",
-  "Ceiling fans throughout",
-  "Washer & dryer",
-  "Energy/insulation upgrade package",
-  "Garden tub in primary bath",
-];
 
 const field =
   "w-full px-4 py-3 border border-[var(--color-charcoal)]/10 rounded focus:border-[var(--color-teal)] focus:ring-2 focus:ring-[var(--color-teal)]/30 focus:outline-none transition-colors bg-white";
@@ -191,12 +204,6 @@ const VIEWS: { key: ViewName; label: string }[] = [
   { key: "right", label: "Right end" },
 ];
 
-/** Where an end-wall option landed on this plan, for captions and the lead message. */
-function endWhere(elevation: PlanElevation, addonPorch: boolean): string {
-  const end = featureEnd(elevation, addonPorch);
-  return end ? ` (shown on the ${end} end)` : " (not drawn: this plan has no end-wall window for it; it stays on your quote)";
-}
-
 function previewCaption(home: DesignerPlan, elevation: PlanElevation, choices: ExteriorChoices, catalog: ExteriorCatalog, picks: { dormer: string; elevation: string }): ReactNode {
   const { features, addedDoors } = choices;
   const slots = addedDoorSlots(elevation, addedDoors);
@@ -238,6 +245,10 @@ interface PreviewProps {
   view: ViewName;
   onView: (v: ViewName) => void;
   onQuote: () => void;
+  /** the designer is laid over the page (its own header sits above this) */
+  full: boolean;
+  /** open the designer full screen; a click on the picture does this */
+  onExpand: () => void;
 }
 
 /**
@@ -247,9 +258,10 @@ interface PreviewProps {
  * part of this block on desktop and rendered separately below the swatches
  * on a phone (ElevationCaption), so the stuck block stays short.
  */
-function ElevationPreview({ home, elevation, state, choices, catalog, picks, view, onView, onQuote }: PreviewProps) {
+function ElevationPreview({ home, elevation, state, choices, catalog, picks, view, onView, onQuote, full, onExpand }: PreviewProps) {
   const frame = "rounded-xl border border-[var(--color-charcoal)]/10 bg-[#eaf1f5] overflow-hidden";
-  const column = "order-first lg:order-none sticky top-[72px] lg:top-24 self-start z-10 bg-white lg:bg-transparent space-y-3";
+  // under the site header normally; under the full-screen bar when laid over the page
+  const column = `order-first lg:order-none sticky ${full ? "top-[57px] lg:top-[72px]" : "top-[72px] lg:top-24"} self-start z-10 bg-white lg:bg-transparent space-y-3`;
   if (!home || state === "idle") {
     return (
       <div className={`${column} ${frame} flex items-center justify-center min-h-[120px] lg:min-h-[220px] p-6 text-center text-sm text-[var(--color-gray)]`}>
@@ -269,9 +281,19 @@ function ElevationPreview({ home, elevation, state, choices, catalog, picks, vie
   }
   return (
     <div className={column}>
-      <div className={frame}>
-        <HomeElevation plan={elevation} choices={choices} view={view} id={`dyh-${home.slug}`} />
-      </div>
+      {full ? (
+        <div className={frame}>
+          <HomeElevation plan={elevation} choices={choices} view={view} id={`dyh-${home.slug}`} />
+        </div>
+      ) : (
+        <button type="button" onClick={onExpand} aria-label="Open the designer full screen" className={`${frame} relative block w-full cursor-zoom-in group`}>
+          <HomeElevation plan={elevation} choices={choices} view={view} id={`dyh-${home.slug}`} />
+          <span className="absolute top-2 right-2 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold tracking-wide uppercase text-[var(--color-charcoal)] shadow-sm group-hover:bg-white">
+            <ExpandIcon />
+            Full screen
+          </span>
+        </button>
+      )}
       <div className="flex flex-wrap items-center gap-1.5 lg:gap-2 pb-2 lg:pb-0" role="tablist" aria-label="Elevation view">
         {VIEWS.map((v) => (
           <button
@@ -305,21 +327,30 @@ function ElevationPreview({ home, elevation, state, choices, catalog, picks, vie
   );
 }
 
+function ExpandIcon() {
+  return (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+    </svg>
+  );
+}
+
 /**
  * The bottom-of-viewport ask once a home is chosen. Hidden while the contact
  * section is on screen (nothing to jump to) and after submit. Stacks above the
  * mobile action bar and the consent banner via the CSS variables they publish.
  */
-function QuoteBar({ homeName, show, onClick }: { homeName: string; show: boolean; onClick: () => void }) {
+function QuoteBar({ homeName, show, full, onClick }: { homeName: string; show: boolean; full: boolean; onClick: () => void }) {
   if (!show) return null;
   return (
     <div
       data-designer-quote-bar=""
-      style={{ bottom: "calc(var(--consent-h, 0px) + var(--mobile-bar-h, 0px))" }}
+      // full screen covers the mobile action bar, so the bar sits on the bottom edge
+      style={{ bottom: full ? "var(--consent-h, 0px)" : "calc(var(--consent-h, 0px) + var(--mobile-bar-h, 0px))" }}
       className="fixed left-0 right-0 z-40 px-3 pb-2 pointer-events-none"
     >
       {/* below md the chat launcher sits at the right edge on the same line, so the bar stops short of it */}
-      <div className="pointer-events-auto mr-[4.75rem] md:mx-auto max-w-3xl flex items-center justify-between gap-3 rounded-xl border border-[var(--color-teal)]/30 bg-white/95 backdrop-blur-md shadow-[0_10px_30px_-12px_rgba(0,0,0,.35)] px-4 py-2.5">
+      <div className={`pointer-events-auto ${full ? "" : "mr-[4.75rem]"} md:mx-auto max-w-3xl flex items-center justify-between gap-3 rounded-xl border border-[var(--color-teal)]/30 bg-white/95 backdrop-blur-md shadow-[0_10px_30px_-12px_rgba(0,0,0,.35)] px-4 py-2.5`}>
         <p className="hidden sm:block min-w-0 text-sm text-[var(--color-charcoal)] truncate">
           Your <span className="font-semibold">{homeName}</span> design is ready to price.
         </p>
@@ -347,6 +378,7 @@ export function HomeDesigner({
   initialHome,
   initialSiding,
   source,
+  copyChannels = { email: false, sms: false },
 }: {
   plans: DesignerPlan[];
   /** a plan slug to preselect (?home=) */
@@ -355,6 +387,8 @@ export function HomeDesigner({
   initialSiding?: string;
   /** which entry point sent the visitor (?src=), for the funnel events */
   source?: DesignerSource;
+  /** the design copies this deployment can send; a channel that is off is not offered */
+  copyChannels?: { email: boolean; sms: boolean };
 }) {
   const [homeSlug, setHomeSlug] = useState(initialHome || "");
   const [bedroomLayout, setBedroomLayout] = useState("");
@@ -387,6 +421,56 @@ export function HomeDesigner({
   const [errors, setErrors] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
+  // a copy of the design for the buyer: email on by default, text only by
+  // its own consent box (never pre-ticked)
+  const [copyEmail, setCopyEmail] = useState(copyChannels.email);
+  const [copySms, setCopySms] = useState(false);
+  const [copySent, setCopySent] = useState<{ email: string; sms: string; toEmail: string; toPhone: string } | null>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  // Full screen: the same form, laid over the page. A history entry is pushed
+  // so the phone's Back button closes it instead of leaving the page.
+  const [full, setFull] = useState(false);
+  const shellRef = useRef<HTMLDivElement>(null);
+  const openFull = (from: "button" | "picture") => {
+    if (full) return;
+    setFull(true);
+    step("full_screen", { plan: homeSlug || undefined, from });
+    try {
+      window.history.pushState({ ...(window.history.state || {}), dyhFull: true }, "");
+    } catch {
+      /* a sandboxed frame can refuse; Close and Escape still work */
+    }
+    // from the picture, land on the picture, not back at step 1
+    if (from === "picture") {
+      window.requestAnimationFrame(() =>
+        window.requestAnimationFrame(() => document.getElementById("design-colors")?.scrollIntoView({ block: "start" })),
+      );
+    }
+  };
+  const closeFull = () => {
+    if (window.history.state?.dyhFull) window.history.back();
+    else setFull(false);
+  };
+  useEffect(() => {
+    if (!full) return;
+    const root = document.documentElement;
+    const before = root.style.overflow;
+    root.style.overflow = "hidden";
+    const onPop = () => setFull(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || document.querySelector("[role='dialog'][aria-modal='true']:not([data-designer-full])")) return;
+      if (window.history.state?.dyhFull) window.history.back();
+      else setFull(false);
+    };
+    window.addEventListener("popstate", onPop);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      root.style.overflow = before;
+      window.removeEventListener("popstate", onPop);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [full]);
   // the contact section: the bottom bar hides while it is on screen, and the
   // "get a quote" buttons scroll to it
   const contactRef = useRef<HTMLFieldSetElement>(null);
@@ -480,25 +564,35 @@ export function HomeDesigner({
     return () => ctrl.abort();
   }, [selectedHome, catalog, source]);
 
-  // What the picture is drawn in: the buyer's picks, with the board's first
-  // colour standing in until they choose.
-  const pick = (list: Swatch[], label: string): Swatch => list.find((s) => s.label === label) || list[0];
-  const features = mergeFeatures(dormer, elevationOption);
-  const addedDoors = extraDoors.filter((id): id is AddedDoor => id === "patio" || id === "atrium");
-  const choices: ExteriorChoices = {
-    siding: pick(catalog.siding, siding),
-    shingles: pick(catalog.shingles, shingle),
+  // Every pick in one object: what the picture is drawn in (the board's first
+  // colour standing in until they choose), what the lead message lists, and
+  // what the buyer's emailed or texted copy is rebuilt from
+  // (src/lib/design-summary.ts).
+  const picks: DesignPicks = {
+    home: homeSlug,
+    bedroomLayout,
+    kitchen,
+    primaryBath,
+    siding,
+    shingle,
+    shutter,
     trim,
-    shutter: pick(catalog.shutters, shutter || "Black"),
-    gableAccent: gableAccent ? pick(catalog.gableAccents, gableAccent) : null,
+    gableAccent,
+    door,
+    extraDoors,
+    blackPackage,
+    dormer,
+    elevation: elevationOption,
     foundation,
     addonPorch,
-    door,
-    blackPackage,
-    windowGrids: catalog.windowGrids,
-    features,
-    addedDoors,
+    cabinet,
+    flooring,
+    countertop,
+    upgrades,
+    view,
   };
+  const choices: ExteriorChoices = choicesFromPicks(catalog, picks);
+  const { features, addedDoors } = choices;
   // where each added door landed, for the checkbox hint and the lead message
   const doorSlots = elevation ? addedDoorSlots(elevation, addedDoors) : {};
 
@@ -558,57 +652,24 @@ export function HomeDesigner({
     if (!lastName) errs.push("Last name is required.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.push("A valid email is required.");
     if (phone.replace(/\D/g, "").length < 10) errs.push("A valid phone number is required.");
+    if (!payment) errs.push("Please tell us if you are paying cash or financing.");
+    if (!land) errs.push("Please tell us if you have land or a lot in a community.");
+    if (!timeframe) errs.push("Please choose your time frame.");
     setErrors(errs);
     if (errs.length) {
       trackLeadFormError("home_designer", errs);
+      window.requestAnimationFrame(() => errorRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
       return;
     }
 
-    const doorLabel = catalog.doors.find((d) => d.id === door)?.label;
-    const dormerLabel = catalog.dormers.find((d) => d.id === dormer)?.label;
-    const elevationLabel = catalog.elevations.find((d) => d.id === elevationOption)?.label;
-    const extraDoorLabels = extraDoors.map((id) => {
-      const label = catalog.extraDoors.find((d) => d.id === id)?.label || id;
-      const slot = doorSlots[id as AddedDoor];
-      return slot ? `${label} (shown on the ${slot.view} wall; placement to confirm)` : label;
-    });
-    const endNote = features.end && elevation ? endWhere(elevation, addonPorch) : "";
     // Pack every design choice into a readable summary for the sales team.
     const lines = [
-      `Home: ${selectedHome ? `${selectedHome.name}${selectedHome.series ? ` (${selectedHome.series} Series, ${selectedHome.homeType})` : ""}` : homeSlug}`,
-      bedroomLayout && `Bedroom layout: ${bedroomLayout}`,
-      kitchen && `Kitchen: ${kitchen}`,
-      primaryBath && `Primary bath: ${primaryBath}`,
-      siding && `Siding color: ${siding}${isPrime ? " (Prime)" : ""}`,
-      shingle && `Shingle color: ${shingle}`,
-      blackPackage
-        ? "Black Exterior package (black soffit, fascia, drip edge, lineals; Black Craftsman door; non-gridded windows)"
-        : trim === "lineals"
-          ? "Window trim: lineals (no shutters)"
-          : shutter && `Shutter color: ${shutter}`,
-      !blackPackage && door !== "6-panel" && doorLabel && `Front door: ${doorLabel}`,
-      extraDoorLabels.length && `Add: ${extraDoorLabels.join(", ")}`,
-      gableAccent && `Gable shake accent: ${gableAccent}`,
-      dormerLabel && `Dormer: ${dormerLabel} (shown over the entry; placement to confirm)`,
-      elevationLabel && `Elevation option: ${elevationLabel}${endNote}`,
-      addonPorch && "Add Champion's optional porch",
-      `Foundation shown: ${foundation === "block" ? "block perimeter wall" : "vinyl skirting"}`,
-      elevation &&
-        `Exterior preview: ${
-          elevation.src !== "sheet"
-            ? "representative layout (no sheet on file)"
-            : elevation.basedOn
-              ? `drawn from the ${elevation.basedOn} sheet (base plan of this reverse-aisle model, not mirrored)`
-              : `drawn from sales sheet ${elevation.model || ""}`
-        }`,
-      cabinet && `Cabinet finish: ${cabinet}`,
-      flooring && `Flooring: ${flooring}`,
-      countertop && `Countertop: ${countertop}`,
-      upgrades.length && `Upgrades: ${upgrades.join(", ")}`,
+      ...designLines({ home: selectedHome, catalog, picks, elevation, audience: "sales" }),
       payment && `Payment: ${payment}`,
       land && `Land status: ${land}`,
       timeframe && `Decision timeframe: ${timeframe}`,
       notes && `Notes: ${notes}`,
+      (copyEmail || copySms) && `Asked for a copy of this design by: ${[copyEmail && "email", copySms && "text"].filter(Boolean).join(" and ")}`,
     ].filter(Boolean);
     const message = `Home Designer submission —\n${lines.join("\n")}`;
 
@@ -631,9 +692,14 @@ export function HomeDesigner({
           message,
           source: "Home Designer",
           pageUrl: window.location.href,
+          // the copy is always drawn from the front
+          design: encodeDesign({ ...picks, view: "front" }),
+          sendCopy: { email: copyEmail, sms: copySms },
+          smsConsent: copySms,
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const reply = (await res.json().catch(() => null)) as { designCopy?: { email?: string; sms?: string } } | null;
       trackLeadFormSubmit("home_designer", {
         id: `lead_${Date.now()}`,
         name: `${firstName} ${lastName}`,
@@ -647,8 +713,14 @@ export function HomeDesigner({
         currency: "USD",
       });
       step("submitted", { plan: selectedHome?.slug, series: catalog.series, preview: elevation?.src || "none" });
+      if (copyEmail || copySms) {
+        const sent = { email: reply?.designCopy?.email || "unknown", sms: reply?.designCopy?.sms || "unknown" };
+        step("design_copy", { plan: selectedHome?.slug, email: copyEmail ? sent.email : "not-requested", sms: copySms ? sent.sms : "not-requested" });
+        setCopySent({ ...sent, toEmail: email, toPhone: phone });
+      }
       setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (full) shellRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setErrors(["Something went wrong submitting your design — please try again or call (260) 308-1457."]);
       trackLeadFormError("home_designer", ["submission_failed"]);
@@ -657,14 +729,73 @@ export function HomeDesigner({
     }
   }
 
+  // The frame: inline on the page, or laid over it in full screen with its
+  // own bar and Close button. A plain function, not a component, so switching
+  // frames never remounts the form and nothing picked is lost.
+  const shell = (content: ReactNode) => (
+    <div
+      ref={shellRef}
+      data-designer-full={full ? "" : undefined}
+      role={full ? "dialog" : undefined}
+      aria-modal={full ? true : undefined}
+      aria-label={full ? "Design your home, full screen" : undefined}
+      className={full ? "fixed inset-0 z-[55] overflow-y-auto overscroll-contain bg-[var(--color-cream)]" : undefined}
+    >
+      {full ? (
+        <div className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-[var(--color-charcoal)]/10 bg-white/95 backdrop-blur-md px-4 py-3">
+          <p className="min-w-0 truncate font-serif text-lg">
+            {selectedHome ? (
+              <>
+                Designing the <strong className="font-semibold">{selectedHome.name}</strong>
+              </>
+            ) : (
+              "Design your home"
+            )}
+          </p>
+          <button
+            type="button"
+            onClick={closeFull}
+            className="shrink-0 inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-charcoal)]/15 bg-white px-3 py-1.5 text-xs font-bold tracking-widest uppercase hover:bg-[var(--color-charcoal)]/5 transition-colors"
+          >
+            Close
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} aria-hidden="true"><path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+        </div>
+      ) : (
+        !submitted && (
+          <div className="mb-4 flex justify-end">
+            <button
+              type="button"
+              onClick={() => openFull("button")}
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-teal)]/40 bg-white px-4 py-2 text-xs font-bold tracking-widest uppercase text-[var(--color-teal)] hover:bg-[var(--color-teal)]/8 transition-colors"
+            >
+              <ExpandIcon />
+              Open full screen
+            </button>
+          </div>
+        )
+      )}
+      <div className={full ? "max-w-6xl mx-auto px-4 lg:px-8 py-6 lg:py-8" : undefined}>{content}</div>
+    </div>
+  );
+
+  const copyLine = (status: string, sentText: string, failedText: string) =>
+    status === "not-requested" ? null : <li>{status === "sent" ? sentText : failedText}</li>;
+
   if (submitted) {
-    return (
+    return shell(
       <div className="max-w-2xl mx-auto text-center bg-[var(--color-lime)]/12 border border-[var(--color-lime)]/50 rounded-2xl p-10">
         <h2 className="font-serif text-3xl font-light mb-3">Your design is on its way! 🎉</h2>
         <p className="text-[var(--color-gray)] mb-6">
           Thanks{selectedHome ? ` for designing your ${selectedHome.name}` : ""}. Our team will review your
           selections and follow up — usually within one business day — with next steps and a line-item quote.
         </p>
+        {copySent && (
+          <ul className="text-sm font-medium mb-6 space-y-1">
+            {copyLine(copySent.email, `We emailed a copy of your design to ${copySent.toEmail}.`, "We couldn\u2019t email your copy just now. Our team has your design and can send it with your quote.")}
+            {copyLine(copySent.sms, `We texted a copy of your design to ${copySent.toPhone}.`, "We couldn\u2019t text your copy just now. Our team has your design and can send it with your quote.")}
+          </ul>
+        )}
         <p className="text-[var(--color-gray)] mb-6">
           Want to walk through one in person? Our Auburn lot has Champion model homes you can tour &mdash; book a time so someone is free to show you around.
         </p>
@@ -681,17 +812,17 @@ export function HomeDesigner({
             Browse more homes
           </Link>
         </div>
-      </div>
+      </div>,
     );
   }
 
   const sectionLabel = catalog.section === "single" ? "single-wide" : catalog.section === "modular" ? "modular" : "multi-section";
 
-  return (
+  return shell(
     <form onSubmit={handleSubmit} onChange={markStarted} className="space-y-6" noValidate>
       {antiSpam.fields}
       {errors.length > 0 && (
-        <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
+        <div ref={errorRef} role="alert" className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
           <ul className="list-disc list-inside space-y-1">
             {errors.map((e) => <li key={e}>{e}</li>)}
           </ul>
@@ -731,34 +862,28 @@ export function HomeDesigner({
             <span className="block text-sm font-medium mb-2">Bedroom layout</span>
             <select className={field} value={bedroomLayout} onChange={(e) => setBedroomLayout(e.target.value)}>
               <option value="">As designed</option>
-              <option>Convert to 2-bedroom with larger living area</option>
-              <option>Add a bedroom if available</option>
-              <option>Add a study / den</option>
+              {BEDROOM_LAYOUTS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </label>
           <label className="block">
             <span className="block text-sm font-medium mb-2">Kitchen</span>
             <select className={field} value={kitchen} onChange={(e) => setKitchen(e.target.value)}>
               <option value="">As designed</option>
-              <option>Add a kitchen island</option>
-              <option>Ultimate kitchen upgrade</option>
-              <option>Summit kitchen upgrade</option>
+              {KITCHENS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </label>
           <label className="block">
             <span className="block text-sm font-medium mb-2">Primary bath</span>
             <select className={field} value={primaryBath} onChange={(e) => setPrimaryBath(e.target.value)}>
               <option value="">As designed</option>
-              <option>Walk-in shower</option>
-              <option>Garden / soaking tub</option>
-              <option>Double vanity</option>
+              {PRIMARY_BATHS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </label>
         </div>
       </fieldset>
 
       {/* 3. Colors & finishes — the chosen home's own Champion selections */}
-      <fieldset className={sectionCls}>
+      <fieldset id="design-colors" className={`${sectionCls} scroll-mt-20`}>
         <legend className={legendCls}><span className="text-[var(--color-lime-dark)] font-bold">3.</span> Colors &amp; finishes</legend>
         <p className="text-sm text-[var(--color-gray)] mb-5">
           {isPrime
@@ -907,6 +1032,8 @@ export function HomeDesigner({
                 view={view}
                 onView={changeView}
                 onQuote={() => goToQuote("preview")}
+                full={full}
+                onExpand={() => openFull("picture")}
               />
             </div>
           </div>
@@ -944,37 +1071,29 @@ export function HomeDesigner({
         )}
       </fieldset>
 
-      {/* 5. Qualifying */}
+      {/* 5. Qualifying — all three required, for the quote and for a copy of the design */}
       <fieldset className={sectionCls}>
         <legend className={legendCls}><span className="text-[var(--color-lime-dark)] font-bold">5.</span> A few quick questions</legend>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <label className="block">
             <span className="block text-sm font-medium mb-2">Paying cash or financing? <span className="text-red-500" aria-hidden="true">*</span></span>
-            <select className={field} value={payment} onChange={(e) => setPayment(e.target.value)}>
+            <select className={field} value={payment} onChange={(e) => setPayment(e.target.value)} required aria-required="true">
               <option value="">Select…</option>
-              <option>Paying cash</option>
-              <option>Financing</option>
-              <option>Not sure yet</option>
+              {PAYMENT_OPTIONS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </label>
           <label className="block">
-            <span className="block text-sm font-medium mb-2">Do you have land or a spot?</span>
-            <select className={field} value={land} onChange={(e) => setLand(e.target.value)}>
+            <span className="block text-sm font-medium mb-2">Your land, or a lot in a community? <span className="text-red-500" aria-hidden="true">*</span></span>
+            <select className={field} value={land} onChange={(e) => setLand(e.target.value)} required aria-required="true">
               <option value="">Select…</option>
-              <option>I own my land</option>
-              <option>I have a lot in a community / park</option>
-              <option>I need to find land or a lot</option>
-              <option>Not sure yet</option>
+              {LAND_OPTIONS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </label>
           <label className="block">
-            <span className="block text-sm font-medium mb-2">Decision timeframe</span>
-            <select className={field} value={timeframe} onChange={(e) => setTimeframe(e.target.value)}>
+            <span className="block text-sm font-medium mb-2">Decision timeframe <span className="text-red-500" aria-hidden="true">*</span></span>
+            <select className={field} value={timeframe} onChange={(e) => setTimeframe(e.target.value)} required aria-required="true">
               <option value="">Select…</option>
-              <option>1–3 months</option>
-              <option>3–6 months</option>
-              <option>6–9 months</option>
-              <option>9–12 months</option>
+              {TIMEFRAME_OPTIONS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </label>
         </div>
@@ -1002,11 +1121,40 @@ export function HomeDesigner({
           </label>
           <label className="block sm:col-span-2"><span className="block text-sm font-medium mb-2">Anything else we should know?</span><textarea name="notes" rows={3} className={`${field} resize-none`} /></label>
         </div>
+
+        {/* A copy of the design for the buyer, sent with the lead once every
+            question above is answered (src/lib/design-summary-send.ts). */}
+        {(copyChannels.email || copyChannels.sms) && (
+        <div className="mt-6 rounded-xl border border-[var(--color-teal)]/25 bg-[var(--color-teal)]/[0.04] p-5">
+          <p className="font-serif text-lg font-light mb-1">Send me a copy of my design</p>
+          <p className="text-xs text-[var(--color-gray)] mb-4">
+            The picture of your home, its floor plan and every choice you made, with our address and phone number. Sent when you submit,
+            once every question above is answered.
+          </p>
+          <div className="space-y-3">
+            {copyChannels.email && (
+            <label className="flex items-start gap-3 cursor-pointer text-sm">
+              <input type="checkbox" checked={copyEmail} onChange={(e) => setCopyEmail(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[var(--color-teal)]" />
+              <span className="font-medium">Email my design to the email address above.</span>
+            </label>
+            )}
+            {copyChannels.sms && (
+            <label className="flex items-start gap-3 cursor-pointer text-sm">
+              <input type="checkbox" checked={copySms} onChange={(e) => setCopySms(e.target.checked)} className="mt-0.5 w-4 h-4 accent-[var(--color-teal)]" />
+              <span>
+                <span className="font-medium">{SMS_CONSENT_TEXT.split(". ")[0]}.</span>{" "}
+                <span className="text-xs text-[var(--color-gray)]">{SMS_CONSENT_TEXT.split(". ").slice(1).join(". ")}</span>
+              </span>
+            </label>
+            )}
+          </div>
+        </div>
+        )}
       </fieldset>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
         <button type="submit" disabled={busy} className="w-full sm:w-auto bg-[var(--color-teal)] text-white px-10 py-4 text-sm font-bold tracking-widest uppercase rounded-lg hover:bg-[var(--color-teal-dark)] transition-colors disabled:opacity-60">
-          {busy ? "Submitting…" : "Submit My Design"}
+          {busy ? "Submitting…" : copyEmail || copySms ? "Submit & Send My Design" : "Submit My Design"}
         </button>
         <p className="text-xs text-[var(--color-gray)]">No obligation. We&rsquo;ll follow up with a line-item quote — you see exactly what you pay for.</p>
       </div>
@@ -1016,8 +1164,9 @@ export function HomeDesigner({
       <QuoteBar
         homeName={selectedHome?.name || ""}
         show={Boolean(selectedHome) && elevationState !== "loading" && !contactInView}
+        full={full}
         onClick={() => goToQuote("bar")}
       />
-    </form>
+    </form>,
   );
 }

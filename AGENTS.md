@@ -54,6 +54,7 @@ only whether the *env vars* are set, which for these two is `false` by design.
 - `LEAD_WEBHOOK_SECRET` (+ optional `LEAD_ALERT_EMAIL_TO`, default sales@) — Supabase Database Webhook on `leads` INSERT posts to `/api/webhooks/new-lead` with header `x-webhook-secret`; the route emails the lead via Resend.
 - `ANTHROPIC_API_KEY` (optional `ANTHROPIC_CHAT_MODEL`, default `claude-haiku-5-5`; `ANTHROPIC_BASE_URL` only for the local mock) — powers Ava (`/api/chat`). `OPENAI_API_KEY` (optional `OPENAI_CHAT_MODEL`, default `gpt-4o-mini`; `OPENAI_BASE_URL` for the mock) is the fallback, used only when the Anthropic key is unset. Neither set → the chat widget uses its scripted replies. See "Ava" below.
 - `RESEND_API_KEY`, `LEAD_EMAIL_TO`, `GOOGLE_SHEETS_ID`, `GOOGLE_SERVICE_ACCOUNT_KEY`, DealerTide keys — lead fan-out channels in `/api/leads`; each is skipped when unset. When `RESEND_API_KEY` is set the route also emails `LEAD_EMAIL_TO` whenever DealerTide rejects a lead, skips it as a duplicate (202), or the Supabase copy fails.
+- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` and `TWILIO_MESSAGING_SERVICE_SID` (or `TWILIO_FROM_NUMBER`), plus optional `DESIGN_COPY_FROM` — the Home Designer's emailed/texted design copy (see "Design Your Home: full screen and the buyer's copy"). Email uses `RESEND_API_KEY`. `/api/health` → `configured.resend` / `configured.twilio`.
 - `LEGACY_CMS_LEADS=1` — re-enables the legacy CMS enquiry channel in `/api/leads`. Off by default since 2026-09-11: that API has answered 5xx since 2026-08-29 and `/admin` reads leads from Supabase.
 - `/api/leads` drops submissions with the hidden `website` honeypot filled or submitted under 2.5s after the form mounted (`src/lib/anti-spam.ts`, `src/lib/use-anti-spam.tsx`), answering 200 so bots learn nothing. Platform-level rate limiting is a Vercel Firewall rule, not code.
 
@@ -2103,7 +2104,9 @@ page above still carries its entry point.
 
 The funnel is measured: every step fires a GA4 `designer_step` event with
 `step` (`plan_selected` with `source`, `preview_loaded`, `exterior_pick` with
-`field`/`value`, `view`, `cta_quote`, `submitted`) next to the existing
+`field`/`value`, `view`, `cta_quote`, `submitted`, and since 2026-11-25
+`full_screen` with `from` (`button`/`picture`) and `design_copy` with the
+`email`/`sms` result) next to the existing
 `lead_form_start` / `lead_form_submit` events, so the path from plan to quote
 can be read in Analytics. The page also
 carries server-rendered "how it works" copy and a three-question FAQ (FAQPage
@@ -2361,4 +2364,48 @@ unresolved. Do not write a cause down as fact.
   changed title, `/api/health`: a merged PR proved nothing for five days.
 - The second project (`factorydirecthomescenter-com`) is not watched: it
   serves no domain.
+
+# Design Your Home: full screen and the buyer's copy
+
+Added 2026-11-25 at Kyle's request: the designer opens full screen on click,
+and a buyer can have their design emailed and/or texted to them, but only once
+the whole lead form is answered (name, email, phone, cash or finance, land or
+community, time frame — all now required in the designer).
+
+- **Full screen** is a frame, not a route: `HomeDesigner`'s `shell()` lays the
+  same form over the page (`fixed inset-0 z-[55]`: above the header, mobile bar
+  and chat at z-50, below the consent banner at z-60 and the lot-visit dialog at
+  z-100). "Open full screen" above step 1 or a click on the picture opens it;
+  Close, Escape and Back close it (a history entry is pushed). Nothing remounts.
+- **The copy** is sent by `/api/leads` itself, after the spam and Turnstile
+  checks, when `source` is "Home Designer" and `sendCopy` asks for it
+  (`src/lib/design-summary-send.ts`). It goes only to that submission's own
+  email and phone, only when `missingForCopy()` is empty, and a text also needs
+  `smsConsent` (the never-pre-ticked box worded by `SMS_CONSENT_TEXT`). The
+  response carries `designCopy: { email, sms }` (`sent`, `not-requested`,
+  `not-configured`, `incomplete`, `failed`); the lead itself is never affected.
+- **What is in it** is rebuilt from the catalogue, never taken from the
+  request: the home by slug (`src/lib/designer-plans.ts`), every pick checked
+  against that home's board (`sanitizePicks` in `src/lib/design-summary.ts`),
+  the same `designLines()` the sales team's lead message uses, the dealership's
+  name, address, phone, email, site and hours from `BUSINESS`. The buyer's first
+  name is the only request text in it (escaped); their notes are left out.
+- **Pictures** are rasters because email clients do not show SVG:
+  `/api/design-summary/image?d=<encodeDesign>` (PNG of the elevation, same
+  `HomeElevation` drawing) and `/api/design-summary/floor-plan?home=<slug>` (the
+  plan's drawing as JPEG; most are WebP). Both use `@napi-rs/canvas`
+  (`serverExternalPackages`). Site-relative drawings are fetched from the live
+  site, because a preview deployment's own URL is behind Vercel's login.
+- **Offered only when it can be sent:** the page passes `copyChannels` from
+  `designCopyConfigured()`; preview deployments always show both so the form can
+  be reviewed. Production shows nothing until `RESEND_API_KEY` (email; the
+  sender `DESIGN_COPY_FROM` defaults to sales@ and must be on a Resend-verified
+  domain) and the Twilio variables (text; needs A2P 10DLC registration) are set.
+- SEO: the page publishes a `WebApplication` node (provider `businessRef()`),
+  a full-screen FAQ, and a "copy of my design" FAQ only where a channel is
+  offered, so neither the copy nor its FAQPage schema promises a send the
+  deployment cannot make. Its registry entry carries `updated`, which the
+  sitemap now publishes as lastmod for any registry page that sets it.
+- Tests: `tests/design-summary.test.ts` and the "Home Designer copy" cases in
+  `tests/leads.test.ts`.
 

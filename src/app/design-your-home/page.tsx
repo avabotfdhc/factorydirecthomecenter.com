@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
 import { FAQSection } from "@/components/FAQSection";
 import { SpecsDisclaimer } from "@/components/SpecsDisclaimer";
-import { getApiFloorPlans } from "@/lib/api-content";
-import { HomeDesigner, type DesignerPlan } from "@/components/HomeDesigner";
+import { forBrowser, getDesignerPlans } from "@/lib/designer-plans";
+import { designCopyConfigured } from "@/lib/design-summary-send";
+import { HomeDesigner } from "@/components/HomeDesigner";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import { exteriorCatalog } from "@/lib/exterior-options";
 import { sidingByLabel } from "@/lib/elevation-defaults";
 import type { DesignerSource } from "@/lib/designer-link";
+import { SITE_URL, businessRef } from "@/lib/business";
+import { jsonLdScript } from "@/lib/json-ld";
+
+const DESIGN_PAGE_DESCRIPTION =
+  "Design a Champion manufactured home online: pick a floor plan, see it full screen in your siding, shingle and shutter colors, and get a line-item quote.";
 
 export const metadata: Metadata = genMeta({
   title: "Design Your Manufactured Home Online",
-  description:
-    "Pick a Champion floor plan, see it drawn in your siding, shingle, shutter and door choices, and request a line-item factory-direct quote. Auburn, IN.",
+  description: DESIGN_PAGE_DESCRIPTION,
   keywords: [
+    "build your own manufactured home online",
+    "mobile home design tool",
+    "manufactured home floor plan designer",
     "design a manufactured home online",
     "manufactured home exterior color visualizer",
     "mobile home siding colors",
@@ -25,43 +33,6 @@ export const metadata: Metadata = genMeta({
 
 // ISR: the home list comes from the live catalog; refresh every 5 min.
 export const revalidate = 300;
-
-// The picker must never take down the page. getApiFloorPlans throws on a CMS
-// network failure (by design, to protect ISR elsewhere) — here we'd rather
-// render the designer with the repo-published catalog than 500, so we fall
-// back to the local floor plans if the live fetch fails.
-async function getDesignerPlans(): Promise<DesignerPlan[]> {
-  try {
-    const plans = await getApiFloorPlans();
-    if (plans.length) {
-      return plans.map((p) => ({
-        slug: p.slug,
-        name: p.name,
-        series: p.series || "",
-        homeType: p.homeType || "Home",
-        ...(p.modelNumber ? { modelNumber: p.modelNumber } : {}),
-        ...(p.lengthFt ? { lengthFt: p.lengthFt } : {}),
-        ...(p.widthFt ? { widthFt: p.widthFt } : {}),
-        ...(p.beds ? { beds: p.beds } : {}),
-      }));
-    }
-  } catch {
-    /* fall through to the repo catalog */
-  }
-  const { localFloorPlans, PRIME_SERIES, PRIME_HOME_TYPE } = await import("@/lib/local-floor-plans");
-  return localFloorPlans
-    .filter((p) => !p.hidden)
-    .map((p) => ({
-      slug: p.slug,
-      name: p.name,
-      series: p.series || PRIME_SERIES,
-      homeType: p.homeType || PRIME_HOME_TYPE,
-      modelNumber: p.modelNumber,
-      lengthFt: parseInt(p.length, 10) || undefined,
-      widthFt: parseInt(p.width, 10) || undefined,
-      beds: p.beds,
-    }));
-}
 
 const HOW_IT_WORKS = [
   {
@@ -99,6 +70,23 @@ const DESIGNER_FAQS = [
   },
 ];
 
+// Always true of the tool, so always asked.
+const FULL_SCREEN_FAQ = {
+  question: "Can I use the designer full screen?",
+  answer:
+    "Yes. Tap the picture of your home or the Open full screen button and the whole designer fills your screen, on a phone or a computer. Close it, press Escape or use your Back button to return to the page — every choice you made stays as you left it.",
+};
+
+// Asked only where this deployment can actually send a copy, so the page and
+// its FAQPage schema never promise an email or a text the site cannot send.
+function copyFaq(channels: { email: boolean; sms: boolean }) {
+  const how = channels.email && channels.sms ? "by email, by text, or both" : channels.email ? "by email" : "by text";
+  return {
+    question: "Can I get a copy of my design?",
+    answer: `Yes. In the last step, choose to have your design sent to you ${how}. Once every question is answered and you submit, we send the picture of your home, its floor plan and every choice you made, with our address and phone number, so you can share it or bring it to the lot. Texts are sent only if you tick the text consent box.`,
+  };
+}
+
 const SOURCES: DesignerSource[] = ["plan_page", "plan_page_swatch", "plan_card", "promo_band", "quote_modal", "header", "footer", "home"];
 
 export default async function DesignYourHomePage({
@@ -107,7 +95,14 @@ export default async function DesignYourHomePage({
   searchParams: Promise<{ home?: string; siding?: string; src?: string }>;
 }) {
   const { home, siding, src } = await searchParams;
-  const designerPlans = await getDesignerPlans();
+  const designerPlans = forBrowser(await getDesignerPlans());
+  // Offer only the copies this deployment can send. Preview deployments show
+  // both so the form can be reviewed before email and texting are set up.
+  const canSend = designCopyConfigured();
+  const preview = process.env.VERCEL_ENV !== "production";
+  const copyChannels = { email: canSend.email || preview, sms: canSend.sms || preview };
+  const offersCopy = copyChannels.email || copyChannels.sms;
+  const faqs = [...DESIGNER_FAQS, FULL_SCREEN_FAQ, ...(offersCopy ? [copyFaq(copyChannels)] : [])];
   // `home`, `siding` and `src` arrive from the plan pages' teasers and the
   // other entry points (src/lib/designer-link.ts). The siding label is only
   // honoured when the chosen plan's catalogue actually carries it, and the
@@ -118,7 +113,35 @@ export default async function DesignYourHomePage({
   const source = (SOURCES as string[]).includes(src || "") ? (src as DesignerSource) : undefined;
 
   return (
-    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
+    <div className="bg-[var(--color-cream)] text-[var(--color-charcoal)]">
+      {/* The designer itself, as a free web app the dealership provides. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "@id": `${SITE_URL}/design-your-home#designer`,
+            name: "Design Your Home — Champion manufactured home designer",
+            url: `${SITE_URL}/design-your-home`,
+            description: DESIGN_PAGE_DESCRIPTION,
+            applicationCategory: "DesignApplication",
+            operatingSystem: "Any",
+            browserRequirements: "Requires JavaScript",
+            isAccessibleForFree: true,
+            featureList: [
+              "Every Champion floor plan we sell",
+              "Exterior drawn from Champion's floor plan sheets in your siding, shingle, shutter and door choices",
+              "Front, rear and end views",
+              "Full-screen view",
+              "Line-item factory-direct quote request",
+              ...(offersCopy ? ["A copy of your design, with its floor plan, by email or text"] : []),
+            ],
+            provider: businessRef(),
+          }),
+        }}
+      />
+      <section className="relative pt-28 pb-14 lg:pt-36 lg:pb-16 bg-[var(--color-charcoal)] grain-overlay text-white">
         <div className="relative max-w-4xl mx-auto px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-5">
             <div className="decorative-line" />
@@ -136,7 +159,7 @@ export default async function DesignYourHomePage({
       </section>
 
       <section className="max-w-4xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
-        <HomeDesigner plans={designerPlans} initialHome={chosen?.slug} initialSiding={initialSiding} source={source} />
+        <HomeDesigner plans={designerPlans} initialHome={chosen?.slug} initialSiding={initialSiding} source={source} copyChannels={copyChannels} />
 
         {/* Server-rendered copy a crawler can read: what the tool does and where its colors come from. */}
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -155,7 +178,7 @@ export default async function DesignYourHomePage({
       <FAQSection
         title="Designing your home online"
         subtitle="Straight answers about the picture, the colors and what happens after you submit."
-        faqs={DESIGNER_FAQS}
+        faqs={faqs}
       />
     </div>
   );
