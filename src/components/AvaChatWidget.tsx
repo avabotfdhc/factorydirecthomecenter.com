@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, type ReactNode } from "react";
 import { H4 } from "./Heading";
 import PriceQuoteModal from "./PriceQuoteModal";
 import { getSaleStatus } from "@/lib/sale";
+import { trackGA4Event, trackLeadFormSubmit } from "@/lib/analytics";
 
 // Ava — the site's sales copilot. Replies come from /api/chat (Claude Haiku
 // 5.5, or OpenAI as the fallback, with Ava's sales persona, the running sale, the live catalogue and her sales
@@ -109,6 +110,8 @@ export function AvaChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   // Once the API answers 503 (not configured) we stop asking it.
   const apiAvailable = useRef(true);
+  // What this chat session has already reported to analytics.
+  const tracked = useRef({ lead: false, visit: false, opened: false });
   // Monotonic message ids (the greeting is "1").
   const nextId = useRef(2);
   const newId = () => String(nextId.current++);
@@ -131,6 +134,7 @@ export function AvaChatWidget() {
 
   const handleSend = async (text: string = inputText) => {
     if (!text.trim()) return;
+    trackGA4Event("chat_message", { message_number: messages.filter((m) => m.type === "user").length + 1 });
 
     const userMessage: Message = {
       id: newId(),
@@ -184,8 +188,23 @@ export function AvaChatWidget() {
       }
       if (!res.ok) return null;
       const json = (await res.json()) as { reply?: string; leadCaptured?: boolean; visitRequested?: boolean };
-      if (json.leadCaptured) setLeadCaptured(true);
-      if (json.visitRequested) setVisitRequested(true);
+      // A lead Ava saved in chat is a lead: report it to GA4 (generate_lead)
+      // and Meta (Lead) like every form does. The refs make each fire once per
+      // chat session even if the route repeats the flag on a later reply.
+      if (json.leadCaptured) {
+        setLeadCaptured(true);
+        if (!tracked.current.lead) {
+          tracked.current.lead = true;
+          trackLeadFormSubmit("ava_chat", { interest: "Ava chat quote request" });
+        }
+      }
+      if (json.visitRequested) {
+        setVisitRequested(true);
+        if (!tracked.current.visit) {
+          tracked.current.visit = true;
+          trackLeadFormSubmit("ava_visit", { interest: "Ava chat showroom visit" });
+        }
+      }
       return json.reply?.trim() || null;
     } catch {
       return null;
@@ -238,6 +257,12 @@ export function AvaChatWidget() {
       {/* Chat Button */}
       <button
         onClick={() => {
+          // Once per page load: the count of visitors who opened the chat,
+          // not the count of times the bubble was toggled.
+          if (!isOpen && !tracked.current.opened) {
+            tracked.current.opened = true;
+            trackGA4Event("chat_open", { page_path: window.location.pathname });
+          }
           setIsOpen(!isOpen);
           setHasNotification(false);
         }}
