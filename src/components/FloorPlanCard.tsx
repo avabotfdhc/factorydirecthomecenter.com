@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import type { ApiFloorPlan } from "@/lib/api-content";
 import PriceQuoteModal from "@/components/PriceQuoteModal";
 import { DesignerCta } from "@/components/DesignerCta";
+import { SaveHomeButton } from "@/components/SaveHomeButton";
 
 // One home in the /floor-plans grid.
 //
@@ -70,6 +71,7 @@ export function FloorPlanCard({ plan: p, bedsLabel, bedsFlex, compareSlot }: Pro
             {bedsLabel} Bed
           </span>
         )}
+        <SaveHomeButton home={p} location="floor_plan_card" />
         {p.virtualTour && !hasDrawing && (
           <span className="fp-card-badge bottom-3 right-3 bg-black/60">
             3D Tour

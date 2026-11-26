@@ -2409,3 +2409,24 @@ community, time frame — all now required in the designer).
 - Tests: `tests/design-summary.test.ts` and the "Home Designer copy" cases in
   `tests/leads.test.ts`.
 
+
+# Saved homes: a heart on every home and /saved (2026-11-26)
+
+From the competitor review of 2026-11-26: neither Champion Homes Center nor
+Factory Expo lets a shopper keep a list. A shortlist is a reason to come back,
+and "get prices on my saved homes" is a softer first lead than a quote form.
+
+- `src/lib/saved-homes-core.ts` is the pure half (no React): the card snapshot
+  (`toSavedHome`), `parseSaved` (tolerant of anything under the key) and
+  `toggleSaved` (newest first, max 12, oldest drops). Server components import
+  only this file — `saved-homes.ts` imports React hooks.
+- `src/lib/saved-homes.ts` is the browser half: localStorage key
+  `fdhc.savedHomes.v1`, `useSavedHomes()` via `useSyncExternalStore` (string
+  snapshot), synced across tabs by the `storage` event. Nothing leaves the
+  browser until the shopper asks for prices.
+- `SaveHomeButton` (heart on `FloorPlanCard`, bottom-left of the photo; labelled
+  button above the actions on plan pages) reports `save_home` / `unsave_home` to
+  GA4. `SavedHomesLink` sits in the /floor-plans filter row once anything is saved.
+- `/saved` (noindex, in `NOT_INDEXED` in tests/indexing.test.ts) lists them, reuses
+  `CompareTray` for side-by-side, and `SavedHomesQuoteButton` sends one lead with
+  `source: "Saved Homes"` naming every saved home.
