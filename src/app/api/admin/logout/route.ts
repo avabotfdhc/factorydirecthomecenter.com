@@ -7,7 +7,13 @@ export async function POST() {
   if (token) await signOut(token);
   const response = NextResponse.json({ success: true });
   for (const name of [ADMIN_COOKIE, ADMIN_REFRESH_COOKIE]) {
-    response.cookies.set(name, "", { httpOnly: true, path: "/", maxAge: 0 });
+    response.cookies.set(name, "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 0,
+    });
   }
   return response;
 }

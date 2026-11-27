@@ -3,6 +3,30 @@
 import { cookies, headers } from "next/headers";
 import { storeLead } from "@/lib/leads-store";
 import { ATTRIBUTION_COOKIE, type Attribution, decodeAttribution } from "@/lib/attribution";
+import { SITE_URL } from "@/lib/business";
+import { internalLeadHeaders, rateLimit, requestIp } from "@/lib/request-guard";
+
+// Hosts this action may post its fan-out to. Anything else (a forged Host or
+// X-Forwarded-Host) falls back to the production origin, so a request can
+// never point the server's own fetch at someone else's server.
+function leadsApiOrigin(h: Headers): string {
+  const host = (h.get("x-forwarded-host") || h.get("host") || "").toLowerCase();
+  if (host.startsWith("localhost:") || host === "localhost") return `http://${host}`;
+  if (
+    host === "factorydirecthomescenter.com" ||
+    host === "www.factorydirecthomescenter.com" ||
+    /^factorydirecthomescenter[a-z0-9-]*\.vercel\.app$/.test(host)
+  ) {
+    return `https://${host}`;
+  }
+  return SITE_URL;
+}
+
+// Per-IP ceiling on the instant quote and Ava's lead tools (security fixes,
+// 2026-11-26): neither carries the honeypot or Turnstile, so this is their
+// bot guard. A buyer asks for two or three quotes at most.
+const QUOTE_LIMIT = 6;
+const QUOTE_WINDOW_MS = 10 * 60 * 1000;
 
 // Lead intake for the instant-quote modal (PriceQuoteModal) and the mobile
 // action bar.
@@ -61,16 +85,17 @@ function insertSupabaseLead(lead: LeadSubmission, attribution: Attribution | nul
 // every phone-only lead against.
 async function fanOutToLeadsApi(lead: LeadSubmission, attributionCookie: string | null): Promise<void> {
   const h = await headers();
-  const host = h.get("x-forwarded-host") || h.get("host");
-  if (!host) return;
-  const proto = h.get("x-forwarded-proto") || (host.startsWith("localhost") ? "http" : "https");
+  const origin = leadsApiOrigin(h);
   const [firstName, ...rest] = clean(lead.name, 120).split(/\s+/);
   const phone = clean(lead.contact, 60);
   const email = clean(lead.email, 120);
-  const res = await fetch(`${proto}://${host}/api/leads`, {
+  const res = await fetch(`${origin}/api/leads`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      // Proves the call comes from this app, so /api/leads honours skipStore
+      // and does not count it against the visitor-facing rate limit.
+      ...internalLeadHeaders(),
       // Forward ONLY the attribution cookie, so the lead email and the
       // DealerTide note name the campaign too. Forwarding the visitor's whole
       // Cookie header would hand an admin session to an internal fetch for no
@@ -114,6 +139,15 @@ export async function submitLead(payload: LeadSubmission): Promise<LeadResult> {
   };
   if (!lead.name || lead.contact.replace(/\D/g, "").length < 10 || !lead.county) {
     return { success: false, error: "Name, a phone number and county are required" };
+  }
+
+  const ip = requestIp(await headers());
+  if (ip !== "unknown") {
+    const limit = rateLimit("quote", ip, QUOTE_LIMIT, QUOTE_WINDOW_MS);
+    if (!limit.allowed) {
+      console.warn("[leads] Instant quote rate limited one client");
+      return { success: false, error: "Too many requests. Please call (260) 308-1457." };
+    }
   }
 
   // Where the visitor came from, from the first-party cookie

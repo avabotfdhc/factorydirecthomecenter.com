@@ -6,6 +6,7 @@ import { attributionSummaryLines, readAttributionCookie } from "@/lib/attributio
 import { verifyTurnstile } from "@/lib/turnstile";
 import { decodeDesign } from "@/lib/design-summary";
 import { sendDesignCopy, type CopyResult } from "@/lib/design-summary-send";
+import { isInternalLeadCall, rateLimit, requestIp } from "@/lib/request-guard";
 
 // DealerTide is tried twice with a 6s timeout each (see lib/dealertide.ts) and
 // the other channels run alongside it. Give the function room so a slow CRM
@@ -36,7 +37,17 @@ const LEAD_EMAIL_TO = process.env.LEAD_EMAIL_TO ?? "leads@factorydirecthomescent
 const GOOGLE_SHEETS_ID = process.env.GOOGLE_SHEETS_ID;
 const GOOGLE_SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
 
-const str = (v: unknown): string => (typeof v === "string" ? v.trim() : v == null ? "" : String(v));
+// Every field is capped so one request cannot push megabytes into the CRM,
+// the email or the sheet. `message` gets more room than the short fields.
+const str = (v: unknown, max = 300): string =>
+  (typeof v === "string" ? v.trim() : v == null ? "" : String(v)).slice(0, max);
+
+// Per-IP ceiling for browser submissions (security fixes, 2026-11-26). A
+// person sends one or two leads; ten in ten minutes from one address is a
+// script. Server-side callers (the instant-quote action, Ava) carry the
+// internal key and are limited where they start instead.
+const LEAD_LIMIT = 10;
+const LEAD_WINDOW_MS = 10 * 60 * 1000;
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -45,6 +56,23 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const internal = isInternalLeadCall(request.headers);
+  if (!internal) {
+    const ip = requestIp(request.headers);
+    // "unknown" only happens off-platform (tests, local dev): Vercel always
+    // sets x-forwarded-for.
+    if (ip !== "unknown") {
+      const limit = rateLimit("leads", ip, LEAD_LIMIT, LEAD_WINDOW_MS);
+      if (!limit.allowed) {
+        console.warn("[leads] Rate limited one client");
+        return NextResponse.json(
+          { error: "Too many submissions. Please call (260) 308-1457." },
+          { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } },
+        );
+      }
+    }
   }
 
   // Bots get the same 200 a person gets and nothing is forwarded or stored.
@@ -95,13 +123,16 @@ export async function POST(request: Request) {
     landStatus: str(body.landStatus),
     timeframe: str(body.timeframe),
     financingStatus: str(body.financingStatus),
-    message: str(body.message),
+    message: str(body.message, 4000),
     source: str(body.source) || "Contact Form",
-    pageUrl: str(body.pageUrl),
+    pageUrl: str(body.pageUrl, 500),
     submittedAt: new Date().toISOString(),
   };
   // The instant-quote server action stores its own copy before calling us.
-  const skipStore = body.skipStore === true || body.skipStore === "true";
+  // Honoured only on an internal call: from the public internet the flag
+  // would let a script keep a lead out of the database (security fixes,
+  // 2026-11-26).
+  const skipStore = internal && (body.skipStore === true || body.skipStore === "true");
 
   // Where this visitor came from. Read from the first-party cookie the browser
   // sends with the POST (src/lib/attribution.ts), NOT from the form body: that
@@ -112,7 +143,7 @@ export async function POST(request: Request) {
   const attributionLines = attributionSummaryLines(attribution);
   const attributionText = attributionLines.join(" | ");
 
-  console.log("[leads] New submission:", lead.email, lead.firstName, lead.lastName);
+  console.log("[leads] New submission from source:", lead.source);
 
   // Everything the salesperson needs to act, in the one free-text field
   // DealerTide is known to accept. The top-level payload stays as it was —
@@ -379,7 +410,7 @@ async function appendToSheet(lead: Record<string, string>) {
   ];
 
   const res = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEETS_ID}/values/Sheet1!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEETS_ID}/values/Sheet1!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
     {
       method: "POST",
       headers: {

@@ -11,6 +11,7 @@ import {
   type AdminFloorPlan,
   type AdminImage,
 } from "@/lib/supabase-admin";
+import { requireAdmin } from "@/lib/admin-auth";
 
 function slugify(s: string): string {
   return String(s || "")
@@ -36,6 +37,7 @@ const EXT: Record<string, string> = {
 
 /** Create or update the core floor-plan record. */
 export async function saveFloorPlan(fd: FormData): Promise<void> {
+  await requireAdmin();
   const id = str(fd, "id");
   const name = str(fd, "name");
   const slug = str(fd, "slug") || slugify(name);
@@ -73,6 +75,7 @@ export async function saveFloorPlan(fd: FormData): Promise<void> {
 
 /** Upload one or more files for a plan and attach them by role. */
 export async function uploadFiles(fd: FormData): Promise<void> {
+  await requireAdmin();
   const id = str(fd, "id");
   const slug = str(fd, "slug");
   const role = str(fd, "role"); // banner | gallery | floorplan | brochure
@@ -89,7 +92,7 @@ export async function uploadFiles(fd: FormData): Promise<void> {
     const f = files[i];
     const ext = EXT[f.type] || (f.name.split(".").pop() || "bin").toLowerCase();
     const stamp = Date.now().toString(36);
-    const key = `${slug}/${role}-${stamp}-${i}.${ext}`;
+    const key = `${slugify(slug)}/${slugify(role) || "gallery"}-${stamp}-${i}.${ext.replace(/[^a-z0-9]/g, "") || "bin"}`;
     const buf = new Uint8Array(await f.arrayBuffer());
     const path = await uploadObject(key, buf, f.type || "application/octet-stream");
     uploadedPaths.push(path);
@@ -115,6 +118,7 @@ export async function uploadFiles(fd: FormData): Promise<void> {
 
 /** Remove one gallery image (by index in the current ordered set). */
 export async function removeImage(fd: FormData): Promise<void> {
+  await requireAdmin();
   const id = str(fd, "id");
   const slug = str(fd, "slug");
   const path = str(fd, "path");
@@ -130,6 +134,7 @@ export async function removeImage(fd: FormData): Promise<void> {
 }
 
 export async function deletePlan(fd: FormData): Promise<void> {
+  await requireAdmin();
   const id = str(fd, "id");
   if (!id) throw new Error("Missing plan id.");
   await deleteFloorPlan(id);

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { safeEqual } from "@/lib/request-guard";
 
 // POST /api/webhooks/new-lead — Supabase Database Webhook target.
 //
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
     console.error("[new-lead] LEAD_WEBHOOK_SECRET is not set; refusing webhook");
     return NextResponse.json({ error: "Webhook not configured" }, { status: 503 });
   }
-  if (request.headers.get("x-webhook-secret") !== secret) {
+  if (!safeEqual(request.headers.get("x-webhook-secret"), secret)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

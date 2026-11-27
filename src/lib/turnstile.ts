@@ -25,7 +25,7 @@ export function turnstileConfigured(): boolean {
 }
 
 export interface TurnstileResult {
-  /** False only when Turnstile is configured AND actively rejected the token. */
+  /** False only when Turnstile is configured AND Cloudflare rejected a token as invalid. */
   ok: boolean;
   /** Why, for the log line. */
   reason: string;
@@ -35,8 +35,13 @@ export async function verifyTurnstile(token: unknown, remoteIp?: string | null):
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) return { ok: true, reason: "not-configured" };
 
+  // No token at all: the widget's script was blocked, failed to load, or had
+  // not finished on a slow phone. That is far more often a real buyer than a
+  // bot (the honeypot and fill timer still ran), so it fails OPEN like an
+  // unreachable Cloudflare, and the log line says so. Security fixes,
+  // 2026-11-26: this used to drop the lead while the visitor saw "thank you".
   if (typeof token !== "string" || !token.trim()) {
-    return { ok: false, reason: "missing-token" };
+    return { ok: true, reason: "missing-token-failed-open" };
   }
 
   const body = new URLSearchParams({ secret, response: token.trim() });
@@ -53,7 +58,13 @@ export async function verifyTurnstile(token: unknown, remoteIp?: string | null):
     if (!res.ok) return { ok: true, reason: `verify-http-${res.status}-failed-open` };
     const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
     if (data.success) return { ok: true, reason: "verified" };
-    return { ok: false, reason: (data["error-codes"] || ["rejected"]).join(",") };
+    const codes = data["error-codes"] || ["rejected"];
+    // An expired or already-used token (a double tap, a resubmit after an
+    // error, a form left open for 5+ minutes) is a person, not a bot.
+    if (codes.every((c) => c === "timeout-or-duplicate")) {
+      return { ok: true, reason: "timeout-or-duplicate-failed-open" };
+    }
+    return { ok: false, reason: codes.join(",") };
   } catch (err) {
     // Cloudflare unreachable or slow: let the lead through and say so.
     return { ok: true, reason: `verify-unreachable-failed-open (${err instanceof Error ? err.message : "error"})` };

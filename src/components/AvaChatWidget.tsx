@@ -58,6 +58,7 @@ function quickReplies(): string[] {
 const RICH_RE =
   /\[([^\]]+)\]\(([^)\s]+)\)|(https?:\/\/[^\s<>()]+)|(^|[\s(])(\/(?:floor-plans|series|homes-on-sale|options|design-your-home|financing|guides|resources|locations|contact-us|champion-homes|about|blog)\b[\w\-./]*)|(\(260\)\s?308-1457|260-308-1457)/g;
 const TRAILING_PUNCT = /[.,;:!?)]+$/;
+const SAFE_HREF = /^(\/(?!\/)|https?:\/\/|tel:|mailto:|sms:)/i;
 
 function linkNode(href: string, label: string, key: number): ReactNode {
   const external = /^https?:\/\//.test(href) && !/factorydirecthomescenter\.com/.test(href);
@@ -82,7 +83,11 @@ function renderRich(text: string): ReactNode[] {
     const start = m.index ?? 0;
     if (start > last) out.push(src.slice(last, start));
     if (m[1] && m[2]) {
-      out.push(linkNode(m[2], m[1], key++));
+      // A markdown link is only made clickable for a site path or an
+      // http(s)/tel/mailto/sms address; anything else (data:, javascript:,
+      // vbscript:) stays plain text, whatever the model was talked into.
+      if (SAFE_HREF.test(m[2])) out.push(linkNode(m[2], m[1], key++));
+      else out.push(m[1]);
     } else if (m[3]) {
       const trimmed = m[3].replace(TRAILING_PUNCT, "");
       out.push(linkNode(trimmed, trimmed, key++), m[3].slice(trimmed.length));

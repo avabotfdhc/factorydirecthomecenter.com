@@ -25,6 +25,7 @@ import {
   RetryableHttpError,
   withRetry,
 } from "./resilient-fetch";
+import { sanitizeHtml } from "./sanitize-html";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
 const SUPABASE_KEY =
@@ -251,7 +252,8 @@ export async function getSupabaseFloorPlanBySlug(slug: string): Promise<ApiFloor
   return {
     ...base,
     description: String(r.description || ""),
-    floorPlanHtml: String(r.floor_plan_html || ""),
+    // Cleaned at read time: this column is typed into /admin and rendered as HTML.
+    floorPlanHtml: sanitizeHtml(String(r.floor_plan_html || "")),
     modelNumber: String(r.model_number || ""),
     length: String(r.length || ""),
     width: String(r.width || ""),

@@ -179,3 +179,19 @@ export async function isAdminRequest(): Promise<boolean> {
   const { status } = await verifyAdmin(token);
   return status === "ok";
 }
+
+/**
+ * Server-action guard. Every `"use server"` function under /admin must call
+ * this first: a server action is a public POST endpoint that any client can
+ * invoke by its action id, so the (protected) layout's page guard does NOT
+ * protect it. Throws unless the request carries a session Supabase confirms
+ * is an admin right now — an unreachable Supabase ("error") is refused too,
+ * because these actions write with the service role.
+ */
+export async function requireAdmin(): Promise<AdminUser> {
+  const token = await getAdminToken();
+  if (!token) throw new Error("Not signed in.");
+  const { status, user } = await verifyAdmin(token);
+  if (status !== "ok" || !user) throw new Error("Admin session could not be verified. Sign in again.");
+  return user;
+}

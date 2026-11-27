@@ -163,6 +163,23 @@ Smoke-test the whole loop without a model provider or real leads: `node scripts/
 
 `/admin` signs in with Supabase Auth email + password on the catalogue project; the GoTrue REST endpoints are called directly from `src/lib/admin-auth.ts` (no client library). Only users whose `app_metadata.role` is `"admin"` are accepted — set it in SQL (`update auth.users set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}' where email = …`), never from the client. The access token (1 h) and refresh token (30 d) live in httpOnly cookies; `src/proxy.ts` sends an expired session through `/api/admin/refresh`, which mints new cookies and returns to the page. Dashboard and Leads read the `leads` and `floor_plans` tables with the service role (`src/lib/admin-data.ts`). Adding an admin: create the user in the Supabase dashboard (Authentication → Users, "auto confirm"), then set the role as above.
 
+# Security rules (2026-11-26)
+
+Fixes for the open items of `docs/full-scope-audit-2026-10-19.md`, pillar 4. Keep them true:
+
+- **Every `"use server"` function under `/admin` calls `requireAdmin()` first** (`src/lib/admin-auth.ts`). A server action is a public POST endpoint callable by its action id; the `(protected)` layout guards pages, not actions. `requireAdmin()` refuses an unverified session, including when Supabase Auth is unreachable.
+- **The `(protected)` layout fails closed.** `verifyAdmin` → `"error"` renders a "try again" page, never the children (the pages read every lead with the service role).
+- **Import storage keys are allow-listed** (`<slug>/<file>` or `literature/<file>`, no `..`) before a signed upload URL is minted.
+- **`floor_plan_html` is cleaned at read time** by `src/lib/sanitize-html.ts` (allow-list, no attributes except a safe `href`). Blog HTML is repo-authored and is not run through it.
+- **`/api/leads`**: 10 browser submissions per IP per 10 minutes; fields capped (message 4,000 chars); `skipStore` honoured only on an internal call. The instant-quote action and Ava prove they are internal with the `x-fdhc-internal-lead` header from `internalLeadHeaders()` (`src/lib/request-guard.ts`), derived from `LEAD_INTERNAL_SECRET` or, unset, the service-role key — no new env var needed. `submitLead` has its own limit (6 per IP per 10 minutes). Google Sheets rows are appended with `valueInputOption=RAW`, so a value starting with `=` stays text.
+- **Turnstile fails open for people.** A missing token (blocked script, slow phone) or `timeout-or-duplicate` (double tap, form left open) is accepted and logged; only a token Cloudflare rejects as invalid is dropped. The old code dropped a missing token while showing "thank you".
+- **Secrets are compared with `safeEqual()`** (constant time). `POST /api/webhooks/dealertide` checks `DEALERTIDE_WEBHOOK_SECRET` (`?key=` or `x-webhook-secret`) when that env var is set, and purges the cache at most once a minute per instance either way.
+- **`GET /api/health`** answers `ok`, `leadsReachCrm` and `checkedAt` to anyone (for uptime monitors). The full report (env var names, Supabase host, upstream bodies) needs a signed-in admin, or `x-health-key: <HEALTH_CHECK_SECRET>` when that env var is set.
+- **Admin sign-in** is limited to 8 attempts per IP and 5 per email per 15 minutes, and always answers "Invalid email or password".
+- **Ava's markdown links** become clickable only for site paths and `http(s):`, `tel:`, `mailto:`, `sms:`.
+- **Content-Security-Policy ships in Report-Only mode** (`CSP_REPORT_ONLY` in `next.config.ts`). Add a source there with every new third-party script, frame or API; switch the header name to `Content-Security-Policy` once the console shows no violations from our own pages.
+- **Lead PII stays out of logs**: `/api/leads` logs the form source, not the name or email.
+
 # AWS is retired
 
 As of 2026-09-11 nothing on the site depends on AWS. The Express/MySQL CMS on EC2 (`api.factorydirecthomescenter.com`, repo `kmdudgeon/fdhc-next-backend`) and the S3 bucket `factory-direct-homescenter` are no longer called: admin login is Supabase Auth, leads go to the `leads` table (plus Resend / DealerTide / Sheets when configured), the blog is repo-authored (`src/lib/local-posts.ts`), and the floor-plan catalogue is Supabase + the repo data files. `scripts/migrate-legacy-media.mjs` (postbuild, idempotent) copied every S3 photo into the `floor-plans` bucket under `legacy/` as WebP and recorded the map in `public.media_migrations`; rows and repo data files point at the copies. Do not add `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_S3_URL` or an S3 `remotePatterns` entry back.
