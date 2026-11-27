@@ -13,6 +13,7 @@ import { ConsentBanner } from "@/components/ConsentBanner";
 import { CONSENT_PREPAINT_SCRIPT } from "@/lib/consent";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { LocalBusinessSchema } from "@/components/JsonLd";
+import { Analytics } from "@vercel/analytics/next";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -134,6 +135,7 @@ export default function RootLayout({
           <DeferredOverlays />
           <ConsentBanner />
         </LocaleProvider>
+        <Analytics />
       </body>
     </html>
   );
